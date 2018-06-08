@@ -8,8 +8,8 @@ const fs = require('fs')
 const execa = require('execa')
 const async = require('async')
 
-const projects = fs.readdirSync(__dirname).filter(file => {
-  return /^mip-site-\w+$/.test(file)
+const projects = fs.readdirSync(path.join(__dirname, 'sites')).filter(file => {
+  return fs.statSync(path.join(__dirname, 'sites', file)).isDirectory()
 })
 
 if (projects.length < 1) {
@@ -19,7 +19,7 @@ if (projects.length < 1) {
 
 const build = function (proj, done) {
 
-  let src = path.join(process.cwd(), proj)
+  let src = path.join(process.cwd(), 'sites', proj)
   let dist = path.join(process.cwd(), 'dist', proj)
   let publicPath = 'https://c.mipcdn.com/static/v2/' + proj;
 

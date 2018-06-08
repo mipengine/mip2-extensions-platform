@@ -12,5 +12,5 @@ https://c.mipcdn.com/extensions/platform/v2/{项目名}/{组件名}/{组件名}.
 
 如
 ```
-https://c.mipcdn.com/extensions/platform/v2/mip-site-a/mip-example/mip-example.js
+https://c.mipcdn.com/extensions/platform/v2/test.a.com/mip-example/mip-example.js
 ```

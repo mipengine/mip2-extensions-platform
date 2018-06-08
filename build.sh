@@ -1,6 +1,7 @@
 #!/bin/bash
 
 script_path=$(cd `dirname $0` && pwd)
+sitesDir=sites
 
 # clean
 rm -rf $script_path/dist
@@ -8,15 +9,15 @@ rm -rf $script_path/node_modules
 echo 'clean done.'
 
 # install dependencies of each site
-for siteName in $script_path/*
+for sitePath in $script_path/$sitesDir/*
 do
-    if [ -d $siteName ]
+    if [ -d $sitePath ]
     then
-        for site in `basename $siteName`
+        for site in `basename $sitePath`
         do
-            cd $site
+            cd $sitesDir/$site
             npm install --production
-            cd ..
+            cd ../..
         done
     fi
 done
