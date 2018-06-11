@@ -30,7 +30,7 @@ MIP 2.0 的站长组件托管在 [Github 站长组件仓库](https://github.com/
 
 ```
 
-`sites` 目录即是站点项目的集合。示例中已经托管了 `test.a.com` 和 `test.b.com` 两个站点的自定义组件。站长各自在其 `components` 目录下[编写组件](./start-writing-first-mip.md#编写-mip-组件)。
+`sites` 目录即是站点项目的集合。示例中已经托管了 `test.a.com` 和 `test.b.com` 两个站点的自定义组件。站长各自在其 `components` 目录下[编写组件](https://github.com/mipengine/mip2/blob/master/docs/cli/start-writing-first-mip.md#编写-mip-组件)。
 
 本地需求实现并测试无误后，通过 `Pull Request` 的方式（暂时方案）提交审核，官方通过审核后会定期编译上线。
 
@@ -65,9 +65,9 @@ $ cd cafe.com
 ```
 切换到站点项目目录即可快速进行组件开发工作了：
 
-- [新增组件](./start-writing-first-mip.md#2-新建一个自定义组件)
-- [调试组件](./component-testing.md)
-- [校验组件](./cli-usage.md#组件和页面校验)
+- [新增组件](https://github.com/mipengine/mip2/blob/master/docs/cli/start-writing-first-mip.md#2-新建一个自定义组件)
+- [调试组件](https://github.com/mipengine/mip2/blob/master/docs/cli/component-testing.md)
+- [校验组件](https://github.com/mipengine/mip2/blob/master/docs/cli/cli-usage.md#组件和页面校验)
 
 3.**发起 Pull Request**
 
