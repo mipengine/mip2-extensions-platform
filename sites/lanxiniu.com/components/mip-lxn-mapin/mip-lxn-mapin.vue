@@ -105,7 +105,6 @@
 <script>
 import base from '../../common/utils/base'
 import map from '../../common/utils/map'
-// import axios from "axios"
 import '../../common/utils/base.css'
 base.setHtmlRem()
 export default {
