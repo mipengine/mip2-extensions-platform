@@ -7,6 +7,7 @@
 
 <script>
 import base from "../../common/utils/base";
+import axios from "axios";
 export default {
   props: {
     globaldata: {

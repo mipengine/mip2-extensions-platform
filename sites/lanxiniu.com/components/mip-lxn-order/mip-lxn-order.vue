@@ -94,10 +94,6 @@
                         type="text"
                         placeholder="您要从哪里搬出"
                         @click="setMoveOut">
-                        <!-- <div
-                        :class="{hastext:outIsFill}"
-                        class="gomap actives"
-                        v-text="globaldata.moveOutAddress.localtion.title"/> -->
                     </a>
 
                   </div>
@@ -264,8 +260,6 @@ export default {
       endX: 0,
 
       cityPicker: '', // 选择器
-      outIsFill: false,
-      inIsFill: false,
       floorAndTime: {
         move: {
           data: '',
@@ -454,6 +448,7 @@ export default {
   },
   created () {
     base.setHtmlRem()
+    base.timeformat()
   },
   mounted () {
     console.log('查看sessionId:' + this.sessionId)
@@ -649,20 +644,11 @@ export default {
     // 全局数据监听
     lxnDataWatch () {
       let that = this
-      //   监控城市
       MIP.watch('lxndata.ordercity', function (newval, oldval) {
         console.log('首页监控城市=============wacth监控============')
         that.getCurrentCityCarTypes(newval)
       })
 
-      MIP.watch('lxndata.moveOutAddress.localtion.title', (newval, oldval) => {
-        console.log('查看搬出地址新数据:' + newval)
-        if (newval !== '') {
-          this.outIsNull = true
-        } else {
-          this.outIsNull = false
-        }
-      })
       MIP.watch('sessionId', function (newval, oldval) {
         console.log('监控sessionId===============================')
         console.log('新的sessionId===========:' + newval)
@@ -772,7 +758,7 @@ export default {
         detailType: '', // 详细的子车型
         discountAmount: '', // 折扣总额
         networkenvironment: '', // 网络环境
-        orderFrom: 16, // 订单来源
+        orderFrom: 15, // 订单来源
         userLat: '', // 用户所在纬度
         userLog: '', // 用户所在经度
         orderType: 5, // 订单类型
@@ -784,8 +770,6 @@ export default {
       }
       console.log(JSON.stringify(data, null, 2))
       let updata = {
-        from_detail: 'baidu',
-        fr: 'xiongzhanghao',
         token: sessionid,
         couponsId: 0, // 所用的优惠券id(默认0)
         OrderNum: '', // 订单号(空为新建订单)这里默认新建订单
@@ -1025,7 +1009,7 @@ export default {
         }
         // 时间
         if (data.orderTime !== '') {
-          let time = base.timeformat(new Date(data.orderTime * 1000), 'yyyy-MM-dd hh:mm')
+          let time = new Date(data.orderTime * 1000).format('yyyy-MM-dd hh:mm')
           floorAndTime.time = time
         }
         // 配置地址
@@ -1214,7 +1198,7 @@ export default {
 }
 
 .banner-content {
-  max-height: 2rem;
+  max-height: 1.6rem;
   overflow: hidden;
 }
 
@@ -1265,18 +1249,18 @@ export default {
   content: "";
   display: inline-block;
   position: absolute;
+  border-radius: 5px;
 }
 
 .head-ul li:nth-child(1) {
   justify-content: center;
-  color: #333333;
 }
 
 .head-ul li:nth-child(1)::after {
-  width: 2rem;
+  width: 0.66rem;
   height: 0.08rem;
   background: #39a1e8;
-  bottom: 0;
+  bottom: 0.1rem;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -1324,7 +1308,7 @@ export default {
   content: "";
   display: inline-block;
   position: absolute;
-  width: 0.46rem;
+  width: 0.72rem;
   height: 0.06rem;
   background: #39a1e8;
   bottom: 0.2rem;
@@ -1334,6 +1318,7 @@ export default {
 }
 
 .swiper-div {
+  /* margin-top: 0.3rem; */
   margin-bottom: 0.2rem;
 }
 .swiper-container {
@@ -1450,16 +1435,6 @@ export default {
   font-size: 0.28rem;
   color: #666666 !important;
 }
-.gomap{
- height: 100%;
- display: flex;
- align-items: center;
- color: #999999;
-}
-.gomap.hastext{
-    color: #666666;
-}
-
 .address-div-flex {
   display: flex;
   height: 100%;

@@ -1,97 +1,58 @@
 <template>
   <div class="wrapper">
-    <div>
-      <ul >
-        <li
-          v-show="nodata"
-          class="li-nodata">
-          暂无数据
-        </li>
+      <div>
+        <ul >
+          <li v-show="nodata" class="li-nodata">
+              暂无数据
+          </li>
 
-        <li
-          v-for="item in orderList"
-          :key="item.OrderNum"
-          class="list"
-          @click="orderDetail(item)">
-          <div >
-            <p class="head">
-              <span>普通搬家</span>
-              <span
-                v-if="item.OrderStatus.Desc === '待支付'"
-                class="status wait-pay"
-                v-text="item.OrderStatus.Desc"/>
-              <span
-                v-else-if="item.OrderStatus.Desc === '已取消'"
-                class="status already-cancel"
-                v-text="item.OrderStatus.Desc"/>
-              <span
-                v-else-if="item.OrderStatus.Desc === '已完成'"
-                class="status already-cancel"
-                v-text="item.OrderStatus.Desc"/>
-              <span
-                v-else
-                class="status wait-service"
-                v-text="item.OrderStatus.Desc"/>
+          <li  v-for="item in orderList"  @click="orderDetail(item)" class="list">
+              <div >
+                  <p class="head">
+                  <span>普通搬家</span>
+                  <span v-if="item.OrderStatus.Desc === '待支付'" v-text="item.OrderStatus.Desc" class="status wait-pay"></span>
+                  <span v-else-if="item.OrderStatus.Desc === '已取消'" v-text="item.OrderStatus.Desc" class="status already-cancel"></span>
+                  <span v-else-if="item.OrderStatus.Desc === '已完成'" v-text="item.OrderStatus.Desc" class="status already-cancel"></span>
+                  <span v-else  v-text="item.OrderStatus.Desc" class="status wait-service"></span>
 
-            </p>
-            <dl class="detail">
-              <dt v-text="item.TransTime"/>
-              <dt class="address-dt">
-                <span class="dt-des">搬出地址:</span>
-                <p v-text="item.poiList[0].deliverAddress"/>
-              </dt>
-              <dt class="address-dt">
-                <span class="dt-des">搬入地址:</span>
-                <p v-text="item.poiList[1].deliverAddress"/>
-              </dt>
-            </dl>
-            <div class="head-footer">
-              <span
-                v-show="item.OrderStatus.isCancelable === 1"
-                class="cancel btn"
-                @click.stop ="cancelOrder(item)">取消订单</span>
-              <a
-                v-show="item.OrderStatus.isConnectDriver === 1"
-                :href="item.driverInfo.phone"
-                @click.stop>
-                <span class="normal btn">联系司机</span>
-              </a>
-              <span
-                v-show="item.OrderStatus.isNeedPay === 1"
-                class="normal btn"
-                @click.stop="payOrder(item)">立即支付</span>
-            </div>
-          </div>
+               </p>
+               <dl class="detail">
+                  <dt v-text="item.TransTime"></dt>
+                  <dt class="address-dt">
+                      <span class="dt-des">搬出地址:</span>
+                      <p v-text="item.poiList[0].deliverAddress"></p>
+                  </dt>
+                  <dt class="address-dt">
+                      <span class="dt-des">搬入地址:</span>
+                      <p v-text="item.poiList[1].deliverAddress"></p>
+                  </dt>
+              </dl>
+               <div class="head-footer">
+                  <span v-show="item.OrderStatus.isCancelable === 1" @click.stop ="cancelOrder(item)" class="cancel btn">取消订单</span>
+                  <a v-show="item.OrderStatus.isConnectDriver === 1" @click.stop :href="item.driverInfo.phone">
+                      <span class="normal btn">联系司机</span>
+                  </a>
+                  <span v-show="item.OrderStatus.isNeedPay === 1"   @click.stop="payOrder(item)" class="normal btn">立即支付</span>
+              </div>
+              </div>
 
         </li>
-
+         
       </ul>
-    </div>
+      </div>
 
-    <div
-      v-show="warn.show"
-      class="layer"
-      @touchstart.prevent/>
-    <div
-      v-show="warn.show"
-      class="layer-content layer-content-explain zoomIn">
-      <div class="order-cancel">
-        <p class="title-cancel">取消订单</p>
-        <p
-          class="title-content"
-          v-text="warn.texts"/>
-      </div>
-      <div
-        class="layer-sure"
-        @click="closeLayer">
-        <p
-          class="btns active-layer"
-          @click="sureMethod">先不等了</p>
-        <p
-          class="btns btns2 active-layer"
-          @click="cancelMethod">再等等吧</p>
-      </div>
-    </div>
+
+       <div v-show="warn.show" @touchstart.prevent  class="layer"></div>
+        <div v-show="warn.show" class="layer-content layer-content-explain zoomIn">
+              <div  class="order-cancel">
+                  <p  class="title-cancel">取消订单</p>
+                  <p v-text="warn.texts" class="title-content"></p>
+              </div>
+              <div @click="closeLayer" class="layer-sure">
+                  <p @click="sureMethod" class="btns active-layer">先不等了</p>
+                  <p @click="cancelMethod" class="btns btns2 active-layer">再等等吧</p>
+              </div>
+          </div> 
 
     <div
       v-if="loading"
@@ -103,174 +64,192 @@
   </div>
 </template>
 
+
+
 <script>
-import base from '../../common/utils/base'
-import '../../common/utils/base.css'
+import base from "../../common/utils/base";
+import "../../common/utils/base.css";
 export default {
   props: {
     globaldata: {
-      type: Object,
-      default: function () { return {} }
+      type: Object
     },
     payConfig: {
-      type: Object,
-      default: function () { return {} }
+      type: Object
     }
   },
-  data () {
+  data() {
     return {
       orderList: [],
       warn: {
-        // 弹窗
+        //弹窗
         show: false,
-        texts: ''
+        texts: ""
       },
-      deleteItem: '',
+      deleteItem: "",
       loading: true,
       nodata: true
-    }
+    };
   },
-  created () {
-    console.log('创建数据')
-    base.setHtmlRem()
-    base.timeformat()
-    console.log(this.globaldata)
+  created() {
+    console.log("创建数据");
+    base.setHtmlRem();
+    base.timeformat();
+    console.log(this.globaldata);
   },
-  mounted () {
-    console.log('这里是订单列表页面 !')
-    this.getOrderList()
+  mounted() {
+    var that = this;
+    console.log("这里是订单列表页面 !");
+
+
+    this.getOrderList();
+
+
+
+
   },
   methods: {
     // 获取订单列表
-    getOrderList () {
-      this.showloading()
-      var that = this
+    getOrderList() {
+      this.showloading();
+      var that = this;
 
-      // console.log('我的订单页面查看sessionID:'+)
+    // console.log('我的订单页面查看sessionID:'+)
 
-      var sessionid = base.getbaiduLogMsg()
+      var sessionid = base.getbaiduLogMsg();
       var updata = {
         token: sessionid,
         pageSize: 30,
         pageIndex: 1
-      }
+      };
 
-      var urls = base.url + '/Order/list?' + base.setUrlParam(updata)
+      var urls = base.url + "/Order/list?" + base.setUrlParam(updata);
 
       fetch(urls, {
-        method: 'get'
+        method: "get"
       })
         .then(response => response.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => {
-          console.log(JSON.stringify(response, null, 2))
-          this.hideloading()
-
-          if (response.data.filter.length !== 0) {
-            this.nodata = false
-            that.orderList = response.data.filter(element => {
-              if (element.driverInfo.phone) {
-                element.driverInfo.phone = 'tel:' + element.driverInfo.phone
-              }
-              element.isdefault = false
-              return element.OrderStatus.Desc !== '待评价'
-            })
-          }
+        .catch(error => {
+          this.hideloading();
         })
+        .then(response => {
+          console.log(JSON.stringify(response, null, 2));
+          this.hideloading();
+          
+          if(response.data.filter.length !== 0){
+              this.nodata = false;
+               that.orderList = response.data.filter(element => {
+                if (element.driverInfo.phone) {
+                element.driverInfo.phone = "tel:" + element.driverInfo.phone;
+                }
+                element.isdefault = false;
+                return element.OrderStatus.Desc !== "待评价";
+            });
+          }
+         
+        });
+
+    
     },
     // 取消订单
-    cancelOrder (item) {
-      console.log('订单号:' + item.OrderNum)
-      this.showloading()
-      this.deleteItem = item
-      var sessionid = base.getbaiduLogMsg()
+    cancelOrder(item) {
+      console.log("订单号:" + item.OrderNum);
+      this.showloading();
+      this.deleteItem = item;
+      var sessionid = base.getbaiduLogMsg();
       var updata = {
         token: sessionid,
         orderNum: item.OrderNum
-      }
+      };
 
       // 判断当前订单取消的费用
-      var urlsprice = base.url + '/Order/cancelWin?' + base.setUrlParam(updata)
+      var urlsprice = base.url + "/Order/cancelWin?" + base.setUrlParam(updata);
 
       fetch(urlsprice, {
-        method: 'get'
+        method: "get"
       })
         .then(response => response.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => {
-          this.hideloading()
-          this.warn.show = true
-          this.warn.texts = response.data.tips
+        .catch(error => {
+          this.hideloading();
         })
+        .then(response => {
+          //   console.log(response);
+          this.hideloading();
+          this.warn.show = true;
+          this.warn.texts = response.data.tips;
+        });
     },
     // 取消删除
-    cancelMethod () {
-      this.warn.show = false
+    cancelMethod() {
+      this.warn.show = false;
     },
     // 确认删除
-    sureMethod () {
-      this.showloading()
-      var item = this.deleteItem
-      var sessionid = base.getbaiduLogMsg()
+    sureMethod() {
+      this.showloading();
+      var item = this.deleteItem;
+      var sessionid = base.getbaiduLogMsg();
       var updata = {
         token: sessionid,
         orderNum: item.OrderNum
-      }
-      var urls = base.url + '/Order/cancel?' + base.setUrlParam(updata)
+      };
+      var urls = base.url + "/Order/cancel?" + base.setUrlParam(updata);
       fetch(urls, {
-        method: 'get'
+        method: "get"
       })
         .then(response => response.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => {
-          console.log(response)
-          this.hideloading()
-          this.warn.show = false
-          this.getOrderList()
+        .catch(error => {
+          this.hideloading();
         })
+        .then(response => {
+          console.log(response);
+          this.hideloading();
+          this.warn.show = false;
+          this.getOrderList();
+        });
     },
     // 查看订单详情
-    orderDetail (item) {
-      console.log('查看订单详情')
-      MIP.viewer.open(base.htmlhref.listdetail + '?OrderNum=' + item.OrderNum, {
+    orderDetail(item) {
+      console.log("查看订单详情");
+      MIP.viewer.open(base.htmlhref.listdetail + "?OrderNum=" + item.OrderNum, {
         isMipLink: true
-      })
+      });
     },
     // 支付订单
-    payOrder (item) {
-      console.log('支付订单')
-      var sessionid = base.getbaiduLogMsg()
+    payOrder(item) {
+      console.log("支付订单");
+      var sessionid = base.getbaiduLogMsg();
       var obj = {
         sessionId: sessionid,
-        redirectUrl: 'https://www.lanxiniu.com/Pay/success',
-        fee: item.needPay + '元',
+        redirectUrl: "https://www.lanxiniu.com/Pay/success",
+        fee: item.needPay + "元",
         postData: {
           orderNum: item.OrderNum,
           token: sessionid
         }
-      }
+      };
       MIP.setData({
         payConfig: MIP.util.fn.extend({}, this.payConfig, obj)
-      })
-      this.$emit('actionPay', {})
+      });
+      this.$emit("actionPay", {});
     },
-    showloading () {
-      this.loading = true
+    showloading() {
+      this.loading = true;
     },
-    hideloading () {
-      this.loading = false
-      var that = this
-      setTimeout(function () {
-        that.loading = false
-      }, 500)
+    hideloading() {
+      this.loading = false;
+      var that = this;
+      setTimeout(function() {
+        that.loading = false;
+      }, 500);
     }
 
   }
-}
+};
 </script>
 
 <style scoped>
 .wrapper {
+  /* padding: .2rem 0;  */
   -webkit-overflow-scrolling: touch;
 }
 .wrapper ul {
@@ -367,6 +346,7 @@ li .head .status {
   color: #36a0e9;
   margin-left: 0.1rem;
 }
+
 
 .li-nodata {
   position: absolute;

@@ -141,8 +141,7 @@ export default {
         show: false,
         texts: ''
       },
-      loading: true,
-      BMap: null
+      loading: true
     }
   },
   created () {
@@ -150,20 +149,13 @@ export default {
   },
   mounted () {
     console.log('这里是搬出地址选择页面 !')
-    // console.log(this.globaldata)
+    console.log(this.globaldata)
 
     // 初始化
     this.initData()
 
     // 数据监控
     this.lxnDataWatch()
-
-    this.$element.customElement.addEventAction('init', () => {
-      console.log(1111)
-      this.BMap = MIP.sandbox.BMap
-      this.mapInit()
-      console.log(this.BMap)
-    })
   },
 
   beforeDestroy () {
@@ -180,10 +172,14 @@ export default {
         MIP.viewer.open(base.htmlhref.order, { isMipLink: false })
       } else {
         console.log('有值')
+        console.log()
 
         // 配置全局数据标志       当前是  搬出地址选择页面
         let obj = { currentmap: 'out' }
         base.mipSetGlobalData(obj)
+
+        // 地图
+        this.mapInit()
 
         // 添加波纹
         this.clickRipple()
@@ -191,13 +187,17 @@ export default {
     },
     // 地图初始化
     mapInit (city) {
-      let BMap = this.BMap
-      console.log(BMap)
       let that = this
       let citys = city || this.globaldata.ordercity
       console.log('查看当前城市' + citys)
 
       let BaiduMap = map.mapInit()
+      let cfg = {
+        ak: '1c738e7908b5e8ec79742527c9796514',
+        location: {
+          city: citys
+        }
+      }
 
       let lxndata = base.getSession()
       let address = ''
@@ -215,7 +215,7 @@ export default {
         moveout.phone = address.phone
       }
       let divs = this.$element.querySelector('#l-map')
-      let maps = new BaiduMap(this.$element, divs, address, function (
+      let maps = new BaiduMap(this.$element, cfg, divs, address, function (
         data
       ) {
         // 还原上次填写的数据
@@ -226,12 +226,16 @@ export default {
         moveout.phone = data.phone
         that.loading = false
       })
-      if (BMap.Map) {
-        console.log(BMap)
-        console.log('存在')
-        this.searchHandler = maps.handleResult(BMap, citys, that.searchResult)
-        this.maps = maps.map
-      }
+
+      maps.show()
+      let intval = setInterval(function () {
+        if (BMap.Map) {
+          console.log('存在')
+          that.searchHandler = maps.handleResult(citys, that.searchResult)
+          that.maps = maps.map
+          clearInterval(intval)
+        }
+      }, 2000)
     },
     // 搜索地址
     searchAddress () {
@@ -247,7 +251,7 @@ export default {
     },
     // 选择搜索结果
     setAddress (item) {
-      let BMap = this.BMap
+      let that = this
       this.focusState = false
       // 将选择的地址在地图上标志出来
       let longitudeP = item.lng
@@ -270,7 +274,6 @@ export default {
     // 确认搬出信息
     moveoutSure () {
       let that = this
-      let BMap = this.BMap
       let warn = this.warn
       let moveOut = this.moveOut
       let title = moveOut.localtion.title
@@ -486,7 +489,7 @@ export default {
 
 .search-content {
   position: absolute;
-  top: 44px;
+  top: 0;
   left: 0;
   right: 0;
   /* background: red; */

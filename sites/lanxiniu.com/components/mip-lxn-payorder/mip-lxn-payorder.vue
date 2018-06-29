@@ -1,170 +1,156 @@
 <template>
   <div class="wrapper">
-    <div class="pay-head">
-      <div class="content">
-        <div
-          class="time"
-          v-text="head.time"/>
-        <div class="pay-address">
-          <div class="item left">
-            <span
-              class="title"
-              v-text="head.moveOut"/>
-            <p v-text="head.moveOutfloor"/>
+      <div class="pay-head">
+          <div class="content">
+            <div v-text="head.time" class="time"></div>
+            <div class="pay-address">
+                <div class="item left">
+                    <span v-text="head.moveOut" class="title"></span>
+                    <p v-text="head.moveOutfloor"></p>
+                </div>
+                <div class="item center">
+                    <p v-text="head.carType" class="title"></p>
+                    <p class="img arrow"></p>
+                </div>
+                <div class="item right">
+                    <span v-text="head.moveIn" class="title"></span>
+                    <p v-text="head.moveInfloor"></p>
+                </div>
+            </div>
           </div>
-          <div class="item center">
-            <p
-              class="title"
-              v-text="head.carType"/>
-            <p class="img arrow"/>
-          </div>
-          <div class="item right">
-            <span
-              class="title"
-              v-text="head.moveIn"/>
-            <p v-text="head.moveInfloor"/>
-          </div>
-        </div>
       </div>
-    </div>
-    <div class="pay-content">
-      <div class="head">
-        <span class="arrow-down"/>
-        <span class="">费用明细</span>
+      <div class="pay-content">
+            <div class="head">
+                  <span class="arrow-down"></span>
+                <span class="">费用明细</span>
+            </div>
+              <div class="pay-list">
+                  <ul>
+                      <li v-for="item in pillList" :class="{title:item.billName==='合计'}" :key="item.billName">
+                          <span v-text="item.billName"></span>
+                          <span v-text="item.billMount"></span>
+                      </li>
+                  </ul>
+            </div>
+            <div class="desc">
+                <ul>
+                    <li>付款须知:</li>
+                    <li>1、线上预付费用,支付资金由平台监管,未服务100%退款。</li>
+                    <li>2、待确定的额外费用服务结束后按收费标准支付。</li>
+                    <li>3、如因额外服务产生费用,请通过在线支付,杜绝乱收费。</li>
+                </ul>
+            </div>
       </div>
-      <div class="pay-list">
-        <ul>
-          <li
-            v-for="item in pillList"
-            :class="{title:item.billName==='合计'}"
-            :key="item.billName">
-            <span v-text="item.billName"/>
-            <span v-text="item.billMount"/>
-          </li>
-        </ul>
+      <div class="footer">
+          <p class="baoxian"><span class="img safe"></span><span class="safe-span">免费提供5000元搬家服务险,服务前40分钟外,免费取消</span></p>
+          <p on="tap:payElement.toggle " class="btn">
+              确认支付
+          </p>
       </div>
-      <div class="desc">
-        <ul>
-          <li>付款须知:</li>
-          <li>1、线上预付费用,支付资金由平台监管,未服务100%退款。</li>
-          <li>2、待确定的额外费用服务结束后按收费标准支付。</li>
-          <li>3、如因额外服务产生费用,请通过在线支付,杜绝乱收费。</li>
-        </ul>
-      </div>
-    </div>
-    <div class="footer">
-      <p class="baoxian"><span class="img safe"/><span class="safe-span">免费提供5000元搬家服务险,服务前40分钟外,免费取消</span></p>
-      <p
-        on="tap:payElement.toggle "
-        class="btn">
-        确认支付
-      </p>
-    </div>
   </div>
 </template>
 
 <script>
-import base from '../../common/utils/base'
-import '../../common/utils/base.css'
-base.setHtmlRem()
+import base from "../../common/utils/base";
+import "../../common/utils/base.css";
+import axios from "axios";
+base.setHtmlRem();
 export default {
   props: {
     globaldata: {
-      type: Object,
-      default: function () { return {} }
+      type: Object
     },
     payConfig: {
-      type: Object,
-      default: function () { return {} }
+      type: Object
     }
   },
-  data () {
+  data() {
     return {
       head: {
-        time: '-',
-        moveOut: '-',
-        moveOutfloor: '-',
-        carType: '-',
-        moveIn: '-',
-        moveInfloor: '-'
+        time: "-",
+        moveOut: "-",
+        moveOutfloor: "-",
+        carType: "-",
+        moveIn: "-",
+        moveInfloor: "-"
       },
       pillList: [
         {
-          billName: '-',
-          billMount: '-'
+          billName: "-",
+          billMount: "-"
         },
         {
-          billName: '-',
-          billMount: '-'
+          billName: "-",
+          billMount: "-"
         },
         {
-          billName: '-',
-          billMount: '-'
+          billName: "-",
+          billMount: "-"
         }
       ]
-    }
+    };
   },
-  watch: {
-    globaldata (val, oldval) {
-      console.log('数据改变了+重置数据=======')
-    }
-  },
-  created () {
-    console.log('创建数据')
+  created() {
+    console.log("创建数据");
 
-    console.log(this.globaldata)
-    this.setList()
+    console.log(this.globaldata);
+    this.setList();
   },
-  mounted () {
-    console.log('这里是支付页面 !')
-    this.initData()
-    this.clickRipple()
+  mounted() {
+    console.log("这里是支付页面 !");
+    this.initData();
+    this.clickRipple();
 
     // $emit
   },
+  watch: {
+    globaldata(val, oldval) {
+      console.log("数据改变了+重置数据=======");
+    }
+  },
   methods: {
     //   初始化数据
-    initData () {
-      var lxndata = base.getSession()
-      var orderNum = lxndata.order.OrderNum
-      var price = lxndata.order.billTotal
-      var sessionid = base.getbaiduLogMsg()
-      console.log('token:' + sessionid + '======' + 'orderNum:' + orderNum)
+    initData() {
+      var lxndata = base.getSession();
+      var orderNum = lxndata.order.OrderNum;
+      var price = lxndata.order.billTotal;
+      var sessionid = base.getbaiduLogMsg();
+      console.log("token:" + sessionid + "======" + "orderNum:" + orderNum);
 
       var obj = {
         sessionId: sessionid,
-        redirectUrl: 'https://www.lanxiniu.com/Pay/success',
+        redirectUrl: "https://www.lanxiniu.com/Pay/success",
         fee: price,
         postData: {
           orderNum: orderNum,
           token: sessionid
         }
-      }
+      };
       MIP.setData({
         payConfig: obj
-      })
+      });
     },
 
-    // 请求订单数据
-    setList () {
-      var _this = this
-      var data = base.getSession()
-      console.log('查看订单信息============')
-      console.log(data)
+    //请求订单数据
+    setList() {
+      var _this = this;
+      var data = base.getSession();
+      console.log("查看订单信息============");
+      console.log(data);
 
-      var order = data.order
-      var poiList = order.poiList
+      var order = data.order;
+      var poiList = order.poiList;
       var floorData = [
-        '有电梯',
-        '无电梯1楼',
-        '无电梯2楼',
-        '无电梯3楼',
-        '无电梯4楼',
-        '无电梯5楼',
-        '无电梯6楼',
-        '无电梯7楼',
-        '无电梯8楼'
-      ]
+        "有电梯",
+        "无电梯1楼",
+        "无电梯2楼",
+        "无电梯3楼",
+        "无电梯4楼",
+        "无电梯5楼",
+        "无电梯6楼",
+        "无电梯7楼",
+        "无电梯8楼"
+      ];
       // 头部
       _this.head = {
         time: order.TransTime,
@@ -173,58 +159,58 @@ export default {
         carType: order.CarTypeName,
         moveOutfloor: floorData[data.moveOutNum],
         moveInfloor: floorData[data.moveInNum]
-      }
-      // 列表
-      var billinfos = order.billinfo
+      };
+      //列表
+      var billinfos = order.billinfo;
       billinfos.push({
-        billName: '合计',
+        billName: "合计",
         billMount: order.billTotal
-      })
-      _this.pillList = billinfos
+      });
+      _this.pillList = billinfos;
     },
-    // 点击波纹效果
-    clickRipple () {
-      var util = MIP.util
-      util.event.delegate(
+    //点击波纹效果
+    clickRipple() {
+      var util = MIP.util;
+      var undelegate = util.event.delegate(
         this.$element,
-        '.btn',
-        'click',
-        function (e) {
-          var target = e.target
-          console.log(target)
-          if (target.className.indexOf('btn') > -1) {
-            var rect = target.getBoundingClientRect()
-            var ripple = target.querySelector('.ripple')
+        ".btn",
+        "click",
+        function(e) {
+          var target = e.target;
+          console.log(target);
+          if (target.className.indexOf("btn") > -1) {
+            var rect = target.getBoundingClientRect();
+            var ripple = target.querySelector(".ripple");
             if (!ripple) {
-              ripple = document.createElement('span')
-              ripple.className = 'ripple'
+              ripple = document.createElement("span");
+              ripple.className = "ripple";
               ripple.style.height = ripple.style.width =
-                Math.max(rect.width, rect.height) + 'px'
-              target.appendChild(ripple)
+                Math.max(rect.width, rect.height) + "px";
+              target.appendChild(ripple);
             }
-            ripple.classList.remove('show')
+            ripple.classList.remove("show");
             var top =
               e.pageY -
               rect.top -
               ripple.offsetHeight / 2 -
-              document.body.scrollTop
+              document.body.scrollTop;
             var left =
               e.pageX -
               rect.left -
               ripple.offsetWidth / 2 -
-              document.body.scrollLeft
-            ripple.style.top = top + 'px'
-            ripple.style.left = left + 'px'
-            ripple.classList.add('show')
-            return false
+              document.body.scrollLeft;
+            ripple.style.top = top + "px";
+            ripple.style.left = left + "px";
+            ripple.classList.add("show");
+            return false;
           }
         }
-      )
+      );
     },
     //   支付
-    pay () {}
+    pay() {}
   }
-}
+};
 </script>
 
 <style scoped>

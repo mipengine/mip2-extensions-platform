@@ -1,704 +1,664 @@
 <template>
   <div class="wrapper">
-    <div class="des-head">
-      <span>
-        普通搬家
-      </span>
-    </div>
-    <div class="car-type">
-      <div
-        class="left arrow"
-        @click="goLeft()"/>
-      <div
-        class="right arrow"
-        @click="goRight()"/>
-      <div class="content">
-        <div class="swiper">
-          <div class="slide slide-one">
-            <div class="title">
-              小面
-            </div>
-            <div class="car-img-div">
-              <div class="car xiaomian"/>
-            </div>
-            <div class="desc">
-              <p>1.7m*1.1m*1.0m</p>
-              <p>长宽高</p>
-            </div>
-            <div class="modelCost">小面总费用=起步价+超里程费+楼层搬运费+额外服务费</div>
-            <div class="des-destail">
-              <ul>
-                <li>
-                  <div>起步价 (含10公里)</div>
-                  <div>60元</div>
-                </li>
-                <li>
-                  <div>超里程费</div>
-                  <div>3元 / 公里</div>
-                </li>
-                <li>
-                  <div>
-                    <span>
-                      楼层搬运费
-                    </span>
-                  </div>
-                  <div>
-                    <p>有电梯或住1楼，0元</p>
-                    <p>2-3层，10元/层  </p>
-                    <p>4-6层，20元/层</p>
-                    <p>7层以上，30元/层</p>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span>
-                      额外服务费
-                    </span>
-                  </div>
-                  <div>
-                    <p>拆装</p>
-                    <p>加人工</p>
-                    <p>多地装卸费</p>
-                    <p>高速、停车费</p>
-                  </div>
-                </li>
-              </ul>
-              <div class="options">
-                <p
-                  v-show="!details.carOne.flag"
-                  @click="detaisOption(details.carOne)"><span class="downs">展开查看详情</span><i/></p>
-                <p
-                  v-show="details.carOne.flag"
-                  @click="detaisOption(details.carOne)"><span class="ups">收起查看详情</span><i/></p>
-              </div>
+      <div class="des-head">
+          <span>
+              普通搬家
+          </span>
+      </div>
+      <div class="car-type">
+          <div @click="goLeft()" class="left arrow"></div>
+          <div @click="goRight()" class="right arrow"></div>
+           <div class="content">
+               <div class="swiper">
+                    <div class="slide slide-one">
+                        <div class="title">
+                            小面
+                        </div>
+                        <div class="car-img-div">
+                            <div class="car xiaomian"></div>
+                        </div>
+                        <div class="desc">
+                            <p>1.7m*1.1m*1.0m</p>
+                            <p>长宽高</p>
+                        </div>
+                        <div class="modelCost">小面总费用=起步价+超里程费+楼层搬运费+额外服务费</div>
+                        <div class="des-destail">
+                            <ul>
+                                <li>
+                                    <div>起步价 (含10公里)</div>
+                                    <div>60元</div>
+                                </li>
+                                <li>
+                                    <div>超里程费</div>
+                                    <div>3元 / 公里</div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <span>
+                                            楼层搬运费
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <p>有电梯或住1楼，0元</p>
+                                        <p>2-3层，10元/层  </p>
+                                        <p>4-6层，20元/层</p>
+                                        <p>7层以上，30元/层</p>
+                                    </div>
+                                </li>
+                                 <li>
+                                    <div>
+                                        <span>
+                                            额外服务费
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <p>拆装</p>
+                                        <p>加人工</p>
+                                        <p>多地装卸费</p>
+                                        <p>高速、停车费</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="options">
+                                <p v-show="!details.carOne.flag" @click="detaisOption(details.carOne)"><span class="downs">展开查看详情</span><i></i></p>
+                                <p v-show="details.carOne.flag" @click="detaisOption(details.carOne)"><span class="ups">收起查看详情</span><i></i></p>
+                            </div>
+                           
+                        </div>
+                         <div v-show="details.carOne.flag" class="service-details">
+                                <ul>
+                                    <li>
+                                        <div>
+                                            服务项目
+                                        </div>
+                                         <div>
+                                            收费标准
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div>
+                                            <span>
+                                                拆装柜子
+                                            </span>
+                                        </div>
+                                         <div>
+                                            <p>10米/0.1米</p>
+                                            <p>1.按柜子长度计算，不足0.1米不计算</p>
+                                            <p>2.柜子不拆装，按拆装价格收取搬运费</p>
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div>
+                                            <span>
+                                                拆装床
+                                            </span>
+                                        </div>
+                                         <div>
+                                            <p>1.8米(宽)以下，50元/张</p>
+                                            <p>1.8米(宽)及以上，100元/张</p>
+                                            <p>子母床，150元/张</p>
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div>
+                                            拆装工位
+                                        </div>
+                                         <div>
+                                            50/个
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div>
+                                            加工人
+                                        </div>
+                                         <div>
+                                            小面标配1人，额外增加工人，150元/人
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div>
+                                            多地装卸费
+                                        </div>
+                                         <div>
+                                            搬家标准为2地，增加中途装卸地址，100元/地
+                                        </div>
+                                    </li>
+                                     <li class="li-last-second">
+                                        <div>
+                                            高速费、停车费
+                                        </div>
+                                         <div>
+                                            按实际产生由用户支付
+                                        </div>
+                                    </li>
+                                    <li class="li-last">
+                                       <div class="options ">
+                                         <p v-show="details.carOne.flag" @click="detaisOption(details.carOne)"><span class="ups">收起查看详情</span><i></i></p>
+                                        </div>
+                                    </li>
+                                </ul>
+                        </div>
+                        <div class="service-des">
+                                <div>
+                                     <p>服务说明</p>
+                                </div>
+                                <ul>
+                                  <li v-for="item in serviceDes" v-text="item.t"></li> 
+                                </ul>
+                        </div>
+                    </div>
+                    <div  class="slide slide-two">
+                        <div class="title">
+                            金杯
+                        </div>
+                        <div class="car-img-div">
+                            <div class="car jinbei"></div>  
+                        </div>
+                         <div class="desc">
+                            <p>2.7m*1.4m*1.2m</p>
+                            <p>长宽高</p>
+                        </div>
+                        <div class="modelCost">金杯总费用=起步价+超里程费+楼层搬运费+额外服务费</div>
+                         <div class="des-destail">
+                            <ul>
+                                <li>
+                                    <div>起步价 (含10公里)</div>
+                                    <div>166元</div>
+                                </li>
+                                <li>
+                                    <div>超里程费</div>
+                                    <div>5元 / 公里</div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <span>
+                                            楼层搬运费
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <p>有电梯或住1楼，0元</p>
+                                        <p>2-3层，12元/层  </p>
+                                        <p>4-6层，24元/层</p>
+                                        <p>7层以上，36元/层</p>
+                                    </div>
+                                </li>
+                                 <li>
+                                    <div>
+                                        <span>
+                                            额外服务费
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <p>拆装</p>
+                                        <p>加人工</p>
+                                        <p>多地装卸费</p>
+                                        <p>高速、停车费</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="options">
+                                <p v-show="!details.carTwo.flag" @click="detaisOption(details.carTwo)"><span class="downs">展开查看详情</span><i></i></p>
+                                <p v-show="details.carTwo.flag" @click="detaisOption(details.carTwo)"><span class="ups">收起查看详情</span><i></i></p>
+                            </div>
+                            <div v-show="details.carTwo.flag" class="service-details">
+                                <ul>
+                                    <li>
+                                        <div>
+                                            服务项目
+                                        </div>
+                                         <div>
+                                            收费标准
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div>
+                                            <span>
+                                                拆装柜子
+                                            </span>
+                                        </div>
+                                         <div>
+                                            <p>10米/0.1米</p>
+                                            <p>1.按柜子长度计算，不足0.1米不计算</p>
+                                            <p>2.柜子不拆装，按拆装价格收取搬运费</p>
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div>
+                                            <span>
+                                                拆装床
+                                            </span>
+                                        </div>
+                                         <div>
+                                            <p>1.8米(宽)以下，50元/张</p>
+                                            <p>1.8米(宽)及以上，100元/张</p>
+                                            <p>子母床，150元/张</p>
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div>
+                                            拆装工位
+                                        </div>
+                                         <div>
+                                            50/个
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div>
+                                            加工人
+                                        </div>
+                                         <div>
+                                            小面标配1人，额外增加工人，150元/人
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div>
+                                            多地装卸费
+                                        </div>
+                                         <div>
+                                            搬家标准为2地，增加中途装卸地址，100元/地
+                                        </div>
+                                    </li>
+                                     <li class="li-last-second">
+                                        <div>
+                                            高速费、停车费
+                                        </div>
+                                         <div>
+                                            按实际产生由用户支付
+                                        </div>
+                                    </li>
+                                    <li class="li-last">
+                                       <div class="options">
+                                               <p v-show="details.carTwo.flag" @click="detaisOption(details.carTwo)"><span class="ups slider2-span">收起查看详情</span><i></i></p>
+                                      </div>
+                                    </li>
+                                </ul>
+                            </div>
+                           
+                           
+                        </div>
 
-            </div>
-            <div
-              v-show="details.carOne.flag"
-              class="service-details">
-              <ul>
-                <li>
-                  <div>
-                    服务项目
-                  </div>
-                  <div>
-                    收费标准
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span>
-                      拆装柜子
-                    </span>
-                  </div>
-                  <div>
-                    <p>10米/0.1米</p>
-                    <p>1.按柜子长度计算，不足0.1米不计算</p>
-                    <p>2.柜子不拆装，按拆装价格收取搬运费</p>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span>
-                      拆装床
-                    </span>
-                  </div>
-                  <div>
-                    <p>1.8米(宽)以下，50元/张</p>
-                    <p>1.8米(宽)及以上，100元/张</p>
-                    <p>子母床，150元/张</p>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    拆装工位
-                  </div>
-                  <div>
-                    50/个
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    加工人
-                  </div>
-                  <div>
-                    小面标配1人，额外增加工人，150元/人
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    多地装卸费
-                  </div>
-                  <div>
-                    搬家标准为2地，增加中途装卸地址，100元/地
-                  </div>
-                </li>
-                <li class="li-last-second">
-                  <div>
-                    高速费、停车费
-                  </div>
-                  <div>
-                    按实际产生由用户支付
-                  </div>
-                </li>
-                <li class="li-last">
-                  <div class="options ">
-                    <p
-                      v-show="details.carOne.flag"
-                      @click="detaisOption(details.carOne)"><span class="ups">收起查看详情</span><i/></p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="service-des">
-              <div>
-                <p>服务说明</p>
-              </div>
-              <ul>
-                <li
-                  v-for="item in serviceDes"
-                  :key="item.t"
-                  v-text="item.t"/>
-              </ul>
-            </div>
-          </div>
-          <div class="slide slide-two">
-            <div class="title">
-              金杯
-            </div>
-            <div class="car-img-div">
-              <div class="car jinbei"/>
-            </div>
-            <div class="desc">
-              <p>2.7m*1.4m*1.2m</p>
-              <p>长宽高</p>
-            </div>
-            <div class="modelCost">金杯总费用=起步价+超里程费+楼层搬运费+额外服务费</div>
-            <div class="des-destail">
-              <ul>
-                <li>
-                  <div>起步价 (含10公里)</div>
-                  <div>166元</div>
-                </li>
-                <li>
-                  <div>超里程费</div>
-                  <div>5元 / 公里</div>
-                </li>
-                <li>
-                  <div>
-                    <span>
-                      楼层搬运费
-                    </span>
-                  </div>
-                  <div>
-                    <p>有电梯或住1楼，0元</p>
-                    <p>2-3层，12元/层  </p>
-                    <p>4-6层，24元/层</p>
-                    <p>7层以上，36元/层</p>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span>
-                      额外服务费
-                    </span>
-                  </div>
-                  <div>
-                    <p>拆装</p>
-                    <p>加人工</p>
-                    <p>多地装卸费</p>
-                    <p>高速、停车费</p>
-                  </div>
-                </li>
-              </ul>
-              <div class="options">
-                <p
-                  v-show="!details.carTwo.flag"
-                  @click="detaisOption(details.carTwo)"><span class="downs">展开查看详情</span><i/></p>
-                <p
-                  v-show="details.carTwo.flag"
-                  @click="detaisOption(details.carTwo)"><span class="ups">收起查看详情</span><i/></p>
-              </div>
-              <div
-                v-show="details.carTwo.flag"
-                class="service-details">
-                <ul>
-                  <li>
-                    <div>
-                      服务项目
+                         <div class="service-des">
+                                <div>
+                                     <p>服务说明</p>
+                                </div>
+                                <ul>
+                                  <li v-for="item in serviceDes" v-text="item.t"></li> 
+                                </ul>
+                        </div>
                     </div>
-                    <div>
-                      收费标准
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <span>
-                        拆装柜子
-                      </span>
-                    </div>
-                    <div>
-                      <p>10米/0.1米</p>
-                      <p>1.按柜子长度计算，不足0.1米不计算</p>
-                      <p>2.柜子不拆装，按拆装价格收取搬运费</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      <span>
-                        拆装床
-                      </span>
-                    </div>
-                    <div>
-                      <p>1.8米(宽)以下，50元/张</p>
-                      <p>1.8米(宽)及以上，100元/张</p>
-                      <p>子母床，150元/张</p>
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      拆装工位
-                    </div>
-                    <div>
-                      50/个
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      加工人
-                    </div>
-                    <div>
-                      小面标配1人，额外增加工人，150元/人
-                    </div>
-                  </li>
-                  <li>
-                    <div>
-                      多地装卸费
-                    </div>
-                    <div>
-                      搬家标准为2地，增加中途装卸地址，100元/地
-                    </div>
-                  </li>
-                  <li class="li-last-second">
-                    <div>
-                      高速费、停车费
-                    </div>
-                    <div>
-                      按实际产生由用户支付
-                    </div>
-                  </li>
-                  <li class="li-last">
-                    <div class="options">
-                      <p
-                        v-show="details.carTwo.flag"
-                        @click="detaisOption(details.carTwo)"><span class="ups slider2-span">收起查看详情</span><i/></p>
-                    </div>
-                  </li>
-                </ul>
-              </div>
+                    <div class="slide slide-three">
+                        <div class="title">
+                            厢货
+                        </div>
+                         <div class="car-img-div">
+                              <div class="car xianghuo"></div>
+                        </div>
+                         <div class="desc">
+                            <p>4.2m*1.9m*1.9m</p>
+                            <p>长宽高</p>
+                        </div>
+                        <div class="modelCost modelCost-xianghuo">厢货总费用=起步价+超里程费+楼层搬运费+平地搬运费+<br>
+                                大件搬运费+额外服务费
+                        </div>
+                        <div class="des-destail">
+                            <ul>
+                                <li>
+                                    <div>起步价 (含10公里)</div>
+                                    <div>348元</div>
+                                </li>
+                                <li>
+                                    <div>超里程费</div>
+                                    <div>6元 / 公里</div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <span>
+                                            楼层搬运费
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <p>有电梯或住1楼，0元</p>
+                                        <p>2-3层，15元/层  </p>
+                                        <p>4-6层，30元/层</p>
+                                        <p>7层以上，45元/层</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <span>
+                                            平底搬运费
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <p>30米内免费，超过部分：40元/20米</p>
+                                        <p>(30米为房屋门口到停车的位置)</p>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div>
+                                        <span>
+                                            大件搬运费
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <p>冰箱</p>
+                                        <p>电视</p>
+                                        <p>洗衣机</p>
+                                        <p>鱼缸</p>
+                                        <p>健身器材</p>
+                                        <p>钢琴</p>
+                                        <p>其他大件</p>
+                                    </div>
+                                </li>
+                                 <div class="options option-three">
+                                    <p v-show="!details.carThree.flag" @click="detaisOption(details.carThree)"><span class="downs">展开查看详情</span><i></i></p>
+                                    <p v-show="details.carThree.flag" @click="detaisOption(details.carThree)"><span class="ups">收起查看详情</span><i></i></p>
+                                 </div>
+                                <div v-show="details.carThree.flag"   class="service-details service-details-xianghuo">
+                                    <ul>
+                                        <li>
+                                            <div>
+                                                服务项目
+                                            </div>
+                                            <div class="xianghuo-detail-title">
+                                               <span>收费标准</span>
+                                               <span class="price">价格</span>
+                                            </div>
+                                            
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <span>
+                                                    冰箱
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <p class="p-detail">
+                                                    <span>体积＜210L</span>
+                                                    <span>0元</span>
+                                                </p>
+                                                <p class="p-detail">
+                                                    <span>210L≤ 体积＜280L</span>
+                                                    <span>50元</span>
+                                                </p>
+                                                <p class="p-detail">
+                                                    <span>280L ≤ 体积＜400L</span>
+                                                    <span>100元</span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <span>
+                                                    洗衣机
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <p class="p-detail">
+                                                    <span>波轮</span>
+                                                    <span>0元</span>
+                                                </p>
+                                                <p class="p-detail">
+                                                    <span>滚筒</span>
+                                                    <span>30元</span>
+                                                </p>
+                    
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <span>
+                                                    电视
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <p class="p-detail">
+                                                    <span>50寸以下</span>
+                                                    <span>0元</span>
+                                                </p>
+                                                <p class="p-detail">
+                                                    <span>50寸以上</span>
+                                                    <span>30元</span>
+                                                </p>
+                    
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <span>
+                                                    健身器材
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <p class="p-detail">
+                                                    <span>重量＜50KG</span>
+                                                    <span>0元</span>
+                                                </p>
+                                                <p class="p-detail">
+                                                    <span>50KG ≤重量＜100KG</span>
+                                                    <span>50元</span>
+                                                </p>
+                                                  <p class="p-detail">
+                                                    <span>100KG ≤重量＜200KG</span>
+                                                    <span>100元</span>
+                                                </p>
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <span>
+                                                    鱼缸
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <p class="p-detail">
+                                                    <span>长＜1M</span>
+                                                    <span>0元</span>
+                                                </p>
+                                                <p class="p-detail">
+                                                    <span>1M≤长＜2M</span>
+                                                    <span>100元</span>
+                                                </p>
+                                               
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div>
+                                                <span>
+                                                    其他大件<br>
+                                                    (体积大于1立方或<br>
+                                                    者重量大于50kg
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <p class="p-detail">
+                                                    <span>重量＜50KG<br>
+                                                          体积＜1m³
+                                                    </span>
+                                                    <span>0元</span>
+                                                </p>
+                                                <p class="p-detail">
+                                                    <span>
+                                                        50KG≤重量＜100KG<br>
+                                                            或1m³≤体积＜1.5m³
+                                                    </span>
+                                                    <span>50元</span>
+                                                </p>
+                                                <p class="p-detail">
+                                                    <span>
+                                                      100KG≤重量＜200KG<br>
+                                                    或1.5m³≤体积＜2m³
+                                                    </span>
+                                                    <span>100元</span>
+                                                </p>
+                                               
+                                            </div>
+                                        </li>
+                                        <li class="li-last-second">
+                                            <div>
+                                                <span>
+                                                    钢琴搬运
+                                                </span>
+                                            </div>
+                                            <div>
+                                                <p class="p-detail">
+                                                    <span>高＜120</span>
+                                                    <span>150元</span>
+                                                </p>
+                                                <p class="p-detail">
+                                                    <span>120≤高≤130</span>
+                                                    <span>250元</span>
+                                                </p>
+                                                 <p class="p-detail">
+                                                    <span>高≥130</span>
+                                                    <span>400元</span>
+                                                </p>
+                                                 <p class="p-detail">
+                                                    <span>三角钢琴</span>
+                                                    <span>500元</span>
+                                                </p>
+                                               
+                                            </div>
+                                        </li>
+                                        <li class="li-last">
+                                           <div class="options ">
+                                              <p v-show="details.carThree.flag" @click="detaisOption(details.carThree)"><span class="ups">收起查看详情</span><i></i></p>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
 
-            </div>
-
-            <div class="service-des">
-              <div>
-                <p>服务说明</p>
-              </div>
-              <ul>
-                <li
-                  v-for="item in serviceDes"
-                  :key="item.t"
-                  v-text="item.t"/>
-              </ul>
-            </div>
-          </div>
-          <div class="slide slide-three">
-            <div class="title">
-              厢货
-            </div>
-            <div class="car-img-div">
-              <div class="car xianghuo"/>
-            </div>
-            <div class="desc">
-              <p>4.2m*1.9m*1.9m</p>
-              <p>长宽高</p>
-            </div>
-            <div class="modelCost modelCost-xianghuo">厢货总费用=起步价+超里程费+楼层搬运费+平地搬运费+<br>
-              大件搬运费+额外服务费
-            </div>
-            <div class="des-destail">
-              <ul>
-                <li>
-                  <div>起步价 (含10公里)</div>
-                  <div>348元</div>
-                </li>
-                <li>
-                  <div>超里程费</div>
-                  <div>6元 / 公里</div>
-                </li>
-                <li>
-                  <div>
-                    <span>
-                      楼层搬运费
-                    </span>
-                  </div>
-                  <div>
-                    <p>有电梯或住1楼，0元</p>
-                    <p>2-3层，15元/层  </p>
-                    <p>4-6层，30元/层</p>
-                    <p>7层以上，45元/层</p>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span>
-                      平底搬运费
-                    </span>
-                  </div>
-                  <div>
-                    <p>30米内免费，超过部分：40元/20米</p>
-                    <p>(30米为房屋门口到停车的位置)</p>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span>
-                      大件搬运费
-                    </span>
-                  </div>
-                  <div>
-                    <p>冰箱</p>
-                    <p>电视</p>
-                    <p>洗衣机</p>
-                    <p>鱼缸</p>
-                    <p>健身器材</p>
-                    <p>钢琴</p>
-                    <p>其他大件</p>
-                  </div>
-                </li>
-                <div class="options option-three">
-                  <p
-                    v-show="!details.carThree.flag"
-                    @click="detaisOption(details.carThree)"><span class="downs">展开查看详情</span><i/></p>
-                  <p
-                    v-show="details.carThree.flag"
-                    @click="detaisOption(details.carThree)"><span class="ups">收起查看详情</span><i/></p>
+                                 <li>
+                                    <div>
+                                        <span>
+                                            额外服务费
+                                        </span>
+                                    </div>
+                                    <div>
+                                        <p>拆装</p>
+                                        <p>加人工</p>
+                                        <p>多地装卸费</p>
+                                        <p>高速、停车费</p>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="options">
+                                <p v-show="!details.carThreeTwo.flag" @click="detaisOption(details.carThreeTwo)"><span class="downs">展开查看详情</span><i></i></p>
+                                <p v-show="details.carThreeTwo.flag" @click="detaisOption(details.carThreeTwo)"><span class="ups">收起查看详情</span><i></i></p>
+                            </div>
+                           
+                        </div>
+                         <div v-show="details.carThreeTwo.flag" class="service-details">
+                                <ul>
+                                    <li>
+                                        <div>
+                                            服务项目
+                                        </div>
+                                         <div>
+                                            收费标准
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div>
+                                            <span>
+                                                拆装柜子
+                                            </span>
+                                        </div>
+                                         <div>
+                                            <p>10米/0.1米</p>
+                                            <p>1.按柜子长度计算，不足0.1米不计算</p>
+                                            <p>2.柜子不拆装，按拆装价格收取搬运费</p>
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div>
+                                            <span>
+                                                拆装床
+                                            </span>
+                                        </div>
+                                         <div>
+                                            <p>1.8米(宽)以下，50元/张</p>
+                                            <p>1.8米(宽)及以上，100元/张</p>
+                                            <p>子母床，150元/张</p>
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div>
+                                            拆装工位
+                                        </div>
+                                         <div>
+                                            50/个
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div>
+                                            加工人
+                                        </div>
+                                         <div>
+                                            小面标配1人，额外增加工人，150元/人
+                                        </div>
+                                    </li>
+                                     <li>
+                                        <div>
+                                            多地装卸费
+                                        </div>
+                                         <div>
+                                            搬家标准为2地，增加中途装卸地址，100元/地
+                                        </div>
+                                    </li>
+                                     <li class="li-last-second">
+                                        <div>
+                                            高速费、停车费
+                                        </div>
+                                         <div>
+                                            按实际产生由用户支付
+                                        </div>
+                                    </li>
+                                    <li class="li-last">
+                                       <div class="options ">
+                                         <p v-show="details.carThreeTwo.flag" @click="detaisOption(details.carThreeTwo)"><span class="ups">收起查看详情</span><i></i></p>
+                                        </div>
+                                    </li>
+                                </ul>
+                        </div>
+                        <div class="service-des">
+                                <div>
+                                     <p>服务说明</p>
+                                </div>
+                                <ul>
+                                    <li>
+                                        1.服务过程中产生的高速费、过路费、停车费等第三方收取的费用由用户按实际产生承担；
+                                    </li>
+                                    <li>
+                                        2.由于用户原因造成的司机到达后无法搬运、装车后无法出门的情况，会收取一定误工费；
+                                    </li>
+                                    <li>
+                                        3.搬家服务暂不支持空调拆装服务；
+                                    </li>
+                                    <li>
+                                        4.支持24小时随时预约搬家
+                                    </li>
+                                </ul>
+                        </div>
+                    </div>
                 </div>
-                <div
-                  v-show="details.carThree.flag"
-                  class="service-details service-details-xianghuo">
-                  <ul>
-                    <li>
-                      <div>
-                        服务项目
-                      </div>
-                      <div class="xianghuo-detail-title">
-                        <span>收费标准</span>
-                        <span class="price">价格</span>
-                      </div>
-
-                    </li>
-                    <li>
-                      <div>
-                        <span>
-                          冰箱
-                        </span>
-                      </div>
-                      <div>
-                        <p class="p-detail">
-                          <span>体积＜210L</span>
-                          <span>0元</span>
-                        </p>
-                        <p class="p-detail">
-                          <span>210L≤ 体积＜280L</span>
-                          <span>50元</span>
-                        </p>
-                        <p class="p-detail">
-                          <span>280L ≤ 体积＜400L</span>
-                          <span>100元</span>
-                        </p>
-                      </div>
-                    </li>
-                    <li>
-                      <div>
-                        <span>
-                          洗衣机
-                        </span>
-                      </div>
-                      <div>
-                        <p class="p-detail">
-                          <span>波轮</span>
-                          <span>0元</span>
-                        </p>
-                        <p class="p-detail">
-                          <span>滚筒</span>
-                          <span>30元</span>
-                        </p>
-
-                      </div>
-                    </li>
-                    <li>
-                      <div>
-                        <span>
-                          电视
-                        </span>
-                      </div>
-                      <div>
-                        <p class="p-detail">
-                          <span>50寸以下</span>
-                          <span>0元</span>
-                        </p>
-                        <p class="p-detail">
-                          <span>50寸以上</span>
-                          <span>30元</span>
-                        </p>
-
-                      </div>
-                    </li>
-                    <li>
-                      <div>
-                        <span>
-                          健身器材
-                        </span>
-                      </div>
-                      <div>
-                        <p class="p-detail">
-                          <span>重量＜50KG</span>
-                          <span>0元</span>
-                        </p>
-                        <p class="p-detail">
-                          <span>50KG ≤重量＜100KG</span>
-                          <span>50元</span>
-                        </p>
-                        <p class="p-detail">
-                          <span>100KG ≤重量＜200KG</span>
-                          <span>100元</span>
-                        </p>
-                      </div>
-                    </li>
-                    <li>
-                      <div>
-                        <span>
-                          鱼缸
-                        </span>
-                      </div>
-                      <div>
-                        <p class="p-detail">
-                          <span>长＜1M</span>
-                          <span>0元</span>
-                        </p>
-                        <p class="p-detail">
-                          <span>1M≤长＜2M</span>
-                          <span>100元</span>
-                        </p>
-
-                      </div>
-                    </li>
-                    <li>
-                      <div>
-                        <span>
-                          其他大件<br>
-                          (体积大于1立方或<br>
-                          者重量大于50kg
-                        </span>
-                      </div>
-                      <div>
-                        <p class="p-detail">
-                          <span>重量＜50KG<br>
-                            体积＜1m³
-                          </span>
-                          <span>0元</span>
-                        </p>
-                        <p class="p-detail">
-                          <span>
-                            50KG≤重量＜100KG<br>
-                            或1m³≤体积＜1.5m³
-                          </span>
-                          <span>50元</span>
-                        </p>
-                        <p class="p-detail">
-                          <span>
-                            100KG≤重量＜200KG<br>
-                            或1.5m³≤体积＜2m³
-                          </span>
-                          <span>100元</span>
-                        </p>
-
-                      </div>
-                    </li>
-                    <li class="li-last-second">
-                      <div>
-                        <span>
-                          钢琴搬运
-                        </span>
-                      </div>
-                      <div>
-                        <p class="p-detail">
-                          <span>高＜120</span>
-                          <span>150元</span>
-                        </p>
-                        <p class="p-detail">
-                          <span>120≤高≤130</span>
-                          <span>250元</span>
-                        </p>
-                        <p class="p-detail">
-                          <span>高≥130</span>
-                          <span>400元</span>
-                        </p>
-                        <p class="p-detail">
-                          <span>三角钢琴</span>
-                          <span>500元</span>
-                        </p>
-
-                      </div>
-                    </li>
-                    <li class="li-last">
-                      <div class="options ">
-                        <p
-                          v-show="details.carThree.flag"
-                          @click="detaisOption(details.carThree)"><span class="ups">收起查看详情</span><i/></p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-
-                <li>
-                  <div>
-                    <span>
-                      额外服务费
-                    </span>
-                  </div>
-                  <div>
-                    <p>拆装</p>
-                    <p>加人工</p>
-                    <p>多地装卸费</p>
-                    <p>高速、停车费</p>
-                  </div>
-                </li>
-              </ul>
-              <div class="options">
-                <p
-                  v-show="!details.carThreeTwo.flag"
-                  @click="detaisOption(details.carThreeTwo)"><span class="downs">展开查看详情</span><i/></p>
-                <p
-                  v-show="details.carThreeTwo.flag"
-                  @click="detaisOption(details.carThreeTwo)"><span class="ups">收起查看详情</span><i/></p>
-              </div>
-
-            </div>
-            <div
-              v-show="details.carThreeTwo.flag"
-              class="service-details">
-              <ul>
-                <li>
-                  <div>
-                    服务项目
-                  </div>
-                  <div>
-                    收费标准
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span>
-                      拆装柜子
-                    </span>
-                  </div>
-                  <div>
-                    <p>10米/0.1米</p>
-                    <p>1.按柜子长度计算，不足0.1米不计算</p>
-                    <p>2.柜子不拆装，按拆装价格收取搬运费</p>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    <span>
-                      拆装床
-                    </span>
-                  </div>
-                  <div>
-                    <p>1.8米(宽)以下，50元/张</p>
-                    <p>1.8米(宽)及以上，100元/张</p>
-                    <p>子母床，150元/张</p>
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    拆装工位
-                  </div>
-                  <div>
-                    50/个
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    加工人
-                  </div>
-                  <div>
-                    小面标配1人，额外增加工人，150元/人
-                  </div>
-                </li>
-                <li>
-                  <div>
-                    多地装卸费
-                  </div>
-                  <div>
-                    搬家标准为2地，增加中途装卸地址，100元/地
-                  </div>
-                </li>
-                <li class="li-last-second">
-                  <div>
-                    高速费、停车费
-                  </div>
-                  <div>
-                    按实际产生由用户支付
-                  </div>
-                </li>
-                <li class="li-last">
-                  <div class="options ">
-                    <p
-                      v-show="details.carThreeTwo.flag"
-                      @click="detaisOption(details.carThreeTwo)"><span class="ups">收起查看详情</span><i/></p>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="service-des">
-              <div>
-                <p>服务说明</p>
-              </div>
-              <ul>
-                <li>
-                  1.服务过程中产生的高速费、过路费、停车费等第三方收取的费用由用户按实际产生承担；
-                </li>
-                <li>
-                  2.由于用户原因造成的司机到达后无法搬运、装车后无法出门的情况，会收取一定误工费；
-                </li>
-                <li>
-                  3.搬家服务暂不支持空调拆装服务；
-                </li>
-                <li>
-                  4.支持24小时随时预约搬家
-                </li>
-              </ul>
-            </div>
           </div>
         </div>
-      </div>
-    </div>
   </div>
 </template>
 
+
 <script>
-import base from '../../common/utils/base.js'
-import '../../common/utils/base.css'
+import base from "../../common/utils/base.js";
+import Swiper from "swiper";
+import "../../common/utils/base.css";
 export default {
   props: {
     globaldata: {
-      type: Object,
-      default: function () { return {} }
+      type: Object
     }
   },
-  data () {
+  data() {
     return {
       test: false,
       details: {
@@ -718,159 +678,175 @@ export default {
       serviceDes: [
         {
           t:
-            '1.服务过程中产生的高速费、过路费、停车费等第三方收取的费用由用户按实际产生承担。'
+            "1.服务过程中产生的高速费、过路费、停车费等第三方收取的费用由用户按实际产生承担。"
         },
         {
           t:
-            '2.由于用户原因造成的司机到达后无法搬运、装车后无法出门的情况，会收取一定误工费。'
+            "2.由于用户原因造成的司机到达后无法搬运、装车后无法出门的情况，会收取一定误工费。"
         },
         {
           t:
-            '3.服务开始前40分钟内取消，收取40元取消费；车辆到位且到达服务时间后，收取定金（小面60元，金杯100元，厢货150元）作为取消费。'
+            "3.服务开始前40分钟内取消，收取40元取消费；车辆到位且到达服务时间后，收取定金（小面60元，金杯100元，厢货150元）作为取消费。"
         },
         {
-          t: '4.搬家服务暂不支持空调、水电拆装服务。'
-        },
-        {
-          t:
-            '5.大量（超过1立方）的书籍和拆好的柜子、床、工位按实际情况协商搬运费。'
+          t: "4.搬家服务暂不支持空调、水电拆装服务。"
         },
         {
           t:
-            '6.贵重物品及易碎物品（如红木家具、高档瓷器、古董、艺术品、玻璃器皿）需按实际情况与司机协商，如有问题请咨询客服热线400-678-5966。'
+            "5.大量（超过1立方）的书籍和拆好的柜子、床、工位按实际情况协商搬运费。"
+        },
+        {
+          t:
+            "6.贵重物品及易碎物品（如红木家具、高档瓷器、古董、艺术品、玻璃器皿）需按实际情况与司机协商，如有问题请咨询客服热线400-678-5966。"
         }
       ],
-      widths: '', // 当前页面宽度
-      actionIndex: 1, // 当前车型
+      widths: "", //当前页面宽度
+      actionIndex: 1, //当前车型
       maxIndex: 3,
-      animatFlag: true
-    }
+      animatFlag:true 
+    };
   },
-  created () {
-    base.setHtmlRem()
-    console.log(JSON.stringify(base, null, 2))
+  created() {
+    base.setHtmlRem();
+    console.log(JSON.stringify(base, null, 2));
   },
-  mounted () {
-    console.log('资费详情页面')
-    var that = this
+  mounted() {
+    console.log("资费详情页面");
+    var that = this;
 
-    var interval = setInterval(function () {
-      var content = that.$element.querySelector('.content')
-      var width = MIP.util.css(content, 'width')
-      console.log(width)
-      if (width === 'auto') {
+    var interval = setInterval(function(){
+         var content = that.$element.querySelector(".content");
+         var width = MIP.util.css(content, "width");
+         console.log(width);
+         if(width === 'auto'){
+            
+         }else{
+              clearInterval(interval);
+               that.getwidth();
+         }
+    },100)
 
-      } else {
-        clearInterval(interval)
-        that.getwidth()
-      }
-    }, 100)
 
-    this.getCurrentCityCarTypes()
+   
+    this.getCurrentCityCarTypes();
     // var texts = document.body.clientWidth;
     // console.log('查看屏幕宽度:'+texts);
   },
   methods: {
     // 请求当前城市的车型列表
-    getCurrentCityCarTypes (city) {
-      var that = this
-      var globaldata = this.globaldata
-      var focusCity = globaldata.ordercity
-      var urls = base.url + '/Setting/getCityData?city=' + focusCity
+    getCurrentCityCarTypes(city) {
+      var that = this;
+      var globaldata = this.globaldata;
+      var focusCity = globaldata.ordercity;
+      var urls = base.url + "/Setting/getCityData?city=" + focusCity;
       fetch(urls, {
-        method: 'get'
+        method: "get"
       })
         .then(response => response.json())
-        .catch(error => console.error('Error:', error))
+        .catch(error => console.error("Error:", error))
         .then(response => {
-          console.log('Success:', response)
+          console.log("Success:", response);
 
-          console.info(response)
-          if (response.data) {
-            var service = response.data.setting.service
-            for (var i = 0; i < service.length; i++) {
-              if (service[i].type === 5) {
+          console.info(response);
+          if( response.data){
+              var service = response.data.setting.service;
+          for (var i = 0; i < service.length; i++) {
+            if (service[i].type === 5) {
               // 如果当前城市车型小于3个  隐藏最后一个
-                if (service[i].car.length < 3) {
-                  that.maxIndex = 2
-                } else {
-                  that.maxIndex = 3
-                }
-                break
+              if (service[i].car.length < 3) {
+                that.maxIndex = 2;
+              } else {
+                that.maxIndex = 3;
               }
+              break;
             }
           }
-        })
+          }
+          
+        });
     },
-    getwidth () {
-      var content = this.$element.querySelector('.content')
-      var width = MIP.util.css(content, 'width')
-      this.widths = Number(width.substring(0, width.length - 2))
+    getwidth() {
+
+      var content = this.$element.querySelector(".content");
+      var slides = this.$element.querySelectorAll(".slide");
+      var swiper = this.$element.querySelector(".swiper");
+      var width = MIP.util.css(content, "width");
+      this.widths = Number(width.substring(0, width.length - 2));
+    //   MIP.util.css(slides, {
+    //     width: width
+    //   });
+    //   MIP.util.css(swiper, {
+    //     width: this.widths * this.maxIndex + "px"
+    //   });
+      console.log("查看当前宽度" + width);
+      console.log(content);
+
+      console.log(this.widths);
     },
-    goLeft () {
-      var that = this
+    goLeft() {
+      var that = this;
       if (this.actionIndex !== 1) {
-        var swiper = this.$element.querySelector('.swiper')
-        var width = ''
+        var swiper = this.$element.querySelector(".swiper");
+        var width = "";
         if (this.actionIndex === 2) {
-          width = '(0px)'
-          swiper.classList.remove('swipertwo')
+          width = "(0px)";
+          swiper.classList.remove("swipertwo");
         }
         if (this.actionIndex === 3) {
-          width = '(-' + this.widths + 'px)'
-          swiper.classList.remove('swiperthree')
+          width = "(-" + this.widths + "px)";
+          swiper.classList.remove("swiperthree");
         }
 
-        var t = 'translateX' + width
+        var t = "translateX" + width;
 
-        console.log(t)
-        setTimeout(function () {
+        console.log(t);
+        setTimeout(function() {
           MIP.util.css(swiper, {
             transform: t,
-            'transition-duration': '200ms'
-          })
-          that.actionIndex -= 1
-        }, 0)
+            "transition-duration": "200ms"
+          });
+          that.actionIndex -= 1;
+        }, 0);
 
-        console.log('当前页面:' + this.actionIndex)
+        console.log("当前页面:" + this.actionIndex);
       } else {
-        console.log('不能点了')
+        console.log("不能点了");
       }
     },
-    goRight () {
-      var that = this
+    goRight() {
+      var that = this;
       if (this.actionIndex !== this.maxIndex) {
-        var swiper = this.$element.querySelector('.swiper')
-        var width = '(-' + this.widths * this.actionIndex + 'px)'
-        console.log(width)
-        var t = 'translateX' + width
+        var swiper = this.$element.querySelector(".swiper");
+        var width = "(-" + this.widths * this.actionIndex + "px)";
+        console.log(width);
+        var t = "translateX" + width;
 
         if (this.actionIndex === 1) {
-          swiper.classList.add('swipertwo')
+          swiper.classList.add("swipertwo");
         }
         if (this.actionIndex === 2) {
           // swiper.classList.remove('test');
-          swiper.classList.add('swiperthree')
+          swiper.classList.add("swiperthree");
         }
 
-        setTimeout(function () {
+        setTimeout(function() {
           MIP.util.css(swiper, {
             transform: t,
-            'transition-duration': '300ms'
-          })
-          that.actionIndex += 1
-        })
+            "transition-duration": "300ms"
+          });
+          that.actionIndex += 1;
+        });
 
-        console.log('当前页面:' + this.actionIndex)
+        console.log("当前页面:" + this.actionIndex);
       } else {
-        console.log('不能点了')
+        console.log("不能点了");
       }
     },
-    detaisOption (item) {
-      item.flag = !item.flag
+    detaisOption(item) {
+      item.flag = !item.flag;
     }
   }
-}
+};
 </script>
 
 <style scoped>

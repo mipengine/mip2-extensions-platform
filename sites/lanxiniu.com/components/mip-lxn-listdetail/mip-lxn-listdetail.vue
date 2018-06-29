@@ -1,141 +1,103 @@
 <template>
   <div class="wrapper">
-    <div class="detail-head">
-      <div class="item">当前进度</div>
-      <div class="item status">
-        <p><span
-          class="status-text"
-          v-text="detail.OrderStatus.Desc"/></p>
-        <p class="status-line"/>
-        <p
-          class="status-time"
-          v-text="detail.flagTime"/>
+      <div class="detail-head">
+          <div class="item">当前进度</div>
+          <div class="item status">
+              <p><span v-text="detail.OrderStatus.Desc" class="status-text"></span></p>
+              <p class="status-line"></p>
+              <p v-text="detail.flagTime" class="status-time"></p>
+          </div>  
       </div>
-    </div>
-    <div
-      v-show="hasDriver"
-      class="driver">
-      <div class="driver-img">
-        <img
-          :src="driverInfo.picture"
-          alt="">
-      </div>
-      <div class="driver-msg">
-        <p>
-          <span
-            class="name"
-            v-text="driverInfo.name"/>
-          <span
-            class="car-num"
-            v-text="driverInfo.carNum"/>
-        </p>
-        <p class="msg-detail">
-          <span
-            v-for="item in driverInfo.lables"
-            v-show="item !==''"
-            :key="item"
-            v-text="item"/>
-
-        </p>
-      </div>
-      <div class="call-driver">
-        <a :href="driverInfo.phone">
-          <p><span class="img phone"/></p>
-          <p>拨打</p>
-        </a>
-
-      </div>
-    </div>
-    <div class="cost">
-      <span class="title">费用</span>
-      <span class="content"><span v-text="detail.needPay"/> 元</span>
-      <span class="order-detail"><a
-        href="javascript:void(0)"
-        @click="coseDetail(detail)">费用明细</a></span>
-    </div>
-    <div class="order-list">
-      <ul>
-        <li>
-          <span class="title">搬家时间</span>
-          <span v-text="detail.TransTime"/>
-        </li>
-        <li>
-          <span class="title">服务车型</span>
-          <span v-text="detail.CarTypeName"/>
-        </li>
-        <li class="address">
-          <div class="left">搬出地址</div>
-          <div class="right">
-            <p v-text="detail.poiList[0].deliverRemark"/>
-            <p v-text="moveOutFloor">有电梯,无楼梯费</p>
+      <div v-show="hasDriver" class="driver">
+          <div class="driver-img">
+              <img :src="driverInfo.picture" alt="">
           </div>
-        </li>
-        <li class="address">
-          <div class="left">搬入地址</div>
-          <div class="right">
-            <p v-text="detail.poiList[1].deliverRemark"/>
-            <p v-text="moveInFloor">有电梯,无楼梯费</p>
+          <div class="driver-msg">
+              <p>
+                  <span v-text="driverInfo.name" class="name"></span>
+                  <span v-text="driverInfo.carNum" class="car-num"></span>
+              </p>
+              <p class="msg-detail">
+                  <span v-for="item in driverInfo.lables" v-show="item !==''" v-text="item"></span>
+                  <!-- <span>普通司机</span>
+                  <span>实名认证</span>
+                  <span>已服务8单</span> -->
+              </p>
           </div>
-        </li>
-        <li>
-          <span class="title">支付方式</span>
-          <span v-text="detail.payInfo.name"/>
-        </li>
-        <li>
-          <span class="title">订单备注</span>
-          <span v-text="detail.remark">小面</span>
-        </li>
-        <li>
-          <span class="title">订单号码</span>
-          <span v-text="detail.OrderNum"/>
-        </li>
-
-      </ul>
-    </div>
-    <div class="options">
-      <span
-        v-show="detail.OrderStatus.isCancelable === 1"
-        class="cancel"
-        @click.stop ="cancelOrder(detail)">取消订单</span>
-      <a
-        v-show="detail.OrderStatus.isConnectDriver === 1"
-        :href="driverInfo.phone"
-        @click.stop>
-        <span class="normal">联系司机</span>
-      </a>
-      <span
-        v-show="detail.OrderStatus.isNeedPay === 1"
-        class="order-again"
-        @click.stop="payOrder(detail)">立即支付</span>
-
-    </div>
-
-    <div
-      v-show="warn.show"
-      class="layer"
-      @touchstart.prevent/>
-    <div
-      v-show="warn.show"
-      class="layer-content layer-content-explain zoomIn">
-      <div class="order-cancel">
-        <p class="title-cancel">取消订单</p>
-        <p
-          class="title-content"
-          v-text="warn.texts"/>
+          <div class="call-driver">
+              <a :href="driverInfo.phone">
+                  <p><span class="img phone"></span></p>
+                  <p>拨打</p>
+              </a>
+              
+          </div>
       </div>
-      <div
-        class="layer-sure"
-        @click="closeLayer">
-        <p
-          class="btns active-layer"
-          @click="sureMethod(detail)">先不等了</p>
-        <p
-          class="btns btns2 active-layer"
-          @click="cancelMethod">再等等吧</p>
+      <div class="cost">
+          <span class="title">费用</span>
+          <span class="content"><span v-text="detail.needPay"></span> 元</span>
+          <span class="order-detail"><a @click="coseDetail(detail)" href="javascript:void(0)">费用明细</a></span>
       </div>
-    </div>
+      <div class="order-list">
+        <ul>    
+            <li>
+                <span class="title">搬家时间</span>
+                <span v-text="detail.TransTime"></span>
+            </li>
+            <li>
+                <span class="title">服务车型</span>
+                <span v-text="detail.CarTypeName"></span>
+            </li>
+             <li class="address">
+                <div class="left">搬出地址</div>
+                <div class="right">
+                   <p v-text="detail.poiList[0].deliverRemark"></p>
+                   <p v-text="moveOutFloor">有电梯,无楼梯费</p>
+                </div>
+            </li>
+             <li class="address">
+                <div class="left">搬入地址</div>
+                <div class="right">
+                   <p v-text="detail.poiList[1].deliverRemark"></p>
+                   <p v-text="moveInFloor">有电梯,无楼梯费</p>
+                </div>
+            </li>
+            <li>
+                <span class="title">支付方式</span>
+                <span v-text="detail.payInfo.name"></span>
+            </li>
+             <li>
+                <span class="title">订单备注</span>
+                <span v-text="detail.remark">小面</span>
+            </li>
+             <li>
+                <span class="title">订单号码</span>
+                <span v-text="detail.OrderNum"></span>
+            </li>
 
-    <div
+        </ul>
+      </div>
+      <div class="options">
+          <span v-show="detail.OrderStatus.isCancelable === 1" @click.stop ="cancelOrder(detail)" class="cancel">取消订单</span>
+          <a v-show="detail.OrderStatus.isConnectDriver === 1" @click.stop :href="driverInfo.phone">
+            <span class="normal">联系司机</span>
+          </a>
+            <span  v-show="detail.OrderStatus.isNeedPay === 1"   @click.stop="payOrder(detail)" class="order-again">立即支付</span>
+
+      </div>
+
+       <div v-show="warn.show" @touchstart.prevent  class="layer"></div>
+        <div v-show="warn.show" class="layer-content layer-content-explain zoomIn">
+              <div  class="order-cancel">
+                  <p  class="title-cancel">取消订单</p>
+                  <p v-text="warn.texts" class="title-content"></p>
+              </div>
+              <div @click="closeLayer" class="layer-sure">
+                  <p @click="sureMethod(detail)" class="btns active-layer">先不等了</p>
+                  <p @click="cancelMethod" class="btns btns2 active-layer">再等等吧</p>
+              </div>
+          </div> 
+        
+        <div
       v-if="loading"
       class="mip-loading-box">
       <div class="point-span">
@@ -145,198 +107,204 @@
   </div>
 </template>
 
+
+
 <script>
-import base from '../../common/utils/base'
-import '../../common/utils/base.css'
+import base from "../../common/utils/base";
+import "../../common/utils/base.css";
+import axios from "axios";
 export default {
   props: {
     globaldata: {
-      type: Object,
-      default: function () { return {} }
+      type: Object
     },
     payConfig: {
-      type: Object,
-      default: function () { return {} }
+      type: Object
     }
   },
-  data () {
+  data() {
     return {
       detail: {
         OrderStatus: {
-          Desc: '请求中'
+          Desc: "请求中"
         },
         poiList: [
           {
-            deliverRemark: ''
+            deliverRemark: ""
           },
           {
-            deliverRemark: ''
+            deliverRemark: ""
           }
         ],
         payInfo: {
-          name: ''
+          name: ""
         }
       },
-      moveOutFloor: '', // 搬出楼层
-      moveInFloor: '', // 搬入楼层
+      moveOutFloor: "", //搬出楼层
+      moveInFloor: "", //搬入楼层
       hasDriver: false,
       driverInfo: {},
       warn: {
-        // 弹窗
+        //弹窗
         show: false,
-        texts: ''
+        texts: ""
       },
       loading: false
-    }
+    };
   },
-  created () {
-    base.setHtmlRem()
+  created() {
+    base.setHtmlRem();
   },
-  mounted () {
-    this.getRequest()
+  mounted() {
+    this.getRequest();
   },
   methods: {
-    getOrderDetail (item) {
-      this.showloading()
-      var sessionid = base.getbaiduLogMsg()
+    getOrderDetail(item) {
+      var that = this;
+      this.showloading();
+      var sessionid = base.getbaiduLogMsg();
       var updata = {
         token: sessionid,
         orderNum: item.OrderNum
-      }
-      var urls = base.url + '/Order/detail?' + base.setUrlParam(updata)
+      };
+      var urls = base.url + "/Order/detail?" + base.setUrlParam(updata);
       fetch(urls, {
-        method: 'get'
+        method: "get"
       })
         .then(response => response.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => {
-          console.log(response)
-          this.hideloading()
-          this.detail = response.data
-          console.log(this.detail)
-          var floorData = [
-            '有电梯',
-            '无电梯1楼',
-            '无电梯2楼',
-            '无电梯3楼',
-            '无电梯4楼',
-            '无电梯5楼',
-            '无电梯6楼',
-            '无电梯7楼',
-            '无电梯8楼'
-          ]
-          this.driverInfo = response.data.driverInfo
-          this.detail = response.data
-          this.moveOutFloor = floorData[this.detail.start_stairs_num]
-          this.moveInFloor = floorData[this.detail.end_stairs_num]
-          if (Number(this.driverInfo.did) !== 0) {
-            this.hasDriver = true
-            this.driverInfo.phone = 'tel:' + this.driverInfo.phone
-          }
+        .catch(error => {
+          this.hideloading();
         })
+        .then(response => {
+          console.log(response);
+          this.hideloading();
+          this.detail = response.data;
+          console.log(this.detail);
+          var floorData = [
+            "有电梯",
+            "无电梯1楼",
+            "无电梯2楼",
+            "无电梯3楼",
+            "无电梯4楼",
+            "无电梯5楼",
+            "无电梯6楼",
+            "无电梯7楼",
+            "无电梯8楼"
+          ];
+          this.driverInfo = response.data.driverInfo;
+          this.detail = response.data;
+          this.moveOutFloor = floorData[this.detail.start_stairs_num];
+          this.moveInFloor = floorData[this.detail.end_stairs_num];
+          if (Number(this.driverInfo.did) !== 0) {
+            this.hasDriver = true;
+            this.driverInfo.phone = "tel:" + this.driverInfo.phone;
+          }
+        });
     },
-    getRequest () {
-      var url = location.search // 获取url中"?"符后的字串
-      console.log('查看url:' + url)
-      var theRequest = {}
-      if (url.indexOf('?') !== -1) {
-        var str = url.substr(1)
-        var strs = str.split('&')
+    getRequest() {
+      var url = location.search; //获取url中"?"符后的字串
+      console.log("查看url:" + url);
+      var theRequest = new Object();
+      if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        var strs = str.split("&");
         for (var i = 0; i < strs.length; i++) {
-          theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
+          theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
         }
       }
-      this.getOrderDetail(theRequest)
+      this.getOrderDetail(theRequest);
     },
     // 取消订单
-    cancelOrder (item) {
-      console.log(item.OrderNum)
-      console.log('订单号:' + item.OrderNum)
-      this.showloading()
-      this.deleteItem = item
-      var sessionid = base.getbaiduLogMsg()
+    cancelOrder(item) {
+      console.log(item.OrderNum);
+      console.log("订单号:" + item.OrderNum);
+      this.showloading();
+      this.deleteItem = item;
+      var sessionid = base.getbaiduLogMsg();
       var updata = {
         token: sessionid,
         orderNum: item.OrderNum
-      }
+      };
 
       // 判断当前订单取消的费用
-      var urlsprice = base.url + '/Order/cancelWin?' + base.setUrlParam(updata)
+      var urlsprice = base.url + "/Order/cancelWin?" + base.setUrlParam(updata);
 
       fetch(urlsprice, {
-        method: 'get'
+        method: "get"
       })
         .then(response => response.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => {
-          this.hideloading()
-          this.warn.show = true
-          this.warn.texts = response.data.tips
+        .catch(error => {
+          this.hideloading();
         })
+        .then(response => {
+          this.hideloading();
+          this.warn.show = true;
+          this.warn.texts = response.data.tips;
+        });
     },
     // 取消删除
-    cancelMethod () {
-      this.warn.show = false
+    cancelMethod() {
+      this.warn.show = false;
     },
     // 确认删除
-    sureMethod (item) {
+    sureMethod(item) {
       //   var item =   this.deleteItem;
-      this.showloading()
-      var sessionid = base.getbaiduLogMsg()
+      this.showloading();
+      var sessionid = base.getbaiduLogMsg();
       var updata = {
         token: sessionid,
         orderNum: item.OrderNum
-      }
-      var urls = base.url + '/Order/cancel?' + base.setUrlParam(updata)
+      };
+      var urls = base.url + "/Order/cancel?" + base.setUrlParam(updata);
       fetch(urls, {
-        method: 'get'
+        method: "get"
       })
         .then(response => response.json())
-        .catch(error => console.error('Error:', error))
+        .catch(error => console.error("Error:", error))
         .then(response => {
-          console.log(response)
-          this.hideloading()
-          this.warn.show = false
-          this.getOrderDetail(item)
-        })
+          console.log(response);
+          this.hideloading();
+          this.warn.show = false;
+          this.getOrderDetail(item);
+        });
     },
     // 立即支付
-    payOrder (item) {
-      console.log(item.OrderNum)
-      console.log('支付订单')
-      var sessionid = base.getbaiduLogMsg()
+    payOrder(item) {
+      console.log(item.OrderNum);
+      console.log("支付订单");
+      var sessionid = base.getbaiduLogMsg();
       var obj = {
         sessionId: sessionid,
-        redirectUrl: 'https://www.lanxiniu.com/Pay/success',
-        fee: item.needPay + '元',
+        redirectUrl: "https://www.lanxiniu.com/Pay/success",
+        fee: item.needPay + "元",
         postData: {
           orderNum: item.OrderNum,
           token: sessionid
         }
-      }
+      };
       MIP.setData({
         payConfig: MIP.util.fn.extend({}, this.payConfig, obj)
-      })
-      this.$emit('actionPay', {})
+      });
+      this.$emit("actionPay", {});
     },
-    coseDetail (item) {
+    coseDetail(item) {
       // var orderNumber = item.
-      MIP.viewer.open(base.htmlhref.costdetail + '?OrderNum=' + item.OrderNum, {
+      MIP.viewer.open(base.htmlhref.costdetail + "?OrderNum=" + item.OrderNum, {
         isMipLink: true
-      })
+      });
     },
-    showloading () {
-      this.loading = true
+    showloading() {
+      this.loading = true;
     },
-    hideloading () {
-      this.loading = false
-      var that = this
-      setTimeout(function () {
-        that.loading = false
-      }, 500)
+    hideloading() {
+      this.loading = false;
+      var that = this;
+      setTimeout(function() {
+        that.loading = false;
+      }, 500);
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -532,5 +500,8 @@ export default {
   background: #36a0e9;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
 }
+
+
+
 
 </style>

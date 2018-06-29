@@ -29,7 +29,6 @@
         <ul>
           <li
             v-for="item in searchData"
-            :key="item.title"
             @click="setAddress(item)">
             <div>
               <span class="img weizhi"/>
@@ -105,6 +104,7 @@
 <script>
 import base from '../../common/utils/base'
 import map from '../../common/utils/map'
+// import axios from "axios"
 import '../../common/utils/base.css'
 base.setHtmlRem()
 export default {
@@ -120,7 +120,7 @@ export default {
   props: {
     globaldata: {
       type: Object,
-      default: function () { return {} }
+      require: true
     }
   },
   data () {
@@ -144,39 +144,43 @@ export default {
         show: false,
         texts: ''
       },
-      loading: true,
-      BMap: null
-
+      loading: true
     }
+  },
+  watch: {},
+  beforeCreate () {
+    console.log('before')
   },
   created () {
     this.cityhref = base.htmlhref.city
+    console.log('创建数据')
   },
   mounted () {
+    console.log('这里是搬入地址选择页面 !')
+
     // 初始化
     this.initData()
 
     // 数据监控
     this.lxnDataWatch()
-
-    this.$element.customElement.addEventAction('init', () => {
-      this.BMap = MIP.sandbox.BMap
-      this.mapInit()
-      console.log(this.BMap)
-    })
   },
   methods: {
     // 基本数据初始化
     initData () {
-      if (Object.keys(this.globaldata).length === 0) {
+      if (!this.globaldata) {
         console.log('无值')
         MIP.viewer.open(base.htmlhref.order, { isMipLink: false })
       } else {
         console.log('有值')
 
+        var that = this
+
         // 配置全局数据标志当前是  搬出地址选择页面
-        let obj = { currentmap: 'in' }
+        var obj = { currentmap: 'in' }
         base.mipSetGlobalData(obj)
+
+        // 地图
+        this.mapInit()
 
         // 添加波纹
         this.clickRipple()
@@ -184,22 +188,26 @@ export default {
     },
     // 地图初始化
     mapInit (city) {
-      let BMap = this.BMap
-      let that = this
-      let citys = city || this.globaldata.ordercity
-      let BaiduMap = map.mapInit()
-
-      let lxndata = base.getSession()
-      let address = ''
+      var that = this
+      var city = city || this.globaldata.ordercity
+      var BaiduMap = map.mapInit()
+      var cfg = {
+        ak: '1c738e7908b5e8ec79742527c9796514',
+        location: {
+          city: city
+        }
+      }
+      var lxndata = base.getSession()
+      var address = ''
       if (lxndata === null) {
         address = this.globaldata.moveInAddress
       } else {
         address = lxndata.moveInAddress
         // 还原上次填写的数据
-        let movein = that.moveIn
+        var movein = that.moveIn
 
-        let moveOutAddress = lxndata.moveOutAddress
-        let moveInAddress = address
+        var moveOutAddress = lxndata.moveOutAddress
+        var moveInAddress = address
         console.log(JSON.stringify(moveInAddress, null, 2))
         console.log(JSON.stringify(moveOutAddress, null, 2))
         if (moveInAddress.localtion.title !== '') {
@@ -211,28 +219,32 @@ export default {
         }
       }
 
-      let divs = this.$element.querySelector('#l-mapin')
-      let maps = new BaiduMap(this.$element, divs, address, function (
+      var divs = this.$element.querySelector('#l-mapin')
+      var maps = new BaiduMap(this.$element, cfg, divs, address, function (
         data
       ) {
         console.log(JSON.stringify(data, null, 2))
         // 还原上次填写的数据
-        let movein = that.moveIn
+        var movein = that.moveIn
         movein.localtion = data.localtion
         movein.address = data.address
         movein.phone = data.phone
         that.loading = false
       })
 
-      if (BMap.Map) {
-        console.log('存在')
-        this.searchHandler = maps.handleResult(citys, that.searchResult)
-        this.maps = maps.map
-      }
+      maps.show()
+      var intval = setInterval(function () {
+        if (BMap.Map) {
+          console.log('存在')
+          that.searchHandler = maps.handleResult(city, that.searchResult)
+          that.maps = maps.map
+          clearInterval(intval)
+        }
+      }, 300)
     },
     // 搜索地址
     searchAddress () {
-      let value = this.searchVal
+      var value = this.searchVal
       this.searchHandler.search(value)
       console.log(value)
       if (value === '') {
@@ -247,17 +259,17 @@ export default {
     },
     // 选择搜索结果
     setAddress (item) {
-      let BMap = this.BMap
+      var that = this
       this.focusState = false
       // 将选择的地址在地图上标志出来
-      let longitudeP = item.lng
-      let latitudeP = item.lat
-      let point = new BMap.Point(longitudeP, latitudeP) // 创建点坐标
-      let myIcon = new BMap.Icon(
+      var longitudeP = item.lng
+      var latitudeP = item.lat
+      var point = new BMap.Point(longitudeP, latitudeP) // 创建点坐标
+      var myIcon = new BMap.Icon(
         'https://www.lanxiniu.com/Public/baidumip/mapicon.png',
         new BMap.Size(26, 32)
       )
-      let marker2 = new BMap.Marker(point, { icon: myIcon }) // 创建标注
+      var marker2 = new BMap.Marker(point, { icon: myIcon }) // 创建标注
       this.maps.clearOverlays()
       this.maps.addOverlay(marker2)
       this.maps.centerAndZoom(point, 16)
@@ -268,11 +280,12 @@ export default {
     },
     // 确认搬出信息
     moveoutSure () {
-      let that = this
-      let BMap = this.BMap
-      let warn = this.warn
-      let moveIn = this.moveIn
-      let title = moveIn.localtion.title
+      var that = this
+      var warn = this.warn
+      var moveIn = this.moveIn
+      var title = moveIn.localtion.title
+      var address = moveIn.address
+      var phone = moveIn.phone
 
       if (title === '') {
         warn.show = true
@@ -280,36 +293,40 @@ export default {
       } else {
         console.log('可以提交')
 
-        let objdata = this.deepClone(this.moveIn)
+        var objdata = this.deepClone(this.moveIn)
         console.log(JSON.stringify(objdata, null, 2))
-        let obj = { moveInAddress: objdata }
-        let datas = base.mipExtendData(this.globaldata, obj)
+        var obj = { moveInAddress: objdata }
+        // var datas = MIP.util.fn.extend({}, this.globaldata, obj);
+        var datas = base.mipExtendData(this.globaldata, obj)
         console.log('配置搬入数据' + JSON.stringify(datas, null, 2))
         base.mipSetGlobalData(obj)
         base.setSession(datas)
 
         // 计算距离
-        let moveout = this.globaldata.moveOutAddress.localtion
-        let movein = objdata.localtion
+        var moveout = this.globaldata.moveOutAddress.localtion
+        var movein = objdata.localtion
+
+        //   console.log(JSON.stringify(movein, null, 2));
 
         if (moveout.lat !== '' && movein.lat !== '') {
-          let pointOut = new BMap.Point(moveout.lng, moveout.lat)
-          let pointIn = new BMap.Point(movein.lng, movein.lat)
-          let kilometer =
+          var pointOut = new BMap.Point(moveout.lng, moveout.lat)
+          var pointIn = new BMap.Point(movein.lng, movein.lat)
+          var kilometer =
             this.maps.getDistance(pointOut, pointIn).toFixed(2) / 1000
           console.log('查看距离:' + kilometer)
-          let obj = { kilometer: kilometer }
+          var obj = { kilometer: kilometer }
 
           console.log(JSON.stringify(obj, null, 2))
           console.log('保存数据-----')
-          let datass = base.mipExtendData(datas, obj)
+          var datas = base.mipExtendData(datas, obj)
           console.log('查看数据:')
-          console.log(JSON.stringify(datass))
+          console.log(JSON.stringify(datas))
           base.mipSetGlobalData(obj)
-          base.setSession(datass)
+          base.setSession(datas)
           setTimeout(function () {
             that.goOrder()
           }, 500)
+          //   }, 500);
         } else {
           console.log('没计算距离')
           this.goOrder()
@@ -319,7 +336,7 @@ export default {
 
     // 全局数据监听
     lxnDataWatch () {
-      let that = this
+      var that = this
       MIP.watch('lxndata.ordercity', function (newval, oldval) {
         console.log('=====..............===wacth监控=============城市改变了')
         console.log(newval)
@@ -369,15 +386,15 @@ export default {
       }
       switch (Object.prototype.toString.call(obj)) {
         case '[object Array]': {
-          let result = new Array(obj.length)
-          for (let i = 0; i < result.length; ++i) {
+          var result = new Array(obj.length)
+          for (var i = 0; i < result.length; ++i) {
             result[i] = this.deepClone(obj[i])
           }
           return result
         }
 
         case '[object Error]': {
-          let result = new obj.constructor(obj.message)
+          var result = new obj.constructor(obj.message)
           result.stack = obj.stack // hack...
           return result
         }
@@ -398,10 +415,10 @@ export default {
           return new obj.constructor(obj)
 
         case '[object Object]': {
-          let keys = Object.keys(obj)
-          let result = {}
-          for (let i = 0; i < keys.length; ++i) {
-            let key = keys[i]
+          var keys = Object.keys(obj)
+          var result = {}
+          for (var i = 0; i < keys.length; ++i) {
+            var key = keys[i]
             result[key] = this.deepClone(obj[key])
           }
           return result
@@ -414,17 +431,17 @@ export default {
     },
     // 点击波纹效果
     clickRipple () {
-      let util = MIP.util
-      util.event.delegate(
+      var util = MIP.util
+      var undelegate = util.event.delegate(
         this.$element,
         '.btn',
         'click',
         function (e) {
-          let target = e.target
+          var target = e.target
           console.log(target)
           if (target.className.indexOf('btn') > -1) {
-            let rect = target.getBoundingClientRect()
-            let ripple = target.querySelector('.ripple')
+            var rect = target.getBoundingClientRect()
+            var ripple = target.querySelector('.ripple')
             if (!ripple) {
               ripple = document.createElement('span')
               ripple.className = 'ripple'
@@ -433,12 +450,12 @@ export default {
               target.appendChild(ripple)
             }
             ripple.classList.remove('show')
-            let top =
+            var top =
               e.pageY -
               rect.top -
               ripple.offsetHeight / 2 -
               document.body.scrollTop
-            let left =
+            var left =
               e.pageX -
               rect.left -
               ripple.offsetWidth / 2 -
@@ -467,7 +484,7 @@ export default {
 
 .search-content {
   position: absolute;
-  top: 44px;
+  top: 0;
   left: 0;
   right: 0;
   /* background: red; */
