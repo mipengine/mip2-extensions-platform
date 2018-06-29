@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html mip>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <title>极客修</title>
+    <link rel="stylesheet" type="text/css" href="https://c.mipcdn.com/static/v1/mip.css">
+    <link rel="stylesheet" href="https://bos.nj.bpc.baidu.com/assets/mip/projects/mip.css">
+    <link rel="icon" href="https://m.jikexiu.com/h5/favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="https://m.jikexiu.com/zhida/orderComplete">
+    <style mip-custom>
+        /* 自定义样式 */
+        
+        .main {
+            height: 100%;
+            padding-bottom: 50px;
+            background: #fff;
+        }
+        
+        .jkx_pic {
+            padding-top: 100px;
+            text-align: center;
+            background-color: #fff;
+        }
+        
+        .pic {
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHgAAAB3CAIAAABHUBNQAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpkNjk4Mzc2YS1jNWY0LTgxNDAtODU0MC05NWJjNjM2NDNmYTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6M0E2NDNBNUQyMjgwMTFFOEI2MTVFQzY1ODRENkNERTYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6M0E2NDNBNUMyMjgwMTFFOEI2MTVFQzY1ODRENkNERTYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NmQyNWJkY2ItZDkyZi02ODQzLWFjNDYtYmJjODQ1ODI1OGRiIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6MDZmNTQ0OWEtYmFjNC0xMWU3LTg1Y2Ut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) no-repeat;
+            width: 60px;
+            height: 60px;
+            background-size: 100% 100%;
+            margin: 0 auto;
+        }
+        
+        .jkx_pic p {
+            margin-top: 10px;
+            font-size: 15px;
+            color: rgb(39, 196, 125);
+        }
+        
+        .navList {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            height: 40px;
+            margin-top: 50px;
+            background: #fff;
+            padding: 5px 20px 0;
+        }
+        
+        .tips {
+            margin-top: 20px;
+            padding: 0 10px;
+        }
+        
+        .jkx_foot {
+            display: flex;
+            flex-wrap: wrap;
+            height: 40px;
+            padding: 0 20px;
+            font-size: 14px;
+            color: rgb(51, 51, 51);
+            line-height: 40px;
+            text-align: center;
+            border: 1px solid #999;
+            border-radius: 5px;
+        }
+        
+        .img {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 正文 -->
+    <mip-shell>
+        <script type="application/json">
+            {
+                "routes": [{
+                    "pattern": "*",
+                    "meta": {
+                        "header": {
+                            "show": true,
+                            "xiongzhang": true,
+                            "title": "极客修",
+                            "logo": "./common/icon/logo.png"
+                        },
+                        "view": {
+                            "isIndex": false
+                        }
+                    }
+                }]
+            }
+        </script>
+    </mip-shell>
+    <div class="main">
+        <div class="jkx_pic">
+            <div class="pic"></div>
+            <p>下单成功</p>
+        </div>
+        <div class="tips">工作时间（08:00-22:00）内将有来自重庆区号023的电话与您联系确认详情！</div>
+        <div class="navList">
+            <a class="jkx_foot" href="./index.html">
+                <mip-img class="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAeCAIAAADCaIt+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpkNjk4Mzc2YS1jNWY0LTgxNDAtODU0MC05NWJjNjM2NDNmYTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6M0E5QjEwNzQyMjgwMTFFOEI2MTVFQzY1ODRENkNERTYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6M0E5QjEwNzMyMjgwMTFFOEI2MTVFQzY1ODRENkNERTYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NmQyNWJkY2ItZDkyZi02ODQzLWFjNDYtYmJjODQ1ODI1OGRiIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6MDZmNTQ0OWEtYmFjNC0xMWU3LTg1Y2UtOWQwZDU0ODUxMjg5Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+MBZydgAAAstJREFUeNq0Vj1IslEU1jfLHISshCibdGlNlxByyMXRFCdpkWgIcROCMlChIaUpMH9yVfBn0UFFKAgaTNuaMvuDgsgCTa2svqfvwvuJmZrf24H3ct/nnnOe+3POuZf18RPxeDwzMzNer7d7EzY+Vhfy/v6+sbERjUb5fH6pVJqfn19ZWWGz2Z0tu5lFuVw2Go1SqdTpdD48PGxubqJvMpmenp462nYmODs7U6vV8Oj3+2nQ5/MBAV4oFP6LYG9vT/pXUqlU01AikSBD+/v7PRKEQiHYKxSK4+PjlgrZbHZ2dhY64XD4xwQOhwOWS0tL9/f3bSZxd3e3uLhIjqdbgkqlsrq6Chu0b29vHQ8JOogo6K+trVWr1Q4EFxcXGo0G2i6X60cpsr29DSutVnt5efktQSaTmZuba7+nHc9MqVTibFoQxGIxEhXBYPCjVwkEAvAgk8ni8ThBKJJuu7u76+vrQ0ND6I+MjLB6FWIrEAgsFgvyBn0OPmTp4eEhtk+lUhkMhufn554JiO3W1haKCk4F8f1JMD4+rtPpzGbz7e0tiwkZGxtDBA4MDKCCfRIgyMhAsVhkhAB+sFeYMfpU40BfXx8jBI1+KNYvy68TcLpXPTk5cbvdNzc3ExMTqD9TU1NMEhwdHS0vL6PsDA8P5/N5hDWicHp6mpkten19tdvtHA4HSZ5MJpGuuCxtNhtwZghwbV1fXy8sLIjFYvxKJBK9Xn91dXV+fs4MwePjI1qRSEQjQqEQLQo7MwQURZGNopGXlxcaZyxMu3zgtCMgLvr7+1uuoDE/yYvoa+a3sG16XdHLbxQej4cWxYtGBgcHabxRarUa2nq93joPUAW5XC6y6fT0lNzGxAuiCJ1IJAIcBRk6uVwOyM7OzuTkJHGKNWFB6XQao6Ojo//W2rSzBwcHVqv1a1nF9JtW9hWBIA1xccnl8m8JGJc/AgwAADYPo0OcW2cAAAAASUVORK5CYII=">
+                </mip-img>
+                <span>返回首页</span>
+            </a>
+            <a class="jkx_foot" href="tel:4008112112">
+                <mip-img class="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAeCAIAAADCaIt+AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpkNjk4Mzc2YS1jNWY0LTgxNDAtODU0MC05NWJjNjM2NDNmYTQiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6M0E5QjEwNzQyMjgwMTFFOEI2MTVFQzY1ODRENkNERTYiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6M0E5QjEwNzMyMjgwMTFFOEI2MTVFQzY1ODRENkNERTYiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTcgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6NmQyNWJkY2ItZDkyZi02ODQzLWFjNDYtYmJjODQ1ODI1OGRiIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6MDZmNTQ0OWEtYmFjNC0xMWU3LTg1Y2UtOWQwZDU0ODUxMjg5Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+MBZydgAAAstJREFUeNq0Vj1IslEU1jfLHISshCibdGlNlxByyMXRFCdpkWgIcROCMlChIaUpMH9yVfBn0UFFKAgaTNuaMvuDgsgCTa2svqfvwvuJmZrf24H3ct/nnnOe+3POuZf18RPxeDwzMzNer7d7EzY+Vhfy/v6+sbERjUb5fH6pVJqfn19ZWWGz2Z0tu5lFuVw2Go1SqdTpdD48PGxubqJvMpmenp462nYmODs7U6vV8Oj3+2nQ5/MBAV4oFP6LYG9vT/pXUqlU01AikSBD+/v7PRKEQiHYKxSK4+PjlgrZbHZ2dhY64XD4xwQOhwOWS0tL9/f3bSZxd3e3uLhIjqdbgkqlsrq6Chu0b29vHQ8JOogo6K+trVWr1Q4EFxcXGo0G2i6X60cpsr29DSutVnt5efktQSaTmZuba7+nHc9MqVTibFoQxGIxEhXBYPCjVwkEAvAgk8ni8ThBKJJuu7u76+vrQ0ND6I+MjLB6FWIrEAgsFgvyBn0OPmTp4eEhtk+lUhkMhufn554JiO3W1haKCk4F8f1JMD4+rtPpzGbz7e0tiwkZGxtDBA4MDKCCfRIgyMhAsVhkhAB+sFeYMfpU40BfXx8jBI1+KNYvy68TcLpXPTk5cbvdNzc3ExMTqD9TU1NMEhwdHS0vL6PsDA8P5/N5hDWicHp6mpkten19tdvtHA4HSZ5MJpGuuCxtNhtwZghwbV1fXy8sLIjFYvxKJBK9Xn91dXV+fs4MwePjI1qRSEQjQqEQLQo7MwQURZGNopGXlxcaZyxMu3zgtCMgLvr7+1uuoDE/yYvoa+a3sG16XdHLbxQej4cWxYtGBgcHabxRarUa2nq93joPUAW5XC6y6fT0lNzGxAuiCJ1IJAIcBRk6uVwOyM7OzuTkJHGKNWFB6XQao6Ojo//W2rSzBwcHVqv1a1nF9JtW9hWBIA1xccnl8m8JGJc/AgwAADYPo0OcW2cAAAAASUVORK5CYII=">
+                </mip-img>
+                <span>联系客服</span>
+            </a>
+        </div>
+    </div>
+    <script src="https://bos.nj.bpc.baidu.com/assets/mip/projects/mip.js"></script>
+</body>
+
+</html>
