@@ -1,0 +1,33 @@
+{
+  "name": "mip2-extensions-platform",
+  "version": "1.0.0",
+  "description": "MIP 2.0 站长组件",
+  "scripts": {
+    "lint": "eslint --ext .js,.vue **/* --ignore-pattern dist"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mipengine/mip2-extensions-platform.git"
+  },
+  "keywords": [
+    "MIP"
+  ],
+  "author": "MIP",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jsdoc": "^3.7.1",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "eslint-plugin-vue": "^4.5.0",
+    "husky": "^1.0.0-rc.8"
+  }
+}
