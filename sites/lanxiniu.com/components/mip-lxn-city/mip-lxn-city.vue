@@ -1,89 +1,73 @@
 <template>
-  <div class="wrapper">
-  </div>
+  <div class="wrapper"/>
 </template>
 
-
-
 <script>
-import base from "../../common/utils/base";
+import base from '../../common/utils/base'
 export default {
   props: {
     globaldata: {
-      type: Object
+      type: Object,
+      default: function () { return {} }
     }
   },
-  data() {
-    return {};
+  data () {
+    return {}
   },
-  created() {
-    console.log("创建数据");
-    base.setHtmlRem();
-    console.log(this.globaldata);
+  created () {
+    console.log('创建数据')
+    base.setHtmlRem()
+    console.log(this.globaldata)
   },
-  mounted() {
-    console.log("这里是选择城市页面 !");
-    var _this = this;
-    var ele = this.$element;
-    this.$element.customElement.addEventAction("setcity", function(
-      event /* 对应的事件对象 */,
-      str /* 事件参数 */
-    ) {
-      console.log("setcity: ", str);
-      console.log(_this.globaldata.currentmap);
-      var mapType = _this.globaldata.currentmap;
-      var obj = {
+  mounted () {
+    console.log('这里是选择城市页面 !')
+
+    this.$element.customElement.addEventAction('setcity', (event, str) => {
+      let obj = {
         ordercity: str,
-        kilometer:0,
+        kilometer: 0,
         moveInAddress: {
           localtion: {
-            address: "",
-            city: "",
-            province: "",
-            lat: "",
-            lng: "",
-            title: ""
+            address: '',
+            city: '',
+            province: '',
+            lat: '',
+            lng: '',
+            title: ''
           },
-          address: "",
-          phone: ""
+          address: '',
+          phone: ''
         },
         moveOutAddress: {
           localtion: {
-            address: "",
-            city: "",
-            province: "",
-            lat: "",
-            lng: "",
-            title: ""
+            address: '',
+            city: '',
+            province: '',
+            lat: '',
+            lng: '',
+            title: ''
           },
-          address: "",
-          phone: ""
+          address: '',
+          phone: ''
         }
-      };
-      var datas = MIP.util.fn.extend({}, _this.globaldata, obj);
+      }
+      let datas = MIP.util.fn.extend({}, this.globaldata, obj)
 
-
-    console.log('查看数据:'+JSON.stringify(datas,null,2))
+      console.log('查看数据:' + JSON.stringify(datas, null, 2))
 
       MIP.setData({
-        "#lxndata": datas
-      });
-      console.log('查看数据:'+JSON.stringify(datas,null,2))
-      base.setSession(datas);
-      setTimeout(function(){
-           if (mapType === "out") {
-        //    MIP.viewer.open(base.htmlhref.mapout, { isMipLink: true });
-           MIP.viewer.page.router.back()
-      } else {
-        //    MIP.viewer.open(base.htmlhref.mapin, { isMipLink: true });
-           MIP.viewer.page.router.back()
-       }
-      },500)
-     
-    });
+        '#lxndata': datas
+      })
+      console.log('查看数据:' + JSON.stringify(datas, null, 2))
+      base.setSession(datas)
+
+      setTimeout(() => {
+        MIP.viewer.page.router.back()
+      }, 500)
+    })
   },
   methods: {}
-};
+}
 </script>
 
 <style scoped>

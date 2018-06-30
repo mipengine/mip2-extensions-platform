@@ -29,28 +29,28 @@ export default ({
   //     costdes: lxnhttp + 'costdes.html'
   //   },
   setHtmlRem: function () {
-    var b = document
-    var a = {}
+    let b = document
+    let a = {}
     a.Html = b.getElementsByTagName('html')[0]
-    var htmls = b.getElementsByTagName('html')
+    let htmls = b.getElementsByTagName('html')
 
     a.widthProportion = function () {
       console.log('宽度:' + b.body.clientWidth)
       //   b.body &&
-      var c = (b.body.clientWidth || a.Html.offsetWidth) / 750
+      let c = (b.body.clientWidth || a.Html.offsetWidth) / 750
       return c > 1 ? 1 : c < 0.4 ? 0.4 : c
     }
     a.changePage = function () {
-      var length = htmls.length
-      var remValue = a.widthProportion() * 100
-      var rem = sessionStorage.getItem('rem')
+      let length = htmls.length
+      let remValue = a.widthProportion() * 100
+      let rem = sessionStorage.getItem('rem')
       // MIP.viewer.page.isRootPage  技术服务开始页初始化session
       if (rem !== null && !MIP.viewer.page.isRootPage) {
-        for (var i = 0; i < length; i++) {
+        for (let i = 0; i < length; i++) {
           htmls[i].setAttribute('style', 'font-size:' + rem + 'px!important;height:100% !important')
         }
       } else {
-        for (var j = 0; j < length; j++) {
+        for (let j = 0; j < length; j++) {
           htmls[j].setAttribute('style', 'font-size:' + remValue + 'px!important;height:100% !important')
         }
         sessionStorage.setItem('rem', remValue)
@@ -80,13 +80,13 @@ export default ({
     sessionStorage.setItem('lxndata', JSON.stringify(datas))
   },
   getSession: function () {
-    var data = sessionStorage.getItem('lxndata')
+    let data = sessionStorage.getItem('lxndata')
     // console.log(JSON.stringify(JSON.parse(data), null, 2))
     return JSON.parse(data)
   },
   timeformat: function (date, format) {
     // 全局时间格式化输出     new Date().format('yyyy-MM-dd hh:mm:ss')
-    var args = {
+    let args = {
       'M+': date.getMonth() + 1,
       'd+': date.getDate(),
       'h+': date.getHours(),
@@ -96,23 +96,26 @@ export default ({
       'S': date.getMilliseconds()
     }
     if (/(y+)/.test(format)) { format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length)) }
-    for (var i in args) {
-      var n = args[i]
+    for (let i in args) {
+      let n = args[i]
       if (new RegExp('(' + i + ')').test(format)) { format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? n : ('00' + n).substr(('' + n).length)) }
     }
     return format
   },
   getbaiduLogMsg: function () {
-    var keys = 'mip-login-xzh:sessionId://www.lanxiniu.com/Baidu/back'
+    let keys = 'mip-login-xzh:sessionId://www.lanxiniu.com/Baidu/back'
     return localStorage.getItem(keys)
   },
   // 使用MIP2同步数据
   mipSetGlobalData: function (newVal) {
-    MIP.setData({'#lxndata': newVal})
+    try {
+      MIP.setData({'#lxndata': newVal})
+    } catch (e) {
+    }
   },
   // 使用MIP2合并数据用于本地存储
   mipExtendData: function (oldVal, newVal) {
-    var data = MIP.util.fn.extend({}, oldVal, newVal)
+    let data = MIP.util.fn.extend({}, oldVal, newVal)
     return data
   }
 })

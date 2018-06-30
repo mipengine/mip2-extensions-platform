@@ -690,7 +690,8 @@
 
 <script>
 import base from '../../common/utils/base.js'
-import '../../common/utils/base.css'
+import '../../common/utils/base.less'
+base.setHtmlRem()
 export default {
   props: {
     globaldata: {
@@ -743,40 +744,32 @@ export default {
       widths: '', // 当前页面宽度
       actionIndex: 1, // 当前车型
       maxIndex: 3,
-      animatFlag: true
+      animatFlag: true,
+      loadWidth: true
     }
-  },
-  created () {
-    base.setHtmlRem()
-    console.log(JSON.stringify(base, null, 2))
   },
   mounted () {
     console.log('资费详情页面')
-    var that = this
 
-    var interval = setInterval(function () {
-      var content = that.$element.querySelector('.content')
-      var width = MIP.util.css(content, 'width')
-      console.log(width)
-      if (width === 'auto') {
+    // let interval = setInterval(function () {
+    //   let content = that.$element.querySelector('.content')
+    //   let width = MIP.util.css(content, 'width')
+    //   console.log(width)
+    //   if (width === 'auto') {
 
-      } else {
-        clearInterval(interval)
-        that.getwidth()
-      }
-    }, 100)
-
-    this.getCurrentCityCarTypes()
-    // var texts = document.body.clientWidth;
-    // console.log('查看屏幕宽度:'+texts);
+    //   } else {
+    //     clearInterval(interval)
+    //     that.getwidth()
+    //     this.getCurrentCityCarTypes()
+    //   }
+    // }, 100)
   },
   methods: {
     // 请求当前城市的车型列表
     getCurrentCityCarTypes (city) {
-      var that = this
-      var globaldata = this.globaldata
-      var focusCity = globaldata.ordercity
-      var urls = base.url + '/Setting/getCityData?city=' + focusCity
+      let globaldata = this.globaldata
+      let focusCity = globaldata.ordercity
+      let urls = base.url + '/Setting/getCityData?city=' + focusCity
       fetch(urls, {
         method: 'get'
       })
@@ -787,14 +780,14 @@ export default {
 
           console.info(response)
           if (response.data) {
-            var service = response.data.setting.service
-            for (var i = 0; i < service.length; i++) {
+            let service = response.data.setting.service
+            for (let i = 0; i < service.length; i++) {
               if (service[i].type === 5) {
               // 如果当前城市车型小于3个  隐藏最后一个
                 if (service[i].car.length < 3) {
-                  that.maxIndex = 2
+                  this.maxIndex = 2
                 } else {
-                  that.maxIndex = 3
+                  this.maxIndex = 3
                 }
                 break
               }
@@ -803,15 +796,17 @@ export default {
         })
     },
     getwidth () {
-      var content = this.$element.querySelector('.content')
-      var width = MIP.util.css(content, 'width')
-      this.widths = Number(width.substring(0, width.length - 2))
+      this.widths = MIP.viewport.getWidth()
+      this.loadWidth = false
+
+      console.log('查看数据:' + this.widths)
     },
     goLeft () {
-      var that = this
+      this.getwidth()
+
       if (this.actionIndex !== 1) {
-        var swiper = this.$element.querySelector('.swiper')
-        var width = ''
+        let swiper = this.$element.querySelector('.swiper')
+        let width = ''
         if (this.actionIndex === 2) {
           width = '(0px)'
           swiper.classList.remove('swipertwo')
@@ -821,15 +816,16 @@ export default {
           swiper.classList.remove('swiperthree')
         }
 
-        var t = 'translateX' + width
+        let t = 'translateX' + width
 
         console.log(t)
-        setTimeout(function () {
+
+        setTimeout(() => {
           MIP.util.css(swiper, {
             transform: t,
             'transition-duration': '200ms'
           })
-          that.actionIndex -= 1
+          this.actionIndex -= 1
         }, 0)
 
         console.log('当前页面:' + this.actionIndex)
@@ -838,27 +834,31 @@ export default {
       }
     },
     goRight () {
-      var that = this
+      this.getwidth()
+
       if (this.actionIndex !== this.maxIndex) {
-        var swiper = this.$element.querySelector('.swiper')
-        var width = '(-' + this.widths * this.actionIndex + 'px)'
+        let swiper = this.$element.querySelector('.swiper')
+        let width = '(-' + this.widths * this.actionIndex + 'px)'
         console.log(width)
-        var t = 'translateX' + width
+        let t = 'translateX' + width
 
         if (this.actionIndex === 1) {
           swiper.classList.add('swipertwo')
         }
         if (this.actionIndex === 2) {
-          // swiper.classList.remove('test');
           swiper.classList.add('swiperthree')
         }
 
         setTimeout(function () {
+
+        })
+
+        setTimeout(() => {
           MIP.util.css(swiper, {
             transform: t,
             'transition-duration': '300ms'
           })
-          that.actionIndex += 1
+          this.actionIndex += 1
         })
 
         console.log('当前页面:' + this.actionIndex)
@@ -928,18 +928,22 @@ export default {
   right: 1rem;
 }
 .content {
-  margin: 0 auto;
+    /* width: 100%; */
+    width: 1px;
+    min-width: 100%;
+margin: 0 auto;
   position: relative;
   overflow: hidden;
   z-index: 1;
 }
 .swiper {
   position: relative;
-  /* width: 2000px; */
+  width: 300%;
   z-index: 1;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  display: -webkit-flex;
   -webkit-transition-property: -webkit-transform;
   transition-property: -webkit-transform;
   transition-property: transform;
@@ -949,10 +953,11 @@ export default {
   transform: translateX(0);
 }
 .swiper .slide {
+    flex: 1;
   flex-shrink: 0;
   position: relative;
   height: 10px;
-  width: 100%;
+  width: 33.3333333%;
 }
 .swiper .slide-one {
   height: auto;

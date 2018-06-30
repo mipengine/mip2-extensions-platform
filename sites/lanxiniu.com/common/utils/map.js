@@ -10,7 +10,6 @@ export default ({
       that.pageindex = 0
 
       let onSearchComplete = function (results) {
-        // console.log("_bMap.getStatus", that._bMap.getStatus());
         if (that._bMap.getStatus() === 0) {
           // 判断状态是否正确
           let searchData = {
@@ -375,6 +374,7 @@ export default ({
       let addressSearch = new AddressSearch(BMap, city,
         '', 20,
         function (searchData) {
+          console.log('查看搜索地址数据:' + searchData)
           if (!searchData || !searchData.data || !searchData.data.length) {
             // 无匹配地址
             return false

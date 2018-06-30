@@ -105,7 +105,7 @@
 
 <script>
 import base from '../../common/utils/base'
-import '../../common/utils/base.css'
+import '../../common/utils/base.less'
 export default {
   props: {
     globaldata: {
@@ -115,7 +115,12 @@ export default {
     payConfig: {
       type: Object,
       default: function () { return {} }
+    },
+    userlogin: {
+      type: Object,
+      default: function () { return {} }
     }
+
   },
   data () {
     return {
@@ -133,64 +138,76 @@ export default {
   created () {
     console.log('创建数据')
     base.setHtmlRem()
-    base.timeformat()
     console.log(this.globaldata)
   },
   mounted () {
     console.log('这里是订单列表页面 !')
-    this.getOrderList()
+    this.$element.customElement.addEventAction('login', (event, str) => {
+      console.log('查看用户信息:' + JSON.stringify(event.userInfo, null, 2))
+
+      let interval = setInterval(() => {
+        console.log(JSON.stringify(this.userlogin, null, 2))
+        if (this.userlogin.sessionId !== '') {
+          this.getOrderList()
+          clearInterval(interval)
+        }
+      }, 200)
+    })
+    if (this.userlogin.sessionId !== '') {
+      this.getOrderList()
+    }
   },
   methods: {
     // 获取订单列表
     getOrderList () {
       this.showloading()
-      var that = this
+      console.log('查看登录信息:' + JSON.stringify(this.userlogin, null))
 
-      // console.log('我的订单页面查看sessionID:'+)
-
-      var sessionid = base.getbaiduLogMsg()
-      var updata = {
-        token: sessionid,
-        pageSize: 30,
-        pageIndex: 1
-      }
-
-      var urls = base.url + '/Order/list?' + base.setUrlParam(updata)
-
-      fetch(urls, {
-        method: 'get'
-      })
-        .then(response => response.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => {
-          console.log(JSON.stringify(response, null, 2))
-          this.hideloading()
-
-          if (response.data.filter.length !== 0) {
-            this.nodata = false
-            that.orderList = response.data.filter(element => {
-              if (element.driverInfo.phone) {
-                element.driverInfo.phone = 'tel:' + element.driverInfo.phone
-              }
-              element.isdefault = false
-              return element.OrderStatus.Desc !== '待评价'
-            })
-          }
+      let sessionid = this.userlogin.sessionId
+      let isLogin = this.userlogin.isLogin
+      if (isLogin) {
+        let updata = {
+          token: sessionid,
+          pageSize: 30,
+          pageIndex: 1
+        }
+        let urls = base.url + '/Order/list?' + base.setUrlParam(updata)
+        fetch(urls, {
+          method: 'get'
         })
+          .then(response => response.json())
+          .catch(error => console.error('Error:', error))
+          .then(response => {
+            console.log(JSON.stringify(response, null, 2))
+            this.hideloading()
+            if (response.data.length !== 0) {
+              this.nodata = false
+              this.orderList = response.data.filter(element => {
+                if (element.driverInfo.phone) {
+                  element.driverInfo.phone = 'tel:' + element.driverInfo.phone
+                }
+                element.isdefault = false
+                return element.OrderStatus.Desc !== '待评价'
+              })
+            }
+          })
+      }
     },
     // 取消订单
     cancelOrder (item) {
       console.log('订单号:' + item.OrderNum)
       this.showloading()
       this.deleteItem = item
-      var sessionid = base.getbaiduLogMsg()
-      var updata = {
+      //   let sessionid = base.getbaiduLogMsg()
+      let sessionid = this.userlogin.sessionId
+
+      let updata = {
         token: sessionid,
         orderNum: item.OrderNum
       }
 
       // 判断当前订单取消的费用
-      var urlsprice = base.url + '/Order/cancelWin?' + base.setUrlParam(updata)
+      let urlsprice = base.url + '/Order/cancelWin?' + base.setUrlParam(updata)
 
       fetch(urlsprice, {
         method: 'get'
@@ -210,13 +227,14 @@ export default {
     // 确认删除
     sureMethod () {
       this.showloading()
-      var item = this.deleteItem
-      var sessionid = base.getbaiduLogMsg()
-      var updata = {
+      let item = this.deleteItem
+      //   let sessionid = base.getbaiduLogMsg()
+      let sessionid = this.userlogin.sessionId
+      let updata = {
         token: sessionid,
         orderNum: item.OrderNum
       }
-      var urls = base.url + '/Order/cancel?' + base.setUrlParam(updata)
+      let urls = base.url + '/Order/cancel?' + base.setUrlParam(updata)
       fetch(urls, {
         method: 'get'
       })
@@ -239,10 +257,16 @@ export default {
     // 支付订单
     payOrder (item) {
       console.log('支付订单')
-      var sessionid = base.getbaiduLogMsg()
-      var obj = {
+      //   let sessionid = base.getbaiduLogMsg()
+      let sessionid = this.userlogin.sessionId
+      let urlsParam = base.setUrlParam({
+        orderNum: item.OrderNum,
         sessionId: sessionid,
-        redirectUrl: 'https://www.lanxiniu.com/Pay/success',
+        total_fee: item.needPay
+      })
+      let obj = {
+        sessionId: sessionid,
+        redirectUrl: 'https://www.lanxiniu.com/Pay/success?' + urlsParam,
         fee: item.needPay + '元',
         postData: {
           orderNum: item.OrderNum,
@@ -259,7 +283,7 @@ export default {
     },
     hideloading () {
       this.loading = false
-      var that = this
+      let that = this
       setTimeout(function () {
         that.loading = false
       }, 500)
@@ -345,10 +369,10 @@ li .head .status {
 }
 .head-footer span {
   display: inline-block;
-  height: 0.48rem;
-  line-height: 0.48rem;
+  /* height: 0.48rem; */
+  line-height: 0.6rem;
   text-emphasis: center;
-  border-radius: 0.02rem;
+  border-radius: 0.06rem;
   font-size: 0.28rem;
   padding: 0 0.2rem;
   position: relative;
@@ -365,7 +389,7 @@ li .head .status {
 .normal {
   border: 0.02rem solid rgba(57, 161, 232, 0.8);
   color: #36a0e9;
-  margin-left: 0.1rem;
+  margin-left: 0.2rem;
 }
 
 .li-nodata {

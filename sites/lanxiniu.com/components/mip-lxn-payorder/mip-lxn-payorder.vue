@@ -55,8 +55,8 @@
     <div class="footer">
       <p class="baoxian"><span class="img safe"/><span class="safe-span">免费提供5000元搬家服务险,服务前40分钟外,免费取消</span></p>
       <p
-        on="tap:payElement.toggle "
-        class="btn">
+        class="btn"
+        @click="payOrders">
         确认支付
       </p>
     </div>
@@ -65,7 +65,7 @@
 
 <script>
 import base from '../../common/utils/base'
-import '../../common/utils/base.css'
+import '../../common/utils/base.less'
 base.setHtmlRem()
 export default {
   props: {
@@ -74,6 +74,10 @@ export default {
       default: function () { return {} }
     },
     payConfig: {
+      type: Object,
+      default: function () { return {} }
+    },
+    userlogin: {
       type: Object,
       default: function () { return {} }
     }
@@ -117,23 +121,39 @@ export default {
   },
   mounted () {
     console.log('这里是支付页面 !')
-    this.initData()
     this.clickRipple()
+    this.$element.customElement.addEventAction('login', (event, str) => {
+      let interval = setInterval(() => {
+        if (this.userlogin.sessionId !== '') {
+          this.initData()
+          clearInterval(interval)
+        }
+      }, 200)
+    })
+
+    if (this.userlogin.sessionId !== '') {
+      this.initData()
+    }
 
     // $emit
   },
   methods: {
     //   初始化数据
     initData () {
-      var lxndata = base.getSession()
-      var orderNum = lxndata.order.OrderNum
-      var price = lxndata.order.billTotal
-      var sessionid = base.getbaiduLogMsg()
+      let lxndata = base.getSession()
+      let orderNum = lxndata.order.OrderNum
+      let price = lxndata.order.billTotal
+      //   let sessionid = base.getbaiduLogMsg()
+      let sessionid = this.userlogin.sessionId
       console.log('token:' + sessionid + '======' + 'orderNum:' + orderNum)
-
-      var obj = {
+      let urlsParam = base.setUrlParam({
+        orderNum: orderNum,
         sessionId: sessionid,
-        redirectUrl: 'https://www.lanxiniu.com/Pay/success',
+        total_fee: price
+      })
+      let obj = {
+        sessionId: sessionid,
+        redirectUrl: 'https://www.lanxiniu.com/Pay/success?' + urlsParam,
         fee: price,
         postData: {
           orderNum: orderNum,
@@ -141,20 +161,20 @@ export default {
         }
       }
       MIP.setData({
-        payConfig: obj
+        payConfig: MIP.util.fn.extend({}, this.payConfig, obj)
       })
     },
 
     // 请求订单数据
     setList () {
-      var _this = this
-      var data = base.getSession()
+      let _this = this
+      let data = base.getSession()
       console.log('查看订单信息============')
       console.log(data)
 
-      var order = data.order
-      var poiList = order.poiList
-      var floorData = [
+      let order = data.order
+      let poiList = order.poiList
+      let floorData = [
         '有电梯',
         '无电梯1楼',
         '无电梯2楼',
@@ -175,7 +195,7 @@ export default {
         moveInfloor: floorData[data.moveInNum]
       }
       // 列表
-      var billinfos = order.billinfo
+      let billinfos = order.billinfo
       billinfos.push({
         billName: '合计',
         billMount: order.billTotal
@@ -184,17 +204,17 @@ export default {
     },
     // 点击波纹效果
     clickRipple () {
-      var util = MIP.util
+      let util = MIP.util
       util.event.delegate(
         this.$element,
         '.btn',
         'click',
         function (e) {
-          var target = e.target
+          let target = e.target
           console.log(target)
           if (target.className.indexOf('btn') > -1) {
-            var rect = target.getBoundingClientRect()
-            var ripple = target.querySelector('.ripple')
+            let rect = target.getBoundingClientRect()
+            let ripple = target.querySelector('.ripple')
             if (!ripple) {
               ripple = document.createElement('span')
               ripple.className = 'ripple'
@@ -203,12 +223,12 @@ export default {
               target.appendChild(ripple)
             }
             ripple.classList.remove('show')
-            var top =
+            let top =
               e.pageY -
               rect.top -
               ripple.offsetHeight / 2 -
               document.body.scrollTop
-            var left =
+            let left =
               e.pageX -
               rect.left -
               ripple.offsetWidth / 2 -
@@ -222,7 +242,32 @@ export default {
       )
     },
     //   支付
-    pay () {}
+    payOrders () {
+      let lxndata = base.getSession()
+      let orderNum = lxndata.order.OrderNum
+      let price = lxndata.order.billTotal
+      //   let sessionid = base.getbaiduLogMsg()
+      let sessionid = this.userlogin.sessionId
+      console.log('token:' + sessionid + '======' + 'orderNum:' + orderNum)
+      let urlsParam = base.setUrlParam({
+        orderNum: orderNum,
+        sessionId: sessionid,
+        total_fee: price
+      })
+      let obj = {
+        sessionId: sessionid,
+        redirectUrl: 'https://www.lanxiniu.com/Pay/success?' + urlsParam,
+        fee: price,
+        postData: {
+          orderNum: orderNum,
+          token: sessionid
+        }
+      }
+      MIP.setData({
+        payConfig: MIP.util.fn.extend({}, this.payConfig, obj)
+      })
+      this.$emit('actionPay', {})
+    }
   }
 }
 </script>

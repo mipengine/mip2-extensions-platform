@@ -147,7 +147,7 @@
 
 <script>
 import base from '../../common/utils/base'
-import '../../common/utils/base.css'
+import '../../common/utils/base.less'
 export default {
   props: {
     globaldata: {
@@ -155,6 +155,10 @@ export default {
       default: function () { return {} }
     },
     payConfig: {
+      type: Object,
+      default: function () { return {} }
+    },
+    userlogin: {
       type: Object,
       default: function () { return {} }
     }
@@ -193,17 +197,35 @@ export default {
     base.setHtmlRem()
   },
   mounted () {
-    this.getRequest()
+    this.$element.customElement.addEventAction('login', (event, str) => {
+      let interval = setInterval(() => {
+        console.log(JSON.stringify(this.userlogin, null, 2))
+        if (this.userlogin.sessionId !== '') {
+          this.getRequest()
+          clearInterval(interval)
+        }
+      }, 200)
+      console.log('查看用户信息:' + JSON.stringify(event, null, 2))
+    })
+
+    if (this.userlogin.sessionId !== '') {
+      console.log('已经登录')
+      console.log('直接调起数据')
+      this.getRequest()
+    } else {
+      console.log('未登录')
+    }
   },
   methods: {
     getOrderDetail (item) {
       this.showloading()
-      var sessionid = base.getbaiduLogMsg()
-      var updata = {
+      let sessionid = this.userlogin.sessionId
+      console.log('查看用户sessionId:' + sessionid)
+      let updata = {
         token: sessionid,
         orderNum: item.OrderNum
       }
-      var urls = base.url + '/Order/detail?' + base.setUrlParam(updata)
+      let urls = base.url + '/Order/detail?' + base.setUrlParam(updata)
       fetch(urls, {
         method: 'get'
       })
@@ -214,7 +236,7 @@ export default {
           this.hideloading()
           this.detail = response.data
           console.log(this.detail)
-          var floorData = [
+          let floorData = [
             '有电梯',
             '无电梯1楼',
             '无电梯2楼',
@@ -236,13 +258,13 @@ export default {
         })
     },
     getRequest () {
-      var url = location.search // 获取url中"?"符后的字串
+      let url = location.search // 获取url中"?"符后的字串
       console.log('查看url:' + url)
-      var theRequest = {}
+      let theRequest = {}
       if (url.indexOf('?') !== -1) {
-        var str = url.substr(1)
-        var strs = str.split('&')
-        for (var i = 0; i < strs.length; i++) {
+        let str = url.substr(1)
+        let strs = str.split('&')
+        for (let i = 0; i < strs.length; i++) {
           theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
         }
       }
@@ -254,14 +276,15 @@ export default {
       console.log('订单号:' + item.OrderNum)
       this.showloading()
       this.deleteItem = item
-      var sessionid = base.getbaiduLogMsg()
-      var updata = {
+      //   let sessionid = base.getbaiduLogMsg()
+      let sessionid = this.userlogin.sessionId
+      let updata = {
         token: sessionid,
         orderNum: item.OrderNum
       }
 
       // 判断当前订单取消的费用
-      var urlsprice = base.url + '/Order/cancelWin?' + base.setUrlParam(updata)
+      let urlsprice = base.url + '/Order/cancelWin?' + base.setUrlParam(updata)
 
       fetch(urlsprice, {
         method: 'get'
@@ -280,14 +303,15 @@ export default {
     },
     // 确认删除
     sureMethod (item) {
-      //   var item =   this.deleteItem;
+      //   let item =   this.deleteItem;
       this.showloading()
-      var sessionid = base.getbaiduLogMsg()
-      var updata = {
+      //   let sessionid = base.getbaiduLogMsg()
+      let sessionid = this.userlogin.sessionId
+      let updata = {
         token: sessionid,
         orderNum: item.OrderNum
       }
-      var urls = base.url + '/Order/cancel?' + base.setUrlParam(updata)
+      let urls = base.url + '/Order/cancel?' + base.setUrlParam(updata)
       fetch(urls, {
         method: 'get'
       })
@@ -304,10 +328,17 @@ export default {
     payOrder (item) {
       console.log(item.OrderNum)
       console.log('支付订单')
-      var sessionid = base.getbaiduLogMsg()
-      var obj = {
+      //   let sessionid = base.getbaiduLogMsg()
+      let sessionid = this.userlogin.sessionId
+      let urlsParam = base.setUrlParam({
+        orderNum: item.OrderNum,
         sessionId: sessionid,
-        redirectUrl: 'https://www.lanxiniu.com/Pay/success',
+        total_fee: item.needPay
+      })
+
+      let obj = {
+        sessionId: sessionid,
+        redirectUrl: 'https://www.lanxiniu.com/Pay/success?' + urlsParam,
         fee: item.needPay + '元',
         postData: {
           orderNum: item.OrderNum,
@@ -320,7 +351,7 @@ export default {
       this.$emit('actionPay', {})
     },
     coseDetail (item) {
-      // var orderNumber = item.
+      // let orderNumber = item.
       MIP.viewer.open(base.htmlhref.costdetail + '?OrderNum=' + item.OrderNum, {
         isMipLink: true
       })
@@ -330,7 +361,7 @@ export default {
     },
     hideloading () {
       this.loading = false
-      var that = this
+      let that = this
       setTimeout(function () {
         that.loading = false
       }, 500)
@@ -523,7 +554,7 @@ export default {
   display: inline-block;
   padding: 0.15rem 0.3rem;
   border: 0.02rem solid #a8a8a8;
-  border-radius: 0.02rem;
+  border-radius: 0.06rem;
   margin-left: 0.2rem;
 }
 .options .order-again {
