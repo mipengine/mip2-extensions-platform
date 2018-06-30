@@ -102,7 +102,7 @@
 <script>
 import base from '../../common/utils/base'
 import map from '../../common/utils/map'
-import '../../common/utils/base.css'
+import '../../common/utils/base.less'
 base.setHtmlRem()
 export default {
   directives: {
@@ -155,23 +155,25 @@ export default {
     // 初始化
     this.initData()
 
-    // 数据监控
-    this.lxnDataWatch()
+    // let xxx = 0
+
+    if (MIP.sandbox.BMap) {
+    //   xxx = 1
+      this.BMap = MIP.sandbox.BMap
+      this.mapInit()
+    } else {
+      console.log('不存在地图环境')
+    }
 
     this.$element.customElement.addEventAction('init', () => {
-      console.log(1111)
+    //   if (!xxx) return
+    //   console.log(1111)
       this.BMap = MIP.sandbox.BMap
       this.mapInit()
       console.log(this.BMap)
     })
   },
 
-  beforeDestroy () {
-    console.log('=+=+=+=+=+=+=+')
-  },
-  destroyed () {
-    console.log('销毁销毁')
-  },
   methods: {
     // 基本数据初始化
     initData () {
@@ -180,16 +182,17 @@ export default {
         MIP.viewer.open(base.htmlhref.order, { isMipLink: false })
       } else {
         console.log('有值')
-
-        // 配置全局数据标志       当前是  搬出地址选择页面
-        let obj = { currentmap: 'out' }
-        base.mipSetGlobalData(obj)
-
+        // let obj = { currentmap: 'out' }
+        // base.mipSetGlobalData(obj)
         // 添加波纹
         this.clickRipple()
+        // 配置全局数据标志       当前是  搬出地址选择页面
+
+        // 数据监控
+        this.lxnDataWatch()
       }
     },
-    // 地图初始化
+
     mapInit (city) {
       let BMap = this.BMap
       console.log(BMap)
@@ -504,7 +507,6 @@ export default {
   position: relative;
 }
 .head a {
-  display: inline-block;
   position: absolute;
   left: 0.32rem;
   font-size: 0.3rem;
@@ -513,19 +515,20 @@ export default {
   display: flex;
   width: 0.9rem;
   z-index: 99999;
-}
-.currentcity {
+  height: 100%;
+  align-items: center;
 }
 
 .arrow-down {
   position: absolute;
-  top: 0.19rem;
+  top: 50%;
   right: 0;
   width: 0;
   height: 0;
   border-left: 0.1rem solid transparent;
   border-right: 0.1rem solid transparent;
   border-top: 0.1rem solid #333333;
+  transform: translateY(-50%);
 }
 
 .s-input {

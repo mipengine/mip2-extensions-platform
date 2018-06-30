@@ -86,29 +86,33 @@
                   <div class="left">
                     <a
                       :href="htmlhref.mapout"
-                      data-type="mip">
+                      data-type="mip"
+
+                      class="actives inputfix">
                       <input
                         v-model="globaldata.moveOutAddress.localtion.title"
                         :readonly="isRead"
-                        class="actives"
+
                         type="text"
                         placeholder="您要从哪里搬出"
-                        @click="setMoveOut">
-                        <!-- <div
+                      >
+                      <!-- <div
                         :class="{hastext:outIsFill}"
                         class="gomap actives"
                         v-text="globaldata.moveOutAddress.localtion.title"/> -->
                     </a>
 
                   </div>
-                  <div class="right">
+                  <div
+                    class="right actives inputfix"
+                    @click="picker({'type':'floor','status':'out'})">
                     <input
                       v-model="floorAndTime.move.moveOut"
                       :readonly="isRead"
-                      class="actives"
+
                       type="text"
                       placeholder="搬出楼层"
-                      @click="picker({'type':'floor','status':'out'})">
+                    >
                   </div>
                 </div>
 
@@ -119,24 +123,25 @@
                   <div class="left">
                     <a
                       :href="htmlhref.mapin"
+                      class=" actives inputfix"
                       data-type="mip">
                       <input
                         v-model="globaldata.moveInAddress.localtion.title"
                         :readonly="isRead"
                         type="text"
-                        class="actives"
                         placeholder="想要搬到哪里去"
-                        @click="setMoveIn">
+                      >
                     </a>
                   </div>
-                  <div class="right">
+                  <div
+                    class="right actives inputfix"
+                    @click="picker({'type':'floor','status':'in'})">
                     <input
                       v-model="floorAndTime.move.moveIn"
                       :readonly="isRead"
-                      class="actives"
                       type="text"
                       placeholder="搬入楼层"
-                      @click="picker({'type':'floor','status':'in'})">
+                    >
                   </div>
                 </div>
               </div>
@@ -149,11 +154,11 @@
                     @click="picker({'type':'time'})">
                     <span>搬家时间</span>
                   </div>
-                  <div class="right">
+                  <div class="right actives inputfix">
                     <input
                       v-model="floorAndTime.time"
                       :readonly="isRead"
-                      class="btn actives"
+                      class="btn "
                       type="text"
                       placeholder="选择时间"
                       @click="picker({'type':'time'})">
@@ -203,6 +208,7 @@
     <div
       v-show="warn.show"
       class="layer"
+
       @touchstart.prevent/>
     <div
       v-show="warn.show"
@@ -227,19 +233,11 @@
 
 <script>
 import base from '../../common/utils/base.js'
-import '../../common/utils/base.css'
+import '../../common/utils/base.less'
 import picker from '../../common/utils/picker.js'
 export default {
   props: {
     globaldata: {
-      type: Object,
-      default: function () { return {} }
-    },
-    sessionId: {
-      type: String,
-      default: function () { return '' }
-    },
-    user: {
       type: Object,
       default: function () { return {} }
     },
@@ -443,7 +441,8 @@ export default {
         // 弹窗
         show: false,
         texts: ''
-      }
+      },
+      debounce: ''
     }
   },
   watch: {
@@ -456,9 +455,7 @@ export default {
     base.setHtmlRem()
   },
   mounted () {
-    console.log('查看sessionId:' + this.sessionId)
-    console.log('查看user:' + JSON.stringify(this.user, null, 2))
-
+    console.log('查看登录信息:' + this.userlogin)
     // 基本数据初始化
     this.initData()
 
@@ -477,10 +474,6 @@ export default {
 
     // 设置波纹效果
     this.clickRipple()
-
-    //  setTimeout(function(){
-    //      MIP.setData({"#sessionId":'测试'});
-    //  },2000)
   },
 
   methods: {
@@ -491,23 +484,12 @@ export default {
       // 配置 车辆信息
       this.floorAndTime.move.data = this.carTypes[0].stairsFee
 
-      // 用户登录信息
-      let user = sessionStorage.getItem('user')
-      if (user !== null) {
-        console.log('用户已经登录')
-        user = JSON.parse(user)
-        console.log(JSON.stringify(user, null, 2))
-        base.mipSetGlobalData(user)
-      } else {
-        console.log('用户未登录')
-      }
-
       this.getwidth()
       this.swiperTouch()
     },
     // 添加tab监听
     addMipWatch () {
-      let that = this
+    //   let that = this
 
       this.$element.customElement.addEventAction('login', function (
         event /* 对应的事件对象 */,
@@ -515,7 +497,7 @@ export default {
       ) {
         console.log('查看用户信息:' + JSON.stringify(event.userInfo, null, 2))
 
-        that.userLogin(event)
+        // that.userLogin(event)
 
         setTimeout(function () {
           console.log('跳转=========================')
@@ -524,14 +506,10 @@ export default {
         }, 1000)
       })
 
-      this.$element.customElement.addEventAction('goorderlist', function (
-        event /* 对应的事件对象 */,
-        str /* 事件参数 */
-      ) {
-        console.log('查看用户信息:' + JSON.stringify(event.userInfo, null, 2))
-        let sessionId = base.getbaiduLogMsg()
-        if (sessionId !== null) {
-          console.log('已登录')
+      this.$element.customElement.addEventAction('goorderlist', (event, str) => {
+        let isLogin = this.userlogin.isLogin
+
+        if (isLogin) {
           MIP.viewer.open(base.htmlhref.orderlist, { isMipLink: true })
         } else {
           console.log('未登录')
@@ -539,7 +517,7 @@ export default {
       })
     },
     // 请求当前城市的车型列表
-    getCurrentCityCarTypes (city) {
+    getCurrentCityCarTypes  (city) {
       let that = this
 
       console.log('==========调用请求当前城市的车型列表============' + city)
@@ -636,11 +614,20 @@ export default {
     },
     // 确认下单
     sureOrder () {
-      let sessionid = this.sessionId
-      console.log('下单前查看数据sessionid:' + sessionid)
-      if (sessionid !== '' && sessionid !== undefined) {
+    //   let sessionid = this.sessionId
+    //   console.log('下单前查看数据sessionid:' + sessionid)
+    //   if (sessionid !== '' && sessionid !== undefined) {
+    //     console.log('确认下单时已经登录=====')
+    //     this.checkData(sessionid)
+    //   } else {
+    //     console.log('确认下单时未登录=====')
+    //   }
+      let islogin = this.userlogin.isLogin
+      let sessionId = this.userlogin.sessionId
+      console.log('查看登录信息:' + JSON.stringify(this.userlogin, null, 2))
+      if (islogin) {
         console.log('确认下单时已经登录=====')
-        this.checkData(sessionid)
+        this.checkData(sessionId)
       } else {
         console.log('确认下单时未登录=====')
       }
@@ -794,7 +781,7 @@ export default {
         data: JSON.stringify(data) // 订单信息
       }
       let urls = base.url + '//Order/update?' + base.setUrlParam(updata)
-      this.fetchShow = true
+      //   this.fetchShow = true
       fetch(urls, {
         method: 'get'
       })
@@ -802,7 +789,7 @@ export default {
         .catch(error => console.error('Error:', error))
         .then(response => {
           console.log(JSON.stringify(response, null, 2))
-          this.fetchShow = false
+          //   this.fetchShow = false
           let data = response.data
           if (data.warning) {
             data.warning = ''
@@ -828,7 +815,8 @@ export default {
         })
     },
     // 切换车型效果
-    changeTab (item) {
+    changeTab (item, isRestoreData) {
+      let isRestor = isRestoreData || false
       let index = item.index
       this.currentCar = item
       this.tabData.forEach(element => {
@@ -838,11 +826,11 @@ export default {
         }
       })
       let num = -this.swiperWidth * item.index
-      this.moveSBack(num)
-      this.changeTabData(index)
+      this.moveSBack(num, isRestor)
+    //   this.changeTabData(index, isRestor)
     },
     // 切换车型数据
-    changeTabData (index) {
+    changeTabData (index, isRestoreData) {
       let that = this
       let move = this.floorAndTime.move
       let data = this.carTypes[index]
@@ -854,16 +842,23 @@ export default {
       //   console.log(JSON.stringify(data, null, 2));
       //   存入 MIP-Data
       console.log('类型:' + data.type)
-      //   切换车型时 重置搬出搬入数据
-      let obj = {
-        carType: data.type,
-        moveOutNum: '',
-        moveInNum: ''
+
+      let flag = isRestoreData || false
+      if (!flag) {
+        console.log('手动操作进行保存')
+        //   切换车型时 重置搬出搬入数据
+        let obj = {
+          carType: data.type,
+          moveOutNum: '',
+          moveInNum: ''
+        }
+        console.log(JSON.stringify(obj, null, 2))
+        let datas = base.mipExtendData(that.globaldata, obj)
+        base.mipSetGlobalData(obj)
+        base.setSession(datas)
+      } else {
+        console.log('还原数据不进行保存')
       }
-      console.log(JSON.stringify(obj, null, 2))
-      let datas = base.mipExtendData(that.globaldata, obj)
-      base.mipSetGlobalData(obj)
-      base.setSession(datas)
     },
     // 设置搬出地址
     setMoveOut () {
@@ -1009,6 +1004,23 @@ export default {
 
         base.mipSetGlobalData(data)
 
+        // 还原车型
+        let carTypeItem = {
+          index: 0
+        }
+        switch (data.carType) {
+          case 3:
+            break
+          case 2:
+            carTypeItem.index = 1
+            break
+          case 20:
+            carTypeItem.index = 2
+            break
+        }
+
+        this.changeTab(carTypeItem, true)
+
         let str1 = ',楼层费'
         let str2 = '...'
 
@@ -1025,7 +1037,9 @@ export default {
         }
         // 时间
         if (data.orderTime !== '') {
+          console.log('存在缓存时间~~~' + data.orderTime)
           let time = base.timeformat(new Date(data.orderTime * 1000), 'yyyy-MM-dd hh:mm')
+          console.log('查看时间:' + time)
           floorAndTime.time = time
         }
         // 配置地址
@@ -1082,16 +1096,16 @@ export default {
     },
 
     // 修复登录数据不显示问题
-    userLogin (event) {
-      // 用户登录后设置登录信息
-      console.log('调用本地存储用户登录信息')
-      console.log('查看用户信息:' + JSON.stringify(event.userInfo, null, 2))
-      let obj = {
-        user: event.userInfo.nickname
-      }
-      base.mipSetGlobalData(obj)
-      sessionStorage.setItem('user', JSON.stringify(obj))
-    },
+    // userLogin (event) {
+    //   // 用户登录后设置登录信息
+    //   console.log('调用本地存储用户登录信息')
+    //   console.log('查看用户信息:' + JSON.stringify(event.userInfo, null, 2))
+    //   let obj = {
+    //     user: event.userInfo.nickname
+    //   }
+    //   base.mipSetGlobalData(obj)
+    //   sessionStorage.setItem('user', JSON.stringify(obj))
+    // },
     // 日式搬家提示
     rishiMove () {
       let warn = this.warn
@@ -1119,7 +1133,7 @@ export default {
       })
     },
     // 不足距离 返回
-    moveSBack (num) {
+    moveSBack (num, isRestoreData) {
       let swiper = this.$element.querySelector('.swiper-wrapper')
       this.transform = num
       let t = 'translateX(' + num + 'px)'
@@ -1138,7 +1152,8 @@ export default {
           element.isActive = true
         }
       })
-      this.changeTabData(index)
+      let flag = isRestoreData || false
+      this.changeTabData(index, flag)
 
       setTimeout(function () {
         MIP.util.css(swiper, {
@@ -1203,7 +1218,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 .lxn-hide {
   display: none;
 }
@@ -1214,7 +1229,7 @@ export default {
 }
 
 .banner-content {
-  max-height: 2rem;
+  max-height: 1.6rem;
   overflow: hidden;
 }
 
@@ -1303,7 +1318,7 @@ export default {
   border-radius: 4px;
   padding: 0 0.3975rem;
   /* padding-top: 0.28rem; */
-  padding-bottom: 0.28rem;
+  padding-bottom: 0.4rem;
 }
 .lxn-tab-title {
   display: flex;
@@ -1421,6 +1436,7 @@ export default {
 }
 .address {
   width: 100%;
+  height: unset!important;
   /* background: blue; */
 }
 .point {
@@ -1440,9 +1456,7 @@ export default {
 }
 
 .address-div {
-  height: 0.75rem;
   padding-left: 0.6rem;
-  /* background: red; */
   position: relative;
   font-size: 0.28rem;
 }
@@ -1464,6 +1478,7 @@ export default {
   display: flex;
   height: 100%;
   border-bottom: 0.02rem solid rgba(68, 68, 68, 0.1);
+  padding-bottom: .04rem;
 }
 .address-div-flex2 {
   border: none;
@@ -1471,6 +1486,7 @@ export default {
 .address-div div.left {
   position: relative;
   flex: 3;
+//   height: .75rem;
 }
 .address-div div.left::after {
   content: "";
@@ -1489,9 +1505,13 @@ export default {
 }
 .address-div div.right {
   flex: 2;
+//   height: .75rem;
 }
 .address-div div.right input {
   text-align: right;
+}
+.address-div input{
+    height: .745rem;
 }
 .move-second {
   border-top: 0.02rem solid rgba(68, 68, 68, 0.1);
@@ -1510,6 +1530,10 @@ export default {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
+}
+.address-div:last-child{
+    height: .75rem;
+    // background: red
 }
 .movetime,
 .beizhu {
@@ -1595,5 +1619,20 @@ export default {
   width: 100%;
   height: 100%;
   position: relative;
+}
+
+.inputfix{
+    position: relative;
+    // display: inline-block;
+    display: block;
+    height: 100%;
+    width: 100%;
+    &::before{
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        content: "";
+        background-color: rgba(0, 0, 0, 0)
+    }
+
 }
 </style>

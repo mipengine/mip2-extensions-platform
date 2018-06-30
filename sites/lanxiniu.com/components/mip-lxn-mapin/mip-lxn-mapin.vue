@@ -105,7 +105,9 @@
 <script>
 import base from '../../common/utils/base'
 import map from '../../common/utils/map'
-import '../../common/utils/base.css'
+// import axios from "axios"
+import '../../common/utils/base.less'
+
 base.setHtmlRem()
 export default {
   directives: {
@@ -156,10 +158,15 @@ export default {
     // 初始化
     this.initData()
 
-    // 数据监控
-    this.lxnDataWatch()
+    if (MIP.sandbox.BMap) {
+      this.BMap = MIP.sandbox.BMap
+      this.mapInit()
+    } else {
+      console.log('不存在地图环境')
+    }
 
     this.$element.customElement.addEventAction('init', () => {
+      console.log('全局数据已经添加完成')
       this.BMap = MIP.sandbox.BMap
       this.mapInit()
       console.log(this.BMap)
@@ -173,10 +180,11 @@ export default {
         MIP.viewer.open(base.htmlhref.order, { isMipLink: false })
       } else {
         console.log('有值')
-
+        // 数据监控
+        this.lxnDataWatch()
         // 配置全局数据标志当前是  搬出地址选择页面
-        let obj = { currentmap: 'in' }
-        base.mipSetGlobalData(obj)
+        // let obj = { currentmap: 'in' }
+        // base.mipSetGlobalData(obj)
 
         // 添加波纹
         this.clickRipple()
@@ -185,8 +193,11 @@ export default {
     // 地图初始化
     mapInit (city) {
       let BMap = this.BMap
+      console.log('初始化查看地图类')
+      console.log(BMap)
       let that = this
       let citys = city || this.globaldata.ordercity
+
       let BaiduMap = map.mapInit()
 
       let lxndata = base.getSession()
@@ -225,8 +236,9 @@ export default {
       })
 
       if (BMap.Map) {
+        console.log(BMap)
         console.log('存在')
-        this.searchHandler = maps.handleResult(citys, that.searchResult)
+        this.searchHandler = maps.handleResult(BMap, citys, that.searchResult)
         this.maps = maps.map
       }
     },
@@ -485,7 +497,6 @@ export default {
   position: relative;
 }
 .head a {
-  display: inline-block;
   position: absolute;
   left: 0.32rem;
   font-size: 0.3rem;
@@ -494,19 +505,20 @@ export default {
   display: flex;
   width: 0.9rem;
   z-index: 99999;
-}
-.currentcity {
+  height: 100%;
+  align-items: center;
 }
 
 .arrow-down {
   position: absolute;
-  top: 0.19rem;
+  top: 50%;
   right: 0;
   width: 0;
   height: 0;
   border-left: 0.1rem solid transparent;
   border-right: 0.1rem solid transparent;
   border-top: 0.1rem solid #333333;
+  transform: translateY(-50%);
 }
 
 .s-input {
