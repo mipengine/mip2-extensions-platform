@@ -24,7 +24,7 @@
 
 <script>
 import base from '../../common/utils/base'
-import '../../common/utils/base.css'
+import '../../common/utils/base.less'
 base.setHtmlRem()
 export default {
   props: {
@@ -51,7 +51,7 @@ export default {
   mounted () {
     this.getRequest()
     this.$element.customElement.addEventAction('login', (event, str) => {
-      var interval = setInterval(() => {
+      let interval = setInterval(() => {
         console.log(JSON.stringify(this.userlogin, null, 2))
         if (this.userlogin.sessionId !== '') {
           this.getRequest()
@@ -70,12 +70,12 @@ export default {
   methods: {
     getCostDetail (item) {
       // 获取费用明细
-      var sessionid = base.getbaiduLogMsg()
-      var updata = {
+      let sessionid = base.getbaiduLogMsg()
+      let updata = {
         token: sessionid,
         orderNum: item.OrderNum
       }
-      var urls = base.url + '/Order/billInfo?' + base.setUrlParam(updata)
+      let urls = base.url + '/Order/billInfo?' + base.setUrlParam(updata)
 
       fetch(urls, {
         method: 'post'
@@ -93,13 +93,13 @@ export default {
         })
     },
     getRequest () {
-      var url = location.search // 获取url中"?"符后的字串
+      let url = location.search // 获取url中"?"符后的字串
       console.log('查看url:' + url)
-      var theRequest = {}
+      let theRequest = {}
       if (url.indexOf('?') !== -1) {
-        var str = url.substr(1)
-        var strs = str.split('&')
-        for (var i = 0; i < strs.length; i++) {
+        let str = url.substr(1)
+        let strs = str.split('&')
+        for (let i = 0; i < strs.length; i++) {
           theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
         }
       }
@@ -110,7 +110,7 @@ export default {
     },
     hideloading () {
       this.loading = false
-      var that = this
+      let that = this
       setTimeout(function () {
         that.loading = false
       }, 500)

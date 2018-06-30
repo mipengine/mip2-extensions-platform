@@ -690,7 +690,7 @@
 
 <script>
 import base from '../../common/utils/base.js'
-import '../../common/utils/base.css'
+import '../../common/utils/base.less'
 base.setHtmlRem()
 export default {
   props: {
@@ -751,9 +751,9 @@ export default {
   mounted () {
     console.log('资费详情页面')
 
-    // var interval = setInterval(function () {
-    //   var content = that.$element.querySelector('.content')
-    //   var width = MIP.util.css(content, 'width')
+    // let interval = setInterval(function () {
+    //   let content = that.$element.querySelector('.content')
+    //   let width = MIP.util.css(content, 'width')
     //   console.log(width)
     //   if (width === 'auto') {
 
@@ -767,9 +767,9 @@ export default {
   methods: {
     // 请求当前城市的车型列表
     getCurrentCityCarTypes (city) {
-      var globaldata = this.globaldata
-      var focusCity = globaldata.ordercity
-      var urls = base.url + '/Setting/getCityData?city=' + focusCity
+      let globaldata = this.globaldata
+      let focusCity = globaldata.ordercity
+      let urls = base.url + '/Setting/getCityData?city=' + focusCity
       fetch(urls, {
         method: 'get'
       })
@@ -780,8 +780,8 @@ export default {
 
           console.info(response)
           if (response.data) {
-            var service = response.data.setting.service
-            for (var i = 0; i < service.length; i++) {
+            let service = response.data.setting.service
+            for (let i = 0; i < service.length; i++) {
               if (service[i].type === 5) {
               // 如果当前城市车型小于3个  隐藏最后一个
                 if (service[i].car.length < 3) {
@@ -805,8 +805,8 @@ export default {
       this.getwidth()
 
       if (this.actionIndex !== 1) {
-        var swiper = this.$element.querySelector('.swiper')
-        var width = ''
+        let swiper = this.$element.querySelector('.swiper')
+        let width = ''
         if (this.actionIndex === 2) {
           width = '(0px)'
           swiper.classList.remove('swipertwo')
@@ -816,7 +816,7 @@ export default {
           swiper.classList.remove('swiperthree')
         }
 
-        var t = 'translateX' + width
+        let t = 'translateX' + width
 
         console.log(t)
 
@@ -837,10 +837,10 @@ export default {
       this.getwidth()
 
       if (this.actionIndex !== this.maxIndex) {
-        var swiper = this.$element.querySelector('.swiper')
-        var width = '(-' + this.widths * this.actionIndex + 'px)'
+        let swiper = this.$element.querySelector('.swiper')
+        let width = '(-' + this.widths * this.actionIndex + 'px)'
         console.log(width)
-        var t = 'translateX' + width
+        let t = 'translateX' + width
 
         if (this.actionIndex === 1) {
           swiper.classList.add('swipertwo')

@@ -233,7 +233,7 @@
 
 <script>
 import base from '../../common/utils/base.js'
-import '../../common/utils/base.css'
+import '../../common/utils/base.less'
 import picker from '../../common/utils/picker.js'
 export default {
   props: {
@@ -507,7 +507,7 @@ export default {
       })
 
       this.$element.customElement.addEventAction('goorderlist', (event, str) => {
-        var isLogin = this.userlogin.isLogin
+        let isLogin = this.userlogin.isLogin
 
         if (isLogin) {
           MIP.viewer.open(base.htmlhref.orderlist, { isMipLink: true })
@@ -622,8 +622,8 @@ export default {
     //   } else {
     //     console.log('确认下单时未登录=====')
     //   }
-      var islogin = this.userlogin.isLogin
-      var sessionId = this.userlogin.sessionId
+      let islogin = this.userlogin.isLogin
+      let sessionId = this.userlogin.sessionId
       console.log('查看登录信息:' + JSON.stringify(this.userlogin, null, 2))
       if (islogin) {
         console.log('确认下单时已经登录=====')
@@ -1152,7 +1152,7 @@ export default {
           element.isActive = true
         }
       })
-      var flag = isRestoreData || false
+      let flag = isRestoreData || false
       this.changeTabData(index, flag)
 
       setTimeout(function () {

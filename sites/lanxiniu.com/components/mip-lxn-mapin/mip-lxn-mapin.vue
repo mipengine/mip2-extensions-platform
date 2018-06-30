@@ -106,7 +106,7 @@
 import base from '../../common/utils/base'
 import map from '../../common/utils/map'
 // import axios from "axios"
-import '../../common/utils/base.css'
+import '../../common/utils/base.less'
 
 base.setHtmlRem()
 export default {
@@ -183,8 +183,8 @@ export default {
         // 数据监控
         this.lxnDataWatch()
         // 配置全局数据标志当前是  搬出地址选择页面
-        let obj = { currentmap: 'in' }
-        base.mipSetGlobalData(obj)
+        // let obj = { currentmap: 'in' }
+        // base.mipSetGlobalData(obj)
 
         // 添加波纹
         this.clickRipple()
@@ -497,7 +497,6 @@ export default {
   position: relative;
 }
 .head a {
-  display: inline-block;
   position: absolute;
   left: 0.32rem;
   font-size: 0.3rem;
@@ -506,19 +505,20 @@ export default {
   display: flex;
   width: 0.9rem;
   z-index: 99999;
-}
-.currentcity {
+  height: 100%;
+  align-items: center;
 }
 
 .arrow-down {
   position: absolute;
-  top: 0.19rem;
+  top: 50%;
   right: 0;
   width: 0;
   height: 0;
   border-left: 0.1rem solid transparent;
   border-right: 0.1rem solid transparent;
   border-top: 0.1rem solid #333333;
+  transform: translateY(-50%);
 }
 
 .s-input {

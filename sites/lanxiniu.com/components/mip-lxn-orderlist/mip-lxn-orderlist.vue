@@ -105,7 +105,7 @@
 
 <script>
 import base from '../../common/utils/base'
-import '../../common/utils/base.css'
+import '../../common/utils/base.less'
 export default {
   props: {
     globaldata: {
@@ -145,7 +145,7 @@ export default {
     this.$element.customElement.addEventAction('login', (event, str) => {
       console.log('查看用户信息:' + JSON.stringify(event.userInfo, null, 2))
 
-      var interval = setInterval(() => {
+      let interval = setInterval(() => {
         console.log(JSON.stringify(this.userlogin, null, 2))
         if (this.userlogin.sessionId !== '') {
           this.getOrderList()
@@ -163,15 +163,15 @@ export default {
       this.showloading()
       console.log('查看登录信息:' + JSON.stringify(this.userlogin, null))
 
-      var sessionid = this.userlogin.sessionId
-      var isLogin = this.userlogin.isLogin
+      let sessionid = this.userlogin.sessionId
+      let isLogin = this.userlogin.isLogin
       if (isLogin) {
-        var updata = {
+        let updata = {
           token: sessionid,
           pageSize: 30,
           pageIndex: 1
         }
-        var urls = base.url + '/Order/list?' + base.setUrlParam(updata)
+        let urls = base.url + '/Order/list?' + base.setUrlParam(updata)
         fetch(urls, {
           method: 'get'
         })
@@ -198,16 +198,16 @@ export default {
       console.log('订单号:' + item.OrderNum)
       this.showloading()
       this.deleteItem = item
-      //   var sessionid = base.getbaiduLogMsg()
-      var sessionid = this.userlogin.sessionId
+      //   let sessionid = base.getbaiduLogMsg()
+      let sessionid = this.userlogin.sessionId
 
-      var updata = {
+      let updata = {
         token: sessionid,
         orderNum: item.OrderNum
       }
 
       // 判断当前订单取消的费用
-      var urlsprice = base.url + '/Order/cancelWin?' + base.setUrlParam(updata)
+      let urlsprice = base.url + '/Order/cancelWin?' + base.setUrlParam(updata)
 
       fetch(urlsprice, {
         method: 'get'
@@ -227,14 +227,14 @@ export default {
     // 确认删除
     sureMethod () {
       this.showloading()
-      var item = this.deleteItem
-      //   var sessionid = base.getbaiduLogMsg()
-      var sessionid = this.userlogin.sessionId
-      var updata = {
+      let item = this.deleteItem
+      //   let sessionid = base.getbaiduLogMsg()
+      let sessionid = this.userlogin.sessionId
+      let updata = {
         token: sessionid,
         orderNum: item.OrderNum
       }
-      var urls = base.url + '/Order/cancel?' + base.setUrlParam(updata)
+      let urls = base.url + '/Order/cancel?' + base.setUrlParam(updata)
       fetch(urls, {
         method: 'get'
       })
@@ -257,14 +257,14 @@ export default {
     // 支付订单
     payOrder (item) {
       console.log('支付订单')
-      //   var sessionid = base.getbaiduLogMsg()
-      var sessionid = this.userlogin.sessionId
-      var urlsParam = base.setUrlParam({
+      //   let sessionid = base.getbaiduLogMsg()
+      let sessionid = this.userlogin.sessionId
+      let urlsParam = base.setUrlParam({
         orderNum: item.OrderNum,
         sessionId: sessionid,
         total_fee: item.needPay
       })
-      var obj = {
+      let obj = {
         sessionId: sessionid,
         redirectUrl: 'https://www.lanxiniu.com/Pay/success?' + urlsParam,
         fee: item.needPay + '元',
@@ -283,7 +283,7 @@ export default {
     },
     hideloading () {
       this.loading = false
-      var that = this
+      let that = this
       setTimeout(function () {
         that.loading = false
       }, 500)

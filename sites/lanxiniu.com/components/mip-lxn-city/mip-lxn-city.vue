@@ -21,15 +21,9 @@ export default {
   },
   mounted () {
     console.log('这里是选择城市页面 !')
-    var _this = this
-    this.$element.customElement.addEventAction('setcity', function (
-      event /* 对应的事件对象 */,
-      str /* 事件参数 */
-    ) {
-      console.log('setcity: ', str)
-      console.log(_this.globaldata.currentmap)
-      var mapType = _this.globaldata.currentmap
-      var obj = {
+
+    this.$element.customElement.addEventAction('setcity', (event, str) => {
+      let obj = {
         ordercity: str,
         kilometer: 0,
         moveInAddress: {
@@ -57,7 +51,7 @@ export default {
           phone: ''
         }
       }
-      var datas = MIP.util.fn.extend({}, _this.globaldata, obj)
+      let datas = MIP.util.fn.extend({}, this.globaldata, obj)
 
       console.log('查看数据:' + JSON.stringify(datas, null, 2))
 
@@ -66,14 +60,9 @@ export default {
       })
       console.log('查看数据:' + JSON.stringify(datas, null, 2))
       base.setSession(datas)
-      setTimeout(function () {
-        if (mapType === 'out') {
-        //    MIP.viewer.open(base.htmlhref.mapout, { isMipLink: true });
-          MIP.viewer.page.router.back()
-        } else {
-        //    MIP.viewer.open(base.htmlhref.mapin, { isMipLink: true });
-          MIP.viewer.page.router.back()
-        }
+
+      setTimeout(() => {
+        MIP.viewer.page.router.back()
       }, 500)
     })
   },

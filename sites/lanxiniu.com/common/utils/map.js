@@ -10,7 +10,6 @@ export default ({
       that.pageindex = 0
 
       let onSearchComplete = function (results) {
-        // console.log("_bMap.getStatus", that._bMap.getStatus());
         if (that._bMap.getStatus() === 0) {
           // 判断状态是否正确
           let searchData = {

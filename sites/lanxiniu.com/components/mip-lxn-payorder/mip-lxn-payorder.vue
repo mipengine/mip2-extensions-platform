@@ -65,7 +65,7 @@
 
 <script>
 import base from '../../common/utils/base'
-import '../../common/utils/base.css'
+import '../../common/utils/base.less'
 base.setHtmlRem()
 export default {
   props: {
@@ -123,7 +123,7 @@ export default {
     console.log('这里是支付页面 !')
     this.clickRipple()
     this.$element.customElement.addEventAction('login', (event, str) => {
-      var interval = setInterval(() => {
+      let interval = setInterval(() => {
         if (this.userlogin.sessionId !== '') {
           this.initData()
           clearInterval(interval)
@@ -140,18 +140,18 @@ export default {
   methods: {
     //   初始化数据
     initData () {
-      var lxndata = base.getSession()
-      var orderNum = lxndata.order.OrderNum
-      var price = lxndata.order.billTotal
-      //   var sessionid = base.getbaiduLogMsg()
-      var sessionid = this.userlogin.sessionId
+      let lxndata = base.getSession()
+      let orderNum = lxndata.order.OrderNum
+      let price = lxndata.order.billTotal
+      //   let sessionid = base.getbaiduLogMsg()
+      let sessionid = this.userlogin.sessionId
       console.log('token:' + sessionid + '======' + 'orderNum:' + orderNum)
-      var urlsParam = base.setUrlParam({
+      let urlsParam = base.setUrlParam({
         orderNum: orderNum,
         sessionId: sessionid,
         total_fee: price
       })
-      var obj = {
+      let obj = {
         sessionId: sessionid,
         redirectUrl: 'https://www.lanxiniu.com/Pay/success?' + urlsParam,
         fee: price,
@@ -167,14 +167,14 @@ export default {
 
     // 请求订单数据
     setList () {
-      var _this = this
-      var data = base.getSession()
+      let _this = this
+      let data = base.getSession()
       console.log('查看订单信息============')
       console.log(data)
 
-      var order = data.order
-      var poiList = order.poiList
-      var floorData = [
+      let order = data.order
+      let poiList = order.poiList
+      let floorData = [
         '有电梯',
         '无电梯1楼',
         '无电梯2楼',
@@ -195,7 +195,7 @@ export default {
         moveInfloor: floorData[data.moveInNum]
       }
       // 列表
-      var billinfos = order.billinfo
+      let billinfos = order.billinfo
       billinfos.push({
         billName: '合计',
         billMount: order.billTotal
@@ -204,17 +204,17 @@ export default {
     },
     // 点击波纹效果
     clickRipple () {
-      var util = MIP.util
+      let util = MIP.util
       util.event.delegate(
         this.$element,
         '.btn',
         'click',
         function (e) {
-          var target = e.target
+          let target = e.target
           console.log(target)
           if (target.className.indexOf('btn') > -1) {
-            var rect = target.getBoundingClientRect()
-            var ripple = target.querySelector('.ripple')
+            let rect = target.getBoundingClientRect()
+            let ripple = target.querySelector('.ripple')
             if (!ripple) {
               ripple = document.createElement('span')
               ripple.className = 'ripple'
@@ -223,12 +223,12 @@ export default {
               target.appendChild(ripple)
             }
             ripple.classList.remove('show')
-            var top =
+            let top =
               e.pageY -
               rect.top -
               ripple.offsetHeight / 2 -
               document.body.scrollTop
-            var left =
+            let left =
               e.pageX -
               rect.left -
               ripple.offsetWidth / 2 -
@@ -243,18 +243,18 @@ export default {
     },
     //   支付
     payOrders () {
-      var lxndata = base.getSession()
-      var orderNum = lxndata.order.OrderNum
-      var price = lxndata.order.billTotal
-      //   var sessionid = base.getbaiduLogMsg()
-      var sessionid = this.userlogin.sessionId
+      let lxndata = base.getSession()
+      let orderNum = lxndata.order.OrderNum
+      let price = lxndata.order.billTotal
+      //   let sessionid = base.getbaiduLogMsg()
+      let sessionid = this.userlogin.sessionId
       console.log('token:' + sessionid + '======' + 'orderNum:' + orderNum)
-      var urlsParam = base.setUrlParam({
+      let urlsParam = base.setUrlParam({
         orderNum: orderNum,
         sessionId: sessionid,
         total_fee: price
       })
-      var obj = {
+      let obj = {
         sessionId: sessionid,
         redirectUrl: 'https://www.lanxiniu.com/Pay/success?' + urlsParam,
         fee: price,
