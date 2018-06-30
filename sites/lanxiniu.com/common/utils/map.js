@@ -375,6 +375,7 @@ export default ({
       let addressSearch = new AddressSearch(BMap, city,
         '', 20,
         function (searchData) {
+          console.log('查看搜索地址数据:' + searchData)
           if (!searchData || !searchData.data || !searchData.data.length) {
             // 无匹配地址
             return false
