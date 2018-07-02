@@ -83,13 +83,13 @@
       </div>
       <div
         class="layer-sure"
-        @click="closeLayer">
+        @touchend.stop.prevent="closeLayer">
         <p
           class="btns active-layer"
-          @click="sureMethod">先不等了</p>
+          @touchend.stop.prevent="sureMethod">先不等了</p>
         <p
           class="btns btns2 active-layer"
-          @click="cancelMethod">再等等吧</p>
+          @touchend.stop.prevent="cancelMethod">再等等吧</p>
       </div>
     </div>
 

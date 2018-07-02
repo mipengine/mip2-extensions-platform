@@ -2,7 +2,6 @@
   <div class="wrapper">
     <div id="l-map"/>
     <div
-      v-show="init"
       class="search-content">
       <div class="head">
         <a
@@ -41,12 +40,11 @@
       </div>
     </div>
     <div
-      v-show="init"
       class="search-result content">
       <ul>
         <li
           class="result-input-first"
-          @click="inputGetFocus">
+          @touchend="inputGetFocus">
           <div>
             <span class="img address"/>
             <p v-text="moveOut.localtion.title"/>
@@ -62,13 +60,16 @@
               placeholder="具体街道  门牌号">
           </div>
         </li>
-        <li class="result-input">
+        <li
+          @
+          class="result-input">
           <div>
             <span class="img lianxiren"/>
             <input
               v-model="moveOut.phone"
               type="number"
               placeholder="联系方式(必填)">
+
             <p
               class="btn-sure btn"
               @click="moveoutSure">确定</p>
@@ -86,7 +87,7 @@
           v-text="warn.texts"/>
         <p
           class="layer-sure active-layer"
-          @click="closeLayer">知道了</p>
+          @touchend="closeLayer">知道了</p>
       </div>
     </div>
     <div
@@ -96,6 +97,7 @@
         <span class="point-first"/><span class="point-second"/><span class="point-last"/>
       </div>
     </div>
+
   </div>
 </template>
 
@@ -123,7 +125,7 @@ export default {
   data () {
     return {
       maps: '',
-      init: true, // 加载完成后 显示
+      init: true, // 数据初始化话完成   只执行一次
       searchVal: '',
       searchHandler: '',
       searchData: [],
@@ -145,31 +147,27 @@ export default {
       BMap: null
     }
   },
+  watch: {
+    globaldata (val, oldval) {
+      console.log('监控生效')
+      if (this.init) {
+        this.mapInit()
+        this.init = false
+      }
+    }
+  },
   created () {
     this.cityhref = base.htmlhref.city
   },
   mounted () {
     console.log('这里是搬出地址选择页面 !')
     // console.log(this.globaldata)
-
-    // 初始化
     this.initData()
-
-    // let xxx = 0
-
-    if (MIP.sandbox.BMap) {
-    //   xxx = 1
-      this.BMap = MIP.sandbox.BMap
-      this.mapInit()
-    } else {
-      console.log('不存在地图环境')
-    }
-
+    // 初始化
     this.$element.customElement.addEventAction('init', () => {
-    //   if (!xxx) return
-    //   console.log(1111)
       this.BMap = MIP.sandbox.BMap
       this.mapInit()
+      this.init = false
       console.log(this.BMap)
     })
   },
@@ -177,19 +175,24 @@ export default {
   methods: {
     // 基本数据初始化
     initData () {
-      if (Object.keys(this.globaldata).length === 0) {
-        console.log('无值')
-        MIP.viewer.open(base.htmlhref.order, { isMipLink: false })
-      } else {
-        console.log('有值')
-        // let obj = { currentmap: 'out' }
-        // base.mipSetGlobalData(obj)
-        // 添加波纹
-        this.clickRipple()
-        // 配置全局数据标志       当前是  搬出地址选择页面
+      if (MIP.viewer.isIframed) {
+        console.log('不是手动刷新页面')
+
+        if (MIP.sandbox.BMap) {
+          this.BMap = MIP.sandbox.BMap
+          this.mapInit()
+        } else {
+          console.log('不存在地图环境')
+        }
 
         // 数据监控
         this.lxnDataWatch()
+
+        // 添加波纹
+        this.clickRipple()
+      } else {
+        MIP.viewer.open(base.htmlhref.order, { isMipLink: true, replace: true })
+        console.log('是手动刷新,跳转回去')
       }
     },
 
@@ -478,6 +481,10 @@ export default {
 </script>
 
 <style scoped>
+
+.wrapper{
+    /* height: 100%; */
+}
 #l-map {
   position: absolute;
   top: 0;
@@ -544,16 +551,17 @@ export default {
 .search-icon {
   position: absolute;
   left: 1.64rem;
-  top: 0.29rem;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .s-input input {
-  padding-left: 0.46rem;
+  padding-left: 0.5rem;
   width: 100%;
   height: 100%;
   background: #eff9ff;
   border-radius: 1.2rem;
   font-size: 0.28rem;
-  line-height: 1;
+  margin-top: -.01rem;
 }
 .content {
   background: #ffffff;
@@ -597,6 +605,20 @@ export default {
   max-height: unset;
   overflow: unset;
 }
+.content li.result-input{
+    padding: 0;
+}
+.content li.result-input div{
+    height: 100%;
+}
+.content li.result-input .img{
+    top: 50% !important;
+    transform: translateY(-50%);
+}
+.content li.result-input:last-child{
+    border-bottom: none;
+}
+
 .result-input {
   height: 1rem;
 }
@@ -612,13 +634,13 @@ export default {
 .result-input input {
   font-size: 0.28rem;
 }
-.result-input .img {
-  top: 0.05rem !important;
-}
+
 .btn-sure {
+  margin-top: 0!important;
+  top: 50%;
+  transform: translateY(-50%);
   position: absolute;
   right: 0;
-  bottom: 0;
   background: #36a0e9;
   box-shadow: 0 1px 1px 0 #cccccc;
   border-radius: 0.04rem;
@@ -627,7 +649,6 @@ export default {
   font-size: 0.34rem !important;
   color: #ffffff !important;
   text-align: center;
-  /* line-height: 0.62rem; */
   letter-spacing: 0.08px;
   display: flex;
   align-items: center;
