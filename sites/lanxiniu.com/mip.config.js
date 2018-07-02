@@ -3,7 +3,6 @@
  * @author
  */
 
-
 module.exports = {
   dev: {
     /**
