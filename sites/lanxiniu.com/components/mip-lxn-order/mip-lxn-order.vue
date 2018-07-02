@@ -10,7 +10,7 @@
         <li>普通搬家<span/></li>
         <li
           class="actives"
-          @click="rishiMove">
+          @touchend="rishiMove">
           <span>
             日式搬家
             <img
@@ -96,16 +96,12 @@
                         type="text"
                         placeholder="您要从哪里搬出"
                       >
-                      <!-- <div
-                        :class="{hastext:outIsFill}"
-                        class="gomap actives"
-                        v-text="globaldata.moveOutAddress.localtion.title"/> -->
                     </a>
 
                   </div>
                   <div
                     class="right actives inputfix"
-                    @click="picker({'type':'floor','status':'out'})">
+                    @touchend.stop.prevent="picker({'type':'floor','status':'out'})">
                     <input
                       v-model="floorAndTime.move.moveOut"
                       :readonly="isRead"
@@ -135,7 +131,7 @@
                   </div>
                   <div
                     class="right actives inputfix"
-                    @click="picker({'type':'floor','status':'in'})">
+                    @touchend.stop.prevent="picker({'type':'floor','status':'in'})">
                     <input
                       v-model="floorAndTime.move.moveIn"
                       :readonly="isRead"
@@ -154,14 +150,16 @@
                     @click="picker({'type':'time'})">
                     <span>搬家时间</span>
                   </div>
-                  <div class="right actives inputfix">
+                  <div
+                    class="right actives inputfix"
+                    @touchend.stop.prevent="picker({'type':'time'})">
                     <input
                       v-model="floorAndTime.time"
                       :readonly="isRead"
                       class="btn "
                       type="text"
                       placeholder="选择时间"
-                      @click="picker({'type':'time'})">
+                    >
                   </div>
                 </div>
               </div>
@@ -194,15 +192,15 @@
       <p
         on="tap:user.login"
         class="sure-order btn"
-        @click="sureOrder">
+        @touchend="sureOrder">
         确认下单
       </p>
-      <div>
-        <!-- <a id="mao" href="#mao"></a> -->
-      </div>
-      <!-- <p  @click="sureOrder" class="sure-order btn">
-          确认下单
-      </p> -->
+      <p
+        on="tap:user.logout"
+        class="sure-order btn"
+      >
+        登出
+      </p>
     </div>
 
     <div
@@ -218,7 +216,7 @@
         v-text="warn.texts"/>
       <p
         class="layer-sure active-layer"
-        @click="closeLayer">知道了</p>
+        @touchend="closeLayer">知道了</p>
     </div>
     <div
       v-if="fetchShow"
@@ -498,12 +496,9 @@ export default {
         console.log('查看用户信息:' + JSON.stringify(event.userInfo, null, 2))
 
         // that.userLogin(event)
-
-        setTimeout(function () {
-          console.log('跳转=========================')
-          //    MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token='+event.sessionId, { isMipLink:false });
-          //   MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token='+event.sessionId, { isMipLink:true });
-        }, 1000)
+        if (base.isWeixn) {
+          MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token=' + event.sessionId, { isMipLink: false })
+        }
       })
 
       this.$element.customElement.addEventAction('goorderlist', (event, str) => {
@@ -643,12 +638,12 @@ export default {
       })
 
       MIP.watch('lxndata.moveOutAddress.localtion.title', (newval, oldval) => {
-        console.log('查看搬出地址新数据:' + newval)
-        if (newval !== '') {
-          this.outIsNull = true
-        } else {
-          this.outIsNull = false
-        }
+        // console.log('查看搬出地址新数据:' + newval)
+        // if (newval !== '') {
+        //   this.outIsNull = true
+        // } else {
+        //   this.outIsNull = false
+        // }
       })
       MIP.watch('sessionId', function (newval, oldval) {
         console.log('监控sessionId===============================')
@@ -1064,7 +1059,6 @@ export default {
         'click',
         function (e) {
           let target = e.target
-          console.log(target)
           if (target.className.indexOf('btn') > -1) {
             let rect = target.getBoundingClientRect()
             let ripple = target.querySelector('.ripple')
@@ -1255,6 +1249,8 @@ export default {
   height: 0.42rem;
   right: 0;
   background: #ecebeb;
+  top: 50%;
+    transform: translateY(-50%);
 }
 .head-ul {
   height: 100%;

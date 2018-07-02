@@ -7,6 +7,7 @@
 ## 示例
 
 示例说明
+<mip-lxn-order></mip-lxn-order>
 
 ## 属性
 
