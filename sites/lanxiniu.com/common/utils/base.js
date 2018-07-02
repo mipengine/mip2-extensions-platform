@@ -1,4 +1,5 @@
 const lxnhttp = 'https://www.lanxiniu.com/BaiduMip/'
+// const lxnhttp = 'https://www.lanxiniu.com/BdMipDev/'
 // const lxnhttp = 'http://127.0.0.1:8111/example/'
 
 export default ({
