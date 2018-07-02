@@ -371,6 +371,11 @@ export default {
 </script>
 
 <style scoped>
+
+.wrapper{
+    width: 1px;
+    min-width: 100%;
+}
 .detail-head {
   display: flex;
   height: 1.72rem;

@@ -120,6 +120,10 @@ export default {
 </script>
 
 <style scoped>
+.wrapper{
+    width: 1px;
+    min-width: 100%;
+}
 .pay-content {
   margin-top: 0.2rem;
 }
