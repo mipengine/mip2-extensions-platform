@@ -152,7 +152,7 @@
                   </div>
                   <div
                     class="right actives inputfix"
-                    @clickt="picker({'type':'time'})">
+                    @click="picker({'type':'time'})">
                     <input
                       v-model="floorAndTime.time"
                       :readonly="isRead"
@@ -484,12 +484,12 @@ export default {
         event /* 对应的事件对象 */,
         str /* 事件参数 */
       ) {
-        if (MIP.util.platform.isWechatApp()) {
-          console.log('是微信内')
-          MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token=' + event.sessionId + '&isdev=1', { isMipLink: false })
-        } else {
-          console.log('不是微信内')
-        }
+        // if (MIP.util.platform.isWechatApp()) {
+        //   console.log('是微信内')
+        //   MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token=' + event.sessionId + '&isdev=1', { isMipLink: false })
+        // } else {
+        //   console.log('不是微信内')
+        // }
       })
 
       this.$element.customElement.addEventAction('goorderlist', (event, str) => {
