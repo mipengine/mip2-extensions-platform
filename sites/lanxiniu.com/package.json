@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
-    "lint": "eslint --ext .js,.vue **/* --ignore-pattern dist"
+    "lint": "eslint {**/*,**}.{vue,js}"
   },
   "author": "ybyebin (yebin@bayax.cn)",
   "dependencies": {},
