@@ -216,7 +216,7 @@
         v-text="warn.texts"/>
       <p
         class="layer-sure active-layer"
-        @touchend="closeLayer">知道了</p>
+        @touchend.stop.prevent="closeLayer">知道了</p>
     </div>
     <div
       v-if="fetchShow"
@@ -453,6 +453,7 @@ export default {
     base.setHtmlRem()
   },
   mounted () {
+    // console.log('查看是否在微信内:' + base.isWeixn())
     console.log('查看登录信息:' + this.userlogin)
     // 基本数据初始化
     this.initData()
@@ -495,9 +496,11 @@ export default {
       ) {
         console.log('查看用户信息:' + JSON.stringify(event.userInfo, null, 2))
 
-        // that.userLogin(event)
-        if (base.isWeixn) {
-          MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token=' + event.sessionId, { isMipLink: false })
+        if (base.isWeixn()) {
+          console.log('是微信内')
+          MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token=' + event.sessionId + '&isdev=1', { isMipLink: false })
+        } else {
+          console.log('不是微信内')
         }
       })
 

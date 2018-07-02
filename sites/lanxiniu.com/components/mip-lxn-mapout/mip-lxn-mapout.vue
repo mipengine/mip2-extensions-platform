@@ -105,6 +105,7 @@
 import base from '../../common/utils/base'
 import map from '../../common/utils/map'
 import '../../common/utils/base.less'
+
 base.setHtmlRem()
 export default {
   directives: {
@@ -161,7 +162,6 @@ export default {
   },
   mounted () {
     console.log('这里是搬出地址选择页面 !')
-    // console.log(this.globaldata)
     this.initData()
     // 初始化
     this.$element.customElement.addEventAction('init', () => {

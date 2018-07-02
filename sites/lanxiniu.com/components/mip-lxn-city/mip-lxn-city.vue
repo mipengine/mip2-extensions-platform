@@ -51,13 +51,9 @@ export default {
           phone: ''
         }
       }
-      let datas = MIP.util.fn.extend({}, this.globaldata, obj)
+      let datas = base.mipExtendData(this.globaldata, obj)
+      base.mipSetGlobalData(obj)
 
-      console.log('查看数据:' + JSON.stringify(datas, null, 2))
-
-      MIP.setData({
-        '#lxndata': datas
-      })
       console.log('查看数据:' + JSON.stringify(datas, null, 2))
       base.setSession(datas)
 

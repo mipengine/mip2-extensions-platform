@@ -117,9 +117,10 @@ export default {
     console.log('创建数据')
 
     console.log(this.globaldata)
-    this.setList()
+    // this.setList()
   },
   mounted () {
+    this.setList()
     console.log('这里是支付页面 !')
     this.clickRipple()
     this.$element.customElement.addEventAction('login', (event, str) => {
@@ -140,29 +141,75 @@ export default {
   methods: {
     //   初始化数据
     initData () {
+    //   let lxndata = base.getSession()
+    //   let orderNum = lxndata.order.OrderNum
+    //   let price = lxndata.order.billTotal
+    //   let sessionid = this.userlogin.sessionId
+    //   console.log('token:' + sessionid + '======' + 'orderNum:' + orderNum)
+    //   let urlsParam = base.setUrlParam({
+    //     orderNum: orderNum,
+    //     sessionId: sessionid,
+    //     total_fee: price
+    //   })
+    //   let obj = {
+    //     sessionId: sessionid,
+    //     redirectUrl: 'https://www.lanxiniu.com/Pay/success?' + urlsParam,
+    //     fee: price,
+    //     postData: {
+    //       orderNum: orderNum,
+    //       token: sessionid
+    //     }
+    //   }
+    //   MIP.setData({
+    //     payConfig: MIP.util.fn.extend({}, this.payConfig, obj)
+    //   })
+
       let lxndata = base.getSession()
       let orderNum = lxndata.order.OrderNum
-      let price = lxndata.order.billTotal
-      //   let sessionid = base.getbaiduLogMsg()
       let sessionid = this.userlogin.sessionId
-      console.log('token:' + sessionid + '======' + 'orderNum:' + orderNum)
       let urlsParam = base.setUrlParam({
         orderNum: orderNum,
-        sessionId: sessionid,
-        total_fee: price
+        sessionId: sessionid
       })
-      let obj = {
-        sessionId: sessionid,
-        redirectUrl: 'https://www.lanxiniu.com/Pay/success?' + urlsParam,
-        fee: price,
-        postData: {
-          orderNum: orderNum,
-          token: sessionid
-        }
-      }
-      MIP.setData({
-        payConfig: MIP.util.fn.extend({}, this.payConfig, obj)
+      let urls = base.url + '/Order/detail?' + urlsParam
+      fetch(urls, {
+        method: 'get'
       })
+        .then(response => response.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => {
+          let data = response.data
+          console.log(data)
+          let poiList = data.poiList
+          // 列表
+          let billinfos = data.billinfo
+          let floorData = [
+            '有电梯',
+            '无电梯1楼',
+            '无电梯2楼',
+            '无电梯3楼',
+            '无电梯4楼',
+            '无电梯5楼',
+            '无电梯6楼',
+            '无电梯7楼',
+            '无电梯8楼'
+          ]
+          // 头部
+          this.head = {
+            time: data.TransTime,
+            moveOut: poiList[0].deliverAddress,
+            moveIn: poiList[1].deliverAddress,
+            carType: data.CarTypeName,
+            moveOutfloor: floorData[data.start_stairs_num],
+            moveInfloor: floorData[data.end_stairs_num]
+          }
+
+          billinfos.push({
+            billName: '合计',
+            billMount: data.billTotal
+          })
+          this.pillList = billinfos
+        })
     },
 
     // 请求订单数据
