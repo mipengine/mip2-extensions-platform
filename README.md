@@ -84,4 +84,6 @@ $ cd cafe.com
 <script src="https://c.mipcdn.com/extensions/platform/v2/{站点项目名}/{组件名}/{组件名}.js"></script>
 ```
 
+test ci
+
 
