@@ -92,7 +92,6 @@
                       <input
                         v-model="globaldata.moveOutAddress.localtion.title"
                         :readonly="isRead"
-
                         type="text"
                         placeholder="您要从哪里搬出"
                       >
@@ -484,6 +483,7 @@ export default {
         event /* 对应的事件对象 */,
         str /* 事件参数 */
       ) {
+
         // if (MIP.util.platform.isWechatApp()) {
         //   console.log('是微信内')
         //   MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token=' + event.sessionId + '&isdev=1', { isMipLink: false })
@@ -494,10 +494,15 @@ export default {
 
       this.$element.customElement.addEventAction('goorderlist', (event, str) => {
         let isLogin = this.userlogin.isLogin
-
         if (isLogin) {
           MIP.viewer.open(base.htmlhref.orderlist, { isMipLink: true })
         }
+      })
+      this.$element.customElement.addEventAction('gocostdes', (event, str) => {
+        MIP.viewer.open(base.htmlhref.costdes, { isMipLink: true })
+      })
+      this.$element.customElement.addEventAction('gouserguide', (event, str) => {
+        MIP.viewer.open(base.htmlhref.userguide, { isMipLink: true })
       })
     },
     // 请求当前城市的车型列表
@@ -754,7 +759,7 @@ export default {
             // 添加版本号
             console.log(JSON.stringify(datas, null, 2))
             if (base.getbaiduLogMsg !== null) {
-              MIP.viewer.open(base.htmlhref.payorder, { isMipLink: true })
+              MIP.viewer.open(base.htmlhref.payorder + '?OrderNum=' + data.OrderNum, { isMipLink: true })
             }
             // MIP.viewer.page.router.push(base.htmlhref.payorder);
           }, 500)

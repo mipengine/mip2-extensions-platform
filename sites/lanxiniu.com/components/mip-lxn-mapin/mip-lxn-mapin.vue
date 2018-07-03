@@ -127,6 +127,7 @@ export default {
     return {
       maps: '',
       init: true, // 数据初始化话完成   只执行一次
+      interval: '', // 轮询查询全局数据是否合并完成
       searchVal: '',
       searchHandler: '',
       searchData: [],
@@ -149,40 +150,35 @@ export default {
 
     }
   },
-  watch: {
-    globaldata (val, oldval) {
-      console.log('监控生效')
-      if (this.init) {
-        this.mapInit()
-        this.init = false
-      }
-    }
-  },
   created () {
     this.cityhref = base.htmlhref.city
   },
   mounted () {
+    console.log('这里是搬入地址选择页面 !')
+    window.addEventListener('hide-page', (e) => {
+      this.interval && clearInterval(this.interval)
+    })
     // 初始化
     this.initData()
-
-    this.$element.customElement.addEventAction('init', () => {
-      console.log('全局数据已经添加完成')
-      this.BMap = MIP.sandbox.BMap
-      this.mapInit()
-      console.log(this.BMap)
-    })
   },
   methods: {
     // 基本数据初始化
     initData () {
-      if (MIP.viewer.isIframed) {
+      if (!MIP.viewer.page.isRootPage) {
         console.log('不是手动刷新页面')
-        if (MIP.sandbox.BMap) {
-          this.BMap = MIP.sandbox.BMap
-          this.mapInit()
+        if (MIP.sandbox.BMap && this.init) {
+          this.chatGlobaldata()
         } else {
-          console.log('不存在地图环境')
+          console.log('初始化====不存在地图环境')
         }
+
+        // 初始化
+        this.$element.customElement.addEventAction('init', () => {
+          console.log('地图回调加载当前页面的地图')
+          if (this.init) {
+            this.chatGlobaldata()
+          }
+        })
 
         // 数据监控
         this.lxnDataWatch()
@@ -190,16 +186,20 @@ export default {
         // 添加波纹
         this.clickRipple()
       } else {
-        MIP.viewer.open(base.htmlhref.order, { isMipLink: true, replace: true })
+        MIP.viewer.open(base.htmlhref.order, { isMipLink: false })
         console.log('是手动刷新,跳转回去')
       }
-
-    //   if (Object.keys(this.globaldata).length === 0) {
-    //     console.log('无值')
-    //     MIP.viewer.open(base.htmlhref.order, { isMipLink: false })
-    //   } else {
-    //     console.log('有值')
-    //   }
+    },
+    chatGlobaldata () {
+      this.init = false
+      this.interval = setInterval(() => {
+        if (Object.keys(this.globaldata).length > 0) {
+          console.log(Object.keys(this.globaldata).length)
+          clearInterval(this.interval)
+          this.BMap = MIP.sandbox.BMap
+          this.mapInit()
+        }
+      }, 300)
     },
     // 地图初始化
     mapInit (city) {

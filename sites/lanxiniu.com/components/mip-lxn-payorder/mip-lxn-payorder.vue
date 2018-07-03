@@ -120,6 +120,9 @@ export default {
     // this.setList()
   },
   mounted () {
+    window.addEventListener('hide-page', (e) => {
+      this.interval && clearInterval(this.interval)
+    })
     this.setList()
     console.log('这里是支付页面 !')
     this.clickRipple()
@@ -142,30 +145,8 @@ export default {
     //   初始化数据
     initData () {
     //   let lxndata = base.getSession()
-    //   let orderNum = lxndata.order.OrderNum
-    //   let price = lxndata.order.billTotal
-    //   let sessionid = this.userlogin.sessionId
-    //   console.log('token:' + sessionid + '======' + 'orderNum:' + orderNum)
-    //   let urlsParam = base.setUrlParam({
-    //     orderNum: orderNum,
-    //     sessionId: sessionid,
-    //     total_fee: price
-    //   })
-    //   let obj = {
-    //     sessionId: sessionid,
-    //     redirectUrl: 'https://www.lanxiniu.com/Pay/success?' + urlsParam,
-    //     fee: price,
-    //     postData: {
-    //       orderNum: orderNum,
-    //       token: sessionid
-    //     }
-    //   }
-    //   MIP.setData({
-    //     payConfig: MIP.util.fn.extend({}, this.payConfig, obj)
-    //   })
-
-      let lxndata = base.getSession()
-      let orderNum = lxndata.order.OrderNum
+      //   let orderNum = lxndata.order.OrderNum
+      let orderNum = base.getRequest().OrderNum
       let sessionid = this.userlogin.sessionId
       let urlsParam = base.setUrlParam({
         orderNum: orderNum,
