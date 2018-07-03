@@ -1,6 +1,6 @@
 const lxnhttp = 'https://www.lanxiniu.com/BaiduMip/'
 // const lxnhttp = 'https://www.lanxiniu.com/BdMipDev/'
-// const lxnhttp = 'http://127.0.0.1:8111/example/'
+// const lxnhttp = 'http://172.30.246.89:8111/example/'
 
 const tranObjUrlToCache = urls => {
   let result = {}
@@ -11,7 +11,7 @@ const tranObjUrlToCache = urls => {
 }
 
 export default ({
-  url: 'https://www.lanxiniu.com',
+  url: '//www.lanxiniu.com',
   // 线上
   htmlhref: tranObjUrlToCache({
     order: lxnhttp + 'order',
