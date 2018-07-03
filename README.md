@@ -58,7 +58,7 @@ https://c.mipcdn.com/extensions/platform/v2/test.a.com/mip-example/mip-example.j
 $ mip2 init
 ```
 
-按照提示输入项目名称，如 `cafe.com`，新增了一个站点项目。
+按照提示输入项目名称，如 `cafe.com`，新增一个站点项目。
 
 ```
 $ cd cafe.com
@@ -83,5 +83,4 @@ $ cd cafe.com
 // 页面中引用
 <script src="https://c.mipcdn.com/extensions/platform/v2/{站点项目名}/{组件名}/{组件名}.js"></script>
 ```
-
 
