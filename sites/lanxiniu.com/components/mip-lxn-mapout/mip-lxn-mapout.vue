@@ -126,7 +126,8 @@ export default {
   data () {
     return {
       maps: '',
-      init: true, // 数据初始化话完成   只执行一次
+      init: true, // 数据初始化话完成   只执行一次,
+      interval: '', // 轮询查询全局数据是否合并完成
       searchVal: '',
       searchHandler: '',
       searchData: [],
@@ -148,52 +149,56 @@ export default {
       BMap: null
     }
   },
-  watch: {
-    globaldata (val, oldval) {
-      console.log('监控生效')
-      if (this.init) {
-        this.mapInit()
-        this.init = false
-      }
-    }
-  },
   created () {
     this.cityhref = base.htmlhref.city
   },
   mounted () {
     console.log('这里是搬出地址选择页面 !')
-    this.initData()
-    // 初始化
-    this.$element.customElement.addEventAction('init', () => {
-      this.BMap = MIP.sandbox.BMap
-      this.mapInit()
-      this.init = false
-      console.log(this.BMap)
+    window.addEventListener('hide-page', (e) => {
+      this.interval && clearInterval(this.interval)
     })
+    this.initData()
   },
 
   methods: {
     // 基本数据初始化
     initData () {
-      if (MIP.viewer.isIframed) {
+      if (!MIP.viewer.page.isRootPage) {
         console.log('不是手动刷新页面')
 
-        if (MIP.sandbox.BMap) {
-          this.BMap = MIP.sandbox.BMap
-          this.mapInit()
+        if (MIP.sandbox.BMap && this.init) {
+          this.chatGlobaldata()
         } else {
-          console.log('不存在地图环境')
+          console.log('初始化====不存在地图环境')
         }
 
+        // 初始化
+        this.$element.customElement.addEventAction('init', () => {
+          console.log('地图回调加载当前页面的地图')
+          if (this.init) {
+            this.chatGlobaldata()
+          }
+        })
         // 数据监控
         this.lxnDataWatch()
 
         // 添加波纹
         this.clickRipple()
       } else {
-        MIP.viewer.open(base.htmlhref.order, { isMipLink: true, replace: true })
+        MIP.viewer.open(base.htmlhref.order, { isMipLink: false })
         console.log('是手动刷新,跳转回去')
       }
+    },
+    chatGlobaldata () {
+      this.init = false
+      this.interval = setInterval(() => {
+        if (Object.keys(this.globaldata).length > 0) {
+          console.log(Object.keys(this.globaldata).length)
+          clearInterval(this.interval)
+          this.BMap = MIP.sandbox.BMap
+          this.mapInit()
+        }
+      }, 300)
     },
 
     mapInit (city) {
@@ -482,9 +487,6 @@ export default {
 
 <style scoped>
 
-.wrapper{
-    /* height: 100%; */
-}
 #l-map {
   position: absolute;
   top: 0;
