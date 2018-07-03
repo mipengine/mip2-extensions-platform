@@ -44,12 +44,16 @@
       <ul>
         <li
           class="result-input-first"
-          @touchend="inputGetFocus">
+          @click="inputGetFocus">
           <div>
             <span class="img address"/>
             <p v-text="moveOut.localtion.title"/>
             <p v-text="moveOut.localtion.address"/>
           </div>
+          <input
+            :readonly="true"
+            type="text"
+            class="fixsafari-click">
         </li>
         <li class="result-input">
           <div>
@@ -280,6 +284,11 @@ export default {
     },
     // 确认搬出信息
     moveoutSure () {
+      let inputs = this.$element.querySelectorAll('input')
+      console.log(inputs)
+      inputs.forEach(ele => {
+        ele.blur()
+      })
       let that = this
       let BMap = this.BMap
       let warn = this.warn
@@ -627,6 +636,7 @@ export default {
 .result-input-first {
   height: 1.1rem;
   overflow: hidden;
+  position: relative;
 }
 .result-input-first p:last-child {
   overflow: hidden;
@@ -655,5 +665,13 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.fixsafari-click{
+   width: 100%;
+   background: transparent;
+   position: absolute;
+   left: 0;
+   right: 0;
+   top: 0;
 }
 </style>

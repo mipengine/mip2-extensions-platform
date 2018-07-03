@@ -483,10 +483,12 @@ export default {
         event /* 对应的事件对象 */,
         str /* 事件参数 */
       ) {
-
         // if (MIP.util.platform.isWechatApp()) {
-        //   console.log('是微信内')
-        //   MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token=' + event.sessionId + '&isdev=1', { isMipLink: false })
+        //   let promas = base.getRequest()
+        //   if (!promas.hasOwnProperty('istop')) {
+        //     console.log('是微信内')
+        //     MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token=' + event.sessionId + '&isdev=1', { isMipLink: false })
+        //   }
         // } else {
         //   console.log('不是微信内')
         // }

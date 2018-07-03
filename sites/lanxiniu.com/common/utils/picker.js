@@ -469,10 +469,15 @@ export default ({
 
       // iscroll初始化
       scrollInit: function (index, num) {
+        console.log(num)
         if (index === 1) {
           let date = new Date()
           let hours = date.getHours()
-          num = hours + 1
+          if (hours > 22) {
+            num = 0
+          } else {
+            num = hours + 1
+          }
         }
 
         let self = this
@@ -1017,6 +1022,10 @@ export default ({
           let month = (new Date(now.getTime() + oneDay * j).getMonth()) + 1
           let date = new Date(now.getTime() + oneDay * j).getDate()
           let day = new Date(now.getTime() + oneDay * j).getDay()
+          //   let hours = new Date().getHours()
+          //   if(hours > 22){
+
+          //   }
           let value = year + '-' + month + '-' + date
           let show = month + '月' + date + '日'
           if (j === 0) {
@@ -1037,6 +1046,7 @@ export default ({
           '#picker-wrapper' + index
         ).childNodes[0].innerHTML = list
         setTimeout(function () {
+          console.log('查看日期:' + index)
           self.scrollInit(index, defaultNum)
         }, 0)
       },
@@ -1085,6 +1095,7 @@ export default ({
           '#picker-wrapper' + index
         ).childNodes[0].innerHTML = list
         setTimeout(function () {
+          console.log(index)
           self.scrollInit(index, defaultNum)
         }, 0)
       },
