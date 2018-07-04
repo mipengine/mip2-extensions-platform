@@ -210,7 +210,6 @@ export default {
       let BMap = this.BMap
       console.log('初始化查看地图类')
       console.log(BMap)
-      let that = this
       let citys = city || this.globaldata.ordercity
 
       let BaiduMap = map.mapInit()
@@ -222,7 +221,7 @@ export default {
       } else {
         address = lxndata.moveInAddress
         // 还原上次填写的数据
-        let movein = that.moveIn
+        let movein = this.moveIn
 
         let moveOutAddress = lxndata.moveOutAddress
         let moveInAddress = address
@@ -238,22 +237,20 @@ export default {
       }
 
       let divs = this.$element.querySelector('#l-mapin')
-      let maps = new BaiduMap(this.$element, divs, address, function (
-        data
-      ) {
+      let maps = new BaiduMap(this.$element, divs, address, (data) => {
         console.log(JSON.stringify(data, null, 2))
         // 还原上次填写的数据
-        let movein = that.moveIn
+        let movein = this.moveIn
         movein.localtion = data.localtion
         movein.address = data.address
         movein.phone = data.phone
-        that.loading = false
+        this.loading = false
       })
 
       if (BMap.Map) {
         console.log(BMap)
         console.log('存在')
-        this.searchHandler = maps.handleResult(BMap, citys, that.searchResult)
+        this.searchHandler = maps.handleResult(BMap, citys, this.searchResult)
         this.maps = maps.map
       }
     },
@@ -295,13 +292,10 @@ export default {
     },
     // 确认搬出信息
     moveoutSure () {
-    //   var input = document.getElementById("your-input-id");
-    //   input.blur();
-      let inputs = this.$element.querySelectorAll('input')
-      inputs.forEach(ele => {
+      let inputs = this.$element.querySelectorAll('input:focus')
+      Array.prototype.slice.call(inputs).forEach(ele => {
         ele.blur()
       })
-      let that = this
       let BMap = this.BMap
       let warn = this.warn
       let moveIn = this.moveIn
@@ -340,9 +334,9 @@ export default {
           console.log(JSON.stringify(datass))
           base.mipSetGlobalData(obj)
           base.setSession(datass)
-          setTimeout(function () {
-            that.goOrder()
-          }, 500)
+          setTimeout(() => {
+            this.goOrder()
+          }, 100)
         } else {
           console.log('没计算距离')
           this.goOrder()
@@ -352,12 +346,11 @@ export default {
 
     // 全局数据监听
     lxnDataWatch () {
-      let that = this
-      MIP.watch('lxndata.ordercity', function (newval, oldval) {
+      MIP.watch('lxndata.ordercity', (newval, oldval) => {
         console.log('=====..............===wacth监控=============城市改变了')
         console.log(newval)
-        that.searchVal = ''
-        that.moveOut = {
+        this.searchVal = ''
+        this.moveOut = {
           localtion: {
             title: ''
           },
@@ -365,26 +358,22 @@ export default {
           phone: ''
         }
 
-        that.globaldata.ordercity = newval
+        this.globaldata.ordercity = newval
 
-        setTimeout(function () {
-          that.mapInit(newval)
+        setTimeout(() => {
+          this.mapInit(newval)
         }, 100)
 
         console.log(newval)
-      })
-
-      MIP.watch('lxndata', function () {
-        console.log('MIP=============wacth监控=============城市改变了')
       })
     },
     inputGetFocus () {
       this.focusState = true
     },
     goOrder () {
-      MIP.viewer.page.router.back()
-      //   MIP.viewer.page.router.push(base.htmlhref.order);
-      //   MIP.viewer.open(base.htmlhref.order, { isMipLink: true });
+      setTimeout(() => {
+        MIP.viewer.page.router.back()
+      }, 100)
     },
     closeLayer () {
       this.warn.show = false

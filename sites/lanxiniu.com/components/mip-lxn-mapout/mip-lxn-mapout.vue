@@ -200,6 +200,7 @@ export default {
           console.log(Object.keys(this.globaldata).length)
           clearInterval(this.interval)
           this.BMap = MIP.sandbox.BMap
+          console.log('=======')
           this.mapInit()
         }
       }, 300)
@@ -208,7 +209,6 @@ export default {
     mapInit (city) {
       let BMap = this.BMap
       console.log(BMap)
-      let that = this
       let citys = city || this.globaldata.ordercity
       console.log('查看当前城市' + citys)
 
@@ -218,33 +218,33 @@ export default {
       let address = ''
       if (lxndata === null) {
         console.log('无缓存')
-        console.log(this.globaldata)
+        console.log(JSON.stringify(this.globaldata, null, 2))
         address = this.globaldata.moveOutAddress
         console.log(JSON.stringify(address, null, 2))
       } else {
         console.log('有缓存')
         address = lxndata.moveOutAddress
-        let moveout = that.moveOut
+        let moveout = this.moveOut
         moveout.localtion = address.localtion
         moveout.address = address.address
         moveout.phone = address.phone
       }
       let divs = this.$element.querySelector('#l-map')
-      let maps = new BaiduMap(this.$element, divs, address, function (
-        data
-      ) {
+      let maps = new BaiduMap(this.$element, divs, address, (data) => {
         // 还原上次填写的数据
         console.log(JSON.stringify(data, null, 2))
-        let moveout = that.moveOut
+        let moveout = this.moveOut
+        console.log(JSON.stringify(moveout, null, 2))
+        console.log(JSON.stringify(data, null, 2))
         moveout.localtion = data.localtion
         moveout.address = data.address
         moveout.phone = data.phone
-        that.loading = false
+        this.loading = false
       })
       if (BMap.Map) {
         console.log(BMap)
         console.log('存在')
-        this.searchHandler = maps.handleResult(BMap, citys, that.searchResult)
+        this.searchHandler = maps.handleResult(BMap, citys, this.searchResult)
         this.maps = maps.map
       }
     },
@@ -284,12 +284,12 @@ export default {
     },
     // 确认搬出信息
     moveoutSure () {
-      let inputs = this.$element.querySelectorAll('input')
-      console.log(inputs)
-      inputs.forEach(ele => {
+      let inputs = this.$element.querySelectorAll('input:focus')
+      Array.prototype.slice.call(inputs).forEach(ele => {
         ele.blur()
       })
-      let that = this
+      console.log('查看点击')
+
       let BMap = this.BMap
       let warn = this.warn
       let moveOut = this.moveOut
@@ -321,9 +321,7 @@ export default {
         } else {
           obj = { moveOutAddress: objdata }
         }
-        console.log(JSON.stringify(obj, null, 2))
         let datas = base.mipExtendData(this.globaldata, obj)
-        console.log('配置搬出数据' + JSON.stringify(datas, null, 2))
         base.mipSetGlobalData(obj)
         base.setSession(datas)
 
@@ -332,7 +330,6 @@ export default {
         let moveout = objdata.localtion
         console.log(JSON.stringify(moveout, null, 2))
         console.log(JSON.stringify(movein, null, 2))
-        //   console.log(JSON.stringify(movein, null, 2));
         if (moveout.lat !== '' && movein.lat !== '') {
           let pointOut = new BMap.Point(moveout.lng, moveout.lat)
           let pointIn = new BMap.Point(movein.lng, movein.lat)
@@ -340,16 +337,13 @@ export default {
             this.maps.getDistance(pointOut, pointIn).toFixed(2) / 1000
           console.log('查看距离:' + kilometer)
           let obj = { kilometer: kilometer }
-          //   setTimeout(function() {
-          console.log('保存数据----------')
-          //   let datas = MIP.util.fn.extend({}, datas, obj);
           let datass = base.mipExtendData(datas, obj)
-          console.log(JSON.stringify(datass))
           base.mipSetGlobalData(obj)
           base.setSession(datass)
-          setTimeout(function () {
-            that.goOrder()
-          }, 500)
+
+          setTimeout(() => {
+            this.goOrder()
+          }, 100)
         } else {
           console.log('没计算距离')
           this.goOrder()
@@ -358,39 +352,37 @@ export default {
     },
     // 全局数据监听
     lxnDataWatch () {
-      let that = this
       //   监控 城市 改变
-      MIP.watch('lxndata.ordercity', function (newval, oldval) {
+      MIP.watch('lxndata.ordercity', (newval, oldval) => {
         console.log(
           '=====..............===搬出地址数据=============城市改变了'
         )
         console.log(newval)
-        that.searchVal = ''
-        that.moveOut = {
+        this.searchVal = ''
+        this.moveOut = {
           localtion: {
             title: ''
           },
           address: '',
           phone: ''
         }
-        that.globaldata.ordercity = newval
-        setTimeout(function () {
-          that.mapInit(newval)
+        this.globaldata.ordercity = newval
+        setTimeout(() => {
+          this.mapInit(newval)
         }, 100)
 
         console.log(newval)
-      })
-      //  测试 监控全局数据变化
-      MIP.watch('lxndata', function () {
-        console.log('MIP=============wacth监控=============城市改变了')
       })
     },
     inputGetFocus () {
       this.focusState = true
     },
     goOrder () {
-      //   MIP.viewer.page.router.push(base.htmlhref.order);
-      MIP.viewer.page.router.back()
+      console.log('跳转====')
+      setTimeout(() => {
+        console.log('跳转====')
+        MIP.viewer.page.router.back()
+      }, 100)
     },
     closeLayer () {
       this.warn.show = false
