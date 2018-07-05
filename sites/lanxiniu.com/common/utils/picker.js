@@ -743,7 +743,7 @@ export default ({
         let mipElement = self.mipElement
         let picker = mipElement.querySelector('.picker')
         let pickerMask = mipElement.querySelector('.picker-mask')
-
+        console.log('测试')
         setTimeout(function () {
           mipElement.removeChild(picker)
           mipElement.removeChild(pickerMask)
