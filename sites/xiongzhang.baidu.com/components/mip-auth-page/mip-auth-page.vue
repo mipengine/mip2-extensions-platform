@@ -1,30 +1,14 @@
 <template>
-  <mip-fixed
-    class="container"
-    type="top"
-    top="0"
-    bottom="0">
-    <mip-iframe
-      :src="url"
-      height="100%"
-      width="100%"
-      scrolling="yes"
-      frameborder="0"
-      layout="fill"/>
-  </mip-fixed>
-
+  <mip-iframe
+    :src="url"
+    height="100%"
+    width="100%"
+    scrolling="yes"
+    frameborder="0"
+    layout="fill"/>
 </template>
 
-<style scoped>
-    .container {
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        width: 100%;
-        min-height: 505px;
-    }
-</style>
+<style scoped></style>
 
 <script>
 
