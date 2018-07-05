@@ -462,6 +462,7 @@ export default {
 
     // 设置波纹效果
     this.clickRipple()
+    console.log(base.getRequest())
   },
 
   methods: {
@@ -477,32 +478,39 @@ export default {
     },
     // 添加tab监听
     addMipWatch () {
-    //   let that = this
-
-      this.$element.customElement.addEventAction('login', function (
-        event /* 对应的事件对象 */,
-        str /* 事件参数 */
-      ) {
-        // if (MIP.util.platform.isWechatApp()) {
-        //   let promas = base.getRequest()
-        //   if (!promas.hasOwnProperty('istop')) {
-        //     console.log('是微信内')
-        //     MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token=' + event.sessionId + '&isdev=1', { isMipLink: false })
-        //   }
-        // } else {
-        //   console.log('不是微信内')
-        // }
+      this.$element.customElement.addEventAction('login', (event, str) => {
+        console.log('查看登录的信息:' + JSON.stringify(event, null, 2))
+        if (MIP.util.platform.isWechatApp()) {
+          console.log('在微信内')
+          let wxauth = event.userInfo.wxauth
+          let promas = base.getRequest()
+          if (+wxauth === 1 && !promas.hasOwnProperty('istop')) {
+            MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token=' + event.sessionId + '&redirect_url=' + location.href + '&isdev=1', { isMipLink: false })
+          }
+        } else {
+          console.log('不是微信内')
+        }
       })
 
+      //   点击(用户)登录
+      this.$element.customElement.addEventAction('userlogin', (event, str) => {
+        this.$emit('actionLogin', {})
+      })
+
+      //   订单列表跳转
       this.$element.customElement.addEventAction('goorderlist', (event, str) => {
         let isLogin = this.userlogin.isLogin
         if (isLogin) {
           MIP.viewer.open(base.htmlhref.orderlist, { isMipLink: true })
         }
       })
+
+      //   资费说明跳转
       this.$element.customElement.addEventAction('gocostdes', (event, str) => {
         MIP.viewer.open(base.htmlhref.costdes, { isMipLink: true })
       })
+
+      //   用户指南跳转
       this.$element.customElement.addEventAction('gouserguide', (event, str) => {
         MIP.viewer.open(base.htmlhref.userguide, { isMipLink: true })
       })

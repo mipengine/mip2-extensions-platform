@@ -4,12 +4,12 @@
 export default ({
   Picker: function () {
     /**
-     * 滚动类
-     *
-     * @class
-     * @param {string} id 选择器
-     * @param {Object} params 配置参数
-     */
+       * 滚动类
+       *
+       * @class
+       * @param {string} id 选择器
+       * @param {Object} params 配置参数
+       */
     function Scroll (id, params) {
       this.scroller = document.querySelector(id)
       this.childNode = this.scroller.childNodes[0]
@@ -105,7 +105,6 @@ export default ({
           let touches = e.changedTouches ? e.changedTouches[0] : e
           let offsetHeight = touches.pageY - self.startPageY // 本次滚动偏移位置
           self.offsetTop += offsetHeight // 记录总偏移位置
-
           if ((self.offsetTop > 0) || (Math.abs(self.offsetTop) > Math.abs(self.scrollHeight))) {
             // 上边缘&下边缘
             self.browserVendor('transition', 'all 500ms')
@@ -207,12 +206,12 @@ export default ({
     }
 
     /**
-     * 日期和城市筛选
-     *
-     * @class
-     * @param {Object} params 选择器
-     * @param {Object} mipElement 上下文
-     */
+       * 日期和城市筛选
+       *
+       * @class
+       * @param {Object} params 选择器
+       * @param {Object} mipElement 上下文
+       */
     function Picker (params, mipElement) {
       this.scrollArray = [] // iscroll变量
       this.textArray = [] // 选中的值
@@ -469,18 +468,22 @@ export default ({
 
       // iscroll初始化
       scrollInit: function (index, num) {
-        console.log(num)
+        let self = this
         if (index === 1) {
           let date = new Date()
-          let hours = date.getHours()
-          if (hours > 22) {
+          let hour = date.getHours() + 1
+          if (hour > 22) {
             num = 0
           } else {
-            num = hours + 1
+            num = hour
           }
-        }
 
-        let self = this
+        //   let hourItem = document.getElementById('picker-wrapper1').getElementsByClassName('sethours')
+        //   let hourItemSet = Array.prototype.slice.call(hourItem)
+        //   for (let i = 0; i < hour; i++) {
+        //     hourItemSet[i].style.display = 'none'
+        //   }
+        }
 
         // 每个选项对的高度
         let wrapperList = document.querySelector('#picker-wrapper0').childNodes[0]
@@ -501,13 +504,34 @@ export default ({
 
             if (self.options.pickerType === 'time') {
               // 当前天数选择大于 当前年月的天数
-              if (self.options.type === 3) {
-                let nowPlace = self.textArray[2].value
-                if (nowPlace > self.monthLen) {
-                  let moveLen = (self.monthLen - 1) * itemHeight
-                  self.textArray[2].value = self.monthLen
+              let days = self.textArray[0].value
+              let hours = self.textArray[1].value
+              let now = new Date()
+              let year = new Date(now.getTime()).getFullYear()
+              let month = (new Date(now.getTime()).getMonth()) + 1
+              let date = new Date(now.getTime()).getDate()
+              let hour = new Date(now.getTime()).getHours() + 1
+              let value = year + '-' + month + '-' + date
+              if (self.options.type === 5 && params.node.length === 12) {
+                if (value === days) {
+                  let moveLen = hour * itemHeight
                   setTimeout(function () {
-                    self.scrollArray[2].scrollTo(0, moveLen, 500)
+                    self.textArray[1].value = ' ' + hour
+                    self.scrollArray[1].scrollTo(0, moveLen, 500)
+                  }, 0)
+                } else {
+                  let moveLen = 0
+                  setTimeout(function () {
+                    self.textArray[1].value = ' 0'
+                    self.scrollArray[1].scrollTo(0, moveLen, 500)
+                  }, 0)
+                }
+              } else if (self.options.type === 5 && params.node.length === 28) {
+                if (value === days && hours < hour) {
+                  let moveLen = hour * itemHeight
+                  setTimeout(function () {
+                    self.textArray[1].value = ' ' + hour
+                    self.scrollArray[1].scrollTo(0, moveLen, 500)
                   }, 0)
                 }
               }
@@ -719,7 +743,7 @@ export default ({
         let mipElement = self.mipElement
         let picker = mipElement.querySelector('.picker')
         let pickerMask = mipElement.querySelector('.picker-mask')
-
+        console.log('测试')
         setTimeout(function () {
           mipElement.removeChild(picker)
           mipElement.removeChild(pickerMask)
@@ -1046,7 +1070,6 @@ export default ({
           '#picker-wrapper' + index
         ).childNodes[0].innerHTML = list
         setTimeout(function () {
-          console.log('查看日期:' + index)
           self.scrollInit(index, defaultNum)
         }, 0)
       },
@@ -1073,7 +1096,7 @@ export default ({
               defaultNum = num // 默认选中的值
               self.setDefaultItem(index, count)
             }
-            list += '<li data-value="' + count + '">' + count + unit + '</li>'
+            list += '<li  data-value="' + count + '">' + count + unit + '</li>'
             num++
           }
 
@@ -1083,7 +1106,7 @@ export default ({
         } else {
           for (let j = 0; j <= 23; j++) {
             count = j < 10 ? prefix + j : j
-            list += '<li data-value=" ' + count + '">' + count + unit + '</li>'
+            list += '<li  data-value=" ' + count + '"  class="sethours">' + count + unit + '</li>'
           }
           let date = new Date()
           let hour = ' ' + (date.getHours() + 1)
@@ -1095,7 +1118,6 @@ export default ({
           '#picker-wrapper' + index
         ).childNodes[0].innerHTML = list
         setTimeout(function () {
-          console.log(index)
           self.scrollInit(index, defaultNum)
         }, 0)
       },
