@@ -45,12 +45,16 @@
       <ul>
         <li
           class="result-input-first"
-          @touchend="inputGetFocus">
+          @click="inputGetFocus">
           <div>
             <span class="img address"/>
             <p v-text="moveIn.localtion.title"/>
             <p v-text="moveIn.localtion.address"/>
           </div>
+          <input
+            :readonly="true"
+            type="text"
+            class="fixsafari-click">
         </li>
         <li class="result-input">
           <div>
@@ -104,7 +108,6 @@
 <script>
 import base from '../../common/utils/base'
 import map from '../../common/utils/map'
-// import axios from "axios"
 import '../../common/utils/base.less'
 
 base.setHtmlRem()
@@ -128,6 +131,7 @@ export default {
     return {
       maps: '',
       init: true, // 数据初始化话完成   只执行一次
+      interval: '', // 轮询查询全局数据是否合并完成
       searchVal: '',
       searchHandler: '',
       searchData: [],
@@ -150,40 +154,35 @@ export default {
 
     }
   },
-  watch: {
-    globaldata (val, oldval) {
-      console.log('监控生效')
-      if (this.init) {
-        this.mapInit()
-        this.init = false
-      }
-    }
-  },
   created () {
     this.cityhref = base.htmlhref.city
   },
   mounted () {
+    console.log('这里是搬入地址选择页面 !')
+    window.addEventListener('hide-page', (e) => {
+      this.interval && clearInterval(this.interval)
+    })
     // 初始化
     this.initData()
-
-    this.$element.customElement.addEventAction('init', () => {
-      console.log('全局数据已经添加完成')
-      this.BMap = MIP.sandbox.BMap
-      this.mapInit()
-      console.log(this.BMap)
-    })
   },
   methods: {
     // 基本数据初始化
     initData () {
-      if (MIP.viewer.isIframed) {
+      if (!MIP.viewer.page.isRootPage) {
         console.log('不是手动刷新页面')
-        if (MIP.sandbox.BMap) {
-          this.BMap = MIP.sandbox.BMap
-          this.mapInit()
+        if (MIP.sandbox.BMap && this.init) {
+          this.chatGlobaldata()
         } else {
-          console.log('不存在地图环境')
+          console.log('初始化====不存在地图环境')
         }
+
+        // 初始化
+        this.$element.customElement.addEventAction('init', () => {
+          console.log('地图回调加载当前页面的地图')
+          if (this.init) {
+            this.chatGlobaldata()
+          }
+        })
 
         // 数据监控
         this.lxnDataWatch()
@@ -191,23 +190,26 @@ export default {
         // 添加波纹
         this.clickRipple()
       } else {
-        MIP.viewer.open(base.htmlhref.order, { isMipLink: true, replace: true })
+        MIP.viewer.open(base.htmlhref.order, { isMipLink: false })
         console.log('是手动刷新,跳转回去')
       }
-
-    //   if (Object.keys(this.globaldata).length === 0) {
-    //     console.log('无值')
-    //     MIP.viewer.open(base.htmlhref.order, { isMipLink: false })
-    //   } else {
-    //     console.log('有值')
-    //   }
+    },
+    chatGlobaldata () {
+      this.init = false
+      this.interval = setInterval(() => {
+        if (Object.keys(this.globaldata).length > 0) {
+          console.log(Object.keys(this.globaldata).length)
+          clearInterval(this.interval)
+          this.BMap = MIP.sandbox.BMap
+          this.mapInit()
+        }
+      }, 300)
     },
     // 地图初始化
     mapInit (city) {
       let BMap = this.BMap
       console.log('初始化查看地图类')
       console.log(BMap)
-      let that = this
       let citys = city || this.globaldata.ordercity
 
       let BaiduMap = map.mapInit()
@@ -219,7 +221,7 @@ export default {
       } else {
         address = lxndata.moveInAddress
         // 还原上次填写的数据
-        let movein = that.moveIn
+        let movein = this.moveIn
 
         let moveOutAddress = lxndata.moveOutAddress
         let moveInAddress = address
@@ -235,22 +237,20 @@ export default {
       }
 
       let divs = this.$element.querySelector('#l-mapin')
-      let maps = new BaiduMap(this.$element, divs, address, function (
-        data
-      ) {
+      let maps = new BaiduMap(this.$element, divs, address, (data) => {
         console.log(JSON.stringify(data, null, 2))
         // 还原上次填写的数据
-        let movein = that.moveIn
+        let movein = this.moveIn
         movein.localtion = data.localtion
         movein.address = data.address
         movein.phone = data.phone
-        that.loading = false
+        this.loading = false
       })
 
       if (BMap.Map) {
         console.log(BMap)
         console.log('存在')
-        this.searchHandler = maps.handleResult(BMap, citys, that.searchResult)
+        this.searchHandler = maps.handleResult(BMap, citys, this.searchResult)
         this.maps = maps.map
       }
     },
@@ -292,7 +292,10 @@ export default {
     },
     // 确认搬出信息
     moveoutSure () {
-      let that = this
+      let inputs = this.$element.querySelectorAll('input:focus')
+      Array.prototype.slice.call(inputs).forEach(ele => {
+        ele.blur()
+      })
       let BMap = this.BMap
       let warn = this.warn
       let moveIn = this.moveIn
@@ -331,9 +334,9 @@ export default {
           console.log(JSON.stringify(datass))
           base.mipSetGlobalData(obj)
           base.setSession(datass)
-          setTimeout(function () {
-            that.goOrder()
-          }, 500)
+          setTimeout(() => {
+            this.goOrder()
+          }, 100)
         } else {
           console.log('没计算距离')
           this.goOrder()
@@ -343,12 +346,11 @@ export default {
 
     // 全局数据监听
     lxnDataWatch () {
-      let that = this
-      MIP.watch('lxndata.ordercity', function (newval, oldval) {
+      MIP.watch('lxndata.ordercity', (newval, oldval) => {
         console.log('=====..............===wacth监控=============城市改变了')
         console.log(newval)
-        that.searchVal = ''
-        that.moveOut = {
+        this.searchVal = ''
+        this.moveOut = {
           localtion: {
             title: ''
           },
@@ -356,26 +358,22 @@ export default {
           phone: ''
         }
 
-        that.globaldata.ordercity = newval
+        this.globaldata.ordercity = newval
 
-        setTimeout(function () {
-          that.mapInit(newval)
+        setTimeout(() => {
+          this.mapInit(newval)
         }, 100)
 
         console.log(newval)
-      })
-
-      MIP.watch('lxndata', function () {
-        console.log('MIP=============wacth监控=============城市改变了')
       })
     },
     inputGetFocus () {
       this.focusState = true
     },
     goOrder () {
-      MIP.viewer.page.router.back()
-      //   MIP.viewer.page.router.push(base.htmlhref.order);
-      //   MIP.viewer.open(base.htmlhref.order, { isMipLink: true });
+      setTimeout(() => {
+        MIP.viewer.page.router.back()
+      }, 100)
     },
     closeLayer () {
       this.warn.show = false
@@ -616,6 +614,7 @@ export default {
 .result-input-first {
   height: 1.1rem;
   overflow: hidden;
+  position: relative;
 }
 .result-input-first p:last-child {
   overflow: hidden;
@@ -640,11 +639,18 @@ export default {
   font-size: 0.34rem !important;
   color: #ffffff !important;
   text-align: center;
-  /* line-height: 0.62rem; */
   letter-spacing: 0.08px;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.fixsafari-click{
+   width: 100%;
+   background: transparent;
+   position: absolute;
+   left: 0;
+   right: 0;
+   top: 0;
 }
 
 </style>

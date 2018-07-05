@@ -118,8 +118,10 @@ export default {
           state: JSON.stringify(config.state)
         }
 
+        let hash = config.state.h || ''
+
         window.MIP.viewer.open(
-          getRedirectUrl(config.state.url || config.redirect_uri, obj),
+          getRedirectUrl(config.state.url || config.redirect_uri, obj, decodeURIComponent(hash)),
           {isMipLink: true, replace: true}
         )
       }

@@ -11,10 +11,10 @@ export function getQuery (name) {
   return matched ? decodeURIComponent(matched[2]) : ''
 }
 
-export function getRedirectUrl (url, query) {
+export function getRedirectUrl (url, query, hash) {
   let result = url + (url.indexOf('?') >= 0 ? '&' : '?') +
-        'code=' + query.code +
-        '&state=' + encodeURIComponent(query.state)
+        'code=' + query.code + '&state=' + query.state + hash
+
   return result
 }
 

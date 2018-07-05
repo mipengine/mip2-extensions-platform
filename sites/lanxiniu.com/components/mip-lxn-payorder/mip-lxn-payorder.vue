@@ -105,7 +105,8 @@ export default {
           billName: '-',
           billMount: '-'
         }
-      ]
+      ],
+      interval: ''
     }
   },
   watch: {
@@ -117,16 +118,20 @@ export default {
     console.log('创建数据')
 
     console.log(this.globaldata)
-    this.setList()
+    // this.setList()
   },
   mounted () {
+    window.addEventListener('hide-page', (e) => {
+      this.interval && clearInterval(this.interval)
+    })
+    this.setList()
     console.log('这里是支付页面 !')
     this.clickRipple()
     this.$element.customElement.addEventAction('login', (event, str) => {
-      let interval = setInterval(() => {
+      this.interval = setInterval(() => {
         if (this.userlogin.sessionId !== '') {
           this.initData()
-          clearInterval(interval)
+          clearInterval(this.interval)
         }
       }, 200)
     })
@@ -140,29 +145,53 @@ export default {
   methods: {
     //   初始化数据
     initData () {
-      let lxndata = base.getSession()
-      let orderNum = lxndata.order.OrderNum
-      let price = lxndata.order.billTotal
-      //   let sessionid = base.getbaiduLogMsg()
+    //   let lxndata = base.getSession()
+      //   let orderNum = lxndata.order.OrderNum
+      let orderNum = base.getRequest().OrderNum
       let sessionid = this.userlogin.sessionId
-      console.log('token:' + sessionid + '======' + 'orderNum:' + orderNum)
       let urlsParam = base.setUrlParam({
         orderNum: orderNum,
-        sessionId: sessionid,
-        total_fee: price
+        sessionId: sessionid
       })
-      let obj = {
-        sessionId: sessionid,
-        redirectUrl: 'https://www.lanxiniu.com/Pay/success?' + urlsParam,
-        fee: price,
-        postData: {
-          orderNum: orderNum,
-          token: sessionid
-        }
-      }
-      MIP.setData({
-        payConfig: MIP.util.fn.extend({}, this.payConfig, obj)
+      let urls = base.url + '/Order/detail?' + urlsParam
+      fetch(urls, {
+        method: 'get'
       })
+        .then(response => response.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => {
+          let data = response.data
+          console.log(data)
+          let poiList = data.poiList
+          // 列表
+          let billinfos = data.billinfo
+          let floorData = [
+            '有电梯',
+            '无电梯1楼',
+            '无电梯2楼',
+            '无电梯3楼',
+            '无电梯4楼',
+            '无电梯5楼',
+            '无电梯6楼',
+            '无电梯7楼',
+            '无电梯8楼'
+          ]
+          // 头部
+          this.head = {
+            time: data.TransTime,
+            moveOut: poiList[0].deliverAddress,
+            moveIn: poiList[1].deliverAddress,
+            carType: data.CarTypeName,
+            moveOutfloor: floorData[data.start_stairs_num],
+            moveInfloor: floorData[data.end_stairs_num]
+          }
+
+          billinfos.push({
+            billName: '合计',
+            billMount: data.billTotal
+          })
+          this.pillList = billinfos
+        })
     },
 
     // 请求订单数据
@@ -171,36 +200,37 @@ export default {
       let data = base.getSession()
       console.log('查看订单信息============')
       console.log(data)
-
-      let order = data.order
-      let poiList = order.poiList
-      let floorData = [
-        '有电梯',
-        '无电梯1楼',
-        '无电梯2楼',
-        '无电梯3楼',
-        '无电梯4楼',
-        '无电梯5楼',
-        '无电梯6楼',
-        '无电梯7楼',
-        '无电梯8楼'
-      ]
-      // 头部
-      _this.head = {
-        time: order.TransTime,
-        moveOut: poiList[0].deliverAddress,
-        moveIn: poiList[1].deliverAddress,
-        carType: order.CarTypeName,
-        moveOutfloor: floorData[data.moveOutNum],
-        moveInfloor: floorData[data.moveInNum]
+      if (data !== null) {
+        let order = data.order
+        let poiList = order.poiList
+        let floorData = [
+          '有电梯',
+          '无电梯1楼',
+          '无电梯2楼',
+          '无电梯3楼',
+          '无电梯4楼',
+          '无电梯5楼',
+          '无电梯6楼',
+          '无电梯7楼',
+          '无电梯8楼'
+        ]
+        // 头部
+        _this.head = {
+          time: order.TransTime,
+          moveOut: poiList[0].deliverAddress,
+          moveIn: poiList[1].deliverAddress,
+          carType: order.CarTypeName,
+          moveOutfloor: floorData[data.moveOutNum],
+          moveInfloor: floorData[data.moveInNum]
+        }
+        // 列表
+        let billinfos = order.billinfo
+        billinfos.push({
+          billName: '合计',
+          billMount: order.billTotal
+        })
+        _this.pillList = billinfos
       }
-      // 列表
-      let billinfos = order.billinfo
-      billinfos.push({
-        billName: '合计',
-        billMount: order.billTotal
-      })
-      _this.pillList = billinfos
     },
     // 点击波纹效果
     clickRipple () {

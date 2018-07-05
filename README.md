@@ -1,10 +1,10 @@
 # mip2-extensions-platform
 
-## MIP 2.0 站长组件
+## MIP 2 站长组件
 
 与 MIP 1.0 采用的方式不同，MIP 2.0 以项目（一个站点）的粒度来管理站长组件。每一个项目（使用 `mip2 init` 命令生成）中包含了这个站点所需的所有自定义组件。
 
-MIP 2.0 的站长组件托管在 [Github 站长组件仓库](https://github.com/mipengine/mip2-extensions-platform)，项目结构大致如下：
+MIP 2.0 的站长组件托管在 [Github 站长组件仓库](https://github.com/mipengine/mip2-extensions-platform)，项目结构如下：
 
 ```
 ├──sites
@@ -58,7 +58,7 @@ https://c.mipcdn.com/extensions/platform/v2/test.a.com/mip-example/mip-example.j
 $ mip2 init
 ```
 
-按照提示输入项目名称，如 `cafe.com`，新增了一个站点项目。
+按照提示输入项目名称，如 `cafe.com`，新增一个站点项目。
 
 ```
 $ cd cafe.com
@@ -83,5 +83,4 @@ $ cd cafe.com
 // 页面中引用
 <script src="https://c.mipcdn.com/extensions/platform/v2/{站点项目名}/{组件名}/{组件名}.js"></script>
 ```
-
 

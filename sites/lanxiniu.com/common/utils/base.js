@@ -1,10 +1,19 @@
 const lxnhttp = 'https://www.lanxiniu.com/BaiduMip/'
-// const lxnhttp = 'http://127.0.0.1:8111/example/'
+// const lxnhttp = 'https://www.lanxiniu.com/BdMipDev/'
+// const lxnhttp = 'http://172.30.246.89:8111/example/'
+
+const tranObjUrlToCache = urls => {
+  let result = {}
+  Object.keys(urls).map(key => {
+    result[key] = MIP.util.makeCacheUrl(urls[key])
+  })
+  return result
+}
 
 export default ({
-  url: 'https://www.lanxiniu.com',
+  url: '//www.lanxiniu.com',
   // 线上
-  htmlhref: {
+  htmlhref: tranObjUrlToCache({
     order: lxnhttp + 'order',
     payorder: lxnhttp + 'payorder',
     mapout: lxnhttp + 'mapout',
@@ -13,11 +22,12 @@ export default ({
     orderlist: lxnhttp + 'myorder',
     listdetail: lxnhttp + 'listdetail',
     costdetail: lxnhttp + 'costdetail',
-    costdes: lxnhttp + 'costdes'
-  },
+    costdes: lxnhttp + 'costdes',
+    userguide: lxnhttp + 'userguide'
+  }),
 
   // 测试
-  //   htmlhref: {
+  //   htmlhref: tranObjUrlToCache({
   //     order: lxnhttp + 'order.html',
   //     payorder: lxnhttp + 'payorder.html',
   //     mapout: lxnhttp + 'mapout.html',
@@ -26,8 +36,9 @@ export default ({
   //     orderlist: lxnhttp + 'myorder.html',
   //     listdetail: lxnhttp + 'listdetail.html',
   //     costdetail: lxnhttp + 'costdetail.html',
-  //     costdes: lxnhttp + 'costdes.html'
-  //   },
+  //     costdes: lxnhttp + 'costdes.html',
+  //     userguide: lxnhttp + 'userguide.html'
+  //   }),
   setHtmlRem: function () {
     let b = document
     let a = {}
@@ -117,5 +128,19 @@ export default ({
   mipExtendData: function (oldVal, newVal) {
     let data = MIP.util.fn.extend({}, oldVal, newVal)
     return data
+  },
+  // 获取url中"?"符后的字串
+  getRequest: function () {
+    let url = location.search
+    console.log('查看url:' + url)
+    let theRequest = {}
+    if (url.indexOf('?') !== -1) {
+      let str = url.substr(1)
+      let strs = str.split('&')
+      for (let i = 0; i < strs.length; i++) {
+        theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
+      }
+      return theRequest
+    }
   }
 })

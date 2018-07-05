@@ -1,12 +1,12 @@
-# `mip-example`
+# `mip-lxn-payorder`
 
 ## lxn-确认支付
-
-组件功能说明
+引用组件
 
 ## 示例
 
-示例说明
+直接引用组件
+<mip-lxn-city></mip-lxn-city>
 
 ## 属性
 

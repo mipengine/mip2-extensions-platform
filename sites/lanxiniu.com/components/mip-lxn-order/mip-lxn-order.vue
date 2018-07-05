@@ -92,7 +92,6 @@
                       <input
                         v-model="globaldata.moveOutAddress.localtion.title"
                         :readonly="isRead"
-
                         type="text"
                         placeholder="您要从哪里搬出"
                       >
@@ -101,7 +100,7 @@
                   </div>
                   <div
                     class="right actives inputfix"
-                    @touchend.stop.prevent="picker({'type':'floor','status':'out'})">
+                    @click="picker({'type':'floor','status':'out'})">
                     <input
                       v-model="floorAndTime.move.moveOut"
                       :readonly="isRead"
@@ -131,7 +130,7 @@
                   </div>
                   <div
                     class="right actives inputfix"
-                    @touchend.stop.prevent="picker({'type':'floor','status':'in'})">
+                    @click="picker({'type':'floor','status':'in'})">
                     <input
                       v-model="floorAndTime.move.moveIn"
                       :readonly="isRead"
@@ -152,7 +151,7 @@
                   </div>
                   <div
                     class="right actives inputfix"
-                    @touchend.stop.prevent="picker({'type':'time'})">
+                    @click="picker({'type':'time'})">
                     <input
                       v-model="floorAndTime.time"
                       :readonly="isRead"
@@ -195,12 +194,6 @@
         @touchend="sureOrder">
         确认下单
       </p>
-      <p
-        on="tap:user.logout"
-        class="sure-order btn"
-      >
-        登出
-      </p>
     </div>
 
     <div
@@ -216,7 +209,7 @@
         v-text="warn.texts"/>
       <p
         class="layer-sure active-layer"
-        @touchend="closeLayer">知道了</p>
+        @touchend.stop.prevent="closeLayer">知道了</p>
     </div>
     <div
       v-if="fetchShow"
@@ -445,7 +438,6 @@ export default {
   },
   watch: {
     globaldata (val, oldval) {
-      console.log('数据改变了+请求价格')
       this.calPrice()
     }
   },
@@ -453,7 +445,6 @@ export default {
     base.setHtmlRem()
   },
   mounted () {
-    console.log('查看登录信息:' + this.userlogin)
     // 基本数据初始化
     this.initData()
 
@@ -464,7 +455,6 @@ export default {
     // this.swiperInit();
 
     // 获取当前城市的车型信息
-    console.log(JSON.stringify(this.globaldata, null, 2))
     this.getCurrentCityCarTypes(this.globaldata.ordercity)
 
     // 全局数据监听
@@ -472,6 +462,7 @@ export default {
 
     // 设置波纹效果
     this.clickRipple()
+    console.log(base.getRequest())
   },
 
   methods: {
@@ -487,36 +478,46 @@ export default {
     },
     // 添加tab监听
     addMipWatch () {
-    //   let that = this
-
-      this.$element.customElement.addEventAction('login', function (
-        event /* 对应的事件对象 */,
-        str /* 事件参数 */
-      ) {
-        console.log('查看用户信息:' + JSON.stringify(event.userInfo, null, 2))
-
-        // that.userLogin(event)
-        if (base.isWeixn) {
-          MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token=' + event.sessionId, { isMipLink: false })
+      this.$element.customElement.addEventAction('login', (event, str) => {
+        console.log('查看登录的信息:' + JSON.stringify(event, null, 2))
+        if (MIP.util.platform.isWechatApp()) {
+          console.log('在微信内')
+          let wxauth = event.userInfo.wxauth
+          let promas = base.getRequest()
+          if (+wxauth === 1 && !promas.hasOwnProperty('istop')) {
+            MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token=' + event.sessionId + '&redirect_url=' + location.href + '&isdev=1', { isMipLink: false })
+          }
+        } else {
+          console.log('不是微信内')
         }
       })
 
+      //   点击(用户)登录
+      this.$element.customElement.addEventAction('userlogin', (event, str) => {
+        this.$emit('actionLogin', {})
+      })
+
+      //   订单列表跳转
       this.$element.customElement.addEventAction('goorderlist', (event, str) => {
         let isLogin = this.userlogin.isLogin
-
         if (isLogin) {
           MIP.viewer.open(base.htmlhref.orderlist, { isMipLink: true })
-        } else {
-          console.log('未登录')
         }
+      })
+
+      //   资费说明跳转
+      this.$element.customElement.addEventAction('gocostdes', (event, str) => {
+        MIP.viewer.open(base.htmlhref.costdes, { isMipLink: true })
+      })
+
+      //   用户指南跳转
+      this.$element.customElement.addEventAction('gouserguide', (event, str) => {
+        MIP.viewer.open(base.htmlhref.userguide, { isMipLink: true })
       })
     },
     // 请求当前城市的车型列表
     getCurrentCityCarTypes  (city) {
       let that = this
-
-      console.log('==========调用请求当前城市的车型列表============' + city)
-
       let focusCity = city
       let urls = base.url + '/Setting/getCityData?city=' + focusCity
       fetch(urls, {
@@ -535,9 +536,7 @@ export default {
           }
           //   console.log(that.carTypes);
           // 如果当前城市车型小于3个  隐藏最后一个
-          console.log(
-            '===========当前车型个数=============' + that.carTypes.length
-          )
+
           if (that.carTypes.length < 3) {
             that.hide = true
             that.tabData[2].hide = true
@@ -558,7 +557,6 @@ export default {
             })
 
             item.stairsFee = arr
-            // console.log(JSON.stringify(item, null, 2));
             if (item.type === 3) {
               that.floorAndTime.move.data = item.stairsFee
             }
@@ -609,22 +607,10 @@ export default {
     },
     // 确认下单
     sureOrder () {
-    //   let sessionid = this.sessionId
-    //   console.log('下单前查看数据sessionid:' + sessionid)
-    //   if (sessionid !== '' && sessionid !== undefined) {
-    //     console.log('确认下单时已经登录=====')
-    //     this.checkData(sessionid)
-    //   } else {
-    //     console.log('确认下单时未登录=====')
-    //   }
       let islogin = this.userlogin.isLogin
       let sessionId = this.userlogin.sessionId
-      console.log('查看登录信息:' + JSON.stringify(this.userlogin, null, 2))
       if (islogin) {
-        console.log('确认下单时已经登录=====')
         this.checkData(sessionId)
-      } else {
-        console.log('确认下单时未登录=====')
       }
     },
 
@@ -633,27 +619,7 @@ export default {
       let that = this
       //   监控城市
       MIP.watch('lxndata.ordercity', function (newval, oldval) {
-        console.log('首页监控城市=============wacth监控============')
         that.getCurrentCityCarTypes(newval)
-      })
-
-      MIP.watch('lxndata.moveOutAddress.localtion.title', (newval, oldval) => {
-        // console.log('查看搬出地址新数据:' + newval)
-        // if (newval !== '') {
-        //   this.outIsNull = true
-        // } else {
-        //   this.outIsNull = false
-        // }
-      })
-      MIP.watch('sessionId', function (newval, oldval) {
-        console.log('监控sessionId===============================')
-        console.log('新的sessionId===========:' + newval)
-        console.log(that.sessionId)
-      })
-      MIP.watch('user', function (newval, oldval) {
-        console.log('监控user===============================')
-        console.log('新的user===========:' + JSON.stringify(newval, null, 2))
-        console.log(JSON.stringify(that.user, null, 2))
       })
     },
 
@@ -803,7 +769,7 @@ export default {
             // 添加版本号
             console.log(JSON.stringify(datas, null, 2))
             if (base.getbaiduLogMsg !== null) {
-              MIP.viewer.open(base.htmlhref.payorder, { isMipLink: true })
+              MIP.viewer.open(base.htmlhref.payorder + '?OrderNum=' + data.OrderNum, { isMipLink: true })
             }
             // MIP.viewer.page.router.push(base.htmlhref.payorder);
           }, 500)
