@@ -445,6 +445,19 @@ export default {
     base.setHtmlRem()
   },
   mounted () {
+    window.addEventListener('show-page', (e) => {
+      console.log('下单页面出现')
+      let data = base.getSession()
+      if (data !== null) {
+        console.log(JSON.stringify(data, null, 2))
+        var obj = {
+          moveOutAddress: data.moveOutAddress,
+          moveInAddress: data.moveInAddress
+
+        }
+        base.mipSetGlobalData(obj)
+      }
+    })
     // 基本数据初始化
     this.initData()
 
@@ -619,6 +632,7 @@ export default {
       let that = this
       //   监控城市
       MIP.watch('lxndata.ordercity', function (newval, oldval) {
+        console.log('监控到全局数据改变')
         that.getCurrentCityCarTypes(newval)
       })
     },

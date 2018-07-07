@@ -370,11 +370,11 @@ li .head .status {
 .head-footer span {
   display: inline-block;
   /* height: 0.48rem; */
-  line-height: 0.6rem;
+  /* line-height: 0.6rem; */
   text-emphasis: center;
   border-radius: 0.06rem;
   font-size: 0.28rem;
-  padding: 0 0.2rem;
+  padding: .1rem 0.2rem;
   position: relative;
 }
 .head-footer span:active{
