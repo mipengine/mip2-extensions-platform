@@ -93,8 +93,12 @@ export default {
       focusState: false, // 获取焦点
       moveOut: {
         localtion: {
-          title: '',
-          address: ''
+          address: '',
+          city: '',
+          province: '',
+          lat: '',
+          lng: '',
+          title: ''
         },
         address: '',
         phone: ''
@@ -133,7 +137,6 @@ export default {
 
         // 初始化
         this.$element.customElement.addEventAction('init', () => {
-          console.log('地图回调加载当前页面的地图')
           if (this.init) {
             this.chatGlobaldata()
           }
@@ -152,10 +155,8 @@ export default {
       this.init = false
       this.interval = setInterval(() => {
         if (Object.keys(this.globaldata).length > 0) {
-          console.log(Object.keys(this.globaldata).length)
           clearInterval(this.interval)
           this.BMap = MIP.sandbox.BMap
-          console.log('=======')
           this.mapInit()
         }
       }, 300)
@@ -163,7 +164,6 @@ export default {
 
     mapInit (city) {
       let BMap = this.BMap
-      console.log(BMap)
       let citys = city || this.globaldata.ordercity
       console.log('查看当前城市' + citys)
 
@@ -172,12 +172,8 @@ export default {
       let lxndata = base.getSession()
       let address = ''
       if (lxndata === null) {
-        console.log('无缓存')
-        console.log(JSON.stringify(this.globaldata, null, 2))
         address = this.globaldata.moveOutAddress
-        console.log(JSON.stringify(address, null, 2))
       } else {
-        console.log('有缓存')
         address = lxndata.moveOutAddress
         let moveout = this.moveOut
         moveout.localtion = address.localtion
@@ -187,10 +183,7 @@ export default {
       let divs = this.$element.querySelector('#l-map')
       let maps = new BaiduMap(this.$element, divs, address, (data) => {
         // 还原上次填写的数据
-        console.log(JSON.stringify(data, null, 2))
         let moveout = this.moveOut
-        console.log(JSON.stringify(moveout, null, 2))
-        console.log(JSON.stringify(data, null, 2))
         moveout.localtion = data.localtion
         this.searchVal = data.localtion.title
         moveout.address = data.address
@@ -198,15 +191,12 @@ export default {
         this.loading = false
       })
       if (BMap.Map) {
-        console.log(BMap)
-        console.log('存在')
         this.searchHandler = maps.handleResult(BMap, citys, this.searchResult)
         this.maps = maps.map
       }
     },
     // 搜索地址
     searchAddress () {
-      console.log(this.searchVal)
       this.debounce()
     },
     // 搜索结果
@@ -240,8 +230,8 @@ export default {
       let moveOut = this.moveOut
       //   let title = moveOut.localtion.title
       let phone = moveOut.phone
-      //   console.log('查看title:' + title)
-      if (this.searchVal === '') {
+      console.log(JSON.stringify(moveOut, null, 2))
+      if (this.searchVal === '' || moveOut.localtion.lat === '') {
         warn.show = true
         warn.texts = '地址不能为空'
       } else if (phone === '') {
@@ -319,14 +309,16 @@ export default {
     },
 
     goOrder () {
-      console.log('跳转====')
       setTimeout(() => {
-        console.log('跳转====')
         MIP.viewer.page.back()
       }, 100)
     },
     // 跳转到城市选择页面
     goCity () {
+      let inputs = this.$element.querySelectorAll('input:focus')
+      Array.prototype.slice.call(inputs).forEach(ele => {
+        ele.blur()
+      })
       MIP.viewer.open(base.htmlhref.city, { isMipLink: true })
     },
     closeLayer () {

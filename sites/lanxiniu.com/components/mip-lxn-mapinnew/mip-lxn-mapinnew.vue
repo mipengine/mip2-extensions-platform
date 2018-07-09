@@ -74,15 +74,6 @@ import '../../common/utils/base.less'
 
 base.setHtmlRem()
 export default {
-  directives: {
-    focus: {
-      update: function (el, { value }) {
-        if (value) {
-          el.focus()
-        }
-      }
-    }
-  },
   props: {
     globaldata: {
       type: Object,
@@ -101,8 +92,12 @@ export default {
       focusState: false, // 获取焦点
       moveIn: {
         localtion: {
-          title: '',
-          address: ''
+          address: '',
+          city: '',
+          province: '',
+          lat: '',
+          lng: '',
+          title: ''
         },
         address: '',
         phone: ''
@@ -112,7 +107,8 @@ export default {
         texts: ''
       },
       loading: true,
-      BMap: null
+      BMap: null,
+      debounceTimeout: ''// 延时定时器
 
     }
   },
@@ -140,7 +136,6 @@ export default {
 
         // 初始化
         this.$element.customElement.addEventAction('init', () => {
-          console.log('地图回调加载当前页面的地图')
           if (this.init) {
             this.chatGlobaldata()
           }
@@ -160,7 +155,6 @@ export default {
       this.init = false
       this.interval = setInterval(() => {
         if (Object.keys(this.globaldata).length > 0) {
-          console.log(Object.keys(this.globaldata).length)
           clearInterval(this.interval)
           this.BMap = MIP.sandbox.BMap
           this.mapInit()
@@ -170,8 +164,6 @@ export default {
     // 地图初始化
     mapInit (city) {
       let BMap = this.BMap
-      console.log('初始化查看地图类')
-      console.log(BMap)
       let citys = city || this.globaldata.ordercity
 
       let BaiduMap = map.mapInit()
@@ -187,20 +179,18 @@ export default {
 
         let moveOutAddress = lxndata.moveOutAddress
         let moveInAddress = address
-        console.log(JSON.stringify(moveInAddress, null, 2))
-        console.log(JSON.stringify(moveOutAddress, null, 2))
         if (moveInAddress.localtion.title !== '') {
           movein.localtion = moveInAddress.localtion
           movein.address = moveInAddress.address
           movein.phone = moveInAddress.phone
         } else {
+          movein.localtion = moveInAddress.localtion
           movein.phone = moveOutAddress.phone
         }
       }
 
       let divs = this.$element.querySelector('#l-mapin')
       let maps = new BaiduMap(this.$element, divs, address, (data) => {
-        console.log(JSON.stringify(data, null, 2))
         // 还原上次填写的数据
         let movein = this.moveIn
         movein.localtion = data.localtion
@@ -211,8 +201,6 @@ export default {
       })
 
       if (BMap.Map) {
-        console.log(BMap)
-        console.log('存在')
         this.searchHandler = maps.handleResult(BMap, citys, this.searchResult)
         this.maps = maps.map
       }
@@ -246,10 +234,9 @@ export default {
       })
       let BMap = this.BMap
       let warn = this.warn
-      //   let moveIn = this.moveIn
-      //   let title = moveIn.localtion.title
-
-      if (this.searchVal === '') {
+      let moveIn = this.moveIn
+      console.log(JSON.stringify(moveIn, null, 2))
+      if (this.searchVal === '' || moveIn.localtion.lat === '') {
         warn.show = true
         warn.texts = '地址不能为空'
       } else {
@@ -276,9 +263,7 @@ export default {
           let obj = { kilometer: kilometer }
 
           console.log(JSON.stringify(obj, null, 2))
-          console.log('保存数据-----')
           let datass = base.mipExtendData(datas, obj)
-          console.log('查看数据:')
           console.log(JSON.stringify(datass))
           base.mipSetGlobalData(obj)
           base.setSession(datass)
@@ -321,6 +306,10 @@ export default {
 
     // 跳转到城市选择页面
     goCity () {
+      let inputs = this.$element.querySelectorAll('input:focus')
+      Array.prototype.slice.call(inputs).forEach(ele => {
+        ele.blur()
+      })
       MIP.viewer.open(base.htmlhref.city, { isMipLink: true })
     },
     goOrder () {
@@ -396,7 +385,6 @@ export default {
         'click',
         function (e) {
           let target = e.target
-          console.log(target)
           if (target.className.indexOf('btn') > -1) {
             let rect = target.getBoundingClientRect()
             let ripple = target.querySelector('.ripple')
@@ -433,7 +421,6 @@ export default {
       }
       this.debounceTimeout = setTimeout(() => {
         let value = this.searchVal
-        console.log('调用搜索')
         if (value === '') {
           this.searchData = []
         } else {
