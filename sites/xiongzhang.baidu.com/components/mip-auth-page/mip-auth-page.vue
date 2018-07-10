@@ -115,8 +115,7 @@ export default {
             }
           })
           window.MIP.viewer.page.back()
-        }
-        else {
+        } else {
           // 否则
           window.MIP.viewer.open(
             getRedirectUrl(config.state.url || config.redirect_uri, obj, decodeURIComponent(hash)),
