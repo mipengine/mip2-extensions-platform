@@ -188,8 +188,13 @@
             资费说明</span></a>
 
       </div>
-      <p
+      <!-- <p
         on="tap:user.login"
+        class="sure-order btn"
+        @touchend="sureOrder">
+        确认下单
+      </p> -->
+      <p
         class="sure-order btn"
         @touchend="sureOrder">
         确认下单
@@ -492,6 +497,11 @@ export default {
     addMipWatch () {
       this.$element.customElement.addEventAction('login', (event, str) => {
         console.log('查看登录的信息:' + JSON.stringify(event, null, 2))
+
+        if (event.origin === 'actionPay') {
+          this.checkData(event.sessionId)
+        }
+
         if (MIP.util.platform.isWechatApp()) {
           console.log('在微信内')
           let wxauth = event.userInfo.wxauth
@@ -506,14 +516,36 @@ export default {
 
       //   点击(用户)登录
       this.$element.customElement.addEventAction('userlogin', (event, str) => {
-        this.$emit('actionLogin', {})
+        let isLogin = this.userlogin.isLogin
+        console.log('点击用户登录')
+        if (!isLogin) {
+          let config = {
+            redirectUri: ''
+          }
+          MIP.setData({'config': config})
+          this.$nextTick(() => {
+            console.log('点击头像登录')
+            this.$emit('actionName')
+          })
+        }
       })
 
       //   订单列表跳转
       this.$element.customElement.addEventAction('goorderlist', (event, str) => {
         let isLogin = this.userlogin.isLogin
+        console.log('订单列表跳转')
         if (isLogin) {
           MIP.viewer.open(base.htmlhref.orderlist, { isMipLink: true })
+        } else {
+          console.log('未登录')
+          let config = {
+            redirectUri: base.htmlhref.orderlist
+          }
+          MIP.setData({'config': config})
+          this.$nextTick(() => {
+            console.log('点击订单列表录')
+            this.$emit('actionOrderList')
+          })
         }
       })
 
@@ -618,6 +650,14 @@ export default {
       let sessionId = this.userlogin.sessionId
       if (islogin) {
         this.checkData(sessionId)
+      } else {
+        let config = {
+          redirectUri: ''
+        }
+        MIP.setData({'config': config})
+        this.$nextTick(() => {
+          this.$emit('actionOrder')
+        })
       }
     },
 
@@ -1391,6 +1431,8 @@ export default {
 .address-div input {
   font-size: 0.28rem;
   color: #666666 !important;
+//   background: red;
+  line-height: .745rem;
 }
 .gomap{
  height: 100%;
