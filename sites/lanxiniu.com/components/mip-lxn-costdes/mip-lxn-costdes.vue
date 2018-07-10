@@ -7,11 +7,11 @@
     </div>
     <div class="car-type">
       <div
-        class="left arrow"
-        @click="goLeft()"/>
+        class="left arrow forbid car-actives"
+        @touchend="swiper(0)"/>
       <div
-        class="right arrow"
-        @click="goRight()"/>
+        class="right arrow car-actives"
+        @touchend="swiper(1)"/>
       <div class="content">
         <div class="swiper">
           <div class="slide slide-one">
@@ -750,19 +750,7 @@ export default {
   },
   mounted () {
     console.log('资费详情页面')
-
-    // let interval = setInterval(function () {
-    //   let content = that.$element.querySelector('.content')
-    //   let width = MIP.util.css(content, 'width')
-    //   console.log(width)
-    //   if (width === 'auto') {
-
-    //   } else {
-    //     clearInterval(interval)
-    //     that.getwidth()
-    //     this.getCurrentCityCarTypes()
-    //   }
-    // }, 100)
+    this.getCurrentCityCarTypes()
   },
   methods: {
     // 请求当前城市的车型列表
@@ -776,9 +764,6 @@ export default {
         .then(response => response.json())
         .catch(error => console.error('Error:', error))
         .then(response => {
-          console.log('Success:', response)
-
-          console.info(response)
           if (response.data) {
             let service = response.data.setting.service
             for (let i = 0; i < service.length; i++) {
@@ -797,75 +782,76 @@ export default {
     },
     getwidth () {
       this.widths = MIP.viewport.getWidth()
-      this.loadWidth = false
-
-      console.log('查看数据:' + this.widths)
     },
-    goLeft () {
+    swiper (type) {
       this.getwidth()
+      let swiper = this.$element.querySelector('.swiper')
+      let left = this.$element.querySelector('.left')
+      let right = this.$element.querySelector('.right')
+      let swTwo = 'swipertwo'
+      let swThree = 'swiperthree'
+      let forbid = 'forbid'
+      left.classList.remove(forbid)
+      right.classList.remove(forbid)
 
-      if (this.actionIndex !== 1) {
-        let swiper = this.$element.querySelector('.swiper')
-        let width = ''
-        if (this.actionIndex === 2) {
-          width = '(0px)'
-          swiper.classList.remove('swipertwo')
-        }
-        if (this.actionIndex === 3) {
-          width = '(-' + this.widths + 'px)'
-          swiper.classList.remove('swiperthree')
-        }
+      if (type) { // 向左
+        if (this.actionIndex !== this.maxIndex) {
+          let width = '(-' + this.widths * this.actionIndex + 'px)'
+          let t = 'translateX' + width
+          if (this.actionIndex === 1) {
+            swiper.classList.add(swTwo)
+          }
+          if (this.actionIndex === 2) {
+            swiper.classList.add(swThree)
+          }
 
-        let t = 'translateX' + width
-
-        console.log(t)
-
-        setTimeout(() => {
-          MIP.util.css(swiper, {
-            transform: t,
-            'transition-duration': '200ms'
+          setTimeout(() => {
+            MIP.util.css(swiper, {
+              transform: t,
+              'transition-duration': '200ms'
+            })
+            this.actionIndex += 1
+            if (this.actionIndex === 3) {
+              right.classList.add(forbid)
+            }
           })
-          this.actionIndex -= 1
-        }, 0)
+        } else {
+          if (this.actionIndex === 3) {
+            right.classList.add(forbid)
+          }
+        }
+      } else { // 向右
+        if (this.actionIndex !== 1) {
+          let width = ''
+          if (this.actionIndex === 2) {
+            width = '(0px)'
+            swiper.classList.remove(swTwo)
+          }
+          if (this.actionIndex === 3) {
+            width = '(-' + this.widths + 'px)'
+            swiper.classList.remove(swThree)
+          }
 
-        console.log('当前页面:' + this.actionIndex)
-      } else {
-        console.log('不能点了')
+          let t = 'translateX' + width
+
+          setTimeout(() => {
+            MIP.util.css(swiper, {
+              transform: t,
+              'transition-duration': '200ms'
+            })
+            this.actionIndex -= 1
+            if (this.actionIndex === 1) {
+              left.classList.add(forbid)
+            }
+          }, 0)
+        } else {
+          if (this.actionIndex === 1) {
+            left.classList.add(forbid)
+          }
+        }
       }
     },
-    goRight () {
-      this.getwidth()
 
-      if (this.actionIndex !== this.maxIndex) {
-        let swiper = this.$element.querySelector('.swiper')
-        let width = '(-' + this.widths * this.actionIndex + 'px)'
-        console.log(width)
-        let t = 'translateX' + width
-
-        if (this.actionIndex === 1) {
-          swiper.classList.add('swipertwo')
-        }
-        if (this.actionIndex === 2) {
-          swiper.classList.add('swiperthree')
-        }
-
-        setTimeout(function () {
-
-        })
-
-        setTimeout(() => {
-          MIP.util.css(swiper, {
-            transform: t,
-            'transition-duration': '300ms'
-          })
-          this.actionIndex += 1
-        })
-
-        console.log('当前页面:' + this.actionIndex)
-      } else {
-        console.log('不能点了')
-      }
-    },
     detaisOption (item) {
       item.flag = !item.flag
     }
@@ -910,13 +896,12 @@ export default {
 .arrow {
   width: 0.49rem;
   height: 0.49rem;
-  border: 0.04rem solid #666666;
+  border: 0.05rem solid #666666;
   border-right: none;
   border-bottom: none;
   position: absolute;
   z-index: 10;
   top: 2.2rem;
-  border-radius: 2px;
 
 }
 .left {
@@ -927,11 +912,14 @@ export default {
   transform: rotate(135deg);
   right: 1rem;
 }
+.left.forbid.arrow,
+.right.forbid.arrow{
+    border-color: #999;
+}
 .content {
-    /* width: 100%; */
-    width: 1px;
-    min-width: 100%;
-margin: 0 auto;
+  width: 1px;
+  min-width: 100%;
+  margin: 0 auto;
   position: relative;
   overflow: hidden;
   z-index: 1;
@@ -976,18 +964,13 @@ margin: 0 auto;
 .swiper.swiperthree .slide-three {
   height: auto;
 }
+
 .slide .title {
   font-size: 0.28rem;
   color: #333333;
   letter-spacing: 0.06px;
 }
 
-.slide-one {
-  /* background: gray; */
-}
-.slide-two {
-  /* background: blueviolet; */
-}
 .slide-three {
   background: repeat-y;
 }
@@ -1001,7 +984,7 @@ margin: 0 auto;
 .car-img-div .car {
   width: 100%;
   height: 100%;
-  background-size: 100%;
+  background-size: 100% 100%;
 }
 .car-img-div .xiaomian {
   background-image: url(https://www.lanxiniu.com/Public/baidumip/xiaomian.png);
@@ -1035,7 +1018,6 @@ margin: 0 auto;
   align-items: center;
   justify-content: center;
   letter-spacing: 0.04px;
-  /* line-height: 28px; */
 }
 .modelCost-xianghuo {
   height: 0.76rem;
@@ -1097,9 +1079,7 @@ margin: 0 auto;
   border: 0.02rem solid #429fff;
   border-right: none;
   border-bottom: none;
-  /* position: absolute; */
   z-index: 10;
-  /* top: 0; */
   margin-left: 0.1rem;
   position: relative;
 }
