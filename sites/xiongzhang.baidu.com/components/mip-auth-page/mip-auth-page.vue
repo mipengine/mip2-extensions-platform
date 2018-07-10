@@ -104,10 +104,24 @@ export default {
 
         let hash = config.state.h || ''
 
-        window.MIP.viewer.open(
-          getRedirectUrl(config.state.url || config.redirect_uri, obj, decodeURIComponent(hash)),
-          {isMipLink: true, replace: true}
-        )
+        // 判断如果是在SF里广播事件，并且返回原页面
+        if (!window.MIP.standalone && config.state.back) {
+          window.MIP.viewer.page.broadcastCustomEvent({
+            name: 'inservice-auth-logined',
+            data: {
+              code: obj.code,
+              origin: config.state.origin,
+              callbackurl: config.state.url
+            }
+          })
+          window.MIP.viewer.page.back()
+        } else {
+          // 否则
+          window.MIP.viewer.open(
+            getRedirectUrl(config.state.url || config.redirect_uri, obj, decodeURIComponent(hash)),
+            {isMipLink: true, replace: true}
+          )
+        }
       }
     }
   }
