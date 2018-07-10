@@ -452,10 +452,11 @@ export default {
             border-bottom: 1px solid #f1f1f1;
             position: relative;
             input{
-                height: 100%;
-                   font-size: .28rem;
-                   color:#666666;
-                   padding-left: .6rem;
+                height: 1rem;
+                font-size: .28rem;
+                color:#666666;
+                padding-left: .6rem;
+                line-height: 120%;
             }
             .img{
                 position: absolute;
