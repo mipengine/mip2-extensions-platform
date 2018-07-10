@@ -38,6 +38,7 @@
           <li
             v-for="item in searchData"
             :key="item.address+item.title"
+            class="car-actives"
             @click="setAddress(item)">
             <div>
               <span class="img weizhi"/>
@@ -116,7 +117,6 @@ export default {
     this.cityhref = base.htmlhref.city
   },
   mounted () {
-    console.log('这里是搬出地址选择页面 !')
     window.addEventListener('hide-page', (e) => {
       this.interval && clearInterval(this.interval)
     })

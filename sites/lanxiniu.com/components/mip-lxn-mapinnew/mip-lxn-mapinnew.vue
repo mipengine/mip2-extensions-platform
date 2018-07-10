@@ -38,6 +38,7 @@
           <li
             v-for="item in searchData"
             :key="item.address+item.title"
+            class="car-actives"
             @click="setAddress(item)">
             <div>
               <span class="img weizhi"/>

@@ -50,7 +50,7 @@
                 </div>
               </div>
               <div
-                :class="{&quot;lxn-hide&quot;:hide}"
+                :class="{'lxn-hide':hide}"
                 class="swiper-slide">
                 <div class="car-img-div">
                   <div class="car xianghuo"/>
@@ -446,6 +446,7 @@ export default {
   },
   mounted () {
     window.addEventListener('show-page', (e) => {
+      console.log('页面显示')
       let data = base.getSession()
       if (data !== null) {
         console.log(JSON.stringify(data, null, 2))
@@ -1293,7 +1294,7 @@ export default {
 .car-img-div .car {
   width: 100%;
   height: 100%;
-  background-size: 100%;
+  background-size: 100% 100%;
 }
 .car-img-div .xiaomian {
   background-image: url(https://www.lanxiniu.com/Public/baidumip/xiaomian.png);

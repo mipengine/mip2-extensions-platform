@@ -59,7 +59,7 @@ export default {
 
       setTimeout(() => {
         MIP.viewer.page.back()
-      }, 500)
+      }, 200)
     })
   },
   methods: {}
