@@ -110,7 +110,8 @@ export default {
             name: 'inservice-auth-logined',
             data: {
               code: obj.code,
-              origin: config.state.origin
+              origin: config.state.origin,
+              callbackurl: config.state.url
             }
           })
           window.MIP.viewer.page.back()
