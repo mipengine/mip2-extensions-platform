@@ -16,9 +16,9 @@
 export default {
   mounted () {
     console.log('This is my first custom component !')
-    setTimeout(()=>{
-      MIP.viewer.open('./index2.html', {isMipLink:true})
-    },3000)
+    setTimeout(() => {
+      MIP.viewer.open('./index2.html', {isMipLink: true})
+    }, 3000)
   }
 }
 </script>

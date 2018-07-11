@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
     <h1>MIP 2.0 component example</h1>
-    <h3>{{ldata.name}}</h3>
+    <h3>{{ ldata.name }}</h3>
   </div>
 </template>
 
