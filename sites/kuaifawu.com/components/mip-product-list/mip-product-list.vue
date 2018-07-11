@@ -141,8 +141,8 @@ export default {
     const self = this
     let pcid = getRequest().pcid
     pcid = pcid || 1
-    let fetchJsonp = require('fetch-jsonp')
-    fetchJsonp('http://api.kuaifawu.com/mip/product/categoryinfo/pcid/' + pcid, {
+
+    window.fetchJsonp('http://api.kuaifawu.com/mip/product/categoryinfo/pcid/' + pcid, {
       jsonpCallback: 'callback'
     }).then(function (res) {
       return res.json()
@@ -174,8 +174,7 @@ export default {
     changelist (pcid) {
       pcid = pcid || 1
       const self = this
-      let fetchJsonp = require('fetch-jsonp')
-      fetchJsonp('http://api.kuaifawu.com/mip/product/categoryinfo/pcid/' + pcid, {
+      window.fetchJsonp('http://api.kuaifawu.com/mip/product/categoryinfo/pcid/' + pcid, {
         jsonpCallback: 'callback'
       }).then(function (res) {
         return res.json()
