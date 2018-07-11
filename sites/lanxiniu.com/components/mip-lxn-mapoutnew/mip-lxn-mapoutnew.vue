@@ -117,6 +117,27 @@ export default {
     this.cityhref = base.htmlhref.city
   },
   mounted () {
+    window.addEventListener('show-page', (e) => {
+      console.log('搬出地址页面显示')
+      //   this.globaldata.ordercity = newval
+      this.searchVal = ''
+      this.searchData = []
+      this.moveOut = {
+        localtion: {
+          address: '',
+          city: '',
+          province: '',
+          lat: '',
+          lng: '',
+          title: ''
+        },
+        address: ''
+      }
+
+      setTimeout(() => {
+        this.mapInit()
+      }, 100)
+    })
     window.addEventListener('hide-page', (e) => {
       this.interval && clearInterval(this.interval)
     })
@@ -292,12 +313,17 @@ export default {
         )
         console.log(newval)
         this.searchVal = ''
+        this.searchData = []
         this.moveOut = {
           localtion: {
+            address: '',
+            city: '',
+            province: '',
+            lat: '',
+            lng: '',
             title: ''
           },
-          address: '',
-          phone: ''
+          address: ''
         }
         this.globaldata.ordercity = newval
         setTimeout(() => {
@@ -458,8 +484,8 @@ export default {
             border-bottom: 1px solid #f1f1f1;
             position: relative;
             input{
-                // height: 100%;
-                height: 1rem;
+                height: 100%;
+                // height: 1rem;
                 font-size: .28rem;
                 color:#666666;
                 padding-left: .6rem;
