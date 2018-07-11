@@ -118,6 +118,28 @@ export default {
   },
   mounted () {
     console.log('这里是搬入地址选择页面 !')
+
+    window.addEventListener('show-page', (e) => {
+      console.log('版入地址页面显示')
+      //   this.globaldata.ordercity = newval
+      this.searchVal = ''
+      this.searchData = []
+      this.moveIn = {
+        localtion: {
+          address: '',
+          city: '',
+          province: '',
+          lat: '',
+          lng: '',
+          title: ''
+        },
+        address: ''
+      }
+
+      setTimeout(() => {
+        this.mapInit()
+      }, 100)
+    })
     window.addEventListener('hide-page', (e) => {
       this.interval && clearInterval(this.interval)
     })
@@ -284,12 +306,17 @@ export default {
         console.log('=====..............===wacth监控=============城市改变了')
         console.log(newval)
         this.searchVal = ''
-        this.moveOut = {
+        this.searchData = []
+        this.moveIn = {
           localtion: {
+            address: '',
+            city: '',
+            province: '',
+            lat: '',
+            lng: '',
             title: ''
           },
-          address: '',
-          phone: ''
+          address: ''
         }
 
         this.globaldata.ordercity = newval
@@ -452,7 +479,8 @@ export default {
             border-bottom: 1px solid #f1f1f1;
             position: relative;
             input{
-                height: 1rem;
+                // height: 1rem;
+                height: 100%;
                 font-size: .28rem;
                 color:#666666;
                 padding-left: .6rem;

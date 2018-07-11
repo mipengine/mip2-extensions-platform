@@ -303,7 +303,7 @@ export default {
 }
 .wrapper li {
   background: #ffffff;
-  padding: 0.24rem 0.66rem;
+  padding: 0.24rem 0.4rem;
   box-shadow: 0 0.02rem 0.04rem 0 rgba(0, 0, 0, 0.1);
   border-radius: 0.04rem;
   margin-bottom: 0.2rem;
