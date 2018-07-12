@@ -1,6 +1,6 @@
 const lxnhttp = 'https://www.lanxiniu.com/BaiduMip/'
 // const lxnhttp = 'https://www.lanxiniu.com/BdMipDev/'
-// const lxnhttp = 'http://172.30.246.89:8111/example/'
+// const lxnhttp = 'http://127.0.0.1:8111/example/'
 
 const tranObjUrlToCache = urls => {
   let result = {}
@@ -122,6 +122,7 @@ export default ({
     try {
       MIP.setData({'#lxndata': newVal})
     } catch (e) {
+      console.error(e, e.stack)
     }
   },
   // 使用MIP2合并数据用于本地存储
@@ -140,6 +141,8 @@ export default ({
       for (let i = 0; i < strs.length; i++) {
         theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
       }
+      return theRequest
+    } else {
       return theRequest
     }
   }
