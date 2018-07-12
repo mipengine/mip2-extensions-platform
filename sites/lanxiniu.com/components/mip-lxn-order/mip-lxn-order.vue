@@ -409,8 +409,8 @@ export default {
           name: '小面',
           index: 0,
           weight: '600KG', // 载重
-          ckg: '1.7m×1.1m×1.0m', // 长宽高
-          volume: '1.87立方', // 体积
+          ckg: '1.7m×1.2m×1.1m', // 长宽高
+          volume: '2.2立方', // 体积
           hide: false, // 是否隐藏
           isActive: true // 被选中状态
         },

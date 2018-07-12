@@ -22,7 +22,7 @@
               <div class="car xiaomian"/>
             </div>
             <div class="desc">
-              <p>1.7m*1.1m*1.0m</p>
+              <p>1.7m*1.2m*1.1m</p>
               <p>长宽高</p>
             </div>
             <div class="modelCost">小面总费用=起步价+超里程费+楼层搬运费+额外服务费</div>
@@ -30,7 +30,7 @@
               <ul>
                 <li>
                   <div>起步价 (含10公里)</div>
-                  <div>60元</div>
+                  <div>96元</div>
                 </li>
                 <li>
                   <div>超里程费</div>
@@ -319,7 +319,7 @@
               <div class="car xianghuo"/>
             </div>
             <div class="desc">
-              <p>4.2m*1.9m*1.9m</p>
+              <p>4.2m*1.8m*1.8m</p>
               <p>长宽高</p>
             </div>
             <div class="modelCost modelCost-xianghuo">厢货总费用=起步价+超里程费+楼层搬运费+平地搬运费+<br>
