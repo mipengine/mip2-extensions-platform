@@ -1,0 +1,315 @@
+<!DOCTYPE html >
+<html mip>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <title>MIP page</title>
+  <link rel="canonical" href="对应的原页面地址">
+  <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+  <style mip-custom>
+    body {
+      background: #F4F4F4;
+    }
+
+    * {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box
+    }
+
+    li,
+    ol {
+      list-style: none
+    }
+
+    h2 {
+      margin: 50px auto;
+      text-align: center
+    }
+    .s4s-page {
+    background: #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+.s4s-help-hd {
+  display: flex;
+  margin: .20rem;
+  justify-content: space-between;
+  align-items: center;
+}
+.s4s-help-hd img {
+  width: .64rem;
+  height: .64rem;
+}
+.s4s-help-bd {
+  background: #EBF7FD;
+  border-radius: .07rem;
+  margin: .10rem;
+  padding: .20rem .10rem;
+}
+.s4s-help-question {
+  font-size: .15rem;
+  color: #0086C6;
+  padding-top: .20rem;
+}
+.s4s-help-question:first-child{
+  padding-top: 0;
+}
+.s4s-help-answer {
+  font-size: .12rem;
+  color: #056795;
+  line-height: 150%;
+  padding-top: .05rem;
+}
+  </style>
+</head>
+
+<body>
+  <mip-shell>
+    <script type="application/json">
+      {
+        "routes": [{
+          "pattern": "index.html",
+          "meta": {
+            "header": {
+              "show": true,
+              "xiongzhang": true,
+              "title": "违章查询",
+              "logo": "",
+              "buttonGroup": [{
+                "name": "index",
+                "text": "首页",
+                "link": "index.html"
+              },{
+                "name": "concat",
+                "text": "联系我们 400-000-1199",
+                "link": "tel://400-000-1199"
+              }, {
+                "name": "cancel",
+                "text": "取消",
+                "link": ""
+              }]
+            },
+            "view": {
+              "isIndex": true
+            }
+          }
+        },{
+          "pattern": "pay1.html",
+          "meta": {
+            "header": {
+              "show": true,
+              "xiongzhang": true,
+              "title": "付款",
+              "logo": ""
+            },
+            "view": {
+              "isIndex": false
+            }
+          }
+        },{
+          "pattern": "pay2.html",
+          "meta": {
+            "header": {
+              "show": true,
+              "xiongzhang": true,
+              "title": "付款",
+              "logo": ""
+            },
+            "view": {
+              "isIndex": false
+            }
+          }
+        }, {
+            "pattern": "violation.html",
+            "meta": {
+              "header": {
+                "show": true,
+                "xiongzhang": true,
+                "title": "查询结果",
+                "logo": "",
+                "buttonGroup": [{
+                  "name": "index",
+                  "text": "首页",
+                  "link": "index.html"
+                },{
+                  "name": "concat",
+                  "text": "联系我们 400-000-1199",
+                  "link": "tel://400-000-1199"
+                }, {
+                  "name": "cancel",
+                  "text": "取消",
+                  "link": ""
+                }]
+              },
+              "view": {
+                "isIndex": false
+              }
+            }
+          },{
+            "pattern": "car.html",
+            "meta": {
+              "header": {
+                "show": true,
+                "xiongzhang": true,
+                "title": "车辆管理",
+                "logo": "",
+                "buttonGroup": [{
+                  "name": "index",
+                  "text": "首页",
+                  "link": "index.html"
+                },{
+                  "name": "concat",
+                  "text": "联系我们 400-000-1199",
+                  "link": "tel://400-000-1199"
+                }, {
+                  "name": "cancel",
+                  "text": "取消",
+                  "link": ""
+                }]
+              },
+              "view": {
+                "isIndex": false
+              }
+            }
+          },{
+            "pattern": "carInfo.html",
+            "meta": {
+              "header": {
+                "show": true,
+                "xiongzhang": true,
+                "title": "编辑车辆信息",
+                "logo": "",
+                "buttonGroup": [{
+                  "name": "index",
+                  "text": "首页",
+                  "link": "index.html"
+                },{
+                  "name": "concat",
+                  "text": "联系我们 400-000-1199",
+                  "link": "tel://400-000-1199"
+                }, {
+                  "name": "cancel",
+                  "text": "取消",
+                  "link": ""
+                }]
+              },
+              "view": {
+                "isIndex": false
+              }
+            }
+          },{
+            "pattern": "help.html",
+            "meta": {
+              "header": {
+                "show": true,
+                "xiongzhang": true,
+                "title": "帮助",
+                "logo": "",
+                "buttonGroup": [{
+                  "name": "index",
+                  "text": "首页",
+                  "link": "index.html"
+                },{
+                  "name": "concat",
+                  "text": "联系我们 400-000-1199",
+                  "link": "tel://400-000-1199"
+                }, {
+                  "name": "cancel",
+                  "text": "取消",
+                  "link": ""
+                }]
+              },
+              "view": {
+                "isIndex": false
+              }
+            }
+          },{
+            "pattern": "agreement.html",
+            "meta": {
+              "header": {
+                "show": true,
+                "xiongzhang": true,
+                "title": "常见问题",
+                "logo": "",
+                "buttonGroup": [{
+                  "name": "index",
+                  "text": "首页",
+                  "link": "index.html"
+                },{
+                  "name": "concat",
+                  "text": "联系我们 400-000-1199",
+                  "link": "tel://400-000-1199"
+                }, {
+                  "name": "cancel",
+                  "text": "取消",
+                  "link": ""
+                }]
+              },
+              "view": {
+                "isIndex": false
+              }
+            }
+          },{
+          "pattern": "*",
+          "meta": {
+            "header": {
+              "show": true,
+              "xiongzhang": true,
+              "title": "违章查询",
+              "logo": "",
+              "buttonGroup": [{
+                "name": "index",
+                "text": "首页",
+                "link": "index.html"
+              },{
+                "name": "concat",
+                "text": "联系我们 400-000-1199",
+                "link": "tel://400-000-1199"
+              }, {
+                "name": "cancel",
+                "text": "取消",
+                "link": ""
+              }]
+            },
+            "view": {
+              "isIndex": false
+            }
+          }
+        }]
+      }
+
+    </script>
+  </mip-shell>
+      <div class="s4s-page">
+          <div class="s4s-help-body">
+              <div class="s4s-help-hd">
+                  <!-- <img style="width: 1.3rem;height: .54rem;" src="../../assets/help_title.png" /> -->
+                  <!-- <img src="../../assets/help_car.png" mode="scaleToFill" /> -->
+              </div>
+              <div class="s4s-help-bd">
+                  <div class="s4s-help-question">Q：什么是违章代缴？</div>
+                  <div class="s4s-help-answer">用户可通过“违章代缴”缴纳违章罚款，在家即可在线一键处理违章，省时省心；违章缴费由合作第三方提供线下服务，所以缴款时会按条收取一定服务费。</div>
+                  <div class="s4s-help-question">Q：办理周期是？</div>
+                  <div class="s4s-help-answer">交通违法代缴的办理周期为1-2个工作日，部分地区2-5个工作日；现场单的办理周期为24小时。无法缴纳的订单，将全额退款。</div>
+                  <div class="s4s-help-question">Q：为什么订单显示处理完成，还能查询到违章记录？</div>
+                  <div class="s4s-help-answer">办理完成后，由于各省交警部门办事流程和交警系统网络传输原因，您还有可能查询到您的违章记录。数据是由本省的交警上传到省厅，再由省厅传输到车辆所在地，短则3-5个工作日，长则半个月或更多时间，部分省份和地区会有延迟，请耐心等待或5个工作日后再查。</div>
+                  <div class="s4s-help-question">Q：支付金额怎么和处罚决定书上的不一致？</div>
+                  <div class="s4s-help-answer">订单中的支付金额包括罚款本金、滞纳金和服务费。</div>
+                  <div class="s4s-help-question">Q：什么是滞纳金，如何计算？</div>
+                  <div class="s4s-help-answer">到交警队或车管所处理拿到处罚决定书后15日没有去缴纳罚款的会发生滞纳金，第16日开始按照每日3%收取滞纳金，处罚总额不超过罚款数额。没有去开罚单不会产生滞纳金，如果民警现场开出罚单，就必须按时交罚款。
+                      <p style="color: #E76A09;display: block;">由于办理周期需要1-2个工作日，部分地区2-5个工作日，所以会提前收取3天的滞纳金。</p>
+                  </div>
+                  <div class="s4s-help-question">Q：关于退单退款</div>
+                  <div class="s4s-help-answer">正在办理中的订单无法退单。如需退单请联系客服申请，如未联系客服退单又自行缴费导致的重复付款，均由客户自行承担。</div>
+              </div>
+          </div>
+      </div>
+      <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+</body>
+
+</html>
