@@ -25,8 +25,8 @@
         </div>
         <a
           v-else
-          data-type="mip"
-          href="menuItem.url">
+          :href="menuItem.url"
+          data-type="mip">
           {{ menuItem.text || menuItem.name }}
         </a>
       </div>

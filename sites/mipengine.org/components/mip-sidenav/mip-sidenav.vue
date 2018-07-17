@@ -4,11 +4,13 @@
       :menu="menu"
       :url="url"
       :level="level">
-      <sidenav-chapter
-        :chapters="chapters"
-        :level="level"
-        :active="activeChapter"
-        @select="chapterSelected"/>
+      <template slot-scope="slotProps">
+        <sidenav-chapter
+          :chapters="chapters"
+          :level="level"
+          :active="activeChapter"
+          @select="chapterSelected"/>
+      </template>
     </sidenav-menu>
   </div>
 </template>

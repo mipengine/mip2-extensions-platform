@@ -8,7 +8,7 @@
         class="chapter-title"
         @click.prevent.stop="select(item.text)"
       >
-        <div>{{ item.text|raw }}</div>
+        <div v-html="item.text"/>
       </a>
       <div
         v-if="item.children"

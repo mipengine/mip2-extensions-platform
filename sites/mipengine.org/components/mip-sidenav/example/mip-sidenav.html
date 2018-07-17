@@ -15,10 +15,12 @@
   </head>
   <body>
     <div class="wrapper">
-      <mip-sidenav>
+      <mip-sidenav m-bind:menu="menu" m-bind:chapters="chapters" m-bind:url="url">
+      </mip-sidenav>
+      <mip-data>
         <script type="application/json">
           {
-            "menu": [{
+            menu: [{
               "name": "基础教程",
               "path": "lavas/v2/basic",
               "children": [{
@@ -162,7 +164,7 @@
             url: "/guide/v2/basic/introduction"
           }
         </script>
-      </mip-sidenav>
+      </mip-data>
     </div>
     <script src="https://bos.nj.bpc.baidu.com/assets/mip/projects/mip.js"></script>
     <script src="/mip-sidenav/mip-sidenav.js"></script>
