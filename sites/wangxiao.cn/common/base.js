@@ -25,14 +25,13 @@ export default ({
     costdes: lxnhttp + 'costdes',
     userguide: lxnhttp + 'userguide'
   }),
-  //获取url中的参数
   getQueryString: function (name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", i); // 匹配目标参数
-    var result = window.location.search.substr(1).match(reg); // 对querystring匹配目标参数
+    let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+    let result = window.location.search.substr(1).match(reg)
     if (result != null) {
-      return decodeURIComponent(result[2]);
+      return decodeURIComponent(result[2])
     } else {
-      return null;
+      return null
     }
   },
   // 测试
