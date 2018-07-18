@@ -2,6 +2,7 @@
   <div class="wd-infinity-chapters">
     <template v-for="item in chapters">
       <a
+        v-if="level !== 0"
         :key="item.text"
         :class="{selected: active === item.text}"
         :href="item.hash"
@@ -26,10 +27,11 @@
 
 <style scoped lang="stylus">
 .wd-infinity-chapters
+    position relative
     div[class^="children-"]
         .chapter-title
             color #6a6b6c
-            padding 15px 10px 15px 0
+            padding 12px 10px 12px 0
             display block
             cursor pointer
             margin-left 10px
@@ -52,15 +54,32 @@
                     padding-right 5px
 
     .children-0
-        // padding-left 10px
         margin-left 10px
         border-left 2px solid #f1f1f1
-        &>.wd-infinity-chapters>.chapter-title
+        &>.wd-infinity-chapters
+          &>.chapter-title
             color #24292e
-            // font-weight bold
             >div
               &::before
                   display none
+
+          // 隐藏多余的 border
+          &>:first-child
+            &:before
+              content ''
+              height 12px
+              border-left 6px solid #fff
+              position absolute
+              top 0
+              left -4px
+          &>:last-child
+            &:after
+              content ''
+              height 12px
+              border-left 6px solid #fff
+              position absolute
+              bottom 0
+              left -4px
 </style>
 
 <script>

@@ -40,7 +40,7 @@
             a
                 display block
                 margin 5px 0
-                padding 15px 10px
+                padding 12px 10px
                 color #6a6b6c
                 font-size 14px
                 &:active
@@ -48,12 +48,12 @@
             .sub-folder
                 color #24292e
                 font-weight bold
-                padding 15px 10px
+                padding 12px 10px
         .l-0>.folder
             color #24292e
             font-size 18px
             font-weight bold
-            margin 25px 0
+            margin 22px 0
             padding-left 10px
     .children-1
         .wd-infinity-menu
@@ -95,8 +95,6 @@ export default {
     }
   },
   mounted () {
-    // console.log(this.level)
-    // console.log(this.menu)
   }
 }
 </script>
