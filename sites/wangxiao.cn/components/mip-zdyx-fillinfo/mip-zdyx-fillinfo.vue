@@ -40,103 +40,171 @@
           height="40"/>
       </div>
     </div>
-    <div class="btn">提交</div>
-    <mip-lightbox
-      id="my-lightbox3"
-      autoclosetime="2"
-      layout="nodisplay"
-      class="mip-hidden">
-      <div class="lightbox">
-        {{ errorMessage }}
-      </div>
-    </mip-lightbox>
+    <div
+      class="btn"
+      @click="submitPhoneNumber">提交</div>
+    <div
+      v-show="showErrorMessage"
+      class="errorMessage">
+      {{ errorMessage }}
+    </div>
   </div>
 </template>
 <script>
-import base from '../../common/base'
+import base from "../../common/base";
 export default {
   components: {},
   props: {
-    value: {
-      type: Number,
-      default: function () {
-        return 0
-      }
-    },
     showImgCode: {
       type: Boolean,
-      default: function () {
-        return true
+      default: function() {
+        return false;
       }
     }
   },
-  data () {
+  data() {
     return {
-      errorMessage: '手机号码格式错误',
-      phoneNumber: '',
-      phoneCodeNumber: '',
-      imgCode: '',
-      phonCodeBtnText: '获取验证码',
+      showErrorMessage: false,
+      errorMessage: "",
+      phoneNumber: "",
+      phoneCodeNumber: "",
+      imgCode: "",
+      phonCodeBtnText: "获取验证码",
       getingPhoneCode: false,
-      imgCodeUrl: 'https://api.wangxiao.cn/app/Validate.ashx?validatekey='
-    }
+      imgCodeUrl: "https://api.wangxiao.cn/app/Validate.ashx?validatekey="
+    };
   },
-  computed: {
-    getWidth () {
-      return this.value / 0.05
-    }
-  },
-  mounted () {
-    this.imgCodeUrl = this.imgCodeUrl + base.getQueryString('validatekey')
+  computed: {},
+  mounted() {
+    this.imgCodeUrl = this.imgCodeUrl + base.getQueryString("validatekey");
   },
   methods: {
-    getImgCode () {
+    getImgCode() {
       this.imgCodeUrl =
-        this.imgCodeUrl.replace(/&v=.*/g, '') + '&v=' + Math.random()
+        this.imgCodeUrl.replace(/&v=.*/g, "") + "&v=" + Math.random();
     },
-    getPhoneCode () {
-      let uPattern = /^1[0-9][0-9]\d{8}$/
-      if (uPattern.test(this.phoneNumber)) {
-        fetch(base.url + base.api.sendMessage, {
-          method: 'POST',
+    getPhoneCode() {
+      let _this = this;
+      let uPattern = /^1[0-9][0-9]\d{8}$/;
+      if (uPattern.test(_this.phoneNumber) && !_this.getingPhoneCode) {
+        fetch(base.api.sendMessage, {
+          method: "POST",
           headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
+            Accept: "application/json",
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
-            phone: this.phoneNumber
+            phone: _this.phoneNumber
           })
         })
-          .then(function (response) {
+          .then(function(response) {
             if (response.status !== 200) {
-              console.log(`返回的响应码${response.status}`)
-              return
+              console.log(`返回的响应码${response.status}`);
+              return;
             }
             // 获得后台实际返回的内容
-            response.json().then(function (data) {
-              this.phonCodeBtnText = 60
+            response.json().then(function(data) {
+              _this.getingPhoneCode = true;
+              _this.phonCodeBtnText = 60;
               let timer = setInterval(() => {
-                if (this.phonCodeBtnText === 0) {
-                  this.phonCodeBtnText = '获取验证码'
+                if (_this.phonCodeBtnText === 0) {
+                  _this.phonCodeBtnText = "获取验证码";
+                  clearInterval(timer);
+                  _this.getingPhoneCode = false;
                 }
-                clearInterval(timer)
-                this.phonCodeBtnText = --this.phonCodeBtnText
-              }, 1000)
-            })
+                _this.phonCodeBtnText = --_this.phonCodeBtnText;
+              }, 1000);
+            });
           })
-          .catch(function (err) {
-            console.log('Fetch Error :-S', err)
-          })
+          .catch(function(err) {
+            console.log("Fetch Error :-S", err);
+          });
       } else {
-        console.log('手机号码错误')
+        if (!uPattern.test(_this.phoneNumber)) {
+          _this.errorMessage = "手机号码错误";
+          _this.showErrorMessage = true;
+        } else {
+          console.log("请稍后获取");
+        }
+      }
+    },
+    submitPhoneNumber() {
+      let _this = this;
+      if (_this.phoneNumber === '') {
+        _this.errorMessage = '请输入手机号码'
+        _this.showErrorMessage = true;
+        return;
+      }
+      let uPattern = /^1[0-9][0-9]\d{8}$/
+      if (!uPattern.test(_this.phoneNumber)) {
+        _this.errorMessage = '请输入正确的手机号码'
+        _this.showErrorMessage = true
+        return;
+      }
+      if (_this.phoneCodeNumber === '') {
+        _this.errorMessage = '请输入短信验证码'
+        _this.showErrorMessage = true
+        return;
+      }
+      if (_this.showImgCode && _this.imgCode === '') {
+        _this.errorMessage = '请输入图形验证码'
+        _this.showErrorMessage = true
+        return;
+      }
+      fetch(base.api.compareMessageCode, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          code: _this.phoneCodeNumber,
+          phone: _this.phoneNumber
+        })
+      })
+        .then(function(response) {
+          if (response.status !== 200) {
+            console.log(`返回的响应码${response.status}`)
+            return;
+          }
+          // 获得后台实际返回的内容
+          response.json().then(function(data) {
+            if(data.code === '100000'){
+              _this.errorMessage = data.message
+              _this.showErrorMessage = true
+            }
+          });
+        })
+        .catch(function(err) {
+          console.log("Fetch Error :-S", err)
+        });
+    }
+  },
+  watch: {
+    showErrorMessage: function(newQuestion, oldQuestion) {
+      if (newQuestion) {
+        setTimeout(() => {
+          this.showErrorMessage = !this.showErrorMessage;
+        }, 2000);
       }
     }
   }
-}
+};
 </script>
 <style lang='less' scoped>
 .fillinfo-content {
   padding: 4rem;
+  .errorMessage {
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    margin-left: -50px;
+    margin-top: -50px;
+    color: #fff;
+    background: #999;
+    padding: 1rem;
+    border-radius: 6px;
+  }
   .form-group {
     display: flex;
     border-bottom: 1px solid #f1f1f1;

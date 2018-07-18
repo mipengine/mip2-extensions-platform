@@ -3,7 +3,7 @@
     <ul>
       <!-- 一级标题  firstTitle点击事件-->
       <li
-        v-for="(item,index) in headerData"
+        v-for="(item,index) in catalogList"
         :key="index"
         class="catalog-title"
         @click.stop="firstTitle(index)">
@@ -11,7 +11,7 @@
           <span
             :class="{'catalog-item-icon-active':firstCurrentIndex===index}"
             class="catalog-item-icon"/>
-          <span class="catalog-item-title">{{ item.Name }}</span>
+          <span class="catalog-item-title">{{ item.ClassName }}</span>
         </div>
         <span
           v-show="firstCurrentIndex===index&&lineTag"
@@ -21,7 +21,7 @@
           v-show="firstCurrentIndex===index">
           <!-- 循环二级菜单数据并使用.stop阻止冒泡 -->
           <li
-            v-for="(item2,index2) in item.Courses"
+            v-for="(item2,index2) in item.Product"
             :key="index2"
             @click.stop="doThis(index2)">
             <div
@@ -30,18 +30,18 @@
               <span
                 :class="{'item-item-icon-active':firstCurrentIndex===index&&index2===secondCurrentIndex}"
                 class="item-item-icon"/>
-              <span class="item-item-title">{{ item2.Title }}</span>
+              <span class="item-item-title">{{ item2.ProductName }}</span>
             </div>
             <ul
               v-show="firstCurrentIndex===index&&index2===secondCurrentIndex">
               <li
-                v-for="( item3,index3 ) in item2.OldClassHours"
+                v-for="( item3,index3 ) in item2.CourseList"
                 :key="index3">
                 <span class="line"/>
                 <div class="list-title-content">
                   <div>
                     <span style="display:inline-block;width: .8rem;height: .8rem;border-radius: 100%;margin-left: .8rem;background: #ff6a4a;"/>
-                    <span class="list-item-title">{{ item3.Title }}</span>
+                    <span class="list-item-title">{{ item3.courseName }}</span>
                   </div>
                   <!-- <p @click.stop="goStudy(item3)" v-if="item3.IsBuy">去学习</p>
                   <p on="tap:user.login" v-else style="color:#ff6a4c;">立即购买</p> -->
@@ -57,7 +57,7 @@
 <script>
 export default {
   props: {
-    headerData: {
+    catalogList: {
       type: Array,
       default: function () {
         return []
