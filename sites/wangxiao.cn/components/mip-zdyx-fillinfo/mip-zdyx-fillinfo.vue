@@ -51,145 +51,145 @@
   </div>
 </template>
 <script>
-import base from "../../common/base";
+import base from '../../common/base'
 export default {
   components: {},
   props: {
     showImgCode: {
       type: Boolean,
-      default: function() {
-        return false;
+      default: function () {
+        return false
       }
     }
   },
-  data() {
+  data () {
     return {
       showErrorMessage: false,
-      errorMessage: "",
-      phoneNumber: "",
-      phoneCodeNumber: "",
-      imgCode: "",
-      phonCodeBtnText: "获取验证码",
+      errorMessage: '',
+      phoneNumber: '',
+      phoneCodeNumber: '',
+      imgCode: '',
+      phonCodeBtnText: '获取验证码',
       getingPhoneCode: false,
-      imgCodeUrl: "https://api.wangxiao.cn/app/Validate.ashx?validatekey="
-    };
+      imgCodeUrl: 'https://api.wangxiao.cn/app/Validate.ashx?validatekey='
+    }
   },
   computed: {},
-  mounted() {
-    this.imgCodeUrl = this.imgCodeUrl + base.getQueryString("validatekey");
+  watch: {
+    showErrorMessage: function (newQuestion, oldQuestion) {
+      if (newQuestion) {
+        setTimeout(() => {
+          this.showErrorMessage = !this.showErrorMessage
+        }, 2000)
+      }
+    }
+  },
+  mounted () {
+    this.imgCodeUrl = this.imgCodeUrl + base.getQueryString('validatekey')
   },
   methods: {
-    getImgCode() {
+    getImgCode () {
       this.imgCodeUrl =
-        this.imgCodeUrl.replace(/&v=.*/g, "") + "&v=" + Math.random();
+        this.imgCodeUrl.replace(/&v=.*/g, '') + '&v=' + Math.random()
     },
-    getPhoneCode() {
-      let _this = this;
-      let uPattern = /^1[0-9][0-9]\d{8}$/;
+    getPhoneCode () {
+      let _this = this
+      let uPattern = /^1[0-9][0-9]\d{8}$/
       if (uPattern.test(_this.phoneNumber) && !_this.getingPhoneCode) {
         fetch(base.api.sendMessage, {
-          method: "POST",
+          method: 'POST',
           headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json"
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             phone: _this.phoneNumber
           })
         })
-          .then(function(response) {
+          .then(function (response) {
             if (response.status !== 200) {
-              console.log(`返回的响应码${response.status}`);
-              return;
+              console.log(`返回的响应码${response.status}`)
+              return
             }
             // 获得后台实际返回的内容
-            response.json().then(function(data) {
-              _this.getingPhoneCode = true;
-              _this.phonCodeBtnText = 60;
+            response.json().then(function (data) {
+              _this.getingPhoneCode = true
+              _this.phonCodeBtnText = 60
               let timer = setInterval(() => {
                 if (_this.phonCodeBtnText === 0) {
-                  _this.phonCodeBtnText = "获取验证码";
-                  clearInterval(timer);
-                  _this.getingPhoneCode = false;
+                  _this.phonCodeBtnText = '获取验证码'
+                  clearInterval(timer)
+                  _this.getingPhoneCode = false
                 }
-                _this.phonCodeBtnText = --_this.phonCodeBtnText;
-              }, 1000);
-            });
+                _this.phonCodeBtnText = --_this.phonCodeBtnText
+              }, 1000)
+            })
           })
-          .catch(function(err) {
-            console.log("Fetch Error :-S", err);
-          });
+          .catch(function (err) {
+            console.log('Fetch Error :-S', err)
+          })
       } else {
         if (!uPattern.test(_this.phoneNumber)) {
-          _this.errorMessage = "手机号码错误";
-          _this.showErrorMessage = true;
+          _this.errorMessage = '手机号码错误'
+          _this.showErrorMessage = true
         } else {
-          console.log("请稍后获取");
+          console.log('请稍后获取')
         }
       }
     },
-    submitPhoneNumber() {
-      let _this = this;
+    submitPhoneNumber () {
+      let _this = this
       if (_this.phoneNumber === '') {
         _this.errorMessage = '请输入手机号码'
-        _this.showErrorMessage = true;
-        return;
+        _this.showErrorMessage = true
+        return
       }
       let uPattern = /^1[0-9][0-9]\d{8}$/
       if (!uPattern.test(_this.phoneNumber)) {
         _this.errorMessage = '请输入正确的手机号码'
         _this.showErrorMessage = true
-        return;
+        return
       }
       if (_this.phoneCodeNumber === '') {
         _this.errorMessage = '请输入短信验证码'
         _this.showErrorMessage = true
-        return;
+        return
       }
       if (_this.showImgCode && _this.imgCode === '') {
         _this.errorMessage = '请输入图形验证码'
         _this.showErrorMessage = true
-        return;
+        return
       }
       fetch(base.api.compareMessageCode, {
-        method: "POST",
+        method: 'POST',
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json"
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           code: _this.phoneCodeNumber,
           phone: _this.phoneNumber
         })
       })
-        .then(function(response) {
+        .then(function (response) {
           if (response.status !== 200) {
             console.log(`返回的响应码${response.status}`)
-            return;
+            return
           }
           // 获得后台实际返回的内容
-          response.json().then(function(data) {
-            if(data.code === '100000'){
+          response.json().then(function (data) {
+            if (data.code === '100000') {
               _this.errorMessage = data.message
               _this.showErrorMessage = true
             }
-          });
+          })
         })
-        .catch(function(err) {
-          console.log("Fetch Error :-S", err)
-        });
-    }
-  },
-  watch: {
-    showErrorMessage: function(newQuestion, oldQuestion) {
-      if (newQuestion) {
-        setTimeout(() => {
-          this.showErrorMessage = !this.showErrorMessage;
-        }, 2000);
-      }
+        .catch(function (err) {
+          console.log('Fetch Error :-S', err)
+        })
     }
   }
-};
+}
 </script>
 <style lang='less' scoped>
 .fillinfo-content {
