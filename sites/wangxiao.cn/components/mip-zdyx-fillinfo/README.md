@@ -13,8 +13,8 @@
 
 ## 示例
 
-<mip-zdyx-fillinfo showImgCode="true"></mip-zdyx-fillinfo>
+<mip-zdyx-fillinfo showImgCode="false"></mip-zdyx-fillinfo>
 
 ## 属性
 
-showImgCode 是否需要填写图形验证码 默认值false不填写
+showImgCode 是否需要填写图形验证码 默认值true填写

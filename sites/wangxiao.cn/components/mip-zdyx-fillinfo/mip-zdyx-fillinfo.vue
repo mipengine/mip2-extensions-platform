@@ -58,7 +58,7 @@ export default {
     showImgCode: {
       type: Boolean,
       default: function () {
-        return false
+        return true
       }
     }
   },
@@ -169,7 +169,7 @@ export default {
         body: JSON.stringify({
           code: _this.phoneCodeNumber,
           phone: _this.phoneNumber,
-          imgCode:_this.imgCode
+          imgCode: _this.imgCode
         })
       })
         .then(function (response) {
