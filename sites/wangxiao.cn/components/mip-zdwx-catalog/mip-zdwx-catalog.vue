@@ -55,21 +55,39 @@
   </div>
 </template>
 <script>
+import base from '../../common/base.js'
 export default {
-  props: {
-    catalogList: {
-      type: Array,
-      default: function () {
-        return []
-      }
-    }
-  },
   data () {
     return {
+      catalogList: [],
       firstCurrentIndex: 0,
       secondCurrentIndex: 0,
       lineTag: true
     }
+  },
+  mounted () {
+    let _this = this
+    fetch(base.api.getGoodsCatalog, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: base.getQueryString('goodsId')
+      })
+    })
+      .then(function (response) {
+        // 获得后台实际返回的内容
+        response.json().then(function (data) {
+          if (data.Data) {
+            _this.catalogList = data.Data
+          }
+        })
+      })
+      .catch(function (err) {
+        console.log('Fetch Error :-S', err)
+      })
   },
   methods: {
     firstTitle (index) {
