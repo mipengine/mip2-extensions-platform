@@ -80,7 +80,7 @@ export default {
       .then(function (response) {
         // 获得后台实际返回的内容
         response.json().then(function (data) {
-          if (data.Data) {
+          if (data.data) {
             _this.catalogList = data.Data
           }
         })
