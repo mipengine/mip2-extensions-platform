@@ -1,153 +1,191 @@
 <template>
-    <div class="s4s-page">
-        <div class="s4s-select-car">
-          <a data-type="mip" ref="carInfo" href="carInfo.html"></a>
-             <a data-type="mip" ref="violation" href="violation.html"></a>
-          <div  v-if="!!list.length">
-            <div class="list" v-for="(car, index) in list" :key="car.Id">
-                <div class="bd">
-                   <mip-img src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree_empty.png" v-show="isSelected != index" width="25" height="25" @click="selected(index)" ></mip-img>
-                    <mip-img src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree.png" v-show="isSelected == index" width="25" height="25" @click="selected(index)" ></mip-img>
-                    <div class="bd-fl">
-                        <span class="car-no"  @click="selected(index)" >{{ car.CarNo }}</span>
-                        <span @click="editCar(car)" class="car-info-edit orange"  >编辑</span>
-                        <span @click="delCar(car)" class="car-info-edit blue"  >删除</span>
-                    </div>
-                     <!-- <mip-img class="s4s-option-out" @click="selected(car, index)" :src="isSelected == index ? 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree.png' : './https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree_empty.png'" ></mip-img> -->
-                </div>
+  <div class="s4s-page">
+    <div class="s4s-select-car">
+      <a
+        ref="carInfo"
+        data-type="mip"
+        href="carInfo.html"/>
+      <a
+        ref="violation"
+        data-type="mip"
+        href="violation.html"/>
+      <div v-if="!!list.length">
+        <div
+          v-for="(car, index) in list"
+          :key="car.Id"
+          class="list">
+          <div class="bd">
+            <mip-img
+              v-show="isSelected != index"
+              src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree_empty.png"
+              width="25"
+              height="25"
+              @click="selected(index)" />
+            <mip-img
+              v-show="isSelected == index"
+              src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree.png"
+              width="25"
+              height="25"
+              @click="selected(index)" />
+            <div class="bd-fl">
+              <span
+                class="car-no"
+                @click="selected(index)" >{{ car.CarNo }}</span>
+              <span
+                class="car-info-edit orange"
+                @click="editCar(car)" >编辑</span>
+              <span
+                class="car-info-edit blue"
+                @click="delCar(car)" >删除</span>
             </div>
+            <!-- <mip-img class="s4s-option-out" @click="selected(car, index)" :src="isSelected == index ? 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree.png' : './https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree_empty.png'" ></mip-img> -->
           </div>
-           
-            <div class="s4s-car-add" @click="gotoCar">
-                <mip-img width="50" height="50" src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/add.png" ></mip-img>
-                <p>点击添加爱车</p>
-            </div>
-            <div v-if="list.length > 0" class="s4s-set-default" @click="setDefault"> 查询选中车辆违章 </div>
         </div>
-        <div class="s4s-confirm" v-if="showConfirm">
-            <div class="s4s-confirm-body">
-                <!-- <div class="s4s-confirm-title">提示</div> -->
-                <div class="s4s-confirm-content">确认删除此车辆？</div>
-                <div class="s4s-confirm-btn">
-                    <span @click="cancelBtn">取消</span>
-                    <span @click="confirmBtn" style="color: #108EE9;">确认</span>
-                </div>
-            </div>
-            <div class="s4s-mask"></div>
+      </div>
+
+      <div
+        class="s4s-car-add"
+        @click="gotoCar">
+        <mip-img
+          width="50"
+          height="50"
+          src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/add.png" />
+        <p>点击添加爱车</p>
+      </div>
+      <div
+        v-if="list.length > 0"
+        class="s4s-set-default"
+        @click="setDefault"> 查询选中车辆违章 </div>
+      <div
+        v-if="showConfirm"
+        class="s4s-confirm">
+        <div class="s4s-confirm-body">
+          <!-- <div class="s4s-confirm-title">提示</div> -->
+          <div class="s4s-confirm-content">确认删除此车辆？</div>
+          <div class="s4s-confirm-btn">
+            <span @click="cancelBtn">取消</span>
+            <span
+              style="color: #108EE9;"
+              @click="confirmBtn">确认</span>
+          </div>
         </div>
+        <div class="s4s-mask"/>
+      </div>
     </div>
+
+  </div>
 </template>
 
 <script>
-import util from "../../common/util";
+import util from '../../common/util'
 
 export default {
-  data() {
+  data () {
     return {
       list: [],
       isSelected: 0,
       showConfirm: false,
       car: {},
-      delCarNo:'',
-    };
+      delCarNo: ''
+    }
   },
-  mounted() {
+  mounted () {
     this.user = {
-      Tel: window.localStorage.UserTel || window.UserTel || ""
-    };
+      Tel: window.localStorage.UserTel || window.UserTel || ''
+    }
     // if (!this.user.Tel) {
 
     // }
-    this.getCar();
+    this.getCar()
   },
   methods: {
-    selected(index) {
-      this.isSelected = index;
+    selected (index) {
+      this.isSelected = index
     },
     // 删除爱车
-    delCar(car) {
-      let self = this;
-      this.showConfirm = true;
+    delCar (car) {
+      // let self = this
+      this.showConfirm = true
       this.delCarNo = car.CarNo
     },
     // 添加车辆
-    gotoCar() {
+    gotoCar () {
       // MIP.viewer.open("carInfo.html");
       MIP.setData({
-        '#changeCarData':{
-          "car_id":'',
-          "provice": '',
-          "car_no": '',
-          "vin": '',
-          "engine":'',
+        '#changeCarData': {
+          car_id: '',
+          provice: '',
+          car_no: '',
+          vin: '',
+          engine: ''
         }
       })
       this.$refs.carInfo.click()
     },
     // 设为默认
-    setDefault() {
-      let car = this.list[this.isSelected];
+    setDefault () {
+      let car = this.list[this.isSelected]
       MIP.setData({
-        '#globalData':{
-          "provice": car.CarNo.substring(0,1),
-          "car_no": car.CarNo.substring(1,7),
-          "vin": car.ClassNo,
-          "engine": car.EngineNo,
+        '#globalData': {
+          provice: car.CarNo.substring(0, 1),
+          car_no: car.CarNo.substring(1, 7),
+          vin: car.ClassNo,
+          engine: car.EngineNo
         }
       })
       // MIP.viewer.open("violation.html");
       this.$refs.violation.click()
     },
-    cancelBtn(){
-      this.showConfirm = false;
+    cancelBtn () {
+      this.showConfirm = false
     },
     // 删除车辆
-    confirmBtn() {
+    confirmBtn () {
       let param = {
-        carno: this.delCarNo
-      };
-      let self = this;
-      util.fetchData("v2/car/vio_del", param).then(res => {
-        if (res.code == 0) {
-          this.showConfirm = false;
-          util.toast("删除成功");
-          self.getCar();
+        car_no: this.delCarNo
+      }
+      let self = this
+      util.fetchData('v3/violation/car/del', param).then(res => {
+        if (res.code === 0) {
+          this.showConfirm = false
+          util.toast('删除成功')
+          self.getCar()
         }
-      });
+      })
     },
-    editCar(car){
+    editCar (car) {
       console.log(car)
       MIP.setData({
-        '#changeCarData':{
-          "car_id":car.Id+'',
-          "provice": car.CarNo.substring(0,1),
-          "car_no": car.CarNo.substring(1,7),
-          "vin": car.ClassNo,
-          "engine": car.EngineNo,
+        '#changeCarData': {
+          car_id: car.Id + '',
+          provice: car.CarNo.substring(0, 1),
+          car_no: car.CarNo.substring(1, 7),
+          vin: car.ClassNo,
+          engine: car.EngineNo
         }
       })
       // MIP.viewer.open("carInfo.html");
-      this.$refs.carInfo.click();
+      this.$refs.carInfo.click()
     },
     // 获取车辆
-    getCar() {
-      let self = this;
+    getCar () {
+      let self = this
       util
-        .fetchData("v2/car/user_car_list")
+        .fetchData('v3/violation/car/list')
         .then(res => {
-          if (res.code == 0) {
-            self.list = res.data?res.data:[];
-          }else{
+          if (res.code === 0) {
+            self.list = res.data ? res.data : []
+          } else {
             util.toast(res.msg)
           }
         })
         .catch(e => {
-          console.log(e);
-          throw new Error(e);
-        });
+          console.log(e)
+          throw new Error(e)
+        })
     }
   }
-};
+}
 </script>
 
 <style scoped>
@@ -162,7 +200,7 @@ export default {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: 19px 15px;
+  padding: .19rem .15rem;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -180,23 +218,23 @@ export default {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  margin-left: 15px;
+  margin-left: .15rem;
 }
 
 .car-info-edit {
-  padding: 4px 10px;
+  padding: .04rem .1rem;
 }
 .car-info-edit.orange {
-  border: 1px solid #FF7B00;
-  margin-right: 15px;
-  color:#FF7B00;
+  border: .01rem solid #ff7b00;
+  margin-right: .15rem;
+  color: #ff7b00;
 }
 .car-info-edit.blue {
-  border: 1px solid #4F7EFF;
-    color:#4F7EFF;
+  border: .01rem solid #4f7eff;
+  color: #4f7eff;
 }
 .car-no {
-  font-size:15px;
+  font-size: .15rem;
   font-weight: 500;
   flex: 1;
   color: #1f2d3d;
@@ -207,26 +245,26 @@ export default {
   position: fixed;
   bottom: 0;
   left: 0;
-  height: 50px;
+  height: .5rem;
   text-align: center;
-  line-height: 50px;
-  font-size: 18px;
-  background-image: linear-gradient(40deg, #FF7C00 0%, #FE5A00 100%);
+  line-height: .5rem;
+  font-size: .18rem;
+  background-image: linear-gradient(40deg, #ff7c00 0%, #fe5a00 100%);
   color: #fff;
 }
 
 .s4s-car-add {
   background: #fff;
-  border-radius: 4px;
-  padding: 20px 0;
-  margin-top: 15px;
+  border-radius: .04rem;
+  padding: .2rem 0;
+  margin-top: .15rem;
   text-align: center;
 }
 
 .s4s-car-add p {
   color: #666666;
-  font-size: 14px;
-  padding-top:15px;
+  font-size: .14rem;
+  padding-top: .15rem;
 }
 .s4s-select-car {
   padding-bottom: 0.6rem;
@@ -238,7 +276,7 @@ export default {
   left: 50%;
   top: 50%;
   background: #fff;
-  border-radius:4px;
+  border-radius: .04rem;
   z-index: 9999;
   margin-left: -38%;
   -webkit-transform: translateY(-50%);
@@ -246,26 +284,26 @@ export default {
 }
 .s4s-confirm-title {
   text-align: center;
-  padding-top: 20px;
+  padding-top: .2rem;
 }
 .s4s-confirm-content {
-  font-size: 16px;
+  font-size: .16rem;
   color: #888;
   text-align: center;
-  padding: 25px;
+  padding: .25rem;
 }
 .s4s-confirm-btn {
-  height: 45px;
+  height: .45rem;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
   align-items: center;
-  border-top: 1px rgba(0, 0, 0, 0.1) solid;
-  font-size: 15px;
+  border-top: .01rem rgba(0, 0, 0, 0.1) solid;
+  font-size: .15rem;
 }
 .s4s-confirm-btn span {
-  line-height: 45px;
-  border-right: 1px rgba(0, 0, 0, 0.1) solid;
+  line-height: .45rem;
+  border-right: .01rem rgba(0, 0, 0, 0.1) solid;
   display: -ms-flexbox;
   display: flex;
   -ms-flex: 1;
