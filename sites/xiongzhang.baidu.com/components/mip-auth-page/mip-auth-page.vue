@@ -1,30 +1,14 @@
 <template>
-  <mip-fixed
-    class="container"
-    type="top"
-    top="0"
-    bottom="0">
-    <mip-iframe
-      :src="url"
-      height="100%"
-      width="100%"
-      scrolling="yes"
-      frameborder="0"
-      layout="fill"/>
-  </mip-fixed>
-
+  <mip-iframe
+    :src="url"
+    height="100%"
+    width="100%"
+    scrolling="yes"
+    frameborder="0"
+    layout="fill"/>
 </template>
 
-<style scoped>
-    .container {
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        width: 100%;
-        min-height: 505px;
-    }
-</style>
+<style scoped></style>
 
 <script>
 
@@ -118,10 +102,26 @@ export default {
           state: JSON.stringify(config.state)
         }
 
-        window.MIP.viewer.open(
-          getRedirectUrl(config.state.url || config.redirect_uri, obj),
-          {isMipLink: true, replace: true}
-        )
+        let hash = config.state.h || ''
+
+        // 判断如果是在SF里广播事件，并且返回原页面
+        if (!window.MIP.standalone && config.state.back) {
+          window.MIP.viewer.page.broadcastCustomEvent({
+            name: 'inservice-auth-logined',
+            data: {
+              code: obj.code,
+              origin: config.state.origin,
+              callbackurl: config.state.url
+            }
+          })
+          window.MIP.viewer.page.back()
+        } else {
+          // 否则
+          window.MIP.viewer.open(
+            getRedirectUrl(config.state.url || config.redirect_uri, obj, decodeURIComponent(hash)),
+            {isMipLink: true, replace: true}
+          )
+        }
       }
     }
   }

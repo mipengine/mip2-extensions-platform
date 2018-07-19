@@ -105,7 +105,8 @@ export default {
           billName: '-',
           billMount: '-'
         }
-      ]
+      ],
+      interval: ''
     }
   },
   watch: {
@@ -127,10 +128,10 @@ export default {
     console.log('这里是支付页面 !')
     this.clickRipple()
     this.$element.customElement.addEventAction('login', (event, str) => {
-      let interval = setInterval(() => {
+      this.interval = setInterval(() => {
         if (this.userlogin.sessionId !== '') {
           this.initData()
-          clearInterval(interval)
+          clearInterval(this.interval)
         }
       }, 200)
     })
@@ -199,36 +200,37 @@ export default {
       let data = base.getSession()
       console.log('查看订单信息============')
       console.log(data)
-
-      let order = data.order
-      let poiList = order.poiList
-      let floorData = [
-        '有电梯',
-        '无电梯1楼',
-        '无电梯2楼',
-        '无电梯3楼',
-        '无电梯4楼',
-        '无电梯5楼',
-        '无电梯6楼',
-        '无电梯7楼',
-        '无电梯8楼'
-      ]
-      // 头部
-      _this.head = {
-        time: order.TransTime,
-        moveOut: poiList[0].deliverAddress,
-        moveIn: poiList[1].deliverAddress,
-        carType: order.CarTypeName,
-        moveOutfloor: floorData[data.moveOutNum],
-        moveInfloor: floorData[data.moveInNum]
+      if (data !== null) {
+        let order = data.order
+        let poiList = order.poiList
+        let floorData = [
+          '有电梯',
+          '无电梯1楼',
+          '无电梯2楼',
+          '无电梯3楼',
+          '无电梯4楼',
+          '无电梯5楼',
+          '无电梯6楼',
+          '无电梯7楼',
+          '无电梯8楼'
+        ]
+        // 头部
+        _this.head = {
+          time: order.TransTime,
+          moveOut: poiList[0].deliverAddress,
+          moveIn: poiList[1].deliverAddress,
+          carType: order.CarTypeName,
+          moveOutfloor: floorData[data.moveOutNum],
+          moveInfloor: floorData[data.moveInNum]
+        }
+        // 列表
+        let billinfos = order.billinfo
+        billinfos.push({
+          billName: '合计',
+          billMount: order.billTotal
+        })
+        _this.pillList = billinfos
       }
-      // 列表
-      let billinfos = order.billinfo
-      billinfos.push({
-        billName: '合计',
-        billMount: order.billTotal
-      })
-      _this.pillList = billinfos
     },
     // 点击波纹效果
     clickRipple () {

@@ -11,7 +11,7 @@ const tranObjUrlToCache = urls => {
 }
 
 export default ({
-  url: 'https://www.lanxiniu.com',
+  url: '//www.lanxiniu.com',
   // 线上
   htmlhref: tranObjUrlToCache({
     order: lxnhttp + 'order',
@@ -122,6 +122,7 @@ export default ({
     try {
       MIP.setData({'#lxndata': newVal})
     } catch (e) {
+      console.error(e, e.stack)
     }
   },
   // 使用MIP2合并数据用于本地存储
@@ -140,6 +141,8 @@ export default ({
       for (let i = 0; i < strs.length; i++) {
         theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
       }
+      return theRequest
+    } else {
       return theRequest
     }
   }

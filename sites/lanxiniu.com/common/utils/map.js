@@ -1,7 +1,7 @@
 export default ({
   mapInit: function () {
     document.getElementsByTagName('body')[0].setAttribute('style', 'height:100% !important')
-    let BMAP_STATUS_SUCCESS = 0
+    // let BMAP_STATUS_SUCCESS = 0
     function AddressSearch (BMap, cityName, provinceFilter, pageSize, searchComplete) {
       let that = this
       that.data = {}
@@ -251,120 +251,24 @@ export default ({
     BaiduMap.prototype.handleResult = function (BMap, city, func) {
       this.map = new BMap.Map(this.divs)
       console.log()
-      // this.map.centerAndZoom(new BMap.Point(116.404, 39.915), 17);
-      let map = this.map
+      //   let map = this.map
       console.log(city)
       let that = this
-      let geolocation = new BMap.Geolocation()
+      //   let geolocation = new BMap.Geolocation()
 
-      let geoc = new BMap.Geocoder()
+      //   let geoc = new BMap.Geocoder()
       if (that.address.localtion.address === '') {
-        geolocation.getCurrentPosition(function (r) {
-          console.log(this.getStatus())
-          console.log(BMAP_STATUS_SUCCESS)
-          if (this.getStatus() === BMAP_STATUS_SUCCESS) {
-            console.log('==============定位=================')
-            let pt = r.point
-            geoc.getLocation(pt, function (rs) {
-              let addComp = rs.addressComponents
-              console.log(addComp)
-              console.log('===========================')
-              let currentCity = addComp.province
-              currentCity = currentCity.substring(0, currentCity.length - 1)
-              console.log('当前城市:' + city)
-              console.log('定位城市' + currentCity)
-              if (city !== currentCity) {
-                // 选择与定位城市 不一致
-                console.log('==============选择与定位城市 不一致=============')
-                let cityData = that.citylist[city]
 
-                console.log(cityData)
-                // 填充默认数据
-                let point = new BMap.Point(cityData.lng, cityData.lat) // 创建点坐标
-                map.clearOverlays()
-                let myIcon = new BMap.Icon('https://www.lanxiniu.com/Public/baidumip/mapicon.png', new BMap.Size(26, 32))
-                let mk = new BMap.Marker(point, {
-                  icon: myIcon
-                })
-                map.addOverlay(mk)
-                map.centerAndZoom(point, 16)
-                // 根据存储的数据 默认定
-                let obj = {
-                  address: cityData.address,
-                  city: '',
-                  lat: cityData.lat,
-                  lng: cityData.lng,
-                  province: cityData.province,
-                  title: cityData.title
-                }
-                let data = {
-                  localtion: obj,
-                  address: '',
-                  phone: that.address.phone
-                }
-                console.log('查看:' + JSON.stringify(obj, null, 2))
-                that.setnitdata(data)
-              } else {
-                //
-                console.log('==============选择与定位城市一致=============')
-                if (that.address.localtion.address === '') {
-                  let myIcon = new BMap.Icon('https://www.lanxiniu.com/Public/baidumip/mapicon.png', new BMap.Size(26, 32))
-                  let mk = new BMap.Marker(r.point, {
-                    icon: myIcon
-                  })
-                  map.addOverlay(mk)
-                  map.centerAndZoom(r.point, 16)
-
-                  let pt = r.point
-                  geoc.getLocation(pt, function (rs) {
-                    let addComp = rs.addressComponents
-                    console.log(addComp)
-                    let obj = {
-                      address: addComp.district,
-                      city: '',
-                      lat: pt.lat,
-                      lng: pt.lng,
-                      province: addComp.province,
-                      title: addComp.street + ' ' + addComp.streetNumber
-                    }
-                    let data = {
-                      localtion: obj,
-                      address: '',
-                      phone: that.address.phone
-                    }
-                    console.log('查看:' + JSON.stringify(obj, null, 2))
-                    that.setnitdata(data)
-                  })
-                } else {
-                  let localtion = this.address.localtion
-                  let point = new BMap.Point(localtion.lng, localtion.lat) // 创建点坐标
-                  map.clearOverlays()
-                  let myIcon = new BMap.Icon('https://www.lanxiniu.com/Public/baidumip/mapicon.png', new BMap.Size(26, 32))
-                  let mk = new BMap.Marker(point, {
-                    icon: myIcon
-                  })
-                  map.addOverlay(mk)
-                  map.centerAndZoom(point, 16)
-                  this.setnitdata(this.address)
-                }
-              }
-            })
-          } else {
-            console.log('==========测试=============')
-          }
-        }, {
-          enableHighAccuracy: true
-        })
       } else {
-        let localtion = this.address.localtion
-        let point = new BMap.Point(localtion.lng, localtion.lat) // 创建点坐标
-        map.clearOverlays()
-        let myIcon = new BMap.Icon('https://www.lanxiniu.com/Public/baidumip/mapicon.png', new BMap.Size(26, 32))
-        let mk = new BMap.Marker(point, {
-          icon: myIcon
-        })
-        map.addOverlay(mk)
-        map.centerAndZoom(point, 16)
+        // let localtion = this.address.localtion
+        // let point = new BMap.Point(localtion.lng, localtion.lat) // 创建点坐标
+        // map.clearOverlays()
+        // let myIcon = new BMap.Icon('https://www.lanxiniu.com/Public/baidumip/mapicon.png', new BMap.Size(26, 32))
+        // let mk = new BMap.Marker(point, {
+        //   icon: myIcon
+        // })
+        // map.addOverlay(mk)
+        // map.centerAndZoom(point, 16)
         this.setnitdata(this.address)
       }
 
@@ -374,11 +278,11 @@ export default ({
       let addressSearch = new AddressSearch(BMap, city,
         '', 20,
         function (searchData) {
-          console.log('查看搜索地址数据:' + searchData)
-          if (!searchData || !searchData.data || !searchData.data.length) {
-            // 无匹配地址
-            return false
-          }
+          console.log('查看搜索地址数据:' + JSON.stringify(searchData, null, 2))
+          //   if (!searchData || !searchData.data || !searchData.data.length) {
+          //     // 无匹配地址
+          //     return false
+          //   }
           func(searchData)
         })
       return addressSearch

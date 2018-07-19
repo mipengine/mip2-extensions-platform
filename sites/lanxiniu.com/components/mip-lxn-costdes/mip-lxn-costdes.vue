@@ -7,11 +7,11 @@
     </div>
     <div class="car-type">
       <div
-        class="left arrow"
-        @click="goLeft()"/>
+        class="left arrow forbid car-actives"
+        @touchend="swiper(0)"/>
       <div
-        class="right arrow"
-        @click="goRight()"/>
+        class="right arrow car-actives"
+        @touchend="swiper(1)"/>
       <div class="content">
         <div class="swiper">
           <div class="slide slide-one">
@@ -22,7 +22,7 @@
               <div class="car xiaomian"/>
             </div>
             <div class="desc">
-              <p>1.7m*1.1m*1.0m</p>
+              <p>1.7m*1.2m*1.1m</p>
               <p>长宽高</p>
             </div>
             <div class="modelCost">小面总费用=起步价+超里程费+楼层搬运费+额外服务费</div>
@@ -30,11 +30,11 @@
               <ul>
                 <li>
                   <div>起步价 (含10公里)</div>
-                  <div>60元</div>
+                  <div>96元</div>
                 </li>
                 <li>
                   <div>超里程费</div>
-                  <div>3元 / 公里</div>
+                  <div>5元 / 公里</div>
                 </li>
                 <li>
                   <div>
@@ -130,7 +130,7 @@
                     多地装卸费
                   </div>
                   <div>
-                    搬家标准为2地，增加中途装卸地址，100元/地
+                    搬家标准为2地，增加中途装卸地址，50元/地
                   </div>
                 </li>
                 <li class="li-last-second">
@@ -268,7 +268,7 @@
                       加工人
                     </div>
                     <div>
-                      小面标配1人，额外增加工人，150元/人
+                      金杯标配1人，额外增加工人，150元/人
                     </div>
                   </li>
                   <li>
@@ -276,7 +276,7 @@
                       多地装卸费
                     </div>
                     <div>
-                      搬家标准为2地，增加中途装卸地址，100元/地
+                      搬家标准为2地，增加中途装卸地址，50元/地
                     </div>
                   </li>
                   <li class="li-last-second">
@@ -319,7 +319,7 @@
               <div class="car xianghuo"/>
             </div>
             <div class="desc">
-              <p>4.2m*1.9m*1.9m</p>
+              <p>4.2m*1.8m*1.8m</p>
               <p>长宽高</p>
             </div>
             <div class="modelCost modelCost-xianghuo">厢货总费用=起步价+超里程费+楼层搬运费+平地搬运费+<br>
@@ -351,12 +351,13 @@
                 <li>
                   <div>
                     <span>
-                      平底搬运费
+                      平地搬运费
                     </span>
                   </div>
                   <div>
+                    <p>以停车位置到楼梯或电梯距离计算</p>
                     <p>30米内免费，超过部分：40元/20米</p>
-                    <p>(30米为房屋门口到停车的位置)</p>
+                    <p>不足20米按20米计算</p>
                   </div>
                 </li>
                 <li>
@@ -405,11 +406,11 @@
                       </div>
                       <div>
                         <p class="p-detail">
-                          <span>体积＜210L</span>
+                          <span>体积＜200L</span>
                           <span>0元</span>
                         </p>
                         <p class="p-detail">
-                          <span>210L≤ 体积＜280L</span>
+                          <span>200L≤ 体积＜280L</span>
                           <span>50元</span>
                         </p>
                         <p class="p-detail">
@@ -431,7 +432,7 @@
                         </p>
                         <p class="p-detail">
                           <span>滚筒</span>
-                          <span>30元</span>
+                          <span>50元</span>
                         </p>
 
                       </div>
@@ -448,8 +449,8 @@
                           <span>0元</span>
                         </p>
                         <p class="p-detail">
-                          <span>50寸以上</span>
-                          <span>30元</span>
+                          <span>50寸及以上</span>
+                          <span>50元</span>
                         </p>
 
                       </div>
@@ -634,7 +635,7 @@
                     加工人
                   </div>
                   <div>
-                    小面标配1人，额外增加工人，150元/人
+                    厢货标配2人，额外增加工人，150元/人
                   </div>
                 </li>
                 <li>
@@ -642,7 +643,7 @@
                     多地装卸费
                   </div>
                   <div>
-                    搬家标准为2地，增加中途装卸地址，100元/地
+                    搬家标准为2地，增加中途装卸地址，50元/地
                   </div>
                 </li>
                 <li class="li-last-second">
@@ -668,16 +669,25 @@
               </div>
               <ul>
                 <li>
-                  1.服务过程中产生的高速费、过路费、停车费等第三方收取的费用由用户按实际产生承担；
+                  1.预约订单服务开始前40分钟内取消，收取40元取消费；车辆到位且到达服务时间后，收取定金（小面60元，金杯100元，厢货150元）作为取消费；即时服务的订单，司机到位且等待20分钟后取消，收取40元取消费；
                 </li>
                 <li>
-                  2.由于用户原因造成的司机到达后无法搬运、装车后无法出门的情况，会收取一定误工费；
+                  2.大量（超过1立方）的书籍和拆好的柜子、床、工位按实际情况协商搬运费；
                 </li>
                 <li>
-                  3.搬家服务暂不支持空调拆装服务；
+                  3.由于用户原因造成的司机到达后无法搬运、装车后无法出门的情况，等待30分钟以上，收取30元起的误工费，为避免耽误您的时间，请提前打包好行李，备好出门条等；
                 </li>
                 <li>
-                  4.支持24小时随时预约搬家
+                  4.如厢货车型搬运楼层涉及到搬运阁楼部分，额外收取50元楼层搬运费；
+                </li>
+                <li>
+                  5.部分超大件无法用电梯搬运时，需要爬楼搬运则按楼层收费标准收取搬运费，7层以上的无电梯搬运需要与司机协商搬运费；
+                </li>
+                <li>
+                  6.贵重物品及易碎物品（如红木家具、高档瓷器、古董、艺术品、玻璃器皿）需按实际情况与司机协商搬运费，如有问题请咨询客服热线：400-678-5966
+                </li>
+                <li>
+                  7.搬家服务暂不支持空调、水电的拆装；
                 </li>
               </ul>
             </div>
@@ -719,26 +729,22 @@ export default {
       serviceDes: [
         {
           t:
-            '1.服务过程中产生的高速费、过路费、停车费等第三方收取的费用由用户按实际产生承担。'
+            '1、预约订单服务开始前40分钟内取消，收取40元取消费；车辆到位且到达服务时间后，收取定金（小面60元，金杯100元，厢货150元）作为取消费；即时服务的订单，司机到位且等待20分钟后取消，收取40元取消费；'
         },
         {
           t:
-            '2.由于用户原因造成的司机到达后无法搬运、装车后无法出门的情况，会收取一定误工费。'
+            '2、车辆停车位置到楼梯／电梯的距离在100米内免费，超出部分 每20米20元，不足20米按20米计算；'
         },
         {
           t:
-            '3.服务开始前40分钟内取消，收取40元取消费；车辆到位且到达服务时间后，收取定金（小面60元，金杯100元，厢货150元）作为取消费。'
+            '3、由于用户原因造成的司机到达后无法搬运、装车后无法出门的情况，等待30分钟以上，收取30元起的误工费，为避免耽误您的时间，请提前打包好行李，备好出门条等；'
         },
         {
-          t: '4.搬家服务暂不支持空调、水电拆装服务。'
-        },
-        {
-          t:
-            '5.大量（超过1立方）的书籍和拆好的柜子、床、工位按实际情况协商搬运费。'
+          t: '4、小面和金杯车型，每车只包含司机一人为您搬运，无法搬运一人无法承担的大件物品，如您搬运物品涉及大件，请与司机共同搬运或提前与司机沟通，加一名搬运工人；'
         },
         {
           t:
-            '6.贵重物品及易碎物品（如红木家具、高档瓷器、古董、艺术品、玻璃器皿）需按实际情况与司机协商，如有问题请咨询客服热线400-678-5966。'
+            '5、搬家服务暂不支持空调、水电的拆装；'
         }
       ],
       widths: '', // 当前页面宽度
@@ -750,19 +756,7 @@ export default {
   },
   mounted () {
     console.log('资费详情页面')
-
-    // let interval = setInterval(function () {
-    //   let content = that.$element.querySelector('.content')
-    //   let width = MIP.util.css(content, 'width')
-    //   console.log(width)
-    //   if (width === 'auto') {
-
-    //   } else {
-    //     clearInterval(interval)
-    //     that.getwidth()
-    //     this.getCurrentCityCarTypes()
-    //   }
-    // }, 100)
+    this.getCurrentCityCarTypes()
   },
   methods: {
     // 请求当前城市的车型列表
@@ -776,9 +770,6 @@ export default {
         .then(response => response.json())
         .catch(error => console.error('Error:', error))
         .then(response => {
-          console.log('Success:', response)
-
-          console.info(response)
           if (response.data) {
             let service = response.data.setting.service
             for (let i = 0; i < service.length; i++) {
@@ -797,75 +788,76 @@ export default {
     },
     getwidth () {
       this.widths = MIP.viewport.getWidth()
-      this.loadWidth = false
-
-      console.log('查看数据:' + this.widths)
     },
-    goLeft () {
+    swiper (type) {
       this.getwidth()
+      let swiper = this.$element.querySelector('.swiper')
+      let left = this.$element.querySelector('.left')
+      let right = this.$element.querySelector('.right')
+      let swTwo = 'swipertwo'
+      let swThree = 'swiperthree'
+      let forbid = 'forbid'
+      left.classList.remove(forbid)
+      right.classList.remove(forbid)
 
-      if (this.actionIndex !== 1) {
-        let swiper = this.$element.querySelector('.swiper')
-        let width = ''
-        if (this.actionIndex === 2) {
-          width = '(0px)'
-          swiper.classList.remove('swipertwo')
-        }
-        if (this.actionIndex === 3) {
-          width = '(-' + this.widths + 'px)'
-          swiper.classList.remove('swiperthree')
-        }
+      if (type) { // 向左
+        if (this.actionIndex !== this.maxIndex) {
+          let width = '(-' + this.widths * this.actionIndex + 'px)'
+          let t = 'translateX' + width
+          if (this.actionIndex === 1) {
+            swiper.classList.add(swTwo)
+          }
+          if (this.actionIndex === 2) {
+            swiper.classList.add(swThree)
+          }
 
-        let t = 'translateX' + width
-
-        console.log(t)
-
-        setTimeout(() => {
-          MIP.util.css(swiper, {
-            transform: t,
-            'transition-duration': '200ms'
+          setTimeout(() => {
+            MIP.util.css(swiper, {
+              transform: t,
+              'transition-duration': '200ms'
+            })
+            this.actionIndex += 1
+            if (this.actionIndex === 3) {
+              right.classList.add(forbid)
+            }
           })
-          this.actionIndex -= 1
-        }, 0)
+        } else {
+          if (this.actionIndex === 3) {
+            right.classList.add(forbid)
+          }
+        }
+      } else { // 向右
+        if (this.actionIndex !== 1) {
+          let width = ''
+          if (this.actionIndex === 2) {
+            width = '(0px)'
+            swiper.classList.remove(swTwo)
+          }
+          if (this.actionIndex === 3) {
+            width = '(-' + this.widths + 'px)'
+            swiper.classList.remove(swThree)
+          }
 
-        console.log('当前页面:' + this.actionIndex)
-      } else {
-        console.log('不能点了')
+          let t = 'translateX' + width
+
+          setTimeout(() => {
+            MIP.util.css(swiper, {
+              transform: t,
+              'transition-duration': '200ms'
+            })
+            this.actionIndex -= 1
+            if (this.actionIndex === 1) {
+              left.classList.add(forbid)
+            }
+          }, 0)
+        } else {
+          if (this.actionIndex === 1) {
+            left.classList.add(forbid)
+          }
+        }
       }
     },
-    goRight () {
-      this.getwidth()
 
-      if (this.actionIndex !== this.maxIndex) {
-        let swiper = this.$element.querySelector('.swiper')
-        let width = '(-' + this.widths * this.actionIndex + 'px)'
-        console.log(width)
-        let t = 'translateX' + width
-
-        if (this.actionIndex === 1) {
-          swiper.classList.add('swipertwo')
-        }
-        if (this.actionIndex === 2) {
-          swiper.classList.add('swiperthree')
-        }
-
-        setTimeout(function () {
-
-        })
-
-        setTimeout(() => {
-          MIP.util.css(swiper, {
-            transform: t,
-            'transition-duration': '300ms'
-          })
-          this.actionIndex += 1
-        })
-
-        console.log('当前页面:' + this.actionIndex)
-      } else {
-        console.log('不能点了')
-      }
-    },
     detaisOption (item) {
       item.flag = !item.flag
     }
@@ -910,13 +902,12 @@ export default {
 .arrow {
   width: 0.49rem;
   height: 0.49rem;
-  border: 0.04rem solid #666666;
+  border: 0.05rem solid #666666;
   border-right: none;
   border-bottom: none;
   position: absolute;
   z-index: 10;
   top: 2.2rem;
-  border-radius: 2px;
 
 }
 .left {
@@ -927,11 +918,14 @@ export default {
   transform: rotate(135deg);
   right: 1rem;
 }
+.left.forbid.arrow,
+.right.forbid.arrow{
+    border-color: #999;
+}
 .content {
-    /* width: 100%; */
-    width: 1px;
-    min-width: 100%;
-margin: 0 auto;
+  width: 1px;
+  min-width: 100%;
+  margin: 0 auto;
   position: relative;
   overflow: hidden;
   z-index: 1;
@@ -976,18 +970,13 @@ margin: 0 auto;
 .swiper.swiperthree .slide-three {
   height: auto;
 }
+
 .slide .title {
   font-size: 0.28rem;
   color: #333333;
   letter-spacing: 0.06px;
 }
 
-.slide-one {
-  /* background: gray; */
-}
-.slide-two {
-  /* background: blueviolet; */
-}
 .slide-three {
   background: repeat-y;
 }
@@ -1001,7 +990,7 @@ margin: 0 auto;
 .car-img-div .car {
   width: 100%;
   height: 100%;
-  background-size: 100%;
+  background-size: 100% 100%;
 }
 .car-img-div .xiaomian {
   background-image: url(https://www.lanxiniu.com/Public/baidumip/xiaomian.png);
@@ -1035,7 +1024,6 @@ margin: 0 auto;
   align-items: center;
   justify-content: center;
   letter-spacing: 0.04px;
-  /* line-height: 28px; */
 }
 .modelCost-xianghuo {
   height: 0.76rem;
@@ -1097,9 +1085,7 @@ margin: 0 auto;
   border: 0.02rem solid #429fff;
   border-right: none;
   border-bottom: none;
-  /* position: absolute; */
   z-index: 10;
-  /* top: 0; */
   margin-left: 0.1rem;
   position: relative;
 }

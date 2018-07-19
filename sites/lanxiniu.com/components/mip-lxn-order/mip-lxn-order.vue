@@ -50,7 +50,7 @@
                 </div>
               </div>
               <div
-                :class="{&quot;lxn-hide&quot;:hide}"
+                :class="{'lxn-hide':hide}"
                 class="swiper-slide">
                 <div class="car-img-div">
                   <div class="car xianghuo"/>
@@ -188,8 +188,15 @@
             资费说明</span></a>
 
       </div>
-      <p
+      <!-- <p
         on="tap:user.login"
+        class="sure-order btn"
+        @touchend="sureOrder">
+        确认下单
+      </p> -->
+      <p
+        id="sureorer"
+        data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22order%22%2C%22click%22%5D%7D"
         class="sure-order btn"
         @touchend="sureOrder">
         确认下单
@@ -392,8 +399,8 @@ export default {
         name: '小面',
         index: 0,
         weight: '600KG', // 载重
-        ckg: '1.7m×1.1m×1.0m', // 长宽高
-        volume: '1.87立方', // 体积
+        ckg: '1.7m×1.2m×1.1m', // 长宽高
+        volume: '2.2立方', // 体积
         hide: false, // 是否隐藏
         isActive: true // 被选中状态
       },
@@ -404,8 +411,8 @@ export default {
           name: '小面',
           index: 0,
           weight: '600KG', // 载重
-          ckg: '1.7m×1.1m×1.0m', // 长宽高
-          volume: '1.87立方', // 体积
+          ckg: '1.7m×1.2m×1.1m', // 长宽高
+          volume: '2.2立方', // 体积
           hide: false, // 是否隐藏
           isActive: true // 被选中状态
         },
@@ -445,6 +452,19 @@ export default {
     base.setHtmlRem()
   },
   mounted () {
+    window.addEventListener('show-page', (e) => {
+      console.log('页面显示')
+      let data = base.getSession()
+      if (data !== null) {
+        console.log(JSON.stringify(data, null, 2))
+        let obj = {
+          moveOutAddress: data.moveOutAddress,
+          moveInAddress: data.moveInAddress
+
+        }
+        base.mipSetGlobalData(obj)
+      }
+    })
     // 基本数据初始化
     this.initData()
 
@@ -477,37 +497,72 @@ export default {
     },
     // 添加tab监听
     addMipWatch () {
-    //   let that = this
+      this.$element.customElement.addEventAction('login', (event, str) => {
+        console.log('查看登录的信息:' + JSON.stringify(event, null, 2))
 
-      this.$element.customElement.addEventAction('login', function (
-        event /* 对应的事件对象 */,
-        str /* 事件参数 */
-      ) {
+        if (event.origin === 'actionPay') {
+          this.checkData(event.sessionId)
+        }
 
-        // if (MIP.util.platform.isWechatApp()) {
-        //   console.log('是微信内')
-        //   MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token=' + event.sessionId + '&isdev=1', { isMipLink: false })
-        // } else {
-        //   console.log('不是微信内')
-        // }
-      })
-
-      this.$element.customElement.addEventAction('goorderlist', (event, str) => {
-        let isLogin = this.userlogin.isLogin
-        if (isLogin) {
-          MIP.viewer.open(base.htmlhref.orderlist, { isMipLink: true })
+        if (MIP.util.platform.isWechatApp()) {
+          console.log('在微信内')
+          let wxauth = event.userInfo.wxauth
+          let promas = base.getRequest()
+          if (+wxauth === 1 && !promas.hasOwnProperty('istop')) {
+            MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token=' + event.sessionId + '&redirect_url=' + location.href + '&isdev=1', { isMipLink: false })
+          }
+        } else {
+          console.log('不是微信内')
         }
       })
+
+      //   点击(用户)登录
+      this.$element.customElement.addEventAction('userlogin', (event, str) => {
+        let isLogin = this.userlogin.isLogin
+        console.log('点击用户登录')
+        if (!isLogin) {
+          let config = {
+            redirectUri: ''
+          }
+          MIP.setData({'config': config})
+          this.$nextTick(() => {
+            console.log('点击头像登录')
+            this.$emit('actionName')
+          })
+        }
+      })
+
+      //   订单列表跳转
+      this.$element.customElement.addEventAction('goorderlist', (event, str) => {
+        let isLogin = this.userlogin.isLogin
+        console.log('订单列表跳转')
+        if (isLogin) {
+          MIP.viewer.open(base.htmlhref.orderlist, { isMipLink: true })
+        } else {
+          console.log('未登录')
+          let config = {
+            redirectUri: base.htmlhref.orderlist
+          }
+          MIP.setData({'config': config})
+          this.$nextTick(() => {
+            console.log('点击订单列表录')
+            this.$emit('actionOrderList')
+          })
+        }
+      })
+
+      //   资费说明跳转
       this.$element.customElement.addEventAction('gocostdes', (event, str) => {
         MIP.viewer.open(base.htmlhref.costdes, { isMipLink: true })
       })
+
+      //   用户指南跳转
       this.$element.customElement.addEventAction('gouserguide', (event, str) => {
         MIP.viewer.open(base.htmlhref.userguide, { isMipLink: true })
       })
     },
     // 请求当前城市的车型列表
     getCurrentCityCarTypes  (city) {
-      let that = this
       let focusCity = city
       let urls = base.url + '/Setting/getCityData?city=' + focusCity
       fetch(urls, {
@@ -520,25 +575,24 @@ export default {
           for (let i = 0; i < service.length; i++) {
             if (service[i].type === 5) {
               //   car = service[i].car;
-              that.carTypes = service[i].car
+              this.carTypes = service[i].car
               break
             }
           }
-          //   console.log(that.carTypes);
           // 如果当前城市车型小于3个  隐藏最后一个
 
-          if (that.carTypes.length < 3) {
-            that.hide = true
-            that.tabData[2].hide = true
-            that.maxIndex = 1
+          if (this.carTypes.length < 3) {
+            this.hide = true
+            this.tabData[2].hide = true
+            this.maxIndex = 1
           } else {
-            that.hide = false
-            that.tabData[2].hide = false
-            that.maxIndex = 2
+            this.hide = false
+            this.tabData[2].hide = false
+            this.maxIndex = 2
           }
           // 设置默认楼层数据
-          that.carTypes.forEach(function (item) {
-            let arr = item.stairs_fee.map(function (item, index) {
+          this.carTypes.forEach((item) => {
+            let arr = item.stairs_fee.map((item, index) => {
               let arr = {
                 id: index,
                 name: item
@@ -548,17 +602,15 @@ export default {
 
             item.stairsFee = arr
             if (item.type === 3) {
-              that.floorAndTime.move.data = item.stairsFee
+              this.floorAndTime.move.data = item.stairsFee
             }
           })
 
-          that.RestoreData()
+          this.RestoreData()
         })
     },
     // 计算订单价格
     calPrice () {
-      let that = this
-
       let globaldata = this.globaldata
 
       let focusCity = globaldata.ordercity
@@ -590,9 +642,8 @@ export default {
         .then(response => response.json())
         .catch(error => console.error('Error:', error))
         .then(response => {
-          console.log('get方法')
           let price = response.data.showPay
-          that.floorAndTime.price = price
+          this.floorAndTime.price = price
         })
     },
     // 确认下单
@@ -601,15 +652,23 @@ export default {
       let sessionId = this.userlogin.sessionId
       if (islogin) {
         this.checkData(sessionId)
+      } else {
+        let config = {
+          redirectUri: ''
+        }
+        MIP.setData({'config': config})
+        this.$nextTick(() => {
+          this.$emit('actionOrder')
+        })
       }
     },
 
     // 全局数据监听
     lxnDataWatch () {
-      let that = this
       //   监控城市
-      MIP.watch('lxndata.ordercity', function (newval, oldval) {
-        that.getCurrentCityCarTypes(newval)
+      MIP.watch('lxndata.ordercity', (newval, oldval) => {
+        console.log('监控到全局数据改变')
+        this.getCurrentCityCarTypes(newval)
       })
     },
 
@@ -661,7 +720,6 @@ export default {
     // 提交订单
     upOrder (sessionid) {
       console.log('查看ID:' + sessionid)
-      let that = this
       let globaldata = this.globaldata
 
       let moveout = globaldata.moveOutAddress
@@ -748,7 +806,7 @@ export default {
           let obj = {
             order: data
           }
-          let datas = base.mipExtendData(that.globaldata, obj)
+          let datas = base.mipExtendData(this.globaldata, obj)
 
           console.log(JSON.stringify(datas, null, 2))
 
@@ -782,52 +840,41 @@ export default {
     },
     // 切换车型数据
     changeTabData (index, isRestoreData) {
-      let that = this
       let move = this.floorAndTime.move
       let data = this.carTypes[index]
-      // 置空已选择的楼层
-      move.moveOut = ''
-      move.moveIn = ''
       //   更新当前楼层价格数据
       move.data = data.stairsFee
-      //   console.log(JSON.stringify(data, null, 2));
-      //   存入 MIP-Data
-      console.log('类型:' + data.type)
+      let floorData = move.data
+      let str1 = ',楼层费'
+      let str2 = '...'
+      let moveOutNum = this.globaldata.moveOutNum
+      let moveInNum = this.globaldata.moveInNum
+      if (moveOutNum !== '') {
+        move.moveOut = floorData[moveOutNum].name.replace(str1, str2)
+      }
+      if (moveInNum !== '') {
+        move.moveIn = floorData[moveInNum].name.replace(str1, str2)
+      }
 
       let flag = isRestoreData || false
       if (!flag) {
         console.log('手动操作进行保存')
         //   切换车型时 重置搬出搬入数据
         let obj = {
-          carType: data.type,
-          moveOutNum: '',
-          moveInNum: ''
+          carType: data.type
+        //   moveOutNum: '',
+        //   moveInNum: ''
         }
         console.log(JSON.stringify(obj, null, 2))
-        let datas = base.mipExtendData(that.globaldata, obj)
+        let datas = base.mipExtendData(this.globaldata, obj)
         base.mipSetGlobalData(obj)
         base.setSession(datas)
       } else {
-        console.log('还原数据不进行保存')
       }
-    },
-    // 设置搬出地址
-    setMoveOut () {
-      console.log('搬出')
-    },
-    // 设置搬入地址
-    setMoveIn () {
-      console.log('搬入')
-    },
-
-    // 楼层选择器打开
-    pickerMaskOpen () {
-      console.log('打开')
     },
     // 选择器关闭
     pickerMaskClose () {
       let element = this.$element
-      console.log('关闭')
       let picker = element.querySelector('.picker')
       picker.classList.remove('open')
       let elementParentNode = element.parentNode
@@ -844,7 +891,6 @@ export default {
       }, 200)
     },
     picker (item) {
-      console.log(item)
       let that = this
       let Picker = picker.Picker()
       let params = ''
@@ -859,10 +905,8 @@ export default {
           },
           data: that.floorAndTime.move.data,
           successCallback: function (val) {
-            console.log(val)
             let move = that.floorAndTime.move
 
-            console.log(move)
             let str1 = ',楼层费'
             let str2 = '...'
             let value = val.value.replace(str1, str2)
@@ -889,7 +933,6 @@ export default {
             let mask = that.$element.querySelector('.picker-mask')
             mask.addEventListener('click', function (e) {
               that.pickerMaskClose()
-              console.log('点击关闭')
               that.cityPicker.hidePicker()
             })
           }
@@ -904,13 +947,11 @@ export default {
           defaultValue: '',
           separator: '',
           successCallback: function (val) {
-            console.log(val)
             let values = val.value.replace(/-/g, '/')
             let date = Date.parse(new Date(values)) / 1000
             let floorTime = that.floorAndTime
             floorTime.time = val.value
             let obj = { orderTime: date }
-            console.log(JSON.stringify(obj, null, 2))
             let datas = base.mipExtendData(that.globaldata, obj)
             base.mipSetGlobalData(obj)
             base.setSession(datas)
@@ -923,19 +964,15 @@ export default {
             let mask = that.$element.querySelector('.picker-mask')
             mask.addEventListener('click', function (e) {
               that.pickerMaskClose()
-              console.log('点击关闭')
               that.cityPicker.hidePicker()
             })
           }
         }
         that.cityPicker = new Picker(params, that.$element)
       }
-
-      // that.pickerMaskOpen();
     },
     // 保存 备注(后期加入)
     saveMask () {
-      console.log(this.floorAndTime.remark)
       let obj = { remark: this.floorAndTime.remark }
       let datas = base.mipExtendData(this.globaldata, obj)
       base.mipSetGlobalData(obj)
@@ -946,7 +983,6 @@ export default {
     },
 
     RestoreData () {
-      let that = this
       let floorAndTime = this.floorAndTime
       let data = base.getSession()
       console.log(data)
@@ -977,7 +1013,6 @@ export default {
 
         if (data.moveOutNum !== '') {
           let num = data.moveOutNum
-          console.log('楼层:' + num)
           let value = floorAndTime.move.data[num].name.replace(str1, str2)
           floorAndTime.move.moveOut = value
         }
@@ -988,9 +1023,7 @@ export default {
         }
         // 时间
         if (data.orderTime !== '') {
-          console.log('存在缓存时间~~~' + data.orderTime)
           let time = base.timeformat(new Date(data.orderTime * 1000), 'yyyy-MM-dd hh:mm')
-          console.log('查看时间:' + time)
           floorAndTime.time = time
         }
         // 配置地址
@@ -999,11 +1032,10 @@ export default {
           floorAndTime.remark = data.remark
         }
 
-        setTimeout(function () {
-          that.calPrice()
+        setTimeout(() => {
+          this.calPrice()
         }, 300)
       }
-      console.log('查看缓存:' + data)
     },
 
     // 点击波纹效果
@@ -1045,17 +1077,6 @@ export default {
       )
     },
 
-    // 修复登录数据不显示问题
-    // userLogin (event) {
-    //   // 用户登录后设置登录信息
-    //   console.log('调用本地存储用户登录信息')
-    //   console.log('查看用户信息:' + JSON.stringify(event.userInfo, null, 2))
-    //   let obj = {
-    //     user: event.userInfo.nickname
-    //   }
-    //   base.mipSetGlobalData(obj)
-    //   sessionStorage.setItem('user', JSON.stringify(obj))
-    // },
     // 日式搬家提示
     rishiMove () {
       let warn = this.warn
@@ -1068,7 +1089,6 @@ export default {
       let width = MIP.util.css(swiper, 'width')
       width = Number(width.substring(0, width.length - 2))
       this.swiperWidth = width
-      console.log('查看宽度:' + width)
     },
     moves (num) {
       let swiper = this.$element.querySelector('.swiper-wrapper')
@@ -1112,24 +1132,24 @@ export default {
       }, 100)
     },
     swiperTouch () {
-      let that = this
+    //   let that = this
       let swiper = this.$element.querySelector('.swiper-wrapper')
-      swiper.addEventListener('touchstart', function (event, str) {
+      swiper.addEventListener('touchstart', (event, str) => {
         event.preventDefault()
         let touch = event.touches[0]
-        that.startX = touch.pageX
+        this.startX = touch.pageX
       })
-      swiper.addEventListener('touchmove', function (event, str) {
+      swiper.addEventListener('touchmove', (event, str) => {
         event.preventDefault()
         let touch = event.touches[0]
-        that.endX = touch.pageX
-        let num = that.startX - touch.pageX
-        that.moves(num)
+        this.endX = touch.pageX
+        let num = this.startX - touch.pageX
+        this.moves(num)
       })
-      swiper.addEventListener('touchend', function (event, str) {
-        let num = that.startX - that.endX
-        if (that.transform > 0) {
-          that.moveSBack(0)
+      swiper.addEventListener('touchend', (event, str) => {
+        let num = this.startX - this.endX
+        if (this.transform > 0) {
+          this.moveSBack(0)
         } else {
           let temp = num
           if (num < 0) {
@@ -1137,28 +1157,26 @@ export default {
           }
 
           if (num < 0) {
-            if (temp > that.swiperWidth / 5) {
-              let curentIndex = that.currentIndex
+            if (temp > this.swiperWidth / 5) {
+              let curentIndex = this.currentIndex
               if (curentIndex !== 0) {
-                that.moveSBack(-that.swiperWidth * (curentIndex - 1))
+                this.moveSBack(-this.swiperWidth * (curentIndex - 1))
               }
             } else {
-              console.log('不足一半回到之前')
-              let num = -that.currentIndex * that.swiperWidth
-              that.moveSBack(num)
+              let num = -this.currentIndex * this.swiperWidth
+              this.moveSBack(num)
             }
           } else {
-            if (temp > that.swiperWidth / 5) {
-              let curentIndexs = that.currentIndex
-              console.log(that.swiperWidth + num)
-              if (curentIndexs !== that.maxIndex) {
-                that.moveSBack(-that.swiperWidth * (curentIndexs + 1))
+            if (temp > this.swiperWidth / 5) {
+              let curentIndexs = this.currentIndex
+              if (curentIndexs !== this.maxIndex) {
+                this.moveSBack(-this.swiperWidth * (curentIndexs + 1))
               } else {
-                that.moveSBack(-that.swiperWidth * that.maxIndex)
+                this.moveSBack(-this.swiperWidth * this.maxIndex)
               }
             } else {
-              let nums = -that.currentIndex * that.swiperWidth
-              that.moveSBack(nums)
+              let nums = -this.currentIndex * this.swiperWidth
+              this.moveSBack(nums)
             }
           }
         }
@@ -1318,7 +1336,7 @@ export default {
 .car-img-div .car {
   width: 100%;
   height: 100%;
-  background-size: 100%;
+  background-size: 100% 100%;
 }
 .car-img-div .xiaomian {
   background-image: url(https://www.lanxiniu.com/Public/baidumip/xiaomian.png);
@@ -1415,6 +1433,8 @@ export default {
 .address-div input {
   font-size: 0.28rem;
   color: #666666 !important;
+//   background: red;
+  line-height: .745rem;
 }
 .gomap{
  height: 100%;

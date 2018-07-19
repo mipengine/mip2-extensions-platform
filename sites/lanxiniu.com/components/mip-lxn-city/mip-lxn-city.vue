@@ -58,8 +58,8 @@ export default {
       base.setSession(datas)
 
       setTimeout(() => {
-        MIP.viewer.page.router.back()
-      }, 500)
+        MIP.viewer.page.back()
+      }, 200)
     })
   },
   methods: {}

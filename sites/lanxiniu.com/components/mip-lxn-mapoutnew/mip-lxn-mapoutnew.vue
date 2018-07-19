@@ -1,34 +1,44 @@
 <template>
   <div class="wrapper">
     <div id="l-map"/>
-    <div
-      class="search-content">
-      <div class="head">
-        <a
-          :href="cityhref"
-          data-type="mip" >
-          <div class="currentcity">
-            <span v-text="globaldata.ordercity"/>
-            <span class="arrow-down"/>
-          </div>
-        </a>
-        <div class="s-input">
-          <span class="img search search-icon"/>
-          <input
-            v-focus="focusState"
-            v-model="searchVal"
-            type="text"
-            placeholder="请输入地址"
-            @input ="searchAddress"
-            @blur="focusState = false">
+    <div class="content">
+      <div class="msg">
+        <span class="img address"/>
+        <input
+          v-model="searchVal"
+          type="text"
+          placeholder="请输入地址"
+          @input ="searchAddress">
+        <div
+          class="city-div actives"
+          @touchend="goCity()">
+          <span
+            class="city"
+            v-text="globaldata.ordercity">北京</span>
+          <span class="arrow"/>
+
         </div>
       </div>
-
-      <div class="content">
+      <div class="msg">
+        <span class="img menpaihao"/>
+        <input
+          v-model="moveOut.address"
+          type="text"
+          placeholder="具体街道  门牌号">
+      </div>
+      <div class="msg">
+        <span class="img lianxiren"/>
+        <input
+          v-model="moveOut.phone"
+          type="number"
+          placeholder="联系方式(必填)">
+      </div>
+      <div class="searh-result">
         <ul>
           <li
             v-for="item in searchData"
-            :key="item.title"
+            :key="item.address+item.title"
+            class="car-actives"
             @click="setAddress(item)">
             <div>
               <span class="img weizhi"/>
@@ -39,49 +49,9 @@
         </ul>
       </div>
     </div>
-    <div
-      class="search-result content">
-      <ul>
-        <li
-          class="result-input-first"
-          @click="inputGetFocus">
-          <div>
-            <span class="img address"/>
-            <p v-text="moveOut.localtion.title"/>
-            <p v-text="moveOut.localtion.address"/>
-          </div>
-          <input
-            :readonly="true"
-            type="text"
-            class="fixsafari-click">
-        </li>
-        <li class="result-input">
-          <div>
-            <span class="img menpaihao"/>
-            <input
-              v-model="moveOut.address"
-              type="text"
-              placeholder="具体街道  门牌号">
-          </div>
-        </li>
-        <li
-          @
-          class="result-input">
-          <div>
-            <span class="img lianxiren"/>
-            <input
-              v-model="moveOut.phone"
-              type="number"
-              placeholder="联系方式(必填)">
-
-            <p
-              class="btn-sure btn"
-              @click="moveoutSure">确定</p>
-          </div>
-        </li>
-
-      </ul>
-    </div>
+    <p
+      class="btn-sure btn"
+      @click="moveoutSure">确定</p>
     <div
       v-show="warn.show"
       class="layer">
@@ -94,15 +64,9 @@
           @touchend="closeLayer">知道了</p>
       </div>
     </div>
-    <div
-      v-if="loading"
-      class="mip-loading-box">
-      <div class="point-span">
-        <span class="point-first"/><span class="point-second"/><span class="point-last"/>
-      </div>
-    </div>
 
   </div>
+
 </template>
 
 <script>
@@ -112,15 +76,6 @@ import '../../common/utils/base.less'
 
 base.setHtmlRem()
 export default {
-  directives: {
-    focus: {
-      update: function (el, { value }) {
-        if (value) {
-          el.focus()
-        }
-      }
-    }
-  },
   props: {
     globaldata: {
       type: Object,
@@ -139,8 +94,12 @@ export default {
       focusState: false, // 获取焦点
       moveOut: {
         localtion: {
-          title: '定位中...',
-          address: '请等待'
+          address: '',
+          city: '',
+          province: '',
+          lat: '',
+          lng: '',
+          title: ''
         },
         address: '',
         phone: ''
@@ -150,14 +109,35 @@ export default {
         texts: ''
       },
       loading: true,
-      BMap: null
+      BMap: null,
+      debounceTimeout: ''// 延时定时器
     }
   },
   created () {
     this.cityhref = base.htmlhref.city
   },
   mounted () {
-    console.log('这里是搬出地址选择页面 !')
+    window.addEventListener('show-page', (e) => {
+      console.log('搬出地址页面显示')
+      //   this.globaldata.ordercity = newval
+      this.searchVal = ''
+      this.searchData = []
+      this.moveOut = {
+        localtion: {
+          address: '',
+          city: '',
+          province: '',
+          lat: '',
+          lng: '',
+          title: ''
+        },
+        address: ''
+      }
+
+      setTimeout(() => {
+        this.mapInit()
+      }, 100)
+    })
     window.addEventListener('hide-page', (e) => {
       this.interval && clearInterval(this.interval)
     })
@@ -178,7 +158,6 @@ export default {
 
         // 初始化
         this.$element.customElement.addEventAction('init', () => {
-          console.log('地图回调加载当前页面的地图')
           if (this.init) {
             this.chatGlobaldata()
           }
@@ -197,10 +176,8 @@ export default {
       this.init = false
       this.interval = setInterval(() => {
         if (Object.keys(this.globaldata).length > 0) {
-          console.log(Object.keys(this.globaldata).length)
           clearInterval(this.interval)
           this.BMap = MIP.sandbox.BMap
-          console.log('=======')
           this.mapInit()
         }
       }, 300)
@@ -208,7 +185,6 @@ export default {
 
     mapInit (city) {
       let BMap = this.BMap
-      console.log(BMap)
       let citys = city || this.globaldata.ordercity
       console.log('查看当前城市' + citys)
 
@@ -217,12 +193,8 @@ export default {
       let lxndata = base.getSession()
       let address = ''
       if (lxndata === null) {
-        console.log('无缓存')
-        console.log(JSON.stringify(this.globaldata, null, 2))
         address = this.globaldata.moveOutAddress
-        console.log(JSON.stringify(address, null, 2))
       } else {
-        console.log('有缓存')
         address = lxndata.moveOutAddress
         let moveout = this.moveOut
         moveout.localtion = address.localtion
@@ -232,53 +204,37 @@ export default {
       let divs = this.$element.querySelector('#l-map')
       let maps = new BaiduMap(this.$element, divs, address, (data) => {
         // 还原上次填写的数据
-        console.log(JSON.stringify(data, null, 2))
         let moveout = this.moveOut
-        console.log(JSON.stringify(moveout, null, 2))
-        console.log(JSON.stringify(data, null, 2))
         moveout.localtion = data.localtion
+        this.searchVal = data.localtion.title
         moveout.address = data.address
         moveout.phone = data.phone
         this.loading = false
       })
       if (BMap.Map) {
-        console.log(BMap)
-        console.log('存在')
         this.searchHandler = maps.handleResult(BMap, citys, this.searchResult)
         this.maps = maps.map
       }
     },
     // 搜索地址
     searchAddress () {
-      let value = this.searchVal
-      this.searchHandler.search(value)
-      if (value === '') {
-        this.searchData = []
-      }
+      this.debounce()
     },
     // 搜索结果
     searchResult (item) {
-      this.searchData = item.data
+      if (item) {
+        this.searchData = item.data
+      }
     },
     // 选择搜索结果
     setAddress (item) {
-      let BMap = this.BMap
-      this.focusState = false
-      // 将选择的地址在地图上标志出来
-      let longitudeP = item.lng
-      let latitudeP = item.lat
-      let point = new BMap.Point(longitudeP, latitudeP) // 创建点坐标
-      let myIcon = new BMap.Icon(
-        'https://www.lanxiniu.com/Public/baidumip/mapicon.png',
-        new BMap.Size(26, 32)
-      )
-      let marker2 = new BMap.Marker(point, { icon: myIcon }) // 创建标注
-      this.maps.clearOverlays()
-      this.maps.addOverlay(marker2)
-      this.maps.centerAndZoom(point, 16)
-
       // 清空搜索数据,在地址框填入数据
+      let inputs = this.$element.querySelectorAll('input:focus')
+      Array.prototype.slice.call(inputs).forEach(ele => {
+        ele.blur()
+      })
       this.searchData = []
+      this.searchVal = item.title
       this.moveOut.localtion = item
       console.log(JSON.stringify(item, null, 2))
     },
@@ -293,10 +249,10 @@ export default {
       let BMap = this.BMap
       let warn = this.warn
       let moveOut = this.moveOut
-      let title = moveOut.localtion.title
+      //   let title = moveOut.localtion.title
       let phone = moveOut.phone
-
-      if (title === '') {
+      console.log(JSON.stringify(moveOut, null, 2))
+      if (this.searchVal === '' || moveOut.localtion.lat === '') {
         warn.show = true
         warn.texts = '地址不能为空'
       } else if (phone === '') {
@@ -307,7 +263,6 @@ export default {
         warn.texts = '号码不符合规范'
       } else {
         console.log('可以提交')
-
         let moveInAddress = this.globaldata.moveInAddress
         let objdata = this.deepClone(this.moveOut)
         let obj = ''
@@ -324,7 +279,6 @@ export default {
         let datas = base.mipExtendData(this.globaldata, obj)
         base.mipSetGlobalData(obj)
         base.setSession(datas)
-
         // 计算距离
         let movein = this.globaldata.moveInAddress.localtion
         let moveout = objdata.localtion
@@ -334,7 +288,7 @@ export default {
           let pointOut = new BMap.Point(moveout.lng, moveout.lat)
           let pointIn = new BMap.Point(movein.lng, movein.lat)
           let kilometer =
-            this.maps.getDistance(pointOut, pointIn).toFixed(2) / 1000
+              this.maps.getDistance(pointOut, pointIn).toFixed(2) / 1000
           console.log('查看距离:' + kilometer)
           let obj = { kilometer: kilometer }
           let datass = base.mipExtendData(datas, obj)
@@ -359,12 +313,17 @@ export default {
         )
         console.log(newval)
         this.searchVal = ''
+        this.searchData = []
         this.moveOut = {
           localtion: {
+            address: '',
+            city: '',
+            province: '',
+            lat: '',
+            lng: '',
             title: ''
           },
-          address: '',
-          phone: ''
+          address: ''
         }
         this.globaldata.ordercity = newval
         setTimeout(() => {
@@ -374,15 +333,19 @@ export default {
         console.log(newval)
       })
     },
-    inputGetFocus () {
-      this.focusState = true
-    },
+
     goOrder () {
-      console.log('跳转====')
       setTimeout(() => {
-        console.log('跳转====')
-        MIP.viewer.page.router.back()
+        MIP.viewer.page.back()
       }, 100)
+    },
+    // 跳转到城市选择页面
+    goCity () {
+      let inputs = this.$element.querySelectorAll('input:focus')
+      Array.prototype.slice.call(inputs).forEach(ele => {
+        ele.blur()
+      })
+      MIP.viewer.open(base.htmlhref.city, { isMipLink: true })
     },
     closeLayer () {
       this.warn.show = false
@@ -481,189 +444,165 @@ export default {
           }
         }
       )
+    },
+    // 延时搜索
+    debounce () {
+      if (this.debounceTimeout) {
+        clearTimeout(this.debounceTimeout)
+      }
+      this.debounceTimeout = setTimeout(() => {
+        let value = this.searchVal
+        console.log('调用搜索')
+        if (value === '') {
+          this.searchData = []
+        } else {
+          this.searchHandler.search(value)
+        }
+      }, 200)
     }
+
   }
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
 #l-map {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: rgba(243, 241, 236, 1);
+ height: 1px;
+ position: absolute;
+ display: none;
+}
+.wrapper{
+    padding: .42rem .2rem;
+    .content{
+        background: #FFFFFF;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.10);
+        border-radius: 4px 4px 0 0;
+        padding: 0 .4rem;
+        position: relative;
+        div.msg{
+            height: 1rem;
+            border-bottom: 1px solid #f1f1f1;
+            position: relative;
+            input{
+                height: 100%;
+                // height: 1rem;
+                font-size: .28rem;
+                color:#666666;
+                padding-left: .6rem;
+                line-height: 120%;
+            }
+            .img{
+                position: absolute;
+                top: 50% !important;
+                transform: translateY(-50%);
+            }
+            div.city-div{
+                position: absolute;
+                 top: 50% ;
+                transform: translateY(-50%);
+                right: 0;
+                width: 1.46rem;
+                text-align: center;
+                color: #666666;
+                height: 100%;
+                line-height: 1rem;
+
+            }
+            div.city-div::before{
+                content: "";
+                display: inline-block;
+                position: absolute;
+                border-radius: 5px;
+                width: 0.02rem;
+                height: 0.4rem;
+                left: 0;
+                top: 50%;
+                transform: translateY(-50%);
+                background: #ecebeb;
+            }
+            div.city-div a{
+                display: inline-block;
+                height: 100%;
+
+            }
+            .city{
+                color: #333333;
+            }
+            .arrow{
+                position: relative;
+                display: inline-block;
+                 width: 0.15rem;
+                height: 0.15rem;
+                border: 0.02rem solid #666666;
+                border-right: none;
+                border-bottom: none;
+                transform: rotate(135deg);
+            }
+        }
+        div.msg:first-child input{
+            padding-right: 1.46rem;
+        }
+         div.msg:last-child{
+           border:none;
+         }
+    }
+    .btn-sure {
+        margin-top: .4rem;
+        background: #36a0e9;
+        box-shadow: 0 1px 1px 0 #cccccc;
+        border-radius: 0.04rem;
+        height: 0.76rem;
+        font-size: 0.34rem;
+        color: #ffffff;
+        text-align: center;
+        letter-spacing: 0.08px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        }
 }
 
-.search-content {
-  position: absolute;
-  top: 44px;
-  left: 0;
-  right: 0;
-  /* background: red; */
-  z-index: 99999;
-  /* margin-top: 45px; */
-  /* padding: 0.2rem; */
+.searh-result {
+    position: absolute;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    top: 1rem;
+    background: #ffffff;
+    padding-left: 0.4rem;
+    padding-right: 0.4rem;
+    // max-height: 7rem;
+    max-height: 260%;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    // background: red;
 }
-.head {
-  display: flex;
-  align-items: center;
-  position: relative;
-  height: 0.88rem;
-  background: #ffffff;
-  border-radius: 0.04rem;
-  position: relative;
-}
-.head a {
-  position: absolute;
-  left: 0.32rem;
-  font-size: 0.3rem;
-  color: #333333;
-  letter-spacing: 0.07px;
-  display: flex;
-  width: 0.9rem;
-  z-index: 99999;
-  height: 100%;
-  align-items: center;
-}
-
-.arrow-down {
-  position: absolute;
-  top: 50%;
-  right: 0;
-  width: 0;
-  height: 0;
-  border-left: 0.1rem solid transparent;
-  border-right: 0.1rem solid transparent;
-  border-top: 0.1rem solid #333333;
-  transform: translateY(-50%);
-}
-
-.s-input {
-  padding: 0.14rem;
-  padding-top: 0.15rem;
-  padding-left: 1.5rem;
-  padding-right: 0.3rem;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  line-height: 1;
-}
-.search-icon {
-  position: absolute;
-  left: 1.64rem;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.s-input input {
-  padding-left: 0.5rem;
-  width: 100%;
-  height: 100%;
-  background: #eff9ff;
-  border-radius: 1.2rem;
-  font-size: 0.28rem;
-  margin-top: -.01rem;
-}
-.content {
-  background: #ffffff;
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
-  max-height: 5.3rem;
-  overflow: auto;
-  -webkit-overflow-scrolling: touch;
-}
-.content li {
+.searh-result li {
   padding: 0.2rem 0;
   border-bottom: 1px solid #f1f1f1;
   display: flex;
 }
-.content li div {
+.searh-result li div {
   width: 100%;
   position: relative;
   padding-left: 0.6255rem;
 }
-.content li div p:first-child {
+.searh-result li div p:first-child {
   font-size: 0.28rem;
   color: #333333;
 }
-.content li div p:last-child {
+.searh-result li div p:last-child {
   margin-top: 0.05rem;
   font-size: 0.24rem;
   color: #999999;
 }
-.content li div .img {
+.searh-result li div .img {
   position: absolute;
   left: 0;
   top: 0.23rem;
 }
-/* 搜索结果*/
-.search-result {
-  background: #ffffff;
-  position: absolute;
-  bottom: 0;
-  left: 0.2rem;
-  right: 0.2rem;
-  max-height: unset;
-  overflow: unset;
-}
-.content li.result-input{
-    padding: 0;
-}
-.content li.result-input div{
-    height: 100%;
-}
-.content li.result-input .img{
-    top: 50% !important;
-    transform: translateY(-50%);
-}
-.content li.result-input:last-child{
+.searh-result li:last-child{
     border-bottom: none;
 }
 
-.result-input {
-  height: 1rem;
-}
-.result-input-first {
-  height: 1.1rem;
-  overflow: hidden;
-  position: relative;
-}
-.result-input-first p:last-child {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.result-input input {
-  font-size: 0.28rem;
-}
-
-.btn-sure {
-  margin-top: 0!important;
-  top: 50%;
-  transform: translateY(-50%);
-  position: absolute;
-  right: 0;
-  background: #36a0e9;
-  box-shadow: 0 1px 1px 0 #cccccc;
-  border-radius: 0.04rem;
-  width: 1.44rem;
-  height: 0.62rem;
-  font-size: 0.34rem !important;
-  color: #ffffff !important;
-  text-align: center;
-  letter-spacing: 0.08px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.fixsafari-click{
-   width: 100%;
-   background: transparent;
-   position: absolute;
-   left: 0;
-   right: 0;
-   top: 0;
-}
 </style>

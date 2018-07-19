@@ -197,13 +197,13 @@
       </li>
       <li class="border-second">
         <p
-          :class="{'open-detail':bxbzfwsm.flag}"
-          @click="open(bxbzfwsm)">
+          :class="{'open-detail':lpgz.flag}"
+          @click="open(lpgz)">
           <span>理赔规则</span>
           <span class="arrow"/>
         </p>
         <div
-          v-show="bxbzfwsm.flag"
+          v-show="lpgz.flag"
           class="detail">
           <p>1. 保险保障仅包含货物运输过程中出现的货损等问题，不包含货物搬运过程中产生的人为损坏。</p>
           <p>2. 理赔受理时效为订单服务结束之前，建议您在货物到达目的地时进行验货，超时后则不予受理。</p>
@@ -255,6 +255,9 @@ export default {
         flag: false
       },
       bxbzfwsm: {// 保险保障服务说明
+        flag: false
+      },
+      lpgz: {// 理赔规则
         flag: false
       }
 
