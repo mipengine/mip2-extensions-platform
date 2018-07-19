@@ -195,6 +195,7 @@ export default {
 <style lang='less' scoped>
 .fillinfo-content {
   padding: 4rem;
+  margin-top: 3.5rem;
   .errorMessage {
     position: absolute;
     left: 50%;
@@ -211,14 +212,18 @@ export default {
     border-bottom: 1px solid #f1f1f1;
     font-size: 1.6rem;
     color: #666;
-    padding: 0.8rem;
+    padding: 0.6rem;
     > span {
       line-height: 4rem;
+      font-size: 1.5rem;
+      color: #333;
     }
     .form-group-left {
       display: flex;
       > span {
         line-height: 4rem;
+        font-size: 1.5rem;
+        color: #333;
       }
       input {
         width: 12rem;
@@ -226,16 +231,22 @@ export default {
       }
     }
     .phoncode-btn {
-      width: 9rem;
+      width: 8.5rem;
+      color: #ff6a4c;
       text-align: center;
-      border: 1px solid;
-      border-radius: 6px;
+      border: 1px solid #ff6a4c;
+      border-radius: 1.3rem;
       cursor: pointer;
+      padding: 0;
+      font-size: 1.3rem;
+      height: 2.4rem;
+      line-height: 2.4rem;
     }
   }
   .form-group-imgcode {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
   input {
     border: none;
@@ -245,11 +256,15 @@ export default {
     border-radius: 0;
     padding: 1rem;
   }
+  input::-webkit-input-placeholder {
+    color: #ccc;
+    font-size: 1.4rem;
+  }
   .btn {
     font-size: 1.6rem;
-    height: 5rem;
-    line-height: 5rem;
-    margin-top: 2rem;
+    height: 4.4rem;
+    line-height: 4.4rem;
+    margin-top: 2.7rem;
     background: linear-gradient(to right, #ff8f53, #ff5e59);
     text-align: center;
     color: #fff;
