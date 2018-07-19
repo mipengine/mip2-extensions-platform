@@ -195,6 +195,8 @@
         确认下单
       </p> -->
       <p
+        id="sureorer"
+        data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22order%22%2C%22click%22%5D%7D"
         class="sure-order btn"
         @touchend="sureOrder">
         确认下单
