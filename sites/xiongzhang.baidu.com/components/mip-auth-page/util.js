@@ -12,7 +12,7 @@ export function getQuery (name) {
 }
 
 export function getRedirectUrl (url, query, hash) {
-  let result = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'code=' + query.code + '&state=' + query.state + hash
+  let result = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'code=' + query.code + '&state=' + encodeURIComponent(query.state) + hash
 
   return result
 }
