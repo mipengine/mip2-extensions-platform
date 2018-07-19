@@ -50,12 +50,15 @@
                 color #24292e
                 font-weight bold
                 padding 12px 10px
-        .l-0>.folder
+        .l-0 .folder
             color #24292e
             font-size 18px
             line-height 24px
             font-weight bold
             padding 20px 0 24px 10px
+        .l-1 .folder
+            // 只有第一级的 folder 不缩进，后续都缩进
+            padding 10px 0 14px 30px
     .children-1
         .wd-infinity-menu
             padding-left 20px
