@@ -39,10 +39,11 @@
         div[class^="l-"]
             a
                 display block
-                margin 5px 0
-                padding 12px 10px
+                margin-bottom 4px
+                padding 10px 10px
                 color #6a6b6c
                 font-size 14px
+                line-height 20px
                 &:active
                     background #f5f5f5
             .sub-folder
@@ -52,9 +53,9 @@
         .l-0>.folder
             color #24292e
             font-size 18px
+            line-height 24px
             font-weight bold
-            margin 22px 0
-            padding-left 10px
+            padding 20px 0 24px 10px
     .children-1
         .wd-infinity-menu
             padding-left 20px

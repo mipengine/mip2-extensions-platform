@@ -30,8 +30,10 @@
     position relative
     div[class^="children-"]
         .chapter-title
+            font-size 14px
+            line-height 20px
             color #6a6b6c
-            padding 12px 10px 12px 0
+            padding 10px 10px 10px 0
             display block
             cursor pointer
             margin-left 10px
