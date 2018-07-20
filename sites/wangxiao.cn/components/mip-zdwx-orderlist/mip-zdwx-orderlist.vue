@@ -163,14 +163,14 @@ export default {
   methods: {
     goEvaluate (order, index) {
       let goodsId = order.goodsId || ''
-      window.MIP.viewer('payorder.jsp?goodsId=' + goodsId)
+      window.MIP.viewer('evaluate.jsp?orderId=' + orderId)
     },
     goStudy (order, index) {
       window.top.location.href = order.url
     },
     goPay (order, index) {
       let orderId = order.orderNumber || ''
-      window.MIP.viewer('evaluate.jsp?orderId=' + orderId)
+      window.MIP.viewer('payorder.jsp?goodsId=' + goodsId)
     },
     cancelOrder (order, index) {
       let orderId = order.orderNumber || ''
