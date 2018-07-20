@@ -107,10 +107,6 @@ export default {
           })
         })
           .then(function (response) {
-            if (response.status !== 200) {
-              console.log(`返回的响应码${response.status}`)
-              return
-            }
             // 获得后台实际返回的内容
             response.json().then(function (data) {
               _this.getingPhoneCode = true
@@ -173,10 +169,6 @@ export default {
         })
       })
         .then(function (response) {
-          if (response.status !== 200) {
-            console.log(`返回的响应码${response.status}`)
-            return
-          }
           // 获得后台实际返回的内容
           response.json().then(function (data) {
             if (data.code === '100000') {
