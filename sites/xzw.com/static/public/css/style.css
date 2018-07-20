@@ -1,0 +1,351 @@
+@charset "UTF-8";html {font-size:-webkit-calc(100vw * 100 / 1080);font-size:-moz-calc(100vw * 100 / 1080);font-size:calc(100vw * 100 / 1080);}
+@media (min-width:751px) {html {font-size:69.4444px;}}
+body,div,dl,dt,p,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,span,i,pre,form,fieldset,input,textarea,blockquote,table,tr,th,td {margin:0;padding:0;border:none;}
+body {color:#555;font-size:0.426rem;font-family:"Microsoft YaHei",Arial;border:none;}
+ol,ul {list-style:none;}
+img {border:0;max-width:100%;}
+small {font-size:0.426rem;}
+strong,b,h1,h2,h3,h4,h5,h6 {font-weight:bold;}
+:focus {outline:0;}
+a,a:hover,a:active {text-decoration:none;-webkit-tap-highlight-color:rgba(0,0,0,0);}
+input,select,textarea,button {border:0;-webkit-appearance:none;border-radius:0;outline:none;font-size:.36rem;font-family:"Microsoft YaHei";}
+dl,dt,dd{padding:0;margin:0;border:0;}
+i,em {font-style:normal;}
+.center {text-align:center;}
+.clear {float:none;clear:both;height:auto;border:none;}
+.clear:after {clear:both;content:"";display:block;font-size:0;height:0;overflow:hidden;visibility:hidden;}
+.fl {float:left}
+.fr {float:right}
+.wrapper,.wrapper2 {width:100%;margin:0 auto;min-height:100vh;overflow:hidden;position:relative;}
+.wrapper2 {padding-bottom:1.84rem;box-sizing:border-box;}
+.contain,.contain2 {position:relative;z-index:1;}
+.wrapper,.wrapper2,.maxWidth {max-width:750px;}
+.loading {position:fixed;top:42%;left:50%;width:1rem;height:1rem;-webkit-transform:translate(-50%,-50%);-moz-transform:translate(-50%,-50%);transform:translate(-50%,-50%);}
+/*各页面背景部分*/
+.bg_box,.layer {position:absolute;top:0;left:0;width:100%;height:100%;}
+.bg1_t {background:url(../images/bg1_t.png) no-repeat left top;background-size:contain;}
+.bg1_b {background:url(../images/bg1_b.png) no-repeat left bottom;background-size:contain;}
+.bg2_t {background:url(../images/bg2_t.png) no-repeat left top;background-size:contain;}
+.bg2_b {background:url(../images/bg2_b.png) no-repeat left bottom;background-size:contain;}
+.bg3_t {background:url(../images/bg3_t.png) no-repeat left top;background-size:contain;}
+.bg4_t {background:url(../images/bg4_t.png) no-repeat left top;background-size:contain;}
+.bg5_t {background:url(../images/bg5_t.png) no-repeat left top;background-size:contain;}
+.bg5_b {background:url(../images/bg5_b.png) no-repeat left bottom;background-size:contain;}
+.bg5_b2 {background:url(../images/bg5_b2.png) no-repeat left bottom;background-size:contain;}
+.bg6_t {background:url(../images/bg6_t.png) no-repeat left top;background-size:contain;}
+.bg7_t {background:url(../images/bg7_t.png) no-repeat left top;background-size:contain;}
+.bg8_t {background:url(../images/bg8_t.png) no-repeat left top;background-size:contain;}
+.bgIn_t {background:url(../images/bgIn_t.png) no-repeat left top;background-size:contain;}
+.bgIn_b {background:url(../images/bgIn_b.png) no-repeat left bottom;background-size:contain;}
+.bg1 {background:-webkit-gradient(linear,left top,left bottom,from(#5848ea),to(#5566e4),color-stop(0.3,#7796fa),color-stop(0.7,#6c75e8));}
+.bg2 {background:-webkit-gradient(linear,left top,left bottom,from(#ea487e),to(#e86262),color-stop(0.3,#fa9977),color-stop(0.7,#ff9f8c));}
+.bg5 {background:-webkit-gradient(linear,left top,left bottom,from(#fec2cf),color-stop(0.3,#fff));}
+.bg6 {background:-webkit-gradient(linear,left top,left bottom,from(#ffd9b5),color-stop(0.3,#fff));}
+.bg7 {background:-webkit-gradient(linear,left top,left bottom,from(rgba(246,141,104,.5)),color-stop(0.3,#fff));}
+.bg8 {background:-webkit-gradient(linear,left top,left bottom,from(rgba(251,113,113,.6)),color-stop(0.3,#fff));}
+.bg9 {background:-webkit-gradient(linear,left top,left bottom,from(#f7936b),to(#ec524a));}
+.bg10 {background:-webkit-gradient(linear,left top,left bottom,from(#f05b5b),to(#db4141));}
+.bg11 {background:-webkit-gradient(linear,left top,left bottom,from(rgba(255,174,190,.9)),color-stop(0.3,#fff));}
+.bgIn1 {opacity:0.95;background:-webkit-gradient(linear,left top,left bottom,from(#ff4970),to(#ff5b76),color-stop(0.17,#ff7290),color-stop(0.46,#ff819c),color-stop(0.76,#ff7387));}
+.bgIn2 {opacity:0.95;background:-webkit-gradient(linear,left top,left bottom,from(#ff6454),to(#ffa461),color-stop(0.17,#ffa27e),color-stop(0.46,#ffa26f),color-stop(0.76,#ff9e6f));}
+/*各页面内容分割线部分*/
+.line {height:1px;margin:0rem auto;background:rgba(255,255,255,.1);}
+.line.curr1 {width:10rem;margin:0.5rem auto;}
+.line.curr2 {background:rgba(205,215,255,.5);}
+.line.curr3 {background:#ffe1e0;}
+/*各页面底部流水部分*/
+.float {position:absolute;height:1.14rem;bottom:0;z-index:0;}
+.float .float1 {background:url(../images/astrocx/float1.png) repeat-x 0 bottom;width:43.2rem;background-size:10.8rem auto;animation:wave 150s linear 0s infinite alternate;}
+.float .float2 {background:url(../images/astrocx/float2.png) repeat-x 0 bottom;width:54rem;background-size:21.6rem auto;-left:-30rem;animation:wave2 90s linear 0s infinite alternate;}
+.float.curr1 .float1 {background-image:url(../images/fate/float1.png);background-size:21.6rem auto;}
+.float.curr1 .float2 {background-image:url(../images/fate/float2.png);background-size:21.6rem auto;}
+.float.curr2 .float1 {background-image:url(../images/zodiac/float1.png);background-size:21.6rem auto;}
+.float.curr2 .float2 {background-image:url(../images/zodiac/float2.png);background-size:21.6rem auto;}
+.float.curr3 .float1 {background-image:url(../images/pair/xzfloat1.png);background-size:21.6rem auto;}
+.float.curr3 .float2 {background-image:url(../images/pair/xzfloat2.png);background-size:21.6rem auto;}
+.float.curr4 .float1 {background-image:url(../images/pair/sxfloat1.png);background-size:21.6rem auto;}
+.float.curr4 .float2 {background-image:url(../images/pair/sxfloat2.png);background-size:21.6rem auto;}
+.float.curr5 .float1 {background-image:url(../images/astrolabe/float1.png);background-size:21.6rem auto;}
+.float.curr5 .float2 {background-image:url(../images/astrolabe/float2.png);background-size:21.6rem auto;}
+.float.curr6 .float1 {background-image:url(../images/astrolabe/float11.png);background-size:21.6rem auto;}
+.float.curr6 .float2 {background-image:url(../images/astrolabe/float22.png);background-size:21.6rem auto;}
+.float.curr7 .float1 {background-image:url(../images/jhjr/float1.png);background-size:21.6rem auto;}
+.float.curr7 .float2 {background-image:url(../images/jhjr/float2.png);background-size:21.6rem auto;}
+/*各页面公用样式*/
+@keyframes wave {0% {left:0px;top:0px;} 50% {left:-29rem;top:0;} 100% {left:0px;top:0px;} }
+@keyframes wave2 {0% {left:0px;top:0px;} 50% {left:-39rem;top:0;}100% {left:0px;top:0px;}}
+.flexsaw {display:box;display:-webkit-box;display:-webkit-flex;display:-moz-box;display:-ms-flexbox;display:flex;-webkit-justify-content:space-around;-moz-justify-content:space-around;-ms-justify-content:space-around;-o-justify-content:space-around;justify-content:space-around;-webkit-flex-wrap:wrap;-moz-flex-wrap:wrap;-ms-flex-wrap:wrap;-o-flex-wrap:wrap;flex-wrap:wrap;-webkit-flex-flow:row wrap;-o-flex-flow:row wrap;-moz-flex-flow:row wrap;flex-flow:row wrap;-webkit-align-content:space-around;-o-align-content:space-around;-moz-align-content:space-around;align-content:space-around;}
+.red {color:#ec7074;}
+.blue {color:#6c8fff;}
+.yellow {color:#fea272;}
+.green {color:#80724a;}
+.info_box {position:relative;min-height:-webkit-calc(100vh - 3.28rem);min-height:-moz-calc(100vh - 3.28rem);min-height:calc(100vh - 3.28rem);padding:0 0.4rem 0.4rem;box-sizing:border-box;width:10rem;margin:0 auto;background:rgba(255,255,255,.9);border-radius:0.28rem;}
+.aspect {padding-bottom:0.48rem;margin-top:0.4rem;}
+.aspect.sx {margin-top:0.6rem;}
+.aspect.jg {margin-top:0.1rem;}
+.aspect li {overflow:hidden;float:left;width:50%;font-size:0.4rem;color:#555;line-height:2.3em;padding-right:0.15rem;box-sizing:border-box;}
+.aspect span {color:#999;display: inline-block;margin-right: 0.2rem;}
+.aspect .label {width:2.04rem;display:inline-block;margin-right: 0;}
+.aspect .text {color:#555;white-space:nowrap;overflow:hidden;margin-right: 0;text-overflow:clip;display:inline-block;width:2.1rem;vertical-align:middle;}
+.aspect .starbox {display:inline-block;position:relative;top:2px;}
+.desc,.excell {padding-top:0.48rem;}
+.desc.xz {padding-top:0.15rem;}
+.excell {padding-bottom:0.48rem;}
+.desc dt {color:#5590e3;line-height:1.2rem;font-size:0.45rem;font-weight:bold;}
+.desc dd,.desc p {line-height:0.8rem;text-align:justify;}
+.excell li {line-height:2.3em;}
+.excell span {font-weight:bold;}
+/*星星*/
+.starbox {width:2.15rem;height:0.46rem;background:url(../images/fate/nstar.png) repeat-x 0 0;background-size:contain;}
+.starbox .star {display:block;height:100%;background:url(../images/fate/star.png) repeat-x 0 0;background-size:contain;}
+.starbox[data="0"],.starbox .star {width:0%;}
+.starbox[data="5"] .star {width:100%;}
+.starbox[data="4"] .star {width:80%;}
+.starbox[data="3"] .star {width:60%;}
+.starbox[data="2"] .star {width:40%;}
+.starbox[data="1"] .star {width:20%;}
+.gridbox {box-sizing:border-box;padding:0.3rem;height:-webkit-calc(100vh - 1.07rem);height:-moz-calc(100vh - 1.07rem);height:calc(100vh - 1.07rem);}
+.gridbox .item {width:3.2rem;text-align:center;}
+.gridbox .item .head {width:2.55rem;margin:0 auto;}
+.gridbox .item .head img {width:100%;}
+.gridbox .item .name {line-height:1.4em;font-size:0.45rem;font-weight:bold;}
+.gridbox .item.xz .name {font-size:0.4rem;color:#e7e3ff;}
+.gridbox .item.xz .date {font-size:0.35rem;font-weight: bold;}
+.gridbox.contain {min-height:14.13rem;}
+/*点击切换星座生肖弹出层的样式*/
+.change {padding-top:0.4rem;}
+.changeBtn {display:inline-block;font-size:0.44rem;color:#fff;padding:0.2rem 0.5rem;}
+.changeBtn .icon {vertical-align:text-bottom;display:inline-block;width:0.54rem;height:0.5rem;background:url("../images/change.png") no-repeat 0 0;background-size:cover;}
+.changeLayer {position:fixed;z-index:-1;top:0;width:100%;height:100%;}
+.changeLayer .layerBox {width:100%;position:absolute;padding-top:0.5rem;background:url("../images/fate/layerbg.png") no-repeat 0 0;background-size:contain;bottom:-10.8rem;}
+.changeLayer .layerbg {display:none;position:absolute;top:0;width:100%;height:100%;background:rgba(0,0,0,.6);}
+.changeLayer .title {position:absolute;top:-0.32rem;left:50%;margin-left:-1.3rem;width:2.6rem;height:0.8rem;}
+.changeLayer .gridbox {height:8.8rem;padding: 0 0.25rem;}
+.changeLayer .item {width:25%;padding: 0;}
+.changeLayer .item .head {width:1.8rem;height:1.8rem;background:rgba(182,176,232,0.2);border-radius:50%;position:relative;}
+.gridbox .item .head {padding-top:0.3rem;box-sizing:border-box;}
+.changeLayer .item .name {color:#888;font-size:0.4rem;line-height:0.8rem;font-weight: normal;}
+.changeLayer .item .head img {width:1.2rem;position:absolute;left:0;right:0;top:0;bottom:0;margin:auto;}
+.changeLayer .layerBody {background:#fff;}
+.control {background:#fff;padding:0 0.4rem;}
+.control .item {width:0.74rem;height:0.74rem;text-indent:-9999px;padding:0;}
+.control .item.cancel {background:url(../images/icon_cancel.png) no-repeat center center;background-size:cover}
+.control .item.yes {background:url(../images/icon_yes.png) no-repeat center center;background-size:cover}
+/*首页工具列表*/
+.logo {text-align:center;padding:0.615rem 0 0.57rem;height:2.84rem;box-sizing:border-box;}
+.logo img {margin:0 auto;min-width: inherit}
+.index .logo img {width:4.8rem}
+.tools {width:10rem;margin:0 auto;padding-bottom:0.4rem;}
+.tools ul {background:rgba(255,255,255,.6);border-radius:0.2rem;padding:0.4rem 0;height:-webkit-calc(100vh - 3.24rem);height:-moz-calc(100vh - 3.24rem);height:calc(100vh - 3.24rem);min-height:12.59rem;box-sizing:border-box;}
+.tools li {width:33.3333%;text-align:center;}
+.tools img {width:2.76rem;display:block;margin:0 auto;}
+.tools .name {color:#7a7a7a;font-size:0.44rem;line-height:1.8em;}
+.index {background:url("../images/index/bg_index.jpg") no-repeat 0 0;background-size:100% 100%;}
+.index_layer {width:100%;height:7.2rem;position:absolute;top:0;left:0;z-index:0;}
+.index_layer ul {position:relative;width:100%;height:100%;}
+.index_layer .layer {width:100%;height:50%;position:absolute;top:0;left:0;}
+.index_layer .item1 {background:url(../images/index/dott.png) no-repeat 0 0;background-size:cover;}
+.index_layer .item2 {background:url(../images/index/line.png) no-repeat 0 0;background-size:cover;}
+.index_layer .item3 {background:url(../images/index/starsky.png) no-repeat 0 0;background-size:cover;}
+.index_layer .item4 {background:url(../images/index/cloud1.png) no-repeat 0 0;background-size:cover;}
+.index_layer .item5 {background:url(../images/index/cloud2.png) no-repeat 0 0;background-size:cover;}
+.index_layer .item6 {background:url(../images/index/cloud3.png) no-repeat 0 0;background-size:cover;}
+.index_layer .item7 {background:url(../images/index/cloud4.png) no-repeat 0 0;background-size:cover;}
+.index_layer .item8 {top:3.6rem;background:url(../images/index/cloud5.png) no-repeat 0 0;background-size:cover;}
+.index_layer .item9 {top:3.6rem;background:url(../images/index/cloud6.png) no-repeat 0 0;background-size:cover;}
+.index_layer .item10 {top:3.6rem;background:url(../images/index/cloud7.png) no-repeat 0 0;background-size:cover;}
+/*星座查询*/
+.form_box {text-align:center;padding-top:0.6rem;}
+.form_item {padding:0.1rem 0 0.54rem;}
+.form_item h3 {padding:0.32rem 0;font-size:0.64rem;color:#fff;font-weight:normal;}
+.form_item .item {margin:0.35rem 0;}
+.form_item.xp .item {margin:0.44rem 0;}
+.form_item input::-webkit-input-placeholder {color:#c4c4c4;}
+.form_item input::-ms-input-placeholder {color:#c4c4c4;}
+.form_item input::-moz-placeholder {color:#c4c4c4;}
+.form_item .item {font-size:0.46rem;color:#c4c4c4;height:1.2rem;line-height:1.2rem;background:#fff;display:inline-block;border-radius:0.6rem;}
+.form_item .item span.curr,.form_item .item span.notempty {color:#555;}
+.form_item .dateinput,.form_item .placeinput {width:7.4rem;}
+.form_item .timeinput,.form_item .nickinput {width:5.3rem;}
+.form_item .nickinput input {text-align:center;font-size:0.46rem;width:100%;background:none;display:inline-block;height:1.2rem;line-height:1.2rem;}
+.form_item .inputbtn {width:5.2rem;height:1.2rem;border-radius:0.6rem;font-size:0.46rem;color:#fff;box-shadow:0 0.07rem 0.1rem 0 rgba(73,118,212,0.13);background:-webkit-gradient(linear,72% 100%,68% 0%,from(rgb(93,163,249)),to(rgb(129,212,255)));}
+.inputbtn a {color:#fff;}
+.form_item2 {margin-top:3.2rem;}
+.form_item2 .item {background:#eaeaea;}
+.inputbtn.curr {background:-webkit-gradient(linear,72% 100%,68% 0%,from(rgb(236,82,74)),to(rgb(247,147,107)));box-shadow:0 0.07rem 0.1rem 0 rgba(191,62,52,0.2);}
+.inputbtn.curr2 {background:-webkit-gradient(linear,72% 100%,68% 0%,from(rgb(219,65,65)),to(rgb(249,134,134)));box-shadow:0 0.07rem 0.1rem 0 rgba(203,47,47,0.2);}
+/*错误提示样式*/
+.tip {width:100%;position:fixed;bottom:1rem;text-align:center;z-index:1;}
+.tip span {font-size:0.4rem;color:#fff;background:rgba(0,0,0,.6);display:inline-block;padding:0.2rem 0.28rem;border-radius:0.2rem;}
+/*精准查询信息页*/
+.astrocx_info .title {font-size:0.48rem;line-height:2.8em;color:#fff;}
+.astrocx_info .subtitle {margin-bottom:0.28rem;}
+.astrocx_info .subtitle span {font-size:0.4rem;text-align:center;width:2.3rem;height:0.7rem;line-height:0.7rem;background:#6554e2;display:inline-block;border-radius:1rem;color:#e9ecff;font-weight:normal;}
+.astrocx_info .line {background:rgba(205,215,255,.5);}
+.astrocx_info .aspect li {padding-right:0;}
+.xzhead {position:relative;}
+.xzhead .item {position:absolute;top:0;right:0;width:1.7rem;box-sizing:border-box;transition:all 1s}
+.xzhead .item .spec {padding-top:0.3rem;}
+.xzhead .item .head {margin-top:0.29rem;width:1.5rem;height:1.5rem;background:#e1dfff;border-radius:50%;padding-top:0.05rem;box-sizing:border-box;}
+.xzhead .item .head img {width:90%;margin:0 auto;display:block;}
+.xzhead .item .name,.xzhead .item .date {display:none;}
+.xzhead .item.curr {position:relative;width:6.68rem;}
+.xzhead .item.curr .head img {width:100%;position:relative;top:-1.1rem;left:-0.2rem;}
+.xzhead .item.curr .head {background:none;width:3.5rem;height:2rem;float:left;margin-right:0.1rem;}
+.xzhead .item.curr .xzbox {display:inline-block;}
+.xzhead .item.curr .name {color:#5590e3;font-size:0.68rem;padding-top:0.4rem;font-weight:bold;}
+.xzhead .item.curr .date {color:#91bdfa;font-size:0.44rem;line-height:0.7rem;font-weight:bold;}
+.xzhead .item.curr .name,.xzhead .item.curr .date {display:block;}
+.xzhead .item.curr dd {width:6.68rem;}
+.xzhead .item.curr .spec {padding-top:0.1rem;}
+.astrocx_info .aspect {padding-top:0;}
+.xzbody {display:none}
+.xzbody[datatype='0'] {display:block;}
+.sun,.up {font-size:0.36rem;color:#fff;display:inline-block;padding:0.1rem 0.25rem;border-radius:1rem;}
+.sun {background:-webkit-gradient(linear,35% 0%,65% 100%,from(#ffb7bb),to(#f08d92));}
+.up {background:-webkit-gradient(linear,35% 0%,65% 100%,from(#c7c3ff),to(#879afa));}
+/*星座运势*/
+.fate {background:url(../images/fate/bg.jpg) no-repeat 0 0;background-size:100% 100%;}
+.fatebox .item .date {color:#a1cfff;}
+.fatebox .item .name {color:#fff;}
+.fate .gridbox .head {width:2.24rem;}
+.fate .gridbox .name {font-size:0.4rem;color:#e7e3ff;}
+.fate .gridbox .date {font-size:0.35rem;font-weight: bold;}
+/*星座运势结果页*/
+.fate_info {padding-bottom:2.12rem;}
+.ft_info {width:2.8rem;position:absolute;top:-1rem;text-align:center;}
+.ft_info .name {color:#5590e3;font-size:0.56rem;font-weight: bold;}
+.changeDay {position:fixed;z-index:1;bottom:-1px;width:100%;height:1.48rem;box-sizing:border-box;padding:0.45rem 0.2rem 0;background:url(../images/fate/changeday.png) no-repeat 0 0;background-size:100% 100%;}
+.changeDay span {color:#d1d2ff;font-size:0.46rem;display:inline-block;height:0.8rem;line-height:0.8rem;padding:0 0.32rem;border-radius:0.5rem;}
+.changeDay span.swiper-pagination-bullet-active {color:#7f7ff3;background:#f4f4fe;}
+.ft_info2 {width:5.4rem;padding-top:0.4rem;}
+.ft_info2 dd {line-height:1.8em;}
+.ft_info2 .item1 {color:#999;font-size:62.5%;white-space:nowrap;font-weight: bold;}
+.ft_info2 .item2 {width:4.2rem;height:0.86rem;}
+.ft_info2 .item3 {color:#555;font-size:0.48rem;font-weight: bold;}
+.xzLayer .title {position:absolute;top:-0.32rem;width:2.6rem;height:0.8rem;}
+.changeDayLayer .swiper-wrapper {display:box;display:-webkit-box;display:-webkit-flex;display:-moz-box;display:-ms-flexbox;display:flex;}
+.changeDayLayer .swiper-slide {position:relative;width:100vw;-webkit-flex-shrink:0;-o-flex-shrink:0;-ms-flex-shrink:0;-moz-flex-shrink:0;flex-shrink:0;}
+/*生肖首页列表*/
+.zodiac {background:url(../images/zodiac/bg.jpg) no-repeat 0 0;background-size:100% 100%;}
+.zodiacbox .item .name {color:#ffecd3;}
+.zodiac_info .changeLayer .item .head {background:#fff6f8}
+/*生肖详情页*/
+.summary {font-size:0.44rem;color:#555;line-height:1.8em;padding:0.48rem 0;}
+.zodiac_info .aspect {padding-top:0;}
+.zodiac_info .aspect li {font-size:0.38rem;}
+.zodiac_info .excell li span.text {font-size:0.38rem;}
+.zodiac_info .name {color:#e86262;}
+.zodiac_info .ft_info2 {color:#dd6d6d;padding-top:1rem;}
+.zodiac_info .ft_info2 .item {white-space:nowrap;}
+.zodiac_info .ft_info2 .item i {float:left;font-weight: bold;}
+.zodiac_info .slant {position:relative;top:0.24rem;display:inline-block;width:0.38rem;height:0.38rem;background:url("../images/zodiac/slant.png") no-repeat 0 0;background-size:contain;}
+.zodiac_info .excell li {position:relative;padding-left:1.5rem;font-size: 0.44rem;line-height: 0.88rem;}
+.zodiac_info .excell span {position:absolute;top:0;left:0;}
+.icon_sx i {font-size: 0.4rem;font-weight:bold;display:inline-block;width:0.64rem;line-height:0.64rem;text-align:center;color:#d47f47;border-radius:50%;margin-right:0.3rem;background:-webkit-gradient(linear,22% 0%,78% 100%,from(#fed3a9),to(#f7a14c));}
+.icon_sx i:last-child {margin-right:0;}
+.zodiac_info .excell .explain{line-height: 0.6rem;}
+/*生肖星座配对样式*/
+.info_box .bg_box {border-radius:0.24rem;}
+.pairlogo {width:5rem;margin:0.95rem auto 1.5rem;}
+.pairbox .item {width:50%;text-align:center}
+.pairbox .head {width:3.28rem;margin:0 auto;padding-top:1.1rem;}
+.pairbox .head img {position:relative;top:-1.1rem;width:3rem;margin:0 auto;}
+.pairbox .boy .head {background:url(../images/pair/boy.png) no-repeat center bottom;background-size:contain;}
+.pairbox .girl .head {background:url(../images/pair/girl.png) no-repeat center bottom;background-size:contain;}
+.pairbtn {font-size:0.52rem;color:#fff;width:5.2rem;height:1.2rem;line-height:1.2rem;border-radius:0.6rem;}
+.pairbox .pairbtn {margin-top:1.4rem;}
+.pairbox .name {position:relative;box-sizing:border-box;padding-right:0.28rem;color:#fff;font-size:0.48rem;width:2.6rem;margin:0.25rem auto;height:0.8rem;line-height:0.8rem;border-radius:0.4rem;}
+.pairbox .name:after {position:absolute;right:0.28rem;top:0.3rem;content:'';display:inline-block;width:0;height:0;border-style:solid;border-color:#fff transparent transparent;border-width:0.24rem 0.18rem;}
+.pairbox .boy .name {background:#98b5f9}
+.pairbox .girl .name {background:#ff96a4}
+.changeLayer .listItem {box-sizing:border-box;padding:0 0.3rem;height: 9.5rem;}
+.listItem .item {width:100%;box-sizing:border-box;opacity: 0.5;}
+.listItem .swiper-container {width:3rem;height:100%;overflow:hidden;}
+.listItem .swiper-slide .head {width:2rem;height:2rem;}
+.listItem .swiper-slide .head img {width:1.58rem;top:-0.15rem;}
+.listItem .swiper-slide-active {position:relative;top:-0.18rem;opacity: 1;margin-bottom: 0.36rem;}
+.listItem .swiper-slide-active .head {width:2.7rem;height:2.7rem;padding-top:0.3rem;box-sizing:border-box;}
+.listItem .swiper-slide-active .head img {width:1.98rem;}
+.listItem .swiperboy .swiper-slide-active .head {background:#f1f1ff;}
+.listItem .swipergirl .swiper-slide-active .head {background:#ffeef1;}
+.listItem .sexType {line-height:9.5rem;font-size:0.48rem;color:#aaa;}
+.electric {width:1.7rem;background:url(../images/pair/electric.png) no-repeat center center;background-size:contain;}
+.electric1 {width:1.7rem;background:url(../images/pair/electric1.png) no-repeat center center;background-size:contain;}
+.info_box .contain2 {padding-top:2rem;}
+.info_box .item .head,.info_box .item img {position:relative;}
+.connect .item {width:2.8rem;text-align:center;}
+.connect .item .head:before {position:absolute;z-index:0;bottom:0;left:50%;margin-left:-0.71rem;content:'';display:block;width:1.42rem;height:0.3rem;background:rgba(255,90,73,.5);border-radius:50% / 50%;}
+.connect.xz .item .head:before {background:rgba(232,55,93,.5);}
+.connect .item .name {color:#dc2b51;font-size:0.44rem;line-height:1.8em;font-weight:bold;}
+.info_box .electric {width:2rem;position:relative;top:0.1rem;}
+.info_box .electric1 {width:2rem;position:relative;top:0.1rem;}
+.info_box .connect {position:absolute;top:-1.4rem;width:9rem;}
+.pair_title {padding:0.2rem 0 0.84rem;}
+.pair_title span {font-weight: bold;display:inline-block;padding:0 0.4rem;height:0.8rem;line-height:0.8rem;border-radius:0.4rem;color:#ff597c;font-size:.48rem;background:rgba(255,228,228,.4);}
+.pair_subtitle {color:#fff;font-size:0.6rem;line-height:1.2rem;margin-top:0.5rem;}
+.pair_info .info_box,.pair_info .aspect li,.pair_info .desc dt {color:#fff;}
+.pair_info .desc dd {color:#fff5f5;}
+.pair_info .aspect {padding-bottom:0;}
+.pair_info .aspect li span {color:rgba(255,255,255,0.65);}
+.pairbtn {display:inline-block;box-shadow:0 0.07rem 0.1rem rgba(213,27,58,.2);background:-webkit-gradient(linear,72% 100%,68% 0%,from(rgb(249,93,119)),to(rgb(255,129,173)));}
+.pairbtn.curr2 {box-shadow:0 0.07rem 0.1rem rgba(228,130,57,0.32);background:-webkit-gradient(linear,72% 100%,68% 0%,from(rgb(255,164,84)),to(rgb(255,200,129)));}
+.pair_info .pairbtn {margin-top:0.8rem;}
+.pair_info .info_box {padding-bottom: 0.8rem;min-height:-webkit-calc(100vh - 6.12rem);-moz-min-height:calc(100vh - 6.12rem);min-height:calc(100vh - 6.12rem);}
+.pair .changeLayer .item .name {line-height:2em;}
+.pair_info2 .desc dd {text-indent:2em;}
+.pair_info2 .pair_title span {color:#ff9d47;}
+/*星盘*/
+.astrolabe {background:-webkit-gradient(linear,72% 100%,68% 0%,from(rgb(120,67,215)),to(rgb(89,61,211)),color-stop(0.42,rgb(124,108,244)),color-stop(0.66,rgb(124,102,255)),color-stop(0.76,rgb(89,61,211)));}
+.astrolabe .inputbtn {background:-webkit-gradient(linear,72% 100%,68% 0%,from(rgb(142,124,255)),to(rgb(183,172,255)));box-shadow:0px 7px 10px 0px rgba(138,73,212,0.13);}
+.astrolabe_info {background:-webkit-gradient(linear,72% 100%,68% 0%,from(rgb(51,46,112)),to(rgb(40,28,77)),color-stop(0.42,rgb(57,45,109)),color-stop(0.66,rgb(54,43,110)),color-stop(0.76,rgb(51,41,111)));}
+.astrolabe .logo img {width:5.36rem;}
+.astrolabe_info .logo {height:2.355rem;}
+.astrolabe_info .logo img {width:4.16rem;}
+.graphs {width:9.8rem;height:9.8rem;margin:0 auto;}
+.xpbtns {text-align:center;margin-top:1rem;}
+.xpbtns .btn {display:inline-block;width:4rem;height:1.2rem;line-height:1.2rem;border-radius:0.6rem;font-size:0.52rem;color:#fff;}
+.xpbtns .btn1 {margin-right:0.25rem;box-shadow:0px 7px 10px 0px rgba(138,73,212,0.13);background:-webkit-gradient(linear,72% 100%,68% 0%,from(rgb(87,140,247)),to(rgb(155,204,255)));}
+.xpbtns .btn2 {margin-left:0.25rem;box-shadow:0px 7px 10px 0px rgba(138,73,212,0.13);background:-webkit-gradient(linear,72% 100%,68% 0%,from(rgb(110,87,247)),to(rgb(169,155,255)));}
+/*吉日,结婚吉日,血型配对查询公用样式*/
+.cx_info_box{padding: 0 0.4rem 0.62rem;}
+.info_box2{background: rgba(255,255,255,.9);padding: 0 0.5rem;border-radius: 0.28rem;}
+.info_box2 h1{font-size: 0.56rem;line-height: 1.64rem;text-align: center;}
+.info_box2 .btn{color:#fff;font-size:0.48rem;margin: 0.78rem 0 0.82rem;border-radius: 0.6rem;display: inline-block;width: 5.2rem;text-align: center;height: 1.2rem;line-height: 1.2rem;}
+.cx_title {padding:0.32rem 0 0.34rem;}
+.cx_title span {font-weight:normal;display:inline-block;width:2.3rem;height:0.7rem;line-height:0.7rem;border-radius:0.4rem;color:#fff4f0;font-size:.4rem;}
+.icon_yj .txt_icon1,.icon_yj .txt_icon2{margin-right:0.28rem;font-size: 0.4rem;color:#fff;width: 0.56rem;height: 0.56rem;text-align: center;border-radius:50%;line-height: 0.56rem;display: inline-block;}
+.icon_yj .txt_icon1{background: #7294f4;}
+.icon_yj .txt_icon2{background: #f87c7c;}
+/*吉日查询*/
+.xline {border: 1px solid #ddd;border-width: 1px 0;padding: 0.15rem 0;}
+.xline li{font-size: 0.44rem;color:#555;padding: 0.15rem 0 0.15rem 2.3rem;line-height: 0.8rem;position: relative;}
+.xline label{width: 2.2rem;text-align: right;display: inline-block;position: absolute;left:0;}
+.jiri .logo img {width:4.72rem;}
+.jiri_info h1{color:#f06654;}
+.jiri_info .cx_title span{box-shadow: 0 0.07rem 0.1rem 0 rgba(196, 26, 27, 0.13);background: -webkit-gradient(linear,72% 100%,68% 0%,from(rgba(249,70,48,0.4)),to(rgba(245,126,90,0.4)))}
+.jiri_info .btn{box-shadow: 0 0.07rem 0.1rem rgba(191, 62, 52, 0.2);background: -webkit-gradient(linear,72% 100%,68% 0%,from(rgb(236,82,74)),to(rgb(247,147,107)));}
+/*结婚吉日查询*/
+.fcxline{border-top: 1px solid #e4e4e4;}
+.fcxline li{border-bottom: 1px solid #e4e4e4;}
+.fcxline .h_icon{position: relative;padding-left: 0.84rem;}
+.fcxline p{margin: 0.46rem 0;}
+.fcxline a{display: block;color:#555;line-height: 0.6rem;}
+.fcxline label{color:#4293de;}
+.fcxline strong{position: absolute;left:0;top:0.05rem;}
+.jhjr .logo img {width:4.72rem;}
+.jhjr_info h1{color:#f35f60;}
+.jhjr_info .cx_title span{box-shadow: 0 0.07rem 0.1rem 0 rgba(196, 26, 27, 0.13);background: -webkit-gradient(linear,72% 100%,68% 0%,from(rgba(215,33,33,.4)),to(rgba(222,67,67,.4)))}
+.jhjr_info .btn{box-shadow: 0 0.07rem 0.1rem rgba(203, 47, 47, 0.2);background: -webkit-gradient(linear,72% 100%,68% 0%,from(rgb(219,65,65)),to(rgb(249,134,134)));}
+/*血型配对*/
+.xxpair .pairlogo img{width: 4.72rem;}
+.xxpair .pairbtn{box-shadow: 0 0.07rem 0.1rem rgba(189, 21, 40, 0.2);background: -webkit-gradient(linear,72% 100%,68% 0%,from(rgb(235,65,84)),to(rgb(255,119,146)));}
+.xxpair .formbox{padding-top: 1.67rem;}
+.xxpair .formbox .item{width:8.06rem;height:1.3rem;line-height:1.3rem;background: #eaeaea;margin: 0.45rem auto;border-radius: 0.65rem;}
+.xxpair .formbox select{display: none;}
+.xxpair .pairbtn{margin-top: 1.17rem;}
+.xxpair .inp_xx{font-size: 0.52rem;margin-left: 1.95rem;}
+.xxpair .item.girl label{color:#fd7e92}
+.xxpair .item.boy label{color:#6aa1fb}
+.xxpair .inp_xx em{color:#ccc;}
+.xxpair .inp_xx em.notempty{color:#555;}
