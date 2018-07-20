@@ -6,7 +6,9 @@ export default ({
     getProductSubjects: zdyxhttp + 'course/getProductSubjects',
     sendMessage: zdyxhttp + 'baiduUser/sendMessage',
     compareMessageCode: zdyxhttp + 'baiduUser/compareMessageCode',
-    getGoodsCatalog: zdyxhttp + 'Order/getProductData'
+    getGoodsCatalog: zdyxhttp + 'Order/getProductData',
+    getOrderList: zdyxhttp + 'Order/orderList',
+    cancelOrder: zdyxhttp + 'Order/cancelOrder'
   },
   getQueryString: function (name) {
     let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
