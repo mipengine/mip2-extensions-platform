@@ -1,24 +1,24 @@
 <template>
   <div
-    class="stars-content"
-    :class="{'bg-stars-content':isbig}">
+    :class="{'bg-stars-content':isbig}"
+    class="stars-content">
     <div
       :style="'width:' + getWidth + '%'"
       class="stars-active-content">
       <span
         v-for="index in 5"
         :key="index"
-        @click="setStarsValue(index)"
+        :class="{'bg-ac-img':isbig}"
         class="ac-img"
-        :class="{'bg-ac-img':isbig}"/>
+        @click="setStarsValue(index)"/>
     </div>
     <div class="stars-backgound-content">
       <span
         v-for="index in 5"
         :key="index"
-        @click="setStarsValue(index)"
+        :class="{'bg-ac-img':isbig}"
         class="bg-img"
-        :class="{'bg-ac-img':isbig}"/>
+        @click="setStarsValue(index)"/>
     </div>
   </div>
 </template>
@@ -50,10 +50,10 @@ export default {
   mounted () {},
   methods: {
     setStarsValue (index) {
-      if (this.disable){
+      if (this.disable) {
         return
       }
-      this.$emit('input',index)
+      this.$emit('input', index)
     }
   }
 }

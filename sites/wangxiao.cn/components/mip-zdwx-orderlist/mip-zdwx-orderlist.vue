@@ -15,9 +15,9 @@
           <p class="order-num">订单编号：{{ allOrder.orderNumber }}</p>
           <div class="order-course">
             <mip-img
+              :src="allOrder.img"
               width="130"
-              height="76"
-              :src="allOrder.img"/>
+              height="76"/>
             <div>
               <p>
                 <span>{{ allOrder.title }}</span>
@@ -28,7 +28,7 @@
           </div>
           <div class="total">
             <span>共1个商品</span>
-            <span>合计￥{{ allOrder.currentPrice }}元（含运费￥{{allOrder.sysExpressPrice}}）</span>
+            <span>合计￥{{ allOrder.currentPrice }}元（含运费￥{{ allOrder.sysExpressPrice }}）</span>
           </div>
           <div class="btn-group">
             <span
@@ -59,9 +59,9 @@
           <p class="order-num">订单编号：{{ unpaiyOrder.orderNumber }}</p>
           <div class="order-course">
             <mip-img
+              :src=" unpaiyOrder.img "
               width="130"
-              height="76"
-              :src="unpaiyOrder.img"/>
+              height="76"/>
             <div>
               <p>
                 <span>{{ unpaiyOrder.title }}</span>
@@ -72,7 +72,7 @@
           </div>
           <div class="total">
             <span>共1个商品</span>
-            <span>合计￥{{ unpaiyOrder.currentPrice }}元（含运费￥{{unpaiyOrder.sysExpressPrice}}）</span>
+            <span>合计￥{{ unpaiyOrder.currentPrice }}元（含运费￥{{ unpaiyOrder.sysExpressPrice }}）</span>
           </div>
           <div class="btn-group">
             <span
@@ -95,9 +95,9 @@
           <p class="order-num">订单编号：{{ paiyOrder.orderNumber }}</p>
           <div class="order-course">
             <mip-img
+              :src=" paiyOrder.img "
               width="130"
-              height="76"
-              :src="paiyOrder.img"/>
+              height="76"/>
             <div>
               <p>
                 <span>{{ paiyOrder.title }}</span>
@@ -108,7 +108,7 @@
           </div>
           <div class="total">
             <span>共1个商品</span>
-            <span>合计￥{{ paiyOrder.currentPrice }}元（含运费￥{{paiyOrder.sysExpressPrice}}）</span>
+            <span>合计￥{{ paiyOrder.currentPrice }}元（含运费￥{{ paiyOrder.sysExpressPrice }}）</span>
           </div>
           <div class="btn-group">
             <span
@@ -139,26 +139,26 @@ export default {
   computed: {},
   mounted () {
     let _this = this
-      fetch(base.api.getOrderList, {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
+    fetch(base.api.getOrderList, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+      })
+    })
+      .then(function (response) {
+        // 获得后台实际返回的内容
+        response.json().then(function (data) {
+          _this.allOrderList = data.data.total
+          _this.unpaiyList = data.data.noPay
+          _this.paiyList = data.data.pay
         })
       })
-        .then(function (response) {
-          // 获得后台实际返回的内容
-          response.json().then(function (data) {
-            _this.allOrderList = data.data.total
-            _this.unpaiyList = data.data.noPay
-            _this.paiyList = data.data.pay
-          })
-        })
-        .catch(function (err) {
-          console.log('Fetch Error :-S', err)
-        })
+      .catch(function (err) {
+        console.log('Fetch Error :-S', err)
+      })
   },
   methods: {
     goEvaluate (order, index) {
@@ -167,7 +167,7 @@ export default {
     },
     goStudy (order, index) {
       let goodsId = order.goodsId || ''
-      window.top.location.href = 'index.html'
+      window.top.location.href = 'index.html?goodsId=' + goodsId
     },
     goPay (order, index) {
       let orderId = order.orderNumber || ''

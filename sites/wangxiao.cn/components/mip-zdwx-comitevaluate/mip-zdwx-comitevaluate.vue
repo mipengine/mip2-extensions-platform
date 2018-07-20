@@ -1,24 +1,40 @@
 <template>
   <div class="evaluate-content">
-    <textarea v-model="textareaValue" class="textarea" cols="30" rows="10" placeholder="请输入您的评价"/>
-    <div class="br"></div>
+    <textarea
+      v-model="textareaValue"
+      class="textarea"
+      cols="30"
+      rows="10"
+      placeholder="请输入您的评价"/>
+    <div class="br"/>
     <div class="evaluate-stars-content">
       <div class="stars-item">
         <span class="star-title">专业能力</span>
-        <stars-component v-model="starValue1" :disable="false" :isbig="true"></stars-component>
+        <stars-component
+          v-model="starValue1"
+          :disable="false"
+          :isbig="true"/>
       </div>
       <div class="stars-item">
         <span class="star-title">课程风采</span>
-        <stars-component v-model="starValue2" :disable="false" :isbig="true"></stars-component>
+        <stars-component
+          v-model="starValue2"
+          :disable="false"
+          :isbig="true"/>
       </div>
       <div class="stars-item">
         <span class="star-title">资料提供</span>
-        <stars-component v-model="starValue3" :disable="false" :isbig="true"></stars-component>
+        <stars-component
+          v-model="starValue3"
+          :disable="false"
+          :isbig="true"/>
       </div>
     </div>
-    
-    <mip-fixed type="bottom" class="evaluate-btn" @click="comitValuate">
-        发表
+    <mip-fixed
+      type="bottom"
+      class="evaluate-btn"
+      @click="comitValuate">
+      发表
     </mip-fixed>
     <div
       v-show="showErrorMessage"
@@ -32,7 +48,7 @@ import base from '../../common/base.js'
 import starsComponent from '../mip-zdwx-stars/mip-zdwx-stars.vue'
 export default {
   components: { starsComponent },
-  data() {
+  data () {
     return {
       showErrorMessage: false,
       errorMessage: '',
@@ -40,14 +56,13 @@ export default {
       starValue2: 0,
       starValue3: 0,
       textareaValue: ''
-    };
-  },
-  computed: {
-    getWidth() {
-      return this.value / 0.05;
     }
   },
-  mounted() {},
+  computed: {
+    getWidth () {
+      return this.value / 0.05
+    }
+  },
   watch: {
     showErrorMessage: function (newQuestion, oldQuestion) {
       if (newQuestion) {
@@ -57,6 +72,7 @@ export default {
       }
     }
   },
+  mounted () {},
   methods: {
     comitValuate () {
       let _this = this
@@ -110,7 +126,7 @@ export default {
         })
     }
   }
-};
+}
 </script>
 <style lang='less' scoped>
 
@@ -168,4 +184,3 @@ textarea::-webkit-textarea-placeholder {
     border-radius: 6px;
   }
 </style>
-
