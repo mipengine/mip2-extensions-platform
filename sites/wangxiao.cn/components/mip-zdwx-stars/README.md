@@ -17,3 +17,5 @@
 ## 属性
 
 value 分值,0-5
+disable 是否只读 默认true 只读
+isbig 是否使用大间距模式 默认false 不使用

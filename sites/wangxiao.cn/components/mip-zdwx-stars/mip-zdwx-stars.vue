@@ -1,18 +1,24 @@
 <template>
-  <div class="stars-content">
+  <div
+    class="stars-content"
+    :class="{'bg-stars-content':isbig}">
     <div
       :style="'width:' + getWidth + '%'"
       class="stars-active-content">
       <span
         v-for="index in 5"
         :key="index"
-        class="ac-img"/>
+        @click="setStarsValue(index)"
+        class="ac-img"
+        :class="{'bg-ac-img':isbig}"/>
     </div>
     <div class="stars-backgound-content">
       <span
         v-for="index in 5"
         :key="index"
-        class="bg-img"/>
+        @click="setStarsValue(index)"
+        class="bg-img"
+        :class="{'bg-ac-img':isbig}"/>
     </div>
   </div>
 </template>
@@ -23,6 +29,14 @@ export default {
     value: {
       type: Number,
       default: function () { return 0 }
+    },
+    disable: {
+      type: Boolean,
+      default: function () { return true }
+    },
+    isbig: {
+      type: Boolean,
+      default: function () { return false }
     }
   },
   data () {
@@ -34,14 +48,28 @@ export default {
     }
   },
   mounted () {},
-  methods: {}
+  methods: {
+    setStarsValue (index) {
+      if (this.disable){
+        return
+      }
+      this.$emit('input',index)
+    }
+  }
 }
 </script>
 <style lang='less' scoped>
 .stars-content {
   display: flex;
   height: 1.6rem;
-  width: 8rem;
+  min-width: 8rem;
+  overflow: hidden;
+  position: relative;
+}
+.bg-stars-content {
+  display: flex;
+  height: 1.6rem;
+  min-width: 16rem;
   overflow: hidden;
   position: relative;
 }
@@ -75,6 +103,9 @@ export default {
   background-image: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAYAAAByDd+UAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAABmJLR0QAAAAAAAD5Q7t/AAAACXBIWXMAAAsSAAALEgHS3X78AAACz0lEQVRIx7XWT4jVVRTA8c8bRsOiMsdFf2hROo0p1Oas2kUtCoIIIkhFM4pMGwolQWpVBJEEQ6RFhsHAQBbUxkWLonYRnFVQTo7WJhsoixjJWpi2+J2B6b03M+/NjAcev9/vnHPP957z7j33tvQhmXk1xrCtVBN4ISIu9BpjsB8g3sYu/FPfT1eMJ3sN0Ooju2H8gBlsrrHf4TqMRMRUL3EG+sjuQEGORMQvEXEWR0p3oNcgPQEz82bsrFKOzTGNlW5n+axYhvuwCsci4tdZZb0fK9u+FQFm5g3YjX9xqIvLobLtLt8FpWPRZOYgbscm3IEHcB8mImL7PJOawFZ8gc9wCpP4MSIudgAz837NEr8LG3Vul99wT0Scnge4EV9jfZvpIk7jWxyNiM9bmfkYjs9xmtEs/8ma6Ul8GRF/LFL6dbgXd1ZlNmFEs21mZWsrM09hGHvxaURML/Y/9COZeRMewWFMtTLzMn6PiPXLC70o+ByGBqpsQ5k5egVhoxjC5AD24xLeysxdVwC2TdMgLuHFgYg4gR2leL8cVhI2Xp87IuLEAETEREFhfCWgtfrHNc1lTzH+v/Ez8wl8UNk+HhEfLRH2ED7RtLw9EfHOrK1bp3lWcwqcx7r2TtEDrKVpFEN4LiIOz7V39NKazRSurUH9ypoaN90Omy/DVbiAvyJi7RJL+jNuwfURMbNghpq2NKg5zZcqJ+s50m7oBtxcz++XAZyd7JZegFvaBnUr2Y3VIxfLcHnAzLwtMz/ENM5m5seZuWEBYEdJu10Th9sGycy1eBmjWI3Zo+pRPJyZ7+KViDhX+sn5gN0y/LOekZmrM/N5nNH0XHgTG+r3huZ6MYozmXkwM9cgyvd8e/Bu2+IpHMVlzfa4pkzHcTAifmrzvxWvYXvF+xtXVTLPRMR7CwIryH7NXXMIX+GliPjGApKZd+NVPKi5NbweER2Xrv8ArzsEZg/eOB0AAAAASUVORK5CYII=");
   background-repeat: no-repeat;
   background-size: contain;
+}
+.bg-ac-img{
+  margin-right: 2rem;
 }
 .stars-active-content {
   z-index: 1;
