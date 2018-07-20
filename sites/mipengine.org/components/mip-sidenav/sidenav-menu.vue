@@ -11,7 +11,9 @@
             :menu="menuItem.children"
             :level="level + 1"
             :url="url">
-            <slot/>
+            <template slot-scope="slotProps">
+              <slot/>
+            </template>
           </mip-sidenav>
         </div>
       </div>
