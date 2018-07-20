@@ -12,7 +12,10 @@
           :key="index"
           class="order-course-scoped">
           <div class="br"/>
-          <p class="order-num">订单编号：{{ allOrder.orderNumber }}</p>
+          <div class="order-title-content">
+            <p class="order-num">订单编号：{{ allOrder.orderNumber }}</p>
+            <span class="order-statusstr">{{ allOrder.orderStatusStr }}</span>
+          </div>
           <div class="order-course">
             <mip-img
               :src="allOrder.img"
@@ -30,7 +33,9 @@
             <span>共1个商品</span>
             <span>合计￥{{ allOrder.currentPrice }}元（含运费￥{{ allOrder.sysExpressPrice }}）</span>
           </div>
-          <div class="btn-group">
+          <div
+            v-show="paiyOrder.evaluate === 0 || paiyOrder.payStatus === 1 || paiyOrder.payStatus === 0"
+            class="btn-group">
             <span
               v-show="allOrder.evaluate === 0"
               class="order-btn"
@@ -56,7 +61,10 @@
           :key="index"
           class="order-course-scoped">
           <div class="br"/>
-          <p class="order-num">订单编号：{{ unpaiyOrder.orderNumber }}</p>
+          <div class="order-title-content">
+            <p class="order-num">订单编号：{{ unpaiyOrder.orderNumber }}</p>
+            <span class="order-statusstr">{{ unpaiyOrder.orderStatusStr }}</span>
+          </div>
           <div class="order-course">
             <mip-img
               :src=" unpaiyOrder.img "
@@ -74,7 +82,9 @@
             <span>共1个商品</span>
             <span>合计￥{{ unpaiyOrder.currentPrice }}元（含运费￥{{ unpaiyOrder.sysExpressPrice }}）</span>
           </div>
-          <div class="btn-group">
+          <div
+            v-show="paiyOrder.payStatus === 0"
+            class="btn-group">
             <span
               v-show="unpaiyOrder.payStatus === 0"
               class="order-btn"
@@ -92,7 +102,10 @@
           :key="index"
           class="order-course-scoped">
           <div class="br"/>
-          <p class="order-num">订单编号：{{ paiyOrder.orderNumber }}</p>
+          <div class="order-title-content">
+            <p class="order-num">订单编号：{{ paiyOrder.orderNumber }}</p>
+            <span class="order-statusstr">{{ paiyOrder.orderStatusStr }}</span>
+          </div>
           <div class="order-course">
             <mip-img
               :src=" paiyOrder.img "
@@ -110,7 +123,9 @@
             <span>共1个商品</span>
             <span>合计￥{{ paiyOrder.currentPrice }}元（含运费￥{{ paiyOrder.sysExpressPrice }}）</span>
           </div>
-          <div class="btn-group">
+          <div
+            v-show="paiyOrder.evaluate === 0 || paiyOrder.payStatus === 1"
+            class="btn-group">
             <span
               v-show="paiyOrder.evaluate === 0"
               class="order-btn"
@@ -215,7 +230,10 @@ export default {
 .order-course-scoped .order-course {
   background-color: #f8f8f8;
 }
-
+.order-title-content{
+  display: flex;
+  justify-content: space-between;
+}
 .order-num,
 .order-course > span:first-of-type {
   font-size: 1.3rem;
@@ -227,8 +245,12 @@ export default {
   height: 3.3rem;
   line-height: 3.3rem;
   background-color: #fff;
+  display: inline-block;
 }
-
+.order-statusstr{
+  font-size: 1.3rem;
+  color: #ff6a4c;
+}
 .order-course {
   padding: 1rem 1.2rem;
   display: flex;
