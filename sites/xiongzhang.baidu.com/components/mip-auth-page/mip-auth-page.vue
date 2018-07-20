@@ -12,13 +12,14 @@
 
 <script>
 
-import {getQuery, getUUID, getRedirectUrl} from './util'
+import {getQuery, getUUID, getRedirectUrl, log} from './util'
 
 export default {
   data () {
     /* eslint-disable */
     let redirect_uri = getQuery('redirect_uri')
     let client_id = getQuery('client_id')
+    let xzh_id = getQuery('appid')
 
 
     let uuid = getUUID()
@@ -33,6 +34,7 @@ export default {
       config: {
         redirect_uri,
         client_id,
+        xzh_id,
         state,
         uuid
       },
@@ -49,6 +51,8 @@ export default {
   },
   created () {
     this.checkConfig()
+    // 发送打点pv
+    log('auth_page', this.config.xzh_id)
   },
   mounted () {
     window.addEventListener('message', this.onmessage, false)
@@ -122,6 +126,10 @@ export default {
             {isMipLink: true, replace: true}
           )
         }
+      } else if (type === 'oauth-iframe-log') {
+        /* eslint-disable */
+        log(value.action, config.xzh_id)
+        /* eslint-enable */
       }
     }
   }
