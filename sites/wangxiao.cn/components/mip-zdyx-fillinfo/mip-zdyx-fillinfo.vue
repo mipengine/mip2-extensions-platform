@@ -123,8 +123,9 @@ export default {
                     _this.phonCodeBtnText = '获取验证码'
                     clearInterval(timer)
                     _this.getingPhoneCode = false
+                  } else {
+                    this.phonCodeBtnText = --_this.phonCodeBtnText
                   }
-                  _this.phonCodeBtnText = --_this.phonCodeBtnText
                 }, 1000)
               } else {
                 _this.errorMessage = data.message
