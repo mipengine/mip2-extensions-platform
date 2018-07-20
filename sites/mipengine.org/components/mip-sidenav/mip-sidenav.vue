@@ -17,7 +17,8 @@
 
 <style scoped lang="stylus">
     .sidenav-wrapper
-        width 280px
+        width 260px
+        margin 40px 0 0 100px
 </style>
 
 <script>
