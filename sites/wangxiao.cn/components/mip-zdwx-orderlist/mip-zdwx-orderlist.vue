@@ -163,14 +163,14 @@ export default {
   methods: {
     goEvaluate (order, index) {
       let orderId = order.orderNumber || ''
-      window.top.location.href = 'evaluate.html?orderId=' + orderId
+      window.MIP.viewer('evaluate.html?orderId=' + orderId)
     },
     goStudy (order, index) {
       window.top.location.href = order.url
     },
     goPay (order, index) {
       let orderId = order.orderNumber || ''
-      window.top.location.href = 'payorder.html?orderId=' + orderId
+      window.MIP.viewer('evaluate.html?orderId=' + orderId)
     },
     cancelOrder (order, index) {
       let orderId = order.orderNumber || ''
