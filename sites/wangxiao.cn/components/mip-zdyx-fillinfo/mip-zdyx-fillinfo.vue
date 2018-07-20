@@ -7,19 +7,6 @@
         type="text"
         placeholder="请输入手机号">
     </div>
-    <div class="form-group form-group-imgcode">
-      <div class="form-group-left">
-        <span>手机验证码</span>
-        <input
-          v-model="phoneCodeNumber"
-          class="phone-code"
-          type="text"
-          placeholder="">
-      </div>
-      <span
-        class="phoncode-btn"
-        @click="getPhoneCode">{{ phonCodeBtnText }}</span>
-    </div>
     <div
       v-if="showImgCode"
       class="form-group form-group-imgcode">
@@ -39,6 +26,19 @@
           width="90"
           height="40"/>
       </div>
+    </div>
+    <div class="form-group form-group-imgcode">
+      <div class="form-group-left">
+        <span>手机验证码</span>
+        <input
+          v-model="phoneCodeNumber"
+          class="phone-code"
+          type="text"
+          placeholder="">
+      </div>
+      <span
+        class="phoncode-btn"
+        @click="getPhoneCode">{{ phonCodeBtnText }}</span>
     </div>
     <div
       class="btn"
@@ -94,6 +94,11 @@ export default {
     },
     getPhoneCode () {
       let _this = this
+      if (_this.showImgCode && _this.imgCode === '') {
+        _this.errorMessage = '请输入图形验证码'
+        _this.showErrorMessage = true
+        return
+      }
       let uPattern = /^1[0-9][0-9]\d{8}$/
       if (uPattern.test(_this.phoneNumber) && !_this.getingPhoneCode) {
         fetch(base.api.sendMessage, {
@@ -103,26 +108,28 @@ export default {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            phone: _this.phoneNumber
+            phone: _this.phoneNumber,
+            imageCode: _this.imgCode
           })
         })
           .then(function (response) {
-            if (response.status !== 200) {
-              console.log(`返回的响应码${response.status}`)
-              return
-            }
             // 获得后台实际返回的内容
             response.json().then(function (data) {
-              _this.getingPhoneCode = true
-              _this.phonCodeBtnText = 60
-              let timer = setInterval(() => {
-                if (_this.phonCodeBtnText === 0) {
-                  _this.phonCodeBtnText = '获取验证码'
-                  clearInterval(timer)
-                  _this.getingPhoneCode = false
-                }
-                _this.phonCodeBtnText = --_this.phonCodeBtnText
-              }, 1000)
+              if (data.code === '000000') {
+                _this.getingPhoneCode = true
+                _this.phonCodeBtnText = 60
+                let timer = setInterval(() => {
+                  if (_this.phonCodeBtnText === 0) {
+                    _this.phonCodeBtnText = '获取验证码'
+                    clearInterval(timer)
+                    _this.getingPhoneCode = false
+                  }
+                  _this.phonCodeBtnText = --_this.phonCodeBtnText
+                }, 1000)
+              } else {
+                _this.errorMessage = data.message
+                _this.showErrorMessage = true
+              }
             })
           })
           .catch(function (err) {
@@ -155,11 +162,6 @@ export default {
         _this.showErrorMessage = true
         return
       }
-      if (_this.showImgCode && _this.imgCode === '') {
-        _this.errorMessage = '请输入图形验证码'
-        _this.showErrorMessage = true
-        return
-      }
       fetch(base.api.compareMessageCode, {
         method: 'POST',
         headers: {
@@ -168,15 +170,10 @@ export default {
         },
         body: JSON.stringify({
           code: _this.phoneCodeNumber,
-          phone: _this.phoneNumber,
-          imgCode: _this.imgCode
+          phone: _this.phoneNumber
         })
       })
         .then(function (response) {
-          if (response.status !== 200) {
-            console.log(`返回的响应码${response.status}`)
-            return
-          }
           // 获得后台实际返回的内容
           response.json().then(function (data) {
             if (data.code === '100000') {
@@ -194,7 +191,7 @@ export default {
 </script>
 <style lang='less' scoped>
 .fillinfo-content {
-  padding: 4rem;
+  padding: 4rem 2rem;
   margin-top: 3.5rem;
   .errorMessage {
     position: absolute;
