@@ -71,7 +71,7 @@ export default {
       imgCode: '',
       phonCodeBtnText: '获取验证码',
       getingPhoneCode: false,
-      imgCodeUrl: 'https://api.wangxiao.cn/app/Validate.ashx?validatekey='
+      imgCodeUrl: 'https://mip.wangxiao.cn/baiduUser/getImageCode?validatekey='
     }
   },
   computed: {},
