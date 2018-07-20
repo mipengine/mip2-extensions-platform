@@ -243,17 +243,19 @@
       </div>
       <!-- <button class="s4s-btn" v-if="(!user.Tel || refillTel)" @click="payFee"> 支付金额{{ (((price * 100 + ownFree * 100 + lateFree * 100) || 0) / 100).toFixed(2) }}元 | 立即办理 </button> -->
       <div style="height:.6rem;"/>
-      <div class="pay-contaienr">
-        <div>
-          <p>合计金额：<span>¥ {{ (((price * 100 + ownFree * 100 + lateFree * 100) || 0) / 100).toFixed(2) }}</span></p>
-          <p>预计1-5个工作日办理完成 </p>
+      <mip-fixed type="bottom">
+        <div class="pay-contaienr">
+          <div>
+            <p>合计金额：<span>¥ {{ (((price * 100 + ownFree * 100 + lateFree * 100) || 0) / 100).toFixed(2) }}</span></p>
+            <p>预计1-5个工作日办理完成 </p>
+          </div>
+          <div
+            :class="agree?'' :'disabled-btn'"
+            @click="payFee" >
+            <button> 立即办理</button>
+          </div>
         </div>
-        <div
-          :class="agree?'' :'disabled-btn'"
-          @click="payFee" >
-          <button> 立即办理</button>
-        </div>
-      </div>
+      </mip-fixed>
     </div>
     <button
       ref="pay"
@@ -314,7 +316,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.globalData)
     this.illegal = this.globalData
     this.price = this.globalData.Fine
     this.date =
@@ -340,7 +341,6 @@ export default {
         })
     },
     sendcode () {
-      console.log(this.phone)
       let tel = /^1\d{10}$/
       if (!this.phone) {
         util.toast('请输入手机号码')
@@ -382,7 +382,6 @@ export default {
       MIP.viewer.open('help.html')
     },
     goAgree () {
-      console.log(this.agree)
       this.agree = !this.agree
     },
     // 服务协议
@@ -706,7 +705,6 @@ export default {
     },
     getVipFee () {
       let self = this
-      console.log(this.illegal)
       util
         .fetchData('v3/violation/fee', {
           vio_id: this.illegal.ViolationId,
@@ -857,20 +855,7 @@ select {
   font-size: .2rem;
   padding-top: .15rem;
 }
-.s4s-toast {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  z-index: 99999;
-  text-align: center;
-  padding: .05rem .1rem;
-  border-radius: .04rem;
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
-  font-size: .14rem;
-}
+
 .agree-container {
   font-size: .15rem;
   color: #999999;
@@ -884,10 +869,7 @@ select {
 
 .pay-contaienr {
   display: flex;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  width: 100%;
   background: #fff;
 }
 .pay-contaienr > div:first-child {
@@ -923,7 +905,11 @@ select {
 .pay-contaienr .disabled-btn button {
   color: #999999;
 }
-
+.pay-contaienr  button,.pay-contaienr  button:focus {
+  background: none;
+  border:none;
+  outline: none;
+}
 .group-upload {
   height: auto;
 }

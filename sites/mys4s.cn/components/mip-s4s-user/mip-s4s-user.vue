@@ -104,7 +104,7 @@
             @click="confirmBtn">确认</span>
         </div>
       </div>
-      <div class="s4s-mask"/>
+      <div class="s4s-mask-user"/>
     </div>
   </div>
 </template>
@@ -269,7 +269,6 @@ export default {
       })
     },
     bindPay (item) {
-      console.log(item)
       MIP.setData({
         payConfig: {
           fee: item.TotalPrice / 100,
@@ -316,6 +315,7 @@ export default {
   align-items: center;
   justify-content: center;
   position: relative;
+  font-size:.15rem;
 }
 .s4s-tab-num {
     background: #fe5a00;
@@ -441,7 +441,7 @@ export default {
 }
 .s4s-confirm-body {
   width: 76%;
-  position: fixed;
+  position: absolute;
   left: 50%;
   top: 50%;
   background: #fff;
@@ -483,7 +483,7 @@ export default {
 .s4s-confirm-btn span:last-child {
   border-right: 0;
 }
-.s4s-mask {
+.s4s-mask-user {
   position: absolute;
   top: 0;
   right: 0;
@@ -491,6 +491,5 @@ export default {
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 9998;
-  margin-bottom: -0.5rem;
 }
 </style>

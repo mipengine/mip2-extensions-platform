@@ -113,24 +113,19 @@
           <!-- <span style="color: #666666;text-decoration:underline" @click="gotoAgreement">《服务协议》</span> -->
           中的说明</p>
       </div>
-      <div class="pay-contaienr">
-        <div>
-          <p>合计金额：<span>¥ {{ (((Number(payForm.money) * 100 + Number(payForm.late_free)* 100 + Number(payForm.own_free)* 100 ) || 0) / 100).toFixed(2) }}</span></p>
-          <p>预计1-5个工作日办理完成 </p>
+      <mip-fixed type="bottom">
+        <div class="pay-contaienr">
+          <div>
+            <p>合计金额：<span>¥ {{ (((Number(payForm.money) * 100 + Number(payForm.late_free)* 100 + Number(payForm.own_free)* 100 ) || 0) / 100).toFixed(2) }}</span></p>
+            <p>预计1-5个工作日办理完成 </p>
+          </div>
+          <div
+            :class="agree?'' :'disabled-btn'"
+            @click="payFee" >
+            <button > 立即办理</button>
+          </div>
         </div>
-        <div
-          :class="agree?'' :'disabled-btn'"
-          @click="payFee" >
-          <button > 立即办理</button>
-        </div>
-      </div>
-      <!-- <button v-if="user.Tel && !refillTel" class="s4s-btn" @click="payFee"> 支付金额{{ (((Number(payForm.money) * 100 + Number(payForm.late_free)* 100  + Number(payForm.own_free)* 100 ) || 0) / 100).toFixed(2) }}元 | 立即办理 </button> -->
-      <div
-        v-if="openShow"
-        class="s4s-mask"
-        @click="closeMake">
-        <mip-img :src="src" />
-      </div>
+      </mip-fixed>
     </div>
   </div>
 </template>
@@ -210,7 +205,6 @@ export default {
         })
     },
     sendcode () {
-      console.log(this.phone)
       let tel = /^1\d{10}$/
       if (!this.phone) {
         util.toast('请输入手机号码')
@@ -308,14 +302,6 @@ export default {
           util.toast(res.msg)
         }
       })
-    },
-    openCode () {
-      this.openShow = true
-      this.src =
-        'https://s4s-mip-imges.oss-cn-hangzhou.aliyuncs.com/mip-img/notice@3x.png'
-    },
-    closeMake () {
-      this.openShow = false
     }
   }
 }
@@ -348,46 +334,7 @@ export default {
   color: #f40;
   padding-right: .05rem;
 }
-.s4s-pop {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  z-index: 9999;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  width: 3rem;
-  margin-top: -.5rem;
-  margin-left: -1.5rem;
-}
-.s4s-pop-body {
-  background-color: #fff;
-  border-radius: .04rem;
-  padding: .1rem;
-  position: absolute;
-}
-.s4s-pop-title {
-  background: rgba(37, 170, 255, 0.9);
-  border-radius: .2rem;
-  height: .35rem;
-  line-height: .35rem;
-  text-align: center;
-  color: #fff;
-  font-size: .17rem;
-  position: relative;
-  z-index: 9999;
-}
-.s4s-pop-bg {
-  /* background: #fff url(https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/help.png) no-repeat .02rem .04rem / 100% 100%; */
-  width: 1rem;
-  height: 1rem;
-  border-radius: 1rem;
-  position: absolute;
-  left: 50%;
-  top: -.55rem;
-  margin-left: -.5rem;
-  z-index: 99;
-}
+
 .s4s-close {
   width: .35rem;
   height: .35rem;
@@ -413,8 +360,7 @@ export default {
   display: -ms-flexbox;
   display: flex;
 }
-.s4s-order-ready {
-}
+
 .s4s-order-input input {
   height: auto;
   -webkit-box-flex: 4;
@@ -472,10 +418,7 @@ export default {
 
 .pay-contaienr {
   display: flex;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  width: 100%;
   background: #fff;
 }
 .pay-contaienr > div:first-child {
@@ -510,6 +453,11 @@ export default {
 }
 .pay-contaienr .disabled-btn button {
   color: #999999;
+}
+.pay-contaienr  button,.pay-contaienr  button:focus {
+  background: none;
+  border:none;
+  outline: none;
 }
 .s4s-group {
   height: .32rem;

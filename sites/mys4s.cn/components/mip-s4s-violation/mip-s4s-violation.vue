@@ -109,18 +109,7 @@ export default {
       system: {}
     }
   },
-  watch: {
-    globalData () {
-      console.log(this.globalData)
-    }
-  },
   mounted () {
-    console.log(this.globalData, 'globalData')
-    console.log(
-      this.globalData.car_no,
-      this.globalData.engine,
-      this.globalData.vin
-    )
     this.car_no = this.globalData.car_no
     this.engion = this.globalData.engine
     this.vin = this.globalData.vin
@@ -139,7 +128,6 @@ export default {
 
     const that = this
     this.$on('search', function () {
-      console.log('search')
       that.getIllegal(
         null,
         that.globalData.provice + that.globalData.car_no,
@@ -153,7 +141,6 @@ export default {
       this.detail = false
     },
     gotoTicketPay (item) {
-      console.log(item)
       MIP.setData({
         '#payCarData': item
       })
@@ -174,7 +161,6 @@ export default {
       util
         .fetchData('v3/violation/web/query', param)
         .then(res => {
-          console.log(res)
           if (res.code === 0 && res.data) {
             let newList = []
             if (res.data.Records && res.data.Records.length > 0) {
@@ -227,7 +213,6 @@ export default {
                 return
               }
               if (res.code === 0) {
-                // console.log(res.data)
                 // util.toast("操作成功");
               }
             })
@@ -443,21 +428,6 @@ export default {
   width: .93rem;
   font-size: .14rem;
   color: #fff;
-}
-
-.s4s-toast {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  z-index: 99999;
-  text-align: center;
-  padding: .05rem .1rem;
-  border-radius: .04rem;
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
-  font-size: .14rem;
 }
 
 .s4s-title {
