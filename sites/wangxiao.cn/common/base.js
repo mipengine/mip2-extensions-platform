@@ -8,7 +8,8 @@ export default ({
     compareMessageCode: zdyxhttp + 'baiduUser/compareMessageCode',
     getGoodsCatalog: zdyxhttp + 'Order/getProductData',
     getOrderList: zdyxhttp + 'Order/orderList',
-    cancelOrder: zdyxhttp + 'Order/cancelOrder'
+    cancelOrder: zdyxhttp + 'Order/cancelOrder',
+    comitEvaluate: zdyxhttp + 'Order/evaluateOrder'
   },
   getQueryString: function (name) {
     let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
