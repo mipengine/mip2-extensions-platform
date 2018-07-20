@@ -194,7 +194,7 @@ export default {
 </script>
 <style lang='less' scoped>
 .fillinfo-content {
-  padding: 4rem;
+  padding: 4rem 2rem;
   margin-top: 3.5rem;
   .errorMessage {
     position: absolute;
