@@ -33,7 +33,7 @@
     <mip-fixed
       type="bottom"
       class="evaluate-btn"
-      @click="comitValuate">
+      @click="comitEvaluate">
       发表
     </mip-fixed>
     <div
@@ -74,7 +74,7 @@ export default {
   },
   mounted () {},
   methods: {
-    comitValuate () {
+    comitEvaluate () {
       let _this = this
       if (_this.textareaValue === '') {
         _this.errorMessage = '请输入评价信息'
@@ -96,28 +96,47 @@ export default {
         _this.showErrorMessage = true
         return
       }
-      fetch(base.api.compareMessageCode, {
+      fetch(base.api.comitEvaluate, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          code: _this.phoneCodeNumber,
-          phone: _this.phoneNumber,
-          imgCode: _this.imgCode
+          Data: {
+            CommentDetail: {
+              CategoryID: '',
+              CommentContent: _this.textareaValue,
+              FKID: base.getQueryString('goodsId'),
+              RemarkSource: 1,
+              UserName: ''
+            },
+            CommentItemDetails: [
+              {
+                Score: _this.starValue1,
+                ScoreItemID: 4
+              },
+              {
+                Score: _this.starValue2,
+                ScoreItemID: 5
+              },
+              {
+                Score: _this.starValue3,
+                ScoreItemID: 6
+              }
+            ]
+          }
         })
       })
         .then(function (response) {
-          if (response.status !== 200) {
-            console.log(`返回的响应码${response.status}`)
-            return
-          }
           // 获得后台实际返回的内容
           response.json().then(function (data) {
-            if (data.code === '100000') {
+            if (data.code === '000000') {
               _this.errorMessage = data.message
               _this.showErrorMessage = true
+              setTimeout(() => {
+                window.MIP.viewer('orderlist.jsp')
+              }, 1000)
             }
           })
         })
@@ -129,7 +148,6 @@ export default {
 }
 </script>
 <style lang='less' scoped>
-
 .evaluate-btn {
   height: 5rem;
   line-height: 5rem;
@@ -143,8 +161,8 @@ export default {
   border: none;
   padding: 1rem;
   font-size: 1.4rem;
-  resize:none;
-  outline:none;
+  resize: none;
+  outline: none;
 }
 textarea::-webkit-textarea-placeholder {
   color: #ccc;
@@ -165,7 +183,7 @@ textarea::-webkit-textarea-placeholder {
   height: 3rem;
   line-height: 3rem;
 }
-.evaluate-stars-content{
+.evaluate-stars-content {
   margin-top: 1rem;
 }
 .stars-item {
@@ -173,14 +191,14 @@ textarea::-webkit-textarea-placeholder {
   align-items: center;
 }
 .errorMessage {
-    position: absolute;
-    left: 50%;
-    top: 35%;
-    margin-left: -50px;
-    margin-top: -50px;
-    color: #fff;
-    background: #999;
-    padding: 1rem;
-    border-radius: 6px;
-  }
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  margin-left: -50px;
+  margin-top: -50px;
+  color: #fff;
+  background: #999;
+  padding: 1rem;
+  border-radius: 6px;
+}
 </style>
