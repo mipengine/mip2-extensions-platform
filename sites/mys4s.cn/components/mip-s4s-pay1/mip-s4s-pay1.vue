@@ -658,7 +658,7 @@ export default {
           ownFree: Math.round(this.ownFree * 100) + '', // 服务费
           totalPrice: totalPrice + '', // 总金额
           vio_time: this.date, // 文章时间：格式：2017-12-13
-          carno: this.illegal.CarNo || '',
+          carno: this.illegal.car_no || this.illegal.CarNo || '',
           vio_id: this.illegal.ViolationId || '',
           mobile: this.phone + '',
           drive_no: this.driveNo || '', // 驾驶证号
