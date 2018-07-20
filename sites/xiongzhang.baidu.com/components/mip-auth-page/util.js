@@ -12,8 +12,7 @@ export function getQuery (name) {
 }
 
 export function getRedirectUrl (url, query, hash) {
-  let result = url + (url.indexOf('?') >= 0 ? '&' : '?') +
-        'code=' + query.code + '&state=' + query.state + hash
+  let result = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'code=' + query.code + '&state=' + encodeURIComponent(query.state) + hash
 
   return result
 }
@@ -26,4 +25,24 @@ export function getUUID () {
   }
   let uuid = s.join('')
   return uuid
+}
+
+export function log (action = '', xzhid = '') {
+  let img = document.createElement('img')
+  /* eslint-disable fecs-camelcase */
+  let data = {
+    rqt: 300,
+    click_token: '',
+    url: 'authlogin',
+    action,
+    xzhid
+  }
+  /* eslint-enable fecs-camelcase */
+
+  let keys = Object.keys(data)
+  let queryArr = keys.map(function (key) {
+    return `${key}=${encodeURIComponent(data[key])}`
+  })
+
+  img.src = 'https://rqs.baidu.com/service/api/rqs?' + queryArr.join('&') + '&_t=' + (new Date()).getTime()
 }
