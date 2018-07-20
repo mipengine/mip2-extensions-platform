@@ -162,15 +162,15 @@ export default {
   },
   methods: {
     goEvaluate (order, index) {
-      let orderId = order.orderNumber || ''
-      window.MIP.viewer('evaluate.html?orderId=' + orderId)
+      let goodsId = order.goodsId || ''
+      window.MIP.viewer('payorder.jsp?goodsId=' + goodsId)
     },
     goStudy (order, index) {
       window.top.location.href = order.url
     },
     goPay (order, index) {
       let orderId = order.orderNumber || ''
-      window.MIP.viewer('evaluate.html?orderId=' + orderId)
+      window.MIP.viewer('evaluate.jsp?orderId=' + orderId)
     },
     cancelOrder (order, index) {
       let orderId = order.orderNumber || ''
