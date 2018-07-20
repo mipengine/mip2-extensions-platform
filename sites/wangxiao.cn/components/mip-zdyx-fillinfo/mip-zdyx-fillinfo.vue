@@ -170,8 +170,7 @@ export default {
         },
         body: JSON.stringify({
           code: _this.phoneCodeNumber,
-          phone: _this.phoneNumber,
-          imgCode: _this.imgCode
+          phone: _this.phoneNumber
         })
       })
         .then(function (response) {
