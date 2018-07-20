@@ -166,8 +166,7 @@ export default {
       window.top.location.href = 'evaluate.html?orderId=' + orderId
     },
     goStudy (order, index) {
-      let goodsId = order.goodsId || ''
-      window.top.location.href = 'index.html?goodsId=' + goodsId
+      window.top.location.href = order.url
     },
     goPay (order, index) {
       let orderId = order.orderNumber || ''
