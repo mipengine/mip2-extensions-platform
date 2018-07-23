@@ -6,9 +6,9 @@
       top="0">
       <div>
         <ul
-                v-for="(val,index) in product"
-                :key="index"
-                type="mip-mustache">
+          v-for="(val,index) in product"
+          :key="index"
+          type="mip-mustache">
           <li>
             <a @click="changelist(val.id)">{{ val.title }}</a>
           </li>
@@ -20,22 +20,22 @@
         <div class="swiper-slide">
           <div>
             <ul
-                    v-for="(value,index) in productsalesattr"
-                    :key="index"
-                    type="mip-mustache">
+              v-for="(value,index) in productsalesattr"
+              :key="index"
+              type="mip-mustache">
               <li class="title">
                 <span class="line"/>
                 <span class="text">{{ value.title }}</span>
               </li>
               <div>
                 <li
-                        v-for="(vv,index) in value.productlist"
-                        :key="index"
-                        class="item"
-                        type="mip-mustache">
+                  v-for="(vv,index) in value.productlist"
+                  :key="index"
+                  class="item"
+                  type="mip-mustache">
                   <a
-                          :href="'/product/info.html?id=' + vv.id "
-                          data-type="mip">
+                    :href="'/product/info.html?id=' + vv.id "
+                    data-type="mip">
                     <p class="i-title">{{ vv.title }}</p>
                     <p class="i-text">{{ vv.sketch }}</p>
                   </a>
@@ -131,62 +131,62 @@
 </style>
 
 <script>
-    import config from '../../utils/config'
-    export default {
-        data () {
-            return {
-                product: [],
-                productsalesattr: []
-            }
-        },
-        mounted () {
-            // console.log('This is 产品分类 !')
-            const self = this
-            let pcid = getRequest().pcid
-            pcid = pcid || 1
-
-            window.fetchJsonp(config.data().apiurl + '/product/categoryinfo/pcid/' + pcid, {
-                jsonpCallback: 'callback'
-            }).then(function (res) {
-                return res.json()
-            }).then(function (data) {
-                self.product = data.data.items.product
-                self.productsalesattr = data.data.items.productsalesattr
-            })
-
-            function getRequest () {
-                let url = location.search // 获取url中"?"符后的字串
-                //  let theRequest = {}
-                let theRequest = {}
-                let strs = ''
-                if (url.indexOf('?') !== -1) {
-                    let str = url.substr(1)
-                    strs = str.split('&')
-                    for (let i = 0; i < strs.length; i++) {
-                        theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
-                    }
-                }
-                return theRequest
-            }
-        },
-        methods: {
-            reset () {
-                this.product = []
-                this.productsalesattr = []
-            },
-            changelist: function (pcid) {
-                pcid = pcid || 1
-                const self = this
-                window.fetchJsonp(config.data().apiurl + '/product/categoryinfo/pcid/' + pcid, {
-                    jsonpCallback: 'callback'
-                }).then(function (res) {
-                    return res.json()
-                }).then(function (data) {
-                    self.product = data.data.items.product
-                    self.productsalesattr = data.data.items.productsalesattr
-                })
-            }
-        }
+import config from '../../utils/config'
+export default {
+  data () {
+    return {
+      product: [],
+      productsalesattr: []
     }
+  },
+  mounted () {
+    // console.log('This is 产品分类 !')
+    const self = this
+    let pcid = getRequest().pcid
+    pcid = pcid || 1
+
+    window.fetchJsonp(config.data().apiurl + '/product/categoryinfo/pcid/' + pcid, {
+      jsonpCallback: 'callback'
+    }).then(function (res) {
+      return res.json()
+    }).then(function (data) {
+      self.product = data.data.items.product
+      self.productsalesattr = data.data.items.productsalesattr
+    })
+
+    function getRequest () {
+      let url = location.search // 获取url中"?"符后的字串
+      //  let theRequest = {}
+      let theRequest = {}
+      let strs = ''
+      if (url.indexOf('?') !== -1) {
+        let str = url.substr(1)
+        strs = str.split('&')
+        for (let i = 0; i < strs.length; i++) {
+          theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
+        }
+      }
+      return theRequest
+    }
+  },
+  methods: {
+    reset () {
+      this.product = []
+      this.productsalesattr = []
+    },
+    changelist: function (pcid) {
+      pcid = pcid || 1
+      const self = this
+      window.fetchJsonp(config.data().apiurl + '/product/categoryinfo/pcid/' + pcid, {
+        jsonpCallback: 'callback'
+      }).then(function (res) {
+        return res.json()
+      }).then(function (data) {
+        self.product = data.data.items.product
+        self.productsalesattr = data.data.items.productsalesattr
+      })
+    }
+  }
+}
 
 </script>

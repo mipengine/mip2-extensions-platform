@@ -1,32 +1,32 @@
 <template>
   <div class="wrapper footer">
     <a
-            href="../../index/index.html"
-            data-type="mip">
+      href="../../index/index.html"
+      data-type="mip">
       <div
-              class="icon icon1"
-              @click="aaa($event)"/>
+        class="icon icon1"
+        @click="aaa($event)"/>
     </a>
     <a
-            href="../../product/category.html"
-            data-type="mip">
+      href="../../product/category.html"
+      data-type="mip">
       <div
-              class="icon icon2"
-              @click="aaa($event)"/>
+        class="icon icon2"
+        @click="aaa($event)"/>
     </a>
     <a
-            href="../../article/index.html"
-            data-type="mip">
+      href="../../article/index.html"
+      data-type="mip">
       <div
-              class="icon icon3"
-              @click="aaa($event)"/>
+        class="icon icon3"
+        @click="aaa($event)"/>
     </a>
     <a
-            href="../../user/index.html"
-            data-type="mip">
+      href="../../user/index.html"
+      data-type="mip">
       <div
-              class="icon icon4"
-              @click="aaa($event)"/>
+        class="icon icon4"
+        @click="aaa($event)"/>
     </a>
   </div>
 </template>
@@ -107,44 +107,44 @@
 </style>
 
 <script>
-    export default {
-        mounted () {
-            console.log('This is 底部固定菜单栏 !')
-        },
-        methods: {
-            aaa: function () {
-                let a = document.querySelectorAll('a')
-                a.forEach(function (el, index) {
-                    el.onclick = function (e) {
-                        let sib = sibilings(this)
-                        this.children[0].classList.add('active')
-                        sib.forEach(function (el, index) {
-                            el.children[0].classList.remove('active')
-                        })
-                        return this
-                    }
-                })
-
-                function sibilings (el) {
-                    let a = []
-                    let p = el.previousSibling
-                    while (p) {
-                        if (p.nodeType === 1) {
-                            a.push(p)
-                        }
-                        p = p.previousSibling
-                    }
-                    a.reverse()
-                    let n = el.nextSibling
-                    while (n) {
-                        if (n.nodeType === 1) {
-                            a.push(n)
-                        }
-                        n = n.nextSibling
-                    }
-                    return a
-                }
-            }
+export default {
+  mounted () {
+    console.log('This is 底部固定菜单栏 !')
+  },
+  methods: {
+    aaa: function () {
+      let a = document.querySelectorAll('a')
+      a.forEach(function (el, index) {
+        el.onclick = function (e) {
+          let sib = sibilings(this)
+          this.children[0].classList.add('active')
+          sib.forEach(function (el, index) {
+            el.children[0].classList.remove('active')
+          })
+          return this
         }
+      })
+
+      function sibilings (el) {
+        let a = []
+        let p = el.previousSibling
+        while (p) {
+          if (p.nodeType === 1) {
+            a.push(p)
+          }
+          p = p.previousSibling
+        }
+        a.reverse()
+        let n = el.nextSibling
+        while (n) {
+          if (n.nodeType === 1) {
+            a.push(n)
+          }
+          n = n.nextSibling
+        }
+        return a
+      }
     }
+  }
+}
 </script>
