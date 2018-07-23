@@ -107,7 +107,7 @@ export default {
             CommentDetail: {
               CategoryID: '',
               CommentContent: _this.textareaValue,
-              FKID: base.getQueryString('goodsId'),
+              FKID: base.getQueryString('id'),
               RemarkSource: 1,
               UserName: ''
             },
