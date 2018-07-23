@@ -85,6 +85,7 @@ export default {
     }
   },
   mounted () {
+    base.setToken(base.getQueryString('token'))
     this.imgCodeUrl = this.imgCodeUrl + base.getQueryString('validatekey')
   },
   methods: {
@@ -109,7 +110,8 @@ export default {
           },
           body: JSON.stringify({
             phone: _this.phoneNumber,
-            imageCode: _this.imgCode
+            imageCode: _this.imgCode,
+            token: base.getQueryString('token') || base.getToken()
           })
         })
           .then(function (response) {
@@ -171,7 +173,8 @@ export default {
         },
         body: JSON.stringify({
           code: _this.phoneCodeNumber,
-          phone: _this.phoneNumber
+          phone: _this.phoneNumber,
+          token: base.getQueryString('token') || base.getToken()
         })
       })
         .then(function (response) {

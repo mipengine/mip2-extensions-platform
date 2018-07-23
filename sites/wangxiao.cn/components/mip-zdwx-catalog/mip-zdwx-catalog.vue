@@ -11,7 +11,7 @@
           <span
             :class="{'catalog-item-icon-active':firstCurrentIndex==index}"
             class="catalog-item-icon"/>
-          <span class="catalog-item-title">{{ item.ClassName }}</span>
+          <span class="catalog-item-title">{{ item.className }}</span>
         </div>
         <span
           v-show="firstCurrentIndex==index&&lineTag"
@@ -21,7 +21,7 @@
           v-show="firstCurrentIndex==index">
           <!-- 循环二级菜单数据并使用.stop阻止冒泡 -->
           <li
-            v-for="(item2,index2) in item.Product"
+            v-for="(item2,index2) in item.product"
             :key="index2"
             @click.stop="doThis(index2)">
             <div
@@ -30,11 +30,11 @@
               <span
                 :class="{'item-item-icon-active':firstCurrentIndex==index&&index2==secondCurrentIndex}"
                 class="item-item-icon"/>
-              <span class="item-item-title">{{ item2.ProductName }}</span>
+              <span class="item-item-title">{{ item2.productName }}</span>
             </div>
             <ul v-show="firstCurrentIndex==index&&index2==secondCurrentIndex">
               <li
-                v-for="(item3,index3) in item2.CourseList"
+                v-for="(item3,index3) in item2.courseList"
                 :key="index3">
                 <span class="line"/>
                 <div class="list-title-content">

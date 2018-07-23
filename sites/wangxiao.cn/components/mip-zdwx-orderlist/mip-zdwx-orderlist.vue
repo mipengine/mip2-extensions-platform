@@ -151,11 +151,13 @@ export default {
     return {
       allOrderList: [],
       unpaiyList: [],
-      paiyList: []
+      paiyList: [],
+      currentOrderId: ''
     }
   },
   computed: {},
   mounted () {
+    base.setToken(base.getQueryString('token'))
     let _this = this
     fetch(base.api.getOrderList, {
       method: 'POST',
@@ -164,6 +166,7 @@ export default {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
+        token: base.getQueryString('token') || base.getToken()
       })
     })
       .then(function (response) {
@@ -180,19 +183,20 @@ export default {
   },
   methods: {
     goEvaluate (order, index) {
+      let goodsId = order.goodsId || ''
       let orderId = order.orderNumber || ''
-      window.MIP.viewer.open('evaluate.jsp?orderId=' + orderId)
+      window.MIP.viewer.open(base.url + 'Order/toEvaluate?id=' + goodsId + '&orderId=' + orderId)
     },
     goStudy (order, index) {
       window.top.location.href = order.url
     },
     goPay (order, index) {
-      let goodsId = order.goodsId || ''
-      window.MIP.viewer.open('payorder.jsp?goodsId=' + goodsId)
+      let orderId = order.orderNumber || ''
+      window.MIP.viewer.open(base.url + 'Order/toEvaluate?orderId=' + orderId)
     },
     goOrderDetail (order) {
       let orderId = order.orderNumber || ''
-      window.MIP.viewer.open('orderdetail.jsp?orderId=' + orderId)
+      window.MIP.viewer.open(base.url + 'orderdetail.jsp?id=' + orderId)
     },
     cancelOrder (order, index) {
       let orderId = order.orderNumber || ''
@@ -200,6 +204,7 @@ export default {
         return
       }
       let _this = this
+      this.currentOrderId = order.orderId
       fetch(base.api.cancelOrder, {
         method: 'POST',
         headers: {
@@ -207,7 +212,8 @@ export default {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          orderNumber: orderId
+          orderNumber: orderId,
+          token: base.getQueryString('token') || base.getToken()
         })
       })
         .then(function (response) {
@@ -215,10 +221,14 @@ export default {
           response.json().then(function (data) {
             // 判断如果取消成功了，需要重新渲染数据。修改allOrderList和unpaiyList对应的数据。
             _this.allOrderList.forEach(function (value, key) {
-              value.orderStatus = data.orderStatus
+              if (_this.currentOrderId === value.orderId) {
+                value.orderStatus = data.orderStatus
+              }
             })
             _this.unpaiyList.forEach(function (value, key) {
-              value.orderStatus = data.orderStatus
+              if (_this.currentOrderId === value.orderId) {
+                value.orderStatus = data.orderStatus
+              }
             })
           })
         })

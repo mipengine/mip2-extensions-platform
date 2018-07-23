@@ -36,18 +36,21 @@ export default {
   },
   computed: {
   },
-  mounted () {},
+  mounted () {
+    base.setToken(base.getQueryString('token'))
+  },
   methods: {
     goEvaluate (order) {
+      let goodsId = order.goodsId || ''
       let orderId = order.orderNumber || ''
-      window.MIP.viewer.open('evaluate.jsp?orderId=' + orderId)
+      window.MIP.viewer.open(base.url + 'Order/toEvaluate?id=' + goodsId + '&orderId=' + orderId)
     },
     goStudy (order) {
       window.top.location.href = order.url
     },
     goPay (order) {
-      let goodsId = order.goodsId || ''
-      window.MIP.viewer.open('payorder.jsp?goodsId=' + goodsId)
+      let orderId = order.orderNumber || ''
+      window.MIP.viewer.open(base.url + 'Order/toEvaluate?orderId=' + orderId)
     },
     cancelOrder (order) {
       let orderId = order.orderNumber || ''
@@ -61,13 +64,14 @@ export default {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          orderNumber: orderId
+          orderNumber: orderId,
+          token: base.getQueryString('token') || base.getToken()
         })
       })
         .then(function (response) {
           // 获得后台实际返回的内容
           response.json().then(function (data) {
-            window.MIP.viewer.open('orderlist.jsp')
+            window.MIP.viewer.open(base.url + 'Order/orderList?token=' + base.getToken())
           })
         })
         .catch(function (err) {

@@ -72,7 +72,9 @@ export default {
       }
     }
   },
-  mounted () {},
+  mounted () {
+    base.setToken(base.getQueryString('token'))
+  },
   methods: {
     comitEvaluate () {
       let _this = this
@@ -125,7 +127,8 @@ export default {
                 ScoreItemID: 6
               }
             ]
-          }
+          },
+          token: base.getQueryString('token') || base.getToken()
         })
       })
         .then(function (response) {

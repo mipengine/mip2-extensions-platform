@@ -19,5 +19,13 @@ export default ({
     } else {
       return null
     }
+  },
+  getToken: function () {
+    return window.localStorage.getItem('mip.wangxiao.token') || ''
+  },
+  setToken: function (token) {
+    if (token) {
+      window.localStorage.setItem('mip.wangxiao.token', token)
+    }
   }
 })
