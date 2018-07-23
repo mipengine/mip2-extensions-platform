@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper"></div>
+  <div class="wrapper" />
 </template>
 
 <style scoped>
@@ -18,7 +18,7 @@ export default {
   /**
    * Control whether the MIPElement is rendred ahead.
    *
-   * @return {boolean} If the result is TRUE, the element will be rendred ahead.
+   * @returns {boolean} If the result is TRUE, the element will be rendred ahead.
    */
   prerenderAllowed () {
     return true
@@ -67,7 +67,7 @@ export default {
           ? document.body.clientHeight
           : document.documentElement.clientHeight
 
-        bodyPaddingTop = bodyPaddingTop || parseInt   (css(body, 'paddingTop'), 10)
+        bodyPaddingTop = bodyPaddingTop || parseInt(css(body, 'paddingTop'), 10)
         let scrollTop = body.scrollTop || rect.getScrollTop()
         let scrollHeight = rect.getElementRect(scrollaBoundaryTouch).height + bodyPaddingTop
 
