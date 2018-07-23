@@ -72,7 +72,7 @@ export default {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        id: base.getQueryString('goodsId')
+        id: base.getQueryString('id')
       })
     })
       .then(function (response) {
