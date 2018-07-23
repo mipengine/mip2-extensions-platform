@@ -10,7 +10,8 @@
         <div
           v-for="(allOrder,index) in allOrderList"
           :key="index"
-          class="order-course-scoped">
+          class="order-course-scoped"
+          @click.stop="goOrderDetail(allOrder,index)">
           <div class="br"/>
           <div class="order-title-content">
             <p class="order-num">订单编号：{{ allOrder.orderNumber }}</p>
@@ -39,19 +40,19 @@
             <span
               v-show="allOrder.evaluate === 0"
               class="order-btn"
-              @click="goEvaluate(allOrder,index)">去评价</span>
+              @click.stop="goEvaluate(allOrder,index)">去评价</span>
             <span
               v-show="allOrder.payStatus === 0"
               class="order-btn"
-              @click="cancelOrder(allOrder,index)">取消订单</span>
+              @click.stop="cancelOrder(allOrder,index)">取消订单</span>
             <span
               v-show="allOrder.payStatus === 1"
               class="order-btn order-btn-red"
-              @click="goStudy(allOrder,index)">去学习</span>
+              @click.stop="goStudy(allOrder,index)">去学习</span>
             <span
               v-show="allOrder.payStatus === 0"
               class="order-btn order-btn-red"
-              @click="goPay(allOrder,index)">去付款</span>
+              @click.stop="goPay(allOrder,index)">去付款</span>
           </div>
         </div>
       </div>
@@ -59,7 +60,8 @@
         <div
           v-for="(unpaiyOrder,index) in unpaiyList"
           :key="index"
-          class="order-course-scoped">
+          class="order-course-scoped"
+          @click.stop="goOrderDetail(unpaiyOrder,index)">
           <div class="br"/>
           <div class="order-title-content">
             <p class="order-num">订单编号：{{ unpaiyOrder.orderNumber }}</p>
@@ -88,11 +90,11 @@
             <span
               v-show="unpaiyOrder.payStatus === 0"
               class="order-btn"
-              @click="cancelOrder(unpaiyOrder,index)">取消订单</span>
+              @click.stop="cancelOrder(unpaiyOrder,index)">取消订单</span>
             <span
               v-show="unpaiyOrder.payStatus === 0"
               class="order-btn order-btn-red"
-              @click="goPay(unpaiyOrder,index)">去付款</span>
+              @click.stop="goPay(unpaiyOrder,index)">去付款</span>
           </div>
         </div>
       </div>
@@ -100,7 +102,8 @@
         <div
           v-for="(paiyOrder,index) in paiyList"
           :key="index"
-          class="order-course-scoped">
+          class="order-course-scoped"
+          @click.stop="goOrderDetail(unpaiyOrder,index)">
           <div class="br"/>
           <div class="order-title-content">
             <p class="order-num">订单编号：{{ paiyOrder.orderNumber }}</p>
@@ -129,11 +132,11 @@
             <span
               v-show="paiyOrder.evaluate === 0"
               class="order-btn"
-              @click="goEvaluate(paiyOrder,index)">去评价</span>
+              @click.stop="goEvaluate(paiyOrder,index)">去评价</span>
             <span
               v-show="paiyOrder.payStatus === 1"
               class="order-btn order-btn-red"
-              @click="goStudy(paiyOrder,index)">去学习</span>
+              @click.stop="goStudy(paiyOrder,index)">去学习</span>
           </div>
         </div>
       </div>
@@ -178,14 +181,18 @@ export default {
   methods: {
     goEvaluate (order, index) {
       let orderId = order.orderNumber || ''
-      window.MIP.viewer('evaluate.jsp?orderId=' + orderId)
+      window.MIP.viewer.open('evaluate.jsp?orderId=' + orderId)
     },
     goStudy (order, index) {
       window.top.location.href = order.url
     },
     goPay (order, index) {
       let goodsId = order.goodsId || ''
-      window.MIP.viewer('payorder.jsp?goodsId=' + goodsId)
+      window.MIP.viewer.open('payorder.jsp?goodsId=' + goodsId)
+    },
+    goOrderDetail (order) {
+      let orderId = order.orderNumber || ''
+      window.MIP.viewer.open('orderdetail.jsp?orderId=' + orderId)
     },
     cancelOrder (order, index) {
       let orderId = order.orderNumber || ''
