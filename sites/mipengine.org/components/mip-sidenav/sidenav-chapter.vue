@@ -4,10 +4,10 @@
       <a
         v-if="level !== 0"
         :key="item.text"
-        :class="{selected: active === item.text}"
+        :class="{selected: active === item.hash}"
         :href="item.hash"
         class="chapter-title"
-        @click.stop="select(item.text)"
+        @click.stop="select(item.hash)"
       >
         <div v-html="item.text"/>
       </a>

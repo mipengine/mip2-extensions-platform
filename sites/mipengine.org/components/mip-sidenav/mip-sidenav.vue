@@ -51,7 +51,7 @@ export default {
   },
   data () {
     return {
-      activeChapter: ''
+      activeChapter: decodeURIComponent(location.hash) || ''
     }
   },
   methods: {
