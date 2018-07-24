@@ -114,12 +114,12 @@
               @change="changeZ" >
             <mip-img
               class="id_photo_z"
-              src="/i/camera_.png"
+              src="https://mip.putibaby.com/i/camera_.png"
               @click="fileSelectZ"/>
             <mip-img
               :class="{'show_opacity':show_z}"
               class="id_photo_zz"
-              src="/i/id_card_z.png"/>
+              src="https://mip.putibaby.com/i/id_card_z.png"/>
             <mip-img
               :src="contract_mama_id_card_zheng"
               :class="{'show_zheng':show_z}"
@@ -142,12 +142,12 @@
 
             <mip-img
               class="id_photo_f"
-              src="/i/camera_.png"
+              src="https://mip.putibaby.com/i/camera_.png"
               @click="fileSelectF"/>
             <mip-img
               :class="{'show_opacity':show_f}"
               class="id_photo_ff"
-              src="/i/id_card_f.png"/>
+              src="https://mip.putibaby.com/i/id_card_f.png"/>
             <mip-img
               :src="contract_mama_id_card_fan"
               :class="{'show_fan':show_f}"
@@ -249,7 +249,9 @@
       </div>
 
       <div class="other_info">
-        <a :href="to_contract_skill_req">
+        <a
+          :href="to_contract_skill_req"
+          mip-link>
           <div class="row">
             <div class="left">服务项目</div>
             <div class="extra_text">
@@ -267,7 +269,9 @@
           </div>
         </a>
         <div class="line"/>
-        <a :href="to_contract_extra">
+        <a
+          :href="to_contract_extra"
+          mip-link>
           <div class="row">
             <div class="left">补充条款</div>
             <div
@@ -1454,7 +1458,8 @@ export default {
     contractDetail () {
       var id = this.order.id
       var url = '/v2_show_ptg_ys_full_contract?id=' + id
-      window.location.href = url
+      // window.location.href = url
+      window.MIP.viewer.open('https://mip.putibaby.com' + url, {})
     },
 
     handleSubmit_ (data, skip) {
@@ -1502,7 +1507,8 @@ export default {
           },
           function (isOk, res) {
             if (isOk) {
-              window.location.href = 'https://mip.putibaby.com/order_list'
+              // window.location.href = 'https://mip.putibaby.com/order_list'
+              window.MIP.viewer.open('https://mip.putibaby.com/order_list', {})
               return
             } else {
               self.err_message = '提交失败请重试'

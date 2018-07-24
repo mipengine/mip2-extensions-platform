@@ -24,7 +24,7 @@
             width="12"
             height="12"
             class="iconStar"
-            src="/i/select_master_star.png" />
+            src="https://mip.putibaby.com/i/select_master_star.png" />
           <mip-img
             v-for="(item, index) in fav.master.star_0_list"
             :key="index"
@@ -32,7 +32,7 @@
             width="12"
             height="12"
             class="iconStar"
-            src="/i/select_master_unstar.png" />
+            src="https://mip.putibaby.com/i/select_master_unstar.png" />
         </p>
         <div class="price">￥{{ fav.master.price.ptg_price/100 }}</div>
         <div class="info">
