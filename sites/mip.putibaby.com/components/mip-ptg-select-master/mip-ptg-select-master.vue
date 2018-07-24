@@ -1001,7 +1001,7 @@
           :key="m.id">
           <div class="masterCard">
             <a
-              :href="'https://mip.putibaby.com/master_card?mcode='+m.id"
+              :href="'master_card?mcode='+m.id"
               mip-link>
               <div class="div-padding">
                 <mip-img

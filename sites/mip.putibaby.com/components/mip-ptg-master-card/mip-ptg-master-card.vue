@@ -28,7 +28,7 @@
           </div>
           <div class="renZheng">
             <a
-              href="https://mip.putibaby.com/service_intro"
+              href="service_intro"
               mip-link>
               <span v-if="data.info.certificated">
                 <mip-img
@@ -39,7 +39,7 @@
               </span>
             </a>
             <a
-              href="https://mip.putibaby.com/service_intro"
+              href="service_intro"
               mip-link>
               <span v-if="data.info.market_certificated">
                 <mip-img
@@ -50,14 +50,14 @@
               </span>
             </a>
             <a
-              :href="'https://mip.putibaby.com/master_intro_detail?u='+data.info.username"
+              :href="'master_intro_detail?u='+data.info.username"
               mip-link>
               <div class="details">基本资料详情</div>
             </a>
             <a
               v-if="data.info.is_credited"
               class="yinzhang_a"
-              href="https://mip.putibaby.com/service_intro"
+              href="service_intro"
               mip-link/>
             <mip-img
               v-if="data.info.is_credited"
@@ -106,7 +106,7 @@
         v-if="data.info.offer_service"
         class="serverCard">
         <a
-          :href="'https://mip.putibaby.com/skill_details?u=' + data.info.username"
+          :href="'skill_details?u=' + data.info.username"
           mip-link>
           <div class="sC_head">
             <mip-img
@@ -138,7 +138,7 @@
         v-if="data.info.price_yuer.market_price > 0 || data.info.price_yuer.market_halfday_price > 0"
         class="serverCard">
         <a
-          :href="'https://mip.putibaby.com/skill_details?is_yuer=1&u=' + data.info.username"
+          :href="'skill_details?is_yuer=1&u=' + data.info.username"
           mip-link>
           <div class="sC_head">
             <mip-img
@@ -197,7 +197,7 @@
 
       <div class="pingJiaCard">
         <a
-          :href="'https://mip.putibaby.com/master_shanghu_detail?u=' + data.info.username"
+          :href="'master_shanghu_detail?u=' + data.info.username"
           mip-link>
           <div class="pJC_head">
             <mip-img
