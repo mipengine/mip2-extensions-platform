@@ -179,10 +179,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -250,7 +247,7 @@ export default {
 
     handleBtn (fav) {
       // window.location.href = '/master_card?mcode=' + fav.master.mcode;
-      window.MIP.viewer.open('https://mip.putibaby.com/master_card?mcode=' + fav.master.mcode, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/master_card?mcode=' + fav.master.mcode), {})
     }
 
   }
