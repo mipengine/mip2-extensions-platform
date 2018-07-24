@@ -70,11 +70,9 @@ function genPreviewPage () {
     })
 
   // 进行站点、组件分类、替换等
-  let sites = []
+  let componentListDom = []
   fs.readdirSync(examplesPath).forEach(site => {
-    let components = []
-
-    fs.readdirSync(path.join(examplesPath, site)).forEach(comp => {
+    fs.readdirSync(path.join(examplesPath, site)).forEach((comp, index) => {
       // example dir may contains multiple pages
       let examplePaths = []
       glob.sync('*.html', {cwd: path.resolve(examplesPath, site, comp)})
@@ -82,29 +80,15 @@ function genPreviewPage () {
           let htmlEgPath = path.join('examples', `${site}/${comp}/${file}`)
           examplePaths.push(htmlEgPath)
 
-          // 替换组件 js 引用路径，加上 site
+          // 替换组件 js 引用路径，加上 site 前缀
           let curFile = path.resolve(examplesPath, site, comp, file)
           let result = fs.readFileSync(curFile, 'utf8').replace(/(src="\/)(mip-(.+)\/mip-(.+).js")/g, `$1${site}/$2`)
           fs.writeFileSync(curFile, result, 'utf8')
         })
 
-      components.push({
-        siteName: site,
-        name: comp,
-        sourcePath: path.join(site, comp, `${comp}.js`),
-        examplePaths
-      })
-    })
-
-    sites.push(components)
-  })
-
-  let componentListDom = []
-  sites.forEach(site => {
-    site.forEach((comp, index) => {
-      const exampleLinksDom = comp.examplePaths.map(path => `<a href="${path}" target="_blank">示例</a>`).join('')
-      let siteTitle = index === 0 ? `<h2>${comp.siteName}</h2>` : ''
-      componentListDom.push(`${siteTitle}<li><b>${comp.name}</b><a href="${comp.sourcePath}" target="_blank">源码</a>${exampleLinksDom}</li>`)
+      const exampleLinksDom = examplePaths.map(path => `<a href="${path}" target="_blank">示例</a>`).join('')
+      let siteTitle = index === 0 ? `<h2>${site}</h2>` : ''
+      componentListDom.push(`${siteTitle}<li><b>${comp}</b><a href="${path.join(site, comp, `${comp}.js`)}" target="_blank">源码</a>${exampleLinksDom}</li>`)
     })
   })
 
