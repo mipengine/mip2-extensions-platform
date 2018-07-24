@@ -13,25 +13,26 @@ const Cookie = {
    * @param path {string}
    * @param secure {bool}
    */
-  set : function (name, value, expires, domain, path='/', secure) {
-    let cookieText = "";
-    cookieText += encodeURIComponent(name) + "=" + encodeURIComponent(value);
+
+  set: function (name, value, expires, domain, path = '/', secure) {
+    let cookieText = ''
+    cookieText += encodeURIComponent(name) + '=' + encodeURIComponent(value)
     if (expires instanceof Date) {
-      cookieText += "; expires=" + expires.toGMTString();
-    }else{
-      let _expires = new Date(+new Date() + expires);
-      cookieText += "; expires=" + _expires.toGMTString();
+      cookieText += '; expires=' + expires.toGMTString()
+    } else {
+      let _expires = new Date(+new Date() + expires)
+      cookieText += '; expires=' + _expires.toGMTString()
     }
     if (path) {
-      cookieText += "; path=" + path;
+      cookieText += '; path=' + path
     }
     if (domain) {
-      cookieText += "; domain=" + domain;
+      cookieText += '; domain=' + domain
     }
     if (secure) {
-      cookieText += "; secure";
+      cookieText += '; secure'
     }
-    document.cookie = cookieText;
+    document.cookie = cookieText
   },
 
   /**
@@ -39,12 +40,15 @@ const Cookie = {
    * @param name {string}
    * @returns {string}
    */
-  get : function (name) {
-    var arr,reg=new RegExp("(^| )"+encodeURIComponent(name) +"=([^;]*)(;|$)");
-    if(arr=document.cookie.match(reg)) {
-      return decodeURIComponent(arr[2]);
+
+  get: function (name) {
+    let arr
+    let reg = new RegExp('(^| )' + encodeURIComponent(name) + '=([^;]*)(;|$)')
+    arr = document.cookie.match(reg)
+    if (arr) {
+      return decodeURIComponent(arr[2])
     } else {
-      return null;
+      return null
     }
   },
   /**
@@ -54,10 +58,10 @@ const Cookie = {
    * @param path
    * @param secure
    */
-  del : function (name, domain, path, secure) {
-    this.set(name, "", 0, domain, path, secure);
+
+  del: function (name, domain, path, secure) {
+    this.set(name, '', 0, domain, path, secure)
   }
-};
+}
 
-export default Cookie;
-
+export default Cookie

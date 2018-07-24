@@ -12,9 +12,9 @@
     </div>
 </template>
 <script>
-import Request from "../../common/request.js";
-import config from "../../config.js";
-const baseUrl = config[config.env]["baseUrl"]; // 获取当前环境下的baseUrl
+import Request from "../../common/request.js"
+import config from "../../config.js"
+const baseUrl = config[config.env]["baseUrl"] // 获取当前环境下的baseUrl
 export default {
   data: () => ({
     categoryList: [],
@@ -36,7 +36,7 @@ export default {
       console.warn(e);
       return false;
     }
-    this.categoryList = res;
+    this.categoryList = res
   }
 };
 </script>
