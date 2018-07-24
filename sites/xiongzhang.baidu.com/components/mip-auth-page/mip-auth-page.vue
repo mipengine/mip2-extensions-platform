@@ -12,13 +12,14 @@
 
 <script>
 
-import {getQuery, getUUID, getRedirectUrl} from './util'
+import {getQuery, getUUID, getRedirectUrl, log} from './util'
 
 export default {
   data () {
     /* eslint-disable */
     let redirect_uri = getQuery('redirect_uri')
     let client_id = getQuery('client_id')
+    let xzh_id = getQuery('appid')
 
 
     let uuid = getUUID()
@@ -33,6 +34,7 @@ export default {
       config: {
         redirect_uri,
         client_id,
+        xzh_id,
         state,
         uuid
       },
@@ -49,6 +51,8 @@ export default {
   },
   created () {
     this.checkConfig()
+    // 发送打点pv
+    log('auth_page', this.config.xzh_id)
   },
   mounted () {
     window.addEventListener('message', this.onmessage, false)
@@ -104,10 +108,28 @@ export default {
 
         let hash = config.state.h || ''
 
-        window.MIP.viewer.open(
-          getRedirectUrl(config.state.url || config.redirect_uri, obj, decodeURIComponent(hash)),
-          {isMipLink: true, replace: true}
-        )
+        // 判断如果是在SF里广播事件，并且返回原页面
+        if (!window.MIP.standalone && config.state.back) {
+          window.MIP.viewer.page.broadcastCustomEvent({
+            name: 'inservice-auth-logined',
+            data: {
+              code: obj.code,
+              origin: config.state.origin,
+              callbackurl: config.state.url
+            }
+          })
+          window.MIP.viewer.page.back()
+        } else {
+          // 否则
+          window.MIP.viewer.open(
+            getRedirectUrl(config.state.url || config.redirect_uri, obj, decodeURIComponent(hash)),
+            {isMipLink: true, replace: true}
+          )
+        }
+      } else if (type === 'oauth-iframe-log') {
+        /* eslint-disable */
+        log(value.action, config.xzh_id)
+        /* eslint-enable */
       }
     }
   }
