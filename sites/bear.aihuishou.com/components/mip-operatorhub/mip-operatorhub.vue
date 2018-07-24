@@ -1,34 +1,45 @@
 <template>
-    <div class="com-home-operatorhub-container">
-        <div class="title">回收工具</div>
-        <div class="operator-wrapper">
-            <a :href="[baseUrl+'/account/login']" data-type="mip" class="operator-item">
-                <span class="iconfont icon-gerenzhongxin"></span>
-                <p>个人中心</p>
-            </a>
-            <a :href="[baseUrl+'/order']" data-type="mip" class="operator-item">
-                <span class="iconfont icon-huishouliucheng1"></span>
-                <p>回收订单</p>
-            </a>
-            <a :href="[baseUrl+'/product']" class="operator-item">
-                <span class="iconfont icon-shebeigujia"></span>
-                <p>免费估价</p>
-            </a>
-            <a :href="[baseUrl+'/help/commonquestion']" data-type="mip" class="operator-item">
-                <span class="iconfont icon-changjianwenti1"></span>
-                <p>帮助中心</p>
-            </a>
-        </div>
+  <div class="com-home-operatorhub-container">
+    <div class="title">回收工具</div>
+    <div class="operator-wrapper">
+      <a
+        :href="[baseUrl+'/account/login']"
+        data-type="mip"
+        class="operator-item">
+        <span class="iconfont icon-gerenzhongxin">&nbsp;</span>
+        <p>个人中心</p>
+      </a>
+      <a
+        :href="[baseUrl+'/order']"
+        data-type="mip"
+        class="operator-item">
+        <span class="iconfont icon-huishouliucheng1">&nbsp;</span>
+        <p>回收订单</p>
+      </a>
+      <a
+        :href="[baseUrl+'/product']"
+        class="operator-item">
+        <span class="iconfont icon-shebeigujia">&nbsp;</span>
+        <p>免费估价</p>
+      </a>
+      <a
+        :href="[baseUrl+'/help/commonquestion']"
+        data-type="mip"
+        class="operator-item">
+        <span class="iconfont icon-changjianwenti1">&nbsp;</span>
+        <p>帮助中心</p>
+      </a>
     </div>
+  </div>
 </template>
 <script>
-import config from "../../config.js";
-const baseUrl = config[config.env]["baseUrl"]; // 获取当前环境下的baseUrl
+import config from '../../config.js'
+const baseUrl = config[config.env]['baseUrl'] // 获取当前环境下的baseUrl
 export default {
   data: () => ({
-      baseUrl
+    baseUrl
   })
-};
+}
 </script>
 <style lang="less" scoped>
 @import "../../styles/index.less";
@@ -56,4 +67,3 @@ export default {
   }
 }
 </style>
-

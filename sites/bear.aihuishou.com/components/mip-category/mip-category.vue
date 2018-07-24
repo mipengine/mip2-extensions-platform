@@ -1,44 +1,49 @@
 <template>
-    <div class="comp-home-category-container">
-        <template v-if="categoryLength">
-            <div class="title">您可以卖</div>
-            <div class="category-wrapper">
-              <a :href="[baseUrl+'/product?cid='+category.id]" data-type="mip" v-for="category in categoryList" :key="category.id" class="category-item">
-                <div :class="['img-box',`img-box--${category.id}`]"></div>
-                <span class="name">{{category.name}}</span>
-              </a>
-            </div>
-        </template>
-    </div>
+  <div class="comp-home-category-container">
+    <template v-if="categoryLength">
+      <div class="title">您可以卖</div>
+      <div class="category-wrapper">
+        <a
+          v-for="category in categoryList"
+          :key="category.id"
+          :href="[baseUrl+'/product?cid='+category.id]"
+          data-type="mip"
+          class="category-item">
+          <div :class="['img-box',`img-box--${category.id}`]">&nbsp;</div>
+          <span class="name">{{ category.name }}</span>
+        </a>
+      </div>
+    </template>
+  </div>
 </template>
 <script>
-import Request from "../../common/request.js"
-import config from "../../config.js"
-const baseUrl = config[config.env]["baseUrl"] // 获取当前环境下的baseUrl
+import Request from '../../common/request.js'
+import config from '../../config.js'
+const baseUrl = config[config.env]['baseUrl'] // 获取当前环境下的baseUrl
 export default {
   data: () => ({
     categoryList: [],
     baseUrl
   }),
   computed: {
-    categoryLength() {
-      return this.categoryList.length;
+    categoryLength () {
+      return this.categoryList.length
     }
   },
-  async mounted() {
+  async mounted () {
     const opts = {
-      url: "/v1/current_app/categories"
-    };
-    let res = null;
+      url: '/v1/current_app/categories'
+    }
+    let res = null
     try {
-      res = await Request(opts);
+      res = await Request(opts)
     } catch (e) {
-      console.warn(e);
-      return false;
+      console.warn(e)
+      return false
     }
     this.categoryList = res
   }
-};
+}
 </script>
 <style lang="less" scoped>
 @import (reference) "../../styles/index.less";

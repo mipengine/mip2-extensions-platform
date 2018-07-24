@@ -1,19 +1,22 @@
 <template>
-    <div class="comp-home-salebtn-container">
-        <a :href="[baseUrl+'/product']" data-type="mip" class="sale-btn">
-            {{text}}
-        </a>
-    </div>
+  <div class="comp-home-salebtn-container">
+    <a
+      :href="[baseUrl+'/product']"
+      data-type="mip"
+      class="sale-btn">
+      {{ text }}
+    </a>
+  </div>
 </template>
 <script>
-import config from "../../config.js";
-const baseUrl = config[config.env]["baseUrl"]; // 获取当前环境下的baseUrl
+import config from '../../config.js'
+const baseUrl = config[config.env]['baseUrl'] // 获取当前环境下的baseUrl
 export default {
   data: () => ({
-    text: "免费估价",
+    text: '免费估价',
     baseUrl
   })
-};
+}
 </script>
 <style lang="less" scoped>
 @import (reference) "../../styles/index.less";
@@ -32,4 +35,3 @@ export default {
   }
 }
 </style>
-

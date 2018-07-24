@@ -1,12 +1,12 @@
 <template>
-    <div class="comp-home-process-container">
-        <div class="img"></div>
-    </div>
+  <div class="comp-home-process-container">
+    <div class="img">&nbsp;</div>
+  </div>
 </template>
 <script>
 export default {
   data: () => ({})
-};
+}
 </script>
 <style lang="less" scoped>
 @import "../../styles/index.less";
@@ -18,5 +18,3 @@ export default {
   }
 }
 </style>
-
-
