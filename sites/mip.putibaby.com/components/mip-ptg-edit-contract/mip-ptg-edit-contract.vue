@@ -994,7 +994,7 @@ API.wrapRet_ = function (api, opts, fn) {
 }
 API.ajaxContract = function (orderId, readonly, fn) {
   API.wrapRet_(
-    '/api/ajax_contract', {
+    'https://mip.putibaby.com/api/ajax_contract', {
       'id': orderId,
       'readonly': readonly ? 1 : 0
     }, fn)
@@ -1002,7 +1002,7 @@ API.ajaxContract = function (orderId, readonly, fn) {
 
 API.uploadFile = function (data, fn) {
   API.wrapRet_(
-    '/api/upload_image', {
+    'https://mip.putibaby.com/api/upload_image', {
       'data': data,
       'target': 'media/image-[md5].jpg'
     },
@@ -1415,7 +1415,7 @@ export default {
       localStorage.State = JSON.stringify(this._data)
       console.log('odj', obj)
       API.wrapRet_(
-        '/api/set_contract', obj,
+        'https://mip.putibaby.com/api/set_contract', obj,
         function (isOk, res) {
           if (isOk) {
             console.log(res)
@@ -1502,7 +1502,7 @@ export default {
         console.log(skip)
         API.wrapRet_(
 
-          '/api/submit_contract', {
+          'https://mip.putibaby.com/api/submit_contract', {
             'id': this.order.id
           },
           function (isOk, res) {

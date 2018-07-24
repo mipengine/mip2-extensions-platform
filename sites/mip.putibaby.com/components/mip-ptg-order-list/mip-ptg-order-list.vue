@@ -344,13 +344,13 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.ajaxOrderList = function (obj, fn) {
   API.wrapRet_(
-    '/api/ajax_order_list', obj,
+    'https://mip.putibaby.com/api/ajax_order_list', obj,
     fn)
 }
 
 API.rejectInterview = function (orderId, fn) {
   API.wrapRet_(
-    '/api/reject_interview', {
+    'https://mip.putibaby.com/api/reject_interview', {
       'id': orderId
     },
     fn)
@@ -358,7 +358,7 @@ API.rejectInterview = function (orderId, fn) {
 
 API.zjqd = function (masterId, masterType, fn) {
   API.wrapRet_(
-    '/api/zjqd', {
+    'https://mip.putibaby.com/api/zjqd', {
       'master_id': masterId,
       'master_type': masterType
     },
@@ -367,7 +367,7 @@ API.zjqd = function (masterId, masterType, fn) {
 
 API.changeToContract = function (orderId, fn) {
   API.wrapRet_(
-    '/api/change_to_contract', {
+    'https://mip.putibaby.com/api/change_to_contract', {
       'id': orderId
     },
     fn)
@@ -375,7 +375,7 @@ API.changeToContract = function (orderId, fn) {
 
 API.hideFinishedOrder = function (orderId, fn) {
   API.wrapRet_(
-    '/api/hide_finished_order', {
+    'https://mip.putibaby.com/api/hide_finished_order', {
       'id': orderId
     },
     fn)
@@ -383,7 +383,7 @@ API.hideFinishedOrder = function (orderId, fn) {
 
 API.doShanghu = function (orderId, fn) {
   API.wrapRet_(
-    '/api/do_shanghu', {
+    'https://mip.putibaby.com/api/do_shanghu', {
       'id': orderId
     },
     fn)

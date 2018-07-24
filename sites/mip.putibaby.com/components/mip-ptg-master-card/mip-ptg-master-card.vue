@@ -958,7 +958,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.getMasterInfo = function (masterId, fn) {
   API.wrapRet_(
-    '/api/get_master_info_for_me',
+    'https://mip.putibaby.com/api/get_master_info_for_me',
     {
       'master_id': masterId
     },
@@ -967,7 +967,7 @@ API.getMasterInfo = function (masterId, fn) {
 
 API.favMaster = function (masterId, fn) {
   API.wrapRet_(
-    '/api/fav_master',
+    'https://mip.putibaby.com/api/fav_master',
     {
       'master_id': masterId
     },
@@ -976,7 +976,7 @@ API.favMaster = function (masterId, fn) {
 
 API.unfavMaster = function (masterId, fn) {
   API.wrapRet_(
-    '/api/unfav_master',
+    'https://mip.putibaby.com/api/unfav_master',
     {
       'master_id': masterId
     }, fn)
