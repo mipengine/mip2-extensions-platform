@@ -1459,7 +1459,7 @@ export default {
       var id = this.order.id
       var url = '/v2_show_ptg_ys_full_contract?id=' + id
       // window.location.href = url
-      window.MIP.viewer.open('https://mip.putibaby.com' + url, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com' + url), {})
     },
 
     handleSubmit_ (data, skip) {
@@ -1508,7 +1508,7 @@ export default {
           function (isOk, res) {
             if (isOk) {
               // window.location.href = 'https://mip.putibaby.com/order_list'
-              window.MIP.viewer.open('https://mip.putibaby.com/order_list', {})
+              window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
               return
             } else {
               self.err_message = '提交失败请重试'

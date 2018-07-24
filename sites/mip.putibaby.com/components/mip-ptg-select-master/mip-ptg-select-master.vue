@@ -1809,17 +1809,17 @@ export default {
 
       if (event.userInfo.isUnion && origin === 'order_list') {
         console.log('logindone to order_list')
-        window.MIP.viewer.open('https://mip.putibaby.com/order_list', {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
       } else if (event.userInfo.isUnion && origin === 'coupon') {
         console.log('logindone to coupon')
-        window.MIP.viewer.open('https://mip.putibaby.com/coupon', {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/coupon'), {})
       } else if (event.userInfo.isUnion && origin === 'update_ycq') {
         console.log('logindone to update_ycq')
-        window.MIP.viewer.open('https://mip.putibaby.com/update_ycq', {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq'), {})
       } else if (!event.userInfo.isUnion && origin) {
         console.log('logindone to submit_ph')
         var to = '/' + origin
-        window.MIP.viewer.open('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to), {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
       }
     })
 
@@ -1930,7 +1930,7 @@ export default {
       }
       if (!this.isUnion) {
         var to = '/' + cmd
-        window.MIP.viewer.open('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to), {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
 
         return false
       }
@@ -1942,12 +1942,12 @@ export default {
       if (!this.checkLogin_('update_ycq')) {
         return
       }
-      window.MIP.viewer.open('https://mip.putibaby.com/update_ycq ', {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq '), {})
     },
     handleOrderList () {
       console.log('handleOrderList')
       if (!this.checkLogin_('order_list')) { return }
-      window.MIP.viewer.open('https://mip.putibaby.com/order_list ', {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list '), {})
     },
     load_data () {
       console.log('should set data')

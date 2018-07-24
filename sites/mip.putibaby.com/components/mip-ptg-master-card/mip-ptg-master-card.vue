@@ -1033,16 +1033,16 @@ export default {
         console.log('logindone to update_time')
         API.next_cmd = ''
         sessionStorage.next_cmd = ''
-        window.MIP.viewer.open('https://mip.putibaby.com/update_time_mip?mcode=' + self.data.codeid, {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_time_mip?mcode=' + self.data.codeid), {})
       } else if (event.userInfo.isUnion &&
           (API.next_cmd === 'order_list' || sessionStorage.next_cmd === 'order_list')) {
         console.log('logindone to order_list')
         API.next_cmd = ''
         sessionStorage.next_cmd = ''
-        window.MIP.viewer.open('https://mip.putibaby.com/order_list', {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
       } else if (!event.userInfo.isUnion) {
         console.log('go to submit_ph')
-        window.MIP.viewer.open('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href), {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
       }
 
       API.getMasterInfo(self.data.info.id, function (isOk, data) {
@@ -1085,12 +1085,12 @@ export default {
 
       if (!this.checkLogin_('update_time')) { return }
 
-      window.MIP.viewer.open('https://mip.putibaby.com/update_time_mip?mcode=' + this.data.codeid, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_time_mip?mcode=' + this.data.codeid), {})
     },
     handleOrderList () {
       console.log('handleOrderList')
       if (!this.checkLogin_('order_list')) { return }
-      window.MIP.viewer.open('https://mip.putibaby.com/order_list', {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
     },
     handleFav () {
       console.log('handleFav')

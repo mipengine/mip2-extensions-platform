@@ -439,7 +439,7 @@ export default {
       API.sessionId = event.sessionId
       if (!event.userInfo.isUnion) {
         console.log('logindone to submit_ph')
-        window.MIP.viewer.open('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href), {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
       }
       API.ajaxOrderList({}, function (isOk, res) {
         self.list = res.list
@@ -475,16 +475,16 @@ export default {
     },
     handleBtn (order) {
       // window.location.href = '/master_card?mcode=' + order.master.mcode;
-      window.MIP.viewer.open('https://mip.putibaby.com/master_card?mcode=' + order.master.mcode, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/master_card?mcode=' + order.master.mcode), {})
     },
     handleBtn_tuijian (order) {
       // window.location.href = '/master_card?mcode=' + order.master.mcode;
-      window.MIP.viewer.open('https://mip.putibaby.com/master_card?mcode=' + order.master.mcode, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/master_card?mcode=' + order.master.mcode), {})
     },
 
     handleBtn_shipinyuyue (order) {
       // window.location.href = '/video_interview_master?master_id=' + order.master.id;
-      window.MIP.viewer.open('https://mip.putibaby.com/video_interview_master?master_id=' + order.master.id, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/video_interview_master?master_id=' + order.master.id), {})
     },
     handleBtn_qianyue (order, skip) {
       // window.location.href = '/show_master?u=' + order.master.username;
@@ -511,11 +511,11 @@ export default {
     },
     handleBtn_chakanshipin (order) {
       // window.location.href = '/show_my_qs_list?id=' + order.id;
-      window.MIP.viewer.open('https://mip.putibaby.com/show_my_qs_list?id=' + order.id, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/show_my_qs_list?id=' + order.id), {})
     },
     handleBtn_wodeyuyue (order) {
       // window.location.href = '/show_my_realtime_video_interview?id=' + order.id;
-      window.MIP.viewer.open('https://mip.putibaby.com/show_my_realtime_video_interview?id=' + order.id, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/show_my_realtime_video_interview?id=' + order.id), {})
     },
     handleBtn_buheshi (order, skip) {
       var self = this
@@ -567,15 +567,15 @@ export default {
     },
     handleBtn_nidinghetong (order) {
       // window.location.href = '/edit_contract?id=' + order.id;
-      window.MIP.viewer.open('https://mip.putibaby.com/edit_contract?id=' + order.id, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/edit_contract?id=' + order.id), {})
     },
     handleBtn_chakanhetong (order) {
       // window.location.href = '/edit_contract?id=' + order.id + '&readonly=1';
-      window.MIP.viewer.open('https://mip.putibaby.com/edit_contract?id=' + order.id + '&readonly=1', {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/edit_contract?id=' + order.id + '&readonly=1'), {})
     },
     handleBtn_jiaodingjin (order) {
       // window.location.href = '/pay/v2_do_pay?order_id=' + order.id;
-      window.MIP.viewer.open('https://mip.putibaby.com/pay/v2_do_pay?order_id=' + order.id, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/pay/v2_do_pay?order_id=' + order.id), {})
     },
     handleBtn_shanghu (order, skip) {
       // var self = this;
@@ -613,11 +613,11 @@ export default {
     },
     handleBtn_fukuan (order) {
       // window.location.href = '/pay/v2_do_pay?order_id=' + order.id;
-      window.MIP.viewer.open('https://mip.putibaby.com/pay/v2_do_pay?order_id=' + order.id, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/pay/v2_do_pay?order_id=' + order.id), {})
     },
     handleBtn_xuqian (order) {
       // window.location.href = '/v2_edit_xudan_yuesao_contract?order_id=' + order.id;
-      window.MIP.viewer.open('https://mip.putibaby.com/v2_edit_xudan_yuesao_contract?order_id=' + order.id, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/v2_edit_xudan_yuesao_contract?order_id=' + order.id), {})
     }
   }
 
