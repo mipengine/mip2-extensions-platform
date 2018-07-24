@@ -1,43 +1,20 @@
 <template>
   <div class="wrapper">
-    <div class="top_level_1">
-      <mip-carousel
-        autoplay
-        defer="3000"
-        width="400"
-        height="277"
-        layout="responsive"
-        indicator-id="mip-carousel-example">
-        <mip-img src="/i/b1.png"/>
-        <mip-img src="/i/b2.png"/>
-        <mip-img src="/i/b3.png"/>
-      </mip-carousel>
-      <div class="mip-carousel-indicator-wrapper">
-        <div
-          id="mip-carousel-example"
-          class="mip-carousel-indicatorDot">
-          <div class="mip-carousel-activeitem mip-carousel-indecator-item"/>
-          <div class="mip-carousel-indecator-item"/>
-          <div class="mip-carousel-indecator-item"/>
-          <div class="mip-carousel-indecator-item"/>
-        </div>
-      </div>
+    <slot name="banner" />
+    <div @touchend="handleCoupon">
+      <mip-img src="https://mip.putibaby.com/i/yhq_jt.png"/>
+      <!-- <slot name="yhq" /> -->
     </div>
     <div>
-      <a @click="handleCoupon">
-        <mip-img src="/i/yhq_jt.png"/>
-      </a>
-    </div>
-    <div>
-      <div class="find">
-        <a @click="handleSelectMaster">
-          <mip-img src="/i/find_ys.png"/>
-        </a>
+      <div
+        class="find"
+        @touchend="handleSelectMaster">
+        <!-- <mip&#45;img src="https://mip.putibaby.com/i/find_ys.png"/> -->
       </div>
-      <div class="help">
-        <a @click="handleUpdateYcq">
-          <mip-img src="/i/help_me.png"/>
-        </a>
+      <div
+        class="help"
+        @touchend="handleUpdateYcq">
+        <!-- <mip&#45;img src="https://mip.putibaby.com/i/help_me.png"/> -->
       </div>
     </div>
 
@@ -48,14 +25,14 @@
         class="bottom_left"
         href="tel:4006188835">
         <mip-img
-          src="/i/index_phone.png"
+          src="https://mip.putibaby.com/i/index_phone.png"
           width="132px"
           height="22px"
           class="bottom_left_img"/>
       </a>
-      <a @click="handleOrderList">
+      <a @touchend="handleOrderList">
         <mip-img
-          src="/i/ind_person.png"
+          src="https://mip.putibaby.com/i/ind_person.png"
           width="38px"
           height="25px"
           class="bottom_right_img"/>
@@ -84,6 +61,7 @@
   .top_level_1 {
     width: 100%;
     position: relative;
+    margin-top: 40px;
   }
 
   mip-form form {
@@ -118,11 +96,11 @@
   }
 
   .mip-carousel-indicator-wrapper {
+    display: none;
     text-align: center;
     background-color: rgba(0, 0, 0, .0);
-    position: absolute;
-    top: 130px;
-    left: 190px;
+    left: 44%;
+    bottom: 10px;
   }
 
   .mip-layout-container {
@@ -154,6 +132,7 @@
 
   .find {
     width: 44%;
+    background-size: contain;
     margin-left: 4%;
     margin-right: 2%;
     height: 150px;
@@ -163,6 +142,7 @@
 
   .help {
     width: 44%;
+    background-size: contain;
     margin-left: 2%;
     margin-right: 4%;
     height: 150px;
@@ -272,33 +252,25 @@ export default {
 
       self.$set(self, 'isLogin', true)
       self.$set(self, 'isUnion', event.userInfo.isUnion)
-      var origin = API.next_cmd || event.origin || localStorage.getItem('origin')
+      var origin = API.next_cmd || event.origin
+      // origin = origin || sessionStorage.next_cmd || localStorage.getItem('origin')
+
+      API.next_cmd = ''
+      // sessionStorage.next_cmd = ''
+      // localStorage.clear()
 
       if (event.userInfo.isUnion && origin === 'order_list') {
         console.log('logindone to order_list')
-        console.log(window.MIP)
         window.MIP.viewer.open('https://mip.putibaby.com/order_list', {})
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
-        localStorage.clear()
       } else if (event.userInfo.isUnion && origin === 'coupon') {
         console.log('logindone to coupon')
         window.MIP.viewer.open('https://mip.putibaby.com/coupon', {})
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
-        localStorage.clear()
       } else if (event.userInfo.isUnion && origin === 'update_ycq') {
         console.log('logindone to update_ycq')
         window.MIP.viewer.open('https://mip.putibaby.com/update_ycq', {})
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
-        localStorage.clear()
       } else if (!event.userInfo.isUnion && origin) {
         console.log('logindone to submit_ph')
         var to = '/' + origin
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
-        localStorage.clear()
         window.MIP.viewer.open('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to), {})
       }
     })
@@ -314,9 +286,9 @@ export default {
     checkLogin_ (cmd) {
       if (!this.isLogin) {
         API.next_cmd = cmd
-        sessionStorage.next_cmd = cmd
-        localStorage.setItem('origin', cmd)
-        console.log(cmd)
+        // sessionStorage.next_cmd = cmd
+        // localStorage.setItem('origin', cmd)
+        // console.log(cmd)
         if (cmd === 'coupon') {
           this.$emit('login1')
         } else if (cmd === 'order_list') {
@@ -327,9 +299,6 @@ export default {
         return false
       }
       if (!this.isUnion) {
-        // API.next_cmd = cmd;
-        // sessionStorage.next_cmd = cmd;
-        // localStorage.setItem('origin', cmd);
         var to = '/' + cmd
         window.MIP.viewer.open('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to), {})
 

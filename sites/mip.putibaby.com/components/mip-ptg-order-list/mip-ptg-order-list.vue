@@ -5,11 +5,11 @@
       :key="order.order_number"
       class="row">
       <p class="row_p">
-        <span class="status">
-          {{ order.desc_str }}
-        </span>
         <span class="row_header">
           编号: {{ order.order_number }}
+        </span>
+        <span class="status">
+          {{ order.desc_str }}
         </span>
       </p>
       <div
@@ -33,7 +33,7 @@
             width="12"
             height="12"
             class="iconStar"
-            src="/i/select_master_star.png"/>
+            src="https://mip.putibaby.com/i/select_master_star.png"/>
           <mip-img
             v-for="(item,index) in order.master.star_0_list"
             :key="index"
@@ -41,7 +41,7 @@
             width="12"
             height="12"
             class="iconStar iconStar_no"
-            src="/i/select_master_unstar.png"/>
+            src="https://mip.putibaby.com/i/select_master_unstar.png"/>
 
         </p>
 
@@ -80,10 +80,7 @@
             v-if="order.showBtn_shipinyuyue"
             class="tuijianBtn"
             @click="handleBtn_shipinyuyue(order)">发起视频预约</div>
-          <div
-            v-if="order.showBtn_qianyue"
-            class="tuijianBtn"
-            @click="handleBtn_qianyue(order)">签约</div>
+
           <div
             v-if="order.showBtn_chakanshipin"
             class=""
@@ -105,8 +102,12 @@
             class="tuijianBtn"
             @click="handleBtn_dianhualianxi(order)">电话联系</div>
           <div
-            v-if="order.showBtn_nidinghetong"
+            v-if="true || order.showBtn_lianxikefu"
             class="tuijianBtn"
+            @click="handleBtn_lianxikefu(order)">联系客服</div>
+          <div
+            v-if="order.showBtn_nidinghetong"
+            class="tuijianBtn boldBtn"
             @click="handleBtn_nidinghetong(order)">拟定合同</div>
           <div
             v-if="order.showBtn_chakanhetong"
@@ -114,19 +115,19 @@
             @click="handleBtn_chakanhetong(order)">查看合同</div>
           <div
             v-if="order.showBtn_jiaodingjin"
-            class="tuijianBtn"
+            class="tuijianBtn boldBtn"
             @click="handleBtn_jiaodingjin(order)">交定金</div>
           <div
+            v-if="order.showBtn_qianyue"
+            class="tuijianBtn boldBtn"
+            @click="handleBtn_qianyue(order)">签约</div>
+          <div
             v-if="order.showBtn_shanghu"
-            class="tuijianBtn"
+            class="tuijianBtn boldBtn"
             @click="handleBtn_shanghu(order)">上户</div>
           <div
-            v-if="order.showBtn_lianxikefu"
-            class="tuijianBtn"
-            @click="handleBtn_lianxikefu(order)">联系客服</div>
-          <div
             v-if="order.showBtn_fukuan"
-            class="tuijianBtn"
+            class="tuijianBtn boldBtn"
             @click="handleBtn_fukuan(order)">付款</div>
             <!-- <div class="btn tuijianBtn" v-if="order.showBtn_xuqian" @click="handleBtn_xuqian(order)">续签</div> -->
         </div>
@@ -166,16 +167,23 @@ body {
   border-bottom: 1px solid #f4f4f4;
 }
 
-.row_header {
+.status {
   height: 30px;
   line-height: 30px;
   margin-right: 10px;
-  color: #666;
+  color: #afd03b;
   cursor: pointer;
   float: right;
+  font-size: 15px;
+}
+.row_header {
+  height: 30px;
+  line-height: 30px;
+  padding-left: 10px;
+  color: #666;
+  cursor: pointer;
   font-size: 13px;
 }
-
 .row_footer {
   border-top: 1px solid #f4f4f4;
   background-color: #fff;
@@ -196,14 +204,6 @@ body {
   margin-left:2px;
   float:left;
 }
-.status {
-  height: 30px;
-  line-height: 30px;
-  padding-left: 10px;
-  color: #666;
-  cursor: pointer;
-  font-size: 13px;
-}
 
 .btn_list {
   float: right;
@@ -213,16 +213,19 @@ body {
 .tuijianBtn {
   border: 1px solid #afd03b;
   display: inline-block;
-  border-radius: 3px;
-  height: 13px;
-  line-height: 13px;
-  font-size: 13px;
-  padding: 3px 3px;
+    border-radius: 15px;
+    height: 14px;
+    line-height: 14px;
+    font-size: 14px;
+    padding: 3px 8px;
   margin: 5px 0px 8px 1px;
   color: #afd03b;
   cursor: pointer;
 }
-
+.boldBtn{
+  background-color: #afd03b;
+  color: #fff;
+}
 .info {
   background: #fff;
   position: relative;

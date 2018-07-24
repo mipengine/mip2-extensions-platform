@@ -236,7 +236,7 @@
                         width="12px"
                         height="12px"
                         class="iconStar"
-                        src="/i/select_master_star.png" />
+                        src="https://mip.putibaby.com/i/select_master_star.png" />
 
                       <mip-img
                         v-for="(item,index) in data.shanghu_data.star_0_list"
@@ -245,7 +245,7 @@
                         width="12px"
                         height="12px"
                         class="iconStar"
-                        src="/i/select_master_unstar.png" />
+                        src="https://mip.putibaby.com/i/select_master_unstar.png" />
 
                     </div>
                   </td>
