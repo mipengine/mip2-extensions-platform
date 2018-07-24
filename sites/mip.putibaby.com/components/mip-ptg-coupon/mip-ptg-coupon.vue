@@ -126,7 +126,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.ajaxCoupon = function (opt, fn) {
   API.wrapRet_(
-    '/api/ajax_coupon', opt, fn)
+    'https://mip.putibaby.com/api/ajax_coupon', opt, fn)
 }
 
 export default {

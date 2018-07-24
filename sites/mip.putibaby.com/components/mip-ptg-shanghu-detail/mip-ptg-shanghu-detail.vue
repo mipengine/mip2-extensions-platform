@@ -45,14 +45,14 @@
                     width="12px"
                     height="12px"
                     class="star"
-                    src="/i/star_yellow_2.png"/>
+                    src="https://mip.putibaby.com/i/star_yellow_2.png"/>
                   <mip-img
                     v-else
                     layout="responisve"
                     width="12px"
                     height="12px"
                     class="star"
-                    src="/i/unstar.png"/>
+                    src="https://mip.putibaby.com/i/unstar.png"/>
                 </span>
               </td>
             </tr>
@@ -78,14 +78,14 @@
                     width="12px"
                     height="12px"
                     class="star"
-                    src="/i/star_yellow_2.png"/>
+                    src="https://mip.putibaby.com/i/star_yellow_2.png"/>
                   <mip-img
                     v-else
                     layout="responisve"
                     width="12px"
                     height="12px"
                     class="star"
-                    src="/i/unstar.png"/>
+                    src="https://mip.putibaby.com/i/unstar.png"/>
                 </span>
               </td>
             </tr>
@@ -139,11 +139,11 @@
                   <mip-img
                     v-if="idx <= (f.feedback.total_star||0)"
                     class="star"
-                    src="/i/star_yellow_2.png"/>
+                    src="https://mip.putibaby.com/i/star_yellow_2.png"/>
                   <mip-img
                     v-else
                     class="star"
-                    src="/i/unstar.png"/>
+                    src="https://mip.putibaby.com/i/unstar.png"/>
                 </span>
               </div>
 
@@ -178,7 +178,7 @@
             <mip-img
               layout="responisve"
               style="width:10px;margin-right:5px;"
-              src="/i/fankui.png"/>
+              src="https://mip.putibaby.com/i/fankui.png"/>
             <span style="color:#88bd4e;font-size:14px;">菩提果客服反馈：</span>
             <span style="color:#666666;font-size:14px;">{{ f.feedback.ptg_reply }}</span>
           </div>
@@ -445,7 +445,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.getMasterInfo = function (masterId, fn) {
   API.wrapRet_(
-    '/api/get_master_info_for_me',
+    'https://mip.putibaby.com/api/get_master_info_for_me',
     {
       'master_id': masterId
     },

@@ -424,7 +424,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.getMasterInfo = function (masterId, fn) {
   API.wrapRet_(
-    '/api/get_master_info_for_me', {
+    'https://mip.putibaby.com/api/get_master_info_for_me', {
       'master_id': masterId
     },
     fn)

@@ -365,7 +365,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.update_ycq = function (name, ycq, masterType, fn) {
   API.wrapRet_(
-    '/api/update_ycq', {
+    'https://mip.putibaby.com/api/update_ycq', {
       'name': name,
       'ycq': ycq,
       'masterType': masterType
