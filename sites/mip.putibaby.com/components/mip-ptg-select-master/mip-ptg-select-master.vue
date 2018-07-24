@@ -1650,10 +1650,7 @@ API.wrapRet_ = function (api, opts, fn) {
   console.log('posting to ' + api)
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
