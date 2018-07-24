@@ -1671,7 +1671,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.getSelectMaster = function (filter, fn) {
   API.wrapRet_(
-    '/api/get_select_master', {
+    'https://mip.putibaby.com/api/get_select_master', {
       'filter': filter
     },
     fn)

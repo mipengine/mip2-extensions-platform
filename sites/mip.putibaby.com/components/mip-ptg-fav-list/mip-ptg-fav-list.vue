@@ -199,7 +199,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.ajaxFavList = function (opt, fn) {
   API.wrapRet_(
-    '/api/ajax_fav_list', opt, fn)
+    'https://mip.putibaby.com/api/ajax_fav_list', opt, fn)
 }
 
 export default {

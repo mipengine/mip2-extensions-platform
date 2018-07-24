@@ -248,7 +248,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.sendPhoneNumberVerifySms = function (phoneNumber, fn) {
   API.wrapRet_(
-    '/api/send_sms', {
+    'https://mip.putibaby.com/api/send_sms', {
       'phone_number': phoneNumber
     },
     fn)
@@ -271,7 +271,7 @@ API.sendPhoneNumberVerifySms = function (phoneNumber, fn) {
 //       }
 //       // window.gt_loading = false;
 //       API.wrapRet_(
-//         '/api/send_sms_validate', {
+//         'https://mip.putibaby.com/api/send_sms_validate', {
 //           'phone_number': phoneNumber,
 //           'geetest_challenge': result.geetest_challenge,
 //           'geetest_validate': result.geetest_validate,
@@ -303,7 +303,7 @@ API.sendPhoneNumberVerifySms = function (phoneNumber, fn) {
 
 API.verifyPhoneNumber = function (phoneNumber, sms, fn) {
   API.wrapRet_(
-    '/api/verify_sms', {
+    'https://mip.putibaby.com/api/verify_sms', {
       'phone_number': phoneNumber,
       'sms': sms
     }, fn)

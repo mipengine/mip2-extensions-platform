@@ -230,7 +230,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.saveIt_ = function (opts, fn) {
   API.wrapRet_(
-    '/api/set_contract', {
+    'https://mip.putibaby.com/api/set_contract', {
       'contract_skill_req': opts.contract_skill_req,
       'id': opts.id,
       'order_id': opts.order_id
@@ -239,7 +239,7 @@ API.saveIt_ = function (opts, fn) {
 
 API.ajaxContractSkillReq = function (orderId, fn) {
   API.wrapRet_(
-    '/api/ajax_contract_skill_req', {
+    'https://mip.putibaby.com/api/ajax_contract_skill_req', {
       'id': orderId
     }, fn)
 }
