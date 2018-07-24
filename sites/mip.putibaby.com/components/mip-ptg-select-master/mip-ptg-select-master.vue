@@ -43,7 +43,7 @@
 
                 <a
                   class="person"
-                  @touchend="handleOrderList">
+                  @click="handleOrderList">
                   <slot name="me"/>
                 </a>
               </td>
@@ -226,10 +226,10 @@
 
               <td class="qt_td"><span
                 class="radio_btn radio_check"
-                @touchend="clickQuantian">全天</span></td>
+                @click="clickQuantian">全天</span></td>
               <td class="bb_td"><span
                 class="radio_btn"
-                @touchend="clickBaiban">白班</span></td>
+                @click="clickBaiban">白班</span></td>
 
             </tr>
           </tbody>
@@ -1067,7 +1067,7 @@
         <div class="bg">
           <div
             class="mip-infinitescroll-loading"
-            @touchend="loadMoreClick">
+            @click="loadMoreClick">
             <p>{{ state.loadMessage }}</p>
           </div>
         </div>
@@ -1080,7 +1080,7 @@
       type="right"
       bottom="50px"
       class="rec_a">
-      <a @touchend="handleUpdateYcq">
+      <a @click="handleUpdateYcq">
         <slot name="bwtj"/>
       </a>
     </mip-fixed>
