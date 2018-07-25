@@ -38,7 +38,7 @@
       </div>
       <span
         class="phoncode-btn"
-        @click="getPhoneCode">{{ phonCodeBtnText }}</span>
+        @click="getPhoneCode">{{ phoneCodeBtnText }}</span>
     </div>
     <div
       class="btn"
@@ -69,7 +69,7 @@ export default {
       phoneNumber: '',
       phoneCodeNumber: '',
       imgCode: '',
-      phonCodeBtnText: '获取验证码',
+      phoneCodeBtnText: '获取验证码',
       getingPhoneCode: false,
       imgCodeUrl: 'https://mip.wangxiao.cn/baiduUser/getImageCode?validatekey='
     }
@@ -119,14 +119,14 @@ export default {
             response.json().then(function (data) {
               if (data.code === '000000') {
                 _this.getingPhoneCode = true
-                _this.phonCodeBtnText = 60
+                _this.phoneCodeBtnText = 60
                 let timer = setInterval(() => {
-                  if (_this.phonCodeBtnText === 0) {
-                    _this.phonCodeBtnText = '获取验证码'
+                  if (_this.phoneCodeBtnText === 0) {
+                    _this.phoneCodeBtnText = '获取验证码'
                     clearInterval(timer)
                     _this.getingPhoneCode = false
                   } else {
-                    this.phonCodeBtnText = --_this.phonCodeBtnText
+                    _this.phoneCodeBtnText = --_this.phoneCodeBtnText
                   }
                 }, 1000)
               } else {
