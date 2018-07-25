@@ -3,7 +3,7 @@
     <div class="s4s-body">
       <div class="s4s-car-info">
         <div class="s4s-car-model">
-          <span class="s4s-car-name">{{ car_no || '-' }}</span>
+          <span class="s4s-car-name">{{ provice + car_no || '-' }}</span>
           <span
             class="s4s-car-change"
             @click="gotoForm">更换爱车</span>
@@ -110,6 +110,7 @@ export default {
     }
   },
   mounted () {
+    this.provice = this.globalData.provice
     this.car_no = this.globalData.car_no
     this.engion = this.globalData.engine
     this.vin = this.globalData.vin
