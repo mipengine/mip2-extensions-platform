@@ -260,7 +260,7 @@ table tr td {
 }
 
 .checked {
-  background-image: url('/i/balance_checked.png');
+  /* background-image: url('/i/balance_checked.png'); */
   background-size: 22px 22px;
   width: 22px;
   height: 22px;
@@ -270,7 +270,7 @@ table tr td {
 }
 
 .unchecked {
-  background-image: url('/i/balance_unchecked.png');
+  /* background-image: url('/i/balance_unchecked.png'); */
   background-size: 22px 22px;
   width: 22px;
   height: 22px;
@@ -290,7 +290,7 @@ table tr td {
 }
 
 .date {
-  background-image: url('/i/date_checked.png');
+  /* background-image: url('/i/date_checked.png'); */
   background-size: 22px 22px;
   width: 22px;
   height: 22px;
