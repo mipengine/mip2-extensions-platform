@@ -27,5 +27,20 @@ export default ({
     if (token) {
       window.localStorage.setItem('mip.wangxiao.token', token)
     }
+  },
+  setSession: function (datas) {
+    sessionStorage.setItem('zdwxdata', JSON.stringify(datas))
+  },
+  getSession: function () {
+    let data = sessionStorage.getItem('zdwxdata')
+    return JSON.parse(data)
+  },
+  // 使用MIP2同步数据
+  setGlobalData: function (newVal) {
+    try {
+      MIP.setData({'#zdwxdata': newVal})
+    } catch (e) {
+      console.error(e, e.stack)
+    }
   }
 })

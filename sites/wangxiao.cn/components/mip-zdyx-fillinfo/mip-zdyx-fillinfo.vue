@@ -174,6 +174,7 @@ export default {
         body: JSON.stringify({
           code: _this.phoneCodeNumber,
           phone: _this.phoneNumber,
+          goodsId: base.getQueryString('goodsId') || '',
           token: base.getQueryString('token') || base.getToken()
         })
       })
@@ -183,6 +184,8 @@ export default {
             if (data.code === '100000') {
               _this.errorMessage = data.message
               _this.showErrorMessage = true
+            } else {
+              MIP.viewer.open(data.url)
             }
           })
         })
