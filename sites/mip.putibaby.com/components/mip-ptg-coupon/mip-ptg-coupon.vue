@@ -18,7 +18,9 @@
         <p>7、本券不与菩提果公司其他优惠同享。</p>
 
       </div>
-      <a href="/index"><div class="close_btn">关闭</div></a>
+      <a
+        href="index"
+        mip-link><div class="close_btn">关闭</div></a>
     </div>
   </div>
 </template>
