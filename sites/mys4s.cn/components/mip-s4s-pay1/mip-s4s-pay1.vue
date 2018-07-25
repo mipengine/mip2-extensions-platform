@@ -249,7 +249,7 @@
         <div
           :class="agree?'' :'disabled-btn'"
           @click="payFee" >
-          <button> 立即办理</button>
+          <span> 立即办理</span>
         </div>
       </div>
     </mip-fixed>
@@ -873,10 +873,8 @@ select {
   justify-content: center;
   padding: 0 .1rem;
 }
+
 .pay-contaienr span {
-  color: #fe7000;
-}
-.pay-contaienr button {
   color: #fff;
   font-size: .18rem;
   font-weight: 300;
@@ -895,13 +893,8 @@ select {
 .pay-contaienr .disabled-btn {
   background: #e6e6e6 !important;
 }
-.pay-contaienr .disabled-btn button {
+.pay-contaienr .disabled-btn span {
   color: #999999;
-}
-.pay-contaienr  button,.pay-contaienr  button:focus {
-  background: none;
-  border:none;
-  outline: none;
 }
 .group-upload {
   height: auto;
