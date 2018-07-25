@@ -237,7 +237,7 @@ export default {
 
       API.submit_(this.content, mcode, function (isOk, res) {
         if (isOk) {
-          var url = '/update_time_ok?mcode=' + mcode
+          var url = 'https://mip.putibaby.com/update_time_ok?mcode=' + mcode
           // window.location.replace(url);
           window.MIP.viewer.open(MIP.util.makeCacheUrl(url), {replace: true})
         }
