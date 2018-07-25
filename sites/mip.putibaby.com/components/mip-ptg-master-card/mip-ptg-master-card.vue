@@ -28,7 +28,7 @@
           </div>
           <div class="renZheng">
             <a
-              href="https://mip.putibaby.com/service_intro"
+              href="service_intro"
               mip-link>
               <span v-if="data.info.certificated">
                 <mip-img
@@ -39,7 +39,7 @@
               </span>
             </a>
             <a
-              href="https://mip.putibaby.com/service_intro"
+              href="service_intro"
               mip-link>
               <span v-if="data.info.market_certificated">
                 <mip-img
@@ -50,14 +50,14 @@
               </span>
             </a>
             <a
-              :href="'https://mip.putibaby.com/master_intro_detail?u='+data.info.username"
+              :href="'master_intro_detail?u='+data.info.username"
               mip-link>
               <div class="details">基本资料详情</div>
             </a>
             <a
               v-if="data.info.is_credited"
               class="yinzhang_a"
-              href="https://mip.putibaby.com/service_intro"
+              href="service_intro"
               mip-link/>
             <mip-img
               v-if="data.info.is_credited"
@@ -106,7 +106,7 @@
         v-if="data.info.offer_service"
         class="serverCard">
         <a
-          :href="'https://mip.putibaby.com/skill_details?u=' + data.info.username"
+          :href="'skill_details?u=' + data.info.username"
           mip-link>
           <div class="sC_head">
             <mip-img
@@ -138,7 +138,7 @@
         v-if="data.info.price_yuer.market_price > 0 || data.info.price_yuer.market_halfday_price > 0"
         class="serverCard">
         <a
-          :href="'https://mip.putibaby.com/skill_details?is_yuer=1&u=' + data.info.username"
+          :href="'skill_details?is_yuer=1&u=' + data.info.username"
           mip-link>
           <div class="sC_head">
             <mip-img
@@ -197,7 +197,7 @@
 
       <div class="pingJiaCard">
         <a
-          :href="'https://mip.putibaby.com/master_shanghu_detail?u=' + data.info.username"
+          :href="'master_shanghu_detail?u=' + data.info.username"
           mip-link>
           <div class="pJC_head">
             <mip-img
@@ -937,10 +937,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -1033,16 +1030,16 @@ export default {
         console.log('logindone to update_time')
         API.next_cmd = ''
         sessionStorage.next_cmd = ''
-        window.MIP.viewer.open('https://mip.putibaby.com/update_time_mip?mcode=' + self.data.codeid, {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_time_mip?mcode=' + self.data.codeid), {})
       } else if (event.userInfo.isUnion &&
           (API.next_cmd === 'order_list' || sessionStorage.next_cmd === 'order_list')) {
         console.log('logindone to order_list')
         API.next_cmd = ''
         sessionStorage.next_cmd = ''
-        window.MIP.viewer.open('https://mip.putibaby.com/order_list', {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
       } else if (!event.userInfo.isUnion) {
         console.log('go to submit_ph')
-        window.MIP.viewer.open('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href), {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
       }
 
       API.getMasterInfo(self.data.info.id, function (isOk, data) {
@@ -1085,12 +1082,12 @@ export default {
 
       if (!this.checkLogin_('update_time')) { return }
 
-      window.MIP.viewer.open('https://mip.putibaby.com/update_time_mip?mcode=' + this.data.codeid, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_time_mip?mcode=' + this.data.codeid), {})
     },
     handleOrderList () {
       console.log('handleOrderList')
       if (!this.checkLogin_('order_list')) { return }
-      window.MIP.viewer.open('https://mip.putibaby.com/order_list', {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
     },
     handleFav () {
       console.log('handleFav')

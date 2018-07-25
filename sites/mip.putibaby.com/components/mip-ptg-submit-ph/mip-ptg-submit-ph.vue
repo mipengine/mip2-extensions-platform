@@ -228,10 +228,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -432,7 +429,7 @@ export default {
               // window.location.href = JSON.parse(self.dataJsonstr).redirect
               var url = JSON.parse(self.dataJsonstr).redirect
               // window.location.replace(url);
-              window.MIP.viewer.open(url, {replace: true})
+              window.MIP.viewer.open(MIP.util.makeCacheUrl(url), {replace: true})
             } else {
               self.errMessage = '请输入正确的验证码'
               self.err = true
