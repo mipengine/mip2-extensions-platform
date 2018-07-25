@@ -13,7 +13,7 @@
                     <li class="tjtrip-li" v-for="item in list">
                         <a :href="item.href" mip-link>
                             <div class="tjtrip-img">
-                                <img :src="item.cover" alt="">
+                                <mip-img :src="item.cover" />
                                 <div class="tjtrip-days">
                                     <span class="tjtrip-day"><i>{{item.days}}</i>天</span>
                                 </div>

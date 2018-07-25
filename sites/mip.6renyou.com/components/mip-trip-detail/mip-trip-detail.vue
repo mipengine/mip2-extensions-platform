@@ -1,7 +1,7 @@
 <style>
 .day-hd1{}
 .day-hd1:after{
-    background: url(/img/trip/i-arr-up.png) no-repeat;
+    background: url(~@/static/img/trip/i-arr-up.png) no-repeat;
     background-size: 14px 8px;
 }
 </style>
@@ -12,7 +12,7 @@
             <div class="topic-image">
                 <ul class="banner-wrap">
                     <li class="banner-slider">
-                        <img :src="cover" alt="">
+                        <mip-img :src="cover" />
                     </li>        
                 </ul>
                 <div class="topic-info-top">
@@ -40,7 +40,7 @@
                         <li v-for="(item, index) in popular_sight" v-show="index < 4 || showMoreSight">
                             <a :href="'/sight/1/' + item.id" mip-link>
                                 <div class="sp-img">
-                                    <img :src="item.cover" width="100%" alt="">
+                                    <mip-img :src="item.cover" width="100%" >
                                     <span class="cy">{{item.city_name}}</span>
                                 </div>
                                 <div class="t1"><p>{{item.name}}</p></div>
@@ -83,7 +83,7 @@
                                     <i class="itrip itrip-spot"></i>
                                     <div class="day-item-cont spot-inf">
                                         <div class="day-img">
-                                            <img :src="sight.cover" alt="">
+                                            <mip-img :src="sight.cover">
                                         </div>
                                         <div class="day-item-title">
                                             <p>{{sight.name}}</p>
@@ -95,7 +95,7 @@
                                     <i class="itrip itrip-activity"></i>
                                     <div class="day-item-cont activity-inf">
                                         <div class="day-img">
-                                            <img :src="sight.cover" alt="">
+                                            <mip-img :src="sight.cover">
                                         </div>
                                         <div class="day-item-title">
                                             <p>{{sight.name}}</p>

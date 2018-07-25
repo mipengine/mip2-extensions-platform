@@ -6,84 +6,12 @@
         <div class="dest-content">
         	<div class="dest-box">
         		<ul class="dest-list clearfix">
-        			<li class="list">
-        				<a href="/dest/北美" mip-link>
+        			<li class="list" v-for="item in destination">
+        				<a :href="host + '/dest/' + item.name" mip-link>
 	        				<div class="dest-img">
-
-	        					<img src="/img/index/dest-na.jpg" />
-
+	        					<mip-img :src="item.img" />
 	        				</div>
-	        				<span class="dest-name">北美</span>
-        				</a>
-        			</li>
-        			<li class="list">
-        				<a href="/dest/南美" mip-link>
-	        				<div class="dest-img">
-
-	        					<img src="/img/index/dest-sa.jpg" />
-
-	        				</div>
-	        				<span class="dest-name">南美</span>
-        				</a>
-        			</li>
-        			<li class="list">
-        				<a href="/dest/欧洲" mip-link>
-	        				<div class="dest-img">
-
-	        					<img src="/img/index/dest-europe.jpg" />
-
-	        				</div>
-	        				<span class="dest-name">欧洲</span>
-        				</a>
-        			</li>
-        			<li class="list">
-        				<a href="/dest/澳洲" mip-link>
-	        				<div class="dest-img">
-
-	        					<img src="/img/index/dest-australia.jpg" />
-
-	        				</div>
-	        				<span class="dest-name">澳洲</span>
-        				</a>
-        			</li>
-        			<li class="list">
-        				<a href="/dest/泰国" mip-link>
-	        				<div class="dest-img">
-
-	        					<img src="/img/index/dest-thailand.jpg" />
-
-	        				</div>
-	        				<span class="dest-name">泰国</span>
-        				</a>
-        			</li>
-        			<li class="list">
-        				<a href="/dest/新加坡" mip-link>
-	        				<div class="dest-img">
-
-	        					<img src="/img/index/dest-singapore.jpg" />
-
-	        				</div>
-	        				<span class="dest-name">新加坡</span>
-        				</a>
-        			</li>
-        			<li class="list">
-        				<a href="/dest/日本" mip-link>
-	        				<div class="dest-img">
-
-	        					<img src="/img/index/dest-japan.jpg" />
-
-	        				</div>
-	        				<span class="dest-name">日本</span>
-        				</a>
-        			</li>
-        			<li class="list">
-        				<a href="/dest/台湾" mip-link>
-	        				<div class="dest-img">
-
-	        					<img src="/img/index/dest-taiwan.jpg" />
-
-	        				</div>
-	        				<span class="dest-name">台湾</span>
+	        				<span class="dest-name">{{item.name}}</span>
         				</a>
         			</li>
         		</ul>
@@ -93,9 +21,45 @@
 </template>
 
 <script>
+    import img_na from '@/static/img/index/dest-na.jpg';
+    import img_sa from '@/static/img/index/dest-sa.jpg';
+    import img_europe from '@/static/img/index/dest-europe.jpg';
+    import img_australia from '@/static/img/index/dest-australia.jpg';
+    import img_thailand from '@/static/img/index/dest-thailand.jpg';
+    import img_singapore from '@/static/img/index/dest-singapore.jpg';
+    import img_japan from '@/static/img/index/dest-japan.jpg';
+    import img_taiwan from '@/static/img/index/dest-taiwan.jpg';
+
 	export default {
+        props: ['host'],
 		data () {
-			return {};	
+			return {
+                destination: [{
+                    name: '北美',
+                    img: img_na,
+                },{
+                    name: '南美',
+                    img: img_sa,
+                },{
+                    name: '欧洲',
+                    img: img_europe,,
+                },{
+                    name: '澳洲',
+                    img: img_australia,
+                },{
+                    name: '泰国',
+                    img: img_thailand,
+                },{
+                    name: '新加坡',
+                    img: img_singapore,
+                },{
+                    name: '日本',
+                    img: img_japan,
+                },{
+                    name: '台湾',
+                    img: img_taiwan,
+                }],
+            };	
 		},
 		methods: {
 		}
