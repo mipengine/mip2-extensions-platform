@@ -415,9 +415,8 @@ body{
     border-radius: 5px;
     color: white;
     box-shadow: 0px 1px 1px 1px #e7ebd0;
-    background-image: url(http://h5.putibaby.com/assets/i/blur_14.jpg);
+    /* background-image: url(http://h5.putibaby.com/assets/i/blur_14.jpg); */
     background-size: cover;
-
 }
 .masterShow .mS_header{
     width: 50px;
@@ -490,7 +489,7 @@ body{
   z-index:99;
 }
 .line{
-    background: url(/i/show_master_card_footer_hb.png);
+    /* background: url(/i/show_master_card_footer_hb.png); */
     width: 100%;
     height: 2px;
     background-size: contain;

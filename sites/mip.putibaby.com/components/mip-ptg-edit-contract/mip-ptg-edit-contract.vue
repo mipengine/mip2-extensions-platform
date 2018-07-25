@@ -885,7 +885,7 @@ p {
 }
 
 .checked {
-  background-image: url('/i/balance_checked.png');
+  /* background-image: url('/i/balance_checked.png'); */
   background-size: 22px 22px;
   width: 22px;
   height: 22px;
@@ -897,7 +897,7 @@ p {
 }
 
 .unchecked {
-  background-image: url('/i/balance_unchecked.png');
+  /* background-image: url('/i/balance_unchecked.png'); */
   background-size: 22px 22px;
   width: 22px;
   height: 22px;
@@ -1454,7 +1454,7 @@ export default {
     },
     contractDetail () {
       var id = this.order.id
-      var url = '/v2_show_ptg_ys_full_contract?id=' + id
+      var url = 'https://mip.putibaby.com/v2_show_ptg_ys_full_contract?id=' + id
       // window.location.href = url
       window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com' + url), {})
     },
