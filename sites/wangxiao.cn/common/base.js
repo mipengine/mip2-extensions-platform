@@ -5,7 +5,11 @@ export default ({
   api: {
     getProductSubjects: zdyxhttp + 'course/getProductSubjects',
     sendMessage: zdyxhttp + 'baiduUser/sendMessage',
-    compareMessageCode: zdyxhttp + 'baiduUser/compareMessageCode'
+    compareMessageCode: zdyxhttp + 'baiduUser/compareMessageCode',
+    getGoodsCatalog: zdyxhttp + 'Order/getProductData',
+    getOrderList: zdyxhttp + 'Order/orderList',
+    cancelOrder: zdyxhttp + 'Order/cancelOrder',
+    comitEvaluate: zdyxhttp + 'Order/evaluateOrder'
   },
   getQueryString: function (name) {
     let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')

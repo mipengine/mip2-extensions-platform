@@ -7,19 +7,6 @@
         type="text"
         placeholder="请输入手机号">
     </div>
-    <div class="form-group form-group-imgcode">
-      <div class="form-group-left">
-        <span>手机验证码</span>
-        <input
-          v-model="phoneCodeNumber"
-          class="phone-code"
-          type="text"
-          placeholder="">
-      </div>
-      <span
-        class="phoncode-btn"
-        @click="getPhoneCode">{{ phonCodeBtnText }}</span>
-    </div>
     <div
       v-if="showImgCode"
       class="form-group form-group-imgcode">
@@ -39,6 +26,19 @@
           width="90"
           height="40"/>
       </div>
+    </div>
+    <div class="form-group form-group-imgcode">
+      <div class="form-group-left">
+        <span>手机验证码</span>
+        <input
+          v-model="phoneCodeNumber"
+          class="phone-code"
+          type="text"
+          placeholder="">
+      </div>
+      <span
+        class="phoncode-btn"
+        @click="getPhoneCode">{{ phonCodeBtnText }}</span>
     </div>
     <div
       class="btn"
@@ -94,6 +94,11 @@ export default {
     },
     getPhoneCode () {
       let _this = this
+      if (_this.showImgCode && _this.imgCode === '') {
+        _this.errorMessage = '请输入图形验证码'
+        _this.showErrorMessage = true
+        return
+      }
       let uPattern = /^1[0-9][0-9]\d{8}$/
       if (uPattern.test(_this.phoneNumber) && !_this.getingPhoneCode) {
         fetch(base.api.sendMessage, {
@@ -103,26 +108,28 @@ export default {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            phone: _this.phoneNumber
+            phone: _this.phoneNumber,
+            imageCode: _this.imgCode
           })
         })
           .then(function (response) {
-            if (response.status !== 200) {
-              console.log(`返回的响应码${response.status}`)
-              return
-            }
             // 获得后台实际返回的内容
             response.json().then(function (data) {
-              _this.getingPhoneCode = true
-              _this.phonCodeBtnText = 60
-              let timer = setInterval(() => {
-                if (_this.phonCodeBtnText === 0) {
-                  _this.phonCodeBtnText = '获取验证码'
-                  clearInterval(timer)
-                  _this.getingPhoneCode = false
-                }
-                _this.phonCodeBtnText = --_this.phonCodeBtnText
-              }, 1000)
+              if (data.code === '000000') {
+                _this.getingPhoneCode = true
+                _this.phonCodeBtnText = 60
+                let timer = setInterval(() => {
+                  if (_this.phonCodeBtnText === 0) {
+                    _this.phonCodeBtnText = '获取验证码'
+                    clearInterval(timer)
+                    _this.getingPhoneCode = false
+                  }
+                  _this.phonCodeBtnText = --_this.phonCodeBtnText
+                }, 1000)
+              } else {
+                _this.errorMessage = data.message
+                _this.showErrorMessage = true
+              }
             })
           })
           .catch(function (err) {
@@ -155,11 +162,6 @@ export default {
         _this.showErrorMessage = true
         return
       }
-      if (_this.showImgCode && _this.imgCode === '') {
-        _this.errorMessage = '请输入图形验证码'
-        _this.showErrorMessage = true
-        return
-      }
       fetch(base.api.compareMessageCode, {
         method: 'POST',
         headers: {
@@ -168,15 +170,10 @@ export default {
         },
         body: JSON.stringify({
           code: _this.phoneCodeNumber,
-          phone: _this.phoneNumber,
-          imgCode: _this.imgCode
+          phone: _this.phoneNumber
         })
       })
         .then(function (response) {
-          if (response.status !== 200) {
-            console.log(`返回的响应码${response.status}`)
-            return
-          }
           // 获得后台实际返回的内容
           response.json().then(function (data) {
             if (data.code === '100000') {
@@ -194,7 +191,8 @@ export default {
 </script>
 <style lang='less' scoped>
 .fillinfo-content {
-  padding: 4rem;
+  padding: 4rem 2rem;
+  margin-top: 3.5rem;
   .errorMessage {
     position: absolute;
     left: 50%;
@@ -211,14 +209,18 @@ export default {
     border-bottom: 1px solid #f1f1f1;
     font-size: 1.6rem;
     color: #666;
-    padding: 0.8rem;
+    padding: 0.6rem;
     > span {
       line-height: 4rem;
+      font-size: 1.5rem;
+      color: #333;
     }
     .form-group-left {
       display: flex;
       > span {
         line-height: 4rem;
+        font-size: 1.5rem;
+        color: #333;
       }
       input {
         width: 12rem;
@@ -226,16 +228,22 @@ export default {
       }
     }
     .phoncode-btn {
-      width: 9rem;
+      width: 8.5rem;
+      color: #ff6a4c;
       text-align: center;
-      border: 1px solid;
-      border-radius: 6px;
+      border: 1px solid #ff6a4c;
+      border-radius: 1.3rem;
       cursor: pointer;
+      padding: 0;
+      font-size: 1.3rem;
+      height: 2.4rem;
+      line-height: 2.4rem;
     }
   }
   .form-group-imgcode {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
   input {
     border: none;
@@ -245,11 +253,15 @@ export default {
     border-radius: 0;
     padding: 1rem;
   }
+  input::-webkit-input-placeholder {
+    color: #ccc;
+    font-size: 1.4rem;
+  }
   .btn {
     font-size: 1.6rem;
-    height: 5rem;
-    line-height: 5rem;
-    margin-top: 2rem;
+    height: 4.4rem;
+    line-height: 4.4rem;
+    margin-top: 2.7rem;
     background: linear-gradient(to right, #ff8f53, #ff5e59);
     text-align: center;
     color: #fff;
