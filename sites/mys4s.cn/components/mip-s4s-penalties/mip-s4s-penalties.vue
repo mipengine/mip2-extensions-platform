@@ -818,7 +818,7 @@ export default {
   -webkit-box-flex: none;
   -ms-flex: none;
   flex: none;
-  background: transparent;
+  background: #fff;
 }
 
 .s4s-title {
