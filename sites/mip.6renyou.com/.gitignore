@@ -6,3 +6,5 @@ Thumbs.db
 .DS_Store
 *.swp
 *.gz
+yarn-error.log
+yarn.lock

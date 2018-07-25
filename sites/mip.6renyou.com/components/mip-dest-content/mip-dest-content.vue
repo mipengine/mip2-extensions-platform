@@ -42,7 +42,7 @@
                     img: img_sa,
                 },{
                     name: '欧洲',
-                    img: img_europe,,
+                    img: img_europe,
                 },{
                     name: '澳洲',
                     img: img_australia,

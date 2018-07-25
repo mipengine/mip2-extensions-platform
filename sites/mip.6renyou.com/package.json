@@ -11,7 +11,11 @@
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
   "author": "kyf (kyf456@163.com)",
-  "dependencies": {},
+  "dependencies": {
+    "axios": "^0.18.0",
+    "vue": "^2.5.16",
+    "vue-toasted": "^1.1.24"
+  },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
