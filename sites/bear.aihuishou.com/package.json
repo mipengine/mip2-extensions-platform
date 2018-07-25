@@ -11,9 +11,10 @@
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
   "author": "殷煌 (huang.yin@aihuishou.com)",
-  "dependencies": {},
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
   "devDependencies": {
-    "axios": "^0.18.0",
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
     "eslint-plugin-import": "^2.12.0",
