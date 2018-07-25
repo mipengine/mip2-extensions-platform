@@ -396,7 +396,7 @@ export default {
       })
     },
     submit_ () {
-      var url = '/edit_contract?id=' + JSON.parse(this.dataJsonstr).id
+      var url = 'https://mip.putibaby.com/edit_contract?id=' + JSON.parse(this.dataJsonstr).id
       // window.location.replace(url);
       window.MIP.viewer.open(MIP.util.makeCacheUrl(url), {replace: true})
     }
