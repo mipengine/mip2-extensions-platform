@@ -14,6 +14,8 @@ const defaultArgs = {
 }
 
 const Request = async (args, codes) => {
+  // 截取完整路径里面掉占位符：https://neon.aihuishou.com
+  const reghttp = 'https://neon.aihuishou.com'
   // headers 增加slug
   args.headers = {
     ...args.headers,
@@ -22,7 +24,7 @@ const Request = async (args, codes) => {
   // 默认method
   args.method = (args.method || 'GET').toLocaleUpperCase()
   // url 增加代理名
-  args.url = proxyName + args.url
+  args.url = proxyName + args.url.replace(reghttp, '')
   // 合并默认参数和业务参数
   args.whiteCodes = codes || null
   const opts = { ...defaultArgs, ...args }

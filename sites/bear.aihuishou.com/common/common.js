@@ -5,7 +5,7 @@ const Api = {
 
   getAccessToken: async (UID, SECRET) => {
     const opts = {
-      url: '/oauth/token',
+      url: 'https://neon.aihuishou.com/oauth/token',
       method: 'POST',
       params: {
         'grant_type': 'client_credentials'
@@ -20,7 +20,7 @@ const Api = {
 
   getAreaConfig: async (slug) => {
     const opts = {
-      url: '/v1/current_app',
+      url: 'https://neon.aihuishou.com/v1/current_app',
       params: {
         slug
       }
@@ -30,21 +30,21 @@ const Api = {
   },
   getCsrfToken: async (slug) => {
     const opts = {
-      url: '/v1/csrf/token'
+      url: 'https://neon.aihuishou.com/v1/csrf/token'
     }
     let result = await Request(opts)
     return result
   },
   getCityInfoByCode: async (adcode) => {
     const opts = {
-      url: `/v1/divisions/${adcode}/parent`
+      url: `https://neon.aihuishou.com/v1/divisions/${adcode}/parent`
     }
     let result = await Request(opts)
     return result
   },
   getCityInfoByIp: async () => {
     const opts = {
-      url: `/v1/divisions/ip`
+      url: `https://neon.aihuishou.com/v1/divisions/ip`
     }
     let result = await Request(opts)
     return result

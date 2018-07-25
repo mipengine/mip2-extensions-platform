@@ -32,7 +32,7 @@ export default {
   },
   async mounted () {
     const opts = {
-      url: '/v1/current_app/categories'
+      url: 'https://neon.aihuishou.com/v1/current_app/categories'
     }
     let res = null
     try {

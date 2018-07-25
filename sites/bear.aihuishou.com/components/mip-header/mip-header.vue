@@ -38,7 +38,7 @@ export default {
   },
   async mounted () {
     const opts = {
-      url: '/v1/current_app/banners/home_top'
+      url: 'https://neon.aihuishou.com/v1/current_app/banners/home_top'
     }
     let res = null
     try {

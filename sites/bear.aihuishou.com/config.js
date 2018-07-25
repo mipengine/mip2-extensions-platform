@@ -9,8 +9,8 @@ export default {
   prod: {
     UID: 'bd205b85ab6ba224cebfebb27ff7359501e3e76debd981904f1507df39400ed5',
     SECRET: 'ab572c142f2af242c9d44f7052d6aad9e5ac66cafa2afa5b1bb2475419a2dbbd',
-    slug: 'bears',
+    slug: 'xzh',
     baseUrl: 'https://neon.aihuishou.com/boot/xzh'
   },
-  env: 'dev'
+  env: 'prod'
 }
