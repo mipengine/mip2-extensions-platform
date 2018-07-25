@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <div class="container">
+  <div class="root-box">
+    <div class="container lad-wrapper" >
       <!-- 弹框 -->
       <div
         v-if="isShowDeleteBox"
@@ -65,10 +65,11 @@
           id="inputagain"
           @click="inputAgain">点击重新输入</div>
       </div>
+
       <!-- 输入正确且有返回的情况 -->
       <div v-if="!noInfo && !wrongInfo && !wrongInfo_license">
         <!-- license 驾驶证 -->
-        <div v-if="isLicense">
+        <div v-if="isLicense" >
           <div id="idcard">
             <div class="top">
               <p id="id_carid">
@@ -173,7 +174,7 @@
                 </div>
                 <div class="weifaxingwei">
                   <div class="behavior_left_item">违法行为</div>
-                  <div class="behavior_right_item">{{ item.wfxw }}}</div>
+                  <div class="behavior_right_item">{{ item.wfxw }}</div>
                 </div>
                 <div class="fakuanjine">
                   <div class="jine_left_item">罚款金额</div>
@@ -320,7 +321,7 @@
                 </div>
                 <div class="weifaxingwei">
                   <div class="behavior_left_item">违法行为</div>
-                  <div class="behavior_right_item">{{ item.wfxw }}}</div>
+                  <div class="behavior_right_item">{{ item.wfxw }}</div>
                 </div>
                 <div class="fakuanjine">
                   <div class="jine_left_item">罚款金额</div>
@@ -334,7 +335,6 @@
                 </div>
               </div>
             </div>
-            <!-- 查询时有结果的话在这里插入内容 -->
           </div>
           <div
             v-if="!hasCardIllegal"
@@ -350,28 +350,11 @@
               @click="wycfjds">我有处罚决定书</div>
           </div>
         </div>
-      </div>
 
+      </div>
     </div>
-    <div id="savekong" />
-    <!-- <div v-if="isFixed" id="fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div> -->
     <div
-      v-if="!isFixed"
-      id="fix_bottom_no">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
-    <div @click="toOtherPage('license')">js点击跳转license</div>
-    <a
-      href="../../example/license.html"
-      data-type="mip"
-      class="actives inputfix">
-      a链接点击我跳转license
-    </a>
-    <div @click="toOtherPage('secPage')">js点击跳转secPage</div>
-    <a
-      href="../../example/secPage.html"
-      data-type="mip"
-      class="actives inputfix">
-      a链接点击我跳转secPage
-    </a>
+      id="fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
   </div>
 </template>
 
@@ -503,36 +486,36 @@
     font-size: 42px !important;
   }
 }
+.root-box{
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  background: rgba(245,245,245,1);
+}
+
 body {
   background: rgba(245, 245, 245, 1);
   position: absolute;
 }
 
 #fix_bottom {
-  width: 100%;
-  margin: 0 auto;
-  margin-bottom: 0.5rem;
-  text-align: center;
-  font-size: 0.55rem;
-  font-family: PingFang-SC-Medium;
-  color: rgba(153, 153, 153, 1);
-  line-height: 1rem;
-}
-#fix_bottom_no {
-  width: 100%;
-  margin: 0 auto;
-  margin-bottom: 0.5rem;
-  text-align: center;
-  font-size: 0.55rem;
-  font-family: PingFang-SC-Medium;
-  color: rgba(153, 153, 153, 1);
-  line-height: 1rem;
+    width: 100%;
+    text-align: center;
+    font-size: 0.55rem;
+    font-family: PingFang-SC-Medium;
+    color: rgba(153, 153, 153, 1);
+    border-box: content-box;
+    box-sizing: border-box;
+    margin: 0.5rem auto;
 }
 
 .container {
+  flex-grow: 2;
   width: 92%;
   margin: 0 auto;
-  margin-bottom: 1rem;
+  /* overflow: scroll; */
+  overflow: auto !important;
+  /* height: auto; */
 }
 
 #id_carid {
@@ -578,7 +561,8 @@ body {
 
 #idcard {
   /* display: none; */
-  margin: 1rem auto;
+  width: 100% !important;
+  margin: 0.5rem auto 1rem auto;
   height: 9.55rem;
   background-image: url(../../static/img/idcard.png);
   background-repeat: no-repeat;
@@ -606,7 +590,7 @@ body {
 }
 
 #license {
-  margin: 1rem auto;
+  margin: 0.5rem auto 1rem auto;
   height: 9.55rem;
   background-image: url(../../static/img/license.png);
   background-repeat: no-repeat;
@@ -615,7 +599,6 @@ body {
   -webkit-background-size: contain;
   -o-background-size: contain;
   background-size: contain;
-  /* display: none; */
 }
 
 #weizhang,
@@ -755,7 +738,6 @@ body {
   color: rgba(51, 51, 51, 1);
   line-height: 2.2rem;
   border: #cccccc 1px solid;
-  /* display: none; */
 }
 
 .ljblwz {
@@ -770,7 +752,6 @@ body {
   color: rgba(255, 255, 255, 1);
   line-height: 2.2rem;
   font-weight: medium;
-  /* display: none; */
 }
 .ljblwz_no {
   width: 8rem;
@@ -825,7 +806,6 @@ body {
   width: 100%;
   border-radius: 0.5rem;
   background: #fff;
-  /* display: none; */
 }
 
 .cxjgitem_1 {
@@ -1030,7 +1010,6 @@ body {
   width: 100%;
   text-align: center;
   margin-bottom: 1.5rem;
-  /* display: none; */
 }
 
 .noweifa {
@@ -1059,10 +1038,6 @@ body {
   line-height: 2.25rem;
 }
 
-/* #noerror {
-      display: none;
-    } */
-
 #newerror {
   /* display: none; */
   height: 22rem;
@@ -1077,7 +1052,6 @@ body {
   margin-top: 5rem;
   width: 100%;
   text-align: center;
-  /* display: none; */
 }
 
 #haserror {
@@ -1257,14 +1231,6 @@ p {
   }
 }
 
-/* .cxjg {
-      display: none;
-    } */
-
-/* .cxjgresult {
-      display: none;
-    } */
-
 .eachresult {
   background: rgba(255, 255, 255, 1);
   border-radius: 0.5rem;
@@ -1282,15 +1248,7 @@ p {
 
 <script>
 import base from '../../common/utils/base.js'
-// function getUrlParam(name) {
-//     // 用于获取url的参数后置参数
-//     let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); // 构造一个含有目标参数的正则表达式对象
-//     let r = window.location.search.substr(1).match(reg); // 匹配目标参数
-//     if (r != null) {
-//         return decodeURI(r[2]);
-//     }
-//     return null; // 返回参数值
-// }
+// import {BScroll} from '../../common/utils/bscroll.min.js'
 export default {
   data () {
     return {
@@ -1320,10 +1278,15 @@ export default {
     }
   },
   created () {
-    base.resetRem()
+    // base.resetRem()
   },
   mounted () {
-    // Common.resetRem();
+    base.resetRem()
+    console.log('document', document)
+    base.setContainerH('.root-box')
+    // let wrapper = document.querySelector('.ald-wrapper')
+    // let scroll = new BScroll(wrapper, {})
+
     // 基本数据初始化
     this.initData()
     let options = {

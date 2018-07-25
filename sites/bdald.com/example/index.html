@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <!-- <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>MIP page</title>
   <link rel="canonical" href="对应的原页面地址">
   <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
@@ -30,6 +31,11 @@
 
     </style>
   </noscript>
+
+  <script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
+  <script>
+    let test = new VConsole()
+  </script>
 </head>
 
 <body>
@@ -89,32 +95,18 @@
     </script>
   </mip-shell-inservice>
 
-  <!-- <mip-hello-world></mip-hello-world> -->
-  <!-- <h2 class="test">看治理</h2> -->
-  <!-- <mip-example></mip-example> -->
-  <!-- <a href="./secPage.html" data-type="mip"> jump secPage </a> -->
-
-  <!-- <mip-alading-autoscreen> -->
-  <!-- <mip-alading-adaptive> -->
-  <!-- <a href="./license.html" data-type="mip">点击我</a> -->
-  <mip-alading-interactions id="alading">
+  <mip-alading-interactions id="alading" layout="responsive">
 
   </mip-alading-interactions>
-  <!-- </mip-alading-adaptive> -->
-  <!-- </mip-alading-autoscreen> -->
+
   <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
-  <!-- <script src="https://c.mipcdn.com/static/v1/mip-toggle/mip-toggle.js"></script> -->
-  <!-- <script src="/mip-example/mip-example.js"></script> -->
-  <!-- <script src="/mip-hello-world/mip-hello-world.js"></script> -->
-  <!-- <script src="/mip-adaptive/mip-adaptive.js"></script> -->
   <script src="https://c.mipcdn.com/static/v2/mip-shell-inservice/mip-shell-inservice.js"></script>
 
-  <!-- <script type="text/javascript" src="https://c.mipcdn.com/static/v1/mip-alading-interactions/mip-alading-interactions.js" async=""></script> -->
-  <script type="text/javascript" src="http://127.0.0.1:8111/mip-alading-interactions/mip-alading-interactions.js"></script>
-  <!-- <script type="text/javascript" src="/mip-alading-adaptive/mip-alading-adaptive.js"></script> -->
-  <!-- <script type="text/javascript" src="https://c.mipcdn.com/static/v1/mip-alading-adaptive/mip-alading-adaptive.js" async=""></script> -->
-  <script type="text/javascript" src="https://c.mipcdn.com/static/v1/mip-alading-autoscreen/mip-alading-autoscreen.js" async=""></script>
-  <!-- <script src="/mip-test/mip-example.js"></script> -->
+  <!-- <script src="https://c.mipcdn.com/extensions/platform/v2/bdald.com/mip-alading-interactions/mip-alading-interactions.js"></script> -->
+
+  <script type="text/javascript" src="../dist/mip-alading-interactions/mip-alading-interactions.js"></script>
+  <!-- <script type="text/javascript" src="http://yjmtapp.xx-motor.com/mip2/dist/mip-alading-interactions/mip-alading-interactions.js"></script> -->
+
 </body>
 
 </html>

@@ -99,7 +99,7 @@
 <script>
 import base from "../../common/utils/base.js";
 
-import '../../common/utils/reset.css'
+// import '../../common/utils/reset.css'
 export default {
     mounted() {
         console.log("This is my first custom component !");
