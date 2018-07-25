@@ -210,10 +210,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -401,7 +398,7 @@ export default {
     submit_ () {
       var url = '/edit_contract?id=' + JSON.parse(this.dataJsonstr).id
       // window.location.replace(url);
-      window.MIP.viewer.open(url, {replace: true})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl(url), {replace: true})
     }
   }
 }
