@@ -1727,7 +1727,7 @@ export default {
       list: null,
       state: {
         isLoadingMore: false,
-        loadMessage: '点击加载数据',
+        loadMessage: '数据正在加载中...',
         hasMoreData: false
       },
       filter: {
