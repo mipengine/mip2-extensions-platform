@@ -6,7 +6,7 @@
         width="60"
         height="50" />
       <div class="s4s-tips-right">
-        <p>交通违法代缴的办理周期为<span style="color:#FE7000">1-2个工作日，部分地区2-5个工作日</span>，需年检用户如需当日处理完成，请勿下单。其他问题请参见
+        <p>交通违法代缴的办理周期为1-2个工作日，部分地区2-5个工作日，<span style="color:#FE7000">需年检用户如需当日处理完成，请勿下单</span>。其他问题请参见
           <a
             data-type="mip"
             href="help.html"
@@ -73,12 +73,12 @@
         <span
           v-show="!cansend"
           type="button"
-          style="background-color: #fff; color: #666;border:0;border-radius:.03rem;margin-left:.05rem;font-size:0.14rem"
+          class="code-btn-disable"
           disabled>{{ btntext }}</span>
         <span
           v-show="cansend"
           type="button"
-          style="background-color: #fff; color: #108ee9;border:0;border-radius:.03rem;margin-left:.05rem;font-size:0.14rem"
+          class="code-btn"
           @click="sendcode">获取验证码</span>
       </div>
       <!-- <div class="s4s-group"  v-if="!(!this.user.Tel || !refillTel)">
@@ -305,7 +305,7 @@ export default {
   watch: {
     code (val) {
       let tel = /^1\d{10}$/
-      if (!this.cansend && val.length === 4 && tel.test(this.phone)) this.testCode()
+      if (!this.cansend && val.length === 4 && tel.test(this.phone)) { this.testCode() }
     }
   },
   mounted () {
@@ -643,9 +643,13 @@ export default {
         this.showConfirm = true
       } else {
         let price = Number(this.price * 100)
-        let totalPrice = Number(price + Math.round(this.ownFree * 100) + Math.round(this.lateFree * 100))
+        let totalPrice = Number(
+          price +
+            Math.round(this.ownFree * 100) +
+            Math.round(this.lateFree * 100)
+        )
         let param = {
-          'source': 'xzapp',
+          source: 'xzapp',
           fine: price + '', // 罚金
           lateFree: (this.lateFree ? Math.round(this.lateFree * 100) : 0) + '',
           ownFree: Math.round(this.ownFree * 100) + '', // 服务费
@@ -670,7 +674,9 @@ export default {
             MIP.setData({
               payConfig: {
                 fee: totalPrice / 100,
-                sessionId: window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'),
+                sessionId: window.localStorage.getItem(
+                  'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
+                ),
                 postData: {
                   order_id: res.data + ''
                 }
@@ -723,8 +729,8 @@ export default {
 .s4s-tips {
   background: #fff;
   border-radius: 0.07rem;
-  padding: 4%;
-  font-size: 0.14rem;
+  padding: 0.2rem;
+  font-size: 0.12rem;
   color: #4b4b4b;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -752,7 +758,7 @@ export default {
 .s4s-pay-body {
   background: #fff;
   padding: 0 4%;
-  margin-top: .15rem;
+  margin-top: 0.15rem;
 }
 
 .s4s-group img {
@@ -785,8 +791,8 @@ export default {
 }
 
 .s4s-group {
-  height: .32rem;
-  border-bottom: .01rem rgba(0, 0, 0, 0.1) solid;
+  height: 0.32rem;
+  border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
   color: #666;
   overflow: hidden;
   -webkit-box-align: center;
@@ -795,18 +801,18 @@ export default {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: .15rem 0;
+  padding: 0.15rem 0;
   box-sizing: content-box;
 }
 .s4s-group-tit {
-  font-size: .15rem;
-  width: .9rem;
+  font-size: 0.15rem;
+  width: 0.9rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 .s4s-group-txt {
-  font-size: .15rem;
+  font-size: 0.15rem;
   color: #777;
   -webkit-box-flex: 1;
   -ms-flex: 1;
@@ -814,14 +820,14 @@ export default {
 }
 .s4s-group input {
   border: none;
-  font-size: .15rem;
+  font-size: 0.15rem;
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
   text-align: left;
 }
 select {
-  font-size: .15rem;
+  font-size: 0.15rem;
 }
 .s4s-group input:focus,
 .s4s-group select:focus {
@@ -845,16 +851,16 @@ select {
   left: 0; */
 }
 .s4s-title {
-  font-size: .2rem;
-  padding-top: .15rem;
+  font-size: 0.2rem;
+  padding-top: 0.15rem;
 }
 
 .agree-container {
-  font-size: .15rem;
+  font-size: 0.15rem;
   color: #999999;
 }
 .agree-container p {
-  padding: .15rem;
+  padding: 0.15rem;
 }
 .agree-container mip-img {
   vertical-align: bottom;
@@ -867,28 +873,28 @@ select {
 }
 .pay-contaienr > div:first-child {
   flex: 1;
-  font-size: .16rem;
+  font-size: 0.16rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 .1rem;
+  padding: 0 0.1rem;
 }
 
 .pay-contaienr span {
   color: #fff;
-  font-size: .18rem;
+  font-size: 0.18rem;
   font-weight: 300;
 }
 .pay-contaienr p:last-child {
   color: #999;
-  font-size: .11rem;
+  font-size: 0.11rem;
 }
 .pay-contaienr > div:last-child {
   width: 1.2rem;
   background-image: linear-gradient(40deg, #fe5a00 0%, #ff7c00 100%);
   text-align: center;
-  line-height: .5rem;
-  font-size: .18rem;
+  line-height: 0.5rem;
+  font-size: 0.18rem;
 }
 .pay-contaienr .disabled-btn {
   background: #e6e6e6 !important;
@@ -900,7 +906,19 @@ select {
   height: auto;
 }
 .group-upload-margin {
-  margin: .1rem .15rem .1rem 0;
+  margin: 0.1rem 0.15rem 0.1rem 0;
   flex: 1;
+}
+.code-btn, .code-btn-disable{
+  color: #FE5C00;
+  background-color: #fff;
+  border:0;
+  border-radius:.03rem;
+  font-size:0.14rem;
+  border:.01rem solid #FF7B00;
+  padding: .05rem .075rem;
+}
+.code-btn-disable {
+  opacity: 0.5;
 }
 </style>

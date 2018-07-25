@@ -97,7 +97,7 @@
 
           </div>
         </div>
-        <p class="s4s-order-content">罚单处理周期为24小时，仅现场单或已领处罚单决定书才可直接缴款。其他问题参见
+        <p class="s4s-order-content">交通违法代缴的办理周期为1-2个工作日，部分地区2-5个工作日，需年检的用户如需当日处理完成请勿下单。其他问题请参见
           <a
             data-type="mip"
             href="help.html"
