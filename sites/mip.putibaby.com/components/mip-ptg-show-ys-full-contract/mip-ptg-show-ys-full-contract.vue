@@ -414,10 +414,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -434,7 +431,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.submit_ = function (content, mcode, fn) {
   API.wrapRet_(
-    '/api/video_interview_master', {
+    'https://mip.putibaby.com/api/video_interview_master', {
       'info': content,
       'mcode': mcode
     },

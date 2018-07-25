@@ -210,10 +210,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -230,7 +227,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.saveIt_ = function (opts, fn) {
   API.wrapRet_(
-    '/api/set_contract', {
+    'https://mip.putibaby.com/api/set_contract', {
       'contract_skill_req': opts.contract_skill_req,
       'id': opts.id,
       'order_id': opts.order_id
@@ -239,7 +236,7 @@ API.saveIt_ = function (opts, fn) {
 
 API.ajaxContractSkillReq = function (orderId, fn) {
   API.wrapRet_(
-    '/api/ajax_contract_skill_req', {
+    'https://mip.putibaby.com/api/ajax_contract_skill_req', {
       'id': orderId
     }, fn)
 }
@@ -401,7 +398,7 @@ export default {
     submit_ () {
       var url = '/edit_contract?id=' + JSON.parse(this.dataJsonstr).id
       // window.location.replace(url);
-      window.MIP.viewer.open(url, {replace: true})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl(url), {replace: true})
     }
   }
 }
