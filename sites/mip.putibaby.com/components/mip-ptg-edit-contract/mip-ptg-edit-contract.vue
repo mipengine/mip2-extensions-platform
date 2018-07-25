@@ -114,12 +114,12 @@
               @change="changeZ" >
             <mip-img
               class="id_photo_z"
-              src="/i/camera_.png"
+              src="https://mip.putibaby.com/i/camera_.png"
               @click="fileSelectZ"/>
             <mip-img
               :class="{'show_opacity':show_z}"
               class="id_photo_zz"
-              src="/i/id_card_z.png"/>
+              src="https://mip.putibaby.com/i/id_card_z.png"/>
             <mip-img
               :src="contract_mama_id_card_zheng"
               :class="{'show_zheng':show_z}"
@@ -142,12 +142,12 @@
 
             <mip-img
               class="id_photo_f"
-              src="/i/camera_.png"
+              src="https://mip.putibaby.com/i/camera_.png"
               @click="fileSelectF"/>
             <mip-img
               :class="{'show_opacity':show_f}"
               class="id_photo_ff"
-              src="/i/id_card_f.png"/>
+              src="https://mip.putibaby.com/i/id_card_f.png"/>
             <mip-img
               :src="contract_mama_id_card_fan"
               :class="{'show_fan':show_f}"
@@ -249,7 +249,9 @@
       </div>
 
       <div class="other_info">
-        <a :href="to_contract_skill_req">
+        <a
+          :href="to_contract_skill_req"
+          mip-link>
           <div class="row">
             <div class="left">服务项目</div>
             <div class="extra_text">
@@ -267,7 +269,9 @@
           </div>
         </a>
         <div class="line"/>
-        <a :href="to_contract_extra">
+        <a
+          :href="to_contract_extra"
+          mip-link>
           <div class="row">
             <div class="left">补充条款</div>
             <div
@@ -990,7 +994,7 @@ API.wrapRet_ = function (api, opts, fn) {
 }
 API.ajaxContract = function (orderId, readonly, fn) {
   API.wrapRet_(
-    '/api/ajax_contract', {
+    'https://mip.putibaby.com/api/ajax_contract', {
       'id': orderId,
       'readonly': readonly ? 1 : 0
     }, fn)
@@ -998,7 +1002,7 @@ API.ajaxContract = function (orderId, readonly, fn) {
 
 API.uploadFile = function (data, fn) {
   API.wrapRet_(
-    '/api/upload_image', {
+    'https://mip.putibaby.com/api/upload_image', {
       'data': data,
       'target': 'media/image-[md5].jpg'
     },
@@ -1411,7 +1415,7 @@ export default {
       localStorage.State = JSON.stringify(this._data)
       console.log('odj', obj)
       API.wrapRet_(
-        '/api/set_contract', obj,
+        'https://mip.putibaby.com/api/set_contract', obj,
         function (isOk, res) {
           if (isOk) {
             console.log(res)
@@ -1454,7 +1458,8 @@ export default {
     contractDetail () {
       var id = this.order.id
       var url = '/v2_show_ptg_ys_full_contract?id=' + id
-      window.location.href = url
+      // window.location.href = url
+      window.MIP.viewer.open('https://mip.putibaby.com' + url, {})
     },
 
     handleSubmit_ (data, skip) {
@@ -1497,12 +1502,13 @@ export default {
         console.log(skip)
         API.wrapRet_(
 
-          '/api/submit_contract', {
+          'https://mip.putibaby.com/api/submit_contract', {
             'id': this.order.id
           },
           function (isOk, res) {
             if (isOk) {
-              window.location.href = 'https://mip.putibaby.com/order_list'
+              // window.location.href = 'https://mip.putibaby.com/order_list'
+              window.MIP.viewer.open('https://mip.putibaby.com/order_list', {})
               return
             } else {
               self.err_message = '提交失败请重试'
