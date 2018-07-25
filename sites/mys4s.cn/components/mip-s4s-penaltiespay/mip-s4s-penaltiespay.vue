@@ -54,12 +54,12 @@
           <span
             v-show="!cansend"
             type="button"
-            style="background-color: #fff; color: #666;border:0;border-radius:.03rem;margin-left:.05rem;font-size:0.14rem"
+            class="code-btn-disable"
             disabled>{{ btntext }}</span>
           <span
             v-show="cansend"
             type="button"
-            style="background-color: #fff; color: #108ee9;border:0;border-radius:.03rem;margin-left:.05rem;font-size:0.14rem"
+            class="code-btn"
             @click="sendcode">获取验证码</span>
         </div>
         <!-- <div class="s4s-group" v-else>
@@ -518,5 +518,17 @@ select {
 .s4s-title {
   font-size: .2rem;
   /* padding-top: .15rem; */
+}
+.code-btn, .code-btn-disable{
+  color: #FE5C00;
+  background-color: #fff;
+  border:0;
+  border-radius:.03rem;
+  font-size:0.14rem;
+  border:.01rem solid #FF7B00;
+  padding: .05rem .075rem;
+}
+.code-btn-disable {
+  opacity: 0.5;
 }
 </style>
