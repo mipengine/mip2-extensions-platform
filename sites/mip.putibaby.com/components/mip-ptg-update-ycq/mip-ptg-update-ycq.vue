@@ -345,10 +345,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -365,7 +362,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.update_ycq = function (name, ycq, masterType, fn) {
   API.wrapRet_(
-    '/api/update_ycq', {
+    'https://mip.putibaby.com/api/update_ycq', {
       'name': name,
       'ycq': ycq,
       'masterType': masterType
@@ -417,7 +414,7 @@ export default {
       self.$set(self, 'isUnion', event.userInfo.isUnion)
       if (!event.userInfo.isUnion) {
         console.log('logindone to submit_ph')
-        window.MIP.viewer.open('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href), {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
       }
     })
   },
@@ -450,7 +447,7 @@ export default {
       API.update_ycq(this.name, this.date, masterType, function (isOk, res) {
         if (isOk) {
           // window.location.replace(url);
-          window.MIP.viewer.open('https://mip.putibaby.com/update_ycq_ok', {replace: true})
+          window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq_ok'), {replace: true})
         }
       })
     }
