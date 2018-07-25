@@ -64,13 +64,13 @@ function genPreviewPage () {
   glob.sync('sites/*/components/mip-*/example/*.*', {realpath: true})
     .forEach(file => {
       let reg = file.match(/sites\/(.+)\/components\/(mip-.+)\/example/)
-      let siteName = reg[1]
-      let compName = reg[2]
-      fs.copySync(file, path.join(dist, 'examples', siteName, compName, path.basename(file)))
+      let destPath = path.join(dist, 'examples', reg[1], reg[2], path.basename(file))
+      fs.copySync(file, destPath)
     })
 
   // 进行站点、组件分类、替换等
   let componentListDom = []
+
   fs.readdirSync(examplesPath).forEach(site => {
     fs.readdirSync(path.join(examplesPath, site)).forEach((comp, index) => {
       // example dir may contains multiple pages
