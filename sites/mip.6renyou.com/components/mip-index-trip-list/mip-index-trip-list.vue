@@ -35,11 +35,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import axios from 'axios'
-import toast from 'vue-toasted'
+import toast from '../../common/toast'
 
-Vue.use(toast)
 let options = {
   position: 'bottom-center',
   duration: 2000
@@ -72,10 +69,9 @@ export default {
   methods: {
     load (cb) {
       if (isLoaded) return
-      axios.get('https://m.6renyou.com/mip_service/get_hot_trip_list?dest=' + destName + '&page=' + page).then(resp => {
-        resp = resp.data
+      fetch('https://m.6renyou.com/mip_service/get_hot_trip_list?dest=' + destName + '&page=' + page).then(resp => resp.json()).then(resp => {
         if (!resp || resp === null || resp.length === 0) {
-          Vue.toasted.show('没有更多', options)
+          toast.show('没有更多', options)
           isLoaded = true
           return
         }

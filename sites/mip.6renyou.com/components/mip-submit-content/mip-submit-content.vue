@@ -46,11 +46,8 @@
 </template>
 
 <script>
-import axios from 'axios'
-import Vue from 'vue'
-import toast from 'vue-toasted'
+import toast from '../../common/toast'
 
-Vue.use(toast)
 let options = {
   position: 'top-center',
   duration: 2000
@@ -84,7 +81,6 @@ export default {
   },
   watch: {
     info (val) {
-      val = JSON.parse(val)
       this.name = val.userInfo.userinfo.nickname
     }
   },
@@ -112,37 +108,36 @@ export default {
           for (let k in params) {
             _data.push(k + '=' + params[k])
           }
-          axios({
-            method: 'post',
-            url: 'https://m.6renyou.com/we_service/save_order',
-            data: _data.join('&'),
+          fetch('https://m.6renyou.com/we_service/save_order', {
+            method: 'POST',
+            body: _data.join('&'),
             headers: headers
-          }).then(res => {
+          }).then(res => res.json()).then(res => {
             console.log('下单返回信息', res)
             this.savePhone()
-            if (parseInt(res.data.status) === 1) {
+            if (parseInt(res.status) === 1) {
               this.baiduCB(this.name, this.phone, this.info)
               MIP.viewer.open('/order/result')
             } else {
-              Vue.toasted.show(res.data.message, options)
+              toast.show(res.message, options)
             }
           }).catch(err => {
-            Vue.toasted.show('下单失败' + err.message, options)
+            toast.show('下单失败' + err.message, options)
           })
         } else {
-          Vue.toasted.show('电话号码输入有误', options)
+          toast.show('电话号码输入有误', options)
         }
       } else {
-        Vue.toasted.show('请输入姓名和电话', options)
+        toast.show('请输入姓名和电话', options)
       }
     },
     savePhone () {
-      let CustomStorage = MIP.util.CustomStorage
+      let CustomStorage = MIP.util.customStorage
       let storage = new CustomStorage(0)
       storage.set('phone', this.phone)
     },
     getPhone () {
-      let CustomStorage = MIP.util.CustomStorage
+      let CustomStorage = MIP.util.customStorage
       let storage = new CustomStorage(0)
       return storage.get('phone')
     },
@@ -150,12 +145,18 @@ export default {
       let data = {
         name,
         phone,
-        info: JSON.parse(this.info),
+        info: this.info,
         dest: this.destination,
         days: this.day
       }
-      axios.post('/order/callback/baidu', data).then(resp => {
-        console.log(resp.data)
+      fetch('/order/callback/baidu', {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(resp => resp.json()).then(resp => {
+        console.log(resp)
       }).catch(err => {
         console.log(err)
       })

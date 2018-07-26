@@ -161,7 +161,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
 export default {
   props: {
@@ -184,8 +183,7 @@ export default {
     }
   },
   mounted () {
-    axios.get('https://m.6renyou.com/mip_service/get_trip_detail?id=' + this.tripid).then(resp => {
-      resp = resp.data
+    fetch('https://m.6renyou.com/mip_service/get_trip_detail?id=' + this.tripid).then(resp => resp.json()).then(resp => {
       if (!resp || resp == null) return
       this.title = resp.title
       this.feature = resp.feature

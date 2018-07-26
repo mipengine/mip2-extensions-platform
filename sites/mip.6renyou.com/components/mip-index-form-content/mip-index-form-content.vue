@@ -54,10 +54,8 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import toast from 'vue-toasted'
+import toast from '../../common/toast'
 
-Vue.use(toast)
 let options = {
   position: 'top-center',
   duration: 2000
@@ -91,11 +89,11 @@ export default {
     },
     jump () {
       if (this.days < 3) {
-        Vue.toasted.show('天数不能小于三天', options)
+        toast.show('天数不能小于三天', options)
         return
       }
       if (this.destName === '') {
-        Vue.toasted.show('您还未填写目的地', options)
+        toast.show('您还未填写目的地', options)
         return
       }
       MIP.viewer.open('/order/submit/' + this.destName + '/' + this.days)
