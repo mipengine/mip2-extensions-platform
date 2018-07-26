@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html mip>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>MIP page</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <style mip-custom>
+        /* 自定义样式 */
+
+        html,
+        body,
+        div {
+            padding: 0;
+            margin: 0;
+        }
+
+        html {
+            font-size: 62.5%;
+        }
+
+        .flex {
+            display: flex;
+        }
+
+        .star-rating {
+            unicode-bidi: bidi-override;
+            color: #ddd;
+            font-size: 0;
+            height: 25px;
+            margin: 0 auto;
+            position: relative;
+            display: table;
+            padding: 0;
+            text-shadow: 0px 1px 0 #a2a2a2;
+        }
+
+        .star-rating span {
+            padding: 2px;
+            font-size: 20px;
+        }
+
+        .star-rating span:after {
+            content: "★";
+        }
+
+        .star-rating-top {
+            color: #FFD700;
+            padding: 0;
+            position: absolute;
+            z-index: 1;
+            display: block;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .star-rating-bottom {
+            padding: 0;
+            display: block;
+            z-index: 0;
+        }
+
+        .course-desc-content {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .course-title {
+            font-size: 1.6rem;
+            line-height: 4rem;
+            height: 4rem;
+        }
+
+        .course-desc {
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+
+        .unit {
+            font-size: 1.2rem;
+            color: #FF1211;
+        }
+
+        .current-price {
+            font-size: 1.7rem;
+            color: #FF1211;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+        }
+
+        .old-price,
+        .count {
+            font-size: 1.2rem;
+            color: #999;
+        }
+
+        .br {
+            background: #f5f5f5;
+            height: 6px;
+        }
+
+        .evaluate-content {
+            font-size: 1rem;
+            color: #666;
+            border-top: 4px solid #f1f1f1;
+            border-bottom: 6px solid #f1f1f1;
+            flex-direction: column;
+            align-items: center;
+            padding-bottom: 1rem;
+        }
+
+        .evaluate-left {
+            flex-direction: column;
+            width: 15rem;
+            align-items: center;
+            justify-content: center;
+            padding-top: 1rem;
+        }
+
+        .evaluate-item {
+            line-height: 2.5rem;
+            height: 2.5rem;
+        }
+
+        .user-pic {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 100%;
+            overflow: hidden;
+        }
+
+        .user-list {
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .user-info {
+            padding-top: 1rem;
+            height: 5rem;
+            align-items: center;
+            padding-left: 10px;
+        }
+
+        .user-message {
+            padding-left: 10px;
+            line-height: 1.8rem;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 1rem;
+        }
+
+        .evaluate-item-content {
+            padding-left: 10px;
+            padding: 1rem;
+            color: #666;
+        }
+
+        .evaluate-title {
+            padding-right: 1rem;
+            line-height: 3rem;
+        }
+
+        .evaluate-count {
+            padding-left: 1rem;
+            color: #FE7457;
+            line-height: 2.8rem;
+        }
+
+        .stars {
+            align-items: center;
+        }
+
+        .pay-btn {
+            width: 100%;
+            height: 6rem;
+            line-height: 6rem;
+            color: #fff;
+            text-align: center;
+            background: linear-gradient(to right, #FF8F53, #FF5E59);
+        }
+
+        .tab-content {
+            padding-bottom: 6rem;
+        }
+    </style>
+</head>
+
+<body>
+    <mip-shell>
+        <script type="application/json">
+              {
+                "routes": [
+                    {
+                        "pattern": "*",
+                        "meta": {
+                            "header": {
+                                "show": true,
+                                "xiongzhang": true,
+                                "title": "中大网校"
+                            },
+                            "view":{
+                                "isIndex": false
+                            }
+                        }
+                    }
+                ]
+            }
+            </script>
+    </mip-shell>
+    <div>
+        <mip-fixed type="top" data-slide class="fix-content" top="5rem">
+            导学：一级建造师精品课程(1)
+        </mip-fixed>
+        <mip-img layout="responsive" width="350" height="200" src="https://www.mipengine.org/static/img/sample_01.jpg">
+        </mip-img>
+        <div class="course-desc-content">
+            <div class="course-title">[VIP考霸特训班]一级建造师建筑法规</div>
+            <div class="course-desc flex">
+                <div class="course-price-content">
+                    <span class="unit">￥</span>
+                    <span class="current-price">188</span>
+                    <span class="old-price">￥199</span>
+                </div>
+                <div class="count">
+                    已有193人报名
+                </div>
+            </div>
+        </div>
+        <div class="br"></div>
+        <mip-vd-tabs>
+            <section>
+                <li>详情</li>
+                <li>课程目录</li>
+                <li>评价</li>
+            </section>
+            <div class="tab-content">
+                <mip-img layout="responsive" width="350" height="263" src="https://img.alicdn.com/imgextra/i4/221042950/TB2JPJ5vTtYBeNjy1XdXXXXyVXa_!!221042950.jpg">
+                </mip-img>
+                <mip-img layout="responsive" width="350" height="263" src="https://img.alicdn.com/imgextra/i1/221042950/TB2fxO6nfuSBuNkHFqDXXXfhVXa_!!221042950.jpg">
+                </mip-img>
+                <mip-img layout="responsive" width="350" height="263" src="https://img.alicdn.com/imgextra/i2/221042950/TB2MkAqvER1BeNjy0FmXXb0wVXa_!!221042950.jpg">
+                </mip-img>
+                <mip-img layout="responsive" width="350" height="263" src="https://img.alicdn.com/imgextra/i4/221042950/TB2aOq1nndYBeNkSmLyXXXfnVXa_!!221042950.jpg">
+                </mip-img>
+                <mip-img layout="responsive" width="350" height="263" src="https://img.alicdn.com/imgextra/i3/221042950/TB2H2jkwr1YBuNjSszhXXcUsFXa_!!221042950.jpg">
+                </mip-img>
+                <mip-img layout="responsive" width="350" height="263" src="https://img.alicdn.com/imgextra/i4/221042950/TB2JPJ5vTtYBeNjy1XdXXXXyVXa_!!221042950.jpg">
+                </mip-img>
+            </div>
+            <div class="tab-content">
+                课程目录
+            </div>
+            <div class="tab-content">
+                <div class="evaluate-content flex">
+                    <div class="evaluate-left flex">
+                        <div>综合评星</div>
+                        <mip-zdwx-stars class="stars flex" style="padding-top: 1rem" value="4.5"></mip-zdwx-stars>
+                        <div class="evaluate-count">
+                            <span>0.00</span>
+                            <span>共0次</span>
+                        </div>
+                    </div>
+                    <div class="evaluate-right">
+                        <div class="evaluate-item flex">
+                            <span class="evaluate-title">专业能力</span>
+                            <mip-zdwx-stars class="stars flex" value="3.8"></mip-zdwx-stars>
+                            <span class="evaluate-count">4.90</span>
+                        </div>
+                        <div class="evaluate-item flex">
+                            <span class="evaluate-title">课程风采</span>
+                            <mip-zdwx-stars class="stars flex" value="4.5"></mip-zdwx-stars>
+                            <span class="evaluate-count">4.90</span>
+                        </div>
+                        <div class="evaluate-item flex">
+                            <span class="evaluate-title">资料提供</span>
+                            <mip-zdwx-stars class="stars flex" value="4.9"></mip-zdwx-stars>
+                            <span class="evaluate-count">4.90</span>
+                        </div>
+                    </div>
+                </div>
+                <mip-list synchronous-data class="servicePro">
+                    <script type="application/json">
+                              {
+                                  "items": [
+                                    {
+                                      "name": "神天兵",
+                                      "alias": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530956542030&di=9e7800721b687362fc0dac4c8fad75a9&imgtype=0&src=http%3A%2F%2Ftx.haiqq.com%2Fuploads%2Fallimg%2F161008%2F0526146162-11.jpg",
+                                      "evaluate":"听了老师的讲课，感觉网校整体水平都不错，非常感谢老师的细心讲解！"
+                                    },{
+                                      "name": "龙太子",
+                                      "alias": "https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1530946443&di=4cade317cc5b3fb5d6673cba8bdc47d8&src=http://www.qqzhi.com/uploadpic/2015-01-08/102705475.jpg",
+                                      "evaluate":"听了老师的讲课，感觉网校整体水平都不错，非常感谢老师的细心讲解！"
+                                    },{
+                                      "name": "剑侠客",
+                                      "alias": "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1530956482975&di=3e06d449edadcf09de5a3f4d87dd2b04&imgtype=0&src=http%3A%2F%2Fwww.qqzhi.com%2Fuploadpic%2F2014-09-20%2F165113607.jpg",
+                                      "evaluate":"听了老师的讲课，感觉网校整体水平都不错，非常感谢老师的细心讲解！"
+                                    },{
+                                      "name": "逍遥生",
+                                      "alias": "https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1530946443&di=63fa5750f0ae88479a34bc211989cbdb&src=http://www.qqzhi.com/uploadpic/2014-08-23/063050699.jpg",
+                                      "evaluate":"听了老师的讲课，感觉网校整体水平都不错，非常感谢老师的细心讲解！"
+                                    }
+                                  ]
+                              }
+                          </script>
+                    <template type="mip-mustache">
+                        <div class="user-list">
+                            <div class="user-info flex">
+                                <div class="user-pic">
+                                    <mip-img src="{{alias}}"></mip-img>
+                                </div>
+                                <div class="user-message flex">
+                                    <div>{{name}}</div>
+                                    <div class="flex">
+                                        <span>评分</span>
+                                        <mip-zdwx-stars value="4.9"></mip-zdwx-stars>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="evaluate-item-content">
+                                {{evaluate}}
+                            </div>
+                        </div>
+                    </template>
+                </mip-list>
+            </div>
+        </mip-vd-tabs>
+    </div>
+    <!-- <mip-zdwx-signup></mip-zdwx-signup> -->
+    <mip-data>
+        <script type="application/json">
+            {
+                "info": {},
+                "config": {
+                    appid: "1536919189936218",
+                    clientId: "2MTZ98ul2gu1vmckEd7tlX5mpF7OZr7D",
+                    id: "info",
+                    autologin: false,
+                    endpoint:
+                      "https://192.168.1.92:8080/Order/buyProduct?id=B3F05EC3-FDAB-4920-9FE0-4BE1FE057D90",
+                    isGlobal: false,
+                    redirectUri: ""
+                  }
+            }
+        </script>
+    </mip-data>
+    <mip-fixed type="bottom" class="pay-btn" on="tap:user.login">
+        <mip-inservice-login id="user" m-bind:config="config">
+        </mip-inservice-login>
+        立即报名
+    </mip-fixed>
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="https://c.mipcdn.com/static/v1/mip-mustache/mip-mustache.js"></script>
+    <script src="https://c.mipcdn.com/static/v1/mip-list/mip-list.js"></script>
+    <script src="https://c.mipcdn.com/static/v1/mip-search-video/mip-search-video.js"></script>
+    <script src="https://c.mipcdn.com/static/v1/mip-fixed/mip-fixed.js"></script>
+    <script src="https://c.mipcdn.com/static/v1/mip-vd-tabs/mip-vd-tabs.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-inservice-login/mip-inservice-login.js"></script>
+    <script src="http://192.168.1.46:8111/mip-zdwx-stars/mip-zdwx-stars.js"></script>
+</body>
+
+</html>

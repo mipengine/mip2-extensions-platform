@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html mip>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <title>MIP page</title>
+  <link rel="canonical" href="对应的原页面地址">
+  <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+  <style mip-custom>
+    /* 自定义样式 */
+
+    html,
+    body,
+    div {
+      padding: 0;
+      margin: 0;
+    }
+
+    html {
+      font-size: 62.5%;
+    }
+
+    .course-introduce {
+      color: #666;
+      padding-bottom: 1rem;
+      font-size: 2rem;
+      padding-top: .2rem;
+      align-items: center;
+    }
+
+    .circular-point {
+      display: inline-block;
+      width: 1rem;
+      height: 1rem;
+      background: #ff6a4c;
+      border-radius: 100%;
+      margin-right: 1rem;
+    }
+
+    .courselist {
+      padding: 1rem;
+      background: #f7f7f7;
+    }
+
+    .course-item {
+      border: 1px solid #f1f1f1;
+      background: #fff;
+      border-radius: 6px;
+      margin-bottom: 2rem;
+      padding: 1rem;
+      box-shadow: 2px 2px 5px #ccc;
+    }
+
+    .flex {
+      display: flex;
+    }
+
+    .course-content {
+      padding: 1rem 0;
+      border-bottom: 1px dashed #ccc;
+    }
+
+    .course-item-right {
+      flex-direction: column;
+      justify-content: space-between;
+      padding-left: 1rem;
+      flex-grow: 1;
+    }
+
+    .course-title {
+      color: #333;
+      font-size: 1.4rem;
+    }
+
+    .course-desc {
+      align-items: center;
+    }
+
+    .course-price {
+      font-size: 1.4rem;
+      color: #ff6a4c;
+    }
+
+    .course-oldprice {
+      font-size: 1rem;
+      color: #ccc;
+      text-decoration: line-through;
+      padding-left: .5rem;
+    }
+
+    .course-type-content {
+      text-align: right;
+    }
+
+    .course-type {
+      display: inline-block;
+      color: #1B8EEE;
+      border: 1px solid #1B8EEE;
+      font-size: 1.2rem;
+      line-height: 1.2rem;
+      height: 1.2rem;
+      padding: .2rem .4rem;
+      border-radius: 1rem;
+    }
+
+    .course-info {
+      font-size: 1.2rem;
+      line-height: 1.2rem;
+      height: 1.2rem;
+      text-align: right;
+      width: 100%;
+      padding-top: 1rem;
+    }
+
+    .course-info a {
+      color: #ccc;
+    }
+
+    .fix-content {
+      padding-left: 1rem;
+      height: 5rem;
+      font-size: 1.6rem;
+      line-height: 5rem;
+      color: #fff;
+      background: #3333332e;
+      top: 5rem;
+      top: 4rem !important;
+    }
+  </style>
+</head>
+
+<body>
+  <mip-shell>
+    <script type="application/json">
+              {
+                "routes": [
+                    {
+                        "pattern": "*",
+                        "meta": {
+                            "header": {
+                                "show": true,
+                                "xiongzhang": true,
+                                "title": "试听课程"
+                            },
+                            "view":{
+                                "isIndex": false
+                            }
+                        }
+                    }
+                ]
+            }
+            </script>
+  </mip-shell>
+  <div>
+    <mip-fixed type="top" data-slide class="fix-content" top="5rem">
+      导学：一级建造师精品课程(1)
+    </mip-fixed>
+    <mip-search-video layout="responsive" width="640" height="360" video-src="https://mip-doc.bj.bcebos.com/MIPSampleVideo.mp4"
+      poster="https://mip-doc.bj.bcebos.com/mip-video-poster.jpg" controls>
+    </mip-search-video>
+    <div class="courselist">
+      <h2 class="course-introduce flex">
+        <span class="circular-point"></span> 课程推荐</h2>
+      <mip-list synchronous-data>
+        <script type="application/json">
+                {
+                    "items": [
+                        {
+                            "name": "lee",
+                            "url": "coursedetail.html",
+                            "pic":"https://www.mipengine.org/static/img/sample_01.jpg",
+                            "title":"[VIP考霸特训班](一建)市政公用工程管理与实务(全科)",
+                            "price":"￥12999",
+                            "type":"全科"
+                        }, {
+                            "name": "ruige",
+                            "url": "coursedetail.html",
+                            "pic":"https://www.mipengine.org/static/img/sample_01.jpg",
+                            "title":"一级建造师svip班",
+                            "price":"￥12999",
+                            "type":"全科"
+                        }, {
+                            "name": "langbo",
+                            "url": "coursedetail.html",
+                            "pic":"https://www.mipengine.org/static/img/sample_01.jpg",
+                            "title":"一级建造师svip班",
+                            "price":"￥12999",
+                            "type":"全科"
+                        }
+                    ]
+                }
+            </script>
+        <template type="mip-mustache">
+          <div class="course-item">
+            <div class="course-content flex">
+              <div class="course-item-left">
+                <mip-img width="130" height="76" src="{{pic}}">
+                </mip-img>
+              </div>
+              <div class="course-item-right flex">
+                <div class="course-title">{{title}}</div>
+                <div class="course-desc flex">
+                  <span class="course-price">{{price}}</span>
+                  <span class="course-oldprice">原价{{price}}</span>
+                </div>
+                <div class="course-type-content">
+                  <span class="course-type">{{type}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="course-info">
+              <a data-type="mip" data-title="" href="{{url}}">查看详情 ></a>
+            </div>
+          </div>
+        </template>
+      </mip-list>
+    </div>
+  </div>
+  <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+  <script src="https://c.mipcdn.com/static/v1/mip-mustache/mip-mustache.js"></script>
+  <script src="https://c.mipcdn.com/static/v1/mip-list/mip-list.js"></script>
+  <script src="https://c.mipcdn.com/static/v1/mip-search-video/mip-search-video.js"></script>
+  <script src="https://c.mipcdn.com/static/v1/mip-fixed/mip-fixed.js"></script>
+</body>
+
+</html>
