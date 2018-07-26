@@ -1,114 +1,118 @@
 <template>
-  <div class="wrapper footer">
-    <a
-      href="../../index/index.html"
-      data-type="mip">
-      <div
-        class="icon icon1"
-        @click="aaa($event)"/>
-    </a>
-    <a
-      href="../../product/category.html"
-      data-type="mip">
-      <div
-        class="icon icon2"
-        @click="aaa($event)"/>
-    </a>
-    <a
-      href="../../article/index.html"
-      data-type="mip">
-      <div
-        class="icon icon3"
-        @click="aaa($event)"/>
-    </a>
-    <a
-      href="../../user/index.html"
-      data-type="mip">
-      <div
-        class="icon icon4"
-        @click="aaa($event)"/>
-    </a>
+  <div class="wrapper">
+    <mip-fix class="footer">
+      <a
+        :href="geturl('/index/index.html')"
+        data-type="mip">
+        <div
+          class="icon icon1"
+          @click="aaa($event)"/>
+      </a>
+      <a
+        :href="geturl('/product/category.html')"
+        data-type="mip">
+        <div
+          class="icon icon2"
+          @click="aaa($event)"/>
+      </a>
+      <a
+        :href="geturl('/article/index.html')"
+        data-type="mip">
+        <div
+          class="icon icon3"
+          @click="aaa($event)"/>
+      </a>
+      <a
+        :href="geturl('/user/index.html')"
+        data-type="mip">
+        <div
+          class="icon icon4"
+          @click="aaa($event)"/>
+      </a>
+    </mip-fix>
   </div>
 </template>
 
 <style scoped>
-  .wrapper {
-    margin: 0 auto;
-    text-align: center;
-  }
+    .wrapper {
+        margin: 0 auto;
+        text-align: center;
+    }
 
-  .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 0.6rem;
-    border-top: 0.01rem solid #d9d9d9;
-    background: #fff;
-    z-index: 999;
-    display: flex;
-    justify-content: space-between;
-  }
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 0.6rem;
+        border-top: 0.01rem solid #d9d9d9;
+        background: #fff;
+        z-index: 999;
+        display: flex;
+        justify-content: space-between;
+    }
 
-  .footer a {
-    text-align: center;
-    display: flex;
-    align-items: center;
-    width: 25%;
-    height: 0.55rem;
-    line-height: 0.55rem;
-  }
+    .footer a {
+        text-align: center;
+        display: flex;
+        align-items: center;
+        width: 25%;
+        height: 0.55rem;
+        line-height: 0.55rem;
+    }
 
-  .footer a .icon {
-    width: 0.25rem;
-    height: 0.43rem;
-    margin: 0 auto;
-  }
+    .footer a .icon {
+        width: 0.25rem;
+        height: 0.43rem;
+        margin: 0 auto;
+    }
 
-  .footer a .icon.icon1 {
-    background: url(../../static/image/home_bar1_no.png) no-repeat;
-    background-size: contain;
-  }
+    .footer a .icon.icon1 {
+        background: url(../../static/image/home_bar1_no.png) no-repeat;
+        background-size: contain;
+    }
 
-  .footer a .icon.icon1.active {
-    background: url(../../static/image/home_bar1_sel.png) no-repeat;
-    background-size: contain;
-  }
+    .footer a .icon.icon1.active {
+        background: url(../../static/image/home_bar1_sel.png) no-repeat;
+        background-size: contain;
+    }
 
-  .footer a .icon.icon2 {
-    background: url(../../static/image/home_bar2_no.png) no-repeat;
-    background-size: contain;
-  }
+    .footer a .icon.icon2 {
+        background: url(../../static/image/home_bar2_no.png) no-repeat;
+        background-size: contain;
+    }
 
-  .footer a .icon.icon2.active {
-    background: url(../../static/image/home_bar2_sel.png) no-repeat;
-    background-size: contain;
-  }
+    .footer a .icon.icon2.active {
+        background: url(../../static/image/home_bar2_sel.png) no-repeat;
+        background-size: contain;
+    }
 
-  .footer a .icon.icon3 {
-    background: url(../../static/image/home_bar3_no.png) no-repeat;
-    background-size: contain;
-  }
+    .footer a .icon.icon3 {
+        background: url(../../static/image/home_bar3_no.png) no-repeat;
+        background-size: contain;
+    }
 
-  .footer a .icon.icon3.active {
-    background: url(../../static/image/home_bar3_sel.png) no-repeat;
-    background-size: contain;
-  }
+    .footer a .icon.icon3.active {
+        background: url(../../static/image/home_bar3_sel.png) no-repeat;
+        background-size: contain;
+    }
 
-  .footer a .icon.icon4 {
-    background: url(../../static/image/home_bar4_no.png) no-repeat;
-    background-size: contain;
-  }
+    .footer a .icon.icon4 {
+        background: url(../../static/image/home_bar4_no.png) no-repeat;
+        background-size: contain;
+    }
 
-  .footer a .icon.icon4.active {
-    background: url(../../static/image/home_bar4_sel.png) no-repeat;
-    background-size: contain;
-  }
+    .footer a .icon.icon4.active {
+        background: url(../../static/image/home_bar4_sel.png) no-repeat;
+        background-size: contain;
+    }
 </style>
 
 <script>
+import config from '../../utils/config'
 export default {
   mounted () {
+    MIP.viewer.fixedElement.init()
     console.log('This is 底部固定菜单栏 !')
   },
   methods: {
@@ -144,7 +148,12 @@ export default {
         }
         return a
       }
+    },
+    geturl (url) {
+      return MIP.util.makeCacheUrl(config.data().burl + url)
     }
   }
+
 }
+
 </script>

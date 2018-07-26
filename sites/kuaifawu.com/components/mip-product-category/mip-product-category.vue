@@ -34,7 +34,7 @@
                   class="item"
                   type="mip-mustache">
                   <a
-                    :href="'/product/info.html?id=' + vv.id "
+                    :href="geturl('/product/info.html?id=' + vv.id)"
                     data-type="mip">
                     <p class="i-title">{{ vv.title }}</p>
                     <p class="i-text">{{ vv.sketch }}</p>
@@ -177,6 +177,9 @@ export default {
     reset () {
       this.product = []
       this.productsalesattr = []
+    },
+    geturl (url) {
+      return MIP.util.makeCacheUrl(config.data().burl + url)
     },
     changelist: function (pcid) {
       pcid = pcid || 1

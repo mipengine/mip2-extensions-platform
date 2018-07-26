@@ -29,7 +29,7 @@
             class="list"
             type="mip-mustache">
             <a
-              :href="'/product/info.html?id=' + val.id + '_' + searchdata.ct + '_' + searchdata.ar"
+              :href="geturl('/product/info.html?id=' + val.id + '_' + searchdata.ct + '_' + searchdata.ar)"
               :class="{active: val.id == searchdata.id && 0 == searchdata.packageid}">{{ val.title }}</a>
           </div>
         </div>
@@ -44,7 +44,7 @@
           class="list"
           type="mip-mustache">
           <a
-            :href="'/product/info.html?id=' + val.mainproductsalesattr + '_' + searchdata.ct + '_' + searchdata.ar + '_' + searchdata.providerid + '_' + val.id"
+            :href="geturl('/product/info.html?id=' + val.mainproductsalesattr + '_' + searchdata.ct + '_' + searchdata.ar + '_' + searchdata.providerid + '_' + val.id)"
             :class="{active: val.id == searchdata.packageid}">{{ val.title }}</a>
         </div>
       </div>
@@ -69,7 +69,7 @@
           <mip-img :src="providerdetailinfo.providerinfo.avatar"/><span>{{ providerdetailinfo.providerinfo.realname }}</span>
         </div>
         <a
-          :href="'/provider/list.html?pid=' + id + '_' + ct + '_' + ar + '_0_0_0_0_0'"
+          :href="geturl('/provider/list.html?pid=' + id + '_' + ct + '_' + ar + '_0_0_0_0_0')"
           class="change">
           <span>查看全部 &gt;</span>
         </a>
@@ -307,6 +307,9 @@ export default {
   methods: {
     show () {
       this.flag = !this.flag
+    },
+    geturl (url) {
+      return MIP.util.makeCacheUrl(config.data().burl + url)
     },
     selectedPro (productsalesattrid, id, title, type, packageid, parentid) {
       this.provinceid = id

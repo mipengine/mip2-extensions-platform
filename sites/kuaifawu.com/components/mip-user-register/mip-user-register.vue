@@ -57,7 +57,9 @@
       </ul>
     </div>
     <p class="reg-tip">
-      绑定账号即表示同意并遵守<a href="/help/license.html">《快法务用户协议》</a>
+      绑定账号即表示同意并遵守<a
+        :href="geturl('/help/license.html')"
+        date-type="mip">《快法务用户协议》</a>
     </p>
     <input
       id="sendtype"
@@ -132,7 +134,7 @@
 
 <script>
 import util from '../../utils/toast.js'
-
+import config from '../../utils/config.js'
 export default {
   data () {
     return {
@@ -258,6 +260,9 @@ export default {
           window.MIP.viewer.open(MIP.util.makeCacheUrl(returnurl), {isMipLink: true})
         }
       })
+    },
+    geturl (url) {
+      return MIP.util.makeCacheUrl(config.data().burl + url)
     }
   }
 }

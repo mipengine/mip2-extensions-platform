@@ -7,7 +7,7 @@
         class="item-list"
         type="mip-mustache">
         <div class="item">
-          <a :href="'/product/info.html?id=' + pid + '_' + ct + '_' + ar + '_' + val.id +'_' + packageid">
+          <a :href="geturl('/product/info.html?id=' + pid + '_' + ct + '_' + ar + '_' + val.id +'_' + packageid)">
             <div class="left">
               <mip-img :src="val.avatar"/>
             </div>
@@ -42,6 +42,7 @@
 </style>
 
 <script>
+import config from '../../utils/config'
 export default {
   data () {
     return {
@@ -79,6 +80,11 @@ export default {
         }
       }
       return theRequest
+    }
+  },
+  methods: {
+    geturl (url) {
+      return MIP.util.makeCacheUrl(config.data().burl + url)
     }
   }
 }

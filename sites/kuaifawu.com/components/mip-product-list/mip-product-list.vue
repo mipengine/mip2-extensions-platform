@@ -53,11 +53,11 @@ export default {
   mounted () {
     console.log('This is 产品分类 !')
     const self = this
-    // let fetchJsonp = require('fetch-jsonp')
+    let fetchJsonp = require('fetch-jsonp')
     changelist(1)
 
     function changelist (pcid) {
-      window.fetchJsonp('http://api.kuaifawu.com/mip/product/categoryinfo/pcid/' + pcid, {
+      fetchJsonp('http://api.kuaifawu.com/mip/product/categoryinfo/pcid/' + pcid, {
         jsonpCallback: 'callback'
       }).then(function (res) {
         return res.json()

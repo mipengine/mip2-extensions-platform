@@ -70,7 +70,7 @@
     <div class="fix-bottom">
       <div class="left">应付：<span>￥{{ sum }}</span></div>
       <a
-        href="/orders/confirm.html"
+        :href="geturl('/orders/confirm.html')"
         data-type="mip"
         class="right">去结算</a>
     </div>
@@ -82,6 +82,7 @@
 
 </style>
 <script>
+import config from '../../utils/config'
 export default {
   props: {
     info: {
@@ -279,6 +280,9 @@ export default {
       }
       this.relate[id].showmoney = saleprice && this.relteMoney[obj.id] ? '￥' + saleprice : ''
       this.relate[id].money = saleprice * this.relteMoney[obj.id]
+    },
+    geturl (url) {
+      return MIP.util.makeCacheUrl(config.data().burl + url)
     }
   }
 

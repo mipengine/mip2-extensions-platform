@@ -111,7 +111,7 @@
       <ul>
         <li class="mycenter-module-li first-li">
           <a
-            href="/user/question.html"
+            :href="geturl('/user/question.html')"
             data-type="mip">
             <span>
               <b class="question_icon">
@@ -127,7 +127,7 @@
         </li>
         <li class="mycenter-module-li">
           <a
-            href="/user/about.html"
+            :href="geturl('/user/about.html')"
             data-type="mip">
             <span>
               <b class="about_icon">
@@ -295,6 +295,9 @@ export default {
       storage.rm('sessionIds')
       this.isreg = 1
       console.log(this.isreg)
+    },
+    geturl (url) {
+      return MIP.util.makeCacheUrl(config.data().burl + url)
     }
   }
 }
