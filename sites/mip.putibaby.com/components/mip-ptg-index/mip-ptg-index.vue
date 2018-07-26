@@ -69,6 +69,7 @@
   .wrapper {
     margin: 0 auto;
     text-align: center;
+    margin-top:44px;
   }
 
   /* <!-- index.css --> */
@@ -84,7 +85,6 @@
   .top_level_1 {
     width: 100%;
     position: relative;
-    margin-top: 40px;
   }
 
   mip-form form {
@@ -162,7 +162,7 @@
     text-align: center;
     float: left;
     background-position:center;
-    margin-bottom:50px;
+    margin-bottom:70px;
   }
 
   .help {

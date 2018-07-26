@@ -42,6 +42,7 @@ export default {
       url: 'https://openapi.baidu.com/oauth/2.0/mip/authorize?response_type=code' +
                 '&scope=snsapi_userinfo' +
                 '&confirm_login=2' +
+                '&modal=1' +
                 '&client_id=' + client_id +
                 '&redirect_uri=' + encodeURIComponent(redirect_uri) +
                 '&state=' + encodeURIComponent(JSON.stringify(state)) +
@@ -51,8 +52,6 @@ export default {
   },
   created () {
     this.checkConfig()
-    // 发送打点pv
-    log('auth_page', this.config.xzh_id)
   },
   mounted () {
     window.addEventListener('message', this.onmessage, false)
@@ -126,9 +125,10 @@ export default {
             {isMipLink: true, replace: true}
           )
         }
-      } else if (type === 'oauth-iframe-log') {
+      } else if (type === 'oauth-page-log') {
+        let { action, ext = {} } = value
         /* eslint-disable */
-        log(value.action, config.xzh_id)
+        log(action, ext, config.xzh_id)
         /* eslint-enable */
       }
     }
