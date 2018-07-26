@@ -36,7 +36,7 @@
             <span>合计￥{{ allOrder.currentPrice }}元（含运费￥{{ allOrder.sysExpressPrice }}）</span>
           </div>
           <div
-            v-show="payOrder.evaluate === 0 || payOrder.payStatus === 1 || payOrder.payStatus === 0"
+            v-show="allOrder.evaluate === 0 || allOrder.payStatus === 1 || allOrder.payStatus === 0"
             class="btn-group">
             <span
               v-show="allOrder.evaluate === 0"
@@ -87,7 +87,7 @@
             <span>合计￥{{ unpayOrder.currentPrice }}元（含运费￥{{ unpayOrder.sysExpressPrice }}）</span>
           </div>
           <div
-            v-show="payOrder.payStatus === 0"
+            v-show="unpayOrder.payStatus === 0"
             class="btn-group">
             <span
               v-show="unpayOrder.payStatus === 0"
@@ -106,7 +106,7 @@
           v-show="payList.length != 0"
           :key="index"
           class="order-course-scoped"
-          @click.stop="goOrderDetail(unpayOrder,index)">
+          @click.stop="goOrderDetail(payOrder,index)">
           <div class="br"/>
           <div class="order-title-content">
             <p class="order-num">订单编号：{{ payOrder.orderNumber }}</p>
@@ -279,6 +279,9 @@ export default {
 .order-title-content {
   display: flex;
   justify-content: space-between;
+  padding-right: 1rem;
+  background: #fff;
+  align-items: center;
 }
 .order-num,
 .order-course > span:first-of-type {
@@ -375,7 +378,7 @@ export default {
 }
 .order-btn {
   font-size: 1.2rem;
-  padding: 0.8rem;
+  padding: 0.4rem 0.8rem;
   border: 1px solid #333;
   margin-right: 1.2rem;
   border-radius: 2.8rem;
