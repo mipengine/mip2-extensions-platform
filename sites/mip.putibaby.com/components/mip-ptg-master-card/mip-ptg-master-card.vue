@@ -1016,25 +1016,20 @@ export default {
       self.$set(self, 'isLogin', true)
       self.$set(self, 'isUnion', event.userInfo.isUnion)
 
-      if (event.userInfo.isUnion &&
-          (API.next_cmd === 'fav' || sessionStorage.next_cmd === 'fav')) {
+      var origin = API.next_cmd || event.origin
+      console.log(origin)
+      API.next_cmd = ''
+
+      if (event.userInfo.isUnion && origin === 'fav') {
         console.log('logindone to fav')
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
         API.favMaster(self.data.info.id, function (isOk, res) {
           if (isOk) { self.$set(self.data.info, 'isfav', true) }
         })
-      } else if (event.userInfo.isUnion &&
-          (API.next_cmd === 'update_time' || sessionStorage.next_cmd === 'update_time')) {
+      } else if (event.userInfo.isUnion && origin === 'update_time') {
         console.log('logindone to update_time')
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_time_mip?mcode=' + self.data.codeid), {})
-      } else if (event.userInfo.isUnion &&
-          (API.next_cmd === 'order_list' || sessionStorage.next_cmd === 'order_list')) {
+      } else if (event.userInfo.isUnion && origin === 'order_list') {
         console.log('logindone to order_list')
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
       } else if (!event.userInfo.isUnion) {
         console.log('go to submit_ph')
@@ -1065,9 +1060,16 @@ export default {
 
     checkLogin_ (cmd) {
       if (!this.isLogin) {
-        API.next_cmd = cmd
-        sessionStorage.next_cmd = cmd
-        this.$emit('login')
+        // API.next_cmd = cmd
+        // sessionStorage.next_cmd = cmd
+        // this.$emit('login')
+        if (cmd === 'fav') {
+          this.$emit('login1')
+        } else if (cmd === 'order_list') {
+          this.$emit('login2')
+        } else if (cmd === 'update_time') {
+          this.$emit('login3')
+        }
         return false
       }
       return true
