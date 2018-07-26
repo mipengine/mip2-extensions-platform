@@ -249,7 +249,7 @@ export default {
           // 获得后台实际返回的内容
           response.json().then(function (data) {
             // 判断如果取消成功了，需要重新渲染数据。修改allOrderList和unpayList对应的数据。
-            if(data.code === '000000'){
+            if (data.code === '000000') {
               _this.allOrderList.forEach(function (value, key) {
                 if (_this.currentOrderId === value.orderId) {
                   value.orderStatus = 0
@@ -261,7 +261,6 @@ export default {
                 }
               })
             }
-            
           })
         })
         .catch(function (err) {
