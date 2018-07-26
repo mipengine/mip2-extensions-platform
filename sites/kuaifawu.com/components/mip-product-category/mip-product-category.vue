@@ -70,10 +70,14 @@
         font-size: 0.15rem;
         background-color: #f3f6f6;
         color: #666;
-        border-bottom: 0.02rem solid #e1e2df;
+        border-bottom: 0.014rem solid #e1e2df;
         text-align: center;
-        padding:0.3rem 0.1rem;
+        height: 0.6rem;
+        line-height: 0.6rem;
         cursor: pointer;
+    }
+    .k-nav li a {
+        display: block;
     }
     .k-nav li.active {
         background-color: #fff;

@@ -1,15 +1,13 @@
-# `mip-product-category`
+# `mip-product-list`
 
 ## 说明
 
-产品分类->产品类型
+产品列表
 
 ## 示例
-* /product/category?pcid=1
+
+<mip-product-list></mip-product-list>
 
 ## 属性
 
-***
-pcid 为产品属性id
-***
-
+无
