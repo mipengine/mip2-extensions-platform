@@ -1031,9 +1031,9 @@ export default {
       } else if (event.userInfo.isUnion && origin === 'order_list') {
         console.log('logindone to order_list')
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
-      } else if (!event.userInfo.isUnion) {
+      } else if (origin && !event.userInfo.isUnion) {
         console.log('go to submit_ph')
-        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/' + origin), {})
       }
 
       API.getMasterInfo(self.data.info.id, function (isOk, data) {

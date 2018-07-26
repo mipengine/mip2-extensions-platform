@@ -18,9 +18,7 @@
         <p>7、本券不与菩提果公司其他优惠同享。</p>
 
       </div>
-      <a
-        href="index"
-        mip-link><div class="close_btn">关闭</div></a>
+      <a @click="handleGoBack"><div class="close_btn">关闭</div></a>
     </div>
   </div>
 </template>
@@ -191,6 +189,9 @@ export default {
 
     load_data () {
       console.log('should set data')
+    },
+    handleGoBack () {
+      MIP.viewer.page.back()
     }
   }
 

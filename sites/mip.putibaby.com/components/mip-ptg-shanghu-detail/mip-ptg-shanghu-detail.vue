@@ -199,7 +199,7 @@
   text-align: center;
 }
 .ptg_sy {
-  background-image: url('/i/ptg_sy.png');
+  /* background-image: url('/i/ptg_sy.png'); */
   background-size: 160px;
   background-repeat: repeat-y;
   background-position: center;
