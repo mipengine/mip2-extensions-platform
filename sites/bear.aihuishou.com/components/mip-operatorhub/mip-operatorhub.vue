@@ -4,29 +4,26 @@
     <div class="operator-wrapper">
       <a
         :href="[baseUrl+'/account/login']"
-        data-type="mip"
         class="operator-item">
-        <span class="iconfont icon-gerenzhongxin">&nbsp;</span>
+        <span class="iconfont icon-gerenzhongxin" />
         <p>个人中心</p>
       </a>
       <a
         :href="[baseUrl+'/order']"
-        data-type="mip"
         class="operator-item">
-        <span class="iconfont icon-huishouliucheng1">&nbsp;</span>
+        <span class="iconfont icon-huishouliucheng1" />
         <p>回收订单</p>
       </a>
       <a
         :href="[baseUrl+'/product']"
         class="operator-item">
-        <span class="iconfont icon-shebeigujia">&nbsp;</span>
+        <span class="iconfont icon-shebeigujia" />
         <p>免费估价</p>
       </a>
       <a
         :href="[baseUrl+'/help/commonquestion']"
-        data-type="mip"
         class="operator-item">
-        <span class="iconfont icon-changjianwenti1">&nbsp;</span>
+        <span class="iconfont icon-changjianwenti1" />
         <p>帮助中心</p>
       </a>
     </div>
