@@ -198,7 +198,7 @@ export default {
           .catch(function (err) {
             console.log('Fetch Error :-S', err)
           })
-      } else if (event.userInfo.userStatus === 1) {
+      } else if (event.userInfo.userStatus === 3) {
         _this.errorMessage = '异常访问！'
         _this.showErrorMessage = true
       } else {
