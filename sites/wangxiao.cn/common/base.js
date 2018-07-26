@@ -22,7 +22,7 @@ export default ({
     }
   },
   getToken: function () {
-    return window.localStorage.getItem('mip.wangxiao.token') || ''
+    return window.localStorage.getItem('mip-login-xzh:sessionId:https://mip.wangxiao.cn:443/baiduUser/user') || window.localStorage.getItem('mip.wangxiao.token')
   },
   setToken: function (token) {
     if (token) {
