@@ -52,25 +52,29 @@
           src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/add.png" />
         <p>点击添加爱车</p>
       </div>
-      <div
-        v-if="list.length > 0"
-        class="s4s-set-default"
-        @click="setDefault"> 查询选中车辆违章 </div>
-      <div
-        v-if="showConfirm"
-        class="s4s-confirm">
-        <div class="s4s-confirm-body">
-          <!-- <div class="s4s-confirm-title">提示</div> -->
-          <div class="s4s-confirm-content">确认删除此车辆？</div>
-          <div class="s4s-confirm-btn">
-            <span @click="cancelBtn">取消</span>
-            <span
-              style="color: #108EE9;"
-              @click="confirmBtn">确认</span>
+      <mip-fixed type="bottom">
+        <div
+          v-if="list.length > 0"
+          class="s4s-set-default"
+          @click="setDefault"> 查询选中车辆违章 </div>
+      </mip-fixed>
+      <mip-fixed type="top">
+        <div
+          v-if="showConfirm"
+          class="s4s-confirm">
+          <div class="s4s-confirm-body">
+            <!-- <div class="s4s-confirm-title">提示</div> -->
+            <div class="s4s-confirm-content">确认删除此车辆？</div>
+            <div class="s4s-confirm-btn">
+              <span @click="cancelBtn">取消</span>
+              <span
+                style="color: #108EE9;"
+                @click="confirmBtn">确认</span>
+            </div>
           </div>
+          <div class="s4s-mask"/>
         </div>
-        <div class="s4s-mask"/>
-      </div>
+      </mip-fixed>
     </div>
 
   </div>
@@ -154,7 +158,6 @@ export default {
       })
     },
     editCar (car) {
-      console.log(car)
       MIP.setData({
         '#changeCarData': {
           car_id: car.Id + '',
@@ -180,7 +183,6 @@ export default {
           }
         })
         .catch(e => {
-          console.log(e)
           throw new Error(e)
         })
     }
@@ -200,7 +202,7 @@ export default {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: .19rem .15rem;
+  padding: 0.19rem 0.15rem;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
@@ -218,23 +220,23 @@ export default {
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
-  margin-left: .15rem;
+  margin-left: 0.15rem;
 }
 
 .car-info-edit {
-  padding: .04rem .1rem;
+  padding: 0.04rem 0.1rem;
 }
 .car-info-edit.orange {
-  border: .01rem solid #ff7b00;
-  margin-right: .15rem;
+  border: 0.01rem solid #ff7b00;
+  margin-right: 0.15rem;
   color: #ff7b00;
 }
 .car-info-edit.blue {
-  border: .01rem solid #4f7eff;
+  border: 0.01rem solid #4f7eff;
   color: #4f7eff;
 }
 .car-no {
-  font-size: .15rem;
+  font-size: 0.15rem;
   font-weight: 500;
   flex: 1;
   color: #1f2d3d;
@@ -242,41 +244,41 @@ export default {
 
 .s4s-set-default {
   width: 100%;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  height: .5rem;
+  height: 0.5rem;
   text-align: center;
-  line-height: .5rem;
-  font-size: .18rem;
+  line-height: 0.5rem;
+  font-size: 0.18rem;
   background-image: linear-gradient(40deg, #ff7c00 0%, #fe5a00 100%);
   color: #fff;
 }
 
 .s4s-car-add {
   background: #fff;
-  border-radius: .04rem;
-  padding: .2rem 0;
-  margin-top: .15rem;
+  border-radius: 0.04rem;
+  padding: 0.2rem 0;
+  margin-top: 0.15rem;
   text-align: center;
 }
 
 .s4s-car-add p {
   color: #666666;
-  font-size: .14rem;
-  padding-top: .15rem;
+  font-size: 0.14rem;
+  padding-top: 0.15rem;
 }
 .s4s-select-car {
   padding-bottom: 0.6rem;
 }
+.s4s-confirm {
+  height: 100vh;
+}
 
 .s4s-confirm-body {
   width: 76%;
-  position: fixed;
+  position: absolute;
   left: 50%;
   top: 50%;
   background: #fff;
-  border-radius: .04rem;
+  border-radius: 0.04rem;
   z-index: 9999;
   margin-left: -38%;
   -webkit-transform: translateY(-50%);
@@ -284,26 +286,26 @@ export default {
 }
 .s4s-confirm-title {
   text-align: center;
-  padding-top: .2rem;
+  padding-top: 0.2rem;
 }
 .s4s-confirm-content {
-  font-size: .16rem;
+  font-size: 0.16rem;
   color: #888;
   text-align: center;
-  padding: .25rem;
+  padding: 0.25rem;
 }
 .s4s-confirm-btn {
-  height: .45rem;
+  height: 0.45rem;
   display: -ms-flexbox;
   display: flex;
   -ms-flex-align: center;
   align-items: center;
-  border-top: .01rem rgba(0, 0, 0, 0.1) solid;
-  font-size: .15rem;
+  border-top: 0.01rem rgba(0, 0, 0, 0.1) solid;
+  font-size: 0.15rem;
 }
 .s4s-confirm-btn span {
-  line-height: .45rem;
-  border-right: .01rem rgba(0, 0, 0, 0.1) solid;
+  line-height: 0.45rem;
+  border-right: 0.01rem rgba(0, 0, 0, 0.1) solid;
   display: -ms-flexbox;
   display: flex;
   -ms-flex: 1;
@@ -315,7 +317,7 @@ export default {
   border-right: 0;
 }
 .s4s-mask {
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
   bottom: 0;

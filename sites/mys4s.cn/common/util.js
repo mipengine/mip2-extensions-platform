@@ -73,10 +73,11 @@ export default {
     return fetch('https://mys4s.cn/' + path, {
       method: 'POST',
       body: JSON.stringify(params),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'same-origin'
+      // headers: {
+      //   'Content-Type': 'application/json'
+      // },
+      // credentials: 'same-origin',
+      credentials: 'include'
     })
       .then(data => {
         return data.json()
