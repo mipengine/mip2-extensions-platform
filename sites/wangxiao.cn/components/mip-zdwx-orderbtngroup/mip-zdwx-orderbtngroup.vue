@@ -43,14 +43,14 @@ export default {
     goEvaluate (order) {
       let goodsId = order.goodsId || ''
       let orderId = order.orderNumber || ''
-      window.MIP.viewer.open(base.url + 'Order/toEvaluate?id=' + goodsId + '&orderId=' + orderId)
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toEvaluate?id=' + goodsId + '&orderId=' + orderId))
     },
     goStudy (order) {
-      window.top.location.href = order.url
+      MIP.viewer.open(order.url, {isMipLink: false})
     },
     goPay (order) {
       let orderId = order.orderNumber || ''
-      window.MIP.viewer.open(base.url + 'Order/toEvaluate?orderId=' + orderId)
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toPay?orderId=' + orderId))
     },
     cancelOrder (order) {
       let orderId = order.orderNumber || ''
@@ -71,7 +71,7 @@ export default {
         .then(function (response) {
           // 获得后台实际返回的内容
           response.json().then(function (data) {
-            window.MIP.viewer.open(base.url + 'Order/orderList?token=' + base.getToken())
+            MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/orderList?token=' + base.getToken()))
           })
         })
         .catch(function (err) {

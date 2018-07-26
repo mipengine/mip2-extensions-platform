@@ -185,18 +185,18 @@ export default {
     goEvaluate (order, index) {
       let goodsId = order.goodsId || ''
       let orderId = order.orderNumber || ''
-      window.MIP.viewer.open(base.url + 'Order/toEvaluate?id=' + goodsId + '&orderId=' + orderId)
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toEvaluate?id=' + goodsId + '&orderId=' + orderId))
     },
     goStudy (order, index) {
-      window.top.location.href = order.url
+      MIP.viewer.open(order.url, {isMipLink: false})
     },
     goPay (order, index) {
       let orderId = order.orderNumber || ''
-      window.MIP.viewer.open(base.url + 'Order/toEvaluate?orderId=' + orderId)
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toPay?orderId=' + orderId))
     },
     goOrderDetail (order) {
       let orderId = order.orderNumber || ''
-      window.MIP.viewer.open(base.url + 'orderdetail.jsp?id=' + orderId)
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'orderdetail.jsp?id=' + orderId))
     },
     cancelOrder (order, index) {
       let orderId = order.orderNumber || ''

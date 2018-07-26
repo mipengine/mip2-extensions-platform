@@ -185,7 +185,7 @@ export default {
               _this.errorMessage = data.message
               _this.showErrorMessage = true
             } else {
-              return fetch(base.api.placeOrder, {
+              fetch(base.api.placeOrder, {
                 method: 'POST',
                 headers: {
                   Accept: 'application/json',
@@ -196,14 +196,20 @@ export default {
                   token: base.getQueryString('token') || base.getToken()
                 })
               })
-            }
-          })
-        })
-        .then(function (response) {
-          // 获得后台实际返回的内容
-          response.json().then(function (data) {
-            if (data.orderId) {
-              MIP.viewer.open('https://mip.wangxiao.cn/Order/toPay?orderId=' + data.orderId)
+                .then(function (response) {
+                  // 获得后台实际返回的内容
+                  response.json().then(function (response) {
+                    if (response.data.orderId) {
+                      MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.wangxiao.cn/Order/toPay?orderId=' + response.data.orderId))
+                    } else {
+                      _this.errorMessage = '下单失败，请重新下单！'
+                      _this.showErrorMessage = true
+                      setTimeout(() => {
+                        MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.wangxiao.cn/Order/getProduct?id=' + base.getQueryString('goodsId')))
+                      }, 2000)
+                    }
+                  })
+                })
             }
           })
         })
