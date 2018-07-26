@@ -162,6 +162,7 @@
     text-align: center;
     float: left;
     background-position:center;
+    margin-bottom:50px;
   }
 
   .help {

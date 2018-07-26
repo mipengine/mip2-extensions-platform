@@ -51,7 +51,8 @@
         "sessionId": "",
         "fee": 0,
         "redirectUrl": "https://mip.putibaby.com/pay/verifypay",
-        "endpoint":{
+        "endpoint":
+        {
         "baifubao":  "https://mip.putibaby.com/api/pay/baifubao",
         "alipay":  "https://mip.putibaby.com/api/pay/alipay",
         "weixin":  "https://mip.putibaby.com/api/pay/weixin"
