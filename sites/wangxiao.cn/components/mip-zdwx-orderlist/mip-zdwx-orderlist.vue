@@ -141,6 +141,11 @@
         </div>
       </div>
     </mip-vd-tabs>
+    <div
+      v-show="showErrorMessage"
+      class="errorMessage">
+      {{ errorMessage }}
+    </div>
   </div>
 </template>
 <script>
@@ -152,34 +157,55 @@ export default {
       allOrderList: [],
       unpaiyList: [],
       paiyList: [],
-      currentOrderId: ''
+      currentOrderId: '',
+      showErrorMessage: false,
+      errorMessage: ''
     }
   },
   computed: {},
+  watch: {
+    showErrorMessage: function (newQuestion, oldQuestion) {
+      if (newQuestion) {
+        setTimeout(() => {
+          this.showErrorMessage = !this.showErrorMessage
+        }, 2000)
+      }
+    }
+  },
   mounted () {
     base.setToken(base.getQueryString('token'))
     let _this = this
-    fetch(base.api.getOrderList, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        token: base.getQueryString('token') || base.getToken()
-      })
-    })
-      .then(function (response) {
-        // 获得后台实际返回的内容
-        response.json().then(function (data) {
-          _this.allOrderList = data.data.total
-          _this.unpaiyList = data.data.noPay
-          _this.paiyList = data.data.pay
+    this.$element.customElement.addEventAction('login', event => {
+      if (event.userInfo.userStatus === 0) {
+        fetch(base.api.getOrderList, {
+          method: 'POST',
+          headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            token: base.getToken() || base.getQueryString('token')
+          })
         })
-      })
-      .catch(function (err) {
-        console.log('Fetch Error :-S', err)
-      })
+          .then(function (response) {
+            // 获得后台实际返回的内容
+            response.json().then(function (data) {
+              _this.allOrderList = data.data.total
+              _this.unpaiyList = data.data.noPay
+              _this.paiyList = data.data.pay
+            })
+          })
+          .catch(function (err) {
+            console.log('Fetch Error :-S', err)
+          })
+      } else if (event.userInfo.userStatus === 1) {
+        _this.errorMessage = '异常访问！'
+        _this.showErrorMessage = true
+      } else {
+        _this.errorMessage = '网络异常！'
+        _this.showErrorMessage = true
+      }
+    })
   },
   methods: {
     goEvaluate (order, index) {
@@ -213,7 +239,7 @@ export default {
         },
         body: JSON.stringify({
           orderNumber: orderId,
-          token: base.getQueryString('token') || base.getToken()
+          token: base.getToken() || base.getQueryString('token')
         })
       })
         .then(function (response) {
@@ -247,7 +273,7 @@ export default {
 .order-course-scoped .order-course {
   background-color: #f8f8f8;
 }
-.order-title-content{
+.order-title-content {
   display: flex;
   justify-content: space-between;
 }
@@ -256,7 +282,17 @@ export default {
   font-size: 1.3rem;
   color: #333;
 }
-
+.errorMessage {
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  margin-left: -50px;
+  margin-top: -50px;
+  color: #fff;
+  background: #999;
+  padding: 1rem;
+  border-radius: 6px;
+}
 .order-num {
   padding: 0 1.2rem;
   height: 3.3rem;
@@ -264,7 +300,7 @@ export default {
   background-color: #fff;
   display: inline-block;
 }
-.order-statusstr{
+.order-statusstr {
   font-size: 1.3rem;
   color: #ff6a4c;
 }
