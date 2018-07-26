@@ -35,7 +35,7 @@
           width="65"
           height="65"
           class="mama_header"
-          src="../i/logo.png"/>
+          src="https://mip.putibaby.com/i/logo.png"/>
         <div class="mama_name_b">丙方
           <span class="mama_info_span">天津菩提果科技有限公司</span>
         </div>
@@ -1074,11 +1074,11 @@ export default {
     var toContractExtra
     var toContractSkillReq
     if (pdata.readonly !== '1') {
-      toContractSkillReq = '/edit_contract_skill_req_mip?id=' + pdata.id
-      toContractExtra = '/edit_contract_extra_mip?id=' + pdata.id
+      toContractSkillReq = 'edit_contract_skill_req_mip?id=' + pdata.id
+      toContractExtra = 'edit_contract_extra_mip?id=' + pdata.id
     } else {
-      toContractSkillReq = '/edit_contract_skill_req_mip?id=' + pdata.id + '&readonly=1'
-      toContractExtra = '/edit_contract_extra_mip?id=' + pdata.id + '&readonly=1'
+      toContractSkillReq = 'edit_contract_skill_req_mip?id=' + pdata.id + '&readonly=1'
+      toContractExtra = 'edit_contract_extra_mip?id=' + pdata.id + '&readonly=1'
     }
 
     return {
@@ -1175,11 +1175,11 @@ export default {
       var toContractExtra
       var toContractSkillReq
       if (pdata.readonly !== '1' && pdata.readonly !== 1) {
-        toContractSkillReq = '/edit_contract_skill_req_mip?id=' + pdata.order.id
-        toContractExtra = '/edit_contract_extra_mip?id=' + pdata.order.id
+        toContractSkillReq = 'edit_contract_skill_req_mip?id=' + pdata.order.id
+        toContractExtra = 'edit_contract_extra_mip?id=' + pdata.order.id
       } else {
-        toContractSkillReq = '/edit_contract_skill_req_mip?id=' + pdata.order.id + '&readonly=1'
-        toContractExtra = '/edit_contract_extra_mip?id=' + pdata.order.id + '&readonly=1'
+        toContractSkillReq = 'edit_contract_skill_req_mip?id=' + pdata.order.id + '&readonly=1'
+        toContractExtra = 'edit_contract_extra_mip?id=' + pdata.order.id + '&readonly=1'
       }
       var showz
       if (data.contract_mama_id_card_list[0] === '') {
