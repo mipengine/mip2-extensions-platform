@@ -185,7 +185,25 @@ export default {
               _this.errorMessage = data.message
               _this.showErrorMessage = true
             } else {
-              MIP.viewer.open(data.url)
+              return fetch(base.api.placeOrder, {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  goodsId: base.getQueryString('goodsId') || '',
+                  token: base.getQueryString('token') || base.getToken()
+                })
+              })
+            }
+          })
+        })
+        .then(function (response) {
+          // 获得后台实际返回的内容
+          response.json().then(function (data) {
+            if (data.orderId) {
+              MIP.viewer.open('https://mip.wangxiao.cn/Order/toPay?orderId=' + data.orderId)
             }
           })
         })
