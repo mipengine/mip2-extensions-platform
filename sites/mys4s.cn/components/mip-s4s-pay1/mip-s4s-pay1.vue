@@ -1,248 +1,246 @@
 <template>
   <div class="s4s-page">
-    <div
-      class="s4s-body"
-      style="padding: 0;">
-      <div class="s4s-tips">
-        <mip-img
-          src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/car.png"
-          width="60"
-          height="50" />
-        <div class="s4s-tips-right">
-          <p>交通违法代缴的办理周期为<span style="color:#FE7000">1-2个工作日，部分地区2-5个工作日</span>，需年检用户如需当日处理完成，请勿下单。其他问题请参见
-            <a
-              data-type="mip"
-              href="help.html"
-              style="text-decoration: underline;" >常见问题</a>
-            <!-- <span style="text-decoration: underline;" @click="gotoHelp">常见问题</span> -->
-            。</p>
-        </div>
+    <div class="s4s-tips">
+      <mip-img
+        src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/car.png"
+        width="60"
+        height="50" />
+      <div class="s4s-tips-right">
+        <p>交通违法代缴的办理周期为1-2个工作日，部分地区2-5个工作日，<span style="color:#FE7000">需年检用户如需当日处理完成，请勿下单</span>。其他问题请参见
+          <a
+            data-type="mip"
+            href="help.html"
+            style="text-decoration: underline;" >常见问题</a>
+          <!-- <span style="text-decoration: underline;" @click="gotoHelp">常见问题</span> -->
+          。</p>
       </div>
-      <div style="display:none">
-        <canvas
-          id="canvas"
-          width="0"
-          height="0"
-          style="dispaly: none"/>
+    </div>
+    <div style="display:none">
+      <canvas
+        id="canvas"
+        width="0"
+        height="0"
+        style="dispaly: none"/>
+    </div>
+
+    <div class="s4s-pay-body">
+      <div class="s4s-title">违章详情</div>
+      <div
+        v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_no == 1"
+        class="s4s-group">
+        <span class="s4s-group-tit">驾驶证号</span>
+        <input
+          v-model="driveNo"
+          type="idcard"
+          placeholder="请输入驾驶证号码" >
+      </div>
+      <div
+        v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_file_number == 1"
+        class="s4s-group">
+        <span class="s4s-group-tit">驾驶证档案编号</span>
+        <input
+          v-model="drive_file_number"
+          type="idcard"
+          placeholder="请输入驾驶证档案编号" >
+      </div>
+      <div
+        v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_bar_code == 1"
+        class="s4s-group">
+        <span class="s4s-group-tit">驾驶证条形码编号</span>
+        <input
+          v-model="drive_bar_code"
+          type="idcard"
+          placeholder="请输入驾驶证条形码编号" >
       </div>
 
-      <div class="s4s-pay-body">
-        <div class="s4s-title">违章详情</div>
-        <div
-          v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_no == 1"
-          class="s4s-group">
-          <span class="s4s-group-tit">驾驶证号</span>
-          <input
-            v-model="driveNo"
-            type="idcard"
-            placeholder="请输入驾驶证号码" >
-        </div>
-        <div
-          v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_file_number == 1"
-          class="s4s-group">
-          <span class="s4s-group-tit">驾驶证档案编号</span>
-          <input
-            v-model="drive_file_number"
-            type="idcard"
-            placeholder="请输入驾驶证档案编号" >
-        </div>
-        <div
-          v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_bar_code == 1"
-          class="s4s-group">
-          <span class="s4s-group-tit">驾驶证条形码编号</span>
-          <input
-            v-model="drive_bar_code"
-            type="idcard"
-            placeholder="请输入驾驶证条形码编号" >
-        </div>
+      <div class="s4s-group">
+        <span class="s4s-group-tit">手机号码</span>
+        <input
+          v-model="phone"
+          type="text"
+          maxlength="11"
+          style="width:auto;max-width:3rem;min-width:1.05rem"
+          placeholder="请输入手机号码" >
 
-        <div class="s4s-group">
-          <span class="s4s-group-tit">手机号码</span>
-          <input
-            v-model="phone"
-            type="text"
-            maxlength="11"
-            style="width:auto;max-width:3rem;min-width:1.05rem"
-            placeholder="请输入手机号码" >
-
-        </div>
-        <div class="s4s-group">
-          <span class="s4s-group-tit" >验证码</span>
-          <input
-            v-model="code"
-            type="text"
-            maxlength="4"
-            placeholder="请输入短信验证码" >
-          <span
-            v-show="!cansend"
-            type="button"
-            style="background-color: #fff; color: #666;border:0;border-radius:.03rem;margin-left:.05rem;font-size:0.14rem"
-            disabled>{{ btntext }}</span>
-          <span
-            v-show="cansend"
-            type="button"
-            style="background-color: #fff; color: #108ee9;border:0;border-radius:.03rem;margin-left:.05rem;font-size:0.14rem"
-            @click="sendcode">获取验证码</span>
-        </div>
-        <!-- <div class="s4s-group"  v-if="!(!this.user.Tel || !refillTel)">
+      </div>
+      <div class="s4s-group">
+        <span class="s4s-group-tit" >验证码</span>
+        <input
+          v-model="code"
+          type="text"
+          maxlength="4"
+          placeholder="请输入短信验证码" >
+        <span
+          v-show="!cansend"
+          type="button"
+          class="code-btn-disable"
+          disabled>{{ btntext }}</span>
+        <span
+          v-show="cansend"
+          type="button"
+          class="code-btn"
+          @click="sendcode">获取验证码</span>
+      </div>
+      <!-- <div class="s4s-group"  v-if="!(!this.user.Tel || !refillTel)">
                     <span class="s4s-group-tit" >手机号码</span>
                     <span class="s4s-group-tit" style="width:auto;"  >{{this.phone ? this.phone : (this.user.Tel || '-')}}</span>
                     <span @click="refillTelClick" style="color:#108ee9;margin-left:.05rem;font-size:0.14rem">更换</span>
                 </div> -->
-        <div class="s4s-group">
-          <span class="s4s-group-tit">车牌号码</span>
-          <span class="s4s-group-txt">{{ illegal.car_no||illegal.CarNo }}</span>
-        </div>
-        <div class="s4s-group">
-          <span class="s4s-group-tit">认罚日期</span>
-          <span class="s4s-group-txt">{{ date }}</span>
-        </div>
+      <div class="s4s-group">
+        <span class="s4s-group-tit">车牌号码</span>
+        <span class="s4s-group-txt">{{ illegal.car_no||illegal.CarNo }}</span>
+      </div>
+      <div class="s4s-group">
+        <span class="s4s-group-tit">认罚日期</span>
+        <span class="s4s-group-txt">{{ date }}</span>
+      </div>
 
-        <div
-          v-if="(illegal.FreeRuleObject && illegal.FreeRuleObject.drive_licence == 1) || (illegal.FreeRuleObject && illegal.FreeRuleObject.travel_licence == 1)"
-          class="s4s-group group-upload">
-          <span class="s4s-group-tit">上传行驶证</span>
-          <div style="display: flex;flex: 1;">
-            <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_licence == 1">
-              <div
-                class="group-upload-margin"
-                @click="chooseImage" >
-                <!-- <span class="s4s-chooseimg">正面</span> -->
-                <mip-img
-                  v-if="driveUrl"
-                  :src="driveUrl"
-                  styel="width:100%;" />
-                <mip-img
-                  v-else
-                  styel="width:100%;"
-                  src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload.png" />
-                <input
-                  ref="file"
-                  type="file"
-                  accept="image/*"
-                  multiple="multiple"
-                  style="display: none;"
-                  @change="uploader">
-              </div>
-            </template>
-            <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.travel_licence == 1">
-              <div
-                class="group-upload-margin"
-                @click="chooseTravel" >
-                <!-- <span class="s4s-chooseimg" style="margin-left: .2rem;">反面</span> -->
-                <mip-img
-                  v-if="travelUrl"
-                  :src="travelUrl"
-                  styel="width:100%;" />
-                <mip-img
-                  v-else
-                  styel="width:100%;"
-                  src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload2.png" />
-                <input
-                  ref="XSZTravel"
-                  type="file"
-                  accept="image/*"
-                  multiple="multiple"
-                  style="display: none;"
-                  @change="uploaderXSZTravel">
-              </div>
-            </template>
-          </div>
-        </div>
-        <div
-          v-if="(illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_drive_licence == 1) || (illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_travel_licence == 1)"
-          class="s4s-group">
-          <span class="s4s-group-tit">上传驾驶证</span>
-          <div style="display: flex;flex: 1;">
-            <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_drive_licence == 1">
+      <div
+        v-if="(illegal.FreeRuleObject && illegal.FreeRuleObject.drive_licence == 1) || (illegal.FreeRuleObject && illegal.FreeRuleObject.travel_licence == 1)"
+        class="s4s-group group-upload">
+        <span class="s4s-group-tit">上传行驶证</span>
+        <div style="display: flex;flex: 1;">
+          <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_licence == 1">
+            <div
+              class="group-upload-margin"
+              @click="chooseImage" >
+              <!-- <span class="s4s-chooseimg">正面</span> -->
               <mip-img
-                v-if="JSZDriveUrl"
-                :src="JSZDriveUrl"
-                style="width: .40rem;height: .40rem;margin: .05rem 0;"
-                @click="chooseJSZDrive" />
-              <div
-                v-show="!JSZDriveUrl"
-                class="group-upload-margin"
-                @click="chooseJSZDrive">
-                <span class="s4s-chooseimg">正面</span>
-                <input
-                  ref="JSZDrive"
-                  type="file"
-                  accept="image/*"
-                  multiple="multiple"
-                  style="display: none;"
-                  @change="uploaderJSZDrive">
-              </div>
-            </template>
-            <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_travel_licence == 1">
+                v-if="driveUrl"
+                :src="driveUrl"
+                styel="width:100%;" />
               <mip-img
-                v-if="JSZTravelUrl"
-                :src="JSZTravelUrl"
-                style="width: .40rem;height: .40rem;margin: .05rem 0 .05rem .10rem;"
-                @click="chooseJSZTravel" />
-              <div
-                v-show="!JSZTravelUrl"
-                class="group-upload-margin"
-                @click="chooseJSZTravel">
-                <span
-                  class="s4s-chooseimg"
-                  style="margin-left: .2rem;">反面</span>
-                <input
-                  ref="JSZTravel"
-                  type="file"
-                  accept="image/*"
-                  multiple="multiple"
-                  style="display: none;"
-                  @change="uploaderJSZTravel">
-              </div>
-            </template>
-          </div>
+                v-else
+                styel="width:100%;"
+                src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload.png" />
+              <input
+                ref="file"
+                type="file"
+                accept="image/*"
+                multiple="multiple"
+                style="display: none;"
+                @change="uploader">
+            </div>
+          </template>
+          <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.travel_licence == 1">
+            <div
+              class="group-upload-margin"
+              @click="chooseTravel" >
+              <!-- <span class="s4s-chooseimg" style="margin-left: .2rem;">反面</span> -->
+              <mip-img
+                v-if="travelUrl"
+                :src="travelUrl"
+                styel="width:100%;" />
+              <mip-img
+                v-else
+                styel="width:100%;"
+                src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload2.png" />
+              <input
+                ref="XSZTravel"
+                type="file"
+                accept="image/*"
+                multiple="multiple"
+                style="display: none;"
+                @change="uploaderXSZTravel">
+            </div>
+          </template>
         </div>
       </div>
-      <div class="s4s-pay-body">
-        <div class="s4s-title">订单详情</div>
-        <div class="s4s-group"><span class="s4s-group-tit">罚款金额</span><span
+      <div
+        v-if="(illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_drive_licence == 1) || (illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_travel_licence == 1)"
+        class="s4s-group">
+        <span class="s4s-group-tit">上传驾驶证</span>
+        <div style="display: flex;flex: 1;">
+          <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_drive_licence == 1">
+            <mip-img
+              v-if="JSZDriveUrl"
+              :src="JSZDriveUrl"
+              style="width: .40rem;height: .40rem;margin: .05rem 0;"
+              @click="chooseJSZDrive" />
+            <div
+              v-show="!JSZDriveUrl"
+              class="group-upload-margin"
+              @click="chooseJSZDrive">
+              <span class="s4s-chooseimg">正面</span>
+              <input
+                ref="JSZDrive"
+                type="file"
+                accept="image/*"
+                multiple="multiple"
+                style="display: none;"
+                @change="uploaderJSZDrive">
+            </div>
+          </template>
+          <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_travel_licence == 1">
+            <mip-img
+              v-if="JSZTravelUrl"
+              :src="JSZTravelUrl"
+              style="width: .40rem;height: .40rem;margin: .05rem 0 .05rem .10rem;"
+              @click="chooseJSZTravel" />
+            <div
+              v-show="!JSZTravelUrl"
+              class="group-upload-margin"
+              @click="chooseJSZTravel">
+              <span
+                class="s4s-chooseimg"
+                style="margin-left: .2rem;">反面</span>
+              <input
+                ref="JSZTravel"
+                type="file"
+                accept="image/*"
+                multiple="multiple"
+                style="display: none;"
+                @change="uploaderJSZTravel">
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+    <div class="s4s-pay-body">
+      <div class="s4s-title">订单详情</div>
+      <div class="s4s-group"><span class="s4s-group-tit">罚款金额</span><span
+        class="s4s-group-txt"
+        style="color:#333">¥ {{ price || 0 }}</span>
+      </div>
+      <div class="s4s-group">
+        <span class="s4s-group-tit">服务费用</span><span
           class="s4s-group-txt"
-          style="color:#333">¥ {{ price || 0 }}</span>
-        </div>
-        <div class="s4s-group">
-          <span class="s4s-group-tit">服务费用</span><span
-            class="s4s-group-txt"
-            style="color:#FE7000">¥ {{ ownFree || 0 }}</span>
-        </div>
+          style="color:#FE7000">¥ {{ ownFree || 0 }}</span>
       </div>
+    </div>
 
-      <!-- <div class="s4s-sum"> 服务费:  -->
-      <!-- <span style="text-decoration:line-through;" v-if="price"> {{ ownFree + 5 || 5 }}</span> -->
-      <!-- <span> ¥ {{ ownFree || 0 }}</span> -->
-      <!-- <span style="width:auto;color:#959595;font-size:0.12rem;margin-left:0.10rem" v-if="price">已优惠5元</span> -->
-      <!-- </div> -->
-      <a
-        ref="newWeb"
-        href="#"/>
-      <div class="agree-container" >
-        <p><mip-img
-          v-show="!agree"
-          src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/disagree.png"
+    <!-- <div class="s4s-sum"> 服务费:  -->
+    <!-- <span style="text-decoration:line-through;" v-if="price"> {{ ownFree + 5 || 5 }}</span> -->
+    <!-- <span> ¥ {{ ownFree || 0 }}</span> -->
+    <!-- <span style="width:auto;color:#959595;font-size:0.12rem;margin-left:0.10rem" v-if="price">已优惠5元</span> -->
+    <!-- </div> -->
+    <a
+      ref="newWeb"
+      href="#"/>
+    <div class="agree-container" >
+      <p><mip-img
+        v-show="!agree"
+        src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/disagree.png"
+        width="25"
+        height="25"
+        @click="goAgree" />
+        <mip-img
+          v-show="agree"
+          src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree.png"
           width="25"
           height="25"
           @click="goAgree" />
-          <mip-img
-            v-show="agree"
-            src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree.png"
-            width="25"
-            height="25"
-            @click="goAgree" />
-          我同意
-          <a
-            data-type="mip"
-            href="agreement.html"
-            style="color: #666666;text-decoration:underline" >《服务协议》</a>
-          <!-- <span style="color: #666666;text-decoration:underline" @click="gotoAgreement">《服务协议》</span> -->
-          中的说明</p>
-      </div>
-      <!-- <button class="s4s-btn" v-if="(!user.Tel || refillTel)" @click="payFee"> 支付金额{{ (((price * 100 + ownFree * 100 + lateFree * 100) || 0) / 100).toFixed(2) }}元 | 立即办理 </button> -->
-      <div style="height:.6rem;"/>
+        我同意
+        <a
+          data-type="mip"
+          href="agreement.html"
+          style="color: #666666;text-decoration:underline" >《服务协议》</a>
+        <!-- <span style="color: #666666;text-decoration:underline" @click="gotoAgreement">《服务协议》</span> -->
+        中的说明</p>
+    </div>
+    <!-- <button class="s4s-btn" v-if="(!user.Tel || refillTel)" @click="payFee"> 支付金额{{ (((price * 100 + ownFree * 100 + lateFree * 100) || 0) / 100).toFixed(2) }}元 | 立即办理 </button> -->
+    <div style="height:.6rem;"/>
+    <mip-fixed type="bottom">
       <div class="pay-contaienr">
         <div>
           <p>合计金额：<span>¥ {{ (((price * 100 + ownFree * 100 + lateFree * 100) || 0) / 100).toFixed(2) }}</span></p>
@@ -251,13 +249,10 @@
         <div
           :class="agree?'' :'disabled-btn'"
           @click="payFee" >
-          <button> 立即办理</button>
+          <span> 立即办理</span>
         </div>
       </div>
-    </div>
-    <button
-      ref="pay"
-      on="tap:payDialog.toggle"/>
+    </mip-fixed>
   </div>
 </template>
 
@@ -310,11 +305,10 @@ export default {
   watch: {
     code (val) {
       let tel = /^1\d{10}$/
-      if (!this.cansend && val.length === 4 && tel.test(this.phone)) this.testCode()
+      if (!this.cansend && val.length === 4 && tel.test(this.phone)) { this.testCode() }
     }
   },
   mounted () {
-    console.log(this.globalData)
     this.illegal = this.globalData
     this.price = this.globalData.Fine
     this.date =
@@ -340,7 +334,6 @@ export default {
         })
     },
     sendcode () {
-      console.log(this.phone)
       let tel = /^1\d{10}$/
       if (!this.phone) {
         util.toast('请输入手机号码')
@@ -382,7 +375,6 @@ export default {
       MIP.viewer.open('help.html')
     },
     goAgree () {
-      console.log(this.agree)
       this.agree = !this.agree
     },
     // 服务协议
@@ -651,15 +643,19 @@ export default {
         this.showConfirm = true
       } else {
         let price = Number(this.price * 100)
-        let totalPrice = Number(price + Math.round(this.ownFree * 100) + Math.round(this.lateFree * 100))
+        let totalPrice = Number(
+          price +
+            Math.round(this.ownFree * 100) +
+            Math.round(this.lateFree * 100)
+        )
         let param = {
-          'source': 'xzapp',
+          source: 'xzapp',
           fine: price + '', // 罚金
           lateFree: (this.lateFree ? Math.round(this.lateFree * 100) : 0) + '',
           ownFree: Math.round(this.ownFree * 100) + '', // 服务费
           totalPrice: totalPrice + '', // 总金额
           vio_time: this.date, // 文章时间：格式：2017-12-13
-          carno: this.illegal.CarNo || '',
+          carno: this.illegal.car_no || this.illegal.CarNo || '',
           vio_id: this.illegal.ViolationId || '',
           mobile: this.phone + '',
           drive_no: this.driveNo || '', // 驾驶证号
@@ -678,7 +674,9 @@ export default {
             MIP.setData({
               payConfig: {
                 fee: totalPrice / 100,
-                sessionId: window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'),
+                sessionId: window.localStorage.getItem(
+                  'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
+                ),
                 postData: {
                   order_id: res.data + ''
                 }
@@ -706,7 +704,6 @@ export default {
     },
     getVipFee () {
       let self = this
-      console.log(this.illegal)
       util
         .fetchData('v3/violation/fee', {
           vio_id: this.illegal.ViolationId,
@@ -732,8 +729,8 @@ export default {
 .s4s-tips {
   background: #fff;
   border-radius: 0.07rem;
-  padding: 4%;
-  font-size: 0.14rem;
+  padding: 0.2rem;
+  font-size: 0.12rem;
   color: #4b4b4b;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -761,7 +758,7 @@ export default {
 .s4s-pay-body {
   background: #fff;
   padding: 0 4%;
-  margin-top: .15rem;
+  margin-top: 0.15rem;
 }
 
 .s4s-group img {
@@ -794,8 +791,8 @@ export default {
 }
 
 .s4s-group {
-  height: .32rem;
-  border-bottom: .01rem rgba(0, 0, 0, 0.1) solid;
+  height: 0.32rem;
+  border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
   color: #666;
   overflow: hidden;
   -webkit-box-align: center;
@@ -804,18 +801,18 @@ export default {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: .15rem 0;
+  padding: 0.15rem 0;
   box-sizing: content-box;
 }
 .s4s-group-tit {
-  font-size: .15rem;
-  width: .9rem;
+  font-size: 0.15rem;
+  width: 0.9rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 .s4s-group-txt {
-  font-size: .15rem;
+  font-size: 0.15rem;
   color: #777;
   -webkit-box-flex: 1;
   -ms-flex: 1;
@@ -823,14 +820,14 @@ export default {
 }
 .s4s-group input {
   border: none;
-  font-size: .15rem;
+  font-size: 0.15rem;
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
   text-align: left;
 }
 select {
-  font-size: .15rem;
+  font-size: 0.15rem;
 }
 .s4s-group input:focus,
 .s4s-group select:focus {
@@ -842,41 +839,28 @@ select {
   border: none;
 }
 .s4s-body {
-  max-width: 7rem;
-  margin: 0 auto;
-  height: 100%;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  position: absolute;
-  top: 0;
+  /* max-width: 7rem; */
+  /* margin: 0 auto; */
+  /* height: 100%; */
+  /* -webkit-box-sizing: border-box;
+  box-sizing: border-box; */
+  /* position: absolute; */
+  /* top: 0;
   right: 0;
   bottom: 0;
-  left: 0;
+  left: 0; */
 }
 .s4s-title {
-  font-size: .2rem;
-  padding-top: .15rem;
+  font-size: 0.2rem;
+  padding-top: 0.15rem;
 }
-.s4s-toast {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  z-index: 99999;
-  text-align: center;
-  padding: .05rem .1rem;
-  border-radius: .04rem;
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
-  font-size: .14rem;
-}
+
 .agree-container {
-  font-size: .15rem;
+  font-size: 0.15rem;
   color: #999999;
 }
 .agree-container p {
-  padding: .15rem;
+  padding: 0.15rem;
 }
 .agree-container mip-img {
   vertical-align: bottom;
@@ -884,51 +868,57 @@ select {
 
 .pay-contaienr {
   display: flex;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  width: 100%;
   background: #fff;
 }
 .pay-contaienr > div:first-child {
   flex: 1;
-  font-size: .16rem;
+  font-size: 0.16rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 .1rem;
+  padding: 0 0.1rem;
 }
+
 .pay-contaienr span {
-  color: #fe7000;
-}
-.pay-contaienr button {
   color: #fff;
-  font-size: .18rem;
+  font-size: 0.18rem;
   font-weight: 300;
 }
 .pay-contaienr p:last-child {
   color: #999;
-  font-size: .11rem;
+  font-size: 0.11rem;
 }
 .pay-contaienr > div:last-child {
   width: 1.2rem;
   background-image: linear-gradient(40deg, #fe5a00 0%, #ff7c00 100%);
   text-align: center;
-  line-height: .5rem;
-  font-size: .18rem;
+  line-height: 0.5rem;
+  font-size: 0.18rem;
 }
 .pay-contaienr .disabled-btn {
   background: #e6e6e6 !important;
 }
-.pay-contaienr .disabled-btn button {
+.pay-contaienr .disabled-btn span {
   color: #999999;
 }
-
 .group-upload {
   height: auto;
 }
 .group-upload-margin {
-  margin: .1rem .15rem .1rem 0;
+  margin: 0.1rem 0.15rem 0.1rem 0;
   flex: 1;
+}
+.code-btn, .code-btn-disable{
+  color: #FE5C00;
+  background-color: #fff;
+  border:0;
+  border-radius:.03rem;
+  font-size:0.14rem;
+  border:.01rem solid #FF7B00;
+  padding: .05rem .075rem;
+}
+.code-btn-disable {
+  opacity: 0.5;
 }
 </style>

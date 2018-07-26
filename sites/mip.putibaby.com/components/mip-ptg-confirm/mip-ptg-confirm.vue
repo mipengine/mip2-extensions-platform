@@ -120,10 +120,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
