@@ -26,27 +26,27 @@
 
               </td>
               <td class="sousuo_td">
-                <input
-                  v-model="filter.kw"
-                  type="search"
-                  name="kw"
-                  class="kw"
-                  validatetarget="kw"
-                  placeholder="输入月嫂的姓名搜索"
-                  @keyup.enter="search">
+                <form
+                  id="searchform"
+                  @submit.prevent="submit">
+                  <input
+                    v-model="filter.kw"
+                    type="search"
+                    name="kw"
+                    class="kw"
+                    validatetarget="kw"
+                    placeholder="输入月嫂的姓名搜索"
+                    @keyup.enter.prevent="search"></form>
                 <mip-img
+                  width="14px"
+                  height="14px"
                   class="sousuo_icon mip-element mip-layout-container mip-img-loaded"
-                  src="/i/sousuo.png" />
+                  src="https://mip.putibaby.com/i/sousuo.png" />
 
                 <a
                   class="person"
                   @click="handleOrderList">
-                  <mip-img
-                    width="18px"
-                    height="22px"
-                    src="/i/card_per.png"
-                    class="mip-element mip-layout-fixed mip-layout-size-defined mip-img-loaded"
-                    style="width: 28px; height: 23px;" />
+                  <slot name="me"/>
                 </a>
               </td>
             </tr>
@@ -64,54 +64,54 @@
                 class="sort_td checked">
                 <mip-img
                   v-if="filter.sort_by == '' || !filter.sort_by"
-                  src="/i/zh_g.png" />
+                  src="https://mip.putibaby.com/i/zh_g.png" />
                 <mip-img
                   v-else
-                  src="/i/zh.png" />
+                  src="https://mip.putibaby.com/i/zh.png" />
               </td>
               <td
                 id="sortPrice"
                 class="sort_td">
                 <mip-img
                   v-if="filter.sort_by == 'price_asc'"
-                  src="/i/jgs_g.png" />
+                  src="https://mip.putibaby.com/i/jgs_g.png" />
                 <mip-img
                   v-else-if="filter.sort_by == 'price_desc'"
-                  src="/i/jgx_g.png" />
+                  src="https://mip.putibaby.com/i/jgx_g.png" />
                 <mip-img
                   v-else
-                  src="/i/jgx.png" />
+                  src="https://mip.putibaby.com/i/jgx.png" />
               </td>
               <td
                 id="sortJY"
                 class="sort_td">
                 <mip-img
                   v-if="filter.sort_by == 'jy_asc'"
-                  src="/i/jys_g.png" />
+                  src="https://mip.putibaby.com/i/jys_g.png" />
                 <mip-img
                   v-else-if="filter.sort_by == 'jy_desc'"
-                  src="/i/jyx_g.png" />
+                  src="https://mip.putibaby.com/i/jyx_g.png" />
                 <mip-img
                   v-else
-                  src="/i/jyx.png" />
+                  src="https://mip.putibaby.com/i/jyx.png" />
               </td>
               <td
                 id="sortAge"
                 class="sort_td">
                 <mip-img
                   v-if="filter.sort_by == 'age_desc'"
-                  src="/i/nlx_g.png" />
+                  src="https://mip.putibaby.com/i/nlx_g.png" />
                 <mip-img
                   v-else-if="filter.sort_by == 'age_asc'"
-                  src="/i/nls_g.png" />
+                  src="https://mip.putibaby.com/i/nls_g.png" />
                 <mip-img
                   v-else
-                  src="/i/nls.png" />
+                  src="https://mip.putibaby.com/i/nls.png" />
               </td>
               <td
                 class="shaixuan_btn"
                 on="tap:right-sidebar.open">
-                <mip-img src="/i/sx.png" />
+                <mip-img src="https://mip.putibaby.com/i/sx.png" />
               </td>
             </tr>
           </tbody>
@@ -1003,7 +1003,7 @@
           :key="m.id">
           <div class="masterCard">
             <a
-              :href="'https://mip.putibaby.com/master_card?mcode='+m.id"
+              :href="'master_card?mcode='+m.id"
               mip-link>
               <div class="div-padding">
                 <mip-img
@@ -1024,14 +1024,14 @@
                         width="12px"
                         height="12px"
                         class="star"
-                        src="/i/select_master_star.png"/>
+                        src="https://mip.putibaby.com/i/select_master_star.png"/>
                       <mip-img
                         v-else
                         layout="responisve"
                         width="12px"
                         height="12px"
                         class="star"
-                        src="/i/select_master_unstar.png"/>
+                        src="https://mip.putibaby.com/i/select_master_unstar.png"/>
                     </span>
 
                   </p>
@@ -1042,21 +1042,21 @@
                         width="11"
                         height="11"
                         class="icon"
-                        src="/i/age.png"/>
+                        src="https://mip.putibaby.com/i/age.png"/>
                       {{ m.desc_list_0 }}</span>
                     <span><mip-img
                       layout="responsive"
                       width="11"
                       height="11"
                       class="icon"
-                      src="/i/work_year.png"/>
+                      src="https://mip.putibaby.com/i/work_year.png"/>
                       {{ m.desc_list_2 }}</span>
                     <span><mip-img
                       layout="responsive"
                       width="11"
                       height="11"
                       class="icon"
-                      src="/i/jiguan.png"/>
+                      src="https://mip.putibaby.com/i/jiguan.png"/>
                       {{ m.desc_list_1 }}</span>
                   </div>
                   <span class="ptgPrice"><b>￥{{ m.ptg_price }}</b></span>
@@ -1080,15 +1080,10 @@
 
     <mip-fixed
       type="right"
-      top="550px"
+      bottom="50px"
       class="rec_a">
       <a @click="handleUpdateYcq">
-        <mip-img
-          class="rec_icon"
-          layout="fixed"
-          width="78px"
-          height="50px"
-          src="i/bwtj.png" />
+        <slot name="bwtj"/>
       </a>
     </mip-fixed>
 
@@ -1138,8 +1133,10 @@
   }
 
   .cardList .masterCard .mC_header {
-    width: 68px;
-    height: 68px;
+    width: 70px;
+    height: 70px;
+    border-top-left-radius:2px;
+    border-bottom-left-radius:2px;
   }
 
   .cardList .masterCard .mC_info {
@@ -1162,7 +1159,7 @@
     height: 16px;
     position: absolute;
     left: 135px;
-    margin-top: -22px;
+    margin-top: -18px;
   }
 
   .cardList .masterCard .mC_info .starBox mip-img {
@@ -1227,7 +1224,7 @@
   }
 
   .line {
-    background: url('/i/show_master_card_footer_hb.png');
+    /* background: url('/i/show_master_card_footer_hb.png'); */
     width: 100%;
     height: 2px;
     background-size: contain;
@@ -1274,8 +1271,8 @@
   }
 
   .sousuo_icon {
-    width: 14px;
-    height: 14px;
+    /* width: 14px; */
+    /* height: 14px; */
     position: absolute;
     left: 10px;
     top: 7px;
@@ -1288,7 +1285,7 @@
     border-radius: 3px;
     font-size: 14px;
     height: 30px;
-    background-image: url('/i/sel_back.png');
+    /* background-image: url('/i/sel_back.png'); */
     background-size: 8px 14px;
     background-repeat: no-repeat;
     background-position: 60px;
@@ -1373,9 +1370,6 @@
 
   .sort_by td {
     border-right: solid 1px #f4f4f4;
-    border-top: solid 1px #f4f4f4;
-    height: 35px;
-    line-height: 35px;
     padding-left: 0px;
     font-size: 13px;
     width: 20%;
@@ -1384,7 +1378,6 @@
 
   .sort_td .checked {
     background-color: #AFD03B;
-    border-top: solid 1px #f4f4f4;
     color: #fff;
     border-right: solid 1px #f4f4f4;
   }
@@ -1433,7 +1426,7 @@
   }
 
   .citybar td {
-    width: 55px;
+    width: 53px;
     font-size: 12px;
     text-align: center;
     height: 30px;
@@ -1447,7 +1440,7 @@
   }
 
   .citybar td.checked {
-    width: 55px;
+    width: 53px;
     font-size: 12px;
     text-align: center;
     height: 30px;
@@ -1502,6 +1495,7 @@
     background-color: #fff;
     padding-top: 7px;
     margin-top: 44px;
+    overflow: hidden;
   }
 
   .span_qt {
@@ -1532,7 +1526,7 @@
     line-height: 15px;
     font-size: 14px;
     color: #666;
-    background-image: url('/i/date_back.png');
+    /* background-image: url('/i/date_back.png'); */
     background-size: 17px 18px;
     background-repeat: no-repeat;
     background-position: 135px;
@@ -1627,7 +1621,7 @@
     /*bottom: 60px;*/
     width: 80px;
     height: 50px;
-    z-index: 999;
+    z-index: 999 !important;
   }
 
   .rec_a .rec_icon {
@@ -1658,10 +1652,7 @@ API.wrapRet_ = function (api, opts, fn) {
   console.log('posting to ' + api)
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -1679,7 +1670,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.getSelectMaster = function (filter, fn) {
   API.wrapRet_(
-    '/api/get_select_master', {
+    'https://mip.putibaby.com/api/get_select_master', {
       'filter': filter
     },
     fn)
@@ -1736,7 +1727,7 @@ export default {
       list: null,
       state: {
         isLoadingMore: false,
-        loadMessage: '点击加载数据',
+        loadMessage: '数据正在加载中...',
         hasMoreData: false
       },
       filter: {
@@ -1803,28 +1794,31 @@ export default {
       // 获取用户信息
       console.log(event)
       API.sessionId = event.sessionId
+      // self.$set(self, 'isLogin', true)
+      // self.$set(self, 'isUnion', event.userInfo.isUnion)
+      self.isLogin = true
+      self.isUnion = event.userInfo.isUnion
+      var origin = API.next_cmd || event.origin
+      // origin = origin || sessionStorage.next_cmd || localStorage.getItem('origin')
 
-      self.$set(self, 'isLogin', true)
-      self.$set(self, 'isUnion', event.userInfo.isUnion)
-      var origin = API.next_cmd || sessionStorage.next_cmd
+      console.log(origin)
+      API.next_cmd = ''
+      // sessionStorage.next_cmd = ''
+      // localStorage.clear()
+
       if (event.userInfo.isUnion && origin === 'order_list') {
         console.log('logindone to order_list')
-        window.MIP.viewer.open('https://mip.putibaby.com/order_list', {})
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
-      } else if (event.userInfo.isUnionorigin === 'coupon') {
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
+      } else if (event.userInfo.isUnion && origin === 'coupon') {
         console.log('logindone to coupon')
-        window.MIP.viewer.open('https://mip.putibaby.com/coupon', {})
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/coupon'), {})
       } else if (event.userInfo.isUnion && origin === 'update_ycq') {
         console.log('logindone to update_ycq')
-        window.MIP.viewer.open('https://mip.putibaby.com/update_ycq', {})
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
-      } else if (!event.userInfo.isUnion) {
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq'), {})
+      } else if (!event.userInfo.isUnion && origin) {
         console.log('logindone to submit_ph')
-        window.MIP.viewer.open('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href), {})
+        var to = '/' + origin
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
       }
     })
 
@@ -1839,14 +1833,14 @@ export default {
     var sorttd = document.querySelectorAll('.sort_td')
     var radiobtn = document.querySelectorAll('.radio_btn')
 
-    sortZH.addEventListener('click', function () {
+    sortZH.addEventListener('touchend', function () {
       removeClass(sorttd, 'checked')
       addClass(sortZH, 'checked')
       self.filter.sort_by = ''
       self.load_data()
     })
 
-    sortPrice.addEventListener('click', function () {
+    sortPrice.addEventListener('touchend', function () {
       removeClass(sorttd, 'checked')
       addClass(sortPrice, 'checked')
       if (self.filter.sort_by === 'price_desc') {
@@ -1857,7 +1851,7 @@ export default {
       self.load_data()
     })
 
-    sortJY.addEventListener('click', function () {
+    sortJY.addEventListener('touchend', function () {
       removeClass(sorttd, 'checked')
       addClass(sortJY, 'checked')
       if (self.filter.sort_by === 'jy_desc') {
@@ -1868,7 +1862,7 @@ export default {
       self.load_data()
     })
 
-    sortAge.addEventListener('click', function () {
+    sortAge.addEventListener('touchend', function () {
       removeClass(sorttd, 'checked')
       addClass(sortAge, 'checked')
       if (self.filter.sort_by === 'age_asc') {
@@ -1883,7 +1877,7 @@ export default {
     // var cityVal = document.querySelector('#btn-open').innerHTML
 
     for (var i = 0; i < citytd.length; i++) {
-      citytd[i].addEventListener('click', function () {
+      citytd[i].addEventListener('touchend', function () {
         removeClass(citytd, 'checked')
         addClass(this, 'checked')
         self.filter.city = this.innerHTML
@@ -1891,7 +1885,7 @@ export default {
     }
 
     for (var j = 0; j < radiobtn.length; j++) {
-      radiobtn[j].addEventListener('click', function () {
+      radiobtn[j].addEventListener('touchend', function () {
         removeClass(radiobtn, 'radio_check')
         addClass(this, 'radio_check')
         self.filter.shlxRow = this.innerHTML
@@ -1917,12 +1911,26 @@ export default {
     clickBaiban () {
       this.filter2.shlxRow = '白班'
     },
+
     checkLogin_ (cmd) {
       if (!this.isLogin) {
         API.next_cmd = cmd
-        sessionStorage.next_cmd = cmd
-        console.log('go')
-        this.$emit('login')
+        // sessionStorage.next_cmd = cmd
+        // localStorage.setItem('origin', cmd)
+        // console.log(cmd)
+        if (cmd === 'coupon') {
+          this.$emit('login1')
+        } else if (cmd === 'order_list') {
+          this.$emit('login2')
+        } else if (cmd === 'update_ycq') {
+          this.$emit('login3')
+        }
+        return false
+      }
+      if (!this.isUnion) {
+        var to = '/' + cmd
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
+
         return false
       }
 
@@ -1933,20 +1941,17 @@ export default {
       if (!this.checkLogin_('update_ycq')) {
         return
       }
-      window.MIP.viewer.open('https://mip.putibaby.com/update_ycq ', {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq '), {})
     },
     handleOrderList () {
       console.log('handleOrderList')
-      if (!this.checkLogin_('order_list')) {
-        return
-      }
-      console.log(window)
-      window.MIP.viewer.open('https://mip.putibaby.com/order_list ', {})
+      if (!this.checkLogin_('order_list')) { return }
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list '), {})
     },
     load_data () {
       console.log('should set data')
-      this.state.loadMessage = '点击加载数据'
-
+      this.state.loadMessage = '数据正在加载中...'
+      this.list = []
       var self = this
       this.filter.pn = 0
       API.getSelectMaster(this.filter, function (isOk, res) {
@@ -1955,7 +1960,12 @@ export default {
           self.list = res.list
           if (res.list.length < 10) {
             self.state.loadMessage = '没有更多数据了!'
+          } else {
+            self.state.loadMessage = '点击加载数据'
           }
+        } else {
+          console.log(res)
+          self.state.loadMessage = '加载数据出错'
         }
       })
     },
@@ -2023,6 +2033,9 @@ export default {
       console.log(e)
       e.target.blur()
       this.load_data()
+    },
+    submit () {
+
     },
     reload_ () {
       window.location.reload()

@@ -18,7 +18,9 @@
         <p>7、本券不与菩提果公司其他优惠同享。</p>
 
       </div>
-      <a href="/index"><div class="close_btn">关闭</div></a>
+      <a
+        href="index"
+        mip-link><div class="close_btn">关闭</div></a>
     </div>
   </div>
 </template>
@@ -106,10 +108,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -126,7 +125,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.ajaxCoupon = function (opt, fn) {
   API.wrapRet_(
-    '/api/ajax_coupon', opt, fn)
+    'https://mip.putibaby.com/api/ajax_coupon', opt, fn)
 }
 
 export default {

@@ -51,7 +51,8 @@
         "sessionId": "",
         "fee": 0,
         "redirectUrl": "https://mip.putibaby.com/pay/verifypay",
-        "endpoint":{
+        "endpoint":
+        {
         "baifubao":  "https://mip.putibaby.com/api/pay/baifubao",
         "alipay":  "https://mip.putibaby.com/api/pay/alipay",
         "weixin":  "https://mip.putibaby.com/api/pay/weixin"
@@ -159,7 +160,7 @@
 }
 
 .checked {
-  background-image: url('/i/balance_checked.png');
+  /* background-image: url('/i/balance_checked.png'); */
   background-size: 22px 22px;
   width: 22px;
   height: 22px;
@@ -169,7 +170,7 @@
 }
 
 .unchecked {
-  background-image: url('/i/balance_unchecked.png');
+  /* background-image: url('/i/balance_unchecked.png'); */
   background-size: 22px 22px;
   width: 22px;
   height: 22px;
@@ -179,7 +180,7 @@
 }
 
 .go {
-  background-image: url('/i/jt-right.png');
+  /* background-image: url('/i/jt-right.png'); */
 }
 
 .tip {
@@ -242,10 +243,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -263,7 +261,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.payOrderWithBalance = function (orderId, type, amount, fn) {
   API.wrapRet_(
-    '/api/pay/pay_order_with_balance', {
+    'https://mip.putibaby.com/api/pay/pay_order_with_balance', {
       'order_id': orderId,
       'type': type,
       'amount': amount
@@ -273,7 +271,7 @@ API.payOrderWithBalance = function (orderId, type, amount, fn) {
 }
 API.ajaxDoPay = function (orderId, fn) {
   API.wrapRet_(
-    '/api/ajax_do_pay', {
+    'https://mip.putibaby.com/api/ajax_do_pay', {
       'order_id': orderId
 
     },

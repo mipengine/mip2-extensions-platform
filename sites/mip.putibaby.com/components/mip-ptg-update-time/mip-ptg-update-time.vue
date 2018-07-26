@@ -152,10 +152,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -172,7 +169,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.submit_ = function (content, mcode, fn) {
   API.wrapRet_(
-    '/api/video_interview_master', {
+    'https://mip.putibaby.com/api/video_interview_master', {
       'info': content,
       'mcode': mcode
     },
@@ -219,7 +216,7 @@ export default {
       self.$set(self, 'isUnion', event.userInfo.isUnion)
       if (!event.userInfo.isUnion) {
         console.log('logindone to submit_ph')
-        window.MIP.viewer.open('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href), {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
       }
     })
   },
@@ -240,9 +237,9 @@ export default {
 
       API.submit_(this.content, mcode, function (isOk, res) {
         if (isOk) {
-          var url = '/update_time_ok?mcode=' + mcode
+          var url = 'https://mip.putibaby.com/update_time_ok?mcode=' + mcode
           // window.location.replace(url);
-          window.MIP.viewer.open(url, {replace: true})
+          window.MIP.viewer.open(MIP.util.makeCacheUrl(url), {replace: true})
         }
       })
     }

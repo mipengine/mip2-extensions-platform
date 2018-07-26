@@ -113,17 +113,18 @@
       ref="index"
       data-type="mip"
       href="index.html"/>
-    <div
-      v-if="detail"
-      class="s4s-mask"
-      @click="closeMake">
-      <mip-img
-        :src="src"
-        layout="responsive"
-        width="350"
-        height="263" />
-    </div>
-
+    <mip-fixed type="top">
+      <div
+        v-if="detail"
+        class="s4s-mask"
+        @click="closeMake">
+        <mip-img
+          :src="src"
+          layout="responsive"
+          width="350"
+          height="263" />
+      </div>
+    </mip-fixed>
     <div
       v-if="showProvice"
       class="s4s-provice" >
@@ -344,13 +345,11 @@ export default {
   },
   mounted () {
     this.$on('customLogin', event => {
-      console.log(event, 'customLogin')
       // event.userInfo;
       // event.sessionId;
       util.toast('授权成功')
     })
     this.$on('customError', event => {
-      console.log(event, 'customError')
       window.localStorage.clear()
       util.toast('授权失败')
       this.$refs.index.click()
@@ -384,7 +383,6 @@ export default {
     // 选择省份
     selectProvice () {
       this.showProvice = !this.showProvice
-      console.log(this.showProvice, 11)
     },
     // 查看车架号
     classDetail () {
@@ -588,7 +586,7 @@ export default {
 .s4s-provice {
   width: 100%;
   background: #d8dbdc;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   left: 0;
   transform: translateY(0);
