@@ -9,6 +9,7 @@
       <div>
         <div
           v-for="(allOrder,index) in allOrderList"
+          v-show="allOrderList.length != 0"
           :key="index"
           class="order-course-scoped"
           @click.stop="goOrderDetail(allOrder,index)">
@@ -35,7 +36,7 @@
             <span>合计￥{{ allOrder.currentPrice }}元（含运费￥{{ allOrder.sysExpressPrice }}）</span>
           </div>
           <div
-            v-show="paiyOrder.evaluate === 0 || paiyOrder.payStatus === 1 || paiyOrder.payStatus === 0"
+            v-show="payOrder.evaluate === 0 || payOrder.payStatus === 1 || payOrder.payStatus === 0"
             class="btn-group">
             <span
               v-show="allOrder.evaluate === 0"
@@ -58,85 +59,87 @@
       </div>
       <div>
         <div
-          v-for="(unpaiyOrder,index) in unpaiyList"
+          v-for="(unpayOrder,index) in unpayList"
+          v-show="unpayList.length != 0"
           :key="index"
           class="order-course-scoped"
-          @click.stop="goOrderDetail(unpaiyOrder,index)">
+          @click.stop="goOrderDetail(unpayOrder,index)">
           <div class="br"/>
           <div class="order-title-content">
-            <p class="order-num">订单编号：{{ unpaiyOrder.orderNumber }}</p>
-            <span class="order-statusstr">{{ unpaiyOrder.orderStatusStr }}</span>
+            <p class="order-num">订单编号：{{ unpayOrder.orderNumber }}</p>
+            <span class="order-statusstr">{{ unpayOrder.orderStatusStr }}</span>
           </div>
           <div class="order-course">
             <mip-img
-              :src=" unpaiyOrder.img "
+              :src=" unpayOrder.img "
               width="130"
               height="76"/>
             <div>
               <p>
-                <span>{{ unpaiyOrder.title }}</span>
-                <span>￥{{ unpaiyOrder.currentPrice }}</span>
+                <span>{{ unpayOrder.title }}</span>
+                <span>￥{{ unpayOrder.currentPrice }}</span>
               </p>
-              <p>过期时间：{{ unpaiyOrder.expiresTime }}</p>
+              <p>过期时间：{{ unpayOrder.expiresTime }}</p>
             </div>
           </div>
           <div class="total">
             <span>共1个商品</span>
-            <span>合计￥{{ unpaiyOrder.currentPrice }}元（含运费￥{{ unpaiyOrder.sysExpressPrice }}）</span>
+            <span>合计￥{{ unpayOrder.currentPrice }}元（含运费￥{{ unpayOrder.sysExpressPrice }}）</span>
           </div>
           <div
-            v-show="paiyOrder.payStatus === 0"
+            v-show="payOrder.payStatus === 0"
             class="btn-group">
             <span
-              v-show="unpaiyOrder.payStatus === 0"
+              v-show="unpayOrder.payStatus === 0"
               class="order-btn"
-              @click.stop="cancelOrder(unpaiyOrder,index)">取消订单</span>
+              @click.stop="cancelOrder(unpayOrder,index)">取消订单</span>
             <span
-              v-show="unpaiyOrder.payStatus === 0"
+              v-show="unpayOrder.payStatus === 0"
               class="order-btn order-btn-red"
-              @click.stop="goPay(unpaiyOrder,index)">去付款</span>
+              @click.stop="goPay(unpayOrder,index)">去付款</span>
           </div>
         </div>
       </div>
       <div>
         <div
-          v-for="(paiyOrder,index) in paiyList"
+          v-for="(payOrder,index) in payList"
+          v-show="payList.length != 0"
           :key="index"
           class="order-course-scoped"
-          @click.stop="goOrderDetail(unpaiyOrder,index)">
+          @click.stop="goOrderDetail(unpayOrder,index)">
           <div class="br"/>
           <div class="order-title-content">
-            <p class="order-num">订单编号：{{ paiyOrder.orderNumber }}</p>
-            <span class="order-statusstr">{{ paiyOrder.orderStatusStr }}</span>
+            <p class="order-num">订单编号：{{ payOrder.orderNumber }}</p>
+            <span class="order-statusstr">{{ payOrder.orderStatusStr }}</span>
           </div>
           <div class="order-course">
             <mip-img
-              :src=" paiyOrder.img "
+              :src=" payOrder.img "
               width="130"
               height="76"/>
             <div>
               <p>
-                <span>{{ paiyOrder.title }}</span>
-                <span>￥{{ paiyOrder.currentPrice }}</span>
+                <span>{{ payOrder.title }}</span>
+                <span>￥{{ payOrder.currentPrice }}</span>
               </p>
-              <p>过期时间：{{ paiyOrder.expiresTime }}</p>
+              <p>过期时间：{{ payOrder.expiresTime }}</p>
             </div>
           </div>
           <div class="total">
             <span>共1个商品</span>
-            <span>合计￥{{ paiyOrder.currentPrice }}元（含运费￥{{ paiyOrder.sysExpressPrice }}）</span>
+            <span>合计￥{{ payOrder.currentPrice }}元（含运费￥{{ payOrder.sysExpressPrice }}）</span>
           </div>
           <div
-            v-show="paiyOrder.evaluate === 0 || paiyOrder.payStatus === 1"
+            v-show="payOrder.evaluate === 0 || payOrder.payStatus === 1"
             class="btn-group">
             <span
-              v-show="paiyOrder.evaluate === 0"
+              v-show="payOrder.evaluate === 0"
               class="order-btn"
-              @click.stop="goEvaluate(paiyOrder,index)">去评价</span>
+              @click.stop="goEvaluate(payOrder,index)">去评价</span>
             <span
-              v-show="paiyOrder.payStatus === 1"
+              v-show="payOrder.payStatus === 1"
               class="order-btn order-btn-red"
-              @click.stop="goStudy(paiyOrder,index)">去学习</span>
+              @click.stop="goStudy(payOrder,index)">去学习</span>
           </div>
         </div>
       </div>
@@ -155,8 +158,8 @@ export default {
   data () {
     return {
       allOrderList: [],
-      unpaiyList: [],
-      paiyList: [],
+      unpayList: [],
+      payList: [],
       currentOrderId: '',
       showErrorMessage: false,
       errorMessage: ''
@@ -191,8 +194,8 @@ export default {
             // 获得后台实际返回的内容
             response.json().then(function (data) {
               _this.allOrderList = data.data.total
-              _this.unpaiyList = data.data.noPay
-              _this.paiyList = data.data.pay
+              _this.unpayList = data.data.noPay
+              _this.payList = data.data.pay
             })
           })
           .catch(function (err) {
@@ -245,13 +248,13 @@ export default {
         .then(function (response) {
           // 获得后台实际返回的内容
           response.json().then(function (data) {
-            // 判断如果取消成功了，需要重新渲染数据。修改allOrderList和unpaiyList对应的数据。
+            // 判断如果取消成功了，需要重新渲染数据。修改allOrderList和unpayList对应的数据。
             _this.allOrderList.forEach(function (value, key) {
               if (_this.currentOrderId === value.orderId) {
                 value.orderStatus = data.orderStatus
               }
             })
-            _this.unpaiyList.forEach(function (value, key) {
+            _this.unpayList.forEach(function (value, key) {
               if (_this.currentOrderId === value.orderId) {
                 value.orderStatus = data.orderStatus
               }
