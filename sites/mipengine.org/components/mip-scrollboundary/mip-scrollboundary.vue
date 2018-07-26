@@ -41,7 +41,7 @@ export default {
 
       scrollaBoundaryTouch.setAttribute('mip-shell-scrollboundary', true);
       [].slice.call(body.children).forEach(child => {
-        if (/^(SCRIPT|IFRAME|MIP-SHELL|MIP-DATA|MIP-SCROLLBOUNDARY)/.test(child.nodeName)) {
+        if (/^(SCRIPT|IFRAME|MIP-SHELL|MIP-DATA|MIP-SCROLLBOUNDARY|MIP-FIXED)/.test(child.nodeName)) {
           return
         }
         scrollaBoundaryTouch.appendChild(child)
