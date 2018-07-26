@@ -71,7 +71,9 @@ export default {
         .then(function (response) {
           // 获得后台实际返回的内容
           response.json().then(function (data) {
-            MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/orderList?token=' + base.getToken()))
+            if(data.code === '000000'){
+              MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/orderList?token=' + base.getToken()))
+            }
           })
         })
         .catch(function (err) {
