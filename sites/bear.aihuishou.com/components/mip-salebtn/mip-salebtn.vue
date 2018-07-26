@@ -2,7 +2,6 @@
   <div class="comp-home-salebtn-container">
     <a
       :href="[baseUrl+'/product']"
-      data-type="mip"
       class="sale-btn">
       {{ text }}
     </a>
