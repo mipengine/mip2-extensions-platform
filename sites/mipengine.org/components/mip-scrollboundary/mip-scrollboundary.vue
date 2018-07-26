@@ -41,7 +41,7 @@ export default {
 
       scrollaBoundaryTouch.setAttribute('mip-shell-scrollboundary', true);
       [].slice.call(body.children).forEach(child => {
-        if (/^(SCRIPT|IFRAME|MIP-SHELL-INSERVICE|MIP-DATA|MIP-SCROLLBOUNDARY)/.test(child.nodeName)) {
+        if (/^(SCRIPT|IFRAME|MIP-SHELL|MIP-DATA|MIP-SCROLLBOUNDARY|MIP-FIXED)/.test(child.nodeName)) {
           return
         }
         scrollaBoundaryTouch.appendChild(child)
@@ -102,6 +102,9 @@ export default {
     getClosestScrollElement (element) {
       while (element && !element.getAttribute('mip-shell-scrollboundary')) {
         if (MIP.util.css(element, 'overflow-y') === 'auto' && element.clientHeight < element.scrollHeight) {
+          return element
+        }
+        if (MIP.util.css(element, 'overflow-x') === 'auto' && element.clientWidth < element.scrollWidth) {
           return element
         }
         element = element.parentNode

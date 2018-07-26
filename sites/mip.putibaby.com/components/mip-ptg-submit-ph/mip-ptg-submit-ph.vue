@@ -228,10 +228,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -248,7 +245,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.sendPhoneNumberVerifySms = function (phoneNumber, fn) {
   API.wrapRet_(
-    '/api/send_sms', {
+    'https://mip.putibaby.com/api/send_sms', {
       'phone_number': phoneNumber
     },
     fn)
@@ -271,7 +268,7 @@ API.sendPhoneNumberVerifySms = function (phoneNumber, fn) {
 //       }
 //       // window.gt_loading = false;
 //       API.wrapRet_(
-//         '/api/send_sms_validate', {
+//         'https://mip.putibaby.com/api/send_sms_validate', {
 //           'phone_number': phoneNumber,
 //           'geetest_challenge': result.geetest_challenge,
 //           'geetest_validate': result.geetest_validate,
@@ -303,7 +300,7 @@ API.sendPhoneNumberVerifySms = function (phoneNumber, fn) {
 
 API.verifyPhoneNumber = function (phoneNumber, sms, fn) {
   API.wrapRet_(
-    '/api/verify_sms', {
+    'https://mip.putibaby.com/api/verify_sms', {
       'phone_number': phoneNumber,
       'sms': sms
     }, fn)
@@ -429,7 +426,10 @@ export default {
           self.err = false
           API.verifyPhoneNumber(this.phoneNumber, this.sms, function (isOk, res) {
             if (isOk) {
-              window.location.href = JSON.parse(self.dataJsonstr).redirect
+              // window.location.href = JSON.parse(self.dataJsonstr).redirect
+              var url = JSON.parse(self.dataJsonstr).redirect
+              // window.location.replace(url);
+              window.MIP.viewer.open(MIP.util.makeCacheUrl(url), {replace: true})
             } else {
               self.errMessage = '请输入正确的验证码'
               self.err = true
