@@ -57,7 +57,8 @@
         "alipay":  "https://mip.putibaby.com/api/pay/alipay",
         "weixin":  "https://mip.putibaby.com/api/pay/weixin"
         },
-        "postData":{
+        "postData":
+        {
         "orderId": 0,
         "pay_id": 0,
         "token": "",
@@ -74,11 +75,11 @@
       id="payDialog"
       m-bind:pay-config="payConfig"/>
     <button
-      v-if="inservicePayAmount>0"
+      v-if="ajaxLoaded && inservicePayAmount>0"
       class="button"
       on="tap:payDialog.toggle">确定支付</button>
     <button
-      v-else
+      v-else-if="ajaxLoaded"
       class="button"
       @click="submitBalancePay" >余额支付</button>
 
@@ -455,9 +456,10 @@ export default {
         function (isOk, res) {
           if (isOk) {
             var donePage = 'https://mip.putibaby.com/order_list'
-            var xzUrl = 'https://xiongzhang.baidu.com/opensc/payment.html' +
-                  '?id=1544608709261251&redirect_url=' + encodeURIComponent(donePage)
-            window.location.href = xzUrl
+            var xzUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment' +
+                  '?id=1544608709261251&redirect=' + encodeURIComponent(donePage)
+            // window.location.href = xzUrl
+            window.MIP.viewer.open(xzUrl, {})
           }
         }
       )
