@@ -1,10 +1,6 @@
 # insurfront-mip
 简要说明
 文档:
-https://mip-project.github.io/mip/basic/introduction.html
-https://mystifying-dubinsky-9e504e.netlify.com/
-https://github.com/mipengine
-https://xiongzhang.baidu.com/
 
 ## 快速开始
 如何构建、安装、运行
