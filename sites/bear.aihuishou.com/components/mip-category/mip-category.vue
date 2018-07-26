@@ -7,7 +7,6 @@
           v-for="category in categoryList"
           :key="category.id"
           :href="[baseUrl+'/product?cid='+category.id]"
-          data-type="mip"
           class="category-item">
           <div :class="['img-box',`img-box--${category.id}`]">&nbsp;</div>
           <span class="name">{{ category.name }}</span>
