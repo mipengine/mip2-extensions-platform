@@ -1,0 +1,27 @@
+{
+  "city": [
+  {
+    "code": 440500,
+
+    "olded":
+    {
+      "value": 2682,
+      "proportion": 8
+    },
+    "unemployment":
+    {
+      "value": 2682,
+      "proportion": 0.5
+    },
+    "medical":
+    {
+      "value": 2682,
+      "proportion": 0.5
+    },
+    "disease":
+    {
+      "value": 0,
+      "proportion": 0
+    }
+  }]
+}

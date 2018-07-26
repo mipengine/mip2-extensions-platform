@@ -1,0 +1,508 @@
+<template>
+  <div id="Container">
+    <div v-show="resultShow">
+      <div class="tag-nav">
+        <div class="flex-item">
+          <span v-bind:class="{active:active}" @click="selectTag(1)">计算税后工资</span>
+          <span v-bind:class="{active_select:active}"></span>
+        </div>
+        <div class="flex-item"><span v-bind:class="{active:!active}" @click="selectTag(2)">推算税前工资</span><span v-bind:class="{active_select:!active}"></span></div>
+      </div>
+      <!--计算税前工资-->
+      <div v-bind:class="{box:isOk}">
+        <mip-wage-city-threshold @getcitybasemoney="getCitybaseMoney" @getthreshold="getThreshold" @getinputwage="getInputWage">{{title}}</mip-wage-city-threshold>
+        <mip-social-security @securityselect="securitySelect" :fromwage="wage" :tag="tag" :socialsecurity="socialSecurity" @getsecuritybase="getSecurityBase" @getselectvalue="getSelectValue" @islowst="isLowst">是否缴纳社保</mip-social-security>
+        <mip-social-security :isshow="show" @securityselect="securitySelect" :fromwage="wage" :tag="tag" @getsecuritybase="getSecurityBase" @getproportion="getProportion" @getselectvalue="getSelectValue">是否缴纳公积金</mip-social-security>
+      </div>
+      <div class="calculateBtn" id="calculateBtn" @click="calculate">开始计算</div>
+      <!--提示框-->
+      <div class="tipsMes" :class={none:tipShow} id="tips">{{tipsmes}}</div>
+    </div>
+    <mip-result v-show="!resultShow" @resetcalculate="reSet" :resultdata="resultData"></mip-result>
+    <div class="tips" id="tips" :class="{'footer':small}">企微云提供技术支持</div>
+  </div>
+</template>
+<style scoped>
+.tag-nav {
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  color: #888685;
+}
+
+.flex-item {
+  position: relative;
+  width: 50%;
+  text-align: center;
+  font-size: 17px;
+  font-family: PingFang-SC-Medium;
+  font-weight: 500;
+}
+
+.active_select {
+  display: inline-block;
+  width: 32px;
+  height: 3px;
+  background: #FF8D1D;
+  position: absolute;
+  left: 50%;
+  margin-left: -16px;
+  bottom: 0;
+}
+
+.active {
+  color: #FF8D1D;
+}
+
+.wrapper {
+  height: 90px;
+  margin: 0 auto;
+  padding: 0 10pt;
+  text-align: center;
+  border-radius: 10pt;
+  background: #fff;
+}
+
+.foonter {
+  position: absolute;
+}
+
+</style>
+<script>
+export default {
+  props: {
+    wage: {
+      type: Number,
+      default: 0,
+    },
+    tipsmes: {
+      type: String,
+      default: "",
+    },
+  },
+  data() {
+    return {
+      getAllData: {
+        /* wage: 0, //输入金额*/
+        threshold: 3500, //起征点，
+        lowst: {
+          socialLowst: 2,
+          accumulationLowst: 2,
+        }
+      },
+      isOk:false,
+      show: true,
+      tipShow: true,
+      active: true,
+      title: "税前工资",
+      tag: 1, //1-税前，2-税后
+      wage: "",
+      security: { //五险一金
+        socialSelect: {
+          isHave: true,
+          baseMoney: 0,
+        },
+        accumulationSelect: {
+          isHave: true,
+          proportion: 0,
+          baseMoney: 0,
+        },
+      },
+      //默认广州-社保公积金基数
+      socialSecurity: {
+        aged: {
+          baseMoney: 3469,
+          maxMoney: 20004,
+          proportion: 8
+        },
+        noWork: {
+          baseMoney: 2100,
+          maxMoney: 24654,
+          proportion: 0.2
+        },
+        medical: {
+          baseMoney: 4931,
+          maxMoney: 24654,
+          proportion: 2
+        },
+        disease: {
+          baseMoney: 0,
+          proportion: 0,
+        },
+        accumulation: {
+          baseMoney: 1895,
+          maxMoney: 24654,
+        }
+      },
+      selectValue: 1,
+      resultShow: false,
+      resultData: {
+        tag: 1,
+        realIncome: 1000.56,
+        wage: 1000.78,
+      },
+      small: false,
+    }
+  },
+  mounted: function() {
+    this.security.socialSelect.baseMoney = this.wage;
+    this.security.accumulationSelect.baseMoney = this.wage;
+  },
+  methods: {
+    //切换税前/税后工资
+    selectTag: function(index) {
+      this.active = !this.active;
+      this.tag = index;
+      if (index == 1) {
+        this.title = "税前工资";
+      } else {
+        this.title = "税后工资";
+        this.isOk = true;
+      }
+     /* this.reload();*/
+    },
+    //是否购买五险一金
+    securitySelect: function(obj) {
+      let data = obj.detail[0];
+      data.socialSelect != null ? this.security.socialSelect.isHave = data.socialSelect : "";
+      data.accumulationSelect != null ? this.security.accumulationSelect.isHave = data.accumulationSelect : "";
+    },
+    //获取自定义五险一金基数
+    getSecurityBase: function(obj) {
+      let data = obj.detail[0];
+      console.log(obj)
+      data.socialMoney != null ? this.security.socialSelect.baseMoney = data.socialMoney : "";
+      data.accumulationMoney != null ? this.security.accumulationSelect.baseMoney = data.accumulationMoney : "";
+      console.log("自定义社保基数：" + this.security.socialSelect.baseMoney);
+      console.log("公积金基数：" + this.security.accumulationSelect.baseMoney);
+    },
+    //获取不同区域社保基数
+    getCitybaseMoney: function(obj) {
+      let socialSecurity = obj.detail[0];
+      this.socialSecurity = socialSecurity;
+      /*
+            console.log(socialSecurity);*/
+    },
+    //获取公积金基数
+    getProportion: function(obj) {
+      console.log(obj)
+      let proportion = obj.detail[0];
+      this.security.accumulationSelect.proportion = proportion;
+    },
+    //获取起征点
+    getThreshold: function(obj) {
+      let threshold = obj.detail[0];
+      this.getAllData.threshold = threshold;
+    },
+
+    //计算
+    calculate: function() {
+      //税前/税后工资
+      let reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
+      let reg2 = /^[1-9]\d*$/;
+      console.log("this.wage:" + this.wage)
+      if (this.wage == "") {
+        if (this.tag == 1) {
+          this.showTipShow("请输入税前工资");
+          return false;
+        } else {
+          this.showTipShow("请输入税后工资");
+          return false;
+        }
+      } else {
+        if (!reg.test(this.wage)) {
+          this.showTipShow("工资输入不符合规则");
+          return false;
+        }
+
+      }
+      if (this.security.socialSelect.isHave) {
+        if (this.getAllData.lowst == 2) {
+          this.security.socialSelect.baseMoney = this.wage;
+        }
+        if (this.security.socialSelect.baseMoney == "0" || this.security.socialSelect.baseMoney == "") {
+          this.showTipShow("请输入社保基数");
+          return false;
+        } else {
+          if (!reg.test(this.security.socialSelect.baseMoney)) {
+            this.showTipShow("社保输入不符合规则");
+            return false;
+          }
+
+        }
+      }
+      if (this.security.accumulationSelect.isHave) {
+        if (this.getAllData.lowst == 2) {
+          this.security.accumulationSelect.baseMoney = this.wage;
+        }
+        if (this.security.accumulationSelect.baseMoney == 0 || this.security.accumulationSelect.baseMoney == "") {
+          this.showTipShow("请输入公积金基数");
+          return false;
+        } else {
+          if (!reg.test(this.security.accumulationSelect.baseMoney)) {
+            this.showTipShow("公积金输入不符合规则");
+            return false;
+          }
+        }
+        if (this.security.accumulationSelect.proportion == 0 || this.security.accumulationSelect.proportion == "") {
+          this.showTipShow("请输入公积金比例");
+          return false;
+        } else {
+          /*console.log(this.security.accumulationSelect.proportion.indexOf("."))*/
+          if (!reg2.test(this.security.accumulationSelect.proportion) || this.security.accumulationSelect.proportion > 12 || this.security.accumulationSelect.proportion < 5) {
+            this.showTipShow("公积金比例为5~12的正整数");
+            return false;
+          }
+        }
+      }
+      this.getAllData.security = this.security;
+      this.getAllData.tag = this.tag;
+      this.getAllData.wage = this.wage;
+      this.getAllData.socialSecurity = this.socialSecurity
+      /*
+            console.log(this.getAllData);*/
+      this.getResult(this.getAllData);
+      this.resultShow = false;
+    },
+    showTipShow(mes) {
+      this.tipsmes = mes;
+      this.tipShow = false;
+      setTimeout(() => {
+        this.tipShow = true;
+      }, 1000);
+    },
+    getInputWage: function(obj) {
+      let wage = obj.detail[0];
+      this.wage = wage;
+      if (this.selectValue == "1") {
+        this.security.socialSelect.baseMoney = this.wage;
+        this.security.accumulationSelect.baseMoney = this.wage;
+      }
+    },
+    isLowst: function(obj) {
+      let isLowst = obj.detail[0];
+      console.log(isLowst)
+      console.log(222)
+      this.getAllData.lowst = isLowst;
+    },
+    getSelectValue: function(str) {
+      this.selectValue = str.detail[0];
+    },
+    getResult: function(data) {
+      var $data = {};
+      var sociall = 0;
+      var accumulation = 0;
+      var getResult = {};
+      $data = JSON.parse(JSON.stringify(data))
+      if (!$data.security.accumulationSelect.isHave) {
+        $data.security.accumulationSelect.baseMoney = 0;
+      }
+      if (!$data.security.socialSelect.isHave) {
+        $data.security.socialSelect.baseMoney = 0;
+      }
+      console.log($data)
+      if ($data.lowst.socialLowst == 1) { //最低标准
+        if ($data.security.socialSelect.isHave) {
+          var $social_1 = $data.socialSecurity.aged.baseMoney * $data.socialSecurity.aged.proportion / 100;
+          var $social_2 = $data.socialSecurity.noWork.baseMoney * $data.socialSecurity.noWork.proportion / 100;
+          var $social_3 = $data.socialSecurity.medical.baseMoney * $data.socialSecurity.medical.proportion / 100;
+          /*var $social_4 = $data.socialSecurity.disease.baseMoney * $data.socialSecurity.disease.proportion / 100;*/
+          sociall = $social_1 + $social_2 + $social_3;
+        } else {
+          sociall = 0;
+        }
+      } else {
+        if ($data.security.socialSelect.isHave) {
+          var socialMoney = 0;
+          if ($data.lowst.socialLowst == 2) {
+            socialMoney = $data.wage
+          } else {
+
+            socialMoney = $data.security.socialSelect.baseMoney;
+          }
+          var $social_5 = 0; //计算养老基数
+          var $social_6 = 0; //计算失业保险
+          var $social_7 = 0;
+          if (socialMoney > $data.socialSecurity.aged.baseMoney && socialMoney < $data.socialSecurity.aged.maxMoney) {
+            $social_5 = socialMoney * $data.socialSecurity.aged.proportion / 100
+          } else if (socialMoney > $data.socialSecurity.aged.maxMoney) {
+            $social_5 = $data.socialSecurity.aged.maxMoney * $data.socialSecurity.aged.proportion / 100;
+          } else {
+            $social_5 = $data.socialSecurity.aged.baseMoney * $data.socialSecurity.aged.proportion / 100;
+          }
+
+          if (socialMoney > $data.socialSecurity.noWork.baseMoney && socialMoney < $data.socialSecurity.noWork.maxMoney) {
+            $social_6 = socialMoney * $data.socialSecurity.noWork.proportion / 100;
+          } else if (socialMoney > $data.socialSecurity.noWork.maxMoney) {
+            $social_6 = $data.socialSecurity.noWork.maxMoney * $data.socialSecurity.noWork.proportion / 100;
+          } else {
+            $social_6 = $data.socialSecurity.noWork.baseMoney * $data.socialSecurity.noWork.proportion / 100;
+          }
+          if (socialMoney > $data.socialSecurity.medical.baseMoney && socialMoney < $data.socialSecurity.medical.maxMoney) {
+            $social_7 = socialMoney * $data.socialSecurity.medical.proportion / 100;
+          } else if (socialMoney > $data.socialSecurity.medical.maxMoney) {
+            $social_7 = $data.socialSecurity.medical.maxMoney * $data.socialSecurity.medical.proportion / 100;
+          } else {
+            $social_7 = $data.socialSecurity.medical.baseMoney * $data.socialSecurity.medical.proportion / 100;
+          }
+          sociall = $social_5 + $social_6 + $social_7+$data.socialSecurity.disease.baseMoney;
+        } else {
+          sociall = 0;
+        }
+
+      }
+      if ($data.security.accumulationSelect.isHave) {
+        if ($data.lowst.accumulationLowst == 2) {
+          $data.security.accumulationSelect.baseMoney = $data.wage;
+        }
+        let accumulationBase = 0;
+        if ($data.security.accumulationSelect.baseMoney > $data.socialSecurity.accumulation.maxMoney) {
+          accumulationBase = $data.socialSecurity.accumulation.maxMoney;
+        } else if ($data.security.accumulationSelect.baseMoney < $data.socialSecurity.accumulation.baseMoney) {
+          accumulationBase = $data.socialSecurity.accumulation.baseMoney;
+        } else {
+          accumulationBase = $data.security.accumulationSelect.baseMoney
+        }
+        accumulation = accumulationBase * $data.security.accumulationSelect.proportion / 100;
+      } else {
+        accumulation = 0;
+      }
+
+      //计算税后收入
+      if ($data.tag == 1) {
+        //计算个人缴纳社保
+        this.resultData = this.getTax($data.wage, sociall + accumulation, $data.threshold);
+        this.resultData.tag = 1;
+
+      } else {
+        this.resultData = this.after2wage($data.wage, sociall + accumulation, $data.threshold);
+        this.resultData.tag = 2;
+      }
+      this.resultData.threshold = $data.threshold.toFixed(2);
+      this.resultData.sociAll = sociall.toFixed(2);
+      this.resultData.accumulation = accumulation.toFixed(2);
+      this.resultData.wage = $data.wage;
+    },
+    //计算税后工资
+    getTax: function(XSum, insure, threshold) {
+      var R, Q;
+      var taxableIncome = XSum - insure - threshold;
+      var A = taxableIncome;
+      A = A.toFixed(2);
+      if (A <= 1500) {
+        R = 0.03;
+        Q = 0;
+      } else if (A > 1500 && A <= 4500) {
+        R = 0.1;
+        Q = 105
+      } else if (A > 4500 && A <= 9000) {
+        R = 0.2;
+        Q = 555
+      } else if (A > 9000 && A <= 35000) {
+        R = 0.25;
+        Q = 1005
+      } else if (A > 35000 && A <= 55000) {
+        R = 0.3;
+        Q = 2755
+      } else if (A > 55000 && A <= 80000) {
+        R = 0.35;
+        Q = 5505
+      } else {
+        R = 0.45;
+        Q = 13505;
+      }
+      var tax = taxableIncome * R - Q;
+      tax < 0 ? tax = 0 : "";
+      var realIncome = XSum - insure - tax;
+      taxableIncome < 0 ? taxableIncome = 0 : "";
+      return {
+        realIncome: realIncome.toFixed(2),
+        tax: tax.toFixed(2),
+        taxableIncome: taxableIncome.toFixed(2),
+        taxR: R * 100,
+        taxQ: Q,
+      }
+    },
+    //计算税前工资
+    after2wage: function(taxwage, insure, threshold) {
+      let hold = threshold;
+      let wage = taxwage;
+      let tax = 0;
+      //第一段
+      if (wage < hold) { return wage; }
+      //第二段
+      wage = (taxwage - 3500 * 0.03) / (1 - 0.03);
+      if (wage > hold && wage <= hold + 1500) {
+        return {
+          realIncome: (wage + insure).toFixed(2),
+          tax: (wage - taxwage).toFixed(2),
+          taxableIncome: (wage + insure - hold).toFixed(2),
+        }
+      }
+      //第三段
+      wage = (taxwage - 105 - 3500 * 0.1) / (1 - 0.1);
+      if (wage > hold + 1500 && wage <= hold + 4500) {
+        return {
+          realIncome: (wage + insure).toFixed(2),
+          tax: (wage - taxwage).toFixed(2),
+          taxableIncome: (wage + insure - hold).toFixed(2),
+        }
+      }
+      //第四段
+      wage = (taxwage - 555 - 3500 * 0.2) / (1 - 0.2);
+      if (wage > hold + 4500 && wage <= hold + 9000) {
+        return {
+          realIncome: (wage + insure).toFixed(2),
+          tax: (wage - taxwage).toFixed(2),
+          taxableIncome: (wage + insure - hold).toFixed(2),
+        }
+      }
+      //第五段
+      wage = (taxwage - 1005 - 3500 * 0.25) / (1 - 0.25);
+      if (wage > hold + 9000 && wage <= hold + 35000) {
+        return {
+          realIncome: (wage + insure).toFixed(2),
+          tax: (wage - taxwage).toFixed(2),
+          taxableIncome: (wage + insure - hold).toFixed(2),
+        }
+      }
+      //第六段
+      wage = (taxwage - 2755 - 3500 * 0.3) / (1 - 0.3);
+      if (wage > hold + 35000 && wage <= hold + 55000) {
+        return {
+          realIncome: (wage + insure).toFixed(2),
+          tax: (wage - taxwage).toFixed(2),
+          taxableIncome: (wage + insure - hold).toFixed(2),
+        }
+      }
+      //第七段
+      wage = (taxwage - 5505 - 3500 * 0.35) / (1 - 0.35);
+      if (wage > hold + 55000 && wage <= hold + 80000) {
+        return {
+          realIncome: (wage + insure).toFixed(2),
+          tax: (wage - taxwage).toFixed(2),
+          taxableIncome: (wage + insure - hold).toFixed(2),
+        }
+      }
+      //第八段
+      wage = (taxwage - 13505 - 3500 * 0.45) / (1 - 0.1);
+      if (wage > hold + 80000) {
+        return {
+          realIncome: (wage + insure).toFixed(2),
+          tax: (wage - taxwage).toFixed(2),
+          taxableIncome: (wage + insure - hold).toFixed(2),
+          /* taxR: R * 100,
+            taxQ:Q,*/
+        }
+      }
+    },
+    reSet: function() {
+      this.resultShow = true;
+    }
+  }
+}
+
+</script>

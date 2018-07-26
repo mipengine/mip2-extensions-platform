@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>MIP page</title>
+    <link rel="stylesheet" href="https://bos.nj.bpc.baidu.com/assets/mip/projects/mip.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <style mip-custom>
+      /* 自定义样式 */
+      html,body{
+        min-height: 100% !important;
+        position: relative;
+        margin:0;
+        padding: 0;
+        font-family: PingFang-SC-Medium;
+        font-size: 16px;
+        font-weight: 500!important;
+        background: #F2F3F6;
+      },
+      body{
+        height: 100%;
+      }
+      h2,a {
+        margin: 50px auto;
+        text-align: center;
+      }
+      .mip-shell-header .mip-shell-header-logo-title .mip-shell-header-logo{
+        width:50px;
+        border: none;
+      }
+      a{
+        display: block;
+        margin:0 auto;
+        font-size: 15pt;
+      }
+      .mip-vd-tabs-nav{
+        margin-bottom: 10pt;
+      }
+      .mip-shell-header-title{
+        font-size: 19px;
+        color: #323232;
+        font-weight: 500;
+      }
+      .mip-vd-tabs .mip-vd-tabs-nav-li{
+          font-size: 17px;
+          font-weight: 500;
+          color: #888685;
+      }
+      .mip-vd-tabs-nav-selected{
+        border-bottom-color: #FF8D1D !important;
+        color: #FF8D1D !important;
+      }
+      .tipsMes{
+        position: fixed;
+        top: 88px;
+        left: 0;
+        height: 45px;
+        line-height: 45px;
+        margin: 0 auto;
+        text-align: center;
+        color: #fff;
+        background: #FF8D1D;
+        opacity: 0.8;
+        z-index: 100;
+        width: 100%;
+        border: none;
+        border-radius: 0;
+      }
+      .calculateBtn a{
+        color: #fff;
+      }
+     .footer{
+        position: absolute;
+     }
+    </style>
+  </head>
+  <body layout="container">
+    <mip-shell>
+     <script type="application/json">
+     {
+       "routes": [
+           {
+               "pattern": "*",
+               "meta": {
+                   "header": {
+                       "show": true,
+                       "xiongzhang": true,
+                       "title": "企微云工资计算器",
+                       "logo": ""
+                   },
+                   "view":{
+                       "isIndex": true
+                   }
+               }
+           }
+       ]
+   }
+   </script>
+     </mip-shell>
+   <mip-data>
+    <script type="application/json">
+    {
+        "wage":0,
+        "tipsMes":"请输入税前工资",
+        "selectValue":1,
+        "small":false,
+    }
+
+    </script>
+</mip-data>
+<mip-example m-bind:wage="wage" m-bind:tipsmes="tipsMes" m-show="false" m-bind:small="small"></mip-example>
+
+</body>
+<script src="https://bos.nj.bpc.baidu.com/assets/mip/projects/mip.js"></script>
+<script src="https://c.mipcdn.com/static/v1/mip-bind/mip-bind.js"></script>
+<script src="/mip-example/mip-example.js"></script>
+<script src="/mip-social-security/mip-social-security.js"></script>
+<script src="/mip-wage-city-threshold/mip-wage-city-threshold.js"></script>
+<script src="/mip-address-select/mip-address-select.js"></script>
+<script src="/mip-scroll-select/mip-scroll-select.js"></script>
+<script src="/mip-result/mip-result.js"></script>
+</html>
