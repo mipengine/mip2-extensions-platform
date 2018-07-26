@@ -161,6 +161,8 @@
     height: 150px;
     text-align: center;
     float: left;
+    background-position:center;
+    margin-bottom:50px;
   }
 
   .help {
@@ -171,6 +173,7 @@
     height: 150px;
     text-align: center;
     float: left;
+    background-position:center;
   }
 
   .bottom {

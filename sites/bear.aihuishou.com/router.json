@@ -1,0 +1,36 @@
+{
+    "routes": [
+        {
+            "pattern": "./index.html",
+            "meta": {
+                "header": {
+                    "show": true
+                },
+                "view":{
+                    "isIndex": true
+                }
+            }
+        },
+        {
+            "pattern": "./secPage.html",
+            "meta": {
+                "header": {
+                    "show": true,
+                    "title":"极客修sec"
+                },
+                "view":{
+                    "isIndex": false
+                }
+            }
+        },
+        {
+            "pattern": "*",
+            "meta": {
+                "header": {
+                    "show": true
+                }
+            }
+        }
+    ],
+    "isId":"156786663788884"
+}
