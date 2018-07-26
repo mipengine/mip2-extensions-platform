@@ -105,33 +105,37 @@
       class="s4s-btn"
       @click="formSubmit"> {{ isEdit?'保存':'添加' }} </button>
 
-    <div
-      v-if="detail"
-      class="s4s-mask"
-      @click="closeMake">
-      <mip-img
-        :src="src"
-        layout="responsive"
-        width="350"
-        height="263" />
-    </div>
-    <div
-      v-if="showProvice"
-      class="s4s-provice" >
-      <div style="overflow: hidden;padding-bottom: .40rem;" >
-        <template v-for="(provice, index) in proviceList">
-          <div
-            :key="index"
-            class="s4s-provice-tit"
-            @click="selProvince(provice)">{{ provice }}</div>
-        </template>
-        <div
-          key="-1"
-          class="s4s-provice-tit"
-          style="width: 33.899999999%;background: #BBC3C7;color: #fff;"
-          @click="selectProvice" >隐藏</div>
+    <mip-fixed type="top">
+      <div
+        v-if="detail"
+        class="s4s-mask"
+        @click="closeMake">
+        <mip-img
+          :src="src"
+          layout="responsive"
+          width="350"
+          height="263" />
       </div>
-    </div>
+    </mip-fixed>
+    <mip-fixed type="bottom">
+      <div
+        v-if="showProvice"
+        class="s4s-provice" >
+        <div style="overflow: hidden;padding-bottom: .40rem;" >
+          <template v-for="(provice, index) in proviceList">
+            <div
+              :key="index"
+              class="s4s-provice-tit"
+              @click="selProvince(provice)">{{ provice }}</div>
+          </template>
+          <div
+            key="-1"
+            class="s4s-provice-tit"
+            style="width: 33.899999999%;background: #BBC3C7;color: #fff;"
+            @click="selectProvice" >隐藏</div>
+        </div>
+      </div>
+    </mip-fixed>
   </div>
 </template>
 
@@ -360,7 +364,6 @@ export default {
     // 选择省份
     selectProvice () {
       this.showProvice = !this.showProvice
-      console.log(this.showProvice, 11)
     },
     // 查看车架号
     classDetail () {
@@ -418,7 +421,6 @@ export default {
           return
         }
         if (res.code === 0) {
-          // console.log(res.data)
           util.toast('操作成功')
           MIP.viewer.open('car.html')
         }
@@ -535,7 +537,7 @@ export default {
 
 <style scoped>
 .s4s-car-info.s4s-illegal-body {
-  margin-top: .12rem;
+  margin-top: 0.12rem;
   padding-bottom: 0;
 }
 
@@ -561,18 +563,18 @@ export default {
   -ms-flex: 1;
   flex: 1;
   color: #333333;
-  font-size: .2rem;
+  font-size: 0.2rem;
 }
 
 .s4s-car-illegal {
-  padding-top: .05rem;
+  padding-top: 0.05rem;
   color: #999999;
-  font-size: .14rem;
+  font-size: 0.14rem;
 }
 
 .s4s-group {
-  height: .32rem;
-  border-bottom: .01rem rgba(0, 0, 0, 0.1) solid;
+  height: 0.32rem;
+  border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
   color: #666;
   overflow: hidden;
   -webkit-box-align: center;
@@ -581,18 +583,18 @@ export default {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding: .15rem 0;
+  padding: 0.15rem 0;
   box-sizing: content-box;
 }
 .s4s-group-tit {
-  font-size: .15rem;
-  width: .9rem;
+  font-size: 0.15rem;
+  width: 0.9rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 .s4s-group-txt {
-  font-size: .15rem;
+  font-size: 0.15rem;
   color: #777;
   -webkit-box-flex: 1;
   -ms-flex: 1;
@@ -601,14 +603,14 @@ export default {
 }
 .s4s-group input {
   border: none;
-  font-size: .15rem;
+  font-size: 0.15rem;
   -webkit-box-flex: 1;
   -ms-flex: 1;
   flex: 1;
   text-align: left;
 }
 select {
-  font-size: .15rem;
+  font-size: 0.15rem;
 }
 .s4s-group input:focus,
 .s4s-group select:focus {
@@ -621,15 +623,15 @@ select {
 }
 .s4s-btn {
   background-image: linear-gradient(40deg, #ff7c00 0%, #fe5a00 100%);
-  border-radius: .04rem;
+  border-radius: 0.04rem;
   border: none;
-  line-height: .5rem;
-  font-size: .18rem;
+  line-height: 0.5rem;
+  font-size: 0.18rem;
   width: 90%;
   display: block;
   margin: 0 auto;
   color: #fff;
-  margin: .2rem auto;
+  margin: 0.2rem auto;
 }
 .s4s-upload-pic {
   width: 30%;
@@ -641,28 +643,28 @@ select {
   flex-direction: row;
   background-image: linear-gradient(-149deg, #fe5a00 0%, #ff7c00 100%);
   justify-content: center;
-  border-radius: .04rem;
+  border-radius: 0.04rem;
   color: #fff;
   /* width: 0.45rem; */
   height: 0.25rem;
-  margin-right: .05rem;
-  padding: .01rem .09rem;
+  margin-right: 0.05rem;
+  padding: 0.01rem 0.09rem;
 }
 .right-arrow {
   display: inline-block;
   width: 0;
   height: 0;
-  border-left: .05rem solid transparent;
-  border-top: .05rem solid #fff;
-  border-right: .05rem solid transparent;
+  border-left: 0.05rem solid transparent;
+  border-top: 0.05rem solid #fff;
+  border-right: 0.05rem solid transparent;
 }
 
 .s4s-provice {
   width: 100%;
   background: #d8dbdc;
-  position: fixed;
+  /* position: absolute;
   bottom: 0;
-  left: 0;
+  left: 0; */
   transform: translateY(0);
   -webkit-transform: translateY(0);
   transition: transform 0.3s ease-out;
@@ -673,7 +675,7 @@ select {
   width: 9%;
   padding: 0.05rem;
   background: #fff;
-  border-radius: .04rem;
+  border-radius: 0.04rem;
   margin-left: 3.09999999%;
   margin-top: 3.09999999%;
   text-align: center;
