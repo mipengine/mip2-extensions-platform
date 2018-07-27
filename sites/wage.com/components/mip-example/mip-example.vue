@@ -16,9 +16,9 @@
       </div>
       <div class="calculateBtn" id="calculateBtn" @click="calculate">开始计算</div>
       <!--提示框-->
-      <mip-fixed type="top" :class={none:tipShow}>
+      <!-- <mip-fixed type="top" :class={none:tipShow}> -->
       <div class="tipsMes" :class={none:tipShow} id="tips">{{tipsmes}}</div>
-      </mip-fixed>
+      <!-- </mip-fixed> -->
     </div>
     
       <mip-result v-show="!resultShow" @resetcalculate="reSet" :resultdata="resultData"></mip-result>
