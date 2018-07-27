@@ -61,7 +61,8 @@
             <tr>
               <td
                 id="sortZH"
-                class="sort_td checked">
+                class="sort_td checked"
+                @click="sortClick('zh')">
                 <mip-img
                   v-if="filter.sort_by == '' || !filter.sort_by"
                   src="https://mip.putibaby.com/i/zh_g.png" />
@@ -71,7 +72,8 @@
               </td>
               <td
                 id="sortPrice"
-                class="sort_td">
+                class="sort_td"
+                @click="sortClick('jg')">
                 <mip-img
                   v-if="filter.sort_by == 'price_asc'"
                   src="https://mip.putibaby.com/i/jgs_g.png" />
@@ -84,7 +86,8 @@
               </td>
               <td
                 id="sortJY"
-                class="sort_td">
+                class="sort_td"
+                @click="sortClick('jy')">
                 <mip-img
                   v-if="filter.sort_by == 'jy_asc'"
                   src="https://mip.putibaby.com/i/jys_g.png" />
@@ -97,7 +100,8 @@
               </td>
               <td
                 id="sortAge"
-                class="sort_td">
+                class="sort_td"
+                @click="sortClick('age')">
                 <mip-img
                   v-if="filter.sort_by == 'age_desc'"
                   src="https://mip.putibaby.com/i/nlx_g.png" />
@@ -1120,7 +1124,7 @@
   }
 
   .cardList{
-    margin-top:5px;
+
   }
   .cardList .masterCard {
     width: 100%;
@@ -1129,7 +1133,8 @@
     border-radius: 3px;
     background-color: white;
     position: relative;
-    border: solid 1px #e5e5e5;
+    box-shadow:0px 5px 10px rgba(175,208,59,0.1);
+
   }
 
   .cardList .masterCard .mC_header {
@@ -1493,9 +1498,9 @@
 
   .header {
     background-color: #fff;
-    padding-top: 7px;
     margin-top: 44px;
     overflow: hidden;
+    margin-bottom:10px;
   }
 
   .span_qt {
@@ -1521,6 +1526,7 @@
   }
 
   .ycq {
+    -webkit-appearance:none;
     width: 170px;
     height: 30px;
     line-height: 15px;
@@ -1817,61 +1823,12 @@ export default {
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq'), {})
       } else if (!event.userInfo.isUnion && origin) {
         console.log('logindone to submit_ph')
-        var to = '/' + origin
+        var to = 'https://mip.putibaby.com/' + origin
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
       }
     })
 
-    // var sortbar = document.querySelector('#sortbar')
-    // var sortBy = sortbar.dataset.sort_by
-    var sortZH = document.querySelector('#sortZH')
-    var sortPrice = document.querySelector('#sortPrice')
-    var sortJY = document.querySelector('#sortJY')
-    var sortAge = document.querySelector('#sortAge')
-    // var city = sortbar.dataset.city
-    // var lightboxClose = document.querySelector('#lightbox-close')
-    var sorttd = document.querySelectorAll('.sort_td')
     var radiobtn = document.querySelectorAll('.radio_btn')
-
-    sortZH.addEventListener('touchend', function () {
-      removeClass(sorttd, 'checked')
-      addClass(sortZH, 'checked')
-      self.filter.sort_by = ''
-      self.load_data()
-    })
-
-    sortPrice.addEventListener('touchend', function () {
-      removeClass(sorttd, 'checked')
-      addClass(sortPrice, 'checked')
-      if (self.filter.sort_by === 'price_desc') {
-        self.filter.sort_by = 'price_asc'
-      } else {
-        self.filter.sort_by = 'price_desc'
-      }
-      self.load_data()
-    })
-
-    sortJY.addEventListener('touchend', function () {
-      removeClass(sorttd, 'checked')
-      addClass(sortJY, 'checked')
-      if (self.filter.sort_by === 'jy_desc') {
-        self.filter.sort_by = 'jy_asc'
-      } else {
-        self.filter.sort_by = 'jy_desc'
-      }
-      self.load_data()
-    })
-
-    sortAge.addEventListener('touchend', function () {
-      removeClass(sorttd, 'checked')
-      addClass(sortAge, 'checked')
-      if (self.filter.sort_by === 'age_asc') {
-        self.filter.sort_by = 'age_desc'
-      } else {
-        self.filter.sort_by = 'age_asc'
-      }
-      self.load_data()
-    })
 
     var citytd = document.querySelectorAll('.citytd')
     // var cityVal = document.querySelector('#btn-open').innerHTML
@@ -1902,6 +1859,11 @@ export default {
         if (isOk) {
           console.log(res)
           self.list = res.list
+          if (res.list.length < 10) {
+            self.state.loadMessage = '没有更多数据了!'
+          } else {
+            self.state.loadMessage = '点击加载数据'
+          }
         }
       })
     },
@@ -1928,7 +1890,7 @@ export default {
         return false
       }
       if (!this.isUnion) {
-        var to = '/' + cmd
+        var to = 'https://mip.putibaby.com/' + cmd
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
 
         return false
@@ -2039,6 +2001,32 @@ export default {
     },
     reload_ () {
       window.location.reload()
+    },
+
+    sortClick (e) {
+      var self = this
+      if (e === 'zh') {
+        self.$set(self.filter, 'sort_by', '')
+      } else if (e === 'jg') {
+        if (self.filter.sort_by === 'price_desc') {
+          self.$set(self.filter, 'sort_by', 'price_asc')
+        } else {
+          self.$set(self.filter, 'sort_by', 'price_desc')
+        }
+      } else if (e === 'jy') {
+        if (self.filter.sort_by === 'jy_desc') {
+          self.$set(self.filter, 'sort_by', 'jy_asc')
+        } else {
+          self.$set(self.filter, 'sort_by', 'jy_desc')
+        }
+      } else if (e === 'age') {
+        if (self.filter.sort_by === 'age_asc') {
+          self.$set(self.filter, 'sort_by', 'age_desc')
+        } else {
+          self.$set(self.filter, 'sort_by', 'age_asc')
+        }
+      }
+      self.load_data()
     }
 
   }
