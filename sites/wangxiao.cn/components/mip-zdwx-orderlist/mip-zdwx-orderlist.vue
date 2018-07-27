@@ -180,27 +180,7 @@ export default {
     let _this = this
     this.$element.customElement.addEventAction('login', event => {
       if (event.userInfo.userStatus === 0) {
-        fetch(base.api.getOrderList, {
-          method: 'POST',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({
-            token: base.getToken() || base.getQueryString('token')
-          })
-        })
-          .then(function (response) {
-            // 获得后台实际返回的内容
-            response.json().then(function (data) {
-              _this.allOrderList = data.data.total
-              _this.unpayList = data.data.noPay
-              _this.payList = data.data.pay
-            })
-          })
-          .catch(function (err) {
-            console.log('Fetch Error :-S', err)
-          })
+        _this.getPageData()
       } else if (event.userInfo.userStatus === 3) {
         _this.errorMessage = '异常访问！'
         _this.showErrorMessage = true
