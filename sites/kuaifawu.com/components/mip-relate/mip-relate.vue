@@ -67,18 +67,22 @@
       </div>
     </div>
     <!-- 底部固定栏 -->
-    <div class="fix-bottom">
-      <div class="left">应付：<span>￥{{ sum }}</span></div>
-      <a
-        :href="geturl('/orders/confirm.html')"
-        data-type="mip"
-        class="right">去结算</a>
-    </div>
+    <mip-fixed
+      type="bottom"
+      bottom="0">
+      <div class="fix-bottom">
+        <div class="left">应付：<span>￥{{ sum }}</span></div>
+        <a
+          :href="geturl('/orders/confirm.html')"
+          data-type="mip"
+          class="right">去结算</a>
+      </div>
+    </mip-fixed>
     <!-- 底部固定栏 -->
   </div>
 </template>
 <style scoped>
-.sku{display:none}.wrapper{margin:0 auto}.flex{display:flex;justify-content:space-between}.choosed{padding:.2rem .1rem 0rem;margin-bottom:.2rem;border-bottom:.014rem solid #d9d9d9;background-color:#fff}.choosed .title{color:#666;margin-bottom:.13rem;font-size:.16rem}.choosed .name .l-name{color:#333;font-size:.18rem;font-weight:bold}.choosed .name .r-money{color:#f85555;font-size:.18rem}.choosed .infos{color:#999;font-size:.10rem;display:flex;align-items:center;height:.5rem}.choosed .infos span{margin-right:.12rem}.choosed .infos mip-img{width:.26rem;display:inline-block;vertical-align:middle}.other{border-top:.014rem solid #d9d9d9;padding:.2rem .1rem;background-color:#fff;padding-bottom:.54rem}.other .title{color:#666;margin-bottom:.13rem;font-size:.16rem}.other .item{border-bottom:.014rem solid #d9d9d9;padding-bottom:.16rem;padding-top:.16rem}.other .item .name{color:#333;font-size:.18rem;font-weight:bold;border-left:.04rem solid #007bc7;padding-left:.1rem}.other .item .money{color:#f85555;font-size:.18rem}.other .item .infos{color:#999;font-size:.10rem;display:flex;align-items:center;height:.5rem}.box{display:flex;flex-wrap:wrap}.box span{border:.014rem solid #999;display:inline-block;padding:0 .14rem;color:#666;margin-right:.04rem;height:.3rem;line-height:.3rem;margin-bottom:.04rem}.box span.active{border:.014rem solid #f85555}.fix-bottom{position:fixed;bottom:0;left:0;background-color:#fff;border-top:.014rem solid #d9d9d9;height:.54rem;line-height:.54rem;width:100%;display:flex}.fix-bottom .left{width:70%;color:#999;text-align:right;padding-right:.2rem}.fix-bottom .left span{font-size:.2rem;color:#e85555}.fix-bottom .right{width:30%;background-color:#e85555;color:#fff;text-align:center}
+.sku{display:none}.wrapper{margin:0 auto}.flex{display:flex;justify-content:space-between}.choosed{padding:.2rem .1rem 0rem;margin-bottom:.2rem;border-bottom:.014rem solid #d9d9d9;background-color:#fff}.choosed .title{color:#666;margin-bottom:.13rem;font-size:.16rem}.choosed .name .l-name{color:#333;font-size:.18rem;font-weight:bold}.choosed .name .r-money{color:#f85555;font-size:.18rem}.choosed .infos{color:#999;font-size:.10rem;display:flex;align-items:center;height:.5rem}.choosed .infos span{margin-right:.12rem}.choosed .infos mip-img{width:.26rem;display:inline-block;vertical-align:middle}.other{border-top:.014rem solid #d9d9d9;padding:.2rem .1rem;background-color:#fff;padding-bottom:.54rem}.other .title{color:#666;margin-bottom:.13rem;font-size:.16rem}.other .item{border-bottom:.014rem solid #d9d9d9;padding-bottom:.16rem;padding-top:.16rem}.other .item .name{color:#333;font-size:.18rem;font-weight:bold;border-left:.04rem solid #007bc7;padding-left:.1rem}.other .item .money{color:#f85555;font-size:.18rem}.other .item .infos{color:#999;font-size:.10rem;display:flex;align-items:center;height:.5rem}.box{display:flex;flex-wrap:wrap}.box span{border:.014rem solid #999;display:inline-block;padding:0 .14rem;color:#666;margin-right:.04rem;height:.3rem;line-height:.3rem;margin-bottom:.04rem}.box span.active{border:.014rem solid #f85555}.fix-bottom{background-color:#fff;border-top:.014rem solid #d9d9d9;height:.54rem;line-height:.54rem;width:100%;display:flex}.fix-bottom .left{width:70%;color:#999;text-align:right;padding-right:.2rem}.fix-bottom .left span{font-size:.2rem;color:#e85555}.fix-bottom .right{width:30%;background-color:#e85555;color:#fff;text-align:center}
 
 </style>
 <script>
@@ -109,6 +113,7 @@ export default {
     }
   },
   mounted () {
+    MIP.viewer.fixedElement.init()
     console.log('This is my 关联推荐页 !')
     // let isreg = getRequest().res ? getRequest().res : 0
     let CustomStorage = MIP.util.customStorage

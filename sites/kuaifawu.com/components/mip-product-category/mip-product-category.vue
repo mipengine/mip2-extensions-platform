@@ -144,6 +144,7 @@ export default {
     }
   },
   mounted () {
+    // MIP.viewer.fixedElement.init()
     // console.log('This is 产品分类 !')
     const self = this
     let pcid = getRequest().pcid
