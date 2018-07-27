@@ -211,6 +211,30 @@ export default {
     })
   },
   methods: {
+    getPageData () {
+      let _this = this
+      fetch(base.api.getOrderList, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          token: base.getToken() || base.getQueryString('token')
+        })
+      })
+        .then(function (response) {
+          // 获得后台实际返回的内容
+          response.json().then(function (data) {
+            _this.allOrderList = data.data.total
+            _this.unpayList = data.data.noPay
+            _this.payList = data.data.pay
+          })
+        })
+        .catch(function (err) {
+          console.log('Fetch Error :-S', err)
+        })
+    },
     goEvaluate (order, index) {
       let goodsId = order.goodsId || ''
       let orderId = order.orderNumber || ''
@@ -250,16 +274,7 @@ export default {
           response.json().then(function (data) {
             // 判断如果取消成功了，需要重新渲染数据。修改allOrderList和unpayList对应的数据。
             if (data.code === '000000') {
-              _this.allOrderList.forEach(function (value, key) {
-                if (_this.currentOrderId === value.orderId) {
-                  value.orderStatus = 0
-                }
-              })
-              _this.unpayList.forEach(function (value, key) {
-                if (_this.currentOrderId === value.orderId) {
-                  value.orderStatus = 0
-                }
-              })
+              _this.getPageData()
             }
           })
         })
