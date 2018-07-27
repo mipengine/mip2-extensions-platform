@@ -229,7 +229,7 @@ export default {
     },
     goOrderDetail (order) {
       let orderId = order.orderNumber || ''
-      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'orderdetail.jsp?id=' + orderId))
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toDetailOrder?orderId=' + orderId))
     },
     cancelOrder (order, index) {
       let orderId = order.orderNumber || ''
