@@ -316,8 +316,12 @@ export default {
       this.tag = index;
       if (index == 1) {
         this.title = "税前工资";
+        this.getAllData.lowst.socialLowst = 2;
+        this.getAllData.lowst.accumulationLowst = 2;
       } else {
         this.title = "税后工资";
+        this.getAllData.lowst.socialLowst = 3;
+        this.getAllData.lowst.accumulationLowst = 3;
         this.isOk = true;
       }
       /* this.reload();*/

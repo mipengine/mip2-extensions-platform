@@ -18,7 +18,7 @@
     <!--  <div v-show="isshow"> -->
     <div class="wage wage2" v-show="isOpen && isshow">
       <label for="">缴纳比例</label>
-      <input type="number" placeholder="请输入5-12" @input="inputProportion">
+      <input type="number" placeholder="请输入5-12" @input="inputProportion" @blur="getProportion">
     </div>
     <mip-fixed type="bottom" v-show="scrollshow" class="container">
       <mip-scroll-select :scrollshow="scrollshow" class="container" @showselect="showSelect" @colsescrollselect="colseScrollSelect" :values="showValues"></mip-scroll-select>
@@ -363,7 +363,7 @@ export default {
       let sNum = e.target.value.toString(); //先转换成字符串类型
       if(sNum>12){
         sNum = "12";
-      }else if(sNum<5&& sNum != 0){
+      }else if(sNum<5 && sNum>1){
         sNum = "5";
       }
       if(sNum.indexOf(".")>0){
@@ -371,6 +371,12 @@ export default {
         sNum = sNum.slice(0, index);
       }
       e.target.value = sNum;
+      this.$emit("getproportion", e.target.value)
+    },
+    getProportion:function(e){
+      if(e.target.value<5){
+        e.target.value = "5"
+      }
       this.$emit("getproportion", e.target.value)
     },
     inputBaseMoney: function(e) {

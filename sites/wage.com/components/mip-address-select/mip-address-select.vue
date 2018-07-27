@@ -1737,7 +1737,7 @@ export default {
                 }
               },
             },
-            {
+       /*     {
               id: 36,
               name: '阿拉善盟',
               district: [
@@ -1745,7 +1745,7 @@ export default {
                 { id: 427, name: '阿拉善右旗' },
                 { id: 428, name: '额济纳旗' }
               ]
-            }
+            }*/
           ]
         },
         {
@@ -2590,7 +2590,7 @@ export default {
                 }
               },
             },
-            {
+      /*      {
               id: 59,
               name: '延边',
               district: [
@@ -2603,7 +2603,7 @@ export default {
                 { id: 587, name: '汪清县' },
                 { id: 588, name: '安图县' }
               ]
-            }
+            }*/
           ]
         },
         {
@@ -3108,7 +3108,7 @@ export default {
                 }
               },
             },
-            {
+        /*    {
               id: 72,
               name: '大兴安岭地区',
               district: [
@@ -3116,7 +3116,7 @@ export default {
                 { id: 717, name: '塔河县' },
                 { id: 718, name: '漠河县' }
               ]
-            }
+            }*/
           ]
         },
         {
@@ -3818,7 +3818,7 @@ export default {
                 }
               },
             },
-            {
+       /*     {
               id: 90,
               name: '嘉兴市',
               district: [
@@ -3830,7 +3830,7 @@ export default {
                 { id: 884, name: '平湖市' },
                 { id: 885, name: '桐乡市' }
               ]
-            },
+            },*/
             {
               id: 91,
               name: '湖州市',
@@ -4102,7 +4102,8 @@ export default {
         {
           id: 12,
           name: '安徽',
-          city: [{
+          city: [
+          {
               id: 98,
               name: '合肥市',
               district: [
@@ -4113,7 +4114,32 @@ export default {
                 { id: 938, name: '长丰县' },
                 { id: 939, name: '肥东县' },
                 { id: 940, name: '肥西县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1520,
+                  maxMoney:20172,
+                }
+              },
             },
             {
               id: 99,
@@ -4126,7 +4152,32 @@ export default {
                 { id: 945, name: '芜湖县' },
                 { id: 946, name: '繁昌县' },
                 { id: 947, name: '南陵县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1350,
+                  maxMoney:14982,
+                }
+              },
             },
             {
               id: 100,
@@ -4139,7 +4190,32 @@ export default {
                 { id: 952, name: '怀远县' },
                 { id: 953, name: '五河县' },
                 { id: 954, name: '固镇县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 6.6,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1350,
+                  maxMoney:16174,
+                }
+              },
             },
             {
               id: 101,
@@ -4151,7 +4227,32 @@ export default {
                 { id: 958, name: '八公山区' },
                 { id: 959, name: '潘集区' },
                 { id: 960, name: '凤台县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1350,
+                  maxMoney:14635,
+                }
+              },
             },
             {
               id: 102,
@@ -4161,7 +4262,32 @@ export default {
                 { id: 962, name: '花山区' },
                 { id: 963, name: '雨山区' },
                 { id: 964, name: '当涂县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:2849,
+                  maxMoney:16182,
+                }
+              },
             },
             {
               id: 103,
@@ -4171,7 +4297,32 @@ export default {
                 { id: 966, name: '相山区' },
                 { id: 967, name: '烈山区' },
                 { id: 968, name: '濉溪县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:680,
+                  maxMoney:16170,
+                }
+              },
             },
             {
               id: 104,
@@ -4181,7 +4332,32 @@ export default {
                 { id: 970, name: '狮子山区' },
                 { id: 971, name: '郊区' },
                 { id: 972, name: '铜陵县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 10,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:3297,
+                  maxMoney:16486,
+                }
+              },
             },
             {
               id: 105,
@@ -4198,7 +4374,32 @@ export default {
                 { id: 981, name: '望江县' },
                 { id: 982, name: '岳西县' },
                 { id: 983, name: '桐城市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1250,
+                  maxMoney:13239,
+                }
+              },
             },
             {
               id: 106,
@@ -4211,7 +4412,32 @@ export default {
                 { id: 988, name: '休宁县' },
                 { id: 989, name: '黟县' },
                 { id: 990, name: '祁门县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:2849,
+                  maxMoney:14831,
+                }
+              },
             },
             {
               id: 107,
@@ -4225,7 +4451,32 @@ export default {
                 { id: 996, name: '凤阳县' },
                 { id: 997, name: '天长市' },
                 { id: 998, name: '明光市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1460,
+                  maxMoney:38000,
+                }
+              },
             },
             {
               id: 108,
@@ -4239,7 +4490,32 @@ export default {
                 { id: 1004, name: '阜南县' },
                 { id: 1005, name: '颍上县' },
                 { id: 1006, name: '界首市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 6,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:2050,
+                  maxMoney:14760,
+                }
+              },
             },
             {
               id: 109,
@@ -4250,9 +4526,34 @@ export default {
                 { id: 1009, name: '萧县' },
                 { id: 1010, name: '灵璧县' },
                 { id: 1011, name: '泗县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1250,
+                  maxMoney:14730,
+                }
+              },
             },
-            {
+        /*    {
               id: 110,
               name: '巢湖市',
               district: [
@@ -4262,7 +4563,7 @@ export default {
                 { id: 1015, name: '含山县' },
                 { id: 1016, name: '和县' }
               ]
-            },
+            },*/
             {
               id: 111,
               name: '六安市',
@@ -4274,7 +4575,32 @@ export default {
                 { id: 1021, name: '舒城县' },
                 { id: 1022, name: '金寨县' },
                 { id: 1023, name: '霍山县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1250,
+                  maxMoney:15751,
+                }
+              },
             },
             {
               id: 112,
@@ -4284,7 +4610,32 @@ export default {
                 { id: 1025, name: '涡阳县' },
                 { id: 1026, name: '蒙城县' },
                 { id: 1027, name: '利辛县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 6,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:2880,
+                  maxMoney:28000,
+                }
+              },
             },
             {
               id: 113,
@@ -4294,7 +4645,32 @@ export default {
                 { id: 1029, name: '东至县' },
                 { id: 1030, name: '石台县' },
                 { id: 1031, name: '青阳县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 4,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1250,
+                  maxMoney:15100,
+                }
+              },
             },
             {
               id: 114,
@@ -4307,7 +4683,32 @@ export default {
                 { id: 1036, name: '绩溪县' },
                 { id: 1037, name: '旌德县' },
                 { id: 1038, name: '宁国市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3396,
+                  maxMoney:16982,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:3064,
+                  maxMoney:18534,
+                }
+              },
             }
           ]
         },
@@ -4331,7 +4732,32 @@ export default {
                 { id: 1049, name: '平潭县' },
                 { id: 1050, name: '福清市' },
                 { id: 1051, name: '长乐市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 1850,
+                  maxMoney:18783,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 1850,
+                  maxMoney:18783,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 4383,
+                  maxMoney:18783,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1650,
+                  maxMoney:18783,
+                }
+              },
             },
             {
               id: 116,
@@ -4343,7 +4769,32 @@ export default {
                 { id: 1055, name: '集美区' },
                 { id: 1056, name: '同安区' },
                 { id: 1057, name: '翔安区' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 1700,
+                  maxMoney:18864,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 1700,
+                  maxMoney:18864,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3773,
+                  maxMoney:18864,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1700,
+                  maxMoney:18863,
+                }
+              },
             },
             {
               id: 117,
@@ -4354,7 +4805,32 @@ export default {
                 { id: 1060, name: '荔城区' },
                 { id: 1061, name: '秀屿区' },
                 { id: 1062, name: '仙游县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 1700,
+                  maxMoney:14840,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 1700,
+                  maxMoney:14840,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 2968,
+                  maxMoney:14840,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1500,
+                  maxMoney:14841,
+                }
+              },
             },
             {
               id: 118,
@@ -4372,7 +4848,32 @@ export default {
                 { id: 1072, name: '泰宁县' },
                 { id: 1073, name: '建宁县' },
                 { id: 1074, name: '永安市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 2000,
+                  maxMoney:17889,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 2000,
+                  maxMoney:17889,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3578,
+                  maxMoney:17889,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1568,
+                  maxMoney:15678,
+                }
+              },
             },
             {
               id: 119,
@@ -4390,7 +4891,32 @@ export default {
                 { id: 1084, name: '石狮市' },
                 { id: 1085, name: '晋江市' },
                 { id: 1086, name: '南安市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 1600,
+                  maxMoney:15313,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 1600,
+                  maxMoney:15313,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3063,
+                  maxMoney:15313,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1500,
+                  maxMoney:15313,
+                }
+              },
             },
             {
               id: 120,
@@ -4407,7 +4933,32 @@ export default {
                 { id: 1095, name: '平和县' },
                 { id: 1096, name: '华安县' },
                 { id: 1097, name: '龙海市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 2300,
+                  maxMoney:16621,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 2300,
+                  maxMoney:16621,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3324,
+                  maxMoney:16621,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:625,
+                  maxMoney:16616,
+                }
+              },
             },
             {
               id: 121,
@@ -4423,7 +4974,32 @@ export default {
                 { id: 1105, name: '武夷山市' },
                 { id: 1106, name: '建瓯市' },
                 { id: 1107, name: '建阳市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 1800,
+                  maxMoney:16087,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 1800,
+                  maxMoney:16087,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 4558,
+                  maxMoney:16087,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1380,
+                  maxMoney:19300,
+                }
+              },
             },
             {
               id: 122,
@@ -4436,7 +5012,32 @@ export default {
                 { id: 1112, name: '武平县' },
                 { id: 1113, name: '连城县' },
                 { id: 1114, name: '漳平市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 1600,
+                  maxMoney:16050,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 1600,
+                  maxMoney:16050,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3210,
+                  maxMoney:16050,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1500,
+                  maxMoney:19260,
+                }
+              },
             },
             {
               id: 123,
@@ -4451,7 +5052,32 @@ export default {
                 { id: 1121, name: '柘荣县' },
                 { id: 1122, name: '福安市' },
                 { id: 1123, name: '福鼎市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 1600,
+                  maxMoney:17166,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 1600,
+                  maxMoney:17166,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3433,
+                  maxMoney:17166,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1280,
+                  maxMoney:17167,
+                }
+              },
             }
           ]
         },
@@ -4471,7 +5097,32 @@ export default {
                 { id: 1130, name: '新建县' },
                 { id: 1131, name: '安义县' },
                 { id: 1132, name: '进贤县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3071,
+                  maxMoney:15357,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3071,
+                  maxMoney:15357,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3150,
+                  maxMoney:17504,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1083,
+                  maxMoney:18175,
+                }
+              },
             },
             {
               id: 125,
@@ -4481,7 +5132,32 @@ export default {
                 { id: 1134, name: '珠山区' },
                 { id: 1135, name: '浮梁县' },
                 { id: 1136, name: '乐平市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 2807,
+                  maxMoney:14034,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 2807,
+                  maxMoney:12285,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 2807,
+                  maxMoney:12285,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1563,
+                  maxMoney:18713,
+                }
+              },
             },
             {
               id: 126,
@@ -4492,7 +5168,32 @@ export default {
                 { id: 1139, name: '莲花县' },
                 { id: 1140, name: '上栗县' },
                 { id: 1141, name: '芦溪县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 2807,
+                  maxMoney:14034,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 2547,
+                  maxMoney:12735,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 2547,
+                  maxMoney:12735,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:844,
+                  maxMoney:18125,
+                }
+              },
             },
             {
               id: 127,
@@ -4510,7 +5211,32 @@ export default {
                 { id: 1151, name: '湖口县' },
                 { id: 1152, name: '彭泽县' },
                 { id: 1153, name: '瑞昌市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3360,
+                  maxMoney:19935,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 2807,
+                  maxMoney:14034,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 2807,
+                  maxMoney:14034,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1580,
+                  maxMoney:37160,
+                }
+              },
             },
             {
               id: 128,
@@ -4518,7 +5244,32 @@ export default {
               district: [
                 { id: 1154, name: '渝水区' },
                 { id: 1155, name: '分宜县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 2807,
+                  maxMoney:14034,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 2687,
+                  maxMoney:13434,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 2687,
+                  maxMoney:13434,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:900,
+                  maxMoney:23600,
+                }
+              },
             },
             {
               id: 129,
@@ -4527,7 +5278,32 @@ export default {
                 { id: 1156, name: '月湖区' },
                 { id: 1157, name: '余江县' },
                 { id: 1158, name: '贵溪市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 2807,
+                  maxMoney:14034,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 2927,
+                  maxMoney:14631,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 2927,
+                  maxMoney:14631,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:2807,
+                  maxMoney:14631,
+                }
+              },
             },
             {
               id: 130,
@@ -4551,7 +5327,32 @@ export default {
                 { id: 1174, name: '石城县' },
                 { id: 1175, name: '瑞金市' },
                 { id: 1176, name: '南康市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 2547,
+                  maxMoney:12732,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 2762,
+                  maxMoney:13812,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 2762,
+                  maxMoney:13812,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1634,
+                  maxMoney:19567,
+                }
+              },
             },
             {
               id: 131,
@@ -4570,7 +5371,32 @@ export default {
                 { id: 1187, name: '安福县' },
                 { id: 1188, name: '永新县' },
                 { id: 1189, name: '井冈山市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3088,
+                  maxMoney:15438,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3066,
+                  maxMoney:99999,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 4819,
+                  maxMoney:14454,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1763,
+                  maxMoney:21050,
+                }
+              },
             },
             {
               id: 132,
@@ -4586,7 +5412,32 @@ export default {
                 { id: 1197, name: '丰城市' },
                 { id: 1198, name: '樟树市' },
                 { id: 1199, name: '高安市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 2807,
+                  maxMoney:14034,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 2807,
+                  maxMoney:14034,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 2807,
+                  maxMoney:14034,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:2807,
+                  maxMoney:14034,
+                }
+              },
             },
             {
               id: 133,
@@ -4603,7 +5454,32 @@ export default {
                 { id: 1208, name: '资溪县' },
                 { id: 1209, name: '东乡县' },
                 { id: 1210, name: '广昌县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 2807,
+                  maxMoney:14034,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 2806,
+                  maxMoney:14034,
+                  proportion: 1
+                },
+                medical: {
+                  baseMoney: 4468,
+                  maxMoney:13404,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1862,
+                  maxMoney:22325,
+                }
+              },
             },
             {
               id: 134,
@@ -4621,7 +5497,32 @@ export default {
                 { id: 1220, name: '万年县' },
                 { id: 1221, name: '婺源县' },
                 { id: 1222, name: '德兴市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 2807,
+                  maxMoney:14034,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 2807,
+                  maxMoney:14034,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 2807,
+                  maxMoney:14034,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:4520,
+                  maxMoney:32590,
+                }
+              },
             }
           ]
         },
@@ -4642,7 +5543,32 @@ export default {
                 { id: 1230, name: '济阳县' },
                 { id: 1231, name: '商河县' },
                 { id: 1232, name: '章丘市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3510,
+                  maxMoney:17550,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3510,
+                  maxMoney:17550,
+                  proportion: 0.3
+                },
+                medical: {
+                  baseMoney: 3510,
+                  maxMoney:17550,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1910,
+                  maxMoney:17550,
+                }
+              },
             },
             {
               id: 136,
@@ -4660,7 +5586,32 @@ export default {
                 { id: 1242, name: '平度市' },
                 { id: 1243, name: '胶南市' },
                 { id: 1244, name: '莱西市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3185,
+                  maxMoney:15927,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3185,
+                  maxMoney:15927,
+                  proportion: 0.3
+                },
+                medical: {
+                  baseMoney: 3185,
+                  maxMoney:15927,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1768,
+                  maxMoney:20885,
+                }
+              },
             },
             {
               id: 137,
@@ -4674,7 +5625,32 @@ export default {
                 { id: 1250, name: '桓台县' },
                 { id: 1251, name: '高青县' },
                 { id: 1252, name: '沂源县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3465,
+                  maxMoney:17325,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3465,
+                  maxMoney:17325,
+                  proportion: 0.3
+                },
+                medical: {
+                  baseMoney: 3465,
+                  maxMoney:17325,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 7.8,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1768,
+                  maxMoney:20885,
+                }
+              },
             },
             {
               id: 138,
@@ -4686,7 +5662,32 @@ export default {
                 { id: 1256, name: '台儿庄区' },
                 { id: 1257, name: '山亭区' },
                 { id: 1258, name: '滕州市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3470,
+                  maxMoney:17326,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3470,
+                  maxMoney:17326,
+                  proportion: 0.3
+                },
+                medical: {
+                  baseMoney: 3470,
+                  maxMoney:17326,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 8,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1768,
+                  maxMoney:20885,
+                }
+              },
             },
             {
               id: 139,
@@ -4697,7 +5698,32 @@ export default {
                 { id: 1261, name: '垦利县' },
                 { id: 1262, name: '利津县' },
                 { id: 1263, name: '广饶县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3466,
+                  maxMoney:17326,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3466,
+                  maxMoney:17326,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3466,
+                  maxMoney:17326,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1910,
+                  maxMoney:19236,
+                }
+              },
             },
             {
               id: 140,
@@ -4715,7 +5741,32 @@ export default {
                 { id: 1273, name: '招远市' },
                 { id: 1274, name: '栖霞市' },
                 { id: 1275, name: '海阳市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 0.3
+                },
+                medical: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1910,
+                  maxMoney:17255,
+                }
+              },
             },
             {
               id: 141,
@@ -4733,7 +5784,32 @@ export default {
                 { id: 1285, name: '安丘市' },
                 { id: 1286, name: '高密市' },
                 { id: 1287, name: '昌邑市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 0.3
+                },
+                medical: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 7.5,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1910,
+                  maxMoney:17034,
+                }
+              },
             },
             {
               id: 142,
@@ -4751,7 +5827,32 @@ export default {
                 { id: 1297, name: '曲阜市' },
                 { id: 1298, name: '兖州市' },
                 { id: 1299, name: '邹城市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 0.3
+                },
+                medical: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 4,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1730,
+                  maxMoney:15477,
+                }
+              },
             },
             {
               id: 143,
@@ -4763,7 +5864,32 @@ export default {
                 { id: 1303, name: '东平县' },
                 { id: 1304, name: '新泰市' },
                 { id: 1305, name: '肥城市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 3.3,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1730,
+                  maxMoney:14918,
+                }
+              },
             },
             {
               id: 144,
@@ -4773,7 +5899,32 @@ export default {
                 { id: 1307, name: '文登市' },
                 { id: 1308, name: '荣成市' },
                 { id: 1309, name: '乳山市' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 0.3
+                },
+                medical: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1910,
+                  maxMoney:15586,
+                }
+              },
             },
             {
               id: 145,
@@ -4783,7 +5934,32 @@ export default {
                 { id: 1311, name: '岚山区' },
                 { id: 1312, name: '五莲县' },
                 { id: 1313, name: '莒县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3465,
+                  maxMoney:17326,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1730,
+                  maxMoney:15855,
+                }
+              },
             },
             {
               id: 146,
@@ -4953,7 +6129,32 @@ export default {
                 { id: 1351, name: '沾化县' },
                 { id: 1352, name: '博兴县' },
                 { id: 1353, name: '邹平县' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3200,
+                  maxMoney:16000,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3200,
+                  maxMoney:16000,
+                  proportion: 0.3
+                },
+                medical: {
+                  baseMoney: 3200,
+                  maxMoney:16000,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 5,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1730,
+                  maxMoney:16188,
+                }
+              },
             },
             {
               id: 151,
@@ -6155,7 +7356,7 @@ export default {
                 }
               },
             },
-            {
+          /*  {
               id: 181,
               name: '恩施',
               district: [
@@ -6168,8 +7369,8 @@ export default {
                 { id: 1619, name: '来凤县' },
                 { id: 1620, name: '鹤峰县' }
               ]
-            },
-            {
+            },*/
+         /*   {
               id: 182,
               name: '神农架',
               district: [
@@ -6178,7 +7379,7 @@ export default {
                 { id: 1623, name: '天门市' },
                 { id: 1624, name: '神农架林区' }
               ]
-            }
+            }*/
           ]
         },
         {
@@ -8063,7 +9264,32 @@ export default {
                 { id: 1978, name: '龙华区' },
                 { id: 1979, name: '琼山区' },
                 { id: 1980, name: '美兰区' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3453,
+                  maxMoney:17265,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3453,
+                  maxMoney:17265,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3453,
+                  maxMoney:17265,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1430,
+                  maxMoney:17010,
+                }
+              },
             },
             {
               id: 233,
@@ -8088,7 +9314,32 @@ export default {
                 { id: 1997, name: '西沙群岛' },
                 { id: 1998, name: '南沙群岛' },
                 { id: 1999, name: '中沙群岛的岛礁及其海域' }
-              ]
+              ],
+              socialSecurity: {
+                aged: {
+                  baseMoney: 3453,
+                  maxMoney:17265,
+                  proportion: 8
+                },
+                noWork: {
+                  baseMoney: 3453,
+                  maxMoney:17265,
+                  proportion: 0.5
+                },
+                medical: {
+                  baseMoney: 3453,
+                  maxMoney:17265,
+                  proportion: 2
+                },
+               disease: {
+                  baseMoney: 0,
+                  proportion: 0,
+                },
+                accumulation:{
+                  baseMoney:1430,
+                  maxMoney:18207,
+                }
+              },
             }
           ]
         },
@@ -9206,7 +10457,7 @@ export default {
                 }
               },
             },
-            {
+     /*       {
               id: 261,
               name: '黔西',
               district: [
@@ -9219,7 +10470,7 @@ export default {
                 { id: 2271, name: '册亨县' },
                 { id: 2272, name: '安龙县' }
               ]
-            },
+            },*/
             {
               id: 262,
               name: '毕节地区',
@@ -9259,7 +10510,7 @@ export default {
                 }
               },
             },
-            {
+        /*    {
               id: 263,
               name: '黔东',
               district: [
@@ -9280,8 +10531,8 @@ export default {
                 { id: 2295, name: '麻江县' },
                 { id: 2296, name: '丹寨县' }
               ]
-            },
-            {
+            },*/
+        /*    {
               id: 264,
               name: '黔南',
               district: [
@@ -9298,7 +10549,7 @@ export default {
                 { id: 2307, name: '惠水县' },
                 { id: 2308, name: '三都水族自治县' }
               ]
-            }
+            }*/
           ]
         },
         {
@@ -9543,7 +10794,7 @@ export default {
                 }
               },
             },
-            {
+       /*     {
               id: 271,
               name: '思茅市',
               district: [
@@ -9558,7 +10809,7 @@ export default {
                 { id: 2370, name: '澜沧拉祜族自治县' },
                 { id: 2371, name: '西盟佤族自治县' }
               ]
-            },
+            },*/
             {
               id: 272,
               name: '临沧市',
@@ -9598,7 +10849,7 @@ export default {
                 }
               },
             },
-            {
+            /*{
               id: 273,
               name: '楚雄',
               district: [
@@ -9613,8 +10864,8 @@ export default {
                 { id: 2388, name: '武定县' },
                 { id: 2389, name: '禄丰县' }
               ]
-            },
-            {
+            },*/
+           /* {
               id: 274,
               name: '红河',
               district: [
@@ -9632,8 +10883,8 @@ export default {
                 { id: 2401, name: '绿春县' },
                 { id: 2402, name: '河口瑶族自治县' }
               ]
-            },
-            {
+            },*/
+          /*  {
               id: 275,
               name: '文山',
               district: [
@@ -9646,8 +10897,8 @@ export default {
                 { id: 2409, name: '广南县' },
                 { id: 2410, name: '富宁县' }
               ]
-            },
-            {
+            },*/
+           /* {
               id: 276,
               name: '西双版纳',
               district: [
@@ -9655,8 +10906,8 @@ export default {
                 { id: 2412, name: '勐海县' },
                 { id: 2413, name: '勐腊县' }
               ]
-            },
-            {
+            },*/
+            /*{
               id: 277,
               name: '大理',
               district: [
@@ -9673,8 +10924,8 @@ export default {
                 { id: 2424, name: '剑川县' },
                 { id: 2425, name: '鹤庆县' }
               ]
-            },
-            {
+            },*/
+            /*{
               id: 278,
               name: '德宏',
               district: [
@@ -9694,8 +10945,8 @@ export default {
                 { id: 2433, name: '贡山独龙族怒族自治县' },
                 { id: 2434, name: '兰坪白族普米族自治县' }
               ]
-            },
-            {
+            },*/
+           /* {
               id: 280,
               name: '迪庆',
               district: [
@@ -9703,7 +10954,7 @@ export default {
                 { id: 2436, name: '德钦县' },
                 { id: 2437, name: '维西傈僳族自治县' }
               ]
-            }
+            }*/
           ]
         },
         {
@@ -10986,7 +12237,7 @@ export default {
                 }
               },
             },
-            {
+           /* {
               id: 313,
               name: '海东地区',
               district: [
@@ -10997,8 +12248,8 @@ export default {
                 { id: 2715, name: '化隆回族自治县' },
                 { id: 2716, name: '循化撒拉族自治县' }
               ]
-            },
-            {
+            },*/
+           /* {
               id: 314,
               name: '海北',
               district: [
@@ -11007,8 +12258,8 @@ export default {
                 { id: 2719, name: '海晏县' },
                 { id: 2720, name: '刚察县' }
               ]
-            },
-            {
+            },*/
+          /*  {
               id: 315,
               name: '黄南',
               district: [
@@ -11017,8 +12268,8 @@ export default {
                 { id: 2723, name: '泽库县' },
                 { id: 2724, name: '河南蒙古族自治县' }
               ]
-            },
-            {
+            },*/
+           /* {
               id: 316,
               name: '海南',
               district: [
@@ -11028,8 +12279,8 @@ export default {
                 { id: 2728, name: '兴海县' },
                 { id: 2729, name: '贵南县' }
               ]
-            },
-            {
+            },*/
+            /*{
               id: 317,
               name: '果洛',
               district: [
@@ -11040,8 +12291,8 @@ export default {
                 { id: 2734, name: '久治县' },
                 { id: 2735, name: '玛多县' }
               ]
-            },
-            {
+            },*/
+            /*{
               id: 318,
               name: '玉树',
               district: [
@@ -11052,8 +12303,8 @@ export default {
                 { id: 2740, name: '囊谦县' },
                 { id: 2741, name: '曲麻莱县' }
               ]
-            },
-            {
+            },*/
+          /*  {
               id: 319,
               name: '海西',
               district: [
@@ -11063,7 +12314,7 @@ export default {
                 { id: 2745, name: '都兰县' },
                 { id: 2746, name: '天峻县' }
               ]
-            }
+            }*/
           ]
         },
         {
@@ -11106,7 +12357,7 @@ export default {
                 }
               },
             },
-            {
+            /*{
               id: 321,
               name: '石嘴山市',
               district: [
@@ -11135,8 +12386,8 @@ export default {
                 { id: 2763, name: '泾源县' },
                 { id: 2764, name: '彭阳县' }
               ]
-            },
-            {
+            },*/
+           /* {
               id: 324,
               name: '中卫市',
               district: [
@@ -11144,7 +12395,7 @@ export default {
                 { id: 2766, name: '中宁县' },
                 { id: 2767, name: '海原县' }
               ]
-            }
+            }*/
           ]
         },
         {
@@ -11292,7 +12543,7 @@ export default {
                 }
               },
             },
-            {
+            /*{
               id: 329,
               name: '昌吉',
               district: [
@@ -11305,8 +12556,8 @@ export default {
                 { id: 2792, name: '吉木萨尔县' },
                 { id: 2793, name: '木垒哈萨克自治县' }
               ]
-            },
-            {
+            },*/
+            /*{
               id: 330,
               name: '博尔塔拉',
               district: [
@@ -11314,8 +12565,8 @@ export default {
                 { id: 2795, name: '精河县' },
                 { id: 2796, name: '温泉县' }
               ]
-            },
-            {
+            },*/
+           /* {
               id: 331,
               name: '巴音郭楞',
               district: [
@@ -11329,8 +12580,8 @@ export default {
                 { id: 2804, name: '和硕县' },
                 { id: 2805, name: '博湖县' }
               ]
-            },
-            {
+            },*/
+          /*  {
               id: 332,
               name: '阿克苏地区',
               district: [
@@ -11344,8 +12595,8 @@ export default {
                 { id: 2813, name: '阿瓦提县' },
                 { id: 2814, name: '柯坪县' }
               ]
-            },
-            {
+            },*/
+         /*   {
               id: 333,
               name: '克孜勒苏柯尔克孜',
               district: [
@@ -11354,8 +12605,8 @@ export default {
                 { id: 2817, name: '阿合奇县' },
                 { id: 2818, name: '乌恰县' }
               ]
-            },
-            {
+            },*/
+          /*  {
               id: 334,
               name: '喀什地区',
               district: [
@@ -11372,8 +12623,8 @@ export default {
                 { id: 2829, name: '巴楚县' },
                 { id: 2830, name: '塔什库尔干塔吉克自治县' }
               ]
-            },
-            {
+            },*/
+          /*  {
               id: 335,
               name: '和田地区',
               district: [
@@ -11386,8 +12637,8 @@ export default {
                 { id: 2837, name: '于田县' },
                 { id: 2838, name: '民丰县' }
               ]
-            },
-            {
+            },*/
+            /*{
               id: 336,
               name: '伊犁哈萨克',
               district: [
@@ -11402,8 +12653,8 @@ export default {
                 { id: 2847, name: '特克斯县' },
                 { id: 2848, name: '尼勒克县' }
               ]
-            },
-            {
+            },*/
+          /*  {
               id: 337,
               name: '塔城地区',
               district: [
@@ -11415,8 +12666,8 @@ export default {
                 { id: 2854, name: '裕民县' },
                 { id: 2855, name: '和布克赛尔蒙古自治县' }
               ]
-            },
-            {
+            },*/
+          /*  {
               id: 338,
               name: '阿勒泰地区',
               district: [
@@ -11428,34 +12679,34 @@ export default {
                 { id: 2861, name: '青河县' },
                 { id: 2862, name: '吉木乃县' }
               ]
-            },
-            { id: 339, name: '石河子市', district: [] },
+            },*/
+            /*{ id: 339, name: '石河子市', district: [] },
             { id: 340, name: '阿拉尔市', district: [] },
             { id: 341, name: '图木舒克市', district: [] },
-            { id: 342, name: '五家渠市', district: [] }
+            { id: 342, name: '五家渠市', district: [] }*/
           ]
         },
-        {
+        /*{
           id: 32,
           name: '香港',
           city: [
             { id: 343, name: '香港', district: [] }
           ]
-        },
-        {
+        },*/
+        /*{
           id: 33,
           name: '澳门',
           city: [
             { id: 344, name: '澳门', district: [] }
           ]
-        },
-        {
+        },*/
+      /*  {
           id: 34,
           name: '台湾',
           city: [
             { id: 345, name: '台湾', district: [] }
           ]
-        }
+        }*/
       ]
     }
   },
