@@ -1,34 +1,25 @@
 <template>
   <div>
-    <div v-if="banner_list.length==1">
-      <a
-        :href="banner_list[0].url"
-        target="_blank">
-        <img
-          :src="banner_list[0].pic"
-          alt="banner_list[0].title"
-          style="width:100%">
-      </a>
+    <div v-if="banner_list.length<=1">
+      <mip-img
+        :src="img"
+        class="banner"/>
     </div>
-    <div
-      v-else
-      class="swiper swiper-container">
-      <div class="swiper-wrapper">
-        <div
-          v-for="(item, index) in banner_list"
-          :key="index"
-          class="swiper-slide">
-          <a :href="item.url">
-            <img
-              :src="item.pic"
-              :title="item.title"
-              style="width:100%">
-          </a>
-        </div>
-      </div>
-      <div class="swiper-pagination"/>
+    <div v-else>
+      <mip-carousel
+        layout="responsive"
+        width="375"
+        height="158"
+      >
+        <mip-img
+          v-for="item in banner_list"
+          :key="item.id"
+          :src="item.pic"
+          class="banner"/>
+      </mip-carousel>
     </div>
   </div>
+
 </template>
 
 <style scoped>
@@ -42,7 +33,8 @@ import apiUrl from '../../common/js/config.api'
 export default {
   data () {
     return {
-      banner_list: []
+      banner_list: [],
+      img: ''
     }
   },
   created () {
@@ -52,8 +44,11 @@ export default {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       body: 'scene_key=m_index'
+    }).then(data => {
+      return data.json()
     }).then(res => {
       if (res.code === 200) {
+        if (res.data.bannerList.length === 1) this.img = res.data.bannerList[0].pic
         this.banner_list = res.data.bannerList
         if (this.banner_list.length > 1) {
           this.banner_list.forEach(element => {
@@ -66,8 +61,6 @@ export default {
         }
       }
     })
-  },
-  methods: {
   }
 }
 </script>
