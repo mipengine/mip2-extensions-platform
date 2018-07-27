@@ -57,9 +57,7 @@
       </ul>
     </div>
     <p class="reg-tip">
-      绑定账号即表示同意并遵守<a
-        :href="geturl('/help/license.html')"
-        date-type="mip">《快法务用户协议》</a>
+      绑定账号即表示同意并遵守<a date-type="mip" :href="geturl('/help/license.html')">《快法务用户协议》</a>
     </p>
     <input
       id="sendtype"
@@ -180,6 +178,9 @@ export default {
     console.log(this.provideridProductskuid)
     console.log(this.sessionid)
   },
+  prerenderAllowed () {
+    return true
+  },
   methods: {
 
     reset () {
@@ -261,7 +262,7 @@ export default {
         }
       })
     },
-    geturl (url) {
+     geturl(url) {
       return MIP.util.makeCacheUrl(config.data().burl + url)
     }
   }

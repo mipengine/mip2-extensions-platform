@@ -29,7 +29,7 @@
             class="list"
             type="mip-mustache">
             <a
-              :href="'/product/info.html?id=' + val.id + '_' + searchdata.ct + '_' + searchdata.ar"
+              :href="geturl('/product/info.html?id=' + val.id + '_' + searchdata.ct + '_' + searchdata.ar)"
               :class="{active: val.id == searchdata.id && 0 == searchdata.packageid}">{{ val.title }}</a>
           </div>
         </div>
@@ -44,7 +44,7 @@
           class="list"
           type="mip-mustache">
           <a
-            :href="'/product/info.html?id=' + val.mainproductsalesattr + '_' + searchdata.ct + '_' + searchdata.ar + '_' + searchdata.providerid + '_' + val.id"
+            :href="geturl('/product/info.html?id=' + val.mainproductsalesattr + '_' + searchdata.ct + '_' + searchdata.ar + '_' + searchdata.providerid + '_' + val.id)"
             :class="{active: val.id == searchdata.packageid}">{{ val.title }}</a>
         </div>
       </div>
@@ -69,7 +69,7 @@
           <mip-img :src="providerdetailinfo.providerinfo.avatar"/><span>{{ providerdetailinfo.providerinfo.realname }}</span>
         </div>
         <a
-          :href="'/provider/list.html?pid=' + id + '_' + ct + '_' + ar + '_0_0_0_0_0'"
+          :href="geturl('/provider/list.html?pid=' + id + '_' + ct + '_' + ar + '_0_0_0_0_0')"
           class="change">
           <span>查看全部 &gt;</span>
         </a>
@@ -111,53 +111,53 @@
       </div>
     </div>
     <mip-fixed>
-      <div
-        v-if="flag"
-        id="choice_area">
-        <div class="lightbox">
-          <p> 请选择城市</p>
-          <div class="list">
-            <div id="change-province">
+    <div
+      v-if="flag"
+      id="choice_area">
+      <div class="lightbox">
+        <p> 请选择城市</p>
+        <div class="list">
+          <div id="change-province">
               <ul>
                 <li
-                  v-for="(pval,pid) in productdetailinfo.servicearealist.provincelist"
-                  :key="pid"
-                  :class="{dis: pval.isprodutopen == 1}"
-                  @click="selectedPro(searchdata.id,pval.id,'\'' + pval.title + '\'',1,searchdata.packageid,0)">{{ pval.title }}
+                    v-for="(pval,pid) in productdetailinfo.servicearealist.provincelist"
+                    :key="pid"
+                    :class="{dis: pval.isprodutopen == 1}"
+                    @click="selectedPro(searchdata.id,pval.id,'\'' + pval.title + '\'',1,searchdata.packageid,0)">{{ pval.title }}
                 </li>
               </ul>
-            </div>
-            <div
-              id="change-city"
-              style="display:none">
-              <ul>
+          </div>
+          <div
+            id="change-city"
+            style="display:none">
+            <ul>
                 <li
-                  v-for="(cval,cid) in productdetailinfo.servicearealist.citylist"
-                  v-if="cval.parentid == provinceid"
-                  :key="cid"
-                  :provinceid="cval.parentid"
-                  :class="{dis: cval.isprodutopen == 1}"
-                  @click="selectedCity(searchdata.id,cval.id,'\'' + cval.title + '\'',2,searchdata.packageid,cval.parentid)">{{ cval.title }}
+                    v-for="(cval,cid) in productdetailinfo.servicearealist.citylist"
+                    v-if="cval.parentid == provinceid"
+                    :key="cid"
+                    :provinceid="cval.parentid"
+                    :class="{dis: cval.isprodutopen == 1}"
+                    @click="selectedCity(searchdata.id,cval.id,'\'' + cval.title + '\'',2,searchdata.packageid,cval.parentid)">{{ cval.title }}
                 </li>
-              </ul>
-            </div>
-            <div
-              id="change-area"
-              style="display:none">
-              <ul>
+            </ul>
+          </div>
+          <div
+            id="change-area"
+            style="display:none">
+            <ul>
                 <li
-                  v-for="(aval,aid) in productdetailinfo.servicearealist.arealist"
-                  v-if="aval.parentid == cityid"
-                  :key="aid"
-                  :parentid="aval.parentid"
-                  :class="{dis: aval.isprodutopen == 1}"
-                  @click="selectedArea(searchdata.id,aval.id,'\'' + aval.title + '\'',3,searchdata.packageid,aval.parentid)">{{ aval.title }}
+                    v-for="(aval,aid) in productdetailinfo.servicearealist.arealist"
+                    v-if="aval.parentid == cityid"
+                    :key="aid"
+                    :parentid="aval.parentid"
+                    :class="{dis: aval.isprodutopen == 1}"
+                    @click="selectedArea(searchdata.id,aval.id,'\'' + aval.title + '\'',3,searchdata.packageid,aval.parentid)">{{ aval.title }}
                 </li>
-              </ul>
-            </div>
+            </ul>
           </div>
         </div>
       </div>
+    </div>
     </mip-fixed>
   </div>
 <!--  <footer class="{disabled: !providerdetailinfo.providerinfo}">
@@ -288,7 +288,7 @@ export default {
       // 存储 providerid 和 productskuid
       let CustomStorage = MIP.util.customStorage
       let storage = new CustomStorage(0)
-      storage.set('saleprice', self.providerdetailinfo.saleprice)
+      storage.set('saleprice',self.providerdetailinfo.saleprice)
       storage.set('provideridProductskuid', self.searchdata.productskuid + '_' + String(self.providerinfo.id))
       storage.set('providerskuid', self.providerinfo.providerskuid)
       console.log(self.providerinfo.providerskuid, 'providerskuid')
@@ -318,9 +318,15 @@ export default {
       return theRequest
     }
   },
+  prerenderAllowed () {
+    return true
+  },
   methods: {
     show () {
       this.flag = !this.flag
+    },
+    geturl(url) {
+      return MIP.util.makeCacheUrl(config.data().burl + url)
     },
     selectedPro (productsalesattrid, id, title, type, packageid, parentid) {
       this.provinceid = id
