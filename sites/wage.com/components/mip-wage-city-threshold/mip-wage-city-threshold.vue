@@ -110,7 +110,6 @@ mip-fixed[type=top] {
 .mip-layout-container {
   height: 100%;
 }
-
 .wrapper {
   position: relative;
   margin: 0 15px 10px 15px;
