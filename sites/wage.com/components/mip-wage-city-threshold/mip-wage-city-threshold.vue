@@ -14,10 +14,10 @@
       <label for="">起征点</label>
       <input type="text" class="ip-disable" id="threshold" :value="threshold">
     </div>
-    <mip-fixed type="bottom" v-show="scrollshow">
+    <mip-fixed type="bottom" v-show="scrollshow" class="fixed-layout">
       <mip-scroll-select :scrollshow="scrollshow" :values="values" @showselect="showselect" @colsescrollselect="colseScrollSelect"></mip-scroll-select>
     </mip-fixed>
-    <mip-fixed type="bottom" v-show="showaddress">
+    <mip-fixed type="bottom" v-show="showaddress" class="fixed-layout">
       <mip-address-select :showaddress="showaddress" @getcitydata="getcitydata" @closecityselect="closeCitySelect"></mip-address-select>
     </mip-fixed>
   </div>
@@ -102,8 +102,7 @@ export default {
 
 </script>
 <style scoped>
-mip-fixed[type=bottom],
-mip-fixed[type=top] {
+.fixed-layout{
   height: 100%;
 }
 

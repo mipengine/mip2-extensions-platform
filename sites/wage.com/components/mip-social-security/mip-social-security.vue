@@ -20,15 +20,14 @@
       <label for="">缴纳比例</label>
       <input type="number" placeholder="请输入5-12" @input="inputProportion">
     </div>
-    <mip-fixed type="bottom" v-show="scrollshow">
+    <mip-fixed type="bottom" v-show="scrollshow" class="fixed-layout">
       <mip-scroll-select :scrollshow="scrollshow" @showselect="showSelect" @colsescrollselect="colseScrollSelect" :values="showValues"></mip-scroll-select>
     </mip-fixed>
     
   </div>
 </template>
 <style scoped>
-mip-fixed[type=bottom],
-mip-fixed[type=top] {
+.fixed-layout{
   height: 100%;
 }
 
@@ -239,8 +238,6 @@ export default {
       fromWage: true,
       fromBase: "",
       isLowst: {
-        socialLowst: 2,
-        accumulationLowst: 2,
       },
       amount: "",
       numberAmount: "",
@@ -321,16 +318,19 @@ export default {
     },
     showSelect: function(obj) {
       this.fromWage = false;
+      this.isLowst = {};
       this.$emit("getselectvalue", 2)
       if (obj.detail[0] != "" && obj.detail[0] != '0') {
         this.selectValue = obj.detail[0];
       }
       if (this.selectValue == "自定义") {
         //基数可编辑
+        debugger
         this.ok = false;
         this.baseMoney = "";
         this.fromBase = "";
         this.isshow ? this.isLowst.accumulationLowst = 3 : this.isLowst.socialLowst = 3;
+        console.log(this.isLowst)
         this.$emit("islowst", this.isLowst);
         this.fromWage = false;
       } else {
@@ -339,6 +339,7 @@ export default {
           this.fromWage = true;
           this.baseMoney = this.fromwage;
           this.isshow ? this.isLowst.accumulationLowst = 2 : this.isLowst.socialLowst = 2;
+          console.log(this.isLowst)
           this.$emit("islowst", this.isLowst)
         } else { //最低标准
           this.fromWage = false;
@@ -346,6 +347,7 @@ export default {
             this.fromBase = this.socialsecurity.noWork.baseMoney;
             this.baseMoney = this.socialsecurity.noWork.baseMoney;
             this.isLowst.socialLowst = 1;
+            console.log(this.isLowst)
             this.$emit("islowst", this.isLowst);
           }
           /*  else {

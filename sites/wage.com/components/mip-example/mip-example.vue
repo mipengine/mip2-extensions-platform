@@ -16,7 +16,7 @@
       </div>
       <div class="calculateBtn" id="calculateBtn" @click="calculate">开始计算</div>
       <!--提示框-->
-      <mip-fixed type="top" :class={none:tipShow}>
+      <mip-fixed type="top" :class={none:tipShow} class="fixed-layout">
       <div class="tipsMes" :class={none:tipShow} id="tips">{{tipsmes}}</div>
       </mip-fixed>
     </div>
@@ -25,7 +25,7 @@
   </div>
 </template>
 <style scoped>
-mip-fixed[type=top]{
+.fixed-layout{
   height: 50px;
   top:88px;
 }
@@ -441,7 +441,9 @@ export default {
     },
     isLowst: function(obj) {
       let isLowst = obj.detail[0];
-      this.getAllData.lowst = isLowst;
+      isLowst.accumulationLowst?this.getAllData.lowst.accumulationLowst = isLowst.accumulationLowst:"";
+      isLowst.socialLowst?this.getAllData.lowst.socialLowst = isLowst.socialLowst:"";/*
+      this.getAllData.lowst = isLowst;*/
     },
     getSelectValue: function(str) {
       this.selectValue = str.detail[0];
