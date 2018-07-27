@@ -16,7 +16,7 @@
       </div>
       <div class="calculateBtn" id="calculateBtn" @click="calculate">开始计算</div>
       <!--提示框-->
-      <mip-fixed type="top" :class={none:tipShow} class="fixed-layout">
+      <mip-fixed type="top" :class={none:tipShow} class="container">
       <div class="tipsMes" :class={none:tipShow} id="tips">{{tipsmes}}</div>
       </mip-fixed>
     </div>
@@ -25,7 +25,7 @@
   </div>
 </template>
 <style scoped>
-.fixed-layout{
+.container{
   height: 50px;
   top:88px;
 }
