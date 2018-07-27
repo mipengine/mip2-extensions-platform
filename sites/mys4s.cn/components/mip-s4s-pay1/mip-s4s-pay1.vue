@@ -352,9 +352,6 @@ export default {
     this.getVipFee()
   },
   methods: {
-    prerenderAllowed () {
-      return true
-    },
     testCode () {
       util
         .fetchData('v5/user/login', {
