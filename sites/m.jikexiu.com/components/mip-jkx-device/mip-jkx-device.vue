@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { fetch } from '@/common/js/fetch'
+// import { fetch } from '@/common/js/fetch'
 import apiUrl from '@/common/js/config.api'
 export default {
   props: {
@@ -103,7 +103,16 @@ export default {
       })
     } else if (href.indexOf('modelName') > 0) {
       let NAME = decodeURI(href.split('?')[1].split('=')[1])
-      fetch(apiUrl.getSms, {ids: NAME}).then(res => {
+      fetch(apiUrl.getSms, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `ids=${NAME}`
+      }).then(data => {
+        return data.json()
+      }).then(res => {
+        console.log(res)
         this.name = res.data.device.model
         this.name1 = res.data.sms[0].malfunctionName
         this.price = res.data.sms[0].price

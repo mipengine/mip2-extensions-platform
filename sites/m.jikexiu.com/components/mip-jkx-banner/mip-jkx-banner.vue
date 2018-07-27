@@ -38,10 +38,7 @@
 }
 </style>
 <script>
-import {fetch} from '@/common/js/fetch'
-import apiUrl from '@/common/js/config.api'
-import Swipers from 'swiper'
-import 'swiper/dist/css/swiper.min.css'
+import apiUrl from '../../common/js/config.api'
 export default {
   data () {
     return {
@@ -50,9 +47,12 @@ export default {
   },
   created () {
     fetch(apiUrl.bannerList, {
-      scene_key: 'm_index'
-    }
-    ).then(res => {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'scene_key=m_index'
+    }).then(res => {
       if (res.code === 200) {
         this.banner_list = res.data.bannerList
         if (this.banner_list.length > 1) {
@@ -61,9 +61,6 @@ export default {
               element.url = 'javascript:void(0)'
             }
           })
-          this.$nextTick(function () {
-            this.swiper()
-          })
         } else {
           this.banner_list[0].url = this.banner_list[0].url === '' ? 'javascript:void(0)' : this.banner_list[0].url
         }
@@ -71,20 +68,6 @@ export default {
     })
   },
   methods: {
-    swiper () {
-      /* eslint-disable no-unused-vars */
-      let mySwiper = new Swipers('.swiper', {
-        pagination: '.swiper-pagination',
-        slidesPerView: 1,
-        freeMode: false,
-        spaceBetween: 0,
-        // effect: 'fade',
-        loop: true,
-        paginationClickable: true,
-        autoplay: 2500,
-        autoplayDisableOnInteraction: false
-      })
-    }
   }
 }
 </script>

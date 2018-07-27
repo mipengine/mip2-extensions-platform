@@ -82,7 +82,7 @@
 
 </template>
 <script>
-import { fetch } from '@/common/js/fetch'
+// import { fetch } from '@/common/js/fetch'
 import apiUrl from '@/common/js/config.api'
 const viewport = MIP.viewport
 export default {
@@ -168,7 +168,9 @@ export default {
     },
     // 获取分类：
     getSort () {
-      fetch(apiUrl.categoryList).then(res => {
+      fetch(apiUrl.categoryList).then(data => {
+        return data.json()
+      }).then(res => {
         this.data1 = res.data.list
         if (this.changeColor === 1 && this.data1.length > 0) {
           this.data2 = this.data1[0].brandList
@@ -182,7 +184,9 @@ export default {
       MIP.setData({
         loading: true
       })
-      fetch(apiUrl.deviceList, {categoryId: this.categoryId, brandId: this.brandId}).then(res => {
+      fetch(`${apiUrl.deviceList}?categoryId=${this.categoryId}&brandId=${this.brandId}`).then(data => {
+        return data.json()
+      }).then(res => {
         this.data3 = res.data.list
         MIP.setData({
           loading: false
@@ -191,9 +195,13 @@ export default {
     },
     // 获取设备故障
     getMalfunction () {
-      fetch(apiUrl.getMalfunction, {deviceId: this.color, attributeIds: this.attr, attributeValues: this.attrValue}).then(res => {
-        this.data4 = res.data.list
-      })
+      // let options = {deviceId: this.color, attributeIds: this.attr, attributeValues: this.attrValue}
+      fetch(`${apiUrl.getMalfunction}?deviceId=${this.color}&attributeIds=${this.attr}&attributeValues=${this.attrValue}`)
+        .then(data => {
+          return data.json()
+        }).then(res => {
+          this.data4 = res.data.list
+        })
     },
     queryBrand () {
       if (this.last) {
@@ -258,6 +266,7 @@ export default {
             'malfunctionId': this.malfunctionId,
             'price': this.price > 0 ? `￥${this.price}` : '待检测',
             'fault': item.name,
+            'brandId': item.id,
             'period': `(${per})`
           },
           deviceData: {
@@ -295,7 +304,15 @@ export default {
     // 获取颜色
     queryColor (id) {
       this.deviceId = id
-      fetch(apiUrl.getUserOrderList, {deviceId: id}).then(res => {
+      fetch(apiUrl.getUserOrderList, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: `deviceId=${id}`
+      }).then(data => {
+        return data.json()
+      }).then(res => {
         this.color = res.data.list[0].deviceId
         this.attr = res.data.list[0].attributeId
         this.attrValue = res.data.list[0].id

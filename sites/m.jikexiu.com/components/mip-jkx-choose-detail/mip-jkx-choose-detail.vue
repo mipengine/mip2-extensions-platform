@@ -58,7 +58,6 @@
 </template>
 
 <script>
-import jsonp from 'jsonp'
 const viewport = MIP.viewport
 export default {
   directives: {
@@ -109,14 +108,11 @@ export default {
       if (val) {
         let that = this
         that.province = this.choosedetail.city
-        jsonp('//api.map.baidu.com/place/v2/suggestion', {
-          param: 'query=' + val + '&region=' + that.province + '&output=json&ak=QUy5EZSQz9LtjPCqbBwl8RDoQXSZIhcG&callback'
-        }, (err, data) => {
-          if (err) {
-            console.error(err.message)
-          } else {
-            that.html = data.result
-          }
+        /* global fetchJsonp */
+        fetchJsonp(`//api.map.baidu.com/place/v2/suggestion?query=${val}&region=${that.province}&output=json&ak=QUy5EZSQz9LtjPCqbBwl8RDoQXSZIhcG&callback`).then(data => {
+          return data.json()
+        }).then(data => {
+          that.html = data.result
         })
       } else {
         this.html = this.choosedetail.around

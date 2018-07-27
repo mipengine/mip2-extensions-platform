@@ -55,7 +55,7 @@
   </div>
 </template>
 <script>
-import {fetch} from '@/common/js/fetch'
+// import {fetch} from '@/common/js/fetch'
 import apiUrl from '@/common/js/config.api'
 let regName = /^[\u4E00-\u9FA5\uf900-\ufa2d·0-9A-z]{1,20}$/
 let reg = /^[1]\d{10}$/
@@ -107,7 +107,9 @@ export default {
           'imgCode': '',
           'code': ''
         }})
-      fetch(apiUrl.imgCode).then(res => {
+      fetch(apiUrl.imgCode).then(data => {
+        return data.json()
+      }).then(res => {
         this.form.img = res.data
       }).catch(error => {
         console.log('错误' + error)
@@ -196,10 +198,23 @@ export default {
         })
       } else {
         if (this.form.imgCode.length === 4) {
+          // let formData = new FormData()
+          // formData.append('authcode', this.form.imgCode)
+          // formData.append('sessionkey', this.form.img.sessionkey)
+          // formData.append('mobile', this.form.phone)
+          // let options = {
+          //   authcode: this.form.imgCode,
+          //   sessionkey: this.form.img.sessionkey,
+          //   mobile: this.form.phone
+          // }
           fetch(apiUrl.sendCode, {
-            authcode: this.form.imgCode,
-            sessionkey: this.form.img.sessionkey,
-            mobile: this.form.phone
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: `authcode=${this.form.imgCode}&sessionkey=${this.form.img.sessionkey}&mobile=${this.form.phone}`
+          }).then(data => {
+            return data.json()
           }).then(res => {
             if (res.code === 200) {
               this.time = 60

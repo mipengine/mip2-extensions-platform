@@ -3,7 +3,9 @@
     <!--维修好评列表组件-->
     <div class="jkx_evaluation_container">
       <div class="evaluate swiper-container">
-        <div class="swiper-wrapper">
+        <div
+          ref = "swiperWraper"
+          class="swiper-wrapper">
           <div
             v-for="(item,index) in data"
             :key="index"
@@ -37,20 +39,25 @@
           </div>
         </div>
       </div>
-      <div class="swiper-button-next">
+      <div
+        class="swiper-button-next"
+        @click="next">
         <i class="icon_next"/>
       </div>
-      <div class="swiper-button-prev">
+      <div
+        class="swiper-button-prev"
+        @click="prev">
         <i class="icon_prev"/>
       </div>
     </div>
   </div>
 </template>
 <script>
-import {fetch} from '@/common/js/fetch'
+// import {fetch} from '@/common/js/fetch'
 import apiUrl from '@/common/js/config.api'
-import Swipers from 'swiper'
-import 'swiper/dist/css/swiper.min.css'
+// import Swipers from 'swiper'
+// import 'swiper/dist/css/swiper.min.css'
+const viewport = MIP.viewport
 export default {
   // 过滤时间同一时间格式
   filters: {
@@ -79,23 +86,41 @@ export default {
   },
   data () {
     return {
+      index: 0,
+      x: 0, // 水平移动距离
       data: [] // 好评数据
     }
   },
   created () {
+    console.log(viewport)
     // 请求好评借口
-    fetch(apiUrl.appraiseList).then(res => {
+    fetch(apiUrl.appraiseList).then(data => {
+      return data.json()
+    }).then(res => {
       this.data = res.data.detail
-      this.$nextTick(function () {
-        /* eslint-disable no-unused-vars */ // 避免eslint报swiper变量的错
-        let swiper = new Swipers('.evaluate', {
-          slidesPerView: 1,
-          loop: true,
-          nextButton: '.swiper-button-next',
-          prevButton: '.swiper-button-prev'
-        })
-      })
+      this.$refs.swiperWraper.style.width = this.data.length * viewport.getWidth() + 'px'
+      this.$refs.swiperWraper.style.webkitTransform = 'translateX(0)'
     })
+  },
+  methods: {
+    next () {
+      if (this.index < this.data.length) {
+        this.index++
+      } else {
+        this.index = this.data.length
+      }
+      this.x = this.index * viewport.getWidth() + 'px'
+      this.$refs.swiperWraper.style.webkitTransform = `translateX(-${this.x})`
+    },
+    prev () {
+      if (this.index > 0) {
+        this.index--
+      } else {
+        this.index = 0
+      }
+      this.x = this.index * viewport.getWidth() + 'px'
+      this.$refs.swiperWraper.style.webkitTransform = `translateX(-${this.x})`
+    }
   }
 }
 </script>
@@ -105,6 +130,7 @@ export default {
       position: relative;
   }
   .jkx_evaluation_container .evaluate {
+    overflow: hidden;
     width: 100%;
     height: 180px;
     border: 1px solid #eee;
@@ -112,9 +138,13 @@ export default {
     background: #fff;
   }
   .swiper-wrapper{
-    width: 100%;
+    display: flex;
+    transform: translateX(0px);
+    transition: all .3s;
+    -webkit-transition: all .3s;
   }
   .jkx_evaluation_container .swiper-slide {
+    width: 100%;
     height: 180px;
     overflow: hidden;
     text-align: center;

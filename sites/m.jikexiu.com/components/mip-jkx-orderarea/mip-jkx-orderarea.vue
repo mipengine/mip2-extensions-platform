@@ -28,25 +28,13 @@
         {{ detail }}
       </p>
     </div>
-    <baidu-map
-      class="bm-view"
-      ak="QUy5EZSQz9LtjPCqbBwl8RDoQXSZIhcG"
-      @ready="handler">
-      <!-- <bm-geolocation
-        :show-address-bar="true"
-        :auto-location="true"
-        anchor="BMAP_ANCHOR_BOTTOM_RIGHT"/> -->
-    </baidu-map>
   </div>
 </template>
 <script>
-import { BaiduMap } from 'vue-baidu-map'
-import { fetch } from '../../common/js/fetch'
+
 import apiUrl from '../../common/js/config.api'
 export default {
-  components: {
-    BaiduMap
-  },
+
   directives: {
     focus: {
       inserted: function (el) {
@@ -87,52 +75,45 @@ export default {
       if (val.show1) this.num++
     }
   },
-  methods: {
-    handler ({BMap, map}) {
-      let that = this
-      let geoc = new BMap.Geocoder()
-      let geolocation = new BMap.Geolocation()
-      geolocation.getCurrentPosition(function (r) {
-        geoc.getLocation(r.point, function (rs) {
-          MIP.setData({
-            chooseDetail: {
-              'around': rs.surroundingPois,
-              'city': rs.addressComponents.city,
-              'nowPosition': rs.addressComponents.city + ' ' + rs.addressComponents.district + ' ' + rs.addressComponents.street + ' ' + rs.addressComponents.streetNumber
-            }
-          })
-          that.detail = rs.address
-          that.area.city = rs.addressComponents.city
-          that.area.address = rs.addressComponents.province + ' ' + rs.addressComponents.city + ' ' + rs.addressComponents.district
-          fetch(apiUrl.getByName, {
-            'cityName': rs.addressComponents.city,
-            'distName': rs.addressComponents.district
-          })
-            .then(res => {
-              that.area.cityId = res.data.dist.city.id
-              that.area.distId = res.data.dist.id
-              MIP.setData({
-                orderData: {
-                  'cityId': res.data.dist.city.id,
-                  'distId': res.data.dist.id,
-                  'address': that.area.address,
-                  'detail': that.detail,
-                  'lat': rs.point.lat,
-                  'lng': rs.point.lng
-                },
-                areaData: {
-                  'detail': that.detail,
-                  'address': that.area.address,
-                  'locationAddress': that.area.address
-                }
-              })
-            })
-        }, {
-          poiRadius: 500,
-          numPois: 6
+  mounted () {
+    this.$on('success', res => {
+      this.detail = res.address.city + ' ' + res.address.district + ' ' + res.address.street
+      this.area.city = res.address.city
+      this.area.address = res.address.province + ' ' + res.address.city + ' ' + res.address.district
+      MIP.setData({
+        chooseDetail: {
+          'around': [],
+          'city': res.address.city,
+          'nowPosition': res.address.city + ' ' + res.address.district + ' ' + res.address.street + ' ' + res.address.street_number
+        }
+      })
+      fetch(`${apiUrl.getByName}?cityName=${res.address.city}&distName=${res.address.district}`).then(data => {
+        return data.json()
+      }).then(res => {
+        this.area.cityId = res.data.dist.city.id
+        this.area.distId = res.data.dist.id
+        MIP.setData({
+          orderData: {
+            'cityId': res.data.dist.city.id,
+            'distId': res.data.dist.id,
+            'address': this.area.address,
+            'detail': this.detail,
+            'lat': res.point.lat,
+            'lng': res.point.lng
+          },
+          areaData: {
+            'detail': this.detail,
+            'address': this.area.address,
+            'locationAddress': this.area.address
+          }
         })
-      }, {enableHighAccuracy: true})
-    },
+      })
+    })
+    this.$on('success', res => {
+      console.log(res)
+    })
+  },
+  methods: {
     selectArea () {
       MIP.setData({
         areaData: {

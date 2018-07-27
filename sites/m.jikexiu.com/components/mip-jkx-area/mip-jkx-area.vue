@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-import {fetch} from '../../common/js/fetch'
+// import {fetch} from '../../common/js/fetch'
 import apiUrl from '../../common/js/config.api'
 const viewport = MIP.viewport
 export default {
@@ -90,10 +90,11 @@ export default {
     }
   },
   created () {
-    fetch(apiUrl.provinceList)
-      .then(response => {
-        this.proList = response.data.provinceList
-      })
+    fetch(apiUrl.provinceList).then(data => {
+      return data.json()
+    }).then(response => {
+      this.proList = response.data.provinceList
+    })
       .catch(error => {
         console.log(error)
       })
@@ -142,8 +143,10 @@ export default {
     chooseCity (city) {
       this.area.cityId = city.id
       this.area.city = city.name
-      fetch(apiUrl.distList, {cityId: city.id})
-        .then(response => {
+      fetch(`${apiUrl.distList}?cityId=${city.id}`)
+        .then(data => {
+          return data.json()
+        }).then(response => {
           this.districtList = response.data.distList
         })
         .catch(error => {
@@ -153,10 +156,11 @@ export default {
     choosepro (pro) {
       this.area.proId = pro.id
       this.area.province = pro.name
-      fetch(apiUrl.cityList, {provinceId: pro.id})
-        .then(response => {
-          this.cityList = response.data.cityList
-        })
+      fetch(`${apiUrl.cityList}?provinceId=${pro.id}`).then(data => {
+        return data.json()
+      }).then(response => {
+        this.cityList = response.data.cityList
+      })
         .catch(error => {
           console.log(error)
         })
