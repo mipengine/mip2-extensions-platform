@@ -180,6 +180,9 @@ export default {
     console.log(this.provideridProductskuid)
     console.log(this.sessionid)
   },
+  prerenderAllowed () {
+    return true
+  },
   methods: {
 
     reset () {
@@ -255,7 +258,7 @@ export default {
         } else {
           let CustomStorage = MIP.util.customStorage
           let storage = new CustomStorage(0)
-          let returnurl = storage.get('returnurl')
+          let returnurl = storage.get('returnurl') ? storage.get('returnurl') : config.data().burl + '/index/index.html'
 
           window.MIP.viewer.open(MIP.util.makeCacheUrl(returnurl), {isMipLink: true})
         }
