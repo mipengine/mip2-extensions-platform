@@ -29,7 +29,7 @@
     </div>
     <p class="fz12 tip">注：由于各地工伤险有差异，计算结果仅供查询</p>
     <div class="calculateBtn" @click="resetCalculate"><a href="./index.html" class="cfff">重新计算</a></div>
-    <p><a class="tip2">关注我们,获取更多实用工具</a></p>
+    <p><a class="tip2" href="https://mo.mbd.baidu.com/cguzdvn?f=cp">关注我们,获取更多实用工具</a></p>
   </div>
   </div>
 </template>
