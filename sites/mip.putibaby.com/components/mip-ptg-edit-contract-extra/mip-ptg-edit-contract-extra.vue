@@ -270,7 +270,7 @@ export default {
     },
     submit_ () {
       var self = this
-      var url = '/edit_contract?id=' + JSON.parse(self.dataJsonstr).id
+      var url = 'https://mip.putibaby.com/edit_contract?id=' + JSON.parse(self.dataJsonstr).id
       // window.location.href = url;
       window.MIP.viewer.open(MIP.util.makeCacheUrl(url), {replace: true})
     }

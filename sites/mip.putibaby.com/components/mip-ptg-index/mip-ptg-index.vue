@@ -28,7 +28,7 @@
       <mip-img src="https://mip.putibaby.com/i/yhq_jt.png"/>
       <!-- <slot name="yhq" /> -->
     </div>
-    <div>
+    <div class="clear_float">
       <div
         class="find"
         @click="handleSelectMaster">
@@ -69,6 +69,7 @@
   .wrapper {
     margin: 0 auto;
     text-align: center;
+    margin-top:44px;
   }
 
   /* <!-- index.css --> */
@@ -80,13 +81,6 @@
   }
 
   /* <!-- banner.css --> */
-
-  .top_level_1 {
-    width: 100%;
-    position: relative;
-    margin-top: 40px;
-  }
-
   mip-form form {
     position: relative;
     left: 0px;
@@ -161,6 +155,7 @@
     height: 150px;
     text-align: center;
     float: left;
+    background-position:center;
   }
 
   .help {
@@ -171,6 +166,7 @@
     height: 150px;
     text-align: center;
     float: left;
+    background-position:center;
   }
 
   .bottom {
@@ -197,6 +193,10 @@
 
   .bottom_right_img {
     vertical-align: -6px;
+  }
+  .clear_float{
+  clear:both;
+  height:240px;
   }
 </style>
 
@@ -262,6 +262,7 @@ export default {
   },
   mounted () {
     console.log('This is index component !')
+    window.MIP.viewer.fixedElement.init()
     var self = this
     this.$element.customElement.addEventAction('logindone', event => {
       // 这里可以输出登录之后的数据
