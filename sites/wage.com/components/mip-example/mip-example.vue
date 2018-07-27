@@ -12,7 +12,7 @@
       <div v-bind:class="{box:isOk}">
         <mip-wage-city-threshold @getcitybasemoney="getCitybaseMoney" @getthreshold="getThreshold" @getinputwage="getInputWage">{{title}}</mip-wage-city-threshold>
         <mip-social-security @securityselect="securitySelect" :fromwage="wage" :tag="tag" :socialsecurity="socialSecurity" @getsecuritybase="getSecurityBase" @getselectvalue="getSelectValue" @islowst="isLowst">是否缴纳社保</mip-social-security>
-        <mip-social-security :isshow="show" @securityselect="securitySelect" :fromwage="wage" :tag="tag" @getsecuritybase="getSecurityBase" @getproportion="getProportion" @getselectvalue="getSelectValue">是否缴纳公积金</mip-social-security>
+        <mip-social-security :isshow="show" @securityselect="securitySelect" :fromwage="wage" :tag="tag" @getsecuritybase="getSecurityBase" @getproportion="getProportion" @getselectvalue="getSelectValue" @islowst="isLowst">是否缴纳公积金</mip-social-security>
       </div>
       <div class="calculateBtn" id="calculateBtn" @click="calculate">开始计算</div>
       <!--提示框-->
@@ -440,6 +440,7 @@ export default {
       }*/
     },
     isLowst: function(obj) {
+      console.log(22)
       let isLowst = obj.detail[0];
       isLowst.accumulationLowst?this.getAllData.lowst.accumulationLowst = isLowst.accumulationLowst:"";
       isLowst.socialLowst?this.getAllData.lowst.socialLowst = isLowst.socialLowst:"";/*

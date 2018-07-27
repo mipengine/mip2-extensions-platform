@@ -28,12 +28,15 @@
       </section>
     </div>
     <p class="fz12 tip">注：由于各地工伤险有差异，计算结果仅供查询</p>
-    <div class="calculateBtn" @click="resetCalculate"><a href="./index.html">重新计算</a></div>
+    <div class="calculateBtn" @click="resetCalculate"><a href="./index.html" class="cfff">重新计算</a></div>
     <p><a class="tip2">关注我们,获取更多实用工具</a></p>
   </div>
   </div>
 </template>
 <style scoped>
+.cfff{
+  color:#fff;
+}
 .wrapper {
     position: relative;
     margin: 0 15px 10px 15px;

@@ -21,7 +21,7 @@
       <input type="number" placeholder="请输入5-12" @input="inputProportion">
     </div>
     <mip-fixed type="bottom" v-show="scrollshow" class="container">
-      <mip-scroll-select :scrollshow="scrollshow" @showselect="showSelect" @colsescrollselect="colseScrollSelect" :values="showValues"></mip-scroll-select>
+      <mip-scroll-select :scrollshow="scrollshow" class="container" @showselect="showSelect" @colsescrollselect="colseScrollSelect" :values="showValues"></mip-scroll-select>
     </mip-fixed>
     
   </div>
@@ -321,7 +321,6 @@ export default {
       }
       if (this.selectValue == "自定义") {
         //基数可编辑
-        debugger
         this.ok = false;
         this.baseMoney = "";
         this.fromBase = "";
