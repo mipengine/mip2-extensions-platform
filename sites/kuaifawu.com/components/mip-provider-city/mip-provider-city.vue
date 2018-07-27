@@ -6,8 +6,10 @@
         class="area active"
         @click="area">
         <span class="title">地区：</span>
-        <span class="text">{{ city }}</span>
-        <img src="../../static/image/splist_seljt.png">
+        <span class="text">{{ areatitle }}</span>
+        <mip-img
+          src="../../static/image/splist_seljt.png"
+          class="img"/>
       </div>
     </div>
     <div
@@ -17,35 +19,59 @@
       <div class="dialog">
         <div class="lightbox">
           <p> 请选择城市</p>
-          <div class="list">
-            <ul id="change-province">
-              <li
-                v-for="(pval,pid) in productdetailinfo.servicearealist.provincelist"
-                :key="pid"
-                :class="{dis: pval.isprodutopen == 1}"
-                @click="selectedPro(searchdata.id,pval.id,'\'' + pval.title + '\'',1,searchdata.packageid,0)">{{ pval.title }}</li>
-            </ul>
-            <ul id="change-city">
-              <li
-                v-for="(cval,cid) in productdetailinfo.servicearealist.citylist"
-                v-if="cval.parentid == provinceid"
-                :key="cid"
-                :parentid="cval.parentid"
-                :class="{dis: cval.isprodutopen == 1}"
-                type="mip-mustache"
-                @click="selectedCity(searchdata.id,cval.id,'\'' + cval.title + '\'',2,searchdata.packageid,cval.parentid,searchdata.ar,searchdata.ct)">{{ cval.title }}</li>
-            </ul>
-            <ul
+          <div
+            v-if="areatitle !== '全国'"
+            class="list">
+            <div id="change-province">
+              <ul>
+                <li
+                  v-for="(pval,pid) in servicearealist.provincelist"
+                  :key="pid"
+                  :class="{dis: pval.isprodutopen == 1}"
+                  @click="selectedPro(searchdata.id,pval.id,'\'' + pval.title + '\'',1,searchdata.packageid,0)">{{ pval.title }}
+                </li>
+              </ul>
+            </div>
+            <div id="change-city">
+              <ul>
+                <li
+                  v-for="(cval,cid) in servicearealist.citylist"
+                  v-if="cval.parentid == provinceid"
+                  :key="cid"
+                  :parentid="cval.parentid"
+                  :class="{dis: cval.isprodutopen == 1}"
+                  type="mip-mustache"
+                  @click="selectedCity(searchdata.id,cval.id,'\'' + cval.title + '\'',2,searchdata.packageid,cval.parentid,searchdata.ar,searchdata.ct)">{{ cval.title }}
+                </li>
+              </ul>
+            </div>
+            <div
               id="change-area"
               style="display:none">
-              <li
-                v-for="(aval,aid) in productdetailinfo.servicearealist.arealist"
-                v-if="aval.parentid == cityid"
-                :key="aid"
-                :parentid="aval.parentid"
-                :class="{dis: aval.isprodutopen == 1}"
-                @click="selectedArea(searchdata.id,aval.id,'\'' + aval.title + '\'',3,searchdata.packageid,aval.parentid)">{{ aval.title }}</li>
-            </ul>
+              <ul>
+                <li
+                  v-for="(aval,aid) in servicearealist.arealist"
+                  v-if="aval.parentid == cityid"
+                  :key="aid"
+                  :parentid="aval.parentid"
+                  :class="{dis: aval.isprodutopen == 1}"
+                  @click="selectedArea(searchdata.pid,aval.parentid,aval.id,'\'' + aval.title + '\'',1,searchdata.packageid)">{{ aval.title }}</li>
+              </ul>
+            </div>
+          </div>
+          <div
+            v-if="areatitle === '全国'"
+            class="list">
+            <div id="change-area">
+              <ul>
+                <li
+                  v-for="(pval,pid) in providercitylist"
+                  :key="pid"
+                  :class="{dis: pval.isprodutopen == 1}"
+                  @click="selectedArea(searchdata.pid,searchdata.ct,searchdata.ar,'\'' + pval.title + '\'',1,searchdata.packageid)">{{ pval.title }}
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -57,18 +83,15 @@
     .wrapper{width:50%;}
     .tab_header .active{padding-left:0.2rem;height:50px;}
     .tab_header .active .text{width:50%;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;}
-    .tab_header .active img{width:15px;margin-left:2px;display: inline-block;vertical-align: middle;}
-    .mask {background:rgba(0,0,0,0.6);width:100%;height:100%;position:fixed;left:0;top:0.95rem;z-index:99;}
-    .mask .dialog{background:#fff;width:100%;border-top:1px solid #eee;height: auto;overflow-y: scroll;}
+    .tab_header .active .img{width:15px;margin-left:2px;display: inline-block;vertical-align: middle;}
+    .mask .dialog{width:100%;border-top:1px solid #eee;height: auto;overflow-y: scroll;margin-top: -45px;}
     .mask .dialog ul li{line-height:0.5rem;border-bottom:1px solid #eee;}
-    .mask .dialog .list {padding:0 0.1rem;}
-    .mask .dialog .list ul{list-style: none;overflow: hidden;display: flex;flex-wrap: wrap;justify-content: space-between;}
-    .mask .dialog .list li{float: left;text-align: center;margin-bottom: 0.1rem;width: 109px;line-height:34px;height: 34px;background-color: white;border: 0.01467rem solid #d9d9d9;}
+    .mask .dialog .list {padding:0 0.12rem;}
+    .mask .dialog .list ul{list-style: none;overflow: hidden;display:flex;flex-wrap: wrap;justify-content: space-between;}
+    .mask .dialog .list li{float: left;text-align: center;margin-bottom: 0.1rem;width: 1rem;line-height:0.3rem;height: 0.3rem;background-color: white;border: 0.01467rem solid #d9d9d9;font-size:0.125rem;overflow: hidden;padding: 0 0.01rem;margin: 0.05rem;}
     .dis{color:#999999}
-    #change-city li {margin: 0.05rem 0.03rem;}
-    #change-area li {margin:0.05rem 0.03rem;}
     /*选择地区light-box*/
-    .mask .dialog .lightbox{background: #f3f6f6;height:300px;overflow-y:scroll;}
+    .mask .dialog .lightbox{background: #f3f6f6;}
     .mask .dialog .lightbox p{padding-left: 0.15rem;color: #999;}
   /*选择地区light-box*/
 </style>
@@ -86,33 +109,39 @@ export default {
     return {
       city1: [],
       area1: [],
-      city: '',
+      areatitle: '',
       provinceid: '',
       cityid: '',
       areaid: '',
-      providerid: ''
+      servicearealist: []
     }
   },
   mounted () {
     const self = this
-    let pcid = getRequest().pcid
+    let pcid = getRequest().pid
     pcid = pcid || 1
-    window.fetchJsonp('https://api.kuaifawu.com/mip/product/info/id/' + pcid, {
+    window.fetchJsonp('https://api.kuaifawu.com/mip/provider/plist/pid/' + pcid, {
       jsonpCallback: 'callback'
     }).then(function (res) {
       return res.json()
     }).then(function (data) {
-      self.id = data.data.items.searchData.id
+      self.searchdata = data.data.items.searchData
+      self.pid = data.data.items.searchData.pid
       self.ct = data.data.items.searchData.ct
       self.ar = data.data.items.searchData.ar
-      self.providerid = data.data.items.searchData.providerid
+      self.id = data.data.items.productSalesAttrInfo.id
       self.packageid = data.data.items.searchData.packageid
-      self.searchdata = data.data.items.searchData
-      self.paramstr = data.data.items.paramStr
-      self.pagesubtitle = data.data.items.pageSubTitle
-      self.productdetailinfo = data.data.items.productDetailInfo
-      self.providerdetailinfo = data.data.items.providerDetailInfo
-      self.city = data.data.items.searchData.cttitle + '-' + data.data.items.searchData.artitle
+      self.servicearealist = data.data.items.serviceAreaList
+      self.areatitle = data.data.items.serviceAreaList.areatitle
+      self.areatitle = data.data.items.searchData.areatitle
+      self.providercitylist = data.data.items.serviceAreaList.providercitylist
+      self.servicearealist = data.data.items.serviceAreaList
+      console.log(self.servicearealist)
+      if (data.data.items.serviceAreaList.areatitle === '全国') {
+        self.areatitle = data.data.items.serviceAreaList.areatitle
+      } else {
+        self.areatitle = data.data.items.searchData.areatitle
+      }
     })
     function getRequest () {
       let url = location.search // 获取url中"?"符后的字串
@@ -153,17 +182,15 @@ export default {
         area.style.display = 'block'
       }
     },
-    selectedArea (productsalesattrid, areaid, title, type, packageid, cityid) {
+    selectedArea (productsalesattrid, cityid, areaid, title, type, packageid) {
       this.area1 = title
       let providerid = this.providerid || 0
       if (this.area1 !== '') {
         this.flag = !this.flag
-        this.city = this.city1 + '-' + this.area1
-        this.city = (this.city).replace(/'|'/g, '')
+        this.areatitle = this.city1 + '-' + this.area1
+        this.areatitle = (this.areatitle).replace(/'|'/g, '')
       }
-      // window.location.href = "/product/info.html?id=" + productsalesattrid + "_" + cityid + "_" + areaid + '_' + providerid + '_' + packageid
-      // window.MIP.viewer.open("/product/info.html?id=" + productsalesattrid + "_" + cityid + "_" + areaid + '_' + providerid + '_' + packageid, {isMipLink: true});
-      window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + '/product/info.html?id=' + productsalesattrid + '_' + cityid + '_' + areaid + '_' + providerid + '_' + packageid), {isMipLink: true})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + '/product/info.html?id=' + productsalesattrid + '_' + cityid + '_' + areaid + '_' + providerid + '_' + packageid + '_0_0'), {isMipLink: true})
     }
   }
 }

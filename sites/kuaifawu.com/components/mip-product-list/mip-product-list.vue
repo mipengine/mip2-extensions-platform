@@ -53,7 +53,6 @@ export default {
   mounted () {
     console.log('This is 产品分类 !')
     const self = this
-    // let fetchJsonp = require('fetch-jsonp')
     changelist(1)
 
     function changelist (pcid) {
