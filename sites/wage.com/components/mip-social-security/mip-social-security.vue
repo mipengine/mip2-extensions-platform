@@ -20,10 +20,21 @@
       <label for="">缴纳比例</label>
       <input type="number" placeholder="请输入5-12" @input="inputProportion">
     </div>
-    <mip-scroll-select :scrollshow="scrollshow" @showselect="showSelect" @colsescrollselect="colseScrollSelect" :values="showValues"></mip-scroll-select>
+    <mip-fixed type="bottom" v-show="scrollshow">
+      <mip-scroll-select :scrollshow="scrollshow" @showselect="showSelect" @colsescrollselect="colseScrollSelect" :values="showValues"></mip-scroll-select>
+    </mip-fixed>
+    
   </div>
 </template>
 <style scoped>
+mip-fixed[type=bottom],
+mip-fixed[type=top] {
+  height: 100%;
+}
+
+.mip-layout-container {
+  height: 100%;
+}
 .wrapper {
     position: relative;
     margin: 0 15px 10px 15px;

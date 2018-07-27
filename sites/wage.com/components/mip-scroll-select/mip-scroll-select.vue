@@ -232,7 +232,7 @@ export default {
 .scroll-container {
   width: 100%;
   height: 100%;
-  position: fixed;
+ /*  position: fixed; */
   top: 0;
   left: 0;
   z-index: 140;
