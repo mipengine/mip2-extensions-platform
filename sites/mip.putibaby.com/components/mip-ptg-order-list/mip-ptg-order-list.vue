@@ -124,7 +124,7 @@
           <div
             v-if="order.showBtn_shanghu"
             class="tuijianBtn boldBtn"
-            @click="handleBtn_shanghu(order)">上户</div>
+            @click="handleBtn_shanghu(order)">邀请上户</div>
           <div
             v-if="order.showBtn_fukuan"
             class="tuijianBtn boldBtn"
