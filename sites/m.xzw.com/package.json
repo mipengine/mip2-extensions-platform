@@ -1,7 +1,7 @@
 {
   "name": "Amy36578",
   "version": "0.0.1",
-  "description": "星座屋MIP",
+  "description": "星座屋MIP极速服务",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
