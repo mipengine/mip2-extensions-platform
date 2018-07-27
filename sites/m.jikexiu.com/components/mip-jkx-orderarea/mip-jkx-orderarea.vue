@@ -70,7 +70,7 @@ export default {
   },
   watch: {
     areadata (val) {
-      this.area.address = val.show1 && this.num === 0 ? val.locationAddress : val.address
+      this.area.address = val.show1 && this.num === 0 ? this.area.address : val.address
       this.detail = val.detail
       if (val.show1) this.num++
     }
