@@ -1,16 +1,18 @@
 <template>
   <div class="tab">
-    <div class="tab_header">
+    <mip-fixed class="tab_header">
       <div
         id="type ="
         class="type active"
         @click="type">
         <span class="title">类型：</span>
         <span class="text">{{ mess }}</span>
-        <img src="../../static/image/splist_seljt.png">
+        <mip-img
+          src="../../static/image/splist_seljt.png"
+          class="img"/>
       </div>
       <provider-city @flag="flag"/>
-    </div>
+    </mip-fixed>
     <div
       v-show="flag"
       id="mask"
@@ -29,12 +31,11 @@
 
 <style scoped>
   li{list-style:none;}
-  .tab .tab_header{width:100%;line-height:.5rem;border-top:1px solid #eee;border-bottom:1px solid #eee;display:flex;z-index:9;background:#fff;position:fixed;top:44px;left:0;}
+  .tab .tab_header{width:100%;line-height:.5rem;border-top:1px solid #eee;border-bottom:1px solid #eee;display:flex;z-index:9;background:#fff;}
   .tab_header .type{border-right:1px solid #eee;width:50%;height:50px;}
   .tab_header .type .title{padding-left:0.2rem;}
   .tab_header .type .text{width:50%;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;}
-  .tab_header .type img{width:15px;display: inline-block;vertical-align: middle;}
-  .mask {background:rgba(0,0,0,0.6);width:100%;height:100%;position:fixed;left:0;top:0.95rem;z-index:99;}
+  .tab_header .type .img{width:15px;display: inline-block;vertical-align: middle;}
   .mask .dialog{background:#fff;width:100%;border-top:1px solid #eee;height: 300px;overflow-y: scroll;}
   .mask .dialog ul li{line-height:0.5rem;border-bottom:1px solid #eee;padding-left:0.15rem;}
 </style>
