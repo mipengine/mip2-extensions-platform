@@ -7,7 +7,9 @@
         @click="area">
         <span class="title">地区：</span>
         <span class="text">{{ areatitle }}</span>
-        <mip-img src="../../static/image/splist_seljt.png" class="img"/>
+        <mip-img
+          src="../../static/image/splist_seljt.png"
+          class="img"/>
       </div>
     </div>
     <div
@@ -17,54 +19,58 @@
       <div class="dialog">
         <div class="lightbox">
           <p> 请选择城市</p>
-          <div class="list" v-if="areatitle !== '全国'">
+          <div
+            v-if="areatitle !== '全国'"
+            class="list">
             <div id="change-province">
-                <ul>
-                    <li
-                        v-for="(pval,pid) in servicearealist.provincelist"
-                        :key="pid"
-                        :class="{dis: pval.isprodutopen == 1}"
-                        @click="selectedPro(searchdata.id,pval.id,'\'' + pval.title + '\'',1,searchdata.packageid,0)">{{ pval.title }}
-                    </li>
-                </ul>
+              <ul>
+                <li
+                  v-for="(pval,pid) in servicearealist.provincelist"
+                  :key="pid"
+                  :class="{dis: pval.isprodutopen == 1}"
+                  @click="selectedPro(searchdata.id,pval.id,'\'' + pval.title + '\'',1,searchdata.packageid,0)">{{ pval.title }}
+                </li>
+              </ul>
             </div>
             <div id="change-city">
-                <ul>
-                    <li
-                        v-for="(cval,cid) in servicearealist.citylist"
-                        v-if="cval.parentid == provinceid"
-                        :key="cid"
-                        :parentid="cval.parentid"
-                        :class="{dis: cval.isprodutopen == 1}"
-                        type="mip-mustache"
-                        @click="selectedCity(searchdata.id,cval.id,'\'' + cval.title + '\'',2,searchdata.packageid,cval.parentid,searchdata.ar,searchdata.ct)">{{ cval.title }}
-                    </li>
-                </ul>
+              <ul>
+                <li
+                  v-for="(cval,cid) in servicearealist.citylist"
+                  v-if="cval.parentid == provinceid"
+                  :key="cid"
+                  :parentid="cval.parentid"
+                  :class="{dis: cval.isprodutopen == 1}"
+                  type="mip-mustache"
+                  @click="selectedCity(searchdata.id,cval.id,'\'' + cval.title + '\'',2,searchdata.packageid,cval.parentid,searchdata.ar,searchdata.ct)">{{ cval.title }}
+                </li>
+              </ul>
             </div>
             <div
               id="change-area"
               style="display:none">
               <ul>
                 <li
-                    v-for="(aval,aid) in servicearealist.arealist"
-                    v-if="aval.parentid == cityid"
-                    :key="aid"
-                    :parentid="aval.parentid"
-                    :class="{dis: aval.isprodutopen == 1}"
-                    @click="selectedArea(searchdata.pid,aval.parentid,aval.id,'\'' + aval.title + '\'',1,searchdata.packageid)">{{ aval.title }}</li>
+                  v-for="(aval,aid) in servicearealist.arealist"
+                  v-if="aval.parentid == cityid"
+                  :key="aid"
+                  :parentid="aval.parentid"
+                  :class="{dis: aval.isprodutopen == 1}"
+                  @click="selectedArea(searchdata.pid,aval.parentid,aval.id,'\'' + aval.title + '\'',1,searchdata.packageid)">{{ aval.title }}</li>
               </ul>
             </div>
           </div>
-          <div class="list" v-if="areatitle === '全国'">
-              <div id="change-area">
-                <ul>
-                    <li
-                        v-for="(pval,pid) in providercitylist"
-                        :key="pid"
-                        :class="{dis: pval.isprodutopen == 1}"
-                        @click="selectedArea(searchdata.pid,searchdata.ct,searchdata.ar,'\'' + pval.title + '\'',1,searchdata.packageid)">{{ pval.title }}
-                    </li>
-                </ul>
+          <div
+            v-if="areatitle === '全国'"
+            class="list">
+            <div id="change-area">
+              <ul>
+                <li
+                  v-for="(pval,pid) in providercitylist"
+                  :key="pid"
+                  :class="{dis: pval.isprodutopen == 1}"
+                  @click="selectedArea(searchdata.pid,searchdata.ct,searchdata.ar,'\'' + pval.title + '\'',1,searchdata.packageid)">{{ pval.title }}
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -107,7 +113,7 @@ export default {
       provinceid: '',
       cityid: '',
       areaid: '',
-      servicearealist:[]
+      servicearealist: []
     }
   },
   mounted () {
@@ -130,13 +136,12 @@ export default {
       self.areatitle = data.data.items.searchData.areatitle
       self.providercitylist = data.data.items.serviceAreaList.providercitylist
       self.servicearealist = data.data.items.serviceAreaList
-        console.log( self.servicearealist)
-    if (data.data.items.serviceAreaList.areatitle === '全国') {
-          self.areatitle = data.data.items.serviceAreaList.areatitle
+      console.log(self.servicearealist)
+      if (data.data.items.serviceAreaList.areatitle === '全国') {
+        self.areatitle = data.data.items.serviceAreaList.areatitle
       } else {
-          self.areatitle = data.data.items.searchData.areatitle
+        self.areatitle = data.data.items.searchData.areatitle
       }
-
     })
     function getRequest () {
       let url = location.search // 获取url中"?"符后的字串
