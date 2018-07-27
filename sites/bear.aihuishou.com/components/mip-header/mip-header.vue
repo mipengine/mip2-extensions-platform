@@ -2,8 +2,7 @@
   <div class="comp-home-header-container">
     <a
       :href="[baseUrl + '/product/search']"
-      class="top-search"
-      data-type="mip">
+      class="top-search">
       <span class="iconfont icon-sousuo">&nbsp;</span>
       <span class="text">点击搜索您要评估的型号</span>
     </a>
