@@ -319,7 +319,7 @@ export default {
         this.ok = false;
         this.baseMoney = "";
         this.fromBase = "";
-        isshow ? this.isLowst.accumulationLowst = 3 : this.isLowst.socialLowst = 3;
+        this.isshow ? this.isLowst.accumulationLowst = 3 : this.isLowst.socialLowst = 3;
         this.$emit("islowst", this.isLowst);
         this.fromWage = false;
       } else {
@@ -327,7 +327,7 @@ export default {
           this.$emit("getselectvalue", 1);
           this.fromWage = true;
           this.baseMoney = this.fromwage;
-          isshow ? this.isLowst.accumulationLowst = 2 : this.isLowst.socialLowst = 2;
+          this.isshow ? this.isLowst.accumulationLowst = 2 : this.isLowst.socialLowst = 2;
           this.$emit("islowst", this.isLowst)
         } else { //最低标准
           this.fromWage = false;
