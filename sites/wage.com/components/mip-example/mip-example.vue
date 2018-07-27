@@ -170,23 +170,6 @@ li {
 .c-disable{
     color:#ACA9A7;
 }
-
-@-webkit-keyframes fadeIn {
-0% {
-opacity: 0; /*初始状态 透明度为0*/
-}
-50% {
-opacity: 0; /*中间状态 透明度为0*/
-}
-100% {
-opacity: 1; /*结尾状态 透明度为1*/
-}
-
-.box
-{-webkit-animation-name: fadeIn; /*动画名称*/
--webkit-animation-duration: 3s; /*动画持续时间*/
--webkit-animation-iteration-count: 1; /*动画次数*/
-}
 .tag-nav {
   width: 100%;
   height: 45px;
@@ -366,7 +349,6 @@ export default {
     calculate: function() {
       //税前/税后工资
       let reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/;
-      let reg2 = /^[1-9]\d*$/;
       console.log("this.wage:" + this.wage)
       if (this.wage == "") {
         if (this.tag == 1) {
@@ -384,7 +366,7 @@ export default {
 
       }
       if (this.security.socialSelect.isHave) {
-        if (this.getAllData.lowst == 2) {
+        if (this.getAllData.lowst.socialLowst == 2) {
           this.security.socialSelect.baseMoney = this.wage;
         }
         if (this.security.socialSelect.baseMoney == "0" || this.security.socialSelect.baseMoney == "") {
@@ -399,7 +381,7 @@ export default {
         }
       }
       if (this.security.accumulationSelect.isHave) {
-        if (this.getAllData.lowst == 2) {
+        if (this.getAllData.lowst.accumulationLowst == 2) {
           this.security.accumulationSelect.baseMoney = this.wage;
         }
         if (this.security.accumulationSelect.baseMoney == 0 || this.security.accumulationSelect.baseMoney == "") {
@@ -416,10 +398,10 @@ export default {
           return false;
         } else {
           /*console.log(this.security.accumulationSelect.proportion.indexOf("."))*/
-          if (!reg2.test(this.security.accumulationSelect.proportion) || this.security.accumulationSelect.proportion > 12 || this.security.accumulationSelect.proportion < 5) {
+      /*    if (!reg2.test(this.security.accumulationSelect.proportion) || this.security.accumulationSelect.proportion > 12 || this.security.accumulationSelect.proportion < 5) {
             this.showTipShow("公积金比例为5~12的正整数");
             return false;
-          }
+          }*/
         }
       }
       this.getAllData.security = this.security;
@@ -441,15 +423,13 @@ export default {
     getInputWage: function(obj) {
       let wage = obj.detail[0];
       this.wage = wage;
-      if (this.selectValue == "1") {
+      /*if (this.selectValue == "1") {
         this.security.socialSelect.baseMoney = this.wage;
         this.security.accumulationSelect.baseMoney = this.wage;
-      }
+      }*/
     },
     isLowst: function(obj) {
       let isLowst = obj.detail[0];
-      console.log(isLowst)
-      console.log(222)
       this.getAllData.lowst = isLowst;
     },
     getSelectValue: function(str) {

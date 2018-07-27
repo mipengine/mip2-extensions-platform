@@ -171,24 +171,6 @@ li {
 .c-disable{
     color:#ACA9A7;
 }
-
-@-webkit-keyframes fadeIn {
-0% {
-opacity: 0; /*初始状态 透明度为0*/
-}
-50% {
-opacity: 0; /*中间状态 透明度为0*/
-}
-100% {
-opacity: 1; /*结尾状态 透明度为1*/
-}
-
-.box
-{-webkit-animation-name: fadeIn; /*动画名称*/
--webkit-animation-duration: 3s; /*动画持续时间*/
--webkit-animation-iteration-count: 1; /*动画次数*/
-}
-
 </style>
 <script>
 export default {

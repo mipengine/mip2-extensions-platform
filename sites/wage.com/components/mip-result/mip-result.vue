@@ -2,8 +2,7 @@
   <div class="wrapper2">
     <div class="head">
       <p class="fz13">{{resultdata.tag==1?afterTitle:beforeTitle}}</p>
-      <p class="fz29 mt13">￥
-        <sapn class="" v-text="splitData"></sapn>.<span class="fz22" v-text="splitData2"></span></p>
+      <p class="fz29 mt13"><span>￥</span><sapn class="" v-text="splitData"></sapn>.<span class="fz22" v-text="splitData2"></span></p>
     </div>
     <div class="result-div">
       <div class="h43"><span>{{resultdata.tag==1?beforeTitle:afterTitle}}</span><span class="right">{{resultdata.wage}}元</span></div>
