@@ -269,6 +269,12 @@ export default {
       })
     },
     bindPay (item) {
+      if (!window.localStorage.getItem(
+        'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
+      )) {
+        util.toast('未授权百度账号')
+        return
+      }
       MIP.setData({
         payConfig: {
           fee: item.TotalPrice / 100,

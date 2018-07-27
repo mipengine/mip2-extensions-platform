@@ -94,12 +94,6 @@ export default {
     }
   },
   mounted () {
-    this.user = {
-      Tel: window.localStorage.UserTel || window.UserTel || ''
-    }
-    // if (!this.user.Tel) {
-
-    // }
     this.getCar()
   },
   methods: {

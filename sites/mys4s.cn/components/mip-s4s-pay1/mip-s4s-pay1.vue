@@ -247,8 +247,9 @@
           <p>预计1-5个工作日办理完成 </p>
         </div>
         <div
+          id="pay1btn"
           :class="agree?'' :'disabled-btn'"
-          @click="payFee" >
+        >
           <span> 立即办理</span>
         </div>
       </div>
@@ -302,6 +303,11 @@ export default {
       isTrueCode: false
     }
   },
+  computed: {
+    prerenderAllowed () {
+      return true
+    }
+  },
   watch: {
     code (val) {
       let tel = /^1\d{10}$/
@@ -309,7 +315,36 @@ export default {
     }
   },
   mounted () {
+    MIP.viewer.fixedElement.init()
+    let event = window.MIP.util.event
+    let me = this
+    this.j = event.delegate(document.documentElement, '#pay1btn', 'click', (e) => {
+      console.log(11)
+      me.payFee() // 当页面出现跳转时，关闭所有的浮层
+    })
+
+    if (this.globalData && this.globalData.Fine) {
+      try {
+        window.localStorage.setItem(
+          'pay1Data',
+          JSON.stringify(this.globalData)
+        )
+      } catch (error) {
+        util.toast('由于您处在无痕模式，不能存储您当前的记录')
+      }
+    } else {
+      try {
+        let globalData = window.localStorage.getItem('pay1Data')
+        if (globalData && JSON.parse(globalData)) {
+          this.globalData = JSON.parse(globalData)
+        }
+      } catch (error) {
+        util.toast('由于您处在无痕模式，不能载入您之前输入的记录')
+      }
+    }
+
     this.illegal = this.globalData
+    console.log(this.globalData)
     this.price = this.globalData.Fine
     this.date =
       this.globalData.OccTime && this.globalData.OccTime.substring(0, 10)
@@ -317,6 +352,9 @@ export default {
     this.getVipFee()
   },
   methods: {
+    prerenderAllowed () {
+      return true
+    },
     testCode () {
       util
         .fetchData('v5/user/login', {
@@ -668,7 +706,12 @@ export default {
           drive_bar_code: this.drive_bar_code || '',
           drive_file_number: this.drive_file_number || ''
         }
-
+        if (!window.localStorage.getItem(
+          'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
+        )) {
+          util.toast('未授权百度账号')
+          return
+        }
         util.fetchData('v3/violation/web/order/create', param).then(res => {
           if (res.code === 0) {
             MIP.setData({
@@ -866,42 +909,6 @@ select {
   vertical-align: bottom;
 }
 
-.pay-contaienr {
-  display: flex;
-  width: 100%;
-  background: #fff;
-}
-.pay-contaienr > div:first-child {
-  flex: 1;
-  font-size: 0.16rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 0.1rem;
-}
-
-.pay-contaienr span {
-  color: #fff;
-  font-size: 0.18rem;
-  font-weight: 300;
-}
-.pay-contaienr p:last-child {
-  color: #999;
-  font-size: 0.11rem;
-}
-.pay-contaienr > div:last-child {
-  width: 1.2rem;
-  background-image: linear-gradient(40deg, #fe5a00 0%, #ff7c00 100%);
-  text-align: center;
-  line-height: 0.5rem;
-  font-size: 0.18rem;
-}
-.pay-contaienr .disabled-btn {
-  background: #e6e6e6 !important;
-}
-.pay-contaienr .disabled-btn span {
-  color: #999999;
-}
 .group-upload {
   height: auto;
 }
