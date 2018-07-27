@@ -1,4 +1,4 @@
-<style>
+<style scoped>
 .day-hd1{}
 .day-hd1:after{
     background: url(~@/static/img/trip/i-arr-up.png) no-repeat;

@@ -1,4 +1,4 @@
-<style>
+<style scoped>
 .text-overflow{
     text-overflow: ellipsis;
     width:300px;
