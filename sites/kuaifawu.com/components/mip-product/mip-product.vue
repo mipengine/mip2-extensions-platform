@@ -110,44 +110,55 @@
         <span v-html="productdetailinfo.productinfo.producth5desc"/>
       </div>
     </div>
+    <mip-fixed>
     <div
       v-if="flag"
       id="choice_area">
       <div class="lightbox">
         <p> 请选择城市</p>
         <div class="list">
-          <ul id="change-province">
-            <li
-              v-for="(pval,pid) in productdetailinfo.servicearealist.provincelist"
-              :key="pid"
-              :class="{dis: pval.isprodutopen == 1}"
-              @click="selectedPro(searchdata.id,pval.id,'\'' + pval.title + '\'',1,searchdata.packageid,0)">{{ pval.title }}</li>
-          </ul>
-          <ul
+          <div id="change-province">
+              <ul>
+                <li
+                    v-for="(pval,pid) in productdetailinfo.servicearealist.provincelist"
+                    :key="pid"
+                    :class="{dis: pval.isprodutopen == 1}"
+                    @click="selectedPro(searchdata.id,pval.id,'\'' + pval.title + '\'',1,searchdata.packageid,0)">{{ pval.title }}
+                </li>
+              </ul>
+          </div>
+          <div
             id="change-city"
             style="display:none">
-            <li
-              v-for="(cval,cid) in productdetailinfo.servicearealist.citylist"
-              v-if="cval.parentid == provinceid"
-              :key="cid"
-              :provinceid="cval.parentid"
-              :class="{dis: cval.isprodutopen == 1}"
-              @click="selectedCity(searchdata.id,cval.id,'\'' + cval.title + '\'',2,searchdata.packageid,cval.parentid)">{{ cval.title }}</li>
-          </ul>
-          <ul
+            <ul>
+                <li
+                    v-for="(cval,cid) in productdetailinfo.servicearealist.citylist"
+                    v-if="cval.parentid == provinceid"
+                    :key="cid"
+                    :provinceid="cval.parentid"
+                    :class="{dis: cval.isprodutopen == 1}"
+                    @click="selectedCity(searchdata.id,cval.id,'\'' + cval.title + '\'',2,searchdata.packageid,cval.parentid)">{{ cval.title }}
+                </li>
+            </ul>
+          </div>
+          <div
             id="change-area"
             style="display:none">
-            <li
-              v-for="(aval,aid) in productdetailinfo.servicearealist.arealist"
-              v-if="aval.parentid == cityid"
-              :key="aid"
-              :parentid="aval.parentid"
-              :class="{dis: aval.isprodutopen == 1}"
-              @click="selectedArea(searchdata.id,aval.id,'\'' + aval.title + '\'',3,searchdata.packageid,aval.parentid)">{{ aval.title }}</li>
-          </ul>
+            <ul>
+                <li
+                    v-for="(aval,aid) in productdetailinfo.servicearealist.arealist"
+                    v-if="aval.parentid == cityid"
+                    :key="aid"
+                    :parentid="aval.parentid"
+                    :class="{dis: aval.isprodutopen == 1}"
+                    @click="selectedArea(searchdata.id,aval.id,'\'' + aval.title + '\'',3,searchdata.packageid,aval.parentid)">{{ aval.title }}
+                </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
+    </mip-fixed>
   </div>
 <!--  <footer class="{disabled: !providerdetailinfo.providerinfo}">
     <?php $sales = providerdetailinfo.saleprice ?: 0;
@@ -178,7 +189,7 @@
   .wrapper {margin: 0 auto;padding:0;padding-bottom:100px;}
   .info {padding:0.1rem 0.1rem 0 0.1rem;border-bottom: 0.01rem solid #d9d9d9;}
   .info h2 {font-size: 0.2rem;font-weight: normal;margin-bottom: 0.14rem;}
-  .info .item {color: #666;font-size: 0.14rem;display: flex;margin-bottom: 0.1rem;}
+  .info .item {color: #666;font-size: 0.14rem;display: flex;margin-bottom: 0.1rem;align-items: center;}
   .info .item .dis{width:100%;color:red;padding:0.1rem 0;display:inline-block;border-top:1px solid #d9d9d9;}
   .info .item span.price{color: #fa444e;font-size: 0.2rem;vertical-align: middle;}
   .info .item.type .title{display: inline-block;vertical-align: top;flex-shrink: 0;}
@@ -189,13 +200,15 @@
   .text {display: flex;align-items: center;}
   .change {color: #00baf8;}
   #recommend-provider1>mip-img{width:0.3rem;height:0.3rem;margin-right: 0.1rem;}
-  #choice_area{background: rgba(0, 0, 0, .6);position:fixed;top:0;left:0;height:100%;width: 100%;}
-  #choice_area .list ul{list-style: none;overflow: hidden;display: flex;flex-wrap: wrap;padding:0 0.15rem;justify-content: space-between;}
-  #choice_area .list li{float: left;text-align: center;margin-bottom: 0.1rem;width: 100px;line-height:34px;height: 34px;background-color: white;border: 0.01467rem solid #d9d9d9;}
+  #choice_area{background: rgba(0, 0, 0, .6);height:100%;width: 100%;}
+  #choice_area .list ul{list-style: none;overflow: hidden;padding:0 0.1rem;display:flex;flex-wrap: wrap;justify-content: space-between;}
+  #choice_area .list ul:after{ content: "";flex: auto;}
+  #choice_area .list li{float: left;text-align: center;margin-bottom: 0.1rem;width: 1rem;line-height:0.3rem;height: 0.3rem;background-color: white;border: 0.01467rem solid #d9d9d9;font-size:0.125rem;overflow: hidden;margin: 0.05rem 0.01rem 0.05rem 0.03rem;}
   .dis{color:#999999}
   #change-city {height:auto;}
-  #change-city li{margin:0 0.06rem;}
-  #change-area li{margin:0 0.06rem;}
+  #change-province li{padding: 0 0.05rem;}
+  #change-city li {margin:0 0.04rem;padding: 0 0.03rem;}
+  #change-area li{margin:0 0.06rem;padding: 0 0.01rem;}
   /*选择地区light-box*/
   #choice_area .lightbox{padding-top: 60px;background: #f3f6f6;overflow-y:scroll;height:300px;}
   #choice_area .lightbox p{padding-left: 0.15rem;color: #999;margin-bottom: 0.1rem;}
@@ -249,6 +262,7 @@ export default {
     }
   },
   mounted () {
+    MIP.viewer.fixedElement.init()
     console.log('This is 订单详情 !')
     const self = this
     let id = getRequest().id
@@ -274,7 +288,7 @@ export default {
       // 存储 providerid 和 productskuid
       let CustomStorage = MIP.util.customStorage
       let storage = new CustomStorage(0)
-      storage.set('saleprice', self.providerdetailinfo.saleprice)
+      storage.set('saleprice',self.providerdetailinfo.saleprice)
       storage.set('provideridProductskuid', self.searchdata.productskuid + '_' + String(self.providerinfo.id))
       storage.set('providerskuid', self.providerinfo.providerskuid)
       console.log(self.providerinfo.providerskuid, 'providerskuid')
@@ -304,11 +318,14 @@ export default {
       return theRequest
     }
   },
+  prerenderAllowed () {
+    return true
+  },
   methods: {
     show () {
       this.flag = !this.flag
     },
-    geturl (url) {
+    geturl(url) {
       return MIP.util.makeCacheUrl(config.data().burl + url)
     },
     selectedPro (productsalesattrid, id, title, type, packageid, parentid) {
