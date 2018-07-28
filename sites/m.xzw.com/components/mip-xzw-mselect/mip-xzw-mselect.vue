@@ -154,17 +154,17 @@ export default {
       xz: ['白羊座', '金牛座', '双子座', '巨蟹座', '狮子座', '处女座', '天秤座', '天蝎座', '射手座', '摩羯座', '水瓶座', '双鱼座'],
       xzid: '1',
       xzname: '白羊座',
-      xzsrc: '/static/public/images/prot_icon/xz/a/1.png',
+      xzsrc: '../static/public/images/prot_icon/xz/a/1.png',
       xzid2: '1',
       xzname2: '白羊座',
-      xzsrc2: '/static/public/images/prot_icon/xz/a/1.png',
+      xzsrc2: '../static/public/images/prot_icon/xz/a/1.png',
       sx: ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'],
       sxid: '1',
       sxname: '鼠',
-      sxsrc: '/static/public/images/prot_icon/sx/a/1.png',
+      sxsrc: '../static/public/images/prot_icon/sx/a/1.png',
       sxid2: '1',
       sxname2: '鼠',
-      sxsrc2: '/static/public/images/prot_icon/sx/a/1.png',
+      sxsrc2: '../static/public/images/prot_icon/sx/a/1.png',
       xx: ['A', 'B', 'O', 'AB'],
       xxname: '',
       xxnamestr: '',
@@ -195,25 +195,25 @@ export default {
       let _id = _this.returnId(arr2[0], _this.xz)
       _this.xzid = _id
       _this.xzname = arr2[0]
-      _this.xzsrc = '/static/public/images/prot_icon/xz/a/' + _id + '.png'
+      _this.xzsrc = '../static/public/images/prot_icon/xz/a/' + _id + '.png'
     })
     _this.$on('pickerChangexzPairGril', (arr2) => {
       let _id = _this.returnId(arr2[0], _this.xz)
       _this.xzid2 = _id
       _this.xzname2 = arr2[0]
-      _this.xzsrc2 = '/static/public/images/prot_icon/xz/a/' + _id + '.png'
+      _this.xzsrc2 = '../static/public/images/prot_icon/xz/a/' + _id + '.png'
     })
     _this.$on('pickerChangesxPairBoy', (arr2) => {
       let _id = _this.returnId(arr2[0], _this.sx)
       _this.sxid = _id
       _this.sxname = arr2[0]
-      _this.sxsrc = '/static/public/images/prot_icon/sx/a/' + _id + '.png'
+      _this.sxsrc = '../static/public/images/prot_icon/sx/a/' + _id + '.png'
     })
     _this.$on('pickerChangesxPairGril', (arr2) => {
       let _id = _this.returnId(arr2[0], _this.sx)
       _this.sxid2 = _id
       _this.sxname2 = arr2[0]
-      _this.sxsrc2 = '/static/public/images/prot_icon/sx/a/' + _id + '.png'
+      _this.sxsrc2 = '../static/public/images/prot_icon/sx/a/' + _id + '.png'
     })
     _this.$on('pickerChangexxPairGril', (arr2) => {
       _this.xxname = arr2[0] + '型'
