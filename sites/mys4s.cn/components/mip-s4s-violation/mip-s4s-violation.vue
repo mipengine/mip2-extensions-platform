@@ -110,6 +110,22 @@ export default {
     }
   },
   mounted () {
+    if (this.globalData.car_no && this.globalData.provice) {
+      try {
+        window.localStorage.setItem('violationData', JSON.stringify(this.globalData))
+      } catch (error) {
+        util.toast('由于您处在无痕模式，不能存储您当前的记录')
+      }
+    } else {
+      try {
+        let globalData = window.localStorage.getItem('violationData')
+        if (globalData && JSON.parse(globalData)) {
+          this.globalData = JSON.parse(globalData)
+        }
+      } catch (error) {
+        util.toast('由于您处在无痕模式，不能载入您之前输入的记录')
+      }
+    }
     this.provice = this.globalData.provice
     this.car_no = this.globalData.car_no
     this.engion = this.globalData.engine
@@ -218,11 +234,11 @@ export default {
               }
             })
           } else {
-            util.toast('查询失败,请稍后重试')
+            util.toast(res.msg)
           }
         })
         .catch(function (e, xhr, response) {
-          util.toast('查询失败,请稍后重试')
+          // util.toast('查询失败,请稍后重试:' + response)
         })
     },
     gotoForm () {
