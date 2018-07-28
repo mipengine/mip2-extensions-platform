@@ -1,6 +1,9 @@
 <template>
   <div class="wrapper">
-    <mip-fix class="footer">
+    <mip-fixed
+      class="footer"
+      type="bottom"
+      bottom="0">
       <a
         :href="geturl('/index/index.html')"
         data-type="mip">
@@ -29,7 +32,7 @@
           class="icon icon4"
           @click="aaa($event)"/>
       </a>
-    </mip-fix>
+    </mip-fixed>
   </div>
 </template>
 
@@ -40,9 +43,6 @@
     }
 
     .footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
         width: 100%;
         height: 0.6rem;
         border-top: 0.01rem solid #d9d9d9;

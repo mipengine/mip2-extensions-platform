@@ -3,7 +3,8 @@
     <!-- 底部固定栏 -->
     <mip-fixed
       type="bottom"
-      class="mip-fixed">
+      bottom="0"
+      class="fb">
       <div class="fix-bottom">
         <a
           href="tel:4006683666"
@@ -22,7 +23,7 @@
   margin: 0 auto
 }
 
-.wrapper .mip-fixed {
+.wrapper .fb {
   height: 0.54rem;
   line-height: .54rem;
 }
@@ -54,7 +55,7 @@
 </style>
 <style>
 .s4s-toast {
-  position: fixed;
+  /*position: fixed;*/
   top: 50%;
   left: 50%;
   padding: 0.2rem 0.1rem;
