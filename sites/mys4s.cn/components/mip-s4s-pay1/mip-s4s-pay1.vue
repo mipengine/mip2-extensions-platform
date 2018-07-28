@@ -249,6 +249,7 @@
         <div
           id="pay1btn"
           :class="agree?'pay-contaienr-last' :'pay-contaienr-last disabled-btn'"
+          on="tap:pay1.pay1event"
         >
           立即办理
         </div>
@@ -316,11 +317,10 @@ export default {
     MIP.viewer.fixedElement.init()
     let event = window.MIP.util.event
     let me = this
-    this.j = event.delegate(document.documentElement, '#pay1btn', 'click', (e) => {
-      console.log(11)
-      me.payFee() // 当页面出现跳转时，关闭所有的浮层
+    this.$on('pay1event', event => {
+      console.log('pay1event')
+      me.payFee()
     })
-
     if (this.globalData && this.globalData.Fine) {
       try {
         window.localStorage.setItem(
