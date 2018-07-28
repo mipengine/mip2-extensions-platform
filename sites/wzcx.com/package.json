@@ -11,10 +11,7 @@
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
   "author": "sanjin (redsanjin@163.com)",
-  "dependencies": {
-    "ip": "^1.1.5",
-    "vconsole": "^3.2.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",

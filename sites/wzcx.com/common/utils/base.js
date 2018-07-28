@@ -1,13 +1,4 @@
-// const aldhttp = 'https://www.lanxiniu.com/BaiduMip/'
-const aldhttp = 'http://127.0.0.1:8111/example/'
 const outAldhttp = 'https://yz-alipay.fundway.net/'
-const tranObjUrlToCache = urls => {
-  let result = {}
-  Object.keys(urls).map(key => {
-    result[key] = MIP.util.makeCacheUrl(urls[key])
-  })
-  return result
-}
 function setContainerH (dom) {
   const agent = window.navigator.userAgent
   let containerH = window.innerHeight || document.documentElement.clientHeight
@@ -52,9 +43,5 @@ function resetRem () {
 export default {
   resetRem: resetRem,
   setContainerH: setContainerH,
-  outAldhttp: outAldhttp,
-  htmlhref: tranObjUrlToCache({
-    license: aldhttp + 'license.html',
-    secPage: aldhttp + 'secPage.html'
-  })
+  outAldhttp: outAldhttp
 }
