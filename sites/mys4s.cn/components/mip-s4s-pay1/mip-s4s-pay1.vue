@@ -310,7 +310,9 @@ export default {
   watch: {
     code (val) {
       let tel = /^1\d{10}$/
-      if (!this.cansend && val.length === 4 && tel.test(this.phone)) { this.testCode() }
+      if (!this.cansend && val.length === 4 && tel.test(this.phone)) {
+        this.testCode()
+      }
     }
   },
   mounted () {
@@ -742,9 +744,11 @@ export default {
           drive_bar_code: this.drive_bar_code || '',
           drive_file_number: this.drive_file_number || ''
         }
-        if (!window.localStorage.getItem(
-          'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
-        )) {
+        if (
+          !window.localStorage.getItem(
+            'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
+          )
+        ) {
           util.toast('未授权百度账号')
           return
         }
@@ -941,16 +945,61 @@ select {
   margin: 0.1rem 0.15rem 0.1rem 0;
   flex: 1;
 }
-.code-btn, .code-btn-disable{
-  color: #FE5C00;
+.code-btn,
+.code-btn-disable {
+  color: #fe5c00;
   background-color: #fff;
-  border:0;
-  border-radius:.03rem;
-  font-size:0.14rem;
-  border:.01rem solid #FF7B00;
-  padding: .05rem .075rem;
+  border: 0;
+  border-radius: 0.03rem;
+  font-size: 0.14rem;
+  border: 0.01rem solid #ff7b00;
+  padding: 0.05rem 0.075rem;
 }
 .code-btn-disable {
   opacity: 0.5;
+}
+
+.pay-contaienr {
+  display: flex;
+  width: 100%;
+  background: #fff;
+}
+
+.pay-contaienr-first {
+  flex: 1;
+  font-size: 0.16rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 0.1rem;
+}
+
+.pay-contaienr-num {
+  color: #fe7000;
+  font-size: 0.2rem;
+}
+
+.pay-contaienr-p1 {
+  color: #000;
+  font-size: 0.17rem;
+}
+.pay-contaienr-p2 {
+  color: #999;
+  font-size: 0.11rem;
+}
+
+.pay-contaienr-last {
+  width: 1.2rem;
+  background-image: linear-gradient(40deg, #fe5a00 0%, #ff7c00 100%);
+  text-align: center;
+  line-height: 0.5rem;
+  font-size: 0.18rem;
+  font-weight: 300;
+  color: #fff;
+}
+
+.disabled-btn {
+  color: #999;
+  background: #e6e6e6 !important;
 }
 </style>
