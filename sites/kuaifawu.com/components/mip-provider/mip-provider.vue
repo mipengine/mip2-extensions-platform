@@ -27,7 +27,7 @@
   .wrapper {
     margin: 0 auto;
   }
-  .page{position:relative;overflow: hidden;margin-top: 50px;}
+  .page{position:relative;overflow: hidden;padding-top:50px;}
   .page .item{border-bottom: 0.014rem solid #d9d9d9;}
   .page .item a{padding:0.2rem 0.1rem;display: flex;justify-content: center;align-items: center;}
   .page .item a .left{width:2rem;margin-right: 0.2rem;}

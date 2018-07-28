@@ -151,7 +151,7 @@ export default {
   data () {
     return {
       car: null,
-      provice: '浙',
+      provice: '省',
       showProvice: false,
       car_no: '',
       engion: '',
