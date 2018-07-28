@@ -253,7 +253,7 @@ export default {
       return id
     },
     returnQuery: function (input) {
-      let query = ''
+      let querys = ''
       for (let i = 0; i < input.length; i++) {
         let name = input[i].getAttribute('name')
         let value = input[i].value
@@ -264,9 +264,9 @@ export default {
         if (i === input.length - 1) {
           and = ''
         }
-        query += name + '=' + value + and
+        querys += name + '=' + value + and
       }
-      return query
+      return querys
     }
   }
 }
