@@ -1,6 +1,7 @@
 <template>
   <!--居住地址三级联动选项-->
-  <section class="showChose" v-show="showaddress">
+  <section class="showChose" 
+  v-show="showaddress">
     <section class="address">
       <section class="title_header">
         <span @click="closeAdd" class="left">取消</span>
