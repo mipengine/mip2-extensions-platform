@@ -26,6 +26,7 @@ export default ({
   },
   setToken: function (token) {
     if (token) {
+      window.localStorage.setItem('mip-login-xzh:sessionId:https://mip.wangxiao.cn:443/baiduUser/user', token)
       window.localStorage.setItem('mip.wangxiao.token', token)
     }
   },
