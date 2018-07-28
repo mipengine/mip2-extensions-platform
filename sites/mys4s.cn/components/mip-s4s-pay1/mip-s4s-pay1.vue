@@ -434,15 +434,53 @@ export default {
       let list = this.$refs.file.files
       if (list.length !== 1) {
         util.toast('最多只能选择1张行驶证。')
-        return
       }
 
-      let item = {
-        name: list[0].name,
-        size: list[0].size,
-        file: list[0]
+      // let item = {
+      //   name: list[0].name,
+      //   size: list[0].size,
+      //   file: list[0]
+      // }
+      // fix canvas bug
+      this.inputUpload(list[0], 'driveUrl')
+      // this.html5Reader(list[0], item, 'driveUrl')
+    },
+    inputUpload (file, name) {
+      const self = this
+      if (file) {
+        console.log(file.size / 1024 / 1024 + 'MB!')
+        const isLt2M = file.size / 1024 / 1024 < 2
+        if (!isLt2M) {
+          util.toast('图片大小需要小于 2MB!')
+          return
+        }
+        util.toast('正在上传')
+        const formData = new FormData()
+        formData.append('image', file)
+        fetch('https://mys4s.cn/car/upload_report_pic', {
+          method: 'POST',
+          body: formData
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.code === 0) {
+              util.toast('上传成功')
+              if (name === 'ticket') {
+                self.ticketUrl = data.data
+              } else if (name === 'JSZTravel') {
+                self.JSZTravelUrl = data.data
+              } else if (name === 'JSZDrive') {
+                self.JSZDriveUrl = data.data
+              } else if (name === 'travelUrl') {
+                self.travelUrl = data.data
+              } else if (name === 'driveUrl') {
+                self.driveUrl = data.data
+              }
+            } else {
+              util.toast(data.msg)
+            }
+          })
       }
-      this.html5Reader(list[0], item, 'driveUrl')
     },
     // 上传行驶证正面照
     uploaderXSZTravel () {
@@ -452,12 +490,13 @@ export default {
         return
       }
 
-      let item = {
-        name: list[0].name,
-        size: list[0].size,
-        file: list[0]
-      }
-      this.html5Reader(list[0], item, 'travelUrl')
+      // let item = {
+      //   name: list[0].name,
+      //   size: list[0].size,
+      //   file: list[0]
+      // }
+      // this.html5Reader(list[0], item, 'travelUrl')
+      this.inputUpload(list[0], 'travelUrl')
     },
     // 上传驾驶证正面照
     uploaderJSZDrive () {
@@ -467,12 +506,13 @@ export default {
         return
       }
 
-      let item = {
-        name: list[0].name,
-        size: list[0].size,
-        file: list[0]
-      }
-      this.html5Reader(list[0], item, 'JSZDrive')
+      // let item = {
+      //   name: list[0].name,
+      //   size: list[0].size,
+      //   file: list[0]
+      // }
+      // this.html5Reader(list[0], item, 'JSZDrive')
+      this.inputUpload(list[0], 'JSZDrive')
     },
     // 上传驾驶证正面照
     uploaderJSZTravel () {
@@ -482,16 +522,18 @@ export default {
         return
       }
 
-      let item = {
-        name: list[0].name,
-        size: list[0].size,
-        file: list[0]
-      }
-      this.html5Reader(list[0], item, 'JSZTravel')
+      // let item = {
+      //   name: list[0].name,
+      //   size: list[0].size,
+      //   file: list[0]
+      // }
+      // this.html5Reader(list[0], item, 'JSZTravel')
+      this.inputUpload(list[0], 'JSZTravel')
     },
     html5Reader: function (file, item, name) {
       let imgSrc = new Image()
       let reader = new FileReader()
+
       reader.onload = e => {
         imgSrc.src = e.srcElement.result
         this.$set(item, 'src', e.srcElement.result)
