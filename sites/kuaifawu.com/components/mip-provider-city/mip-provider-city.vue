@@ -1,48 +1,88 @@
 <template>
-    <div class="wrapper">
-        <div class="tab_header">
-            <div id="area" class="area active" @click="area">
-                <span class="title">地区：</span>
-                <span class="text">{{ areatitle }}</span>
-                <mip-img src="../../static/image/splist_seljt.png" class="img" />
-            </div>
-        </div>
-        <div v-show="flag" id="masks" class="mask">
-            <div class="dialog" id="dialogs">
-                <div class="lightbox">
-                    <p> 请选择城市</p>
-                    <div class="list" v-if="isquanguo === 1">
-                        <div id="change-province">
-                            <ul>
-                                <li v-for="(pval,pid) in servicearealist.provincelist" :key="pid" :class="{dis: pval.isprodutopen == 1}" @click="selectedPro(searchdata.id,pval.id,'\'' + pval.title + '\'',1,searchdata.packageid,0)">{{ pval.title }}
-                                </li>
-                            </ul>
-                        </div>
-                        <div id="change-city">
-                            <ul>
-                                <li v-for="(cval,cid) in servicearealist.citylist" v-if="cval.parentid == provinceid" :key="cid" :parentid="cval.parentid" :class="{dis: cval.isprodutopen == 1}" type="mip-mustache" @click="selectedCity(searchdata.id,cval.id,'\'' + cval.title + '\'',2,searchdata.packageid,cval.parentid,searchdata.ar,searchdata.ct)">{{ cval.title }}
-                                </li>
-                            </ul>
-                        </div>
-                        <div id="change-area" style="display:none">
-                            <ul>
-                                <li v-for="(aval,aid) in servicearealist.arealist" v-if="aval.parentid == cityid" :key="aid" :parentid="aval.parentid" :class="{dis: aval.isprodutopen == 1}" @click="selectedArea(searchdata.pid,aval.parentid,aval.id,'\'' + aval.title + '\'',1,searchdata.packageid)">{{ aval.title }}</li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="list" v-if="isquanguo === 2">
-                        <div id="change-area">
-                            <ul>
-                                <li v-for="(pval,pid) in providercitylist" :key="pid" :class="{dis: pval.isprodutopen == 1}" v-if="pval.isprovideropen === 2" @click="selectedArea(searchdata.pid,pval.parentid,pval.id,'\'' + pval.title + '\'',1,searchdata.packageid)">{{ pval.title }}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="blank" @click="cancels"></div>
-        </div>
+  <div class="wrapper">
+    <div class="tab_header">
+      <div
+        id="area"
+        class="area active"
+        @click="area">
+        <span class="title">地区：</span>
+        <span class="text">{{ areatitle }}</span>
+        <mip-img
+          src="../../static/image/splist_seljt.png"
+          class="img" />
+      </div>
     </div>
+    <div
+      v-show="flag"
+      id="masks"
+      class="mask">
+      <div
+        id="dialogs"
+        class="dialog">
+        <div class="lightbox">
+          <p> 请选择城市</p>
+          <div
+            v-if="isquanguo === 1"
+            class="list">
+            <div id="change-province">
+              <ul>
+                <li
+                  v-for="(pval,pid) in servicearealist.provincelist"
+                  :key="pid"
+                  :class="{dis: pval.isprodutopen == 1}"
+                  @click="selectedPro(searchdata.id,pval.id,'\'' + pval.title + '\'',1,searchdata.packageid,0)">{{ pval.title }}
+                </li>
+              </ul>
+            </div>
+            <div id="change-city">
+              <ul>
+                <li
+                  v-for="(cval,cid) in servicearealist.citylist"
+                  v-if="cval.parentid == provinceid"
+                  :key="cid"
+                  :parentid="cval.parentid"
+                  :class="{dis: cval.isprodutopen == 1}"
+                  type="mip-mustache"
+                  @click="selectedCity(searchdata.id,cval.id,'\'' + cval.title + '\'',2,searchdata.packageid,cval.parentid,searchdata.ar,searchdata.ct)">{{ cval.title }}
+                </li>
+              </ul>
+            </div>
+            <div
+              id="change-area"
+              style="display:none">
+              <ul>
+                <li
+                  v-for="(aval,aid) in servicearealist.arealist"
+                  v-if="aval.parentid == cityid"
+                  :key="aid"
+                  :parentid="aval.parentid"
+                  :class="{dis: aval.isprodutopen == 1}"
+                  @click="selectedArea(searchdata.pid,aval.parentid,aval.id,'\'' + aval.title + '\'',1,searchdata.packageid)">{{ aval.title }}</li>
+              </ul>
+            </div>
+          </div>
+          <div
+            v-if="isquanguo === 2"
+            class="list">
+            <div id="change-area">
+              <ul>
+                <li
+                  v-for="(pval,pid) in providercitylist"
+                  v-if="pval.isprovideropen === 2"
+                  :key="pid"
+                  :class="{dis: pval.isprodutopen == 1}"
+                  @click="selectedArea(searchdata.pid,pval.parentid,pval.id,'\'' + pval.title + '\'',1,searchdata.packageid)">{{ pval.title }}
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="blank"
+        @click="cancels"/>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -128,150 +168,150 @@
 </style>
 
 <script>
-import config from "../../utils/config";
+import config from '../../utils/config'
 export default {
-    props: {
-        flag: {
-            type: Boolean,
-            required: true
-        }
-    },
-    data() {
-        return {
-            city1: [],
-            area1: [],
-            areatitle: "",
-            provinceid: "",
-            cityid: "",
-            areaid: "",
-            servicearealist: [],
-            providercitylist: [],
-            isquanguo: 1
-        };
-    },
-    mounted() {
-        const self = this;
-        let pcid = getRequest().pid;
-        pcid = pcid || 1;
-        window
-            .fetchJsonp(
-                "https://api.kuaifawu.com/mip/provider/plist/pid/" + pcid,
-                {
-                    jsonpCallback: "callback"
-                }
-            )
-            .then(function(res) {
-                return res.json();
-            })
-            .then(function(data) {
-                self.searchdata = data.data.items.searchData;
-                self.pid = data.data.items.searchData.pid;
-                self.ct = data.data.items.searchData.ct;
-                self.ar = data.data.items.searchData.ar;
-                self.id = data.data.items.productSalesAttrInfo.id;
-                self.packageid = data.data.items.searchData.packageid;
-                self.servicearealist = data.data.items.serviceAreaList;
-                self.areatitle = data.data.items.searchData.areatitle;
-                if (data.data.items.serviceAreaList.areatitle === "全国") {
-                    self.isquanguo = 2;
-                    self.providercitylist =
-                        data.data.items.serviceAreaList.providercitylist;
-                } else {
-                    self.isquanguo = 1;
-                }
-            });
-        function getRequest() {
-            let url = location.search; // 获取url中"?"符后的字串
-            let theRequest = {};
-            let strs = "";
-            if (url.indexOf("?") !== -1) {
-                let str = url.substr(1);
-                strs = str.split("&");
-                for (let i = 0; i < strs.length; i++) {
-                    theRequest[strs[i].split("=")[0]] = unescape(
-                        strs[i].split("=")[1]
-                    );
-                }
-            }
-            return theRequest;
-        }
-    },
-    methods: {
-        area() {
-            this.flag = !this.flag;
-            this.$emit("flag", this.flag);
-        },
-        cancels() {
-            let masks = document.getElementById("masks");
-            masks.style.display = "none";
-        },
-        selectedPro(productsalesattrid, id, title, type, packageid, parentid) {
-            this.provinceid = id;
-            this.province1 = title;
-            if (this.province1 !== "") {
-                let province = document.getElementById("change-province");
-                let uls = document.getElementById("change-city");
-                province.style.display = "none";
-                uls.style.display = "block";
-            }
-        },
-        selectedCity(productsalesattrid, id, title, type, packageid, pid) {
-            this.cityid = id;
-            this.city1 = title;
-            if (this.city1 !== "") {
-                let uls = document.getElementById("change-city");
-                let area = document.getElementById("change-area");
-                uls.style.display = "none";
-                area.style.display = "block";
-            }
-        },
-        selectedArea(
-            productsalesattrid,
-            cityid,
-            areaid,
-            title,
-            type,
-            packageid
-        ) {
-            this.area1 = title;
-            if (this.area1 !== "") {
-                this.flag = !this.flag;
-                this.areatitle = this.area1;
-                this.areatitle = this.areatitle.replace(/'|'/g, "");
-            }
-
-            if (2 === this.isquanguo) {
-                window.MIP.viewer.open(
-                    MIP.util.makeCacheUrl(
-                        config.data().burl +
-                            "/provider/list.html?pid=" +
-                            productsalesattrid +
-                            "_" +
-                            cityid +
-                            "_0_" +
-                            areaid +
-                            "_0_0_0_" +
-                            packageid
-                    ),
-                    { isMipLink: true }
-                );
-            } else {
-                window.MIP.viewer.open(
-                    MIP.util.makeCacheUrl(
-                        config.data().burl +
-                            "/provider/list.html?pid=" +
-                            productsalesattrid +
-                            "_" +
-                            cityid +
-                            "_" +
-                            areaid +
-                            "_0_0_0_0_" +
-                            packageid
-                    ),
-                    { isMipLink: true }
-                );
-            }
-        }
+  props: {
+    flag: {
+      type: Boolean,
+      required: true
     }
-};
+  },
+  data () {
+    return {
+      city1: [],
+      area1: [],
+      areatitle: '',
+      provinceid: '',
+      cityid: '',
+      areaid: '',
+      servicearealist: [],
+      providercitylist: [],
+      isquanguo: 1
+    }
+  },
+  mounted () {
+    const self = this
+    let pcid = getRequest().pid
+    pcid = pcid || 1
+    window
+      .fetchJsonp(
+        'https://api.kuaifawu.com/mip/provider/plist/pid/' + pcid,
+        {
+          jsonpCallback: 'callback'
+        }
+      )
+      .then(function (res) {
+        return res.json()
+      })
+      .then(function (data) {
+        self.searchdata = data.data.items.searchData
+        self.pid = data.data.items.searchData.pid
+        self.ct = data.data.items.searchData.ct
+        self.ar = data.data.items.searchData.ar
+        self.id = data.data.items.productSalesAttrInfo.id
+        self.packageid = data.data.items.searchData.packageid
+        self.servicearealist = data.data.items.serviceAreaList
+        self.areatitle = data.data.items.searchData.areatitle
+        if (data.data.items.serviceAreaList.areatitle === '全国') {
+          self.isquanguo = 2
+          self.providercitylist =
+                        data.data.items.serviceAreaList.providercitylist
+        } else {
+          self.isquanguo = 1
+        }
+      })
+    function getRequest () {
+      let url = location.search // 获取url中"?"符后的字串
+      let theRequest = {}
+      let strs = ''
+      if (url.indexOf('?') !== -1) {
+        let str = url.substr(1)
+        strs = str.split('&')
+        for (let i = 0; i < strs.length; i++) {
+          theRequest[strs[i].split('=')[0]] = unescape(
+            strs[i].split('=')[1]
+          )
+        }
+      }
+      return theRequest
+    }
+  },
+  methods: {
+    area () {
+      this.flag = !this.flag
+      this.$emit('flag', this.flag)
+    },
+    cancels () {
+      let masks = document.getElementById('masks')
+      masks.style.display = 'none'
+    },
+    selectedPro (productsalesattrid, id, title, type, packageid, parentid) {
+      this.provinceid = id
+      this.province1 = title
+      if (this.province1 !== '') {
+        let province = document.getElementById('change-province')
+        let uls = document.getElementById('change-city')
+        province.style.display = 'none'
+        uls.style.display = 'block'
+      }
+    },
+    selectedCity (productsalesattrid, id, title, type, packageid, pid) {
+      this.cityid = id
+      this.city1 = title
+      if (this.city1 !== '') {
+        let uls = document.getElementById('change-city')
+        let area = document.getElementById('change-area')
+        uls.style.display = 'none'
+        area.style.display = 'block'
+      }
+    },
+    selectedArea (
+      productsalesattrid,
+      cityid,
+      areaid,
+      title,
+      type,
+      packageid
+    ) {
+      this.area1 = title
+      if (this.area1 !== '') {
+        this.flag = !this.flag
+        this.areatitle = this.area1
+        this.areatitle = this.areatitle.replace(/'|'/g, '')
+      }
+
+      if (this.isquanguo === 2) {
+        window.MIP.viewer.open(
+          MIP.util.makeCacheUrl(
+            config.data().burl +
+                            '/provider/list.html?pid=' +
+                            productsalesattrid +
+                            '_' +
+                            cityid +
+                            '_0_' +
+                            areaid +
+                            '_0_0_0_' +
+                            packageid
+          ),
+          { isMipLink: true }
+        )
+      } else {
+        window.MIP.viewer.open(
+          MIP.util.makeCacheUrl(
+            config.data().burl +
+                            '/provider/list.html?pid=' +
+                            productsalesattrid +
+                            '_' +
+                            cityid +
+                            '_' +
+                            areaid +
+                            '_0_0_0_0_' +
+                            packageid
+          ),
+          { isMipLink: true }
+        )
+      }
+    }
+  }
+}
 </script>

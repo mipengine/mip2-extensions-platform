@@ -1,22 +1,37 @@
 <template>
-    <div class="tab">
-        <div class="tab_header">
-            <div class="type active" id="type =" @click="type">
-                <span class="title">类型：</span>
-                <span class="text">{{mess}}</span>
-                <mip-img src="../../static/image/splist_seljt.png" class="img" />
-            </div>
-            <provider-city v-on:flag="flag"></provider-city>
-        </div>
-        <div class="mask" v-show="flag" id="mask">
-            <div class="dialog" id="dialog">
-                <ul>
-                    <li v-for="(key,ind) in productsalesattrinfo.productsalesattrlist" :key="ind" @click="check(key,key.id)">{{ key.title }}</li>
-                </ul>
-            </div>
-            <div class="blank" @click="cancel"></div>
-        </div>
+  <div class="tab">
+    <div class="tab_header">
+      <div
+        id="type ="
+        class="type active"
+        @click="type">
+        <span class="title">类型：</span>
+        <span class="text">{{ mess }}</span>
+        <mip-img
+          src="../../static/image/splist_seljt.png"
+          class="img" />
+      </div>
+      <provider-city @flag="flag"/>
     </div>
+    <div
+      v-show="flag"
+      id="mask"
+      class="mask">
+      <div
+        id="dialog"
+        class="dialog">
+        <ul>
+          <li
+            v-for="(key,ind) in productsalesattrinfo.productsalesattrlist"
+            :key="ind"
+            @click="check(key,key.id)">{{ key.title }}</li>
+        </ul>
+      </div>
+      <div
+        class="blank"
+        @click="cancel"/>
+    </div>
+  </div>
 </template>
 
 <style scoped>
@@ -74,92 +89,92 @@ li {
 }
 </style>
 <script>
-import config from "../../utils/config";
-import providerCity from "../mip-provider-city/mip-provider-city";
+import config from '../../utils/config'
+import providerCity from '../mip-provider-city/mip-provider-city'
 export default {
-    data() {
-        return {
-            flag: false,
-            searchdata: [],
-            providerList: [],
-            productsalesattrinfo: [],
-            mess: "",
-            city: "",
-            id: ""
-        };
-    },
-    components: {
-        providerCity
-    },
-    methods: {
-        type(flag) {
-            this.flag = flag;
-            let mask = document.getElementById("mask");
-            let masks = document.getElementById("masks");
-            if (this.flag) {
-                masks.style.zIndex = 9;
-                mask.style.zIndex = 8;
-            } else {
-                masks.style.zIndex = 8;
-                mask.style.zIndex = 9;
-            }
-        },
-        cancel() {
-            let mask = document.getElementById("mask");
-            mask.style.display = "none";
-        },
-        check(obj, id) {
-            this.mess = obj.title;
-            let mask = document.getElementById("mask");
-            mask.style.display = "none";
-            // window.location.href = "/provider/list.html?pid=" + id
-            // window.MIP.viewer.open("/provider/list.html?pid=" + id, {isMipLink: true});
-            window.MIP.viewer.open(
-                MIP.util.makeCacheUrl(
-                    config.data().burl + "/provider/list.html?pid=" + id
-                ),
-                { isMipLink: true }
-            );
-        }
-    },
-    mounted() {
-        const self = this;
-        let pid = getRequest().pid;
-        window
-            .fetchJsonp(
-                "https://api.kuaifawu.com/mip/provider/plist/pid/" + pid,
-                {
-                    jsonpCallback: "callback"
-                }
-            )
-            .then(function(res) {
-                return res.json();
-            })
-            .then(function(data) {
-                self.searchdata = data.data.items.searchData;
-                self.providerList = data.data.items.providerList;
-                self.productsalesattrinfo =
-                    data.data.items.productSalesAttrInfo;
-                self.productsalesattrlist =
-                    data.data.items.productSalesAttrInfo.productsalesattrlist;
-                self.mess = data.data.items.productSalesAttrInfo.title;
-            });
-
-        function getRequest() {
-            let url = location.search; // 获取url中"?"符后的字串
-            let theRequest = {};
-            let strs = "";
-            if (url.indexOf("?") !== -1) {
-                let str = url.substr(1);
-                strs = str.split("&");
-                for (let i = 0; i < strs.length; i++) {
-                    theRequest[strs[i].split("=")[0]] = unescape(
-                        strs[i].split("=")[1]
-                    );
-                }
-            }
-            return theRequest;
-        }
+  components: {
+    providerCity
+  },
+  data () {
+    return {
+      flag: false,
+      searchdata: [],
+      providerList: [],
+      productsalesattrinfo: [],
+      mess: '',
+      city: '',
+      id: ''
     }
-};
+  },
+  mounted () {
+    const self = this
+    let pid = getRequest().pid
+    window
+      .fetchJsonp(
+        'https://api.kuaifawu.com/mip/provider/plist/pid/' + pid,
+        {
+          jsonpCallback: 'callback'
+        }
+      )
+      .then(function (res) {
+        return res.json()
+      })
+      .then(function (data) {
+        self.searchdata = data.data.items.searchData
+        self.providerList = data.data.items.providerList
+        self.productsalesattrinfo =
+                    data.data.items.productSalesAttrInfo
+        self.productsalesattrlist =
+                    data.data.items.productSalesAttrInfo.productsalesattrlist
+        self.mess = data.data.items.productSalesAttrInfo.title
+      })
+
+    function getRequest () {
+      let url = location.search // 获取url中"?"符后的字串
+      let theRequest = {}
+      let strs = ''
+      if (url.indexOf('?') !== -1) {
+        let str = url.substr(1)
+        strs = str.split('&')
+        for (let i = 0; i < strs.length; i++) {
+          theRequest[strs[i].split('=')[0]] = unescape(
+            strs[i].split('=')[1]
+          )
+        }
+      }
+      return theRequest
+    }
+  },
+  methods: {
+    type (flag) {
+      this.flag = flag
+      let mask = document.getElementById('mask')
+      let masks = document.getElementById('masks')
+      if (this.flag) {
+        masks.style.zIndex = 9
+        mask.style.zIndex = 8
+      } else {
+        masks.style.zIndex = 8
+        mask.style.zIndex = 9
+      }
+    },
+    cancel () {
+      let mask = document.getElementById('mask')
+      mask.style.display = 'none'
+    },
+    check (obj, id) {
+      this.mess = obj.title
+      let mask = document.getElementById('mask')
+      mask.style.display = 'none'
+      // window.location.href = "/provider/list.html?pid=" + id
+      // window.MIP.viewer.open("/provider/list.html?pid=" + id, {isMipLink: true});
+      window.MIP.viewer.open(
+        MIP.util.makeCacheUrl(
+          config.data().burl + '/provider/list.html?pid=' + id
+        ),
+        { isMipLink: true }
+      )
+    }
+  }
+}
 </script>

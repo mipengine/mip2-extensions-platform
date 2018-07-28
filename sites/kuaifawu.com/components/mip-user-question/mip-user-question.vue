@@ -2,7 +2,9 @@
   <div class="question">
     <h1>常见问题</h1>
     <div class="pic">
-      <img src="../../static/image/zixun_head_sec.jpg" alt="">
+      <img
+        src="../../static/image/zixun_head_sec.jpg"
+        alt="">
     </div>
     <div class="main">
       <h2>注册登录</h2>

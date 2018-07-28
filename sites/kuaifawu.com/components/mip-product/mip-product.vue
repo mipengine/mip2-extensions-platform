@@ -113,50 +113,54 @@
     <div
       v-if="flag"
       id="choice-area">
-      <div class="lightbox" id="lightbox">
+      <div
+        id="lightbox"
+        class="lightbox">
         <p> 请选择城市</p>
         <div class="list">
           <div id="change-province">
-              <ul>
-                <li
-                    v-for="(pval,pid) in productdetailinfo.servicearealist.provincelist"
-                    :key="pid"
-                    :class="{dis: pval.isprodutopen == 1}"
-                    @click="selectedPro(searchdata.id,pval.id,'\'' + pval.title + '\'',1,searchdata.packageid,0)">{{ pval.title }}
-                </li>
-              </ul>
+            <ul>
+              <li
+                v-for="(pval,pid) in productdetailinfo.servicearealist.provincelist"
+                :key="pid"
+                :class="{dis: pval.isprodutopen == 1}"
+                @click="selectedPro(searchdata.id,pval.id,'\'' + pval.title + '\'',1,searchdata.packageid,0)">{{ pval.title }}
+              </li>
+            </ul>
           </div>
           <div
             id="change-city"
             style="display:none">
             <ul>
-                <li
-                    v-for="(cval,cid) in productdetailinfo.servicearealist.citylist"
-                    v-if="cval.parentid == provinceid"
-                    :key="cid"
-                    :provinceid="cval.parentid"
-                    :class="{dis: cval.isprodutopen == 1}"
-                    @click="selectedCity(searchdata.id,cval.id,'\'' + cval.title + '\'',2,searchdata.packageid,cval.parentid)">{{ cval.title }}
-                </li>
+              <li
+                v-for="(cval,cid) in productdetailinfo.servicearealist.citylist"
+                v-if="cval.parentid == provinceid"
+                :key="cid"
+                :provinceid="cval.parentid"
+                :class="{dis: cval.isprodutopen == 1}"
+                @click="selectedCity(searchdata.id,cval.id,'\'' + cval.title + '\'',2,searchdata.packageid,cval.parentid)">{{ cval.title }}
+              </li>
             </ul>
           </div>
           <div
             id="change-area"
             style="display:none">
             <ul>
-                <li
-                    v-for="(aval,aid) in productdetailinfo.servicearealist.arealist"
-                    v-if="aval.parentid == cityid"
-                    :key="aid"
-                    :parentid="aval.parentid"
-                    :class="{dis: aval.isprodutopen == 1}"
-                    @click="selectedArea(searchdata.id,aval.id,'\'' + aval.title + '\'',3,searchdata.packageid,aval.parentid)">{{ aval.title }}
-                </li>
+              <li
+                v-for="(aval,aid) in productdetailinfo.servicearealist.arealist"
+                v-if="aval.parentid == cityid"
+                :key="aid"
+                :parentid="aval.parentid"
+                :class="{dis: aval.isprodutopen == 1}"
+                @click="selectedArea(searchdata.id,aval.id,'\'' + aval.title + '\'',3,searchdata.packageid,aval.parentid)">{{ aval.title }}
+              </li>
             </ul>
           </div>
         </div>
       </div>
-      <div class="blank" @click="cancel"></div>
+      <div
+        class="blank"
+        @click="cancel"/>
     </div>
   </div>
 <!--  <footer class="{disabled: !providerdetailinfo.providerinfo}">
@@ -288,7 +292,7 @@ export default {
       // 存储 providerid 和 productskuid
       let CustomStorage = MIP.util.customStorage
       let storage = new CustomStorage(0)
-      storage.set('saleprice',self.providerdetailinfo.saleprice)
+      storage.set('saleprice', self.providerdetailinfo.saleprice)
       storage.set('provideridProductskuid', self.searchdata.productskuid + '_' + String(self.providerinfo.id))
       storage.set('providerskuid', self.providerinfo.providerskuid)
       console.log(self.providerinfo.providerskuid, 'providerskuid')
@@ -326,12 +330,12 @@ export default {
       this.flag = !this.flag
     },
     cancel () {
-        let choice = document.getElementById('choice-area')
-        let lightbox =  document.getElementById('lightbox')
-        choice.style.display = "none"
-        lightbox.style.display = 'none'
+      let choice = document.getElementById('choice-area')
+      let lightbox = document.getElementById('lightbox')
+      choice.style.display = 'none'
+      lightbox.style.display = 'none'
     },
-    geturl(url) {
+    geturl (url) {
       return MIP.util.makeCacheUrl(config.data().burl + url)
     },
     selectedPro (productsalesattrid, id, title, type, packageid, parentid) {

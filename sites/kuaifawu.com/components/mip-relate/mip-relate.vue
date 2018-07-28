@@ -67,14 +67,16 @@
       </div>
     </div>
     <!-- 底部固定栏 -->
-    <mip-fixed type="bottom" bottom="0">
-    <div class="fix-bottom">
-      <div class="left">应付：<span>￥{{ sum }}</span></div>
-      <a
-        :href="geturl('/orders/confirm.html')"
-        data-type="mip"
-        class="right">去结算</a>
-    </div>
+    <mip-fixed
+      type="bottom"
+      bottom="0">
+      <div class="fix-bottom">
+        <div class="left">应付：<span>￥{{ sum }}</span></div>
+        <a
+          :href="geturl('/orders/confirm.html')"
+          data-type="mip"
+          class="right">去结算</a>
+      </div>
     </mip-fixed>
     <!-- 底部固定栏 -->
   </div>
@@ -107,7 +109,7 @@ export default {
       providerSkuid: 0,
       summmmm: [],
       providerskuid: '',
-      relteMoney :[]
+      relteMoney: []
     }
   },
   mounted () {
@@ -274,19 +276,19 @@ export default {
     },
     getmoney: function (id, saleprice, obj) {
       // console.log(obj.id && !this.relteMoney[obj.id],'pppppppppp')
-      this.relteMoney[obj.id] = 0;
-      console.log(this.relteMoney,'rrrrrrrrrrrr')
+      this.relteMoney[obj.id] = 0
+      console.log(this.relteMoney, 'rrrrrrrrrrrr')
       if (obj.id && !this.relteMoney[obj.id]) {
-         this.relteMoney[obj.id] = 1;
+        this.relteMoney[obj.id] = 1
       } else {
-         this.relteMoney[obj.id] = 0;
+        this.relteMoney[obj.id] = 0
       }
       // console.log(saleprice,'ssssssss')
       // console.log(this.relteMoney[obj.id],'idididiidi')
       this.relate[id].showmoney = saleprice && this.relteMoney[obj.id] ? '￥' + saleprice : ''
       this.relate[id].money = saleprice * this.relteMoney[obj.id]
     },
-     geturl(url) {
+    geturl (url) {
       return MIP.util.makeCacheUrl(config.data().burl + url)
     }
   }

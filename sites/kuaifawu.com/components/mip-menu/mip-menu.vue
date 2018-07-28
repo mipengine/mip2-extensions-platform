@@ -1,34 +1,37 @@
 <template>
   <div class="wrapper">
-    <mip-fixed class="footer" type="bottom" bottom="0">
-    <a
-            :href="geturl('/index/index.html')"
-            data-type="mip">
-      <div
-        class="icon icon1"
-        @click="aaa($event)"/>
-    </a>
-    <a
-            :href="geturl('/product/category.html')"
-            data-type="mip">
-      <div
-        class="icon icon2"
-        @click="aaa($event)"/>
-    </a>
-    <a
-            :href="geturl('/article/index.html')"
-            data-type="mip">
-      <div
-        class="icon icon3"
-        @click="aaa($event)"/>
-    </a>
-    <a
-            :href="geturl('/user/index.html')"
-            data-type="mip">
-      <div
-        class="icon icon4"
-        @click="aaa($event)"/>
-    </a>
+    <mip-fixed
+      class="footer"
+      type="bottom"
+      bottom="0">
+      <a
+        :href="geturl('/index/index.html')"
+        data-type="mip">
+        <div
+          class="icon icon1"
+          @click="aaa($event)"/>
+      </a>
+      <a
+        :href="geturl('/product/category.html')"
+        data-type="mip">
+        <div
+          class="icon icon2"
+          @click="aaa($event)"/>
+      </a>
+      <a
+        :href="geturl('/article/index.html')"
+        data-type="mip">
+        <div
+          class="icon icon3"
+          @click="aaa($event)"/>
+      </a>
+      <a
+        :href="geturl('/user/index.html')"
+        data-type="mip">
+        <div
+          class="icon icon4"
+          @click="aaa($event)"/>
+      </a>
     </mip-fixed>
   </div>
 </template>
@@ -106,52 +109,51 @@
 </style>
 
 <script>
-    import config from '../../utils/config'
-    export default {
-        mounted () {
-            MIP.viewer.fixedElement.init()
-            console.log('This is 底部固定菜单栏 !')
-        },
-        methods: {
-            aaa: function () {
-                let a = document.querySelectorAll('a')
-                a.forEach(function (el, index) {
-                    el.onclick = function (e) {
-                        let sib = sibilings(this)
-                        this.children[0].classList.add('active')
-                        sib.forEach(function (el, index) {
-                            el.children[0].classList.remove('active')
-                        })
-                        return this
-                    }
-                })
-
-                function sibilings (el) {
-                    let a = []
-                    let p = el.previousSibling
-                    while (p) {
-                        if (p.nodeType === 1) {
-                            a.push(p)
-                        }
-                        p = p.previousSibling
-                    }
-                    a.reverse()
-                    let n = el.nextSibling
-                    while (n) {
-                        if (n.nodeType === 1) {
-                            a.push(n)
-                        }
-                        n = n.nextSibling
-                    }
-                    return a
-                }
-            },
-            geturl (url) {
-               return MIP.util.makeCacheUrl(config.data().burl + url)
-            }
+import config from '../../utils/config'
+export default {
+  mounted () {
+    MIP.viewer.fixedElement.init()
+    console.log('This is 底部固定菜单栏 !')
+  },
+  methods: {
+    aaa: function () {
+      let a = document.querySelectorAll('a')
+      a.forEach(function (el, index) {
+        el.onclick = function (e) {
+          let sib = sibilings(this)
+          this.children[0].classList.add('active')
+          sib.forEach(function (el, index) {
+            el.children[0].classList.remove('active')
+          })
+          return this
         }
-        
+      })
 
+      function sibilings (el) {
+        let a = []
+        let p = el.previousSibling
+        while (p) {
+          if (p.nodeType === 1) {
+            a.push(p)
+          }
+          p = p.previousSibling
+        }
+        a.reverse()
+        let n = el.nextSibling
+        while (n) {
+          if (n.nodeType === 1) {
+            a.push(n)
+          }
+          n = n.nextSibling
+        }
+        return a
+      }
+    },
+    geturl (url) {
+      return MIP.util.makeCacheUrl(config.data().burl + url)
+    }
   }
+
+}
 
 </script>
