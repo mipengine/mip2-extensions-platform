@@ -36,24 +36,28 @@
             <span>合计￥{{ allOrder.currentPrice }}元（含运费￥{{ allOrder.sysExpressPrice }}）</span>
           </div>
           <div
-            v-show="allOrder.evaluate === 0 || allOrder.payStatus === 1 || allOrder.payStatus === 0"
+            v-show="allOrder.payStatus !== 1 && allOrder.orderStatus !== 3"
+            class="btn-group">
+            <span
+              v-show="allOrder.payStatus === 0"
+              class="order-btn"
+              @click.stop="cancelOrder(allOrder,index)">取消订单</span>
+            <span
+              v-show="allOrder.payStatus === 0"
+              class="order-btn order-btn-red"
+              @click.stop="goPay(allOrder,index)">去付款</span>
+          </div>
+          <div
+            v-show="allOrder.payStatus === 1"
             class="btn-group">
             <span
               v-show="allOrder.evaluate === 0"
               class="order-btn"
               @click.stop="goEvaluate(allOrder,index)">去评价</span>
             <span
-              v-show="allOrder.payStatus === 0"
-              class="order-btn"
-              @click.stop="cancelOrder(allOrder,index)">取消订单</span>
-            <span
               v-show="allOrder.payStatus === 1"
               class="order-btn order-btn-red"
               @click.stop="goStudy(allOrder,index)">去学习</span>
-            <span
-              v-show="allOrder.payStatus === 0"
-              class="order-btn order-btn-red"
-              @click.stop="goPay(allOrder,index)">去付款</span>
           </div>
         </div>
       </div>
@@ -86,9 +90,7 @@
             <span>共1个商品</span>
             <span>合计￥{{ unpayOrder.currentPrice }}元（含运费￥{{ unpayOrder.sysExpressPrice }}）</span>
           </div>
-          <div
-            v-show="unpayOrder.payStatus === 0"
-            class="btn-group">
+          <div class="btn-group">
             <span
               v-show="unpayOrder.payStatus === 0"
               class="order-btn"
@@ -129,9 +131,7 @@
             <span>共1个商品</span>
             <span>合计￥{{ payOrder.currentPrice }}元（含运费￥{{ payOrder.sysExpressPrice }}）</span>
           </div>
-          <div
-            v-show="payOrder.evaluate === 0 || payOrder.payStatus === 1"
-            class="btn-group">
+          <div class="btn-group">
             <span
               v-show="payOrder.evaluate === 0"
               class="order-btn"
@@ -179,6 +179,9 @@ export default {
     base.setToken(base.getQueryString('token'))
     let _this = this
     this.$element.customElement.addEventAction('login', event => {
+      if (event.sessionId) {
+        base.setToken(event.sessionId)
+      }
       if (event.userInfo.userStatus === 0) {
         _this.getPageData()
       } else if (event.userInfo.userStatus === 3) {
@@ -218,18 +221,18 @@ export default {
     goEvaluate (order, index) {
       let goodsId = order.goodsId || ''
       let orderId = order.orderNumber || ''
-      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toEvaluate?id=' + goodsId + '&orderId=' + orderId))
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toEvaluate?id=' + goodsId + '&orderId=' + orderId + '&token=' + base.getToken()))
     },
     goStudy (order, index) {
       MIP.viewer.open(order.url, {isMipLink: false})
     },
     goPay (order, index) {
       let orderId = order.orderNumber || ''
-      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toPay?orderId=' + orderId))
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toPay?orderId=' + orderId + '&token=' + base.getToken()))
     },
     goOrderDetail (order) {
       let orderId = order.orderNumber || ''
-      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toDetailOrder?orderId=' + orderId))
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toDetailOrder?orderId=' + orderId + '&token=' + base.getToken()))
     },
     cancelOrder (order, index) {
       let orderId = order.orderNumber || ''

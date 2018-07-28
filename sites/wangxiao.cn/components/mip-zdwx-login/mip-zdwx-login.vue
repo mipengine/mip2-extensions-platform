@@ -6,6 +6,7 @@
   </div>
 </template>
 <script>
+import base from '../../common/base.js'
 export default {
   data () {
     return {
@@ -25,6 +26,9 @@ export default {
   mounted () {
     let _this = this
     this.$element.customElement.addEventAction('login', event => {
+      if (event.sessionId) {
+        base.setToken(event.sessionId)
+      }
       if (event.userInfo.userStatus === 1 || event.userInfo.userStatus === 0) {
         if (event.userInfo.url) {
           MIP.viewer.open(event.userInfo.url, {isMipLink: false})

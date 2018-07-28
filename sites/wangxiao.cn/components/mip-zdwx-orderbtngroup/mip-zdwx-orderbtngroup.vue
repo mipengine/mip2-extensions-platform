@@ -1,23 +1,29 @@
 <template>
-  <div
-    v-show="orderInfo.evaluate === 0 || orderInfo.payStatus === 1 || orderInfo.payStatus === 0"
-    class="btn-group">
-    <span
-      v-show="orderInfo.evaluate === 0"
-      class="order-btn"
-      @click="goEvaluate(orderInfo)">去评价</span>
-    <span
-      v-show="orderInfo.payStatus === 0"
-      class="order-btn"
-      @click="cancelOrder(orderInfo)">取消订单</span>
-    <span
+  <div>
+    <div
+      v-show="orderInfo.payStatus !== 1 && orderInfo.orderStatus !== 3"
+      class="btn-group">
+      <span
+        v-show="orderInfo.payStatus === 0"
+        class="order-btn"
+        @click="cancelOrder(orderInfo)">取消订单</span>
+      <span
+        v-show="orderInfo.payStatus === 0"
+        class="order-btn order-btn-red"
+        @click="goPay(orderInfo)">去付款</span>
+    </div>
+    <div
       v-show="orderInfo.payStatus === 1"
-      class="order-btn order-btn-red"
-      @click="goStudy(orderInfo)">去学习</span>
-    <span
-      v-show="orderInfo.payStatus === 0"
-      class="order-btn order-btn-red"
-      @click="goPay(orderInfo)">去付款</span>
+      class="btn-group">
+      <span
+        v-show="orderInfo.evaluate === 0"
+        class="order-btn"
+        @click.stop="goEvaluate(orderInfo,index)">去评价</span>
+      <span
+        v-show="orderInfo.payStatus === 1"
+        class="order-btn order-btn-red"
+        @click.stop="goStudy(orderInfo,index)">去学习</span>
+    </div>
   </div>
 </template>
 <script>
@@ -43,14 +49,14 @@ export default {
     goEvaluate (order) {
       let goodsId = order.goodsId || ''
       let orderId = order.orderNumber || ''
-      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toEvaluate?id=' + goodsId + '&orderId=' + orderId))
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toEvaluate?id=' + goodsId + '&orderId=' + orderId + '&token=' + base.getToken()))
     },
     goStudy (order) {
       MIP.viewer.open(order.url, {isMipLink: false})
     },
     goPay (order) {
       let orderId = order.orderNumber || ''
-      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toPay?orderId=' + orderId))
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toPay?orderId=' + orderId + '&token=' + base.getToken()))
     },
     cancelOrder (order) {
       let orderId = order.orderNumber || ''
