@@ -91,7 +91,7 @@ export default {
   },
   data () {
     return {
-      provice: '浙',
+      provice: '省',
       proviceShow: false,
       detail: false,
       src: '',
@@ -110,7 +110,7 @@ export default {
     }
   },
   mounted () {
-    if (this.globalData.car_no && this.globalData.provice) {
+    if (this.globalData.car_no) {
       try {
         window.localStorage.setItem('violationData', JSON.stringify(this.globalData))
       } catch (error) {
