@@ -109,6 +109,9 @@ export default {
       system: {}
     }
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     if (this.globalData.car_no) {
       try {

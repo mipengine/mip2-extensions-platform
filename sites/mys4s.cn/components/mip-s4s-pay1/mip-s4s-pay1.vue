@@ -249,6 +249,7 @@
         <div
           id="pay1btn"
           :class="agree?'pay-contaienr-last' :'pay-contaienr-last disabled-btn'"
+          on="tap:pay1.pay1event"
         >
           立即办理
         </div>
@@ -303,10 +304,8 @@ export default {
       isTrueCode: false
     }
   },
-  computed: {
-    prerenderAllowed () {
-      return true
-    }
+  prerenderAllowed () {
+    return true
   },
   watch: {
     code (val) {
@@ -316,13 +315,11 @@ export default {
   },
   mounted () {
     MIP.viewer.fixedElement.init()
-    let event = window.MIP.util.event
     let me = this
-    this.j = event.delegate(document.documentElement, '#pay1btn', 'click', (e) => {
-      console.log(11)
-      me.payFee() // 当页面出现跳转时，关闭所有的浮层
+    this.$on('pay1event', event => {
+      console.log('pay1event')
+      me.payFee()
     })
-
     if (this.globalData && this.globalData.Fine) {
       try {
         window.localStorage.setItem(
@@ -878,18 +875,7 @@ select {
 .s4s-group:last-child {
   border: none;
 }
-.s4s-body {
-  /* max-width: 7rem; */
-  /* margin: 0 auto; */
-  /* height: 100%; */
-  /* -webkit-box-sizing: border-box;
-  box-sizing: border-box; */
-  /* position: absolute; */
-  /* top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0; */
-}
+
 .s4s-title {
   font-size: 0.2rem;
   padding-top: 0.15rem;

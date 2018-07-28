@@ -93,6 +93,9 @@ export default {
       delCarNo: ''
     }
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     this.getCar()
   },
