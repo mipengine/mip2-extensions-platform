@@ -1,6 +1,7 @@
 <template>
   <!--居住地址三级联动选项-->
-  <section class="showChose" 
+  <section 
+  class="showChose" 
   v-show="showaddress">
     <section class="address">
       <section class="title_header">
