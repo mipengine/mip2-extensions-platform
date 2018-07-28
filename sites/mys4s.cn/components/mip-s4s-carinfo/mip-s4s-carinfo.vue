@@ -345,6 +345,9 @@ export default {
     //   });
     // }
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     if (this.globalData && this.globalData.car_no) {
       this.car_no = this.globalData.car_no
@@ -422,7 +425,7 @@ export default {
         }
         if (res.code === 0) {
           util.toast('操作成功')
-          MIP.viewer.open('car.html')
+          MIP.viewer.open('./car.html')
         }
       })
     },

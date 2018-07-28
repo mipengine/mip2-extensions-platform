@@ -308,7 +308,8 @@ export default {
         return res.json()
       }).then(function (data) {
         // console.log(data);
-        window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + '/user/orders.html'), {isMipLink: true})
+        // window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + "/user/orders.html"), {isMipLink: true});
+        window.location.reload()
       })
     },
     pay (ordersId, price) {
