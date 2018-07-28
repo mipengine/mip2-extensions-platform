@@ -5,23 +5,39 @@
   class="showChose">
     <section class="address">
       <section class="title_header">
-        <span class="left" 
+        <span 
+        class="left" 
         @click="closeAdd">取消</span>
-        <span class="yes-btn"
+        <span 
+        class="yes-btn"
         @click="yesAdd">确定</span>
       </section>
       <section class="title">
-        <div class="area" @click="provinceSelected()">{{ Province?Province:info[province-1].name }}</div>
-        <div class="area" @click="citySelected()" :class="City?'':'active'" :data-id="city">{{ City?City:'请选择' }}</div>
+        <div 
+        class="area" 
+        @click="provinceSelected()">{{ Province?Province:info[province-1].name }}</div>
+        <div 
+        class="area" 
+        @click="citySelected()" 
+        :class="City?'':'active'" 
+        :data-id="city">{{ City?City:'请选择' }}</div>
         <!-- 
         <div class="area" @click="districtSelected()" :class="District?'':'active'" v-show="City">{{District?District:'请选择'}}</div> -->
       </section>
       <section class="address-list">
         <ul>
-          <li class="addList" v-for="(v,k) in info" @click="getProvinceId(v.id, v.name, k)" v-show="showProvince" :class="v.selected ? 'active' : ''">{{ v.name }}</li>
+          <li 
+          class="addList" v-for="(v,k) in info" 
+          @click="getProvinceId(v.id, v.name, k)" 
+          v-show="showProvince" 
+          :class="v.selected ? 'active' : ''">{{ v.name }}</li>
         </ul>
         <ul>
-          <li class="addList" v-for="(v,k) in showCityList" @click="getCityId(v.id, v.name, k,v.socialSecurity)" :data-id="v.id" v-show="showCity" :class="v.selected ? 'active' : ''">{{ v.name }}</li>
+          <li 
+          class="addList" v-for="(v,k) in showCityList" 
+          @click="getCityId(v.id, v.name, k,v.socialSecurity)" 
+          :data-id="v.id" v-show="showCity" 
+          :class="v.selected ? 'active' : ''">{{ v.name }}</li>
         </ul>
         <!-- <ul>
           <li class="addList" v-for="(v,k) in showDistrictList" @click="getDistrictId(v.id, v.name, k)" v-show="showDistrict" :class="v.selected ? 'active' : ''">{{v.name}}</li>
