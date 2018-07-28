@@ -27,13 +27,14 @@ export function getUUID () {
   return uuid
 }
 
-export function log (action = '', xzhid = '') {
+export function log (action = '', ext = {}, xzhid = '') {
   let img = document.createElement('img')
   /* eslint-disable fecs-camelcase */
   let data = {
     rqt: 300,
     click_token: '',
     url: 'authlogin',
+    ext: JSON.stringify(ext),
     action,
     xzhid
   }

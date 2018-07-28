@@ -51,12 +51,14 @@
         "sessionId": "",
         "fee": 0,
         "redirectUrl": "https://mip.putibaby.com/pay/verifypay",
-        "endpoint":{
+        "endpoint":
+        {
         "baifubao":  "https://mip.putibaby.com/api/pay/baifubao",
         "alipay":  "https://mip.putibaby.com/api/pay/alipay",
         "weixin":  "https://mip.putibaby.com/api/pay/weixin"
         },
-        "postData":{
+        "postData":
+        {
         "orderId": 0,
         "pay_id": 0,
         "token": "",
@@ -73,11 +75,11 @@
       id="payDialog"
       m-bind:pay-config="payConfig"/>
     <button
-      v-if="inservicePayAmount>0"
+      v-if="ajaxLoaded && inservicePayAmount>0"
       class="button"
       on="tap:payDialog.toggle">确定支付</button>
     <button
-      v-else
+      v-else-if="ajaxLoaded"
       class="button"
       @click="submitBalancePay" >余额支付</button>
 
@@ -159,7 +161,7 @@
 }
 
 .checked {
-  background-image: url('/i/balance_checked.png');
+  /* background-image: url('/i/balance_checked.png'); */
   background-size: 22px 22px;
   width: 22px;
   height: 22px;
@@ -169,7 +171,7 @@
 }
 
 .unchecked {
-  background-image: url('/i/balance_unchecked.png');
+  /* background-image: url('/i/balance_unchecked.png'); */
   background-size: 22px 22px;
   width: 22px;
   height: 22px;
@@ -179,7 +181,7 @@
 }
 
 .go {
-  background-image: url('/i/jt-right.png');
+  /* background-image: url('/i/jt-right.png'); */
 }
 
 .tip {
@@ -454,9 +456,10 @@ export default {
         function (isOk, res) {
           if (isOk) {
             var donePage = 'https://mip.putibaby.com/order_list'
-            var xzUrl = 'https://xiongzhang.baidu.com/opensc/payment.html' +
-                  '?id=1544608709261251&redirect_url=' + encodeURIComponent(donePage)
-            window.location.href = xzUrl
+            var xzUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment' +
+                  '?id=1544608709261251&redirect=' + encodeURIComponent(donePage)
+            // window.location.href = xzUrl
+            window.MIP.viewer.open(xzUrl, {})
           }
         }
       )
