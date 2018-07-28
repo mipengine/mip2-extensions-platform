@@ -210,6 +210,8 @@
   border-bottom: 1px solid #e5e5e5;
   color: #666;
   /*border-top: 1px solid #eee;*/
+  margin-left:10px;
+  margin-right:10px;
 }
 
 .clear {
@@ -218,12 +220,10 @@
 
 .khpj_row_left {
   float: left;
-  margin-left: 10px;
 }
 
 .khpj_row_right {
-  float: right;
-  margin-right: 10px;
+  float: right
 }
 
 .khpj_star {
@@ -238,13 +238,15 @@
   position: relative;
   height: 70px;
   border-bottom: 1px solid #e5e5e5;
+  margin-left:10px;
+  margin-right:10px;
 }
 
 .khpj_mama_header {
   height: 50px;
   width: 50px;
   position: absolute;
-  left: 10px;
+  left: 0px;
   top: 10px;
   border-radius: 5px;
 }
@@ -253,7 +255,7 @@
   font-size: 15px;
   position: absolute;
   top: 11px;
-  left: 75px;
+  left: 65px;
   line-height:16px;
   color:#666;
 }
@@ -449,6 +451,7 @@ function parseJSON (response) {
 
 API.wrapRet_ = function (api, opts, fn) {
   console.log('posting to ' + api)
+  opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
     credentials: 'include',

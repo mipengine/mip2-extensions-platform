@@ -364,7 +364,8 @@ export default {
         'subject': '支付商品',
         'fee': (pdata.payamount / 100).toFixed(2),
         'sessionId': pdata.sessionId,
-        'redirectUrl': 'https://mip.putibaby.com/pay/verifypay',
+        'redirectUrl': 'https://mip.putibaby.com/pay/verifypay?order_number=' +
+          pdata.order_number + '&pay_id=' + pdata.pay_id,
         'endpoint': {
           'baifubao': 'https://mip.putibaby.com/api/pay/baifubao',
           'alipay': 'https://mip.putibaby.com/api/pay/alipay',
@@ -398,6 +399,9 @@ export default {
       API.sessionId = event.sessionId
       self.$set(self, 'isLogin', true)
       self.$set(self, 'isUnion', event.userInfo.isUnion)
+      if (event.userInfo.wx_url) {
+        window.location.href = event.userInfo.wx_url
+      }
       API.ajaxDoPay(self.data.order_id, function (isOk, res) {
         if (isOk) {
           setData(res)
