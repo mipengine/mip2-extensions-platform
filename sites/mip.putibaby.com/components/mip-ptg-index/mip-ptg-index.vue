@@ -291,7 +291,7 @@ export default {
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq'), {})
       } else if (!event.userInfo.isUnion && origin) {
         console.log('logindone to submit_ph')
-        var to = '/' + origin
+        var to = 'https://mip.putibaby.com/' + origin
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
       }
     })
@@ -320,7 +320,7 @@ export default {
         return false
       }
       if (!this.isUnion) {
-        var to = '/' + cmd
+        var to = 'https://mip.putibaby.com/' + origin
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
 
         return false

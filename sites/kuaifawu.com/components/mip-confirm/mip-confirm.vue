@@ -31,14 +31,18 @@
       </div>
     </div>
     <!-- 底部固定栏 -->
-    <div class="fix-bottom">
-      <div>{{ total }}</div>
-      <div class="left">应付：<span>￥{{ moneyTotle }}</span></div>
-      <div
-        class="right"
-        on="tap:payDialog.toggle">去结算
+    <mip-fixed
+      type="bottom"
+      bottom="0">
+      <div class="fix-bottom">
+        <div>{{ total }}</div>
+        <div class="left">应付：<span>￥{{ moneyTotle }}</span></div>
+        <div
+          class="right"
+          on="tap:payDialog.toggle">去结算
+        </div>
       </div>
-    </div>
+    </mip-fixed>
     <!-- 底部固定栏 -->
   </div>
 </template>
@@ -57,7 +61,7 @@
     .r-op a{display: inline-block;width:0.2rem;height: 0.2rem;text-align: center;border:0.014rem solid #d9d9d9;float: left;color: #666;}
     .r-op input{display: inline-block;width:0.4rem;height: 0.2rem;border:0.014rem solid #d9d9d9;border-left: 0;border-right: 0;float: left;text-align: center;outline:none}
     .r-op span{display: inline-block;width:0.4rem;height: 0.2rem;border:0.014rem solid #d9d9d9;border-left: 0;border-right: 0;float: left;text-align: center;line-height: 0.2rem;}
-    .fix-bottom{position: fixed;bottom: 0;left: 0;background-color: #fff;border-top: 0.014rem solid #d9d9d9;height: 0.54rem;line-height: 0.54rem;width:100%;display: flex;}
+    .fix-bottom{background-color: #fff;border-top: 0.014rem solid #d9d9d9;height: 0.54rem;line-height: 0.54rem;width:100%;display: flex;}
     .fix-bottom .left{width:70%;color: #999;text-align: right;padding-right: 0.2rem;}
     .fix-bottom .left span{font-size: 0.2rem;color: #e85555;}
     .fix-bottom .right{width:30%;background-color: #e85555;color: #fff;text-align: center;}
@@ -102,6 +106,7 @@ export default {
   mounted () {
     // console.log(isMipLink,'213')
     // window.MIP.viewer.open('../user/index.html', {isMipLink: true});
+    MIP.viewer.fixedElement.init()
     console.log('This is 订单确认页 !')
     const self = this
     let CustomStorage = MIP.util.customStorage

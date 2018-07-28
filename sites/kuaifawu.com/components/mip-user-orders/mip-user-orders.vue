@@ -31,7 +31,7 @@
               :key="index1"
               class="order_number">
               <p>
-                <span class="list-title"><a href="">{{ val1.title }}({{ val1.areatitle }})</a></span>
+                <span class="list-title"><a href="javascript:;">{{ val1.title }}({{ val1.areatitle }})</a></span>
                 <span/>
                 <span class="color333">￥{{ val1.saleprice - val1.platformdiscount - val1.providerdiscount }}</span>
               </p>
@@ -91,7 +91,7 @@
               :key="index1"
               class="order_number">
               <p>
-                <span class="list-title"><a href="">{{ val1.title }}({{ val1.areatitle }})</a></span>
+                <span class="list-title"><a href="javascript:;">{{ val1.title }}({{ val1.areatitle }})</a></span>
                 <span/>
                 <span class="color333">￥{{ val1.saleprice - val1.platformdiscount - val1.providerdiscount }}</span>
               </p>
@@ -144,7 +144,7 @@
               :key="index1"
               class="order_number">
               <p>
-                <span class="list-title"><a href="">{{ val1.title }}({{ val1.areatitle }})</a></span>
+                <span class="list-title"><a href="javascript:;">{{ val1.title }}({{ val1.areatitle }})</a></span>
                 <span/>
                 <span class="color333">￥{{ val1.saleprice - val1.platformdiscount - val1.providerdiscount }}</span>
               </p>
@@ -193,7 +193,7 @@
           <div class="listContent">
             <div class="order_number">
               <p>
-                <span class="list-title"><a href="">{{ val.productsalesattrtitle }}({{ val.areatitle }})</a></span>
+                <span class="list-title"><a href="javascript:;">{{ val.productsalesattrtitle }}({{ val.areatitle }})</a></span>
                 <span/>
                 <span class="color333">￥{{ val.pricepayed }}</span>
               </p>
