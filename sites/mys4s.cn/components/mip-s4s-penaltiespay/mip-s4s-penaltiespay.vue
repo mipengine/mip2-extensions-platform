@@ -166,11 +166,6 @@ export default {
       cansend: true
     }
   },
-  computed: {
-    prerenderAllowed () {
-      return true
-    }
-  },
   watch: {
     code (val) {
       let tel = /^1\d{10}$/
@@ -178,6 +173,9 @@ export default {
         this.testCode()
       }
     }
+  },
+  prerenderAllowed () {
+    return true
   },
   mounted () {
     MIP.viewer.fixedElement.init()

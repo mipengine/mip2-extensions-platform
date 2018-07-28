@@ -303,10 +303,8 @@ export default {
       isTrueCode: false
     }
   },
-  computed: {
-    prerenderAllowed () {
-      return true
-    }
+  prerenderAllowed () {
+    return true
   },
   watch: {
     code (val) {
@@ -878,18 +876,7 @@ select {
 .s4s-group:last-child {
   border: none;
 }
-.s4s-body {
-  /* max-width: 7rem; */
-  /* margin: 0 auto; */
-  /* height: 100%; */
-  /* -webkit-box-sizing: border-box;
-  box-sizing: border-box; */
-  /* position: absolute; */
-  /* top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0; */
-}
+
 .s4s-title {
   font-size: 0.2rem;
   padding-top: 0.15rem;
