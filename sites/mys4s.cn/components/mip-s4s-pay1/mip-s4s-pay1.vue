@@ -315,7 +315,6 @@ export default {
   },
   mounted () {
     MIP.viewer.fixedElement.init()
-    let event = window.MIP.util.event
     let me = this
     this.$on('pay1event', event => {
       console.log('pay1event')
