@@ -70,7 +70,7 @@
     <div
       v-else
       class="tabContent padding-top">
-      <div class="all_main"/>
+      <div class="all_main"></div>
     </div>
     <!-- 全部 -->
 
@@ -123,7 +123,7 @@
     <div
       v-else
       class="tabContent padding-top">
-      <div class="all_main"/>
+      <div class="all_main"></div>
     </div>
     <!-- 待付款 -->
 
@@ -176,7 +176,7 @@
     <div
       v-else
       class="tabContent padding-top">
-      <div class="all_main"/>
+      <div class="all_main"></div>
     </div>
     <!-- 已付款 -->
 
@@ -224,7 +224,7 @@
     <div
       v-else
       class="tabContent padding-top">
-      <div class="all_main"/>
+      <div class="all_main"></div>
     </div>
     <!-- 已退款 -->
   </mip-vd-tabs>
@@ -301,15 +301,15 @@ export default {
       })
     },
     cancelorders (ordersId) {
-      console.log(ordersId, '这是取消订单')
+      console.log(ordersId, "这是取消订单")
       window.fetchJsonp(config.data().apiurl + '/orders/cancel?ordersid=' + ordersId + '&sessionid=' + encodeURIComponent(this.sessionid), {
-        jsonpCallback: 'callback'
+          jsonpCallback: 'callback'
       }).then(function (res) {
-        return res.json()
+          return res.json()
       }).then(function (data) {
-        // console.log(data);
-        // window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + "/user/orders.html"), {isMipLink: true});
-        window.location.reload()
+         // console.log(data);
+          // window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + "/user/orders.html"), {isMipLink: true});
+          window.location.reload()
       })
     },
     pay (ordersId, price) {
