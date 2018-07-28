@@ -242,15 +242,15 @@
     <div style="height:.6rem;"/>
     <mip-fixed type="bottom">
       <div class="pay-contaienr">
-        <div>
-          <p>合计金额：<span>¥ {{ (((price * 100 + ownFree * 100 + lateFree * 100) || 0) / 100).toFixed(2) }}</span></p>
-          <p>预计1-5个工作日办理完成 </p>
+        <div class="pay-contaienr-first">
+          <p class="pay-contaienr-p1">合计金额：<span class="pay-contaienr-num">¥ {{ (((price * 100 + ownFree * 100 + lateFree * 100) || 0) / 100).toFixed(2) }}</span></p>
+          <p class="pay-contaienr-p2" >预计1-5个工作日办理完成 </p>
         </div>
         <div
           id="pay1btn"
-          :class="agree?'' :'disabled-btn'"
+          :class="agree?'pay-contaienr-last' :'pay-contaienr-last disabled-btn'"
         >
-          <span> 立即办理</span>
+          立即办理
         </div>
       </div>
     </mip-fixed>
