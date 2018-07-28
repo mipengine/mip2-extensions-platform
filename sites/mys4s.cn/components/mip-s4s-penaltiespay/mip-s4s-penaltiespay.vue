@@ -121,7 +121,8 @@
           </div>
           <div
             id="pay2btn"
-            :class="agree?'pay-contaienr-last' :'pay-contaienr-last disabled-btn'">
+            :class="agree?'pay-contaienr-last' :'pay-contaienr-last disabled-btn'"
+            on="tap:pay2.pay2event" >
             立即办理
           </div>
         </div>
@@ -166,11 +167,6 @@ export default {
       cansend: true
     }
   },
-  computed: {
-    prerenderAllowed () {
-      return true
-    }
-  },
   watch: {
     code (val) {
       let tel = /^1\d{10}$/
@@ -179,19 +175,16 @@ export default {
       }
     }
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     MIP.viewer.fixedElement.init()
-    let event = window.MIP.util.event
     let me = this
-    this.j = event.delegate(
-      document.documentElement,
-      '#pay2btn',
-      'click',
-      e => {
-        console.log(2)
-        me.payFee() // 当页面出现跳转时，关闭所有的浮层
-      }
-    )
+    this.$on('pay2event', event => {
+      console.log('pay2event')
+      me.payFee()
+    })
     if (this.globalData && this.globalData.orderNumber) {
       try {
         window.localStorage.setItem(
