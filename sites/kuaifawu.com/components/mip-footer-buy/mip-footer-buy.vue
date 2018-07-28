@@ -106,7 +106,7 @@ export default {
 
     if (this.info.userInfo.isreg === 1 && this.info.isLogin) {
       // window.location.href = '/user/register.html'
-      window.MIP.viewer.open('/user/register.html', { isMipLink: true })
+      window.MIP.viewer.open(config.data().burl + '/user/register.html', { isMipLink: true })
     }
 
     // document.querySelector('.right').setAttribute('href', '/product/relate.html?id=' + pp + '.html')

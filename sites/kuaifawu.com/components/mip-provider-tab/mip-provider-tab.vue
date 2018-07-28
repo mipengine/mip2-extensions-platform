@@ -170,7 +170,7 @@ export default {
       // window.MIP.viewer.open("/provider/list.html?pid=" + id, {isMipLink: true});
       window.MIP.viewer.open(
         MIP.util.makeCacheUrl(
-          config.data().burl + 'provider/list.html?pid=' + id
+          config.data().burl + '/provider/list.html?pid=' + id
         ),
         { isMipLink: true }
       )

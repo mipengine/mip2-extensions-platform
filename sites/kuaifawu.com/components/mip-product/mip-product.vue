@@ -370,7 +370,7 @@ export default {
       }
       // window.location.href = "/product/info.html?id=" + productsalesattrid + "_" + cityid + "_" + areaid + '_' + providerid + '_' + packageid
       // window.MIP.viewer.open("/product/info.html?id=" + productsalesattrid + "_" + cityid + "_" + areaid + '_' + providerid + '_' + packageid, {isMipLink: true});
-      window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + 'product/info.html?id=' + productsalesattrid + '_' + cityid + '_' + areaid + '_' + providerid + '_' + packageid), {isMipLink: true})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + '/product/info.html?id=' + productsalesattrid + '_' + cityid + '_' + areaid + '_' + providerid + '_' + packageid), {isMipLink: true})
     }
   }
 }

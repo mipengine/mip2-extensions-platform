@@ -284,7 +284,7 @@ export default {
         window.MIP.viewer.open(
           MIP.util.makeCacheUrl(
             config.data().burl +
-                            'provider/list.html?pid=' +
+                            '/provider/list.html?pid=' +
                             productsalesattrid +
                             '_' +
                             cityid +
@@ -299,7 +299,7 @@ export default {
         window.MIP.viewer.open(
           MIP.util.makeCacheUrl(
             config.data().burl +
-                            'provider/list.html?pid=' +
+                            '/provider/list.html?pid=' +
                             productsalesattrid +
                             '_' +
                             cityid +

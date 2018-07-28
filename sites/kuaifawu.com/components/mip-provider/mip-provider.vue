@@ -7,7 +7,7 @@
         class="item-list"
         type="mip-mustache">
         <div class="item">
-          <a :href="geturl('product/info.html?id=' + pid + '_' + ct + '_' + ar + '_' + val.id +'_' + packageid)">
+          <a :href="geturl('/product/info.html?id=' + pid + '_' + ct + '_' + ar + '_' + val.id +'_' + packageid)">
             <div class="left">
               <mip-img :src="val.avatar"/>
             </div>
