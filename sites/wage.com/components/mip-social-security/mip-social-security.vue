@@ -247,11 +247,6 @@ export default {
             baseMoney: 0,
             proportion: 2
           },
-          values: [
-            '按照工资',
-            '按照最低标准',
-            '自定义'
-          ]
         }
       }
     }
@@ -293,14 +288,14 @@ export default {
           this.fromWage = true
           this.ok = true
           this.isAfter = false
-          return this.values = ['按照工资', '自定义']
+          return ['按照工资', '自定义']
         } else { // 税后
           this.selectValue = '自定义'
           this.fromWage = false
           this.ok = false
           this.fromBase = ''
           this.isAfter = true
-          return this.values = ['自定义']
+          return ['自定义']
         }
       } else { // 社保
         this.isAfter = false
@@ -308,7 +303,7 @@ export default {
           this.selectValue = '按照工资'
           this.fromWage = true
           this.ok = true
-          return this.values = [
+          return [
             '按照工资',
             '按照最低标准',
             '自定义'
@@ -319,7 +314,7 @@ export default {
           this.ok = false
           this.fromBase = ''
           this.baseMoney = ''
-          return this.values = [
+          return [
             '自定义',
             '按照最低标准'
           ]
@@ -354,7 +349,6 @@ export default {
         this.baseMoney = ''
         this.fromBase = ''
         this.isshow ? this.isLowst.accumulationLowst = 3 : this.isLowst.socialLowst = 3
-        console.log(this.isLowst)
         this.$emit('islowst', this.isLowst)
         this.fromWage = false
       } else {
@@ -363,7 +357,6 @@ export default {
           this.fromWage = true
           this.baseMoney = this.fromwage
           this.isshow ? this.isLowst.accumulationLowst = 2 : this.isLowst.socialLowst = 2
-          console.log(this.isLowst)
           this.$emit('islowst', this.isLowst)
         } else { // 最低标准
           this.fromWage = false
@@ -371,13 +364,8 @@ export default {
             this.fromBase = this.socialsecurity.noWork.baseMoney
             this.baseMoney = this.socialsecurity.noWork.baseMoney
             this.isLowst.socialLowst = 1
-            console.log(this.isLowst)
             this.$emit('islowst', this.isLowst)
           }
-          /*  else {
-             this.fromBase = this.accumulationSelect.aged.baseMoney
-             this.baseMoney = this.accumulationSelect.aged.baseMoney;
-           } */
         }
         this.ok = true
       }

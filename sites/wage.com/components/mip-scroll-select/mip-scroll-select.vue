@@ -53,11 +53,14 @@ const singleDeg = deg
 const space = Math.floor((360 / singleDeg) / 2)
 export default {
   props: {
-    values: [
-        '按照工资',
-        '按照最低标准',
-        '自定义'
-      ],
+    values: {
+       type:Array,
+            default:[
+            '按照工资',
+            '按照最低标准',
+            '自定义'
+          ]
+    },
     scrollshow: {
       type: false,
       default: false
