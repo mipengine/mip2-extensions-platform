@@ -8,7 +8,7 @@
         <span class="title">地区：</span>
         <span class="text">{{ areatitle }}</span>
         <mip-img
-          src="../../static/image/splist_seljt.png"
+          src="https://b.kuaifawu.com/static/image/splist_seljt.png"
           class="img" />
       </div>
     </div>
@@ -114,7 +114,7 @@
 }
 .mask .blank {
     width: 100%;
-    height: 64%;
+    height: 59%;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -157,7 +157,7 @@
 /*选择地区light-box*/
 .mask .dialog .lightbox {
     background: #f3f6f6;
-    height: 240px;
+    height: 300px;
     overflow-y: scroll;
 }
 .mask .dialog .lightbox p {
@@ -284,7 +284,7 @@ export default {
         window.MIP.viewer.open(
           MIP.util.makeCacheUrl(
             config.data().burl +
-                            'provider/list.html?pid=' +
+                            '/provider/list.html?pid=' +
                             productsalesattrid +
                             '_' +
                             cityid +
@@ -299,7 +299,7 @@ export default {
         window.MIP.viewer.open(
           MIP.util.makeCacheUrl(
             config.data().burl +
-                            'provider/list.html?pid=' +
+                            '/provider/list.html?pid=' +
                             productsalesattrid +
                             '_' +
                             cityid +
