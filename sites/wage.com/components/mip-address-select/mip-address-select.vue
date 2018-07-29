@@ -27,20 +27,20 @@
       <section class="address-list">
         <ul>
           <li
-          v-show="showProvince"
           v-for="(v,k) in info"
-          class="addList"
+          v-show="showProvince"
           :class="v.selected ? 'active' : ''"
+          class="addList"
           @click="getProvinceId(v.id, v.name, k)"
           >{{ v.name }}</li>
         </ul>
         <ul>
           <li
-          v-show="showCity"
-          class="addList"
           v-for="(v,k) in showCityList"
+          v-show="showCity"
           :data-id="v.id"
           :class="v.selected ? 'active' : ''"
+          class="addList"
           @click="getCityId(v.id, v.name, k,v.socialSecurity)">{{ v.name }}</li>
         </ul>
         <!-- <ul>
