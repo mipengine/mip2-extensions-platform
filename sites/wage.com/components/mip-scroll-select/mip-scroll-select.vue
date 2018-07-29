@@ -199,8 +199,7 @@ export default {
       this.inertia(absV, Math.floor(absV / v), 0)
     },
     /**
-     * 用户结束滑动，应该慢慢放慢，最终停止。从而需要 a(加速度)
-     *
+     * @param a 用户结束滑动，应该慢慢放慢，最终停止。从而需要 a(加速度)
      * @param start 开始速度
      * @param position 速度方向，值: 正负1
      * @param target 结束速度
