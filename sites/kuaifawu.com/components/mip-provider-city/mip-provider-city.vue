@@ -8,7 +8,7 @@
         <span class="title">地区：</span>
         <span class="text">{{ areatitle }}</span>
         <mip-img
-          src="../../static/image/splist_seljt.png"
+          src="https://b.kuaifawu.com/static/image/splist_seljt.png"
           class="img" />
       </div>
     </div>

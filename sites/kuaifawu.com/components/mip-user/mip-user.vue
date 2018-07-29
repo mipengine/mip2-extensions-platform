@@ -8,7 +8,7 @@
             <dt>
               <a href="javascript:;">
                 <mip-img
-                  src="../../static/image/touxiang.png"
+                  src="https://b.kuaifawu.com/static/image/touxiang.png"
                   alt=""
                   class="img"/>
               </a>
