@@ -280,7 +280,6 @@ export default {
   data () {
     return {
       getAllData: {
-        /* wage: 0, //输入金额 */
         threshold: 3500, // 起征点，
         lowst: {
           socialLowst: 2,
@@ -293,7 +292,6 @@ export default {
       active: true,
       title: '税前工资',
       tag: 1, // 1-税前，2-税后
-      wage: '',
       security: { // 五险一金
         socialSelect: {
           isHave: true,
