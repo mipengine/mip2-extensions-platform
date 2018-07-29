@@ -83,12 +83,12 @@ export default {
       this.amount = sNum.replace(/[^\d.]/g, '')// 清除“数字”和“.”以外的字符
       this.amount = this.amount.replace(/\.{2,}/g, '.')// 只保留第一个. 清除多余的
       this.amount = this.amount.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.')
-      this.amount = this.amount.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3')// 只能输入两个小数
+      this.amount = this.amount.replace(/^(-)*(\d+)\.(\d\d).*$/, '$1$2.$3')// 只能输入两个小数
       if (this.amount > 10000000) {
         return false
       }
       // 以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
-      if (this.amount.indexOf('.') < 0 && this.amount != '') {
+      if (this.amount.indexOf('.') < 0 && this.amount !== '') {
         this.amount = parseFloat(sNum)
       }
       MIP.setData({ 'wage': this.amount })
@@ -116,7 +116,7 @@ export default {
     // 显示选择值
     showselect: function (obj) {
       let selectValue = obj.detail[0]
-      selectValue == '3500' ? this.threshold = 3500 : this.threshold = 4800
+      selectValue === "3500" ? this.threshold = 3500 : this.threshold = 4800
       this.colseScrollSelect()
       this.$emit('getthreshold', this.threshold)
     },
