@@ -114,7 +114,7 @@
 }
 .mask .blank {
     width: 100%;
-    height: 64%;
+    height: 59%;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -157,7 +157,7 @@
 /*选择地区light-box*/
 .mask .dialog .lightbox {
     background: #f3f6f6;
-    height: 240px;
+    height: 300px;
     overflow-y: scroll;
 }
 .mask .dialog .lightbox p {

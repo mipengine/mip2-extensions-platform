@@ -69,7 +69,7 @@
           <mip-img :src="providerdetailinfo.providerinfo.avatar"/><span>{{ providerdetailinfo.providerinfo.realname }}</span>
         </div>
         <a
-          :href="geturl('provider/list.html?pid=' + id + '_' + ct + '_' + ar + '_0_0_0_0_0')"
+          :href="geturl('/provider/list.html?pid=' + id + '_' + ct + '_' + ar + '_0_0_0_0_0')"
           class="change">
           <span>查看全部 &gt;</span>
         </a>
