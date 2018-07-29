@@ -277,9 +277,8 @@ export default {
           return this.fromwage
           } else {
             if (this.isLowst.socialLowst === 1) {
-              this.fromBase = this.socialsecurity.noWork.baseMoney
+              return this.socialsecurity.noWork.baseMoney
             }
-            return this.fromBase
           }
       }
     },
