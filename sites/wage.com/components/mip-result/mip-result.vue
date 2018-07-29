@@ -1,36 +1,52 @@
 <template>
   <div class="wrapper2">
     <div class="head">
-      <p class="fz13">{{resultdata.tag==1?afterTitle:beforeTitle}}</p>
-      <p class="fz29 mt13"><span>￥</span><sapn class="" v-text="splitData"></sapn>.<span class="fz22" v-text="splitData2"></span></p>
+      <p class="fz13">{{ resultdata.tag==1?afterTitle:beforeTitle }}</p>
+      <p class="fz29 mt13"><span>￥</span><sapn
+        class=""
+        v-text="splitData"/>.<span
+          class="fz22"
+          v-text="splitData2"/></p>
     </div>
     <div class="result-div">
-      <div class="h43"><span>{{resultdata.tag==1?beforeTitle:afterTitle}}</span><span class="right">{{resultdata.wage}}元</span></div>
-      <div class="h43"><span>个人所得税</span><span class="right">{{resultdata.tax}}元</span></div>
-      <div class="h43" v-show="hasSocial"><span>社保个人缴纳</span><span class="right">{{resultdata.sociAll}}元</span></div>
-      <div class="h43" v-show="hasAccumulation"><span>公积金个人缴纳</span><span class="right">{{resultdata.accumulation}}元</span></div>
+      <div class="h43"><span>{{ resultdata.tag==1?beforeTitle:afterTitle }}</span><span class="right">{{ resultdata.wage }}元</span></div>
+      <div class="h43"><span>个人所得税</span><span class="right">{{ resultdata.tax }}元</span></div>
+      <div
+        v-show="hasSocial"
+        class="h43"><span>社保个人缴纳</span><span class="right">{{ resultdata.sociAll }}元</span></div>
+      <div
+        v-show="hasAccumulation"
+        class="h43"><span>公积金个人缴纳</span><span class="right">{{ resultdata.accumulation }}元</span></div>
     </div>
     <div class="result-div mt10">
-      <div class="my-wage-detail2 h43" @click="closeWageDetail" :class="{'no-bor':!isTrue,'my-wage-detail':isTrue}">我的工资计算详情</div>
+      <div
+        :class="{'no-bor':!isTrue,'my-wage-detail':isTrue}"
+        class="my-wage-detail2 h43"
+        @click="closeWageDetail">我的工资计算详情</div>
       <section v-show="isShow">
         <div class="pd16">
-          <p class="mb10"><span>{{resultdata.tag==1?afterTitle:beforeTitle}}</span><span class="right">{{resultdata.tag==1?resultdata.realIncome:resultdata.wage}}元</span></p>
-          <p class="detail">税前工资({{resultdata.tag==1?resultdata.wage:resultdata.realIncome}})-社保个人缴纳({{resultdata.sociAll}})-公积金个人缴纳({{resultdata.accumulation}})-个人所得税({{resultdata.tax}})</p>
+          <p class="mb10"><span>{{ resultdata.tag==1?afterTitle:beforeTitle }}</span><span class="right">{{ resultdata.tag==1?resultdata.realIncome:resultdata.wage }}元</span></p>
+          <p class="detail">税前工资({{ resultdata.tag==1?resultdata.wage:resultdata.realIncome }})-社保个人缴纳({{ resultdata.sociAll }})-公积金个人缴纳({{ resultdata.accumulation }})-个人所得税({{ resultdata.tax }})</p>
         </div>
         <div class="pd16">
-          <p class="mb10"><span>个人所得税</span><span class="right">{{resultdata.tax}}元</span></p>
-          <p class="detail">应纳税所得额({{resultdata.taxableIncome}})*税率({{resultdata.taxR}}%)-速算扣除数({{resultdata.taxQ}})</p>
+          <p class="mb10"><span>个人所得税</span><span class="right">{{ resultdata.tax }}元</span></p>
+          <p class="detail">应纳税所得额({{ resultdata.taxableIncome }})*税率({{ resultdata.taxR }}%)-速算扣除数({{ resultdata.taxQ }})</p>
         </div>
         <div class="pd16">
-          <p class="mb10"><span>应纳税所得额</span><span class="right">{{resultdata.taxableIncome}}元</span></p>
-          <p class="detail">税前工资({{resultdata.tag==1?resultdata.wage:resultdata.realIncome}})-社保个人缴纳({{resultdata.sociAll}})-公积金个人缴纳({{resultdata.accumulation}})-起征点({{resultdata.threshold}}.00)</p>
+          <p class="mb10"><span>应纳税所得额</span><span class="right">{{ resultdata.taxableIncome }}元</span></p>
+          <p class="detail">税前工资({{ resultdata.tag==1?resultdata.wage:resultdata.realIncome }})-社保个人缴纳({{ resultdata.sociAll }})-公积金个人缴纳({{ resultdata.accumulation }})-起征点({{ resultdata.threshold }}.00)</p>
         </div>
       </section>
     </div>
     <p class="fz12 tip">注：由于各地工伤险有差异，计算结果仅供查询</p>
-    <div class="calculateBtn" @click="resetCalculate"><a href="./index.html" class="cfff">重新计算</a></div>
-    <p><a class="tip2" href="https://mo.mbd.baidu.com/cguzdvn?f=cp">关注我们,获取更多实用工具</a></p>
-  </div>
+    <div
+      class="calculateBtn"
+      @click="resetCalculate"><a
+        href="./index.html"
+        class="cfff">重新计算</a></div>
+    <p><a
+      class="tip2"
+      href="https://mo.mbd.baidu.com/cguzdvn?f=cp">关注我们,获取更多实用工具</a></p>
   </div>
 </template>
 <style scoped>
@@ -45,7 +61,6 @@
     background: #fff;
     border: 1px solid #E6E4E1;
 }
-
 .wrapper>div {
     height: 45px;
     line-height: 45px;
@@ -91,7 +106,7 @@ input::placeholder {
 }
 
 .ip-disable {
-    pointer-events: none;    
+    pointer-events: none;
 }
 
 .onOff {
@@ -290,8 +305,6 @@ li {
   border: none !important;
 }
 
-
-
 .my-wage-detail2 {
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAACAklEQVRIS+2TMWhTURSGv/OeFESEhyCUjuJk0MnhcfOSEkXRDkVQgohDQUEcKoJ0EARBpyIOKiIiKg6ipIMgKhTsktybxLopcRKcggqiGRTh8ZIjkSq2JH2pkK1n/s/57v3Pf4Qhlwx5PuuAVIeHb1G1Wt0JXPc872gYhp9Tn5QiWFxcHE2S5BFwxhjzVpxzC8Ae4H2SJPvHx8c//C+kUqls8zxvHtiuqi+jKNon5XJ5q+/7L4DdwEff9w+EYfhmrZB6vb4rSZJ5ERkFXsdxPFEoFL783oG1drOIPAH2At9UdTKKIjsoxFqbE5GnQAAsxHF8qFAofO/2/11yo9EYabVaD4EjwE8RKRpjnqVBrLWTIvIY2AjMBUFwPJPJxH/6lqWoVCr5Y2NjN0XkFJCo6skoih70gzjnpoA7wAbgVrPZnC4Wi+1/9T1j6py7DFwAFJjJZrNXV0Kcc+eAK10XROSSMeZir4f0vQPn3DRwbcnGWWPMeRFRVZVarTarqjNABzibzWZv9PvlqodWrVaPqep9YAS4FwTB6VardRvoWhOLyJQxppv5vpV6ydbag57nzanqJlX91I2hiPwADhtjuplftVIBSzEOReQ5sAX42ul0JnK53Ku04ctimiYul8s7fN+/2263T+Tz+Xdp+p4xHbRpLbqBLFrLwJXadUCqe0O36Bd3hKwZuL+5DgAAAABJRU5ErkJggg==) no-repeat 100% center;
   background-size: 12px 12px;
@@ -319,50 +332,51 @@ export default {
           realIncome: 6000,
           tax: 200,
           threshold: 3500,
-          taxableIncome: 350,
+          taxableIncome: 350
         }
-      },
+      }
 
     }
   },
-  data() {
+  data () {
     return {
-      beforeTitle: "税前工资",
-      afterTitle: "税后工资",
+      beforeTitle: '税前工资',
+      afterTitle: '税后工资',
       isShow: false,
       isTrue: false,
-      wageSlice: 0,
-      /*hasSocial:true,
-      hasAccumulation:true,*/
+      wageSlice: 0
+      /* hasSocial:true,
+      hasAccumulation:true, */
     }
   },
   computed: {
-    hasSocial: function() {
-      return this.resultdata.sociAll == 0 ? false : true;
+    hasSocial: function () {
+      return this.resultdata.sociAll !== 0
     },
-    hasAccumulation: function() {
-      return this.resultdata.accumulation == 0 ? false : true;
+    hasAccumulation: function () {
+      return this.resultdata.accumulation !== 0
     },
-    resetCalculate: function() {
-      this.$emit("resetcalculate", "");
+    resetCalculate: function () {
+      this.$emit('resetcalculate', '')
+      return true
     },
-    splitData: function() {
-      let realIncome = this.resultdata.realIncome;
-      var index = realIncome.toString().indexOf(".");
-      return index > 0 ? realIncome.toString().substring(0, index) : realIncome;
+    splitData: function () {
+      let realIncome = this.resultdata.realIncome
+      let index = realIncome.toString().indexOf('.')
+      return index > 0 ? realIncome.toString().substring(0, index) : realIncome
     },
-    splitData2: function() {
-      let realIncome = this.resultdata.realIncome;
-      var index = realIncome.toString().indexOf(".");
-      return index > 0 ? realIncome.toString().substring(index + 1, index + 3) : "00";
-    },
+    splitData2: function () {
+      let realIncome = this.resultdata.realIncome
+      let index = realIncome.toString().indexOf('.')
+      return index > 0 ? realIncome.toString().substring(index + 1, index + 3) : '00'
+    }
   },
   methods: {
-    closeWageDetail: function() {
-      this.isShow = !this.isShow;
-      this.isTrue = !this.isTrue;
+    closeWageDetail: function () {
+      this.isShow = !this.isShow
+      this.isTrue = !this.isTrue
       MIP.setData({ small: !this.isShow })
-    },
+    }
   }
 
 }
