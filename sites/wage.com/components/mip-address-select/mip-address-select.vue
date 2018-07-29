@@ -5,39 +5,43 @@
   class="showChose">
     <section class="address">
       <section class="title_header">
-        <span 
-        class="left" 
+        <span
+        class="left"
         @click="closeAdd">取消</span>
-        <span 
+        <span
         class="yes-btn"
         @click="yesAdd">确定</span>
       </section>
       <section class="title">
-        <div 
-        class="area" 
+        <div
+        class="area"
         @click="provinceSelected()">{{ Province?Province:info[province-1].name }}</div>
-        <div 
-        class="area" 
-        @click="citySelected()" 
-        :class="City?'':'active'" 
-        :data-id="city">{{ City?City:'请选择' }}</div>
-        <!-- 
+        <div
+        class="area"
+        :class="City?'':'active'"
+        :data-id="city"
+        @click="citySelected()">{{ City?City:'请选择' }}</div>
+        <!--
         <div class="area" @click="districtSelected()" :class="District?'':'active'" v-show="City">{{District?District:'请选择'}}</div> -->
       </section>
       <section class="address-list">
         <ul>
-          <li 
-          class="addList" v-for="(v,k) in info" 
-          @click="getProvinceId(v.id, v.name, k)" 
-          v-show="showProvince" 
-          :class="v.selected ? 'active' : ''">{{ v.name }}</li>
+          <li
+          v-show="showProvince"
+          v-for="(v,k) in info"
+          class="addList"
+          :class="v.selected ? 'active' : ''"
+          @click="getProvinceId(v.id, v.name, k)"
+          >{{ v.name }}</li>
         </ul>
         <ul>
-          <li 
-          class="addList" v-for="(v,k) in showCityList" 
-          @click="getCityId(v.id, v.name, k,v.socialSecurity)" 
-          :data-id="v.id" v-show="showCity" 
-          :class="v.selected ? 'active' : ''">{{ v.name }}</li>
+          <li
+          v-show="showCity"
+          class="addList"
+          v-for="(v,k) in showCityList"
+          :data-id="v.id"
+          :class="v.selected ? 'active' : ''"
+          @click="getCityId(v.id, v.name, k,v.socialSecurity)">{{ v.name }}</li>
         </ul>
         <!-- <ul>
           <li class="addList" v-for="(v,k) in showDistrictList" @click="getDistrictId(v.id, v.name, k)" v-show="showDistrict" :class="v.selected ? 'active' : ''">{{v.name}}</li>
@@ -89,7 +93,6 @@
 .myAddress .cont {
   border-bottom: 1px solid rgba(245, 245, 245, 0.8);
 }
-
 .myAddress .cont span {
   display: inline-block;
   font-size: 0.28rem;
@@ -97,11 +100,9 @@
   line-height: 0.88rem;
   margin-left: 0.32rem;
 }
-
 .myAddress .cont section {
   float: left;
 }
-
 .myAddress .cont p {
   display: inline-block;
   font-size: 0.28rem;
@@ -109,18 +110,15 @@
   line-height: 0.88rem;
   margin-left: 1rem;
 }
-
 .myAddress .cont .pic2 {
   float: right;
   width: 0.14rem;
   height: 0.24rem;
   margin: 0.32rem 0.32rem 0.32rem 0;
 }
-
 .myAddress .cont p.text {
   margin-left: 0.72rem;
 }
-
 .showChose {
   width: 100%;
   height: 100%;
@@ -129,7 +127,6 @@
   z-index: 120;
   background: rgba(0, 0, 0, 0.3);
 }
-
 .address {
   position: absolute;
   bottom: 0;
@@ -139,7 +136,6 @@
   width: 100%;
   height: 300px;
 }
-
 .title h4 {
   display: flex;
   margin-left: 3.2rem;
@@ -148,14 +144,12 @@
   font-weight: normal;
   color: #999;
 }
-
 .title span {
   margin: 0.42rem 0 0 2.2rem;
   font-size: 0.45rem;
   line-height: 0.34rem;
   color: #D8D8D8;
 }
-
 .area {
   display: inline-block;
   width: 48%;
@@ -166,7 +160,6 @@
   font-size: 14px;
   font-family: PingFang-SC-Medium;
 }
-
 .addList {
   width: 100%;
   height: 30px;
@@ -176,22 +169,16 @@
   text-align: center;
   color: #000;
 }
-
-
-
 /* 修改的格式 */
-
 .address ul {
   width: 50%;
   height: 100%;
   overflow: auto;
 }
-
 .address .title .active {
   color: #0071B8;
   border-bottom: 0.02rem solid #0071B8;
 }
-
 .address ul .active {
   color: #FF8D1D;
 }
@@ -227,15 +214,15 @@ export default {
       // v-for循环判断是否为当前
       selected: false,
       info: [{
-          id: 1,
-          name: '北京',
-          city: [{
-            id: 1,
-            name: '北京市',
-            socialSecurity: {
-                aged: {
-                  baseMoney: 3384,
-                  maxMoney:25401,
+        id: 1,
+        name: '北京',
+        city: [{
+        id: 1,
+        name: '北京市',
+        socialSecurity: {
+          aged: {
+            baseMoney: 3384,
+            maxMoney:25401,
                   proportion: 8
                 },
                 noWork: {
@@ -4872,17 +4859,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 2000,
-                  maxMoney:17889,
+                  maxMoney: 17889,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 2000,
-                  maxMoney:17889,
+                  maxMoney: 17889,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 3578,
-                  maxMoney:17889,
+                  maxMoney: 17889,
                   proportion: 2
                 },
                disease: {
@@ -4891,7 +4878,7 @@ export default {
                 },
                 accumulation:{
                   baseMoney:1568,
-                  maxMoney:15678,
+                  maxMoney: 15678,
                 }
               },
             },
@@ -4915,17 +4902,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 1600,
-                  maxMoney:15313,
+                  maxMoney: 15313,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 1600,
-                  maxMoney:15313,
+                  maxMoney: 15313,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 3063,
-                  maxMoney:15313,
+                  maxMoney: 15313,
                   proportion: 2
                 },
                disease: {
@@ -4933,8 +4920,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1500,
-                  maxMoney:15313,
+                  baseMoney: 1500,
+                  maxMoney: 15313,
                 }
               },
             },
@@ -4962,12 +4949,12 @@ export default {
                 },
                 noWork: {
                   baseMoney: 2300,
-                  maxMoney:16621,
+                  maxMoney: 16621,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 3324,
-                  maxMoney:16621,
+                  maxMoney: 16621,
                   proportion: 2
                 },
                disease: {
@@ -4975,8 +4962,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:625,
-                  maxMoney:16616,
+                  baseMoney: 625,
+                  maxMoney: 16616,
                 }
               },
             },
@@ -4998,17 +4985,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 1800,
-                  maxMoney:16087,
+                  maxMoney: 16087,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 1800,
-                  maxMoney:16087,
+                  maxMoney: 16087,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 4558,
-                  maxMoney:16087,
+                  maxMoney: 16087,
                   proportion: 2
                 },
                disease: {
@@ -5016,48 +5003,48 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1380,
-                  maxMoney:19300,
+                  baseMoney: 1380,
+                  maxMoney: 19300,
                 }
               },
-            },
+        },
             {
-              id: 122,
-              name: '龙岩市',
-              district: [
-                { id: 1108, name: '新罗区' },
-                { id: 1109, name: '长汀县' },
-                { id: 1110, name: '永定县' },
-                { id: 1111, name: '上杭县' },
-                { id: 1112, name: '武平县' },
-                { id: 1113, name: '连城县' },
-                { id: 1114, name: '漳平市' }
-              ],
-              socialSecurity: {
-                aged: {
-                  baseMoney: 1600,
-                  maxMoney:16050,
-                  proportion: 8
-                },
-                noWork: {
-                  baseMoney: 1600,
-                  maxMoney:16050,
-                  proportion: 0.5
-                },
-                medical: {
-                  baseMoney: 3210,
-                  maxMoney:16050,
-                  proportion: 2
-                },
-               disease: {
-                  baseMoney: 0,
-                  proportion: 0,
-                },
-                accumulation:{
-                  baseMoney:1500,
-                  maxMoney:19260,
-                }
-              },
+          id: 122,
+          name: '龙岩市',
+          district: [
+            { id: 1108, name: '新罗区' },
+            { id: 1109, name: '长汀县' },
+            { id: 1110, name: '永定县' },
+            { id: 1111, name: '上杭县' },
+            { id: 1112, name: '武平县' },
+            { id: 1113, name: '连城县' },
+            { id: 1114, name: '漳平市' }
+          ],
+          socialSecurity: {
+            aged: {
+              baseMoney: 1600,
+              maxMoney: 16050,
+              proportion: 8
+            },
+            noWork: {
+              baseMoney: 1600,
+              maxMoney: 16050,
+              proportion: 0.5
+            },
+            medical: {
+              baseMoney: 3210,
+              maxMoney: 16050,
+              proportion: 2
+            },
+            disease: {
+              baseMoney: 0,
+              proportion: 0,
+            },
+            accumulation:{
+              baseMoney: 1500,
+              maxMoney: 19260,
+            }
+          },
             },
             {
               id: 123,
@@ -5076,17 +5063,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 1600,
-                  maxMoney:17166,
+                  maxMoney: 17166,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 1600,
-                  maxMoney:17166,
+                  maxMoney: 17166,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 3433,
-                  maxMoney:17166,
+                  maxMoney: 17166,
                   proportion: 2
                 },
                disease: {
@@ -5094,8 +5081,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1280,
-                  maxMoney:17167,
+                  baseMoney: 1280,
+                  maxMoney: 17167,
                 }
               },
             }
@@ -5121,17 +5108,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3071,
-                  maxMoney:15357,
+                  maxMoney: 15357,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 3071,
-                  maxMoney:15357,
+                  maxMoney: 15357,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 3150,
-                  maxMoney:17504,
+                  maxMoney: 17504,
                   proportion: 2
                 },
                disease: {
@@ -5139,8 +5126,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1083,
-                  maxMoney:18175,
+                  baseMoney: 1083,
+                  maxMoney: 18175,
                 }
               },
             },
@@ -5156,17 +5143,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 2807,
-                  maxMoney:14034,
+                  maxMoney: 14034,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 2807,
-                  maxMoney:12285,
+                  maxMoney: 12285,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 2807,
-                  maxMoney:12285,
+                  maxMoney: 12285,
                   proportion: 2
                 },
                disease: {
@@ -5174,8 +5161,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1563,
-                  maxMoney:18713,
+                  baseMoney: 1563,
+                  maxMoney: 18713,
                 }
               },
             },
@@ -5192,17 +5179,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 2807,
-                  maxMoney:14034,
+                  maxMoney: 14034,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 2547,
-                  maxMoney:12735,
+                  maxMoney: 12735,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 2547,
-                  maxMoney:12735,
+                  maxMoney: 12735,
                   proportion: 2
                 },
                disease: {
@@ -5210,8 +5197,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:844,
-                  maxMoney:18125,
+                  baseMoney: 844,
+                  maxMoney: 18125,
                 }
               },
             },
@@ -5235,17 +5222,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3360,
-                  maxMoney:19935,
+                  maxMoney: 19935,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 2807,
-                  maxMoney:14034,
+                  maxMoney: 14034,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 2807,
-                  maxMoney:14034,
+                  maxMoney: 14034,
                   proportion: 2
                 },
                disease: {
@@ -5253,8 +5240,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1580,
-                  maxMoney:37160,
+                  baseMoney: 1580,
+                  maxMoney: 37160,
                 }
               },
             },
@@ -5268,17 +5255,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 2807,
-                  maxMoney:14034,
+                  maxMoney: 14034,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 2687,
-                  maxMoney:13434,
+                  maxMoney: 13434,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 2687,
-                  maxMoney:13434,
+                  maxMoney: 13434,
                   proportion: 2
                 },
                disease: {
@@ -5286,8 +5273,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:900,
-                  maxMoney:23600,
+                  baseMoney: 900,
+                  maxMoney: 23600,
                 }
               },
             },
@@ -5302,17 +5289,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 2807,
-                  maxMoney:14034,
+                  maxMoney: 14034,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 2927,
-                  maxMoney:14631,
+                  maxMoney: 14631,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 2927,
-                  maxMoney:14631,
+                  maxMoney: 14631,
                   proportion: 2
                 },
                disease: {
@@ -5320,8 +5307,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:2807,
-                  maxMoney:14631,
+                  baseMoney: 2807,
+                  maxMoney: 14631,
                 }
               },
             },
@@ -5351,17 +5338,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 2547,
-                  maxMoney:12732,
+                  maxMoney: 12732,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 2762,
-                  maxMoney:13812,
+                  maxMoney: 13812,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 2762,
-                  maxMoney:13812,
+                  maxMoney: 13812,
                   proportion: 2
                 },
                disease: {
@@ -5369,8 +5356,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1634,
-                  maxMoney:19567,
+                  baseMoney: 1634,
+                  maxMoney: 19567,
                 }
               },
             },
@@ -5395,17 +5382,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3088,
-                  maxMoney:15438,
+                  maxMoney: 15438,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 3066,
-                  maxMoney:99999,
+                  maxMoney: 99999,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 4819,
-                  maxMoney:14454,
+                  maxMoney: 14454,
                   proportion: 2
                 },
                disease: {
@@ -5413,8 +5400,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1763,
-                  maxMoney:21050,
+                  baseMoney: 1763,
+                  maxMoney: 21050,
                 }
               },
             },
@@ -5436,17 +5423,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 2807,
-                  maxMoney:14034,
+                  maxMoney: 14034,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 2807,
-                  maxMoney:14034,
+                  maxMoney: 14034,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 2807,
-                  maxMoney:14034,
+                  maxMoney: 14034,
                   proportion: 2
                 },
                disease: {
@@ -5454,8 +5441,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:2807,
-                  maxMoney:14034,
+                  baseMoney: 2807,
+                  maxMoney: 14034,
                 }
               },
             },
@@ -5478,17 +5465,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 2807,
-                  maxMoney:14034,
+                  maxMoney: 14034,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 2806,
-                  maxMoney:14034,
+                  maxMoney: 14034,
                   proportion: 1
                 },
                 medical: {
                   baseMoney: 4468,
-                  maxMoney:13404,
+                  maxMoney: 13404,
                   proportion: 2
                 },
                disease: {
@@ -5496,8 +5483,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1862,
-                  maxMoney:22325,
+                  baseMoney: 1862,
+                  maxMoney: 22325,
                 }
               },
             },
@@ -5521,17 +5508,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 2807,
-                  maxMoney:14034,
+                  maxMoney: 14034,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 2807,
-                  maxMoney:14034,
+                  maxMoney: 14034,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 2807,
-                  maxMoney:14034,
+                  maxMoney: 14034,
                   proportion: 2
                 },
                disease: {
@@ -5539,8 +5526,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:4520,
-                  maxMoney:32590,
+                  baseMoney: 4520,
+                  maxMoney: 32590,
                 }
               },
             }
@@ -5567,7 +5554,7 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3510,
-                  maxMoney:17550,
+                  maxMoney: 17550,
                   proportion: 8
                 },
                 noWork: {
@@ -5585,8 +5572,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1910,
-                  maxMoney:17550,
+                  baseMoney: 1910,
+                  maxMoney: 17550,
                 }
               },
             },
@@ -5610,17 +5597,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3185,
-                  maxMoney:15927,
+                  maxMoney: 15927,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 3185,
-                  maxMoney:15927,
+                  maxMoney: 15927,
                   proportion: 0.3
                 },
                 medical: {
                   baseMoney: 3185,
-                  maxMoney:15927,
+                  maxMoney: 15927,
                   proportion: 2
                 },
                disease: {
@@ -5628,8 +5615,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1768,
-                  maxMoney:20885,
+                  baseMoney: 1768,
+                  maxMoney: 20885,
                 }
               },
             },
@@ -5649,17 +5636,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3465,
-                  maxMoney:17325,
+                  maxMoney: 17325,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 3465,
-                  maxMoney:17325,
+                  maxMoney: 17325,
                   proportion: 0.3
                 },
                 medical: {
                   baseMoney: 3465,
-                  maxMoney:17325,
+                  maxMoney: 17325,
                   proportion: 2
                 },
                disease: {
@@ -5667,8 +5654,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1768,
-                  maxMoney:20885,
+                  baseMoney: 1768,
+                  maxMoney: 20885,
                 }
               },
             },
@@ -5686,17 +5673,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3470,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 3470,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 0.3
                 },
                 medical: {
                   baseMoney: 3470,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 2
                 },
                disease: {
@@ -5704,8 +5691,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1768,
-                  maxMoney:20885,
+                  baseMoney: 1768,
+                  maxMoney: 20885,
                 }
               },
             },
@@ -5722,17 +5709,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3466,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 3466,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 3466,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 2
                 },
                disease: {
@@ -5740,8 +5727,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1910,
-                  maxMoney:19236,
+                  baseMoney: 1910,
+                  maxMoney: 19236,
                 }
               },
             },
@@ -5765,17 +5752,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 0.3
                 },
                 medical: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 2
                 },
                disease: {
@@ -5783,8 +5770,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1910,
-                  maxMoney:17255,
+                  baseMoney: 1910,
+                  maxMoney: 17255,
                 }
               },
             },
@@ -5808,17 +5795,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 0.3
                 },
                 medical: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 2
                 },
                disease: {
@@ -5826,8 +5813,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1910,
-                  maxMoney:17034,
+                  baseMoney: 1910,
+                  maxMoney: 17034,
                 }
               },
             },
@@ -5851,17 +5838,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 0.3
                 },
                 medical: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 2
                 },
                disease: {
@@ -5869,8 +5856,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1730,
-                  maxMoney:15477,
+                  baseMoney: 1730,
+                  maxMoney: 15477,
                 }
               },
             },
@@ -5888,17 +5875,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 2
                 },
                disease: {
@@ -5906,8 +5893,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1730,
-                  maxMoney:14918,
+                  baseMoney: 1730,
+                  maxMoney: 14918,
                 }
               },
             },
@@ -5923,17 +5910,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 0.3
                 },
                 medical: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 2
                 },
                disease: {
@@ -5941,8 +5928,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1910,
-                  maxMoney:15586,
+                  baseMoney: 1910,
+                  maxMoney: 15586,
                 }
               },
             },
@@ -5958,17 +5945,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 0.5
                 },
                 medical: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 2
                 },
                disease: {
@@ -5976,8 +5963,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1730,
-                  maxMoney:15855,
+                  baseMoney: 1730,
+                  maxMoney: 15855,
                 }
               },
             },
@@ -5991,17 +5978,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 2998,
-                  maxMoney:14935,
+                  maxMoney: 14935,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 2998,
-                  maxMoney:14935,
+                  maxMoney: 14935,
                   proportion: 0.3
                 },
                 medical: {
-                  baseMoney:2998,
-                  maxMoney:14935,
+                  baseMoney: 2998,
+                  maxMoney: 14935,
                   proportion: 2
                 },
                disease: {
@@ -6009,8 +5996,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1730,
-                  maxMoney:14935,
+                  baseMoney: 1730,
+                  maxMoney: 14935,
                 }
               },
             },
@@ -6034,17 +6021,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3172,
-                  maxMoney:15860,
+                  maxMoney: 15860,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 3172,
-                  maxMoney:15860,
+                  maxMoney: 15860,
                   proportion: 0.3
                 },
                 medical: {
-                  baseMoney:3172,
-                  maxMoney:15860,
+                  baseMoney: 3172,
+                  maxMoney: 15860,
                   proportion: 2
                 },
                disease: {
@@ -6052,8 +6039,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1730,
-                  maxMoney:15860,
+                  baseMoney: 1730,
+                  maxMoney: 15860,
                 }
               },
             },
@@ -6076,17 +6063,17 @@ export default {
               socialSecurity: {
                 aged: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 8
                 },
                 noWork: {
                   baseMoney: 3465,
-                  maxMoney:17326,
+                  maxMoney: 17326,
                   proportion: 0.3
                 },
                 medical: {
-                  baseMoney:3465,
-                  maxMoney:17326,
+                  baseMoney: 3465,
+                  maxMoney: 17326,
                   proportion: 2
                 },
                disease: {
@@ -6094,8 +6081,8 @@ export default {
                   proportion: 0,
                 },
                 accumulation:{
-                  baseMoney:1550,
-                  maxMoney:17469,
+                  baseMoney: 1550,
+                  maxMoney: 17469,
                 }
               },
             },
@@ -6627,7 +6614,7 @@ export default {
                 }
               },
             },
-              
+
             {
               id: 162,
               name: '漯河市',
@@ -11736,7 +11723,7 @@ export default {
                 }
               },
             },
-            { id: 299, name: '嘉峪关市', 
+            { id: 299, name: '嘉峪关市',
             district: [],
               socialSecurity: {
                 aged: {
@@ -12731,29 +12718,26 @@ export default {
     }
   },
   methods: {
-    choseAdd: function() {
-      /*this.showaddress = true;*/
-    },
     closeAdd: function() {
-      this.$emit("closecityselect","");
+      this.$emit('closecityselect','')
     },
     _filter(add, name, code) {
       let result = [];
       for (let i = 0; i < add.length; i++) {
         if (code == add[i].id) {
-          result = add[i][name];
+          result = add[i][name]
         }
       }
-      return result;
+      return result
     },
     getProvinceId: function(code, input, index) {
-      this.province = code;
-      this.Province = input;
-      this.City = false;
-      this.showProvince = true;
-      this.showCity = true;
-      this.showDistrict = false;
-      this.showCityList = this._filter(this.info, 'city', this.province);
+      this.province = code
+      this.Province = input
+      this.City = false
+      this.showProvince = true
+      this.showCity = true
+      this.showDistrict = false
+      this.showCityList = this._filter(this.info, 'city', this.province)
       // 点击选择当前
       this.info.map(a => a.selected = false);
       this.info[index].selected = true;
@@ -12763,7 +12747,7 @@ export default {
      /*  this.showCityList = false;
         this.showDistrictList = false;*/
         // 清除市级和区级选项
-        this.City = false;
+        this.City = false
        /* this.District = false;
         // 选项页面的切换
         this.showProvince = true;
@@ -12771,16 +12755,16 @@ export default {
         this.showDistrict = false;*/
     },
     getCityId: function(code, input, index, socialSecurity) {
-      this.city = code;
-      this.City = input;
-      this.socialSecurity = socialSecurity; //城市社保数据
+      this.city = code
+      this.City = input
+      this.socialSecurity = socialSecurity // 城市社保数据
       /*this.showProvince = false;*/
-      this.showCity = true;
+      this.showCity = true
       /*this.showDistrict = true;
       this.showDistrictList = this._filter(this.showCityList, 'district', this.city);*/
       // 选择当前添加active
-      this.showCityList.map(a => a.selected = false);
-      this.showCityList[index].selected = true;
+      this.showCityList.map(a => a.selected = false)
+      this.showCityList[index].selected = true
     },
     citySelected: function() {
       /*this.showProvince = false;
@@ -12788,30 +12772,29 @@ export default {
       this.showDistrict = false;*/
     },
     getDistrictId: function(code, input, index) {
-      this.district = code;
-      this.District = input;
+      this.district = code
+      this.District = input
       // 选择当前添加active
-      this.showDistrictList.map(a => a.selected = false);
-      this.showDistrictList[index].selected = true;
+      this.showDistrictList.map(a => a.selected = false)
+      this.showDistrictList[index].selected = true
       // 选取市区选项之后关闭弹层
-      this.showaddress = false;
+      this.showaddress = false
     },
     districtSelected: function() {
-      this.showProvince = false;
-      this.showCity = false;
-      this.showDistrict = true;
+      this.showProvince = false
+      this.showCity = false
+      this.showDistrict = true
     },
-    yesAdd: function() { //选择城市
-      if(!this.City){
-        return false;
+    yesAdd : function() { // 选择城市
+      if (!this.City) {
+        return false
       }
-      var getSelectData = {
+      let getSelectData = {
         provinceName: this.Province,
         cityName: this.City,
         socialSecurity: this.socialSecurity
       }
-      console.log(6666)
-     this.$emit("getcitydata", getSelectData);
+      this.$emit('getcitydata', getSelectData)
     }
   }
 }

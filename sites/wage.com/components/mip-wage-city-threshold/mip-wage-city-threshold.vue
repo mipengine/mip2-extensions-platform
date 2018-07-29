@@ -4,21 +4,53 @@
       <label>
         <slot></slot>
       </label>
-      <input type="number" placeholder="0-10000 ,000 最多两位小数" v-on:blur="checkNum" v-model="amount" @keyup="numberAmount(amount)">
+      <input
+      v-model="amount"
+      type="number"
+      placeholder="0-10000 ,000 最多两位小数"
+      @blur="checkNum"
+      @keyup="numberAmount(amount)">
     </div>
-    <div class="arrow" @click="openAddressSelect()">
-      <label for="">缴纳城市</label>
-      <input type="text" placeholder="" :value="provinceName" class="ip-disable">
+    <div
+    class="arrow"
+    @click="openAddressSelect()">
+      <label>缴纳城市</label>
+      <input
+      :value="provinceName"
+      type="text"
+      placeholder=""
+      class="ip-disable">
     </div>
-    <div class="arrow" @click="openScrollSelect()">
-      <label for="">起征点</label>
-      <input type="text" class="ip-disable" id="threshold" :value="threshold">
+    <div
+    class="arrow"
+    @click="openScrollSelect()">
+      <label>起征点</label>
+      <input
+      id="threshold"
+      :value="threshold"
+      type="text"
+      class="ip-disable">
     </div>
-    <mip-fixed type="bottom" v-show="scrollshow" class="container">
-      <mip-scroll-select :scrollshow="scrollshow" :values="values" @showselect="showselect" @colsescrollselect="colseScrollSelect" class="container"></mip-scroll-select>
+    <mip-fixed
+    v-show="scrollshow"
+    type="bottom"
+    class="container">
+      <mip-scroll-select
+      :scrollshow="scrollshow"
+      :values="values"
+      @showselect="showselect"
+      @colsescrollselect="colseScrollSelect"
+      class="container"></mip-scroll-select>
     </mip-fixed>
-    <mip-fixed type="bottom" v-show="showaddress" class="container">
-      <mip-address-select :showaddress="showaddress" @getcitydata="getcitydata" @closecityselect="closeCitySelect" class="container"></mip-address-select>
+    <mip-fixed
+     v-show="showaddress"
+    type="bottom"
+    class="container">
+      <mip-address-select
+      :showaddress="showaddress"
+      @getcitydata="getcitydata"
+      @closecityselect="closeCitySelect"
+      class="container"></mip-address-select>
     </mip-fixed>
   </div>
 </template>
@@ -27,15 +59,15 @@ export default {
   data() {
     return {
       showaddress: false,
-      provinceName: "广东",
-      cityName: "广州市",
+      provinceName: '广东',
+      cityName: '广州市',
       threshold: 3500,
       values: [
-        "3500",
-        "4800(外籍人士，包括港澳台)"
+       '3500',
+       '4800(外籍人士，包括港澳台)'
       ],
       scrollshow: false,
-      amount: "",
+      amount:'',
     }
   },
   mounted: function() {
@@ -44,22 +76,21 @@ export default {
 
   methods: {
     numberAmount(obj) {
-      let sNum = obj.toString(); //先转换成字符串类型
+      let sNum = obj.toString();
       if (sNum > 10000000) {
         sNum = sNum.slice(0, 7)
         console.log("yes");
       }
-      this.amount = sNum.replace(/[^\d.]/g, ""); //清除“数字”和“.”以外的字符    
-      this.amount = this.amount.replace(/\.{2,}/g, "."); //只保留第一个. 清除多余的   
+      this.amount = sNum.replace(/[^\d.]/g, "");//清除“数字”和“.”以外的字符
+      this.amount = this.amount.replace(/\.{2,}/g, ".");//只保留第一个. 清除多余的
       this.amount = this.amount.replace(".", "$#$").replace(/\./g, "").replace("$#$", ".");
-      this.amount = this.amount.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3'); //只能输入两个小数
+      this.amount = this.amount.replace(/^(\-)*(\d+)\.(\d\d).*$/, '$1$2.$3');//只能输入两个小数
       if (this.amount > 10000000) {
         return false;
       }
-      //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额 
+      //以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
       if (this.amount.indexOf(".") < 0 && this.amount != "") {
         this.amount = parseFloat(sNum);
-
       }
       MIP.setData({ "wage": this.amount });
       this.$emit("getinputwage", this.amount)
@@ -75,7 +106,7 @@ export default {
     getcitydata: function(obj) {
       let cityData = obj.detail[0];
       this.showaddress = false;
-      this.provinceName = cityData.provinceName + ' ' + cityData.cityName; //显示地址选择器所选省份城市/*
+      this.provinceName = cityData.provinceName + ' ' + cityData.cityName;//显示地址选择器所选省份城市/*
       this.$emit("getcitybasemoney", cityData.socialSecurity)
       console.log(cityData.socialSecurity.aged.baseMoney);
     },
