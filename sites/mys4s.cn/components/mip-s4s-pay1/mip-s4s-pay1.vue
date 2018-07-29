@@ -249,6 +249,7 @@
         <div
           id="pay1btn"
           :class="agree?'pay-contaienr-last' :'pay-contaienr-last disabled-btn'"
+          on="tap:pay1.pay1event"
         >
           立即办理
         </div>
@@ -303,26 +304,24 @@ export default {
       isTrueCode: false
     }
   },
-  computed: {
-    prerenderAllowed () {
-      return true
-    }
+  prerenderAllowed () {
+    return true
   },
   watch: {
     code (val) {
       let tel = /^1\d{10}$/
-      if (!this.cansend && val.length === 4 && tel.test(this.phone)) { this.testCode() }
+      if (!this.cansend && val.length === 4 && tel.test(this.phone)) {
+        this.testCode()
+      }
     }
   },
   mounted () {
     MIP.viewer.fixedElement.init()
-    let event = window.MIP.util.event
     let me = this
-    this.j = event.delegate(document.documentElement, '#pay1btn', 'click', (e) => {
-      console.log(11)
-      me.payFee() // 当页面出现跳转时，关闭所有的浮层
+    this.$on('pay1event', event => {
+      console.log('pay1event')
+      me.payFee()
     })
-
     if (this.globalData && this.globalData.Fine) {
       try {
         window.localStorage.setItem(
@@ -437,15 +436,53 @@ export default {
       let list = this.$refs.file.files
       if (list.length !== 1) {
         util.toast('最多只能选择1张行驶证。')
-        return
       }
 
-      let item = {
-        name: list[0].name,
-        size: list[0].size,
-        file: list[0]
+      // let item = {
+      //   name: list[0].name,
+      //   size: list[0].size,
+      //   file: list[0]
+      // }
+      // fix canvas bug
+      this.inputUpload(list[0], 'driveUrl')
+      // this.html5Reader(list[0], item, 'driveUrl')
+    },
+    inputUpload (file, name) {
+      const self = this
+      if (file) {
+        console.log(file.size / 1024 / 1024 + 'MB!')
+        const isLt2M = file.size / 1024 / 1024 < 2
+        if (!isLt2M) {
+          util.toast('图片大小需要小于 2MB!')
+          return
+        }
+        util.toast('正在上传')
+        const formData = new FormData()
+        formData.append('image', file)
+        fetch('https://mys4s.cn/car/upload_report_pic', {
+          method: 'POST',
+          body: formData
+        })
+          .then(res => res.json())
+          .then(data => {
+            if (data.code === 0) {
+              util.toast('上传成功')
+              if (name === 'ticket') {
+                self.ticketUrl = data.data
+              } else if (name === 'JSZTravel') {
+                self.JSZTravelUrl = data.data
+              } else if (name === 'JSZDrive') {
+                self.JSZDriveUrl = data.data
+              } else if (name === 'travelUrl') {
+                self.travelUrl = data.data
+              } else if (name === 'driveUrl') {
+                self.driveUrl = data.data
+              }
+            } else {
+              util.toast(data.msg)
+            }
+          })
       }
-      this.html5Reader(list[0], item, 'driveUrl')
     },
     // 上传行驶证正面照
     uploaderXSZTravel () {
@@ -455,12 +492,13 @@ export default {
         return
       }
 
-      let item = {
-        name: list[0].name,
-        size: list[0].size,
-        file: list[0]
-      }
-      this.html5Reader(list[0], item, 'travelUrl')
+      // let item = {
+      //   name: list[0].name,
+      //   size: list[0].size,
+      //   file: list[0]
+      // }
+      // this.html5Reader(list[0], item, 'travelUrl')
+      this.inputUpload(list[0], 'travelUrl')
     },
     // 上传驾驶证正面照
     uploaderJSZDrive () {
@@ -470,12 +508,13 @@ export default {
         return
       }
 
-      let item = {
-        name: list[0].name,
-        size: list[0].size,
-        file: list[0]
-      }
-      this.html5Reader(list[0], item, 'JSZDrive')
+      // let item = {
+      //   name: list[0].name,
+      //   size: list[0].size,
+      //   file: list[0]
+      // }
+      // this.html5Reader(list[0], item, 'JSZDrive')
+      this.inputUpload(list[0], 'JSZDrive')
     },
     // 上传驾驶证正面照
     uploaderJSZTravel () {
@@ -485,16 +524,18 @@ export default {
         return
       }
 
-      let item = {
-        name: list[0].name,
-        size: list[0].size,
-        file: list[0]
-      }
-      this.html5Reader(list[0], item, 'JSZTravel')
+      // let item = {
+      //   name: list[0].name,
+      //   size: list[0].size,
+      //   file: list[0]
+      // }
+      // this.html5Reader(list[0], item, 'JSZTravel')
+      this.inputUpload(list[0], 'JSZTravel')
     },
     html5Reader: function (file, item, name) {
       let imgSrc = new Image()
       let reader = new FileReader()
+
       reader.onload = e => {
         imgSrc.src = e.srcElement.result
         this.$set(item, 'src', e.srcElement.result)
@@ -703,9 +744,11 @@ export default {
           drive_bar_code: this.drive_bar_code || '',
           drive_file_number: this.drive_file_number || ''
         }
-        if (!window.localStorage.getItem(
-          'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
-        )) {
+        if (
+          !window.localStorage.getItem(
+            'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
+          )
+        ) {
           util.toast('未授权百度账号')
           return
         }
@@ -878,18 +921,7 @@ select {
 .s4s-group:last-child {
   border: none;
 }
-.s4s-body {
-  /* max-width: 7rem; */
-  /* margin: 0 auto; */
-  /* height: 100%; */
-  /* -webkit-box-sizing: border-box;
-  box-sizing: border-box; */
-  /* position: absolute; */
-  /* top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0; */
-}
+
 .s4s-title {
   font-size: 0.2rem;
   padding-top: 0.15rem;
@@ -913,16 +945,61 @@ select {
   margin: 0.1rem 0.15rem 0.1rem 0;
   flex: 1;
 }
-.code-btn, .code-btn-disable{
-  color: #FE5C00;
+.code-btn,
+.code-btn-disable {
+  color: #fe5c00;
   background-color: #fff;
-  border:0;
-  border-radius:.03rem;
-  font-size:0.14rem;
-  border:.01rem solid #FF7B00;
-  padding: .05rem .075rem;
+  border: 0;
+  border-radius: 0.03rem;
+  font-size: 0.14rem;
+  border: 0.01rem solid #ff7b00;
+  padding: 0.05rem 0.075rem;
 }
 .code-btn-disable {
   opacity: 0.5;
+}
+
+.pay-contaienr {
+  display: flex;
+  width: 100%;
+  background: #fff;
+}
+
+.pay-contaienr-first {
+  flex: 1;
+  font-size: 0.16rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 0.1rem;
+}
+
+.pay-contaienr-num {
+  color: #fe7000;
+  font-size: 0.2rem;
+}
+
+.pay-contaienr-p1 {
+  color: #000;
+  font-size: 0.17rem;
+}
+.pay-contaienr-p2 {
+  color: #999;
+  font-size: 0.11rem;
+}
+
+.pay-contaienr-last {
+  width: 1.2rem;
+  background-image: linear-gradient(40deg, #fe5a00 0%, #ff7c00 100%);
+  text-align: center;
+  line-height: 0.5rem;
+  font-size: 0.18rem;
+  font-weight: 300;
+  color: #fff;
+}
+
+.disabled-btn {
+  color: #999;
+  background: #e6e6e6 !important;
 }
 </style>
