@@ -12728,7 +12728,7 @@ export default {
     _filter (add, name, code) {
       let result = []
       for (let i = 0; i < add.length; i++) {
-        if (code == add[i].id) {
+        if (code === add[i].id) {
           result = add[i][name]
         }
       }
@@ -12743,7 +12743,9 @@ export default {
       this.showDistrict = false
       this.showCityList = this._filter(this.info, 'city', this.province)
       // 点击选择当前
-      this.info.map(a => a.selected = false)
+      this.info.map(function(a){
+        a.selected = false
+      })
       this.info[index].selected = true
     },
     provinceSelected: function () {
@@ -12767,7 +12769,9 @@ export default {
       /* this.showDistrict = true;
       this.showDistrictList = this._filter(this.showCityList, 'district', this.city); */
       // 选择当前添加active
-      this.showCityList.map(a => a.selected = false)
+      this.showCityList.map(function(){
+        a.selected = false
+      })
       this.showCityList[index].selected = true
     },
     citySelected: function () {
@@ -12779,7 +12783,9 @@ export default {
       this.district = code
       this.District = input
       // 选择当前添加active
-      this.showDistrictList.map(a => a.selected = false)
+      this.showDistrictList.map(function(){
+        a.selected = false
+      })
       this.showDistrictList[index].selected = true
       // 选取市区选项之后关闭弹层
       this.showaddress = false

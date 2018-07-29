@@ -276,12 +276,11 @@ export default {
     }
   },
   computed: {
-    getBase: function () {
-      let agedBaseMoney = this.socialsecurity
+    getBase: function () { 
       if (this.fromWage) {
         return this.fromwage
       } else {
-        if (this.isLowst.socialLowst == 1) {
+        if (this.isLowst.socialLowst === 1) {
           this.fromBase = this.socialsecurity.noWork.baseMoney
         }
         return this.fromBase
@@ -289,7 +288,7 @@ export default {
     },
     showValues: function () {
       if (this.isshow) { // 公积金
-        if (this.tag == 1) { // 税前
+        if (this.tag === 1) { // 税前
           this.selectValue = '按照工资'
           this.fromWage = true
           this.ok = true
@@ -305,7 +304,7 @@ export default {
         }
       } else { // 社保
         this.isAfter = false
-        if (this.tag == 1) { // 税前
+        if (this.tag === 1) { // 税前
           this.selectValue = '按照工资'
           this.fromWage = true
           this.ok = true
