@@ -1,6 +1,16 @@
 <template>
   <div
-    v-if="name == 'date'"
+    v-if="name == 'nick'"
+    class="item nickinput">
+    <input
+      name="nick"
+      type="text"
+      validatetype="must"
+	  placeholder="昵称"
+    >
+  </div>
+  <div
+    v-else-if="name == 'date'"
     class="item dateinput">
     <input
       :value="dateVal"
@@ -223,29 +233,34 @@ export default {
       _this.xxname2 = arr2[0] + '型'
       _this.xxnamestr2 = arr2[0]
     })
-    let submit = document.querySelectorAll('#submit')
-    let submit2 = document.querySelectorAll('#submit2')
+    let submit = document.getElementById('submit')
+    let submit2 = document.getElementById('submit2')
     let pt = document.getElementById('pt')
     let jz = document.getElementById('jz')
-    let href = submit[0].getAttribute('url')
+	let a = submit.querySelectorAll('a')
+    let href = a[0].getAttribute('href')
     let input = document.querySelectorAll('input')
-    if (submit2.length > 0) {
+    if (submit2) {
       input = pt.querySelectorAll('input')
-      submit2[0].addEventListener('click', function () {
+      submit2.addEventListener('click', function () {
+	    let a2 = submit2.querySelectorAll('a')
+        let href2 = a2[0].getAttribute('href')
         input = jz.querySelectorAll('input')
-		if (!_this.returnQuery(input)) {
-		  return false;
-		}
-        let url = href + '?' + _this.returnQuery(input)
-        submit2[0].setAttribute('href', url)
+	    if (!_this.returnQuery(input)) {
+		  return false
+	    }
+        let url = href2 + '?' + _this.returnQuery(input)
+        a2[0].setAttribute('href', url)
+		a2[0].click()
       })
     }
-    submit[0].addEventListener('click', function () {
-		if (!_this.returnQuery(input)) {
-		  return false;
-		}
+    submit.addEventListener('click', function () {
+	  if (!_this.returnQuery(input)) {
+		return false
+	  }
       let url = href + '?' + _this.returnQuery(input)
-      submit[0].setAttribute('href', url)
+      a[0].setAttribute('href', url)
+	  a[0].click()
     })
   },
   methods: {
@@ -260,11 +275,12 @@ export default {
     },
     returnQuery: function (input) {
       let querys = ''
+      let q = true
       for (let i = 0; i < input.length; i++) {
         let name = input[i].getAttribute('name')
         let value = input[i].value
         if (value == null || value === '') {
-          return false
+          q = false
         }
         let and = '&'
         if (i === input.length - 1) {
@@ -272,7 +288,7 @@ export default {
         }
         querys += name + '=' + value + and
       }
-      return querys
+      return q == true ? querys : ''
     }
   }
 }
