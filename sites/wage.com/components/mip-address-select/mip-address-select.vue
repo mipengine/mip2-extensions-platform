@@ -27,7 +27,7 @@
       <section class="address-list">
         <ul>
           <li
-            v-for="(v,k) in info"
+            v-for="(v,k) in info" :key="(v,k)"
             v-show="showProvince"
             :class="v.selected ? 'active' : ''"
             class="addList"
@@ -36,7 +36,7 @@
         </ul>
         <ul>
           <li
-            v-for="(v,k) in showCityList"
+            v-for="(v,k) in showCityList" :key="(v,k)"
             v-show="showCity"
             :data-id="v.id"
             :class="v.selected ? 'active' : ''"
@@ -12751,7 +12751,7 @@ export default {
       /* this.showDistrict = true;
       this.showDistrictList = this._filter(this.showCityList, 'district', this.city); */
       // 选择当前添加active
-      this.showCityList.map(function(){
+      this.showCityList.map(function(a){
         a.selected = false
       })
       this.showCityList[index].selected = true
@@ -12765,7 +12765,7 @@ export default {
       this.district = code
       this.District = input
       // 选择当前添加active
-      this.showDistrictList.map(function(){
+      this.showDistrictList.map(function(a){
         a.selected = false
       })
       this.showDistrictList[index].selected = true
