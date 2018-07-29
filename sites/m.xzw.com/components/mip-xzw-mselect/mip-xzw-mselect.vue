@@ -233,11 +233,17 @@ export default {
       input = pt.querySelectorAll('input')
       submit2[0].addEventListener('click', function () {
         input = jz.querySelectorAll('input')
+		if (!_this.returnQuery(input)) {
+		  return false;
+		}
         let url = href + '?' + _this.returnQuery(input)
         submit2[0].setAttribute('href', url)
       })
     }
     submit[0].addEventListener('click', function () {
+		if (!_this.returnQuery(input)) {
+		  return false;
+		}
       let url = href + '?' + _this.returnQuery(input)
       submit[0].setAttribute('href', url)
     })
