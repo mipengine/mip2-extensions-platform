@@ -271,14 +271,16 @@ export default {
     }
   },
   computed: {
-    getBase: function () { 
-      if (this.fromWage) {
-        return this.fromwage
-      } else {
-        if (this.isLowst.socialLowst === 1) {
-          this.fromBase = this.socialsecurity.noWork.baseMoney
-        }
-        return this.fromBase
+    getBase:{
+      get: function() {
+        if (this.fromWage) {
+          return this.fromwage
+          } else {
+            if (this.isLowst.socialLowst === 1) {
+              this.fromBase = this.socialsecurity.noWork.baseMoney
+            }
+            return this.fromBase
+          }
       }
     },
     showValues: function () {
