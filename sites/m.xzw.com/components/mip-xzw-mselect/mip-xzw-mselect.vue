@@ -275,12 +275,12 @@ export default {
     },
     returnQuery: function (input) {
       let querys = ''
-      let q = true
+      let t = true
       for (let i = 0; i < input.length; i++) {
         let name = input[i].getAttribute('name')
         let value = input[i].value
         if (value == null || value === '') {
-          q = false
+          t = false
         }
         let and = '&'
         if (i === input.length - 1) {
@@ -288,7 +288,7 @@ export default {
         }
         querys += name + '=' + value + and
       }
-      return q == true ? querys : ''
+      return t == true ? querys : ''
     }
   }
 }
