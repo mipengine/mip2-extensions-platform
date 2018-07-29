@@ -238,7 +238,7 @@ export default {
     let pt = document.getElementById('pt')
     let jz = document.getElementById('jz')
 	let a = submit.querySelectorAll('a')
-    let href = a[0].getAttribute('href')
+    let href = a[0].getAttribute('url')
     let input = document.querySelectorAll('input')
     if (submit2) {
       input = pt.querySelectorAll('input')
@@ -251,7 +251,6 @@ export default {
 	    }
         let url = href2 + '?' + _this.returnQuery(input)
         a2[0].setAttribute('href', url)
-		a2[0].click()
       })
     }
     submit.addEventListener('click', function () {
@@ -260,7 +259,6 @@ export default {
 	  }
       let url = href + '?' + _this.returnQuery(input)
       a[0].setAttribute('href', url)
-	  a[0].click()
     })
   },
   methods: {
@@ -275,12 +273,12 @@ export default {
     },
     returnQuery: function (input) {
       let querys = ''
-      let t = true
+      let q = true
       for (let i = 0; i < input.length; i++) {
         let name = input[i].getAttribute('name')
         let value = input[i].value
         if (value == null || value === '') {
-          t = false
+          q = false
         }
         let and = '&'
         if (i === input.length - 1) {
@@ -288,7 +286,7 @@ export default {
         }
         querys += name + '=' + value + and
       }
-      return t == true ? querys : ''
+      return q == true ? querys : ''
     }
   }
 }
