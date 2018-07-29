@@ -371,22 +371,16 @@ export default {
     // 获取自定义五险一金基数
     getSecurityBase: function (obj) {
       let data = obj.detail[0]
-      console.log(obj)
       data.socialMoney != null ? this.security.socialSelect.baseMoney = data.socialMoney : ''
       data.accumulationMoney != null ? this.security.accumulationSelect.baseMoney = data.accumulationMoney : ''
-      console.log('自定义社保基数：' + this.security.socialSelect.baseMoney)
-      console.log('公积金基数：' + this.security.accumulationSelect.baseMoney)
     },
     // 获取不同区域社保基数
     getCitybaseMoney: function (obj) {
       let socialSecurity = obj.detail[0]
       this.socialSecurity = socialSecurity
-      /*
-            console.log(socialSecurity); */
     },
     // 获取公积金基数
     getProportion: function (obj) {
-      console.log(obj)
       let proportion = obj.detail[0]
       this.security.accumulationSelect.proportion = proportion
     },
@@ -400,7 +394,6 @@ export default {
     calculate: function () {
       // 税前/税后工资
       let reg = /^(([1-9][0-9]*)|(([0]\.\d{1,2}|[1-9][0-9]*\.\d{1,2})))$/
-      console.log('this.wage:' + this.wage)
       if (this.wage == '') {
         if (this.tag == 1) {
           this.showTipShow('请输入税前工资')
@@ -445,20 +438,12 @@ export default {
         if (this.security.accumulationSelect.proportion == 0 || this.security.accumulationSelect.proportion == '') {
           this.showTipShow('请输入公积金比例')
           return false
-        } else {
-          /* console.log(this.security.accumulationSelect.proportion.indexOf(".")) */
-          /*    if (!reg2.test(this.security.accumulationSelect.proportion) || this.security.accumulationSelect.proportion > 12 || this.security.accumulationSelect.proportion < 5) {
-                this.showTipShow("公积金比例为5~12的正整数");
-                return false;
-              } */
         }
       }
       this.getAllData.security = this.security
       this.getAllData.tag = this.tag
       this.getAllData.wage = this.wage
       this.getAllData.socialSecurity = this.socialSecurity
-      /*
-            console.log(this.getAllData); */
       this.getResult(this.getAllData)
       this.resultShow = false
     },
@@ -472,17 +457,11 @@ export default {
     getInputWage: function (obj) {
       let wage = obj.detail[0]
       this.wage = wage
-      /* if (this.selectValue == "1") {
-        this.security.socialSelect.baseMoney = this.wage;
-        this.security.accumulationSelect.baseMoney = this.wage;
-      } */
     },
     isLowst: function (obj) {
-      console.log(22)
       let isLowst = obj.detail[0]
       isLowst.accumulationLowst ? this.getAllData.lowst.accumulationLowst = isLowst.accumulationLowst : ''
-      isLowst.socialLowst ? this.getAllData.lowst.socialLowst = isLowst.socialLowst : ''/*
-      this.getAllData.lowst = isLowst; */
+      isLowst.socialLowst ? this.getAllData.lowst.socialLowst = isLowst.socialLowst : ''
     },
     getSelectValue: function (str) {
       this.selectValue = str.detail[0]
@@ -491,7 +470,6 @@ export default {
       let $data = {}
       let sociall = 0
       let accumulation = 0
-      let getResult = {}
       $data = JSON.parse(JSON.stringify(data))
       if (!$data.security.accumulationSelect.isHave) {
         $data.security.accumulationSelect.baseMoney = 0
@@ -499,7 +477,6 @@ export default {
       if (!$data.security.socialSelect.isHave) {
         $data.security.socialSelect.baseMoney = 0
       }
-      console.log($data)
       if ($data.lowst.socialLowst == 1) { // 最低标准
         if ($data.security.socialSelect.isHave) {
           let $social_1 = $data.socialSecurity.aged.baseMoney * $data.socialSecurity.aged.proportion / 100
