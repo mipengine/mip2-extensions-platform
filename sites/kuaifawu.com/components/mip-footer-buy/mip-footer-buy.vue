@@ -35,7 +35,7 @@
   border-top: .014rem solid #d9d9d9;
   width: 100%;
   display: flex;
-  z-index: 1;
+  z-index: 999;
   font-size: .17rem;
   color: #fff
 }
@@ -55,7 +55,7 @@
 </style>
 <style>
 .s4s-toast {
-  /*position: fixed;*/
+  position: fixed;
   top: 50%;
   left: 50%;
   padding: 0.2rem 0.1rem;

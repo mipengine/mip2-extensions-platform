@@ -230,6 +230,7 @@ export default {
     }
   },
   mounted () {
+    MIP.viewer.fixedElement.init()
     // 自定义exit事件
     const self = this
     this.$element.customElement.addEventAction('logout', event => {
