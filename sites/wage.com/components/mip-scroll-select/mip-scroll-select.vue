@@ -55,11 +55,11 @@ export default {
   props: {
     values: {
        type:Array,
-            default:[
-            '按照工资',
+      default:function () { return [
+        '按照工资',
             '按照最低标准',
             '自定义'
-          ]
+      ]}
     },
     scrollshow: {
       type: false,
@@ -198,12 +198,6 @@ export default {
       isInertial = true
       this.inertia(absV, Math.floor(absV / v), 0)
     },
-    /**
-     * @param a 用户结束滑动，应该慢慢放慢，最终停止。从而需要 a(加速度)
-     * @param start 开始速度
-     * @param position 速度方向，值: 正负1
-     * @param target 结束速度
-     */
     inertia (start, position, target) {
       if (start <= target || !isInertial) {
         this.animate.stop()
