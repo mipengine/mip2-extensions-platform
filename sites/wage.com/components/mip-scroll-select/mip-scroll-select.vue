@@ -20,7 +20,7 @@
           :style="getListTop"
           class="wheel-list">
           <li
-            v-for="item in scrollValues"
+            v-for="item in scrollValues" :key="item"
             :style="initWheelItemDeg(item.index)"
             class="wheel-item">{{ item.value }}</li>
         </ul>
@@ -53,14 +53,11 @@ const singleDeg = deg
 const space = Math.floor((360 / singleDeg) / 2)
 export default {
   props: {
-    values: {
-      type: Array,
-      default: [
+    values: [
         '按照工资',
         '按照最低标准',
         '自定义'
-      ]
-    },
+      ],
     scrollshow: {
       type: false,
       default: false
@@ -231,7 +228,6 @@ export default {
       this.$refs.wheel.style.transform = `rotate3d(1, 0, 0, ${moveDeg}deg)`
       this.updateRange(Math.round(this.finger.currentMove / lineHeight))
       this.animate.start(this.inertia.bind(this, newStart, position, target))
-      console.log('target:' + position)
     },
     // 关闭选择器
     closeScrollSelect () {
@@ -239,7 +235,6 @@ export default {
     },
     // 获取选中值，传递到父组件显示
     getScrollSelectValue (ev) {
-      console.log('你选中了：' + selectValue)
       this.$emit('showselect', selectValue)
       selectValue = ''
     }

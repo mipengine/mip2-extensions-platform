@@ -99,7 +99,6 @@ export default {
       this.$emit('getinputwage', e.target.value)
     },
     openAddressSelect: function () {
-      console.log(11, this.showaddress)
       this.showaddress = true
     },
     getcitydata: function (obj) {
@@ -107,7 +106,6 @@ export default {
       this.showaddress = false
       this.provinceName = cityData.provinceName + ' ' + cityData.cityName// 显示地址选择器所选省份城市/*
       this.$emit('getcitybasemoney', cityData.socialSecurity)
-      console.log(cityData.socialSecurity.aged.baseMoney)
     },
     // 打开起征点
     openScrollSelect: function () {

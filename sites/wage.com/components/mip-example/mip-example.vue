@@ -596,9 +596,8 @@ export default {
     },
     // 计算税前工资
     after2wage: function (taxwage, insure, threshold) {
-      let hold = threshold
-      let wage = taxwage
-      let tax = 0
+      let hold = threshold;
+      let wage = taxwage;
       // 第一段
       if (wage < hold) { return wage }
       // 第二段
