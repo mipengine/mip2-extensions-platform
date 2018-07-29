@@ -8085,24 +8085,6 @@ export default {
         {
           id: 201,
           name: '汕头市',
-          socialSecurity: {
-            aged: {
-              baseMoney: 2682,
-              proportion: 8
-            },
-            noWork: {
-              baseMoney: 2682,
-              proportion: 0.2
-            },
-            medical: {
-              baseMoney: 2682,
-              proportion: 2
-            },
-            disease: {
-              baseMoney: 0,
-              proportion: 0
-            }
-          },
           district: [
             { id: 1778, name: '龙湖区' },
             { id: 1779, name: '金平区' },
