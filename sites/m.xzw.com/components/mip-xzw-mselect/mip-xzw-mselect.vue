@@ -6,7 +6,7 @@
       name="nick"
       type="text"
       validatetype="must"
-	  placeholder="昵称"
+      placeholder="昵称"
     >
   </div>
   <div
@@ -237,26 +237,26 @@ export default {
     let submit2 = document.getElementById('submit2')
     let pt = document.getElementById('pt')
     let jz = document.getElementById('jz')
-	let a = submit.querySelectorAll('a')
+    let a = submit.querySelectorAll('a')
     let href = a[0].getAttribute('url')
     let input = document.querySelectorAll('input')
     if (submit2) {
       input = pt.querySelectorAll('input')
       submit2.addEventListener('click', function () {
-	    let a2 = submit2.querySelectorAll('a')
+        let a2 = submit2.querySelectorAll('a')
         let href2 = a2[0].getAttribute('url')
         input = jz.querySelectorAll('input')
-	    if (!_this.returnQuery(input)) {
-		  return false
-	    }
+        if (!_this.returnQuery(input)) {
+          return false
+        }
         let url = href2 + '?' + _this.returnQuery(input)
         a2[0].setAttribute('href', url)
       })
     }
     submit.addEventListener('click', function () {
-	  if (!_this.returnQuery(input)) {
-		return false
-	  }
+      if (!_this.returnQuery(input)) {
+        return false
+      }
       let url = href + '?' + _this.returnQuery(input)
       a[0].setAttribute('href', url)
     })
@@ -286,7 +286,7 @@ export default {
         }
         querys += name + '=' + value + and
       }
-      return q == true ? querys : ''
+      return q === true ? querys : ''
     }
   }
 }
