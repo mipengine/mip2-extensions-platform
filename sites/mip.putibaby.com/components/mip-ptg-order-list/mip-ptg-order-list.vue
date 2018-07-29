@@ -599,7 +599,7 @@ export default {
         MIP.viewer.eventAction.execute('doshow', ele, {
           el_id: 'orderlist',
           title: '提示消息',
-          msg: '确定要现在执行上户?',
+          msg: '确定要邀请护理师上户吗?',
           from: this.handleBtn_shanghu,
           data: order })
       }
