@@ -244,7 +244,7 @@ export default {
       input = pt.querySelectorAll('input')
       submit2.addEventListener('click', function () {
 	    let a2 = submit2.querySelectorAll('a')
-        let href2 = a2[0].getAttribute('href')
+        let href2 = a2[0].getAttribute('url')
         input = jz.querySelectorAll('input')
 	    if (!_this.returnQuery(input)) {
 		  return false
