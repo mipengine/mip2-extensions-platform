@@ -290,7 +290,7 @@ export default {
 	},
 	methods: {
 		showValuesF: function(){
-      	if (this.isshow) { // 公积金
+			if (this.isshow) { // 公积金
 				if (this.tag === 1) { // 税前
 					this.selectValue = '按照工资';
 					this.fromWage = true;
