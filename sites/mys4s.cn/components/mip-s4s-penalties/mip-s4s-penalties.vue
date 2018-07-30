@@ -169,13 +169,14 @@
             <input
               v-model="nick"
               type="text"
+              maxlength="22"
               placeholder="请输入被处罚人姓名" >
           </div>
           <div
             v-if="!showName"
             class="s4s-group">
             <span class="s4s-group-tit">车牌号码</span>
-            <div style="display: flex;align-items:center;overflow: hidden;width:1.30rem;">
+            <div style=" display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;align-items:center;overflow: hidden;width:1.30rem;">
               <span
                 class="s4s-sel-provice"
                 style="float: left;"
@@ -368,10 +369,13 @@ export default {
   },
 
   watch: {
-    price () {
+    price (val) {
+      if (val > 999999) {
+        this.price = val.slice(0, 6)
+      }
       this.getVioFee()
     },
-    date () {
+    date (val) {
       this.getVioFee()
     },
     orderNumber () {
@@ -772,7 +776,7 @@ export default {
   margin-top: .15rem;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   overflow: hidden;
 }
 .s4s-order-input input {
@@ -799,9 +803,9 @@ export default {
 .s4s-order-img-container {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  -webkit-justify-content:space-around; justify-content:space-around;-moz-box-pack:space-around;-webkit--moz-box-pack:space-around;box-pack:space-around;
   margin: 0.2rem 0;
   text-align: center;
 }
@@ -842,9 +846,9 @@ export default {
   margin-top: .15rem;
 }
 .flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
 }
 .s4s-order-tip-text {
   font-size: .13rem;
