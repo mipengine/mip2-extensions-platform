@@ -115,6 +115,9 @@ export default {
     MIP.viewer.fixedElement.init()
     console.log('This is 底部固定菜单栏 !')
   },
+  prerenderAllowed () {
+    return true
+  },
   methods: {
     aaa: function () {
       let a = document.querySelectorAll('a')
