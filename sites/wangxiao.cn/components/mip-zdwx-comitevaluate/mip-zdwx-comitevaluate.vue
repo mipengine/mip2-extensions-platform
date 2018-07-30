@@ -142,7 +142,7 @@ export default {
               _this.errorMessage = data.message
               _this.showErrorMessage = true
               setTimeout(() => {
-                window.MIP.viewer('orderlist.jsp')
+                MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/orderList?token=' + base.getToken()))
               }, 1000)
             }
           })
