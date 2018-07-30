@@ -105,6 +105,8 @@ export default {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          FKID: base.getQueryString('id'),
+          token: base.getToken(),
           Data: {
             CommentDetail: {
               CategoryID: '',
@@ -116,19 +118,21 @@ export default {
             CommentItemDetails: [
               {
                 Score: _this.starValue1,
-                ScoreItemID: 4
+                ScoreItemID: 4,
+                ModuleId: 3
               },
               {
                 Score: _this.starValue2,
-                ScoreItemID: 5
+                ScoreItemID: 5,
+                ModuleId: 3
               },
               {
                 Score: _this.starValue3,
-                ScoreItemID: 6
+                ScoreItemID: 6,
+                ModuleId: 3
               }
             ]
-          },
-          token: base.getQueryString('token') || base.getToken()
+          }
         })
       })
         .then(function (response) {
