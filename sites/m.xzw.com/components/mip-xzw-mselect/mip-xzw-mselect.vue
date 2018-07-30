@@ -239,7 +239,6 @@ export default {
     let jz = document.getElementById('jz')
     let a = submit.querySelectorAll('a')
     let href = a[0].getAttribute('url')
-<<<<<<< HEAD
     if (submit2) {
       submit2.addEventListener('click', function () {
         let a2 = submit2.querySelectorAll('a')
@@ -249,30 +248,14 @@ export default {
           return false
         }
         let url = href2 + '?' + _this.returnQuery(input2)
-=======
-    let input = document.querySelectorAll('input')
-    if (submit2) {
-      input = pt.querySelectorAll('input')
-      submit2.addEventListener('click', function () {
-        let a2 = submit2.querySelectorAll('a')
-        let href2 = a2[0].getAttribute('url')
-        input = jz.querySelectorAll('input')
-        if (!_this.returnQuery(input)) {
-          return false
-        }
-        let url = href2 + '?' + _this.returnQuery(input)
->>>>>>> origin/fix/xzw_commponent
         a2[0].setAttribute('href', url)
       })
     }
     submit.addEventListener('click', function () {
-<<<<<<< HEAD
       let input = document.querySelectorAll('input')
       if (submit2) {
         input = pt.querySelectorAll('input')
       }
-=======
->>>>>>> origin/fix/xzw_commponent
       if (!_this.returnQuery(input)) {
         return false
       }
