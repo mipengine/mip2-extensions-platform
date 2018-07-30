@@ -6,7 +6,8 @@
       type="top"
       class="fix_back">
       <div id="fullScreen"/>
-      <mip-fixed
+     </mip-fixed>
+     <mip-fixed
         type="top"
         class="fix_con">
         <div id="floatLayer">
@@ -22,7 +23,6 @@
           </div>
         </div>
       </mip-fixed>
-    </mip-fixed>
 
   </div>
 </template>
@@ -39,7 +39,7 @@
   height:100%;
 }
 .fix_con{
-  z-index:10000;
+  z-index:10000 !important;
 }
 #fullScreen {
   width: 100%;
