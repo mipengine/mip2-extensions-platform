@@ -62,7 +62,8 @@
               validatetarget="username"
               validatetype="must"
               placeholder="中文姓名"
-              @input="contract_mama_name_change_">
+              @input="contract_mama_name_change_"
+              @change="contract_mama_name_change_">
             <div target="username">姓名不符合规范</div>
           </div>
         </div>
@@ -79,7 +80,8 @@
               validatetarget="phone_number"
               validatetype="must"
               placeholder="手机号码"
-              @input="contract_mama_phone_number_change_">
+              @input="contract_mama_phone_number_change_"
+              @change="contract_mama_phone_number_change_">
             <div target="phone_number">手机号码错误</div>
           </div>
         </div>
@@ -96,7 +98,8 @@
               validatetarget="identity"
               validatetype="must"
               placeholder="身份证号码"
-              @input="contract_mama_id_card_change_">
+              @input="contract_mama_id_card_change_"
+              @change="contract_mama_id_card_change_">
             <div target="identity">身份证号码错误</div>
           </div>
         </div>
@@ -215,7 +218,8 @@
               class="input_sc"
               type="number"
               value=""
-              @input="contract_shanghu_length_change_" >天
+              @input="contract_shanghu_length_change_"
+              @change="contract_shanghu_length_change_">天
           </div>
         </div>
         <div class="line"/>
@@ -295,7 +299,8 @@
               type="text"
               value=""
               placeholder="请输入上户的详细地址"
-              @input="contract_location_change_"/>
+              @input="contract_location_change_"
+              @change="contract_location_change_"/>
           </div>
         </div>
       </div>
@@ -1114,7 +1119,8 @@ export default {
       contract_deposit_min: 0,
       to_contract_skill_req: toContractSkillReq,
       to_contract_extra: toContractExtra,
-      err_message: ''
+      err_message: '',
+      ret: 1
     }
   },
   computed: {
@@ -1313,14 +1319,23 @@ export default {
     },
     contract_mama_name_change_ () {
       this.inspect_()
+      if (this.ret !== 2) {
+        return
+      }
       this.saveIt_()
     },
     contract_mama_phone_number_change_ () {
       this.inspect_()
+      if (this.ret !== 2) {
+        return
+      }
       this.saveIt_()
     },
     contract_mama_id_card_change_ () {
       this.inspect_()
+      if (this.ret !== 2) {
+        return
+      }
       this.saveIt_()
     },
     contract_shanghu_at_change_ () {
@@ -1338,11 +1353,17 @@ export default {
         djb = 1.0
       }
       this.contract_deposit_min = djb
-
+      this.inspect_()
+      if (this.ret !== 2) {
+        return
+      }
       this.saveIt_()
     },
     contract_location_change_ (event) {
       this.inspect_()
+      if (this.ret !== 2) {
+        return
+      }
       this.saveIt_()
     },
 
@@ -1401,6 +1422,7 @@ export default {
       return idCard
     },
     inspect_ () {
+      this.ret = 1
       if (!/\S+/.test(this.contract_mama_name)) {
         this.err_message = '请填写正确的姓名'
         this.err = true
@@ -1410,8 +1432,16 @@ export default {
         this.err_message = '请填写正确的电话号码'
         this.err = true
         return
+      } else if (!this.contract_mama_phone_number.match(/^1\d{10}/)) {
+        this.err_message = '请填写正确的电话号码'
+        this.err = true
+        return
       }
-      if (this.contract_mama_id_card) {
+      if (!/\S+/.test(this.contract_mama_id_card)) {
+        this.err_message = '请填写身份证号码'
+        this.err = true
+        return
+      } else if (this.contract_mama_id_card) {
         var idCard = this.contract_mama_id_card
         this.Trim(idCard)
         // 15位和18位身份证号码的正则表达式
@@ -1419,18 +1449,14 @@ export default {
         // 如果通过该验证，说明身份证格式正确，但准确性还需计算
         if (regIdCard.test(idCard)) {
           if (idCard.length === 18) {
-            // 将前17位加权因子保存在数组里
-            var idCardWi = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]
-            // 这是除以11后，可能产生的11位余数、验证码，也保存成数组
-            var idCardY = [1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2]
-            // 用来保存前17位各自乖以加权因子后的总和
-            var idCardWiSum = 0
+            var idCardWi = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]// 将前17位加权因子保存在数组里
+            var idCardY = [1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2]// 这是除以11后，可能产生的11位余数、验证码，也保存成数组
+            var idCardWiSum = 0// 用来保存前17位各自乖以加权因子后的总和
             for (var i = 0; i < 17; i++) {
               idCardWiSum += idCard.substring(i, i + 1) * idCardWi[i]
             }
             var idCardMod = idCardWiSum % 11
-            // 计算出校验码所在数组的位置
-            var idCardLast = idCard.substring(17)
+            var idCardLast = idCard.substring(17)// 计算出校验码所在数组的位置
             // 得到最后一位身份证号码
             // 如果等于2，则说明校验码是10，身份证号码最后一位应该是X
             if (idCardMod === 2) {
@@ -1442,13 +1468,17 @@ export default {
               }
             } else {
               // 用计算出的验证码与最后一位身份证号码匹配，如果一致，说明通过，否则是无效的身份证号码
-              if (idCardLast === idCardY[idCardMod]) {
+              if (parseInt(idCardLast) === idCardY[idCardMod]) {
               } else {
                 this.err_message = '身份证号码错误'
                 this.err = true
                 return
               }
             }
+          } else {
+            this.err_message = '身份证号码错误'
+            this.err = true
+            return
           }
         } else {
           this.err_message = '身份证格式不正确'
@@ -1456,10 +1486,11 @@ export default {
           return
         }
       } else {
-        this.err_message = '请填写身份证号码'
+        this.err_message = '身份证格式不正确'
         this.err = true
         return
       }
+
       if (!/^[1-9]\d*/.test(this.contract_shanghu_length)) {
         this.err_message = '请填写正确的上户时长'
         this.err = true
@@ -1476,6 +1507,7 @@ export default {
         return
       }
       this.err = false
+      this.ret = 2
     },
     contractDetail () {
       var id = this.order.id
@@ -1485,7 +1517,6 @@ export default {
     },
 
     handleSubmit_ (data, skip) {
-      this.inspect_()
       // 检查基本信息
       // var info = oa({}, this.state);
       if (this.contract_deposit_min === 1) {
@@ -1493,6 +1524,10 @@ export default {
       }
 
       var self = this
+      self.inspect_()
+      if (self.ret !== 2) {
+        return
+      }
       if (skip) {
         API.wrapRet_(
           'https://mip.putibaby.com/api/submit_contract', {
@@ -1501,7 +1536,7 @@ export default {
           function (isOk, res) {
             if (isOk) {
               // window.location.href = 'https://mip.putibaby.com/order_list'
-              window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
+              window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {replace: true})
             } else {
               self.err_message = '提交失败请重试'
               self.err = true
