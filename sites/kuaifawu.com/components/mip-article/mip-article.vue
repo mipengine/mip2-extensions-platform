@@ -15,6 +15,7 @@
 <script>
 export default {
   mounted () {
+    MIP.viewer.fixedElement.init()
     console.log('This is 文章列表页的js !')
   },
   methods: {
