@@ -214,214 +214,217 @@ li {
 </style>
 <script>
 export default {
-  props: {
-    isshow: {
-      type: Boolean,
-      default: false
-    },
-    fromwage: {
-      type: Number,
-      default: 0
-    },
-    tag: {
-      type: Number,
-      default: 1
-    },
-    socialsecurity: {
-      type: Object,
-      default: () => {
-        return {
-          aged: {
-            baseMoney: 2682,
-            proportion: 8
-          },
-          noWork: {
-            baseMoney: 2682,
-            proportion: 0.2
-          },
-          medical: {
-            baseMoney: 2682,
-            proportion: 2
-          },
-          disease: {
-            baseMoney: 0,
-            proportion: 2
-          },
-        }
-      }
-    }
-  },
-  data () {
-    return {
-      isOpen: true,
-      security: {},
-      baseMoneys: {},
-      scrollshow: false,
-      selectValue: '按照工资',
-      ok: true,
-      baseMoney: '',
-      fromWage: true,
-      fromBase: '',
-      isLowst: {
-      },
-      amount: '',
-      numberAmount: '',
-      isAfter: false
+	props: {
+		isshow: {
+			type: Boolean,
+			default: false
+		},
+		fromwage: {
+			type: Number,
+			default: 0
+		},
+		tag: {
+			type: Number,
+			default: 1
+		},
+		socialsecurity: {
+			type: Object,
+			default: () => {
+				return {
+					aged: {
+						baseMoney: 2682,
+						proportion: 8
+					},
+					noWork: {
+						baseMoney: 2682,
+						proportion: 0.2
+					},
+					medical: {
+						baseMoney: 2682,
+						proportion: 2
+					},
+					disease: {
+						baseMoney: 0,
+						proportion: 2
+					},
+				};
+			}
+		}
+	},
+	data () {
+		return {
+			isOpen: true,
+			security: {},
+			baseMoneys: {},
+			scrollshow: false,
+			selectValue: '按照工资',
+			ok: true,
+			baseMoney: '',
+			fromWage: true,
+			fromBase: '',
+			isLowst: {
+			},
+			amount: '',
+			numberAmount: '',
+			isAfter: false
 
-    }
-  },
-  computed: {
-    getBase:{
-      get: function() {
-        if (this.fromWage) {
-          return this.fromwage
-          } else {
-            if (this.isLowst.socialLowst === 1) {
-              return this.socialsecurity.noWork.baseMoney
-            }
-          }
-      }
-    },
-    showValues:{
-      get: function () {
-        if (this.isshow) { // 公积金
-        if (this.tag === 1) { // 税前
-          this.selectValue = '按照工资'
-          this.fromWage = true
-          this.ok = true
-          this.isAfter = false
-          return ['按照工资', '自定义']
-        } else { // 税后
-          this.selectValue = '自定义'
-          this.fromWage = false
-          this.ok = false
-          this.fromBase = ''
-          this.isAfter = true
-          return ['自定义']
-        }
-      } else { // 社保
-        this.isAfter = false
-        if (this.tag === 1) { // 税前
-          this.selectValue = '按照工资'
-          this.fromWage = true
-          this.ok = true
-          return [
-            '按照工资',
-            '按照最低标准',
-            '自定义'
-          ]
-        } else { // 税后
-          this.selectValue = '自定义'
-          this.fromWage = false
-          this.ok = false
-          this.fromBase = ''
-          this.baseMoney = ''
-          return [
-            '自定义',
-            '按照最低标准'
-          ]
-        }
-      }
-      }
-    }
-  },
-  methods: {
-    closeOrShow: function () {
-      this.isOpen = !this.isOpen
-      if (this.isshow) { // 公积金
-        // this.accumulationSelect = this.isOpen;
-        this.security.accumulationSelect = this.isOpen
-      } else { // 社保
-        this.security.socialSelect = this.isOpen
-      }
-      this.$emit('securityselect', this.security)
-    },
-    openScrollSelect: function () {
-      this.scrollshow = true
-    },
-    showSelect: function (obj) {
-      this.fromWage = false
-      this.isLowst = {}
-      this.$emit('getselectvalue', 2)
-      if (obj.detail[0] != '' && obj.detail[0] != '0') {
-        this.selectValue = obj.detail[0]
-      }
-      if (this.selectValue == '自定义') {
-        // 基数可编辑
-        this.ok = false
-        this.baseMoney = ''
-        this.fromBase = ''
-        this.isshow ? this.isLowst.accumulationLowst = 3 : this.isLowst.socialLowst = 3
-        this.$emit('islowst', this.isLowst)
-        this.fromWage = false
-      } else {
-        if (this.selectValue == '按照工资') {
-          this.$emit('getselectvalue', 1)
-          this.fromWage = true
-          this.baseMoney = this.fromwage
-          this.isshow ? this.isLowst.accumulationLowst = 2 : this.isLowst.socialLowst = 2
-          this.$emit('islowst', this.isLowst)
-        } else { // 最低标准
-          this.fromWage = false
-          if (!this.isshow) { // 社保
-            this.fromBase = this.socialsecurity.noWork.baseMoney
-            this.baseMoney = this.socialsecurity.noWork.baseMoney
-            this.isLowst.socialLowst = 1
-            this.$emit('islowst', this.isLowst)
-          }
-        }
-        this.ok = true
-      }
-      this.scrollshow = false
-      this.sendBaseMoney()
-    },
-    colseScrollSelect () {
-      this.scrollshow = false
-    },
-    // 公积金比例
-    inputProportion: function (e) {
-      let sNum = e.target.value.toString() // 先转换成字符串类型
-      if (sNum > 12) {
-        sNum = '12'
-      } else if (sNum < 5 && sNum > 1) {
-        sNum = '5'
-      }
-      if (sNum.indexOf('.') > 0) {
-        let index = sNum.indexOf('.')
-        sNum = sNum.slice(0, index)
-      }
-      e.target.value = sNum
-      this.$emit('getproportion', e.target.value)
-    },
-    getProportion: function (e) {
-      if (e.target.value < 5) {
-        e.target.value = '5'
-      }
-      this.$emit('getproportion', e.target.value)
-    },
-    inputBaseMoney: function (e) {
-      let sNum = e.target.value.toString() // 先转换成字符串类型
-      if (sNum > 10000000) {
-        sNum = sNum.slice(0, 7)
-      }
-      this.baseMoney = sNum.replace(/[^\d.]/g, '') // 清除“数字”和“.”以外的字符
-      this.baseMoney = this.baseMoney.replace(/\.{2,}/g, '.') // 只保留第一个. 清除多余的
-      this.baseMoney = this.baseMoney.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.')
-      this.baseMoney = this.baseMoney.replace(/^(-)*(\d+)\.(\d\d).*$/, '$1$2.$3') // 只能输入两个小数
-      // 以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
-      if (this.baseMoney.indexOf('.') < 0 && this.baseMoney != '') {
-        this.baseMoney = parseFloat(sNum)
-      }
-      e.target.value = this.baseMoney
-      this.fromBase = this.baseMoney
-      this.sendBaseMoney()
-    },
-    sendBaseMoney: function () {
-      let baseMoneys = {}
-      this.isshow ? (baseMoneys.accumulationMoney = this.baseMoney) : (baseMoneys.socialMoney = this.baseMoney)
-      this.$emit('getsecuritybase', baseMoneys)
-    }
-  }
-}
+		};
+	},
+	computed: {
+		getBase:{
+			get: function() {
+				if (this.fromWage) {
+					return this.fromwage;
+				} else {
+					if (this.isLowst.socialLowst === 1) {
+						return this.socialsecurity.noWork.baseMoney;
+					}
+				}
+			}
+		},
+		showValues:{
+			get: function () {
+				this.showValuesF();
+			}
+		}
+	},
+	methods: {
+		showValuesF: function(){
+      	if (this.isshow) { // 公积金
+				if (this.tag === 1) { // 税前
+					this.selectValue = '按照工资';
+					this.fromWage = true;
+					this.ok = true;
+					this.isAfter = false;
+					return ['按照工资', '自定义'];
+				} else { // 税后
+					this.selectValue = '自定义';
+					this.fromWage = false;
+					this.ok = false;
+					this.fromBase = '';
+					this.isAfter = true;
+					return ['自定义'];
+				}
+			} else { // 社保
+				this.isAfter = false;
+				if (this.tag === 1) { // 税前
+					this.selectValue = '按照工资';
+					this.fromWage = true;
+					this.ok = true;
+					return [
+						'按照工资',
+						'按照最低标准',
+						'自定义'
+					];
+				} else { // 税后
+					this.selectValue = '自定义';
+					this.fromWage = false;
+					this.ok = false;
+					this.fromBase = '';
+					this.baseMoney = '';
+					return [
+						'自定义',
+						'按照最低标准'
+					];
+				}
+			}
+		},
+		closeOrShow: function () {
+			this.isOpen = !this.isOpen;
+			if (this.isshow) { // 公积金
+				// this.accumulationSelect = this.isOpen;
+				this.security.accumulationSelect = this.isOpen;
+			} else { // 社保
+				this.security.socialSelect = this.isOpen;
+			}
+			this.$emit('securityselect', this.security);
+		},
+		openScrollSelect: function () {
+			this.scrollshow = true;
+		},
+		showSelect: function (obj) {
+			this.fromWage = false;
+			this.isLowst = {};
+			this.$emit('getselectvalue', 2);
+			if (obj.detail[0] != '' && obj.detail[0] != '0') {
+				this.selectValue = obj.detail[0];
+			}
+			if (this.selectValue == '自定义') {
+				// 基数可编辑
+				this.ok = false;
+				this.baseMoney = '';
+				this.fromBase = '';
+				this.isshow ? this.isLowst.accumulationLowst = 3 : this.isLowst.socialLowst = 3;
+				this.$emit('islowst', this.isLowst);
+				this.fromWage = false;
+			} else {
+				if (this.selectValue == '按照工资') {
+					this.$emit('getselectvalue', 1);
+					this.fromWage = true;
+					this.baseMoney = this.fromwage;
+					this.isshow ? this.isLowst.accumulationLowst = 2 : this.isLowst.socialLowst = 2;
+					this.$emit('islowst', this.isLowst);
+				} else { // 最低标准
+					this.fromWage = false;
+					if (!this.isshow) { // 社保
+						this.fromBase = this.socialsecurity.noWork.baseMoney;
+						this.baseMoney = this.socialsecurity.noWork.baseMoney;
+						this.isLowst.socialLowst = 1;
+						this.$emit('islowst', this.isLowst);
+					}
+				}
+				this.ok = true;
+			}
+			this.scrollshow = false;
+			this.sendBaseMoney();
+		},
+		colseScrollSelect () {
+			this.scrollshow = false;
+		},
+		// 公积金比例
+		inputProportion: function (e) {
+			let sNum = e.target.value.toString(); // 先转换成字符串类型
+			if (sNum > 12) {
+				sNum = '12';
+			} else if (sNum < 5 && sNum > 1) {
+				sNum = '5';
+			}
+			if (sNum.indexOf('.') > 0) {
+				let index = sNum.indexOf('.');
+				sNum = sNum.slice(0, index);
+			}
+			e.target.value = sNum;
+			this.$emit('getproportion', e.target.value);
+		},
+		getProportion: function (e) {
+			if (e.target.value < 5) {
+				e.target.value = '5';
+			}
+			this.$emit('getproportion', e.target.value);
+		},
+		inputBaseMoney: function (e) {
+			let sNum = e.target.value.toString(); // 先转换成字符串类型
+			if (sNum > 10000000) {
+				sNum = sNum.slice(0, 7);
+			}
+			this.baseMoney = sNum.replace(/[^\d.]/g, ''); // 清除“数字”和“.”以外的字符
+			this.baseMoney = this.baseMoney.replace(/\.{2,}/g, '.'); // 只保留第一个. 清除多余的
+			this.baseMoney = this.baseMoney.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.');
+			this.baseMoney = this.baseMoney.replace(/^(-)*(\d+)\.(\d\d).*$/, '$1$2.$3'); // 只能输入两个小数
+			// 以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
+			if (this.baseMoney.indexOf('.') < 0 && this.baseMoney != '') {
+				this.baseMoney = parseFloat(sNum);
+			}
+			e.target.value = this.baseMoney;
+			this.fromBase = this.baseMoney;
+			this.sendBaseMoney();
+		},
+		sendBaseMoney: function () {
+			let baseMoneys = {};
+			this.isshow ? (baseMoneys.accumulationMoney = this.baseMoney) : (baseMoneys.socialMoney = this.baseMoney);
+			this.$emit('getsecuritybase', baseMoneys);
+		}
+	}
+};
 
 </script>
