@@ -124,7 +124,7 @@
           <div
             v-if="order.showBtn_shanghu"
             class="tuijianBtn boldBtn"
-            @click="handleBtn_shanghu(order)">上户</div>
+            @click="handleBtn_shanghu(order)">邀请上户</div>
           <div
             v-if="order.showBtn_fukuan"
             class="tuijianBtn boldBtn"
@@ -413,6 +413,9 @@ export default {
   computed: {
 
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     console.log('This is pty order list component !')
     var self = this
@@ -599,7 +602,7 @@ export default {
         MIP.viewer.eventAction.execute('doshow', ele, {
           el_id: 'orderlist',
           title: '提示消息',
-          msg: '确定要现在执行上户?',
+          msg: '确定要邀请护理师上户吗?',
           from: this.handleBtn_shanghu,
           data: order })
       }

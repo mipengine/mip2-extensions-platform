@@ -28,7 +28,7 @@
       <mip-img src="https://mip.putibaby.com/i/yhq_jt.png"/>
       <!-- <slot name="yhq" /> -->
     </div>
-    <div>
+    <div class="clear_float">
       <div
         class="find"
         @click="handleSelectMaster">
@@ -81,12 +81,6 @@
   }
 
   /* <!-- banner.css --> */
-
-  .top_level_1 {
-    width: 100%;
-    position: relative;
-  }
-
   mip-form form {
     position: relative;
     left: 0px;
@@ -162,7 +156,6 @@
     text-align: center;
     float: left;
     background-position:center;
-    margin-bottom:70px;
   }
 
   .help {
@@ -200,6 +193,10 @@
 
   .bottom_right_img {
     vertical-align: -6px;
+  }
+  .clear_float{
+  clear:both;
+  height:240px;
   }
 </style>
 
@@ -243,6 +240,14 @@ API.wrapRet_ = function (api, opts, fn) {
     })
 }
 
+API.checkUnionAgain = function (opt, fn) {
+  API.wrapRet_(
+    'https://mip.putibaby.com/api/check_union_again', {
+      'opt': opt
+    },
+    fn)
+}
+
 export default {
 
   props: {
@@ -265,7 +270,30 @@ export default {
   },
   mounted () {
     console.log('This is index component !')
+    window.MIP.viewer.fixedElement.init()
     var self = this
+
+    window.addEventListener('show-page', () => {
+      console.log('show-page')
+      if (self.isUnion || !self.isLogin) {
+        return
+      }
+      API.checkUnionAgain('', function (isOk, res) {
+        if (isOk) {
+          console.log(res)
+          self.isLogin = res.isLogin
+          self.isUnion = res.isUnion
+          // MIP.setData({'#isLogin': true})
+          // MIP.setData({'#isUnion': event.userInfo.isUnion})
+        } else {
+          console.log(res)
+        }
+      })
+    })
+    window.addEventListener('hide-page', () => {
+
+    })
+
     this.$element.customElement.addEventAction('logindone', event => {
       // 这里可以输出登录之后的数据
 
@@ -275,6 +303,9 @@ export default {
 
       self.$set(self, 'isLogin', true)
       self.$set(self, 'isUnion', event.userInfo.isUnion)
+
+      console.log(MIP)
+
       var origin = API.next_cmd || event.origin
       // origin = origin || sessionStorage.next_cmd || localStorage.getItem('origin')
 
@@ -293,7 +324,7 @@ export default {
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq'), {})
       } else if (!event.userInfo.isUnion && origin) {
         console.log('logindone to submit_ph')
-        var to = '/' + origin
+        var to = 'https://mip.putibaby.com/' + origin
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
       }
     })
@@ -321,8 +352,9 @@ export default {
         }
         return false
       }
+      console.log(MIP.getData('isUnion'))
       if (!this.isUnion) {
-        var to = '/' + cmd
+        var to = 'https://mip.putibaby.com/' + cmd
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
 
         return false
@@ -337,23 +369,23 @@ export default {
     handleCoupon () {
       console.log('handleCoupon')
       if (!this.checkLogin_('coupon')) { return }
-      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/coupon '), {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/coupon'), {})
     },
     handleSelectMaster () {
       console.log('handleSelectMaster')
       // if (!this.checkLogin_('select_master'))
       //   return;
-      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/select_master '), {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/select_master'), {})
     },
     handleUpdateYcq () {
       console.log('handleUpdateYcq')
       if (!this.checkLogin_('update_ycq')) { return }
-      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq '), {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq'), {})
     },
     handleOrderList () {
       console.log('handleOrderList')
       if (!this.checkLogin_('order_list')) { return }
-      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list '), {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
     },
     load_data () {
       console.log('should set data')

@@ -181,15 +181,25 @@
         <!-- </a> -->
         <div class="picList">
           <p v-if="data.xc_list.length === 0">没有照片</p>
-          <div v-if="data.xc_list.length > 0">
-            <mip-img
+          <div
+            v-if="data.xc_list.length > 0"
+            class="allpic">
+            <!-- <mip-img
               v-for="pic in data.xc_list"
               :key="pic.big"
               :src="pic.big"
               layout="responsive"
               popup
               width="70px"
-              height="70px" />
+              height="70px" /> -->
+            <div
+              v-for="pic in data.xc_list"
+              :key="pic.big"
+              :src="pic.big"
+              :style="{backgroundImage: 'url(' + pic.big + ')', backgroundSize:'contain'}"
+              class="onepic"
+              @click.prevent="show(pic.big)"/>
+
           </div>
 
         </div>
@@ -366,6 +376,21 @@
         </tbody>
       </table>
     </mip-fixed>
+    <mip-fixed
+      v-if="showImg"
+      class="img_back"
+      type="top"
+      @click="hideImg">
+      <div
+        v-if="showImg"
+        class="img_div"
+        @touchmove.prevent="noop">
+        <mip-img
+          :src="imgUrl"
+        />
+      </div>
+    </mip-fixed>
+
   </div>
 
 </template>
@@ -586,7 +611,19 @@ body{
     margin-right: 10px;
     border-radius: 5px;
 }
+.allpic{
 
+    display: inline-block;
+
+}
+.onepic{
+    height: 70px;
+    width: 70px;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 5px;
+}
 .serverCard{
     width: 100%;
     border-radius: 5px;
@@ -912,6 +949,25 @@ td.secondCol {
     margin-right: 10px;
 }
 
+.img_back{
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  top: 0;
+  left: 0;
+  bottom:0;
+  z-index: 99996 !important;
+}
+.img_div{
+  width: 100%;
+  position: absolute;
+  z-index:99999;
+  top: 100px;
+  left: 0;
+}
+.img_div mip-img{
+  width: 100%;
+}
 </style>
 
 <script>
@@ -978,6 +1034,14 @@ API.unfavMaster = function (masterId, fn) {
     }, fn)
 }
 
+API.checkUnionAgain = function (opt, fn) {
+  API.wrapRet_(
+    'https://mip.putibaby.com/api/check_union_again', {
+      'opt': opt
+    },
+    fn)
+}
+
 export default {
 
   props: {
@@ -996,7 +1060,9 @@ export default {
     return {
       data: pdata.data,
       isLogin: false,
-      isUnion: false
+      isUnion: false,
+      showImg: false,
+      imgUrl: ''
     }
   },
   computed: {
@@ -1006,6 +1072,28 @@ export default {
     console.log('This is master card component !')
     window.MIP.viewer.fixedElement.init()
     var self = this
+
+    window.addEventListener('show-page', () => {
+      console.log('show-page')
+      if (self.isUnion || !self.isLogin) {
+        return
+      }
+      API.checkUnionAgain('', function (isOk, res) {
+        if (isOk) {
+          console.log(res)
+          self.isLogin = res.isLogin
+          self.isUnion = res.isUnion
+          // MIP.setData({'#isLogin': true})
+          // MIP.setData({'#isUnion': event.userInfo.isUnion})
+        } else {
+          console.log(res)
+        }
+      })
+    })
+    window.addEventListener('hide-page', () => {
+
+    })
+
     this.$element.customElement.addEventAction('logindone', event => {
       // 这里可以输出登录之后的数据
 
@@ -1031,6 +1119,9 @@ export default {
       } else if (event.userInfo.isUnion && origin === 'order_list') {
         console.log('logindone to order_list')
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
+      } else if (origin === 'fav' && !event.userInfo.isUnion) {
+        console.log('go to submit_ph')
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
       } else if (origin && !event.userInfo.isUnion) {
         console.log('go to submit_ph')
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/' + origin), {})
@@ -1072,6 +1163,21 @@ export default {
         }
         return false
       }
+      if (!this.isUnion) {
+        var to = '/' + cmd
+        console.log(to)
+        if (cmd === 'fav') {
+          window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
+        } else if (cmd === 'order_list') {
+          window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
+        } else if (cmd === 'update_time') {
+          to = 'https://mip.putibaby.com/update_time_mip?mcode=' + this.data.codeid
+          window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
+        }
+
+        return false
+      }
+
       return true
     },
 
@@ -1110,6 +1216,15 @@ export default {
     },
     load_data () {
       console.log('should set data')
+    },
+    show (e) {
+      this.showImg = true
+      this.imgUrl = e
+    },
+    hideImg () {
+      this.showImg = false
+    },
+    noop () {
     }
   }
 
