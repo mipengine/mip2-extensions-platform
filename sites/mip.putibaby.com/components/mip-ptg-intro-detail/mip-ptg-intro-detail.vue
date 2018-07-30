@@ -452,6 +452,9 @@ export default {
   computed: {
 
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     console.log('This is shanghu detail component !')
   },
