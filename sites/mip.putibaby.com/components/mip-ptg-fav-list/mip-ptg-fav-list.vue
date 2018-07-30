@@ -218,6 +218,9 @@ export default {
   computed: {
 
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     console.log('This is my first custom component !')
     var self = this

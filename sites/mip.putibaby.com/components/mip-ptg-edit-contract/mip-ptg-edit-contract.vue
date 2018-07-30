@@ -1120,6 +1120,9 @@ export default {
   computed: {
 
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     var readonly = this.readonly ? 1 : 0
     if (readonly === 1 || readonly === '1') {

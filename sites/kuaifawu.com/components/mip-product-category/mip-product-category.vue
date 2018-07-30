@@ -3,7 +3,7 @@
     <mip-fixed
       class="k-nav"
       type="left"
-      top="0">
+      top="44px">
       <div>
         <ul
           v-for="(val,index) in product"

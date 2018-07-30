@@ -93,13 +93,10 @@ export default {
       delCarNo: ''
     }
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
-    this.user = {
-      Tel: window.localStorage.UserTel || window.UserTel || ''
-    }
-    // if (!this.user.Tel) {
-
-    // }
     this.getCar()
   },
   methods: {

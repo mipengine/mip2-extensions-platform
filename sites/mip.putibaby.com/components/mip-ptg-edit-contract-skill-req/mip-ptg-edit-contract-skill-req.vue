@@ -287,6 +287,9 @@ export default {
   beforeMount () {
 
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     console.log('This is edit contract_skill_req component !')
     var self = this

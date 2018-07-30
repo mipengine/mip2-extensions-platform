@@ -513,6 +513,9 @@ export default {
   computed: {
 
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     var self = this
     this.$element.customElement.addEventAction('logindone', event => {

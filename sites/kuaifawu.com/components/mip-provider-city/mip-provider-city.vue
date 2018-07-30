@@ -8,19 +8,21 @@
         <span class="title">地区：</span>
         <span class="text">{{ areatitle }}</span>
         <mip-img
-          src="../../static/image/splist_seljt.png"
-          class="img"/>
+          src="https://b.kuaifawu.com/static/image/splist_seljt.png"
+          class="img" />
       </div>
     </div>
     <div
       v-show="flag"
       id="masks"
       class="mask">
-      <div class="dialog">
+      <div
+        id="dialogs"
+        class="dialog">
         <div class="lightbox">
           <p> 请选择城市</p>
           <div
-            v-if="areatitle !== '全国'"
+            v-if="isquanguo === 1"
             class="list">
             <div id="change-province">
               <ul>
@@ -60,40 +62,109 @@
             </div>
           </div>
           <div
-            v-if="areatitle === '全国'"
+            v-if="isquanguo === 2"
             class="list">
             <div id="change-area">
               <ul>
                 <li
                   v-for="(pval,pid) in providercitylist"
+                  v-if="pval.isprovideropen === 2"
                   :key="pid"
                   :class="{dis: pval.isprodutopen == 1}"
-                  @click="selectedArea(searchdata.pid,searchdata.ct,searchdata.ar,'\'' + pval.title + '\'',1,searchdata.packageid)">{{ pval.title }}
+                  @click="selectedArea(searchdata.pid,pval.parentid,pval.id,'\'' + pval.title + '\'',1,searchdata.packageid)">{{ pval.title }}
                 </li>
               </ul>
             </div>
           </div>
         </div>
       </div>
+      <div
+        class="blank"
+        @click="cancels"/>
     </div>
   </div>
 </template>
 
 <style scoped>
-    .wrapper{width:50%;}
-    .tab_header .active{padding-left:0.2rem;height:50px;}
-    .tab_header .active .text{width:50%;display: inline-block;white-space: nowrap;text-overflow: ellipsis;overflow: hidden;vertical-align: middle;}
-    .tab_header .active .img{width:15px;margin-left:2px;display: inline-block;vertical-align: middle;}
-    .mask .dialog{width:100%;border-top:1px solid #eee;overflow-y: scroll;margin-top: -45px;}
-    .mask .dialog ul li{line-height:0.5rem;border-bottom:1px solid #eee;}
-    .mask .dialog .list {padding:0 0.12rem;}
-    .mask .dialog .list ul{list-style: none;overflow: hidden;display:flex;flex-wrap: wrap;justify-content: space-between;}
-    .mask .dialog .list li{float: left;text-align: center;margin-bottom: 0.1rem;width: 1rem;line-height:0.3rem;height: 0.3rem;background-color: white;border: 0.01467rem solid #d9d9d9;font-size:0.125rem;overflow: hidden;padding: 0 0.01rem;margin: 0.05rem;}
-    .dis{color:#999999}
-    /*选择地区light-box*/
-    .mask .dialog .lightbox{background: #f3f6f6;height:300px;overflow-y:scroll;}
-    .mask .dialog .lightbox p{padding-left: 0.15rem;color: #999;}
-  /*选择地区light-box*/
+.wrapper {
+    width: 50%;
+}
+.tab_header .active {
+    padding-left: 0.2rem;
+    height: 50px;
+}
+.tab_header .active .text {
+    width: 50%;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    vertical-align: middle;
+}
+.tab_header .active .img {
+    width: 15px;
+    margin-left: 2px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.mask .dialog {
+    width: 100%;
+    border-top: 1px solid #eee;
+    overflow-y: scroll;
+}
+.mask .blank {
+    width: 100%;
+    height: 59%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+.mask .dialog ul li {
+    line-height: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+.mask .dialog .list {
+    padding: 0 0.12rem;
+}
+.mask .dialog .list ul {
+    list-style: none;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.mask .dialog .list ul:after {
+    content: "";
+    flex: auto;
+}
+.mask .dialog .list li {
+    float: left;
+    text-align: center;
+    margin-bottom: 0.1rem;
+    width: 1rem;
+    line-height: 0.3rem;
+    height: 0.3rem;
+    background-color: white;
+    border: 0.01467rem solid #d9d9d9;
+    font-size: 0.125rem;
+    overflow: hidden;
+    padding: 0 0.01rem;
+    margin: 0.05rem;
+}
+.dis {
+    color: #999999;
+}
+/*选择地区light-box*/
+.mask .dialog .lightbox {
+    background: #f3f6f6;
+    height: 300px;
+    overflow-y: scroll;
+}
+.mask .dialog .lightbox p {
+    padding-left: 0.15rem;
+    color: #999;
+}
+/*选择地区light-box*/
 </style>
 
 <script>
@@ -113,36 +184,42 @@ export default {
       provinceid: '',
       cityid: '',
       areaid: '',
-      servicearealist: []
+      servicearealist: [],
+      providercitylist: [],
+      isquanguo: 1
     }
   },
   mounted () {
     const self = this
     let pcid = getRequest().pid
     pcid = pcid || 1
-    window.fetchJsonp('https://api.kuaifawu.com/mip/provider/plist/pid/' + pcid, {
-      jsonpCallback: 'callback'
-    }).then(function (res) {
-      return res.json()
-    }).then(function (data) {
-      self.searchdata = data.data.items.searchData
-      self.pid = data.data.items.searchData.pid
-      self.ct = data.data.items.searchData.ct
-      self.ar = data.data.items.searchData.ar
-      self.id = data.data.items.productSalesAttrInfo.id
-      self.packageid = data.data.items.searchData.packageid
-      self.servicearealist = data.data.items.serviceAreaList
-      self.areatitle = data.data.items.serviceAreaList.areatitle
-      self.areatitle = data.data.items.searchData.areatitle
-      self.providercitylist = data.data.items.serviceAreaList.providercitylist
-      self.servicearealist = data.data.items.serviceAreaList
-      console.log(self.servicearealist)
-      if (data.data.items.serviceAreaList.areatitle === '全国') {
-        self.areatitle = data.data.items.serviceAreaList.areatitle
-      } else {
+    window
+      .fetchJsonp(
+        'https://api.kuaifawu.com/mip/provider/plist/pid/' + pcid,
+        {
+          jsonpCallback: 'callback'
+        }
+      )
+      .then(function (res) {
+        return res.json()
+      })
+      .then(function (data) {
+        self.searchdata = data.data.items.searchData
+        self.pid = data.data.items.searchData.pid
+        self.ct = data.data.items.searchData.ct
+        self.ar = data.data.items.searchData.ar
+        self.id = data.data.items.productSalesAttrInfo.id
+        self.packageid = data.data.items.searchData.packageid
+        self.servicearealist = data.data.items.serviceAreaList
         self.areatitle = data.data.items.searchData.areatitle
-      }
-    })
+        if (data.data.items.serviceAreaList.areatitle === '全国') {
+          self.isquanguo = 2
+          self.providercitylist =
+                        data.data.items.serviceAreaList.providercitylist
+        } else {
+          self.isquanguo = 1
+        }
+      })
     function getRequest () {
       let url = location.search // 获取url中"?"符后的字串
       let theRequest = {}
@@ -151,7 +228,9 @@ export default {
         let str = url.substr(1)
         strs = str.split('&')
         for (let i = 0; i < strs.length; i++) {
-          theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
+          theRequest[strs[i].split('=')[0]] = unescape(
+            strs[i].split('=')[1]
+          )
         }
       }
       return theRequest
@@ -161,6 +240,10 @@ export default {
     area () {
       this.flag = !this.flag
       this.$emit('flag', this.flag)
+    },
+    cancels () {
+      let masks = document.getElementById('masks')
+      masks.style.display = 'none'
     },
     selectedPro (productsalesattrid, id, title, type, packageid, parentid) {
       this.provinceid = id
@@ -182,15 +265,52 @@ export default {
         area.style.display = 'block'
       }
     },
-    selectedArea (productsalesattrid, cityid, areaid, title, type, packageid) {
+    selectedArea (
+      productsalesattrid,
+      cityid,
+      areaid,
+      title,
+      type,
+      packageid
+    ) {
       this.area1 = title
-      let providerid = this.providerid || 0
       if (this.area1 !== '') {
         this.flag = !this.flag
-        this.areatitle = this.city1 + '-' + this.area1
-        this.areatitle = (this.areatitle).replace(/'|'/g, '')
+        this.areatitle = this.area1
+        this.areatitle = this.areatitle.replace(/'|'/g, '')
       }
-      window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + '/product/info.html?id=' + productsalesattrid + '_' + cityid + '_' + areaid + '_' + providerid + '_' + packageid + '_0_0'), {isMipLink: true})
+
+      if (this.isquanguo === 2) {
+        window.MIP.viewer.open(
+          MIP.util.makeCacheUrl(
+            config.data().burl +
+                            '/provider/list.html?pid=' +
+                            productsalesattrid +
+                            '_' +
+                            cityid +
+                            '_0_' +
+                            areaid +
+                            '_0_0_0_' +
+                            packageid
+          ),
+          { isMipLink: true }
+        )
+      } else {
+        window.MIP.viewer.open(
+          MIP.util.makeCacheUrl(
+            config.data().burl +
+                            '/provider/list.html?pid=' +
+                            productsalesattrid +
+                            '_' +
+                            cityid +
+                            '_' +
+                            areaid +
+                            '_0_0_0_0_' +
+                            packageid
+          ),
+          { isMipLink: true }
+        )
+      }
     }
   }
 }
