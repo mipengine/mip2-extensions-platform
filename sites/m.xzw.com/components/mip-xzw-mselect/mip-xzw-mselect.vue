@@ -239,21 +239,23 @@ export default {
     let jz = document.getElementById('jz')
     let a = submit.querySelectorAll('a')
     let href = a[0].getAttribute('url')
-    let input = document.querySelectorAll('input')
     if (submit2) {
-      input = pt.querySelectorAll('input')
       submit2.addEventListener('click', function () {
         let a2 = submit2.querySelectorAll('a')
         let href2 = a2[0].getAttribute('url')
-        input = jz.querySelectorAll('input')
-        if (!_this.returnQuery(input)) {
+        let input2 = jz.querySelectorAll('input')
+        if (!_this.returnQuery(input2)) {
           return false
         }
-        let url = href2 + '?' + _this.returnQuery(input)
+        let url = href2 + '?' + _this.returnQuery(input2)
         a2[0].setAttribute('href', url)
       })
     }
     submit.addEventListener('click', function () {
+      let input = document.querySelectorAll('input')
+      if (submit2) {
+        input = pt.querySelectorAll('input')
+      }
       if (!_this.returnQuery(input)) {
         return false
       }

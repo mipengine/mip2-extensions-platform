@@ -293,6 +293,9 @@ export default {
   beforeMount () {
 
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     console.log('This is my first custom component !')
     console.log(this)
