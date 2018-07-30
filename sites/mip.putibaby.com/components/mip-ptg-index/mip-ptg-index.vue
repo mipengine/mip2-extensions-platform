@@ -358,6 +358,7 @@ export default {
       console.log(MIP.getData('isUnion'))
       if (!this.isUnion) {
         var to = 'https://mip.putibaby.com/' + cmd
+        console.log('uuu' + to)
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
 
         return false
