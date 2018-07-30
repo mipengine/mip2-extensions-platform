@@ -6,22 +6,22 @@
       type="top"
       class="fix_back">
       <div id="fullScreen"/>
-      <mip-fixed
-        type="top"
-        class="fix_con">
-        <div id="floatLayer">
-          <p class="title">{{ title }}</p>
-          <p class="msg">{{ msg }}</p>
-          <div class="btn_div">
-            <span
-              class="btn_cal"
-              @click="cancelConfirm">取消</span>
-            <span
-              class="btn_ok"
-              @click="okConfirm">确定</span>
-          </div>
+    </mip-fixed>
+    <mip-fixed
+      type="top"
+      class="fix_con">
+      <div id="floatLayer">
+        <p class="title">{{ title }}</p>
+        <p class="msg">{{ msg }}</p>
+        <div class="btn_div">
+          <span
+            class="btn_cal"
+            @click="cancelConfirm">取消</span>
+          <span
+            class="btn_ok"
+            @click="okConfirm">确定</span>
         </div>
-      </mip-fixed>
+      </div>
     </mip-fixed>
 
   </div>
@@ -39,7 +39,7 @@
   height:100%;
 }
 .fix_con{
-  z-index:10000;
+  z-index:10000 !important;
 }
 #fullScreen {
   width: 100%;

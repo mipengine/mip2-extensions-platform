@@ -465,7 +465,7 @@ export default {
             var donePage = 'https://mip.putibaby.com/order_list'
             var xzUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment' +
                   '?id=1544608709261251&redirect=' + encodeURIComponent(donePage)
-            window.location.href = xzUrl
+            window.top.location.href = xzUrl
             // window.MIP.viewer.open(xzUrl, {})
           } else {
             console.error(res)
