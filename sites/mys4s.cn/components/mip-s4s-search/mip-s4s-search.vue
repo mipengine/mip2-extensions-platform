@@ -15,6 +15,7 @@
             class="s4s-ask-upload-btn"
             @click="upload" >
             <mip-img
+              ref="imagess"
               :src="driveUrl"
               styel="width:100%;" />
           </div>
@@ -94,7 +95,7 @@
         </div>
         <input
           :maxlength="engineNoLength === 99 ? '' : 6"
-          v-model="engion"
+          v-model="engine"
           :placeholder="engineNoLength === 99 ? '请输入完整的发动机号' : '请输入发动机号后六位'"
           type="text" >
         <span
@@ -154,7 +155,7 @@ export default {
       provice: '省',
       showProvice: false,
       car_no: '',
-      engion: '',
+      engine: '',
       vin: '',
       detail: false,
       src: '',
@@ -328,7 +329,7 @@ export default {
         }
       })
     },
-    engion (val) {
+    engine (val) {
       MIP.setData({
         '#globalData': {
           engine: val
@@ -372,7 +373,7 @@ export default {
       this.provice = val.plateno ? val.plateno.substring(0, 1) : '浙'
       this.car_no = val.plateno ? val.plateno.substring(1) : ''
       this.vin = val.vin || ''
-      this.engion = val.engineno || ''
+      this.engine = val.engineno || ''
       this.driveUrl = driveUrl
       if (val.vehicletype.indexOf('小') !== -1) {
         this.cartype = '02'
@@ -421,7 +422,7 @@ export default {
         util.toast('请输入正确的车架号')
         return
       }
-      if (this.engion.length < 6 && this.engineNoLength !== 0) {
+      if (this.engine.length < 6 && this.engineNoLength !== 0) {
         util.toast('请输入正确的发动机号')
         return
       }
@@ -436,28 +437,29 @@ export default {
       let list = this.$refs.file.files
       if (list.length !== 1) {
         util.toast('最多只能选择1张驾驶证。')
-        return
       }
 
-      // let item = {
-      //   name: list[0].name,
-      //   size: list[0].size,
-      //   file: list[0]
+      let item = {
+        name: list[0].name,
+        size: list[0].size,
+        file: list[0]
+      }
+
+      // const file = list[0]
+      // if (file) {
+      //   console.log(file.size / 1024 / 1024 + 'MB')
+      //   const isLt2M = file.size / 1024 / 1024 < 2
+      //   if (!isLt2M) {
+      //     util.toast('图片大小需要小于 2MB!')
+      //     return
+      //   }
+      //   util.toast('正在上传')
+      //   const formData = new FormData()
+      //   formData.append('image', list[0])
+      //   self.vehiclecardFetch(formData)
       // }
 
-      const file = list[0]
-      if (file) {
-        console.log(file.size / 1024 / 1024 + 'MB')
-        const isLt2M = file.size / 1024 / 1024 < 2
-        if (!isLt2M) {
-          util.toast('图片大小需要小于 2MB!')
-          return
-        }
-        util.toast('正在上传')
-        const formData = new FormData()
-        formData.append('image', list[0])
-        self.vehiclecardFetch(formData)
-      }
+      // 对图片进行压缩
 
       // let name = 'travelUrl'
       // const formData1 = new FormData()
@@ -485,8 +487,8 @@ export default {
       //       util.toast(data.msg)
       //     }
       //   })
-
-      // self.html5Reader(list[0], item, 'travelUrl')
+      console.log(list)
+      self.html5Reader(list[0], item, 'driveUrl')
     },
     html5Reader: function (file, item, name) {
       let imgSrc = new Image()
@@ -530,24 +532,29 @@ export default {
           // 图片压缩
           context.drawImage(imgSrc, 0, 0, targetWidth, targetHeight)
           // canvas转为blob并上传
-          canvas.toBlob(function (blob) {
+          let data = canvas.toDataURL('image/jpeg').split(',')[1]
+          // 获取base64图片大小，返回MB数字
+          let size = parseInt(data.length - (data.length / 8) * 2)
+          console.log(size)
+          if (size) {
+            const isLt2M = size / 1024 / 1024 < 2
+            if (!isLt2M) {
+              util.toast('图片大小需要小于 2MB!')
+              return
+            }
             util.toast('正在上传')
-            const formData = new FormData()
-            formData.append('image', blob, item.name)
-            self.vehiclecardFetch(formData)
-          }, file.type || 'image/png')
+            self.vehiclecardFetch(data)
+          }
         }
       }
       reader.readAsDataURL(file)
     },
     // 识别行驶证
-    vehiclecardFetch (formData) {
+    vehiclecardFetch (data) {
       let self = this
-      fetch('https://mys4s.cn/v2/car/recognize_vehiclecard', {
-        method: 'POST',
-        body: formData
+      util.fetchData('v2/car/b64/recognize_vehiclecard', {
+        imageString: data
       })
-        .then(res => res.json())
         .then(data => {
           if (data.code === 0) {
             if (data.data && data.data.img_url) {
@@ -568,7 +575,7 @@ export default {
 
 <style scoped>
 .s4s-car-info.s4s-illegal-body {
-  margin-top: .12rem;
+  margin-top: 0.12rem;
   padding-bottom: 0;
 }
 
@@ -583,7 +590,7 @@ export default {
 }
 .s4s-car-info {
   background-color: #fff;
-  padding: .15rem;
+  padding: 0.15rem;
 }
 
 .s4s-car-name {
@@ -591,13 +598,13 @@ export default {
   -ms-flex: 1;
   flex: 1;
   color: #333333;
-  font-size: .2rem;
+  font-size: 0.2rem;
 }
 
 .s4s-car-illegal {
-  padding-top: .05rem;
+  padding-top: 0.05rem;
   color: #999999;
-  font-size: .14rem;
+  font-size: 0.14rem;
 }
 
 .s4s-upload-pic {
@@ -610,20 +617,20 @@ export default {
   flex-direction: row;
   background-image: linear-gradient(-149deg, #fe5a00 0%, #ff7c00 100%);
   justify-content: center;
-  border-radius: .04rem;
+  border-radius: 0.04rem;
   color: #fff;
   /* width: 0.45rem; */
   height: 0.25rem;
-  margin-right: .05rem;
-  padding: .01rem .09rem;
+  margin-right: 0.05rem;
+  padding: 0.01rem 0.09rem;
 }
 .right-arrow {
   display: inline-block;
   width: 0;
   height: 0;
-  border-left: .05rem solid transparent;
-  border-top: .05rem solid #fff;
-  border-right: .05rem solid transparent;
+  border-left: 0.05rem solid transparent;
+  border-top: 0.05rem solid #fff;
+  border-right: 0.05rem solid transparent;
 }
 .s4s-provice {
   width: 100%;
@@ -641,7 +648,7 @@ export default {
   width: 9%;
   padding: 0.05rem;
   background: #fff;
-  border-radius: .04rem;
+  border-radius: 0.04rem;
   margin-left: 3.09999999%;
   margin-top: 3.09999999%;
   text-align: center;

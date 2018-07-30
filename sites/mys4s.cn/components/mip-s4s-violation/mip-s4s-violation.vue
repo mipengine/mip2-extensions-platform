@@ -100,7 +100,7 @@ export default {
       code: 1,
       lists: [],
       car_no: '',
-      engion: '',
+      engine: '',
       vin: '',
       car: null,
       driveUrl: '',
@@ -113,6 +113,14 @@ export default {
     return true
   },
   mounted () {
+    if (!this.globalData.car_no && this.getQueryString('carno')) {
+      console.log('url模式')
+      this.globalData.car_no = this.getQueryString('carno').slice(1, 10)
+      this.globalData.provice = this.getQueryString('carno').slice(0, 1)
+      this.globalData.vin = this.getQueryString('vin')
+      this.globalData.engine = this.getQueryString('engine')
+      this.globalData.car_type = this.getQueryString('car_type')
+    }
     if (this.globalData.car_no) {
       try {
         window.localStorage.setItem('violationData', JSON.stringify(this.globalData))
@@ -121,6 +129,7 @@ export default {
       }
     } else {
       try {
+        console.log('cache模式')
         let globalData = window.localStorage.getItem('violationData')
         if (globalData && JSON.parse(globalData)) {
           this.globalData = JSON.parse(globalData)
@@ -131,7 +140,7 @@ export default {
     }
     this.provice = this.globalData.provice
     this.car_no = this.globalData.car_no
-    this.engion = this.globalData.engine
+    this.engine = this.globalData.engine
     this.vin = this.globalData.vin
     this.car_type = this.globalData.car_type
     if (this.globalData.channel) {
@@ -157,6 +166,12 @@ export default {
     })
   },
   methods: {
+    getQueryString (name) {
+      let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+      let r = window.location.search.substr(1).match(reg)
+      if (r != null) return decodeURIComponent(r[2])
+      return null
+    },
     closeMake () {
       this.detail = false
     },
@@ -168,16 +183,16 @@ export default {
       this.$refs.pay1.click()
     },
     // 获取违章
-    getIllegal (formid, carNo, vin, engion) {
+    getIllegal (formid, carNo, vin, engine) {
       let self = this
       let param = {
         car_no: carNo ? carNo.toUpperCase() : '',
         vin: vin ? vin.toUpperCase() : '',
-        engine: engion ? engion.toUpperCase() : '',
+        engine: engine ? engine.toUpperCase() : '',
         channel: 'baidu',
         car_type: this.globalData.car_type
       }
-      // car_no车牌号，vin车架号，engion发动机，{car_no: 陕KC1166 vin: LSVNJ49J472028756 engion: 020297
+      // car_no车牌号，vin车架号，engion发动机，{car_no: 陕KC1166 vin: LSVNJ49J472028756 engine: 020297
       util
         .fetchData('v3/violation/web/query', param)
         .then(res => {
@@ -208,7 +223,7 @@ export default {
                   ViolationId: item.ViolationId,
                   car_no: carNo ? carNo.toUpperCase() : '',
                   vin: vin ? vin.toUpperCase() : '',
-                  engion: engion ? engion.toUpperCase() : ''
+                  engine: engine ? engine.toUpperCase() : ''
                 })
               })
             }
@@ -226,7 +241,7 @@ export default {
               vin: param.vin ? param.vin.toUpperCase() : '',
               engine: param.engine ? param.engine.toUpperCase() : ''
             }
-            // 接口参数 engion
+            // 接口参数 engine
             util.fetchData('v3/violation/car/manage', addParam).then(res => {
               if (res.code > 0) {
                 util.toast(res.msg)

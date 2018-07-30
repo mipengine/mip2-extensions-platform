@@ -594,42 +594,12 @@ export default {
         util.toast('最多只能选择1张处罚单。')
         return
       }
-      // let item = {
-      //   name: list[0].name,
-      //   size: list[0].size,
-      //   file: list[0]
-      // }
-      // fix canvas bug
-      const file = list[0]
-      const self = this
-      if (file) {
-        console.log(file.size / 1024 / 1024 + 'MB')
-        const isLt2M = file.size / 1024 / 1024 < 2
-        if (!isLt2M) {
-          util.toast('图片大小需要小于 2MB!')
-          return
-        }
-        util.toast('正在上传')
-        const formData = new FormData()
-        formData.append('image', list[0])
-        // self.vehiclecardFetch(formData)
-        fetch('https://mys4s.cn/car/upload_report_pic', {
-          method: 'POST',
-          body: formData
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (data.code === 0) {
-              util.toast('上传成功')
-              // if (name === 'ticket') {
-              self.ticketUrl = data.data
-              // }
-            } else {
-              util.toast(data.msg)
-            }
-          })
+      let item = {
+        name: list[0].name,
+        size: list[0].size,
+        file: list[0]
       }
-      // this.html5Reader(list[0], item, 'ticket')
+      this.html5Reader(list[0], item)
     },
     // 常见问题
     gotoHelp () {
@@ -692,7 +662,7 @@ export default {
         }
       })
     },
-    html5Reader: function (file, item, name) {
+    html5Reader: function (file, item) {
       let imgSrc = new Image()
       let reader = new FileReader()
       reader.onload = e => {
@@ -734,27 +704,34 @@ export default {
           // 图片压缩
           context.drawImage(imgSrc, 0, 0, targetWidth, targetHeight)
           // canvas转为blob并上传
-          canvas.toBlob(function (blob) {
-            const formData = new FormData()
-            formData.append('image', blob, item.name)
-
+          // canvas.toBlob(function (blob) {
+          //   const formData = new FormData()
+          //   formData.append('image', blob, item.name)
+          let data = canvas.toDataURL('image/jpeg').split(',')[1]
+          // 获取base64图片大小，返回MB数字
+          let size = parseInt(data.length - (data.length / 8) * 2)
+          console.log(size)
+          if (size) {
+            const isLt2M = size / 1024 / 1024 < 2
+            if (!isLt2M) {
+              util.toast('图片大小需要小于 2MB!')
+              return
+            }
             util.toast('正在上传')
-            fetch('https://mys4s.cn/car/upload_report_pic', {
-              method: 'POST',
-              body: formData
+            util.fetchData('v3/violation/image/upload', {
+              imageString: data
             })
-              .then(res => res.json())
               .then(data => {
                 if (data.code === 0) {
                   util.toast('上传成功')
-                  if (name === 'ticket') {
-                    self.ticketUrl = data.data
-                  }
+                  self.ticketUrl = data.data
                 } else {
                   util.toast(data.msg)
                 }
               })
-          }, file.type || 'image/png')
+          }
+
+          // }, file.type || 'image/png')
         }
       }
       reader.readAsDataURL(file)

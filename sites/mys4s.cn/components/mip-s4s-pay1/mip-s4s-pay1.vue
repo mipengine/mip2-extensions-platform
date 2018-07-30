@@ -94,7 +94,6 @@
         <span class="s4s-group-tit">认罚日期</span>
         <span class="s4s-group-txt">{{ date }}</span>
       </div>
-
       <div
         v-if="(illegal.FreeRuleObject && illegal.FreeRuleObject.drive_licence == 1) || (illegal.FreeRuleObject && illegal.FreeRuleObject.travel_licence == 1)"
         class="s4s-group group-upload">
@@ -438,51 +437,13 @@ export default {
         util.toast('最多只能选择1张行驶证。')
       }
 
-      // let item = {
-      //   name: list[0].name,
-      //   size: list[0].size,
-      //   file: list[0]
-      // }
-      // fix canvas bug
-      this.inputUpload(list[0], 'driveUrl')
-      // this.html5Reader(list[0], item, 'driveUrl')
-    },
-    inputUpload (file, name) {
-      const self = this
-      if (file) {
-        console.log(file.size / 1024 / 1024 + 'MB!')
-        const isLt2M = file.size / 1024 / 1024 < 2
-        if (!isLt2M) {
-          util.toast('图片大小需要小于 2MB!')
-          return
-        }
-        util.toast('正在上传')
-        const formData = new FormData()
-        formData.append('image', file)
-        fetch('https://mys4s.cn/car/upload_report_pic', {
-          method: 'POST',
-          body: formData
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (data.code === 0) {
-              util.toast('上传成功')
-              if (name === 'ticket') {
-                self.ticketUrl = data.data
-              } else if (name === 'JSZTravel') {
-                self.JSZTravelUrl = data.data
-              } else if (name === 'JSZDrive') {
-                self.JSZDriveUrl = data.data
-              } else if (name === 'travelUrl') {
-                self.travelUrl = data.data
-              } else if (name === 'driveUrl') {
-                self.driveUrl = data.data
-              }
-            } else {
-              util.toast(data.msg)
-            }
-          })
+      let item = {
+        name: list[0].name,
+        size: list[0].size,
+        file: list[0]
       }
+      // fix canvas bug
+      this.html5Reader(list[0], item, 'driveUrl')
     },
     // 上传行驶证正面照
     uploaderXSZTravel () {
@@ -492,13 +453,12 @@ export default {
         return
       }
 
-      // let item = {
-      //   name: list[0].name,
-      //   size: list[0].size,
-      //   file: list[0]
-      // }
-      // this.html5Reader(list[0], item, 'travelUrl')
-      this.inputUpload(list[0], 'travelUrl')
+      let item = {
+        name: list[0].name,
+        size: list[0].size,
+        file: list[0]
+      }
+      this.html5Reader(list[0], item, 'travelUrl')
     },
     // 上传驾驶证正面照
     uploaderJSZDrive () {
@@ -508,13 +468,12 @@ export default {
         return
       }
 
-      // let item = {
-      //   name: list[0].name,
-      //   size: list[0].size,
-      //   file: list[0]
-      // }
-      // this.html5Reader(list[0], item, 'JSZDrive')
-      this.inputUpload(list[0], 'JSZDrive')
+      let item = {
+        name: list[0].name,
+        size: list[0].size,
+        file: list[0]
+      }
+      this.html5Reader(list[0], item, 'JSZDrive')
     },
     // 上传驾驶证正面照
     uploaderJSZTravel () {
@@ -524,13 +483,12 @@ export default {
         return
       }
 
-      // let item = {
-      //   name: list[0].name,
-      //   size: list[0].size,
-      //   file: list[0]
-      // }
-      // this.html5Reader(list[0], item, 'JSZTravel')
-      this.inputUpload(list[0], 'JSZTravel')
+      let item = {
+        name: list[0].name,
+        size: list[0].size,
+        file: list[0]
+      }
+      this.html5Reader(list[0], item, 'JSZTravel')
     },
     html5Reader: function (file, item, name) {
       let imgSrc = new Image()
@@ -574,49 +532,87 @@ export default {
           context.clearRect(0, 0, targetWidth, targetHeight)
           // 图片压缩
           context.drawImage(imgSrc, 0, 0, targetWidth, targetHeight)
-          // canvas转为blob并上传
-          canvas.toBlob(function (blob) {
-            //    var b = {
-            //         file: blob,
-            //         name: item.name,
-            //         size: blob.size,
-            //         src: imgSrc.src
-            //     }
-            const formData = new FormData()
-            formData.append('image', blob, item.name)
-
-            // const formData = new FormData();
-            // formData.append("image", file);
-
+          let data = canvas.toDataURL('image/jpeg').split(',')[1]
+          // 获取base64图片大小，返回MB数字
+          let size = parseInt(data.length - (data.length / 8) * 2)
+          console.log(size)
+          if (size) {
+            const isLt2M = size / 1024 / 1024 < 2
+            if (!isLt2M) {
+              util.toast('图片大小需要小于 2MB!')
+              return
+            }
             util.toast('正在上传')
+            self.uploadBase64(data, name)
+          }
 
-            fetch('https://mys4s.cn/car/upload_report_pic', {
-              method: 'POST',
-              body: formData
-            })
-              .then(res => res.json())
-              .then(data => {
-                if (data.code === 0) {
-                  util.toast('上传成功')
-                  if (name === 'ticket') {
-                    self.ticketUrl = data.data
-                  } else if (name === 'JSZTravel') {
-                    self.JSZTravelUrl = data.data
-                  } else if (name === 'JSZDrive') {
-                    self.JSZDriveUrl = data.data
-                  } else if (name === 'travelUrl') {
-                    self.travelUrl = data.data
-                  } else if (name === 'driveUrl') {
-                    self.driveUrl = data.data
-                  }
-                } else {
-                  util.toast(data.msg)
-                }
-              })
-          }, file.type || 'image/png')
+          // canvas转为blob并上传
+          // canvas.toBlob(function (blob) {
+          //    var b = {
+          //         file: blob,
+          //         name: item.name,
+          //         size: blob.size,
+          //         src: imgSrc.src
+          //     }
+          // const formData = new FormData()
+          // formData.append('image', blob, item.name)
+
+          // const formData = new FormData();
+          // formData.append("image", file);
+
+          // util.toast('正在上传')
+
+          // fetch('https://mys4s.cn/car/upload_report_pic', {
+          //   method: 'POST',
+          //   body: formData
+          // })
+          //   .then(res => res.json())
+          //   .then(data => {
+          //     if (data.code === 0) {
+          //       util.toast('上传成功')
+          //       if (name === 'ticket') {
+          //         self.ticketUrl = data.data
+          //       } else if (name === 'JSZTravel') {
+          //         self.JSZTravelUrl = data.data
+          //       } else if (name === 'JSZDrive') {
+          //         self.JSZDriveUrl = data.data
+          //       } else if (name === 'travelUrl') {
+          //         self.travelUrl = data.data
+          //       } else if (name === 'driveUrl') {
+          //         self.driveUrl = data.data
+          //       }
+          //     } else {
+          //       util.toast(data.msg)
+          //     }
+          //   })
+          // }, file.type || 'image/png')
         }
       }
       reader.readAsDataURL(file)
+    },
+    uploadBase64 (data, name) {
+      let self = this
+      util.fetchData('/v3/violation/image/upload', {
+        imageString: data
+      })
+        .then(data => {
+          if (data.code === 0) {
+            util.toast('上传成功')
+            if (name === 'ticket') {
+              self.ticketUrl = data.data
+            } else if (name === 'JSZTravel') {
+              self.JSZTravelUrl = data.data
+            } else if (name === 'JSZDrive') {
+              self.JSZDriveUrl = data.data
+            } else if (name === 'travelUrl') {
+              self.travelUrl = data.data
+            } else if (name === 'driveUrl') {
+              self.driveUrl = data.data
+            }
+          } else {
+            util.toast(data.msg)
+          }
+        })
     },
     // 支付
     payFee () {
