@@ -413,6 +413,9 @@ export default {
   computed: {
 
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     console.log('This is pty order list component !')
     var self = this

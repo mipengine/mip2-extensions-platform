@@ -181,7 +181,9 @@
         <!-- </a> -->
         <div class="picList">
           <p v-if="data.xc_list.length === 0">没有照片</p>
-          <div v-if="data.xc_list.length > 0">
+          <div
+            v-if="data.xc_list.length > 0"
+            class="allpic">
             <!-- <mip-img
               v-for="pic in data.xc_list"
               :key="pic.big"
@@ -195,28 +197,14 @@
               :key="pic.big"
               :src="pic.big"
               :style="{backgroundImage: 'url(' + pic.big + ')', backgroundSize:'contain'}"
-              @click="show(pic.big)"/>
+              class="onepic"
+              @click.prevent="show(pic.big)"/>
 
           </div>
 
         </div>
       </div>
 
-      <mip-fixed
-        v-if="showImg"
-        class="img_back"
-        type="top"
-        @click="hideImg">
-        <div
-          v-if="showImg"
-          class="img_div"
-          @click="hideImg"
-          @touchmove.prevent="noop">
-          <mip-img
-            :src="imgUrl"
-            @click="hideImg" />
-        </div>
-      </mip-fixed>
       <div class="pingJiaCard">
         <a
           :href="'master_shanghu_detail?u=' + data.info.username"
@@ -388,6 +376,21 @@
         </tbody>
       </table>
     </mip-fixed>
+    <mip-fixed
+      v-if="showImg"
+      class="img_back"
+      type="top"
+      @click="hideImg">
+      <div
+        v-if="showImg"
+        class="img_div"
+        @touchmove.prevent="noop">
+        <mip-img
+          :src="imgUrl"
+        />
+      </div>
+    </mip-fixed>
+
   </div>
 
 </template>
@@ -608,7 +611,12 @@ body{
     margin-right: 10px;
     border-radius: 5px;
 }
-.albumCard .picList div{
+.allpic{
+
+    display: inline-block;
+
+}
+.onepic{
     height: 70px;
     width: 70px;
     cursor: pointer;
@@ -948,7 +956,7 @@ td.secondCol {
   top: 0;
   left: 0;
   bottom:0;
-  z-index: 9999;
+  z-index: 99996 !important;
 }
 .img_div{
   width: 100%;

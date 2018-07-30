@@ -353,6 +353,9 @@ export default {
       }
     }
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     console.log('This is pty order pay component !')
     var self = this

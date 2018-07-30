@@ -170,6 +170,9 @@ export default {
       console.log('new: %s, old: %s', val, oldVal)
     }
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     console.log('This is comfirm component !')
     var self = this
