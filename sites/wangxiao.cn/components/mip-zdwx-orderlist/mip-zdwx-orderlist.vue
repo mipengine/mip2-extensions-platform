@@ -221,18 +221,18 @@ export default {
     goEvaluate (order, index) {
       let goodsId = order.goodsId || ''
       let orderId = order.orderNumber || ''
-      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toEvaluate?id=' + goodsId + '&orderId=' + orderId + '&token=' + base.getToken()))
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'order/evaluate?id=' + goodsId + '&orderId=' + orderId + '&token=' + base.getToken()))
     },
     goStudy (order, index) {
       MIP.viewer.open(order.url, {isMipLink: false})
     },
     goPay (order, index) {
       let orderId = order.orderNumber || ''
-      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toPay?orderId=' + orderId + '&token=' + base.getToken()))
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'order/pay?orderId=' + orderId + '&token=' + base.getToken()))
     },
     goOrderDetail (order) {
       let orderId = order.orderNumber || ''
-      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/toDetailOrder?orderId=' + orderId + '&token=' + base.getToken()))
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'order/detail?orderId=' + orderId + '&token=' + base.getToken()))
     },
     cancelOrder (order, index) {
       let orderId = order.orderNumber || ''

@@ -8,7 +8,7 @@ export default ({
     compareMessageCode: zdyxhttp + 'baiduUser/compareMessageCode',
     getGoodsCatalog: zdyxhttp + 'Order/getProductData',
     getOrderList: zdyxhttp + 'Order/orderList',
-    cancelOrder: zdyxhttp + 'Order/cancelOrder',
+    cancelOrder: zdyxhttp + 'order/cancel',
     comitEvaluate: zdyxhttp + 'Order/evaluateOrder',
     placeOrder: zdyxhttp + 'baiduUser/placeOrder'
   },

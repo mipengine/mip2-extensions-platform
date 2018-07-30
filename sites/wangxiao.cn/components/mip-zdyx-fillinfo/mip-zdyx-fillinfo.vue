@@ -200,12 +200,12 @@ export default {
                   // 获得后台实际返回的内容
                   response.json().then(function (response) {
                     if (response.data.orderId) {
-                      MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.wangxiao.cn/Order/toPay?orderId=' + response.data.orderId))
+                      MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.wangxiao.cn/order/pay?orderId=' + response.data.orderId))
                     } else {
                       _this.errorMessage = '下单失败，请重新下单！'
                       _this.showErrorMessage = true
                       setTimeout(() => {
-                        MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.wangxiao.cn/Order/getProduct?id=' + base.getQueryString('goodsId')))
+                        MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.wangxiao.cn/course/detail?id=' + base.getQueryString('goodsId')))
                       }, 2000)
                     }
                   })
