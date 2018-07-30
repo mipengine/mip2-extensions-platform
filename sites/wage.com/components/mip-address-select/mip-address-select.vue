@@ -49,7 +49,6 @@
           <li class="addList" v-for="(v,k) in showDistrictList" @click="getDistrictId(v.id, v.name, k)" v-show="showDistrict" :class="v.selected ? 'active' : ''">{{v.name}}</li>
         </ul> -->
       </div>
-      </ul>
     </div>
   </div>
 </template>
