@@ -8,7 +8,7 @@
         <span class="title">类型：</span>
         <span class="text">{{ mess }}</span>
         <mip-img
-          src="../../static/image/splist_seljt.png"
+          src="https://b.kuaifawu.com/static/image/splist_seljt.png"
           class="img" />
       </div>
       <provider-city @flag="flag"/>
@@ -170,7 +170,7 @@ export default {
       // window.MIP.viewer.open("/provider/list.html?pid=" + id, {isMipLink: true});
       window.MIP.viewer.open(
         MIP.util.makeCacheUrl(
-          config.data().burl + 'provider/list.html?pid=' + id
+          config.data().burl + '/provider/list.html?pid=' + id
         ),
         { isMipLink: true }
       )

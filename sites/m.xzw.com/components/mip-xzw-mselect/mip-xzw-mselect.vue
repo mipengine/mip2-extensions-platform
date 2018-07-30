@@ -1,6 +1,16 @@
 <template>
   <div
-    v-if="name == 'date'"
+    v-if="name == 'nick'"
+    class="item nickinput">
+    <input
+      name="nick"
+      type="text"
+      validatetype="must"
+      placeholder="昵称"
+    >
+  </div>
+  <div
+    v-else-if="name == 'date'"
     class="item dateinput">
     <input
       :value="dateVal"
@@ -154,17 +164,17 @@ export default {
       xz: ['白羊座', '金牛座', '双子座', '巨蟹座', '狮子座', '处女座', '天秤座', '天蝎座', '射手座', '摩羯座', '水瓶座', '双鱼座'],
       xzid: '1',
       xzname: '白羊座',
-      xzsrc: '/static/public/images/prot_icon/xz/a/1.png',
+      xzsrc: '../static/public/images/prot_icon/xz/a/1.png',
       xzid2: '1',
       xzname2: '白羊座',
-      xzsrc2: '/static/public/images/prot_icon/xz/a/1.png',
+      xzsrc2: '../static/public/images/prot_icon/xz/a/1.png',
       sx: ['鼠', '牛', '虎', '兔', '龙', '蛇', '马', '羊', '猴', '鸡', '狗', '猪'],
       sxid: '1',
       sxname: '鼠',
-      sxsrc: '/static/public/images/prot_icon/sx/a/1.png',
+      sxsrc: '../static/public/images/prot_icon/sx/a/1.png',
       sxid2: '1',
       sxname2: '鼠',
-      sxsrc2: '/static/public/images/prot_icon/sx/a/1.png',
+      sxsrc2: '../static/public/images/prot_icon/sx/a/1.png',
       xx: ['A', 'B', 'O', 'AB'],
       xxname: '',
       xxnamestr: '',
@@ -195,25 +205,25 @@ export default {
       let _id = _this.returnId(arr2[0], _this.xz)
       _this.xzid = _id
       _this.xzname = arr2[0]
-      _this.xzsrc = '/static/public/images/prot_icon/xz/a/' + _id + '.png'
+      _this.xzsrc = '../static/public/images/prot_icon/xz/a/' + _id + '.png'
     })
     _this.$on('pickerChangexzPairGril', (arr2) => {
       let _id = _this.returnId(arr2[0], _this.xz)
       _this.xzid2 = _id
       _this.xzname2 = arr2[0]
-      _this.xzsrc2 = '/static/public/images/prot_icon/xz/a/' + _id + '.png'
+      _this.xzsrc2 = '../static/public/images/prot_icon/xz/a/' + _id + '.png'
     })
     _this.$on('pickerChangesxPairBoy', (arr2) => {
       let _id = _this.returnId(arr2[0], _this.sx)
       _this.sxid = _id
       _this.sxname = arr2[0]
-      _this.sxsrc = '/static/public/images/prot_icon/sx/a/' + _id + '.png'
+      _this.sxsrc = '../static/public/images/prot_icon/sx/a/' + _id + '.png'
     })
     _this.$on('pickerChangesxPairGril', (arr2) => {
       let _id = _this.returnId(arr2[0], _this.sx)
       _this.sxid2 = _id
       _this.sxname2 = arr2[0]
-      _this.sxsrc2 = '/static/public/images/prot_icon/sx/a/' + _id + '.png'
+      _this.sxsrc2 = '../static/public/images/prot_icon/sx/a/' + _id + '.png'
     })
     _this.$on('pickerChangexxPairGril', (arr2) => {
       _this.xxname = arr2[0] + '型'
@@ -223,23 +233,34 @@ export default {
       _this.xxname2 = arr2[0] + '型'
       _this.xxnamestr2 = arr2[0]
     })
-    let submit = document.querySelectorAll('#submit')
-    let submit2 = document.querySelectorAll('#submit2')
+    let submit = document.getElementById('submit')
+    let submit2 = document.getElementById('submit2')
     let pt = document.getElementById('pt')
     let jz = document.getElementById('jz')
-    let href = submit[0].getAttribute('url')
-    let input = document.querySelectorAll('input')
-    if (submit2.length > 0) {
-      input = pt.querySelectorAll('input')
-      submit2[0].addEventListener('click', function () {
-        input = jz.querySelectorAll('input')
-        let url = href + '?' + _this.returnQuery(input)
-        submit2[0].setAttribute('href', url)
+    let a = submit.querySelectorAll('a')
+    let href = a[0].getAttribute('url')
+    if (submit2) {
+      submit2.addEventListener('click', function () {
+        let a2 = submit2.querySelectorAll('a')
+        let href2 = a2[0].getAttribute('url')
+        let input2 = jz.querySelectorAll('input')
+        if (!_this.returnQuery(input2)) {
+          return false
+        }
+        let url = href2 + '?' + _this.returnQuery(input2)
+        a2[0].setAttribute('href', url)
       })
     }
-    submit[0].addEventListener('click', function () {
+    submit.addEventListener('click', function () {
+      let input = document.querySelectorAll('input')
+      if (submit2) {
+        input = pt.querySelectorAll('input')
+      }
+      if (!_this.returnQuery(input)) {
+        return false
+      }
       let url = href + '?' + _this.returnQuery(input)
-      submit[0].setAttribute('href', url)
+      a[0].setAttribute('href', url)
     })
   },
   methods: {
@@ -253,20 +274,21 @@ export default {
       return id
     },
     returnQuery: function (input) {
-      let query = ''
+      let querys = ''
+      let q = true
       for (let i = 0; i < input.length; i++) {
         let name = input[i].getAttribute('name')
         let value = input[i].value
         if (value == null || value === '') {
-          return false
+          q = false
         }
         let and = '&'
         if (i === input.length - 1) {
           and = ''
         }
-        query += name + '=' + value + and
+        querys += name + '=' + value + and
       }
-      return query
+      return q === true ? querys : ''
     }
   }
 }

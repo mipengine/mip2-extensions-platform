@@ -8,7 +8,7 @@
             <dt>
               <a href="javascript:;">
                 <mip-img
-                  src="../../static/image/touxiang.png"
+                  src="https://b.kuaifawu.com/static/image/touxiang.png"
                   alt=""
                   class="img"/>
               </a>
@@ -230,6 +230,7 @@ export default {
     }
   },
   mounted () {
+    MIP.viewer.fixedElement.init()
     // 自定义exit事件
     const self = this
     this.$element.customElement.addEventAction('logout', event => {
