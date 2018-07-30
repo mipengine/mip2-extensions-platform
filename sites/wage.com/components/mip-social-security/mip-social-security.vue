@@ -284,7 +284,7 @@ export default {
 		},
 		showValues:{
 			get: function () {
-				this.showValuesF();
+				return	this.showValuesF();
 			}
 		}
 	},
