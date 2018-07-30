@@ -1,9 +1,10 @@
 export default class Animate {
 	constructor() {
 		this.timer = null;
+    
 	}
 	start(fn){
-		if (!fn) {
+	  if (!fn) {
 			throw new Error('需要执行函数');
 		}
 		if (this.timer) {
@@ -11,7 +12,7 @@ export default class Animate {
 		}
 		this.timer = requestAnimationFrame(fn);
 	}
-  stop(){
+	stop(){
 		if (!this.timer) {
 			return;
 		}
