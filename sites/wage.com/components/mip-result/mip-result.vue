@@ -108,29 +108,6 @@ input::placeholder {
 .ip-disable {
     pointer-events: none;
 }
-
-.onOff {
-    position: absolute;
-    right: 19px;
-    top: 15px;
-    height: 20px;
-    width: 38px;
-    background: #bbb;
-    border-radius: 10px;
-    cursor: pointer;
-    display: block;
-}
-
-.onOff_off {
-    position: absolute;
-    top: 1px;
-    left: 1px;
-    width: 18px;
-    height: 18px;
-    background: #fff;
-    border-radius: 50%;
-}
-
 .open {
     background: #FF8D1D;
 }
@@ -138,11 +115,6 @@ input::placeholder {
 .none {
     display: none;
 }
-
-.onOff_off.active {
-    left: 50%;
-}
-
 .calculateBtn {
     width: 50%;
     height: 45px;
@@ -263,14 +235,6 @@ li {
   line-height: 15px;
   color: #ACA9A7;
 }
-
-.result-div {
-  /*  width: 100%;
- height: 165px;
- font-size:13px;
- color:#000; */
-}
-
 .result-div {
   width: 93%;
   margin: -45px auto 0 auto;
@@ -320,65 +284,65 @@ li {
 </style>
 <script>
 export default {
-  props: {
-    resultdata: {
-      type: Object,
-      default: () => {
-        return {
-          tag: 1,
-          sociAll: 100,
-          accumulation: 10,
-          wage: 8000,
-          realIncome: 6000,
-          tax: 200,
-          threshold: 3500,
-          taxableIncome: 350
-        }
-      }
+	props: {
+		resultdata: {
+			type: Object,
+			default: () => {
+				return {
+					tag: 1,
+					sociAll: 100,
+					accumulation: 10,
+					wage: 8000,
+					realIncome: 6000,
+					tax: 200,
+					threshold: 3500,
+					taxableIncome: 350
+				};
+			}
 
-    }
-  },
-  data () {
-    return {
-      beforeTitle: '税前工资',
-      afterTitle: '税后工资',
-      isShow: false,
-      isTrue: false,
-      wageSlice: 0
-      /* hasSocial:true,
+		}
+	},
+	data () {
+		return {
+			beforeTitle: '税前工资',
+			afterTitle: '税后工资',
+			isShow: false,
+			isTrue: false,
+			wageSlice: 0
+			/* hasSocial:true,
       hasAccumulation:true, */
-    }
-  },
-  computed: {
-    hasSocial: function () {
-      return this.resultdata.sociAll !== 0
-    },
-    hasAccumulation: function () {
-      return this.resultdata.accumulation !== 0
-    },
-    resetCalculate: function () {
-      this.$emit('resetcalculate', '')
-      return true
-    },
-    splitData: function () {
-      let realIncome = this.resultdata.realIncome
-      let index = realIncome.toString().indexOf('.')
-      return index > 0 ? realIncome.toString().substring(0, index) : realIncome
-    },
-    splitData2: function () {
-      let realIncome = this.resultdata.realIncome
-      let index = realIncome.toString().indexOf('.')
-      return index > 0 ? realIncome.toString().substring(index + 1, index + 3) : '00'
-    }
-  },
-  methods: {
-    closeWageDetail: function () {
-      this.isShow = !this.isShow
-      this.isTrue = !this.isTrue
-      MIP.setData({ small: !this.isShow })
-    }
-  }
+		};
+	},
+	computed: {
+		hasSocial: function () {
+			return this.resultdata.sociAll !== 0;
+		},
+		hasAccumulation: function () {
+			return this.resultdata.accumulation !== 0;
+		},
+		resetCalculate: function () {
+			this.$emit('resetcalculate', '');
+			return true;
+		},
+		splitData: function () {
+			let realIncome = this.resultdata.realIncome;
+			let index = realIncome.toString().indexOf('.');
+			return index > 0 ? realIncome.toString().substring(0, index) : realIncome;
+		},
+		splitData2: function () {
+			let realIncome = this.resultdata.realIncome;
+			let index = realIncome.toString().indexOf('.');
+			return index > 0 ? realIncome.toString().substring(index + 1, index + 3) : '00';
+		}
+	},
+	methods: {
+		closeWageDetail: function () {
+			this.isShow = !this.isShow;
+			this.isTrue = !this.isTrue;
+			MIP.setData({ small: !this.isShow });
+		}
+	}
 
-}
+};
 
 </script>

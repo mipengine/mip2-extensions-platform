@@ -98,14 +98,20 @@ label {
 }
 
 input {
-    width: 100%;
+    width: 98%;
     padding-left: 7em;
     text-align: right;
     box-sizing: border-box;
     border: none;
     outline: none;
+	color: #333;
 }
-
+.left {
+    float: left;
+}
+.right{
+	float: right;
+}
 input::placeholder {
     text-align: right;
     color: #ccc;
@@ -124,9 +130,9 @@ input::placeholder {
 .onOff {
     position: absolute;
     right: 19px;
-    top: 15px;
-    height: 20px;
-    width: 38px;
+    top: 13px;
+    height: 22px;
+    width: 45px;
     background: #bbb;
     border-radius: 10px;
     cursor: pointer;
@@ -137,8 +143,8 @@ input::placeholder {
     position: absolute;
     top: 1px;
     left: 1px;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     background: #fff;
     border-radius: 50%;
 }
