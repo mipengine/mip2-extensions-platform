@@ -101,7 +101,6 @@ export default {
   },
   methods: {
     next () {
-
       if (this.index < this.data.length - 1) {
         this.index++
       } else {
@@ -114,7 +113,6 @@ export default {
       if (this.index > 0) {
         this.index--
       } else {
-
         this.index = this.data.length - 1
       }
       this.x = this.index * viewport.getWidth() * 0.8 + 'px'
