@@ -21,7 +21,7 @@
           class="wheel-list">
           <li
             v-for="item in scrollValues" 
-:key="item"
+            :key="item"
             :style="initWheelItemDeg(item.index)"
             class="wheel-item">{{ item.value }}</li>
         </ul>
