@@ -58,7 +58,6 @@
             </div>
           </div>
         </div>
-
       </div>
       <span class="jkx_loading"/>
     </section>

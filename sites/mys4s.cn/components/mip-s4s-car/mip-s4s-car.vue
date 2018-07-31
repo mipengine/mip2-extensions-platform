@@ -93,13 +93,10 @@ export default {
       delCarNo: ''
     }
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
-    this.user = {
-      Tel: window.localStorage.UserTel || window.UserTel || ''
-    }
-    // if (!this.user.Tel) {
-
-    // }
     this.getCar()
   },
   methods: {
@@ -201,25 +198,25 @@ export default {
 .bd {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   padding: 0.19rem 0.15rem;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
   overflow: hidden;
 }
 
 .bd-fl {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
   overflow: hidden;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   margin-left: 0.15rem;
 }
 
@@ -238,7 +235,11 @@ export default {
 .car-no {
   font-size: 0.15rem;
   font-weight: 500;
-  flex: 1;
+  box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
   color: #1f2d3d;
 }
 
@@ -297,9 +298,9 @@ export default {
 .s4s-confirm-btn {
   height: 0.45rem;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
   border-top: 0.01rem rgba(0, 0, 0, 0.1) solid;
   font-size: 0.15rem;
 }
@@ -307,11 +308,14 @@ export default {
   line-height: 0.45rem;
   border-right: 0.01rem rgba(0, 0, 0, 0.1) solid;
   display: -ms-flexbox;
-  display: flex;
-  -ms-flex: 1;
-  flex: 1;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
   -ms-flex-pack: center;
-  justify-content: center;
+  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
 }
 .s4s-confirm-btn span:last-child {
   border-right: 0;

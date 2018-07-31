@@ -1,8 +1,8 @@
 <template>
   <div class="s4s-page" >
     <div class="s4s-car-info">
-      <div style="display: flex;align-items: center;">
-        <div style="flex: 1;">
+      <div style=" display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;-webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;">
+        <div style="box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;">
           <h2
             class="s4s-car-name"
           >请您上传行驶证，</h2>
@@ -49,8 +49,7 @@
         <div
           class="provice"
           @click="selectProvice" >
-          <div style="margin-right:.05rem;">{{ provice }}</div>
-          <div class="right-arrow"/>
+          <div style="height:100%">{{ provice }} <span class="right-arrow"/></div>
         </div>
         <input
           v-model="car_no"
@@ -130,8 +129,7 @@
           </template>
           <div
             key="-1"
-            class="s4s-provice-tit"
-            style="width: 33.899999999%;background: #BBC3C7;color: #fff;"
+            class="s4s-provice-tit-hide"
             @click="selectProvice" >隐藏</div>
         </div>
       </div>
@@ -345,6 +343,9 @@ export default {
     //   });
     // }
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     if (this.globalData && this.globalData.car_no) {
       this.car_no = this.globalData.car_no
@@ -422,7 +423,7 @@ export default {
         }
         if (res.code === 0) {
           util.toast('操作成功')
-          MIP.viewer.open('car.html')
+          MIP.viewer.open('./car.html')
         }
       })
     },
@@ -545,12 +546,12 @@ export default {
   margin: -1.1rem 0.1rem 0 0.1rem;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   color: #fff;
   font-size: 0.12rem;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
 }
 
 .s4s-car-info {
@@ -559,9 +560,9 @@ export default {
 }
 
 .s4s-car-name {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   color: #333333;
   font-size: 0.2rem;
 }
@@ -579,34 +580,34 @@ export default {
   overflow: hidden;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   padding: 0.15rem 0;
-  box-sizing: content-box;
+    box-sizing: content-box;-moz-box-sizing: content-box;-webkit-box-sizing: content-box;
 }
 .s4s-group-tit {
   font-size: 0.15rem;
   width: 0.9rem;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
 }
 .s4s-group-txt {
   font-size: 0.15rem;
   color: #777;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   text-align: right;
 }
 .s4s-group input {
   border: none;
   font-size: 0.15rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   text-align: left;
 }
 select {
@@ -638,39 +639,36 @@ select {
 }
 
 .provice {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
   background-image: linear-gradient(-149deg, #fe5a00 0%, #ff7c00 100%);
-  justify-content: center;
   border-radius: 0.04rem;
   color: #fff;
   /* width: 0.45rem; */
+  min-width: .5rem;
   height: 0.25rem;
   margin-right: 0.05rem;
   padding: 0.01rem 0.09rem;
 }
 .right-arrow {
   display: inline-block;
+  margin-bottom: 2px;
   width: 0;
   height: 0;
   border-left: 0.05rem solid transparent;
   border-top: 0.05rem solid #fff;
   border-right: 0.05rem solid transparent;
 }
-
 .s4s-provice {
   width: 100%;
   background: #d8dbdc;
-  /* position: absolute;
-  bottom: 0;
-  left: 0; */
+  /* position: absolute; */
+  /* bottom: 0; */
+  /* left: 0; */
   transform: translateY(0);
   -webkit-transform: translateY(0);
   transition: transform 0.3s ease-out;
   -webkit-transition: -webkit-transform 0.3s ease-out;
 }
-.s4s-provice-tit {
+.s4s-provice-tit,.s4s-provice-tit-hide {
   float: left;
   width: 9%;
   padding: 0.05rem;
@@ -680,6 +678,21 @@ select {
   margin-top: 3.09999999%;
   text-align: center;
   font-size: 0.14rem;
+}
+.s4s-provice-tit-hide{
+  width: 33.899999999%;background: #BBC3C7;color: #fff;
+}
+@media screen and (min-width: 500px) {
+    .s4s-provice-tit {
+      width: auto;
+      margin-left: 1.09999999%;
+      margin-top: 1.09999999%;
+    }
+    .s4s-provice-tit-hide{
+      width: 98%;
+      margin-left: 1.09999999%;
+      margin-top: 1.09999999%;
+    }
 }
 .s4s-provice-hover {
   background: #bbb;
