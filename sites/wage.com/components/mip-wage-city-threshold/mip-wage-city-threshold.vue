@@ -174,6 +174,7 @@ input {
   border: none;
   outline: none;
   color:#333;
+  letter-spacing:1px;
 }
 
 input::placeholder {
