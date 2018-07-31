@@ -526,7 +526,7 @@ export default {
 			this.resultData.threshold = $data.threshold.toFixed(2);
 			this.resultData.sociAll = sociall.toFixed(2);
 			this.resultData.accumulation = accumulation.toFixed(2);
-			this.resultData.wage = $data.wage;
+			this.resultData.wage = $data.wage.toFixed(2);
 		},
 		// 计算税后工资
 		getTax: function (XSum, insure, threshold) {
