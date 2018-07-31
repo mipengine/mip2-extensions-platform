@@ -321,7 +321,7 @@ export default {
       phone: '',
       nickCarNo: '',
       nickCarNo2: '',
-      date: '',
+      date: util.formatDateTime().slice(0, 10),
       ticketUrl: '',
       price: '',
       openShow: false,
@@ -506,7 +506,7 @@ export default {
         this.nick = ''
         this.phone = ''
         this.nickCarNo = ''
-        this.date = ''
+        this.date = util.formatDateTime().slice(0, 10)
         this.price = ''
         this.ownFree = 0
         this.lateFree = 0
