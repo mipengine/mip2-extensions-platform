@@ -65,9 +65,10 @@ $ cd cafe.com
 ```
 切换到站点项目目录即可快速进行组件开发工作了：
 
-- [新增组件](https://github.com/mipengine/mip2/blob/master/docs/cli/start-writing-first-mip.md#2-新建一个自定义组件)
-- [调试组件](https://github.com/mipengine/mip2/blob/master/docs/cli/component-testing.md)
-- [校验组件](https://github.com/mipengine/mip2/blob/master/docs/cli/cli-usage.md#组件和页面校验)
+- [组件开发](https://github.com/mipengine/mip2/blob/master/docs/guide/mip-cli/component-development.md)
+- [调试](https://github.com/mipengine/mip2/blob/master/docs/guide/mip-cli/component-testing.md)
+- [校验](https://github.com/mipengine/mip2/blob/master/docs/guide/mip-cli/cli-usage.md#mip2-validate-%E7%BB%84%E4%BB%B6%E5%92%8C%E9%A1%B5%E9%9D%A2%E6%A0%A1%E9%AA%8C)
+
 
 3.**发起 Pull Request**
 
