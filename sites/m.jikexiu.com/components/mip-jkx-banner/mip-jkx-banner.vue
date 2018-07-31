@@ -7,19 +7,25 @@
     </div>
     <div v-else>
       <mip-carousel
+        autoplay
+        defer="3000"
         layout="responsive"
         width="375"
         height="158"
+        indicator-id="mip-carousel-example"
       >
-        <mip-img
+        <a
           v-for="item in banner_list"
           :key="item.id"
-          :src="item.pic"
-          class="banner"/>
+          :href="item.url"
+          target="_blank">
+          <mip-img
+            :src="item.pic"
+            class="banner"/>
+        </a>
       </mip-carousel>
     </div>
   </div>
-
 </template>
 
 <style scoped>
