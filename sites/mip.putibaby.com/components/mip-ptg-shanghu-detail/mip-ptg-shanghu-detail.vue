@@ -451,6 +451,7 @@ function parseJSON (response) {
 
 API.wrapRet_ = function (api, opts, fn) {
   console.log('posting to ' + api)
+  opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
     credentials: 'include',
@@ -521,6 +522,9 @@ export default {
   },
   computed: {
 
+  },
+  prerenderAllowed () {
+    return true
   },
   mounted () {
     console.log('This is shanghu detail component !')

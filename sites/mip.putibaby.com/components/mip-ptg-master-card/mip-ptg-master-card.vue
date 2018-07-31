@@ -181,7 +181,9 @@
         <!-- </a> -->
         <div class="picList">
           <p v-if="data.xc_list.length === 0">没有照片</p>
-          <div v-if="data.xc_list.length > 0">
+          <div
+            v-if="data.xc_list.length > 0"
+            class="allpic">
             <!-- <mip-img
               v-for="pic in data.xc_list"
               :key="pic.big"
@@ -195,28 +197,14 @@
               :key="pic.big"
               :src="pic.big"
               :style="{backgroundImage: 'url(' + pic.big + ')', backgroundSize:'contain'}"
-              @click="show(pic.big)"/>
+              class="onepic"
+              @click.prevent="show(pic.big)"/>
 
           </div>
 
         </div>
       </div>
 
-      <mip-fixed
-        v-if="showImg"
-        class="img_back"
-        type="top"
-        @click="hideImg">
-        <div
-          v-if="showImg"
-          class="img_div"
-          @click="hideImg"
-          @touchmove.prevent="noop">
-          <mip-img
-            :src="imgUrl"
-            @click="hideImg" />
-        </div>
-      </mip-fixed>
       <div class="pingJiaCard">
         <a
           :href="'master_shanghu_detail?u=' + data.info.username"
@@ -388,6 +376,21 @@
         </tbody>
       </table>
     </mip-fixed>
+    <mip-fixed
+      v-if="showImg"
+      class="img_back"
+      type="top"
+      @click="hideImg">
+      <div
+        v-if="showImg"
+        class="img_div"
+        @touchmove.prevent="noop">
+        <mip-img
+          :src="imgUrl"
+        />
+      </div>
+    </mip-fixed>
+
   </div>
 
 </template>
@@ -608,7 +611,12 @@ body{
     margin-right: 10px;
     border-radius: 5px;
 }
-.albumCard .picList div{
+.allpic{
+
+    display: inline-block;
+
+}
+.onepic{
     height: 70px;
     width: 70px;
     cursor: pointer;
@@ -948,7 +956,7 @@ td.secondCol {
   top: 0;
   left: 0;
   bottom:0;
-  z-index: 9999;
+  z-index: 99996 !important;
 }
 .img_div{
   width: 100%;
@@ -1026,6 +1034,14 @@ API.unfavMaster = function (masterId, fn) {
     }, fn)
 }
 
+API.checkUnionAgain = function (opt, fn) {
+  API.wrapRet_(
+    'https://mip.putibaby.com/api/check_union_again', {
+      'opt': opt
+    },
+    fn)
+}
+
 export default {
 
   props: {
@@ -1056,6 +1072,42 @@ export default {
     console.log('This is master card component !')
     window.MIP.viewer.fixedElement.init()
     var self = this
+
+    window.addEventListener('show-page', () => {
+      console.log('show-page')
+      if (self.isLogin) {
+        API.getMasterInfo(self.data.info.id, function (isOk, data) {
+          console.log(data)
+          if (isOk) {
+            self.$set(self.data.info, 'isfav', data.fav)
+            self.$set(self.data.info, 'can_online_interview', data.can_online_interview)
+            self.$set(self.data.info, 'order_desc_str', data.order_desc_str)
+          // console.log(self);
+          } else {
+            console.warn(data)
+          }
+        })
+      }
+      if (self.isUnion || !self.isLogin) {
+        return
+      }
+
+      API.checkUnionAgain('', function (isOk, res) {
+        if (isOk) {
+          console.log(res)
+          self.isLogin = res.isLogin
+          self.isUnion = res.isUnion
+          // MIP.setData({'#isLogin': true})
+          // MIP.setData({'#isUnion': event.userInfo.isUnion})
+        } else {
+          console.log(res)
+        }
+      })
+    })
+    window.addEventListener('hide-page', () => {
+
+    })
+
     this.$element.customElement.addEventAction('logindone', event => {
       // 这里可以输出登录之后的数据
 

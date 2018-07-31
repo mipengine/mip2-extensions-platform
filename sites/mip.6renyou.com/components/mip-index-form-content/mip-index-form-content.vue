@@ -96,6 +96,7 @@ export default {
         toast.show('您还未填写目的地', options)
         return
       }
+
       MIP.viewer.open('./order/submit/' + this.destName + '/' + this.days)
     }
 

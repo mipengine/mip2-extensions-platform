@@ -3,7 +3,7 @@
     <h1>常见问题</h1>
     <div class="pic">
       <img
-        src="../../static/image/zixun_head_sec.jpg"
+        src="https://b.kuaifawu.com/static/image/zixun_head_sec.jpg"
         alt="">
     </div>
     <div class="main">

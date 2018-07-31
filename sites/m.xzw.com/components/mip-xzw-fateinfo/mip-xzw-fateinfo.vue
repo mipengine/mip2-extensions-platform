@@ -93,7 +93,7 @@ export default {
   },
   created () {
     const _this = this
-    const url = `/apidat/fortune.js?id=` + _this.id + `&ld=-1`
+    const url = `../apidat/fortune.js?id=` + _this.id + `&ld=-1`
     fetch(url).then(function (response) {
       return response.json()
     }).then(function (myJson) {

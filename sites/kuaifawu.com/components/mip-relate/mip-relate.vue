@@ -275,14 +275,16 @@ export default {
       //       storage.set('sku',arrSku)
     },
     getmoney: function (id, saleprice, obj) {
-      if (saleprice) {
-        // this.sku[obj.id] =1
-      }
+      // console.log(obj.id && !this.relteMoney[obj.id],'pppppppppp')
+      this.relteMoney[obj.id] = 0
+      console.log(this.relteMoney, 'rrrrrrrrrrrr')
       if (obj.id && !this.relteMoney[obj.id]) {
         this.relteMoney[obj.id] = 1
       } else {
         this.relteMoney[obj.id] = 0
       }
+      // console.log(saleprice,'ssssssss')
+      // console.log(this.relteMoney[obj.id],'idididiidi')
       this.relate[id].showmoney = saleprice && this.relteMoney[obj.id] ? '￥' + saleprice : ''
       this.relate[id].money = saleprice * this.relteMoney[obj.id]
     },

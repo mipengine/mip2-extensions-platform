@@ -169,13 +169,14 @@
             <input
               v-model="nick"
               type="text"
+              maxlength="22"
               placeholder="请输入被处罚人姓名" >
           </div>
           <div
             v-if="!showName"
             class="s4s-group">
             <span class="s4s-group-tit">车牌号码</span>
-            <div style="display: flex;align-items:center;overflow: hidden;width:1.30rem;">
+            <div style=" display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;align-items:center;overflow: hidden;width:1.30rem;">
               <span
                 class="s4s-sel-provice"
                 style="float: left;"
@@ -320,7 +321,7 @@ export default {
       phone: '',
       nickCarNo: '',
       nickCarNo2: '',
-      date: '',
+      date: util.formatDateTime().slice(0, 10),
       ticketUrl: '',
       price: '',
       openShow: false,
@@ -368,10 +369,13 @@ export default {
   },
 
   watch: {
-    price () {
+    price (val) {
+      if (val > 999999) {
+        this.price = val.slice(0, 6)
+      }
       this.getVioFee()
     },
-    date () {
+    date (val) {
       this.getVioFee()
     },
     orderNumber () {
@@ -502,7 +506,7 @@ export default {
         this.nick = ''
         this.phone = ''
         this.nickCarNo = ''
-        this.date = ''
+        this.date = util.formatDateTime().slice(0, 10)
         this.price = ''
         this.ownFree = 0
         this.lateFree = 0
@@ -599,7 +603,7 @@ export default {
         size: list[0].size,
         file: list[0]
       }
-      this.html5Reader(list[0], item, 'ticket')
+      this.html5Reader(list[0], item)
     },
     // 常见问题
     gotoHelp () {
@@ -662,7 +666,7 @@ export default {
         }
       })
     },
-    html5Reader: function (file, item, name) {
+    html5Reader: function (file, item) {
       let imgSrc = new Image()
       let reader = new FileReader()
       reader.onload = e => {
@@ -704,27 +708,34 @@ export default {
           // 图片压缩
           context.drawImage(imgSrc, 0, 0, targetWidth, targetHeight)
           // canvas转为blob并上传
-          canvas.toBlob(function (blob) {
-            const formData = new FormData()
-            formData.append('image', blob, item.name)
-
+          // canvas.toBlob(function (blob) {
+          //   const formData = new FormData()
+          //   formData.append('image', blob, item.name)
+          let data = canvas.toDataURL('image/jpeg').split(',')[1]
+          // 获取base64图片大小，返回MB数字
+          let size = parseInt(data.length - (data.length / 8) * 2)
+          console.log(size)
+          if (size) {
+            const isLt2M = size / 1024 / 1024 < 2
+            if (!isLt2M) {
+              util.toast('图片大小需要小于 2MB!')
+              return
+            }
             util.toast('正在上传')
-            fetch('https://mys4s.cn/car/upload_report_pic', {
-              method: 'POST',
-              body: formData
+            util.fetchData('v3/violation/image/upload', {
+              imageString: data
             })
-              .then(res => res.json())
               .then(data => {
                 if (data.code === 0) {
                   util.toast('上传成功')
-                  if (name === 'ticket') {
-                    self.ticketUrl = data.data
-                  }
+                  self.ticketUrl = data.data
                 } else {
                   util.toast(data.msg)
                 }
               })
-          }, file.type || 'image/png')
+          }
+
+          // }, file.type || 'image/png')
         }
       }
       reader.readAsDataURL(file)
@@ -765,7 +776,7 @@ export default {
   margin-top: .15rem;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   overflow: hidden;
 }
 .s4s-order-input input {
@@ -792,9 +803,9 @@ export default {
 .s4s-order-img-container {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  -webkit-justify-content:space-around; justify-content:space-around;-moz-box-pack:space-around;-webkit--moz-box-pack:space-around;box-pack:space-around;
   margin: 0.2rem 0;
   text-align: center;
 }
@@ -835,9 +846,9 @@ export default {
   margin-top: .15rem;
 }
 .flex-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
 }
 .s4s-order-tip-text {
   font-size: .13rem;

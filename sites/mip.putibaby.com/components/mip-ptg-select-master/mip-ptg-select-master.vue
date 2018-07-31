@@ -1072,12 +1072,19 @@
         <div class="mip-infinitescroll-results" />
         <div class="bg">
           <div
+            v-if="!state.isGif"
             class="mip-infinitescroll-loading"
             @click="loadMoreClick">
             <p>{{ state.loadMessage }}</p>
           </div>
         </div>
-
+        <div
+          v-if="state.isGif"
+          class="gif">
+          <mip-img
+            v-if="state.isGif"
+            src="https://mip.putibaby.com/i/jiazai.gif" />
+        </div>
       </div>
 
     </div>
@@ -1095,6 +1102,16 @@
 </template>
 
 <style scoped>
+  .gif{
+    width: 100%;
+    text-align: center;
+    margin-top: 200px;
+  }
+  .gif mip-img{
+    width: 130px;
+    height: 130px;
+    margin: 0 auto;
+  }
   .wrapper {
     margin: 0 auto;
     text-align: center;
@@ -1588,6 +1605,7 @@
     font-size: 14px;
     border-radius: 5px;
     margin-top: 10px;
+    margin-bottom:50px;
   }
 
   .from_to {
@@ -1656,6 +1674,7 @@ function parseJSON (response) {
 
 API.wrapRet_ = function (api, opts, fn) {
   console.log('posting to ' + api)
+  opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
     credentials: 'include',
@@ -1678,6 +1697,14 @@ API.getSelectMaster = function (filter, fn) {
   API.wrapRet_(
     'https://mip.putibaby.com/api/get_select_master', {
       'filter': filter
+    },
+    fn)
+}
+
+API.checkUnionAgain = function (opt, fn) {
+  API.wrapRet_(
+    'https://mip.putibaby.com/api/check_union_again', {
+      'opt': opt
     },
     fn)
 }
@@ -1733,8 +1760,9 @@ export default {
       list: null,
       state: {
         isLoadingMore: false,
-        loadMessage: '数据正在加载中...',
-        hasMoreData: false
+        loadMessage: '',
+        hasMoreData: false,
+        isGif: true
       },
       filter: {
         pn: 0,
@@ -1776,6 +1804,9 @@ export default {
       };
     })
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     window.MIP.viewer.fixedElement.init()
     console.log('This is pty order list component !')
@@ -1794,6 +1825,27 @@ export default {
       console.log(str)
     })
 
+    window.addEventListener('show-page', () => {
+      console.log('show-page')
+      if (self.isUnion || !self.isLogin) {
+        return
+      }
+      API.checkUnionAgain('', function (isOk, res) {
+        if (isOk) {
+          console.log(res)
+          self.isLogin = res.isLogin
+          self.isUnion = res.isUnion
+          // MIP.setData({'#isLogin': true})
+          // MIP.setData({'#isUnion': event.userInfo.isUnion})
+        } else {
+          console.log(res)
+        }
+      })
+    })
+    window.addEventListener('hide-page', () => {
+
+    })
+
     this.$element.customElement.addEventAction('logindone', event => {
       // 这里可以输出登录之后的数据
 
@@ -1804,6 +1856,9 @@ export default {
       // self.$set(self, 'isUnion', event.userInfo.isUnion)
       self.isLogin = true
       self.isUnion = event.userInfo.isUnion
+      // MIP.setData({'#isLogin': true})
+      // MIP.setData({'#isUnion': event.userInfo.isUnion})
+
       var origin = API.next_cmd || event.origin
       // origin = origin || sessionStorage.next_cmd || localStorage.getItem('origin')
 
@@ -1859,6 +1914,7 @@ export default {
         if (isOk) {
           console.log(res)
           self.list = res.list
+          self.state.isGif = false
           if (res.list.length < 10) {
             self.state.loadMessage = '没有更多数据了!'
           } else {
@@ -1912,13 +1968,15 @@ export default {
     },
     load_data () {
       console.log('should set data')
-      this.state.loadMessage = '数据正在加载中...'
+      this.state.loadMessage = ''
+      this.state.isGif = true
       this.list = []
       var self = this
       this.filter.pn = 0
       API.getSelectMaster(this.filter, function (isOk, res) {
         if (isOk) {
           console.log(res)
+          self.state.isGif = false
           self.list = res.list
           if (res.list.length < 10) {
             self.state.loadMessage = '没有更多数据了!'
@@ -1938,6 +1996,7 @@ export default {
       API.getSelectMaster(this.filter, function (isOk, res) {
         if (isOk) {
           // console.log(res);
+          self.state.isGif = false
           self.list = self.list.concat(res.list)
           if (res.list.length >= 10) {
             self.state.loadMessage = '点击加载数据'
