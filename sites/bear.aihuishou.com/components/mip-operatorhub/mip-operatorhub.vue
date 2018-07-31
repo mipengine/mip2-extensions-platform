@@ -3,12 +3,6 @@
     <div class="title">回收工具</div>
     <div class="operator-wrapper">
       <a
-        :href="[baseUrl+'/account/login']"
-        class="operator-item">
-        <span class="iconfont icon-gerenzhongxin" />
-        <p>个人中心</p>
-      </a>
-      <a
         :href="[baseUrl+'/order']"
         class="operator-item">
         <span class="iconfont icon-huishouliucheng1" />
