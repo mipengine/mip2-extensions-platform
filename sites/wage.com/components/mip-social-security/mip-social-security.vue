@@ -20,6 +20,7 @@
       <label for="">缴纳标准</label>
       <input
         :value="selectValue"
+        :class="{'c-disable':cok}"
         type="text"
         class="ip-disable">
     </div>
@@ -28,7 +29,7 @@
       class="wage">
       <label for="">缴纳基数</label>
       <input
-        :class="{'ip-disable':ok,'c-disable':ok}"
+        :class="{'ip-disable':ok}"
         :value="getBase"
         type="number"
         placeholder="0-1000,000 最多两位小数"
@@ -276,8 +277,8 @@ export default {
 			},
 			amount: '',
 			numberAmount: '',
-			isAfter: false
-
+			isAfter: false,
+			cok:false
 		};
 	},
 	computed: {
@@ -305,12 +306,14 @@ export default {
 					this.selectValue = '按照工资';
 					this.fromWage = true;
 					this.ok = true;
+					this.cok = false;
 					this.isAfter = false;
 					return ['按照工资', '自定义'];
 				} else { // 税后
 					this.selectValue = '自定义';
 					this.fromWage = false;
 					this.ok = false;
+					this.cok = true;
 					this.fromBase = '';
 					this.isAfter = true;
 					return ['自定义'];
@@ -321,6 +324,7 @@ export default {
 					this.selectValue = '按照工资';
 					this.fromWage = true;
 					this.ok = true;
+					this.cok = false;
 					return [
 						'按照工资',
 						'按照最低标准',
@@ -330,6 +334,7 @@ export default {
 					this.selectValue = '自定义';
 					this.fromWage = false;
 					this.ok = false;
+					this.cok = false;
 					this.fromBase = '';
 					this.baseMoney = '';
 					return [
