@@ -544,14 +544,19 @@ export default {
 
 .s4s-user-car {
   margin: -1.1rem 0.1rem 0 0.1rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox
+  ;display: -webkit-flex;
+  display: flex;
   color: #fff;
   font-size: 0.12rem;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  align-items:center;
+  -webkit-box-align:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
 }
 
 .s4s-car-info {
@@ -560,9 +565,12 @@ export default {
 }
 
 .s4s-car-name {
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   color: #333333;
   font-size: 0.2rem;
 }
@@ -581,34 +589,49 @@ export default {
   overflow: hidden;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
-  display: -webkit-box;
+  align-items:center;
+  -webkit-box-align:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
+  display:-webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display: -webkit-flex;
+  display: flex;
   padding: 0.20rem 0;
-    box-sizing: content-box;-moz-box-sizing: content-box;-webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
 }
 .s4s-group-tit {
   font-size: 0.15rem;
   width: 0.9rem;
-  display: -webkit-box;
+  display:-webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
-  display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display: -webkit-flex;
+  display: flex;
 }
 .s4s-group-txt {
   font-size: 0.15rem;
   color: #777;
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   text-align: right;
 }
 .s4s-group input {
   border: none;
   font-size: 0.15rem;
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   text-align: left;
 }
 select {

@@ -840,8 +840,10 @@ export default {
   border-radius: .04rem;
   margin-top: .15rem;
   display: -webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display: -webkit-flex;
+  display: flex;
   overflow: hidden;
 }
 .s4s-order-input input {
@@ -868,16 +870,23 @@ export default {
 .s4s-order-img-container {
   display: -webkit-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
-  -webkit-justify-content:space-around; justify-content:space-around;-moz-box-pack:space-around;-webkit--moz-box-pack:space-around;box-pack:space-around;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: flex;
+  align-items:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
+  -webkit-justify-content:space-around;
+  justify-content:space-around;
+  -webkit-box-pack:space-around;
+  -moz-box-pack:space-around;
   margin: 0.2rem 0;
   text-align: center;
 }
 .s4s-order-img-container mip-img + mip-img {
   margin-right: -.22rem;
   margin-left: .16rem;
-      margin-top: .12rem;
+  margin-top: .12rem;
 }
 .flex-center {
   margin-bottom: .1rem;
@@ -912,30 +921,40 @@ export default {
   margin-top: .15rem;
 }
 .flex-center {
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
-  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
+  -webkit-justify-content:center;
+  justify-content:center;
+  -moz-box-pack:center;
+  -webkit-box-pack:center;
+  -moz-box-pack:center;
 }
 .s4s-order-tip-text {
   font-size: .13rem;
   color: #636363;
 }
 .image-container {
-      height: 70px;
-    width: 100%;
-    overflow: hidden;
+  height: 70px;
+  width: 100%;
+  overflow: hidden;
 }
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-    color: #ccc;
+  color: #ccc;
 }
 input:-moz-placeholder, textarea:-moz-placeholder {
-color:#ccc;
+  color:#ccc;
 }
 input::-moz-placeholder, textarea::-moz-placeholder {
-color:#ccc;
+  color:#ccc;
 }
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-color:#ccc;
+  color:#ccc;
 }
 .provice {
   background-image: linear-gradient(-149deg, #fe5a00 0%, #ff7c00 100%);
@@ -979,19 +998,21 @@ color:#ccc;
   font-size: 0.14rem;
 }
 .s4s-provice-tit-hide{
-  width: 33.899999999%;background: #BBC3C7;color: #fff;
+  width: 33.899999999%;
+  background: #BBC3C7;
+  color: #fff;
 }
 @media screen and (min-width: 500px) {
-    .s4s-provice-tit {
-      width: auto;
-      margin-left: 1.09999999%;
-      margin-top: 1.09999999%;
-    }
-    .s4s-provice-tit-hide{
-      width: 98%;
-      margin-left: 1.09999999%;
-      margin-top: 1.09999999%;
-    }
+  .s4s-provice-tit {
+    width: auto;
+    margin-left: 1.09999999%;
+    margin-top: 1.09999999%;
+  }
+  .s4s-provice-tit-hide{
+    width: 98%;
+    margin-left: 1.09999999%;
+    margin-top: 1.09999999%;
+  }
 }
 .s4s-provice-hover {
   background: #bbb;

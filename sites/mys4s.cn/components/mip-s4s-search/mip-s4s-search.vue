@@ -599,9 +599,12 @@ export default {
 }
 
 .s4s-car-name {
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   color: #333333;
   font-size: 0.2rem;
 }
@@ -661,31 +664,31 @@ export default {
   width: 33.899999999%;background: #BBC3C7;color: #fff;
 }
 @media screen and (min-width: 500px) {
-    .s4s-provice-tit {
-      width: auto;
-      margin-left: 1.09999999%;
-      margin-top: 1.09999999%;
-    }
-    .s4s-provice-tit-hide{
-      width: 98%;
-      margin-left: 1.09999999%;
-      margin-top: 1.09999999%;
-    }
+  .s4s-provice-tit {
+    width: auto;
+    margin-left: 1.09999999%;
+    margin-top: 1.09999999%;
+  }
+  .s4s-provice-tit-hide{
+    width: 98%;
+    margin-left: 1.09999999%;
+    margin-top: 1.09999999%;
+  }
 }
 .s4s-provice-hover {
   background: #bbb;
   color: #fff;
 }
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-    color: #ccc;
+  color: #ccc;
 }
 input:-moz-placeholder, textarea:-moz-placeholder {
-color:#ccc;
+  color:#ccc;
 }
 input::-moz-placeholder, textarea::-moz-placeholder {
-color:#ccc;
+  color:#ccc;
 }
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-color:#ccc;
+  color:#ccc;
 }
 </style>

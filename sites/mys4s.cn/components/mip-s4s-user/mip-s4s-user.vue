@@ -302,12 +302,17 @@ export default {
   color: #999;
   height: 50px;
   line-height: 45px;
-  display: -webkit-box;
+  display:-webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display: -webkit-flex;
+  display: flex;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
-  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
+  -webkit-justify-content:center;
+  justify-content:center;
+  -moz-box-pack:center;
+  -webkit-box-pack:center;
 }
 .s4s-tab-cur {
   border-bottom: 0.03rem #fe7000 solid;
@@ -318,11 +323,19 @@ export default {
 .s4s-tab-item {
   padding: 0 0.1rem;
   -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
-  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
+  -ms-box-flex:1;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  align-items:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
+  -webkit-justify-content:center;
+  justify-content:center;
+  -moz-box-pack:center;
+  -webkit-box-pack:center;
   position: relative;
   font-size:.15rem;
 }
@@ -336,9 +349,15 @@ export default {
     border-radius: 2rem;
     text-align: center;
     color: #fff;
-    -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
-    -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
-      box-sizing: content-box;-moz-box-sizing: content-box;-webkit-box-sizing: content-box;
+    -webkit-box-pack:center;
+    -moz-box-align:center;
+    -webkit-box-align:center;
+    -webkit-justify-content:center;
+    justify-content:center;
+    -moz-box-pack:center;
+    box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
     font-size: .12rem;
     line-height: .18rem;
     position: absolute;
@@ -372,28 +391,37 @@ export default {
   margin-bottom: 0;
 }
 .s4s-cell-hd {
-  display: -webkit-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: flex;
   border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
   padding-bottom: 0.1rem;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
 }
 .s4s-cell-hd p {
   color: #999;
   font-size: 0.14rem;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
 }
 .s4s-cell-hd span {
   font-size: 0.14rem;
   color: #fe7000;
 }
 .s4s-cell-hd-time {
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   color: #333;
 }
 .s4s-cell-bd {
@@ -469,10 +497,14 @@ export default {
 }
 .s4s-confirm-btn {
   height: 0.45rem;
+  display:-webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display: -webkit-flex;
+  display: flex;
   -ms-flex-align: center;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
   border-top: 0.01rem rgba(0, 0, 0, 0.1) solid;
   font-size: 0.15rem;
   font-weight: bold;
@@ -481,12 +513,20 @@ export default {
 .s4s-confirm-btn span {
   line-height: 0.45rem;
   border-right: 0.01rem rgba(0, 0, 0, 0.1) solid;
+  display:-webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  display: -webkit-flex;
+  display: flex;
+  -ms-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
   -ms-flex-pack: center;
-  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
+  -webkit-justify-content:center;
+  justify-content:center;
+  -moz-box-pack:center;
 }
 .s4s-confirm-btn span:last-child {
   border-right: 0;
