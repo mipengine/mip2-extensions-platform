@@ -121,7 +121,8 @@
           </div>
           <div
             id="pay2btn"
-            :class="agree?'pay-contaienr-last' :'pay-contaienr-last disabled-btn'">
+            :class="agree?'pay-contaienr-last' :'pay-contaienr-last disabled-btn'"
+            on="tap:pay2.pay2event" >
             立即办理
           </div>
         </div>
@@ -166,11 +167,6 @@ export default {
       cansend: true
     }
   },
-  computed: {
-    prerenderAllowed () {
-      return true
-    }
-  },
   watch: {
     code (val) {
       let tel = /^1\d{10}$/
@@ -179,19 +175,16 @@ export default {
       }
     }
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     MIP.viewer.fixedElement.init()
-    let event = window.MIP.util.event
     let me = this
-    this.j = event.delegate(
-      document.documentElement,
-      '#pay2btn',
-      'click',
-      e => {
-        console.log(2)
-        me.payFee() // 当页面出现跳转时，关闭所有的浮层
-      }
-    )
+    this.$on('pay2event', event => {
+      console.log('pay2event')
+      me.payFee()
+    })
     if (this.globalData && this.globalData.orderNumber) {
       try {
         window.localStorage.setItem(
@@ -225,7 +218,6 @@ export default {
     }
   },
   methods: {
-
     testCode () {
       util
         .fetchData('v5/user/login', {
@@ -547,5 +539,49 @@ select {
 }
 .code-btn-disable {
   opacity: 0.5;
+}
+
+.pay-contaienr {
+  display: flex;
+  width: 100%;
+  background: #fff;
+}
+
+.pay-contaienr-first {
+  flex: 1;
+  font-size: 0.16rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 0.1rem;
+}
+
+.pay-contaienr-num {
+  color: #fe7000;
+  font-size: 0.2rem;
+}
+
+.pay-contaienr-p1 {
+  color: #000;
+  font-size: 0.17rem;
+}
+.pay-contaienr-p2 {
+  color: #999;
+  font-size: 0.11rem;
+}
+
+.pay-contaienr-last {
+  width: 1.2rem;
+  background-image: linear-gradient(40deg, #fe5a00 0%, #ff7c00 100%);
+  text-align: center;
+  line-height: 0.5rem;
+  font-size: 0.18rem;
+  font-weight: 300;
+  color: #fff;
+}
+
+.disabled-btn {
+  color: #999;
+  background: #e6e6e6 !important;
 }
 </style>

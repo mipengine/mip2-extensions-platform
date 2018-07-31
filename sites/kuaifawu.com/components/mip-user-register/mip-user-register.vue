@@ -6,7 +6,7 @@
     clear>
     <mip-toast/>
     <h1><mip-img
-      src="../../static/image/regist_bg_title.png"
+      src="https://b.kuaifawu.com/static/image/regist_bg_title.png"
       class="imgs"/></h1>
     <div class="reg-list">
       <ul class="">
