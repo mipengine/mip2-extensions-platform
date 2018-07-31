@@ -113,7 +113,7 @@
     <a
       ref="index"
       data-type="mip"
-      href="index.html"/>
+      href="index.html?current=1"/>
     <mip-fixed type="top">
       <div
         v-if="detail"

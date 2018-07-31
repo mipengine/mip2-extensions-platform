@@ -1,8 +1,8 @@
 <template>
   <div class="s4s-page">
-    <a
+    <!-- <a
       ref="tel"
-      href="tel://400-000-1199"/>
+      href="tel://400-000-1199" /> -->
     <!-- <div style="background-color:#fff;padding:4%">
                 <h3 style="font-size: .2rem; font-weight:medium; ">尊敬的客户您好</h3>
                 <p style="font-size: .14rem;padding-top: .05rem;color:#666">当前待付款 <span style="color:#f40">{{ statics.UnpaySum || 0}}</span> 条，处理中 <span style="color:#f40">{{ statics.HandleSum || 0}}</span> 条，已完成 <span style="color:#f40">{{ statics.FinishSum || 0}}</span> 条。</p>
@@ -163,7 +163,9 @@ export default {
       this.selIndex = index
     },
     closeOrder () {
-      this.$refs.tel.click()
+      // this.$refs.tel.click()
+      util.toast('联系电话 400-000-1199')
+      MIP.viewer.open('tel://400-000-1199')
     },
     // 取消订单
     cancelOrder (id) {

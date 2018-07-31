@@ -872,7 +872,8 @@ export default {
 }
 
 .s4s-group {
-  height: 0.32rem;
+  position: relative;
+  line-height: 0.15rem;
   border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
   color: #666;
   overflow: hidden;
@@ -882,15 +883,12 @@ export default {
   display: -webkit-box;
   display: -ms-flexbox;
    display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
-  padding: 0.15rem 0;
+  padding: 0.20rem 0;
     box-sizing: content-box;-moz-box-sizing: content-box;-webkit-box-sizing: content-box;
 }
 .s4s-group-tit {
   font-size: 0.15rem;
   width: 0.9rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
 }
 .s4s-group-txt {
   font-size: 0.15rem;
@@ -952,6 +950,11 @@ select {
   font-size: 0.14rem;
   border: 0.01rem solid #ff7b00;
   padding: 0.05rem 0.075rem;
+  line-height: .20rem;
+  position: absolute;
+  right: 0;
+  top:50%;
+  margin-top:-.15rem
 }
 .code-btn-disable {
   opacity: 0.5;
