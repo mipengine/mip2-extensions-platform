@@ -19,3 +19,10 @@ done
 echo "start to build"
 # build each site in parallel
 node tools/build-site.js
+
+if [ $? -ne 0 ]; then
+    echo "build failed"
+    exit 1
+else
+    echo "build succeed"
+fi

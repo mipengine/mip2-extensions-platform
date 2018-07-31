@@ -11,9 +11,9 @@ const builder = require('../node_modules/mip2/lib/build')
 const rootDir = path.join(__dirname, '..')
 
 // 编译，结束后生成预览站点
-build()
+buildComponents()
 
-function build () {
+function buildComponents () {
   const projects = fs.readdirSync(path.join(rootDir, 'sites')).filter(file =>
     fs.statSync(path.join(rootDir, 'sites', file)).isDirectory()
   )
@@ -28,12 +28,17 @@ function build () {
     let dist = path.join(rootDir, 'dist', proj)
     let publicPath = '/' + proj
 
-    await builder({
-      dir: src,
-      output: dist,
-      asset: publicPath,
-      clean: true
-    })
+    try {
+      await builder({
+        dir: src,
+        output: dist,
+        asset: publicPath,
+        clean: true
+      })
+    } catch (e) {
+      console.log(e)
+      process.exit(1)
+    }
   }
 
   console.log('Building... Please wait')
