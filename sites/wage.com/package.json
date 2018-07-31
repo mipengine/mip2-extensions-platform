@@ -1,0 +1,31 @@
+{
+  "name": "mip-demo",
+  "version": "0.0.1",
+  "description": "mip learning",
+  "scripts": {
+    "dev": "mip2 dev",
+    "build": "mip2 build",
+    "lint": "npm run lint:js && npm run lint:style",
+    "lint:js": "eslint {**/*,**}.{vue,js,md}",
+    "lint:style": "stylelint {**/*,**}.{vue,css,less,md}",
+    "fix": "npm run fix:js && npm run fix:style",
+    "fix:js": "eslint {**/*,**}.{vue,js,md} --fix",
+    "fix:style": "stylelint {**/*,**}.{vue,css,less,md} --fix"
+  },
+  "author": "linjinkun",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jsdoc": "^3.7.1",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "eslint-plugin-vue": "^4.5.0",
+    "eslint-plugin-markdown": "^1.0.0-beta.6",
+    "stylelint": "^9.3.0",
+    "stylelint-config-standard": "^18.2.0"
+  }
+}
