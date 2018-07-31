@@ -7,7 +7,7 @@
       <input
         v-model="amount"
         type="number"
-        placeholder="0-10000 ,000 最多两位小数"
+        placeholder="0-10000,000 最多两位小数"
         @blur="checkNum"
         @keyup="numberAmount(amount)">
     </div>
@@ -19,7 +19,7 @@
         :value="provinceName"
         type="text"
         placeholder=""
-        class="ip-disable">
+        class="ip-disable w98p">
     </div>
     <div
       class="arrow"
@@ -29,12 +29,12 @@
         id="threshold"
         :value="threshold"
         type="text"
-        class="ip-disable">
+        class="ip-disable w98p">
     </div>
     <mip-fixed
       v-show="scrollshow"
       type="bottom"
-      class="container">
+      class="container z1000">
       <mip-scroll-select
         :scrollshow="scrollshow"
         :values="values"
@@ -45,7 +45,7 @@
     <mip-fixed
       v-show="showaddress"
       type="bottom"
-      class="container">
+      class="container z1000">
       <mip-address-select
         :showaddress="showaddress"
         class="container"
@@ -133,6 +133,9 @@ export default {
 .container{
   height: 100%;
 }
+.z1000{
+  z-index: 1000;
+}
 .wrapper {
   position: relative;
   margin: 0 15px 10px 15px;
@@ -174,8 +177,11 @@ input {
   border: none;
   outline: none;
   color:#333;
+  letter-spacing:1px;
 }
-
+.w98p{
+  width:98%;
+}
 input::placeholder {
   text-align: right;
   color: #ccc;
