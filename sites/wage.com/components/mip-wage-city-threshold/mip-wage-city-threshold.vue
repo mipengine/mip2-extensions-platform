@@ -5,11 +5,10 @@
         <slot/>
       </label>
       <input
-        v-model="amount"
         type="number"
         placeholder="0-10000,000 最多两位小数"
         @blur="checkNum"
-        @keyup="numberAmount(amount)">
+        @input="numberAmount">
     </div>
     <div
       class="arrow"
@@ -75,8 +74,8 @@ export default {
 	},
 
 	methods: {
-		numberAmount (obj) {
-			let sNum = obj.toString();
+		numberAmount (e) {
+			let sNum = e.target.value.toString();
 			if (sNum > 10000000) {
 				sNum = sNum.slice(0, 7);
 			}
@@ -91,6 +90,7 @@ export default {
 			if (this.amount.indexOf('.') < 0 && this.amount !== '') {
 				this.amount = parseFloat(sNum);
 			}
+			e.target.value = this.amount;
 			MIP.setData({ 'wage': this.amount });
 			this.$emit('getinputwage', this.amount);
 		},

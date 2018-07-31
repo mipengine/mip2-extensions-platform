@@ -42,7 +42,7 @@
     <div
       class="calculateBtn"
       @click="resetCalculate"><a
-        href="./index.html"
+        href="http://wbg.do1.com.cn/gzjsq.html"
         class="cfff">重新计算</a></div>
     <p><a
       class="tip2"
