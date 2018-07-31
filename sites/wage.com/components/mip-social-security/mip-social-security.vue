@@ -20,6 +20,7 @@
       <label for="">缴纳标准</label>
       <input
         :value="selectValue"
+        :class="{'c-disable':cok}"
         type="text"
         class="ip-disable">
     </div>
@@ -28,7 +29,7 @@
       class="wage">
       <label for="">缴纳基数</label>
       <input
-        :class="{'ip-disable':ok,'c-disable':ok}"
+        :class="{'ip-disable':ok}"
         :value="getBase"
         type="number"
         placeholder="0-1000,000 最多两位小数"
@@ -49,11 +50,11 @@
     <mip-fixed
       v-show="scrollshow"
       type="bottom"
-      class="container">
+      class="container z1001">
       <mip-scroll-select
         :scrollshow="scrollshow"
         :values="showValues"
-        class="container"
+        class="container z1001"
         @showselect="showSelect"
         @colsescrollselect="colseScrollSelect"/>
     </mip-fixed>
@@ -63,6 +64,9 @@
 <style scoped>
 .container{
   height: 100%;
+}
+.z1001{
+	z-index: 1001;
 }
 .wrapper {
     position: relative;
@@ -105,6 +109,7 @@ input {
     border: none;
     outline: none;
 	color: #333;
+	letter-spacing:1px;
 }
 .left {
     float: left;
@@ -122,7 +127,6 @@ input::placeholder {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAB+klEQVRIS62Wv4sTQRTHv28DdoJ98ldok8ybNHdcd4o22vnjCkUOEeWw9AeKIocgHlYqFuIV8UepnRbZmVVBG0mllZWiRVJ4guB+5UmuS7KzZ6Yadt9+Pvv2vZlZwZQRQrhKcst7f2NaTMp1mRTU7/f3ZVn2FkADwFlVvZMCmxQzUWCBMcYVkvdtTvKk9/7fvO6YKjBQCOEMAHv7PyJy1Dm3OVfBWHIBwE2TkDzsvX9eRzIzg21QjPEKyYsAfpM86L1/mSpJEowzuQXgPIAtksve+9cpkmQBSYkx3gVwWkR+klxS1aJKkiwYd5MURfGQ5DEAoyzLFjqdzodZkloCA/V6vUar1dq0ggP4LiKLzrmP0yS1BQYaDAa7RqPRU5L7SX7NsqzrnPtca6FVfds8z3eLyBcAewC8UdXO3ASWwXA4fALgAIBvjUaj2263P81FYDVoNpuPARwB8ENEFuZWg3GrPgBwwrqoLMvFbrf7fi5dZPAQwoaIrNpiE5El51ysqlVyF+V5vi4iawB+AVhW1VdVcLufJAghXAZwabwXHfLev0iBJwlijGsk1203tcKq6rNUeKUgxrhKcsPOHADHVfVRHfhMQQjBOsU6xsYpVb1XFz5VUBTF3rIs39mZLCLnnHO3dwKfmUGM8br9VajqtZ3CK2vwP+DtZ/8CVbfLGdhcLzIAAAAASUVORK5CYII=) no-repeat 100% 56%;
     background-size: 10px;
 }
-
 .ip-disable {
     pointer-events: none;
 }
@@ -272,8 +276,8 @@ export default {
 			},
 			amount: '',
 			numberAmount: '',
-			isAfter: false
-
+			isAfter: false,
+			cok:false
 		};
 	},
 	computed: {
@@ -301,12 +305,14 @@ export default {
 					this.selectValue = '按照工资';
 					this.fromWage = true;
 					this.ok = true;
+					this.cok = false;
 					this.isAfter = false;
 					return ['按照工资', '自定义'];
 				} else { // 税后
 					this.selectValue = '自定义';
 					this.fromWage = false;
 					this.ok = false;
+					this.cok = true;
 					this.fromBase = '';
 					this.isAfter = true;
 					return ['自定义'];
@@ -317,6 +323,7 @@ export default {
 					this.selectValue = '按照工资';
 					this.fromWage = true;
 					this.ok = true;
+					this.cok = false;
 					return [
 						'按照工资',
 						'按照最低标准',
@@ -326,6 +333,7 @@ export default {
 					this.selectValue = '自定义';
 					this.fromWage = false;
 					this.ok = false;
+					this.cok = false;
 					this.fromBase = '';
 					this.baseMoney = '';
 					return [
