@@ -52,7 +52,7 @@ export default {
       MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'order/evaluate?id=' + goodsId + '&orderId=' + orderId + '&token=' + base.getToken()))
     },
     goStudy (order) {
-      MIP.viewer.open(order.url, {isMipLink: false})
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'user/study?token=' + base.getToken()))
     },
     goPay (order) {
       let orderId = order.orderNumber || ''

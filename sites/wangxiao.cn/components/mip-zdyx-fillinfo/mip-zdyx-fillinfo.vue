@@ -70,8 +70,9 @@ export default {
       phoneCodeNumber: '',
       imgCode: '',
       phoneCodeBtnText: '获取验证码',
+      iscomit: false,
       getingPhoneCode: false,
-      imgCodeUrl: 'https://mip.wangxiao.cn/baiduUser/getImageCode?validatekey='
+      imgCodeUrl: 'https://mip.wangxiao.cn/baiduUser/getImageCode?token=' + base.getToken()
     }
   },
   computed: {},
@@ -86,7 +87,7 @@ export default {
   },
   mounted () {
     base.setToken(base.getQueryString('token'))
-    this.imgCodeUrl = this.imgCodeUrl + base.getQueryString('validatekey')
+    this.imgCodeUrl = this.imgCodeUrl + '&v=' + Math.random()
   },
   methods: {
     getImgCode () {
@@ -165,6 +166,11 @@ export default {
         _this.showErrorMessage = true
         return
       }
+      if (_this.iscomit) {
+        return
+      } else {
+        _this.iscomit = true
+      }
       fetch(base.api.compareMessageCode, {
         method: 'POST',
         headers: {
@@ -197,10 +203,11 @@ export default {
                 })
               })
                 .then(function (response) {
+                  _this.iscomit = false
                   // 获得后台实际返回的内容
                   response.json().then(function (response) {
                     if (response.data.orderId) {
-                      MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.wangxiao.cn/order/pay?orderId=' + response.data.orderId))
+                      MIP.viewer.open('https://mip.wangxiao.cn/order/pay?orderId=' + response.data.orderId, {isMipLink: false})
                     } else {
                       _this.errorMessage = '下单失败，请重新下单！'
                       _this.showErrorMessage = true
@@ -214,6 +221,7 @@ export default {
           })
         })
         .catch(function (err) {
+          _this.iscomit = false
           console.log('Fetch Error :-S', err)
         })
     }

@@ -224,7 +224,7 @@ export default {
       MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'order/evaluate?id=' + goodsId + '&orderId=' + orderId + '&token=' + base.getToken()))
     },
     goStudy (order, index) {
-      MIP.viewer.open(order.url, {isMipLink: false})
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'user/study?token=' + base.getToken()))
     },
     goPay (order, index) {
       let orderId = order.orderNumber || ''
@@ -258,6 +258,8 @@ export default {
             // 判断如果取消成功了，需要重新渲染数据。修改allOrderList和unpayList对应的数据。
             if (data.code === '000000') {
               _this.getPageData()
+              _this.errorMessage = '订单取消成功！'
+              _this.showErrorMessage = true
             }
           })
         })
