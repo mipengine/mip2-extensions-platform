@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "MIP 2.0 站长组件",
   "scripts": {
-    "lint": "eslint {**/*,**}.{vue,js}",
+    "lint": "eslint --fix {**/*,**}.{vue,js}",
     "validate": "sh tools/validate.sh",
     "deploy:preview": "sh tools/build.sh"
   },
