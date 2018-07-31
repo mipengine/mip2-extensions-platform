@@ -34,7 +34,7 @@
     <mip-fixed
       v-show="scrollshow"
       type="bottom"
-      class="container">
+      class="container z1000">
       <mip-scroll-select
         :scrollshow="scrollshow"
         :values="values"
@@ -45,7 +45,7 @@
     <mip-fixed
       v-show="showaddress"
       type="bottom"
-      class="container">
+      class="container z1000">
       <mip-address-select
         :showaddress="showaddress"
         class="container"
@@ -132,6 +132,9 @@ export default {
 <style scoped>
 .container{
   height: 100%;
+}
+.z1000{
+  z-index: 1000;
 }
 .wrapper {
   position: relative;

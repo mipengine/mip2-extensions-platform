@@ -49,11 +49,11 @@
     <mip-fixed
       v-show="scrollshow"
       type="bottom"
-      class="container">
+      class="container z1001">
       <mip-scroll-select
         :scrollshow="scrollshow"
         :values="showValues"
-        class="container"
+        class="container z1001"
         @showselect="showSelect"
         @colsescrollselect="colseScrollSelect"/>
     </mip-fixed>
@@ -63,6 +63,9 @@
 <style scoped>
 .container{
   height: 100%;
+}
+.z1001{
+	z-index: 1001;
 }
 .wrapper {
     position: relative;
