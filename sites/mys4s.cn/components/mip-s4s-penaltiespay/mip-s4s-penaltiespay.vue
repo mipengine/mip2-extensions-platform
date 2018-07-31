@@ -363,12 +363,12 @@ export default {
 }
 .s4s-sum {
   margin: 0.2rem 0.1rem 0 0.1rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
   text-align: left;
   font-size: 0.15rem;
   color: #50b0de;
@@ -401,7 +401,7 @@ export default {
   margin-top: 0.1rem;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
 }
 
 .s4s-order-input input {
@@ -411,9 +411,9 @@ export default {
   flex: 4;
 }
 .s4s-order-input span {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   background: #3388ff;
   margin: 0;
   height: 0.25rem;
@@ -422,9 +422,9 @@ export default {
 .s4s-order-mip-img-container {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  -webkit-justify-content:space-around; justify-content:space-around;-moz-box-pack:space-around;-webkit--moz-box-pack:space-around;box-pack:space-around;
   margin: 0.2rem 0;
 }
 .s4s-order-mip-img-container .pic {
@@ -437,9 +437,9 @@ export default {
 .s4s-order-mip-img-container .arr {
   max-width: 0.11rem;
   height: 0.2rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
 }
 .s4s-order-content {
   font-size: 0.13rem;
@@ -466,33 +466,33 @@ export default {
   overflow: hidden;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   padding: 0.15rem 0;
-  box-sizing: content-box;
+    box-sizing: content-box;-moz-box-sizing: content-box;-webkit-box-sizing: content-box;
 }
 .s4s-group-tit {
   font-size: 0.15rem;
   width: 0.9rem;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
 }
 .s4s-group-txt {
   font-size: 0.15rem;
   color: #777;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
 }
 .s4s-group input {
   border: none;
   font-size: 0.15rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   text-align: left;
 }
 select {
@@ -542,17 +542,17 @@ select {
 }
 
 .pay-contaienr {
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   width: 100%;
   background: #fff;
 }
 
 .pay-contaienr-first {
-  flex: 1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   font-size: 0.16rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+   -webkit-box-orient:vertical;-webkit-box-direction:normal;-moz-box-orient:vertical;-moz-box-direction:normal;flex-direction:column;-webkit-flex-direction:column;
+  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
   padding: 0 0.1rem;
 }
 

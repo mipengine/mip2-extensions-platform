@@ -94,12 +94,11 @@
         <span class="s4s-group-tit">认罚日期</span>
         <span class="s4s-group-txt">{{ date }}</span>
       </div>
-
       <div
         v-if="(illegal.FreeRuleObject && illegal.FreeRuleObject.drive_licence == 1) || (illegal.FreeRuleObject && illegal.FreeRuleObject.travel_licence == 1)"
         class="s4s-group group-upload">
         <span class="s4s-group-tit">上传行驶证</span>
-        <div style="display: flex;flex: 1;">
+        <div style=" display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;">
           <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_licence == 1">
             <div
               class="group-upload-margin"
@@ -150,7 +149,7 @@
         v-if="(illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_drive_licence == 1) || (illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_travel_licence == 1)"
         class="s4s-group">
         <span class="s4s-group-tit">上传驾驶证</span>
-        <div style="display: flex;flex: 1;">
+        <div style=" display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;">
           <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_drive_licence == 1">
             <mip-img
               v-if="JSZDriveUrl"
@@ -438,51 +437,13 @@ export default {
         util.toast('最多只能选择1张行驶证。')
       }
 
-      // let item = {
-      //   name: list[0].name,
-      //   size: list[0].size,
-      //   file: list[0]
-      // }
-      // fix canvas bug
-      this.inputUpload(list[0], 'driveUrl')
-      // this.html5Reader(list[0], item, 'driveUrl')
-    },
-    inputUpload (file, name) {
-      const self = this
-      if (file) {
-        console.log(file.size / 1024 / 1024 + 'MB!')
-        const isLt2M = file.size / 1024 / 1024 < 2
-        if (!isLt2M) {
-          util.toast('图片大小需要小于 2MB!')
-          return
-        }
-        util.toast('正在上传')
-        const formData = new FormData()
-        formData.append('image', file)
-        fetch('https://mys4s.cn/car/upload_report_pic', {
-          method: 'POST',
-          body: formData
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (data.code === 0) {
-              util.toast('上传成功')
-              if (name === 'ticket') {
-                self.ticketUrl = data.data
-              } else if (name === 'JSZTravel') {
-                self.JSZTravelUrl = data.data
-              } else if (name === 'JSZDrive') {
-                self.JSZDriveUrl = data.data
-              } else if (name === 'travelUrl') {
-                self.travelUrl = data.data
-              } else if (name === 'driveUrl') {
-                self.driveUrl = data.data
-              }
-            } else {
-              util.toast(data.msg)
-            }
-          })
+      let item = {
+        name: list[0].name,
+        size: list[0].size,
+        file: list[0]
       }
+      // fix canvas bug
+      this.html5Reader(list[0], item, 'driveUrl')
     },
     // 上传行驶证正面照
     uploaderXSZTravel () {
@@ -492,13 +453,12 @@ export default {
         return
       }
 
-      // let item = {
-      //   name: list[0].name,
-      //   size: list[0].size,
-      //   file: list[0]
-      // }
-      // this.html5Reader(list[0], item, 'travelUrl')
-      this.inputUpload(list[0], 'travelUrl')
+      let item = {
+        name: list[0].name,
+        size: list[0].size,
+        file: list[0]
+      }
+      this.html5Reader(list[0], item, 'travelUrl')
     },
     // 上传驾驶证正面照
     uploaderJSZDrive () {
@@ -508,13 +468,12 @@ export default {
         return
       }
 
-      // let item = {
-      //   name: list[0].name,
-      //   size: list[0].size,
-      //   file: list[0]
-      // }
-      // this.html5Reader(list[0], item, 'JSZDrive')
-      this.inputUpload(list[0], 'JSZDrive')
+      let item = {
+        name: list[0].name,
+        size: list[0].size,
+        file: list[0]
+      }
+      this.html5Reader(list[0], item, 'JSZDrive')
     },
     // 上传驾驶证正面照
     uploaderJSZTravel () {
@@ -524,13 +483,12 @@ export default {
         return
       }
 
-      // let item = {
-      //   name: list[0].name,
-      //   size: list[0].size,
-      //   file: list[0]
-      // }
-      // this.html5Reader(list[0], item, 'JSZTravel')
-      this.inputUpload(list[0], 'JSZTravel')
+      let item = {
+        name: list[0].name,
+        size: list[0].size,
+        file: list[0]
+      }
+      this.html5Reader(list[0], item, 'JSZTravel')
     },
     html5Reader: function (file, item, name) {
       let imgSrc = new Image()
@@ -574,49 +532,87 @@ export default {
           context.clearRect(0, 0, targetWidth, targetHeight)
           // 图片压缩
           context.drawImage(imgSrc, 0, 0, targetWidth, targetHeight)
-          // canvas转为blob并上传
-          canvas.toBlob(function (blob) {
-            //    var b = {
-            //         file: blob,
-            //         name: item.name,
-            //         size: blob.size,
-            //         src: imgSrc.src
-            //     }
-            const formData = new FormData()
-            formData.append('image', blob, item.name)
-
-            // const formData = new FormData();
-            // formData.append("image", file);
-
+          let data = canvas.toDataURL('image/jpeg').split(',')[1]
+          // 获取base64图片大小，返回MB数字
+          let size = parseInt(data.length - (data.length / 8) * 2)
+          console.log(size)
+          if (size) {
+            const isLt2M = size / 1024 / 1024 < 2
+            if (!isLt2M) {
+              util.toast('图片大小需要小于 2MB!')
+              return
+            }
             util.toast('正在上传')
+            self.uploadBase64(data, name)
+          }
 
-            fetch('https://mys4s.cn/car/upload_report_pic', {
-              method: 'POST',
-              body: formData
-            })
-              .then(res => res.json())
-              .then(data => {
-                if (data.code === 0) {
-                  util.toast('上传成功')
-                  if (name === 'ticket') {
-                    self.ticketUrl = data.data
-                  } else if (name === 'JSZTravel') {
-                    self.JSZTravelUrl = data.data
-                  } else if (name === 'JSZDrive') {
-                    self.JSZDriveUrl = data.data
-                  } else if (name === 'travelUrl') {
-                    self.travelUrl = data.data
-                  } else if (name === 'driveUrl') {
-                    self.driveUrl = data.data
-                  }
-                } else {
-                  util.toast(data.msg)
-                }
-              })
-          }, file.type || 'image/png')
+          // canvas转为blob并上传
+          // canvas.toBlob(function (blob) {
+          //    var b = {
+          //         file: blob,
+          //         name: item.name,
+          //         size: blob.size,
+          //         src: imgSrc.src
+          //     }
+          // const formData = new FormData()
+          // formData.append('image', blob, item.name)
+
+          // const formData = new FormData();
+          // formData.append("image", file);
+
+          // util.toast('正在上传')
+
+          // fetch('https://mys4s.cn/car/upload_report_pic', {
+          //   method: 'POST',
+          //   body: formData
+          // })
+          //   .then(res => res.json())
+          //   .then(data => {
+          //     if (data.code === 0) {
+          //       util.toast('上传成功')
+          //       if (name === 'ticket') {
+          //         self.ticketUrl = data.data
+          //       } else if (name === 'JSZTravel') {
+          //         self.JSZTravelUrl = data.data
+          //       } else if (name === 'JSZDrive') {
+          //         self.JSZDriveUrl = data.data
+          //       } else if (name === 'travelUrl') {
+          //         self.travelUrl = data.data
+          //       } else if (name === 'driveUrl') {
+          //         self.driveUrl = data.data
+          //       }
+          //     } else {
+          //       util.toast(data.msg)
+          //     }
+          //   })
+          // }, file.type || 'image/png')
         }
       }
       reader.readAsDataURL(file)
+    },
+    uploadBase64 (data, name) {
+      let self = this
+      util.fetchData('/v3/violation/image/upload', {
+        imageString: data
+      })
+        .then(data => {
+          if (data.code === 0) {
+            util.toast('上传成功')
+            if (name === 'ticket') {
+              self.ticketUrl = data.data
+            } else if (name === 'JSZTravel') {
+              self.JSZTravelUrl = data.data
+            } else if (name === 'JSZDrive') {
+              self.JSZDriveUrl = data.data
+            } else if (name === 'travelUrl') {
+              self.travelUrl = data.data
+            } else if (name === 'driveUrl') {
+              self.driveUrl = data.data
+            }
+          } else {
+            util.toast(data.msg)
+          }
+        })
     },
     // 支付
     payFee () {
@@ -817,23 +813,25 @@ export default {
   color: #4b4b4b;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
 }
 
 .s4s-tips-right {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+  -moz-box-orient:vertical;
+  -moz-box-direction:normal;
+  flex-direction:column;
+  -webkit-flex-direction:column;
   padding-left: 0.15rem;
   line-height: 150%;
 }
@@ -850,12 +848,12 @@ export default {
 
 .s4s-sum {
   margin: 0.2rem 0.1rem 0 0.1rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
   text-align: left;
   font-size: 0.13rem;
   color: #4b4b4b;
@@ -880,33 +878,33 @@ export default {
   overflow: hidden;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   padding: 0.15rem 0;
-  box-sizing: content-box;
+    box-sizing: content-box;-moz-box-sizing: content-box;-webkit-box-sizing: content-box;
 }
 .s4s-group-tit {
   font-size: 0.15rem;
   width: 0.9rem;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
 }
 .s4s-group-txt {
   font-size: 0.15rem;
   color: #777;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
 }
 .s4s-group input {
   border: none;
   font-size: 0.15rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   text-align: left;
 }
 select {
@@ -943,7 +941,7 @@ select {
 }
 .group-upload-margin {
   margin: 0.1rem 0.15rem 0.1rem 0;
-  flex: 1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
 }
 .code-btn,
 .code-btn-disable {
@@ -960,17 +958,17 @@ select {
 }
 
 .pay-contaienr {
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   width: 100%;
   background: #fff;
 }
 
 .pay-contaienr-first {
-  flex: 1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   font-size: 0.16rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+   -webkit-box-orient:vertical;-webkit-box-direction:normal;-moz-box-orient:vertical;-moz-box-direction:normal;flex-direction:column;-webkit-flex-direction:column;
+  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
   padding: 0 0.1rem;
 }
 
