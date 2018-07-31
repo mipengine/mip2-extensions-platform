@@ -208,9 +208,6 @@ export default {
       this.current_el_id = ''
       this.current_el_data = {}
       this.show = false
-      setTimeout(() => {
-        MIP.viewer.fixedElement.init()
-      }, 0)
     },
     okConfirm () {
       var ele = document.getElementById(this.current_el_id)
@@ -221,9 +218,6 @@ export default {
       this.current_el_id = ''
       this.current_el_data = {}
       this.show = false
-      setTimeout(() => {
-        MIP.viewer.fixedElement.init()
-      }, 0)
     }
   }
 
