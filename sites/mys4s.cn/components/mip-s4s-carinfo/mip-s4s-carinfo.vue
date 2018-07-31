@@ -49,7 +49,7 @@
         <div
           class="provice"
           @click="selectProvice" >
-          <div style="height:100%">{{ provice }} <span class="right-arrow"/></div>
+          <div style="height:100%;padding: 4px 0;">{{ provice }} <span class="right-arrow"/></div>
         </div>
         <input
           v-model="car_no"
@@ -574,8 +574,9 @@ export default {
 }
 
 .s4s-group {
-  height: 0.32rem;
-  border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
+  position: relative;
+  line-height: 0.15rem;
+  border-bottom: 0.01rem #EAEAEA solid;
   color: #666;
   overflow: hidden;
   -webkit-box-align: center;
@@ -584,7 +585,7 @@ export default {
   display: -webkit-box;
   display: -ms-flexbox;
    display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
-  padding: 0.15rem 0;
+  padding: 0.20rem 0;
     box-sizing: content-box;-moz-box-sizing: content-box;-webkit-box-sizing: content-box;
 }
 .s4s-group-tit {
@@ -645,7 +646,7 @@ select {
   /* width: 0.45rem; */
   min-width: .5rem;
   height: 0.25rem;
-  margin-right: 0.05rem;
+  margin-right: 0.1rem;
   padding: 0.01rem 0.09rem;
 }
 .right-arrow {
@@ -697,5 +698,17 @@ select {
 .s4s-provice-hover {
   background: #bbb;
   color: #fff;
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+    color: #ccc;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+color:#ccc;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+color:#ccc;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+color:#ccc;
 }
 </style>

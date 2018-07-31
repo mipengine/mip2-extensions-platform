@@ -34,7 +34,7 @@
             <div class="s4s-illegal-hd">
               <span class="s4s-illegal-addr"><mip-img
                 src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/position.png"
-                style="margin-right:.03rem;vertical-align: -.02rem;"
+                style="margin-right:.07rem;vertical-align: -.02rem;"
                 width="10"
                 height="14" />{{ list.Address || '未知' }}</span>
             </div>
@@ -307,6 +307,7 @@ export default {
   box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   color: #333;
   font-size: .2rem;
+  font-weight: bold;
 }
 
 .s4s-car-illegal {
@@ -395,7 +396,7 @@ export default {
   box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   font-size: 0.14rem;
   color: #666;
-  padding: 0 0.15rem 0 0.1rem;
+  padding-right: 0.15rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -406,7 +407,9 @@ export default {
   font-size: 0.14rem;
   color: #333;
 }
-
+.s4s-illegal-bd-number{
+  font-weight: bold;
+}
 .s4s-illegal-bd-number span {
   padding: 0 0.03rem;
 }
@@ -467,6 +470,8 @@ export default {
 .s4s-title {
   font-size: .2rem;
   padding: .15rem;
+    font-weight: bold;
+
 }
 .s4s-car-change {
   border: .01rem solid #fe7000;

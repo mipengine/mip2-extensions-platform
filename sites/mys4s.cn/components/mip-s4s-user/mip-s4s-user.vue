@@ -32,7 +32,7 @@
             :key="item.AliOrderId"
             :class="['s4s-cell', (item.Status == 2 || item.Status == 5) ? 's4s-cell-hd-image' : item.Status == 7 ? 's4s-cell-hd-image-down' :'']">
             <div class="s4s-cell-hd" >
-              <p >{{ item.SwiftNum || '-' }}</p><span v-if="item.Status == 0">等待支付</span>
+              <p >{{ item.SwiftNum || '-' }}</p><span v-if="item.Status == 0">等待支付</span><span v-if="item.Status == 3">处理中</span>
             </div>
             <div
               v-if="item.car_no"
@@ -100,7 +100,7 @@
         <div class="s4s-confirm-btn">
           <span @click="cancelBtn">取消</span>
           <span
-            style="color: #108EE9;"
+            style="color: #4f7eff;font-weight: 200;"
             @click="confirmBtn">确认</span>
         </div>
       </div>
@@ -164,7 +164,7 @@ export default {
     },
     closeOrder () {
       // this.$refs.tel.click()
-      util.toast('联系电话 400-000-1199')
+      util.toast('退款事宜请拨打客服电话400-000-1199')
       MIP.viewer.open('tel://400-000-1199')
     },
     // 取消订单
@@ -344,8 +344,10 @@ export default {
     position: absolute;
     right: 0;
     top: .03rem;
-    padding: .01rem .05rem;
+    padding: .01rem .07rem;
+    letter-spacing: 1px;
     font-weight: 100;
+    min-width: .1rem;
 }
 @media screen and (min-width: 590px) {
   .s4s-tab-item {
@@ -396,18 +398,13 @@ export default {
 }
 .s4s-cell-bd {
   padding-top: 0.15rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
 }
 .s4s-cell-tit {
   color: #999;
 }
 .s4s-cell-txt {
   color: #666;
+  font-size: .15rem;
 }
 .s4s-cell-bd:last-child {
   padding-bottom: 0.1rem;
@@ -478,6 +475,8 @@ export default {
   -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
   border-top: 0.01rem rgba(0, 0, 0, 0.1) solid;
   font-size: 0.15rem;
+  font-weight: bold;
+  color: #4f7eff;
 }
 .s4s-confirm-btn span {
   line-height: 0.45rem;

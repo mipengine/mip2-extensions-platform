@@ -6,7 +6,7 @@
         width="60"
         height="50" />
       <div class="s4s-tips-right">
-        <p>交通违法代缴的办理周期为1-2个工作日，部分地区2-5个工作日，<span style="color:#FE7000">需年检用户如需当日处理完成，请勿下单</span>。其他问题请参见
+        <p>交通违法代缴的办理周期为<span style="color:#FE7000">1-2个工作日，部分地区2-5个工作日</span>，需年检用户如需当日处理完成，请勿下单。其他问题请参见
           <a
             data-type="mip"
             href="help.html"
@@ -871,21 +871,21 @@ export default {
   float: right;
 }
 
-.s4s-group {
-  position: relative;
-  line-height: 0.15rem;
-  border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
-  color: #666;
-  overflow: hidden;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
-  padding: 0.20rem 0;
-    box-sizing: content-box;-moz-box-sizing: content-box;-webkit-box-sizing: content-box;
-}
+    .s4s-group {
+      position: relative;
+      line-height: 0.15rem;
+      border-bottom: 0.01rem #EAEAEA solid;
+      color: #666;
+      overflow: hidden;
+      -webkit-box-align: center;
+      -ms-flex-align: center;
+      -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+      padding: 0.20rem 0;
+      box-sizing: content-box;-moz-box-sizing: content-box;-webkit-box-sizing: content-box;
+    }
 .s4s-group-tit {
   font-size: 0.15rem;
   width: 0.9rem;
@@ -1002,5 +1002,17 @@ select {
 .disabled-btn {
   color: #999;
   background: #e6e6e6 !important;
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+    color: #ccc;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+color:#ccc;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+color:#ccc;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+color:#ccc;
 }
 </style>

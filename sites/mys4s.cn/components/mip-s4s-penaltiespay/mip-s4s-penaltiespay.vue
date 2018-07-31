@@ -185,6 +185,7 @@ export default {
       console.log('pay2event')
       me.payFee()
     })
+
     if (this.globalData && this.globalData.orderNumber) {
       try {
         window.localStorage.setItem(
@@ -462,7 +463,7 @@ export default {
 .s4s-group {
   position: relative;
   line-height: 0.15rem;
-  border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
+  border-bottom: 0.01rem #EAEAEA solid;
   color: #666;
   overflow: hidden;
   -webkit-box-align: center;
@@ -586,5 +587,17 @@ select {
 .disabled-btn {
   color: #999;
   background: #e6e6e6 !important;
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+    color: #ccc;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+color:#ccc;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+color:#ccc;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+color:#ccc;
 }
 </style>
