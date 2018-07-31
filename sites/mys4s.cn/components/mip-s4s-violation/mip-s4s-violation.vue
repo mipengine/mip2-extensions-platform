@@ -456,7 +456,11 @@ export default {
   border-top: 0.01rem rgba(0, 0, 0, 0.05) solid;
   font-size: 0.14rem;
   color: #999;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
 }

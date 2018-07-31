@@ -704,34 +704,36 @@ select {
   font-size: 0.14rem;
 }
 .s4s-provice-tit-hide{
-  width: 33.899999999%;background: #BBC3C7;color: #fff;
+  width: 33.899999999%;
+  background: #BBC3C7;
+  color: #fff;
 }
 @media screen and (min-width: 500px) {
-    .s4s-provice-tit {
-      width: auto;
-      margin-left: 1.09999999%;
-      margin-top: 1.09999999%;
-    }
-    .s4s-provice-tit-hide{
-      width: 98%;
-      margin-left: 1.09999999%;
-      margin-top: 1.09999999%;
-    }
+  .s4s-provice-tit {
+    width: auto;
+    margin-left: 1.09999999%;
+    margin-top: 1.09999999%;
+  }
+  .s4s-provice-tit-hide{
+    width: 98%;
+    margin-left: 1.09999999%;
+    margin-top: 1.09999999%;
+  }
 }
 .s4s-provice-hover {
   background: #bbb;
   color: #fff;
 }
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
-    color: #ccc;
+  color: #ccc;
 }
 input:-moz-placeholder, textarea:-moz-placeholder {
-color:#ccc;
+  color:#ccc;
 }
 input::-moz-placeholder, textarea::-moz-placeholder {
-color:#ccc;
+  color:#ccc;
 }
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-color:#ccc;
+  color:#ccc;
 }
 </style>

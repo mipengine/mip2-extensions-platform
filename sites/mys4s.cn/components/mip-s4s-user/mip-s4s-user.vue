@@ -317,12 +317,16 @@ export default {
 .s4s-tab-cur {
   border-bottom: 0.03rem #fe7000 solid;
   color: #333;
-      width: 100%;
-    text-align: center;
+  width: 100%;
+  text-align: center;
 }
 .s4s-tab-item {
   padding: 0 0.1rem;
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
   -ms-box-flex:1;
   display:-webkit-box;
   display: -moz-box;
@@ -340,33 +344,33 @@ export default {
   font-size:.15rem;
 }
 .s4s-tab-num {
-    background: #fe5a00;
-    background-image:linear-gradient(40deg, #fe5a00 0%, #ff7c00 100%);
-    /* min-width: .185rem;
-    width:auto;
-    padding:0 .0485rem; */
-    display: inline-block;
-    border-radius: 2rem;
-    text-align: center;
-    color: #fff;
-    -webkit-box-pack:center;
-    -moz-box-align:center;
-    -webkit-box-align:center;
-    -webkit-justify-content:center;
-    justify-content:center;
-    -moz-box-pack:center;
-    box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    -webkit-box-sizing: content-box;
-    font-size: .12rem;
-    line-height: .18rem;
-    position: absolute;
-    right: 0;
-    top: .03rem;
-    padding: .01rem .07rem;
-    letter-spacing: 1px;
-    font-weight: 100;
-    min-width: .1rem;
+  background: #fe5a00;
+  background-image:linear-gradient(40deg, #fe5a00 0%, #ff7c00 100%);
+  /* min-width: .185rem;
+  width:auto;
+  padding:0 .0485rem; */
+  display: inline-block;
+  border-radius: 2rem;
+  text-align: center;
+  color: #fff;
+  -webkit-box-pack:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
+  -webkit-justify-content:center;
+  justify-content:center;
+  -moz-box-pack:center;
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  font-size: .12rem;
+  line-height: .18rem;
+  position: absolute;
+  right: 0;
+  top: .03rem;
+  padding: .01rem .07rem;
+  letter-spacing: 1px;
+  font-weight: 100;
+  min-width: .1rem;
 }
 @media screen and (min-width: 590px) {
   .s4s-tab-item {
@@ -441,9 +445,11 @@ export default {
   border-top: 0.01rem rgba(0, 0, 0, 0.1) solid;
   margin-top: 0.15rem;
   padding-top: 0.15rem;
-  display: -webkit-box;
+  display:-webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display: -webkit-flex;
+  display: flex;
   -webkit-box-pack: end;
   -ms-flex-pack: end;
   justify-content: flex-end;

@@ -661,7 +661,9 @@ export default {
   font-size: 0.14rem;
 }
 .s4s-provice-tit-hide{
-  width: 33.899999999%;background: #BBC3C7;color: #fff;
+  width: 33.899999999%;
+  background: #BBC3C7;
+  color: #fff;
 }
 @media screen and (min-width: 500px) {
   .s4s-provice-tit {
