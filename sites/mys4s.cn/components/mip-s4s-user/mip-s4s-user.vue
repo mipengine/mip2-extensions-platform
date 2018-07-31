@@ -181,7 +181,8 @@ export default {
       let self = this
       util.fetchData('v3/violation/order/cancel', param).then(res => {
         if (res.code === 0) {
-          self.getOrder(0)
+          // self.getOrder(this.selIndex)
+          self.selTab(self.selIndex)
           self.getOrderStatic()
           util.toast('取消成功')
         }
@@ -301,10 +302,10 @@ export default {
   line-height: 45px;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
-  justify-content: center;
+  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
 }
 .s4s-tab-cur {
   border-bottom: 0.03rem #fe7000 solid;
@@ -314,12 +315,12 @@ export default {
 }
 .s4s-tab-item {
   padding: 0 0.1rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
   position: relative;
   font-size:.15rem;
 }
@@ -333,9 +334,9 @@ export default {
     border-radius: 2rem;
     text-align: center;
     color: #fff;
-    align-items: center;
-    justify-content: center;
-    box-sizing: content-box;
+    -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+    -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
+      box-sizing: content-box;-moz-box-sizing: content-box;-webkit-box-sizing: content-box;
     font-size: .12rem;
     line-height: .18rem;
     position: absolute;
@@ -369,36 +370,36 @@ export default {
 .s4s-cell-hd {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
   padding-bottom: 0.1rem;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
 }
 .s4s-cell-hd p {
   color: #999;
   font-size: 0.14rem;
-  flex: 1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
 }
 .s4s-cell-hd span {
   font-size: 0.14rem;
   color: #fe7000;
 }
 .s4s-cell-hd-time {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   color: #333;
 }
 .s4s-cell-bd {
   padding-top: 0.15rem;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
 }
 .s4s-cell-tit {
   color: #999;
@@ -415,7 +416,7 @@ export default {
   padding-top: 0.15rem;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -webkit-box-pack: end;
   -ms-flex-pack: end;
   justify-content: flex-end;
@@ -470,9 +471,9 @@ export default {
 .s4s-confirm-btn {
   height: 0.45rem;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
   border-top: 0.01rem rgba(0, 0, 0, 0.1) solid;
   font-size: 0.15rem;
 }
@@ -480,11 +481,11 @@ export default {
   line-height: 0.45rem;
   border-right: 0.01rem rgba(0, 0, 0, 0.1) solid;
   display: -ms-flexbox;
-  display: flex;
-  -ms-flex: 1;
-  flex: 1;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   -ms-flex-pack: center;
-  justify-content: center;
+  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
 }
 .s4s-confirm-btn span:last-child {
   border-right: 0;
