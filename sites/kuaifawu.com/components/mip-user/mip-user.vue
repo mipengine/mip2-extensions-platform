@@ -32,14 +32,14 @@
       </div>
       <div
         v-if="isreg === 1"
-        class="btn">
+        class="btn" on="tap:log.login">
         <a
           class="word"
-          on="tap:log.login">注册</a>
+          >注册</a>
         <span class="line"/>
         <a
           class="word"
-          on="tap:log.login">登录</a>
+          >登录</a>
       </div>
     </div>
     <!-- 列表 -->
@@ -230,47 +230,70 @@ export default {
     }
   },
   mounted () {
-    MIP.viewer.fixedElement.init()
-    // 自定义exit事件
-    const self = this
-    this.$element.customElement.addEventAction('logout', event => {
-      console.log(12312)
-    })
-    this.$element.customElement.addEventAction('login', event => {
-      // console.log('1111')
+      MIP.viewer.fixedElement.init()
+      // 自定义exit事件
+      const self = this
+      this.$element.customElement.addEventAction('logout', event => {
+          console.log(12312)
+          this.removeSession()
+      });
+
       let CustomStorage = MIP.util.customStorage
       let storage = new CustomStorage(0)
-      console.log(event.sessionId)
-      console.log(event.userInfo.nickname)
-      if (event.sessionId) {
-        storage.set('sessionIds', event.sessionId)
-        storage.set('nickname', event.userInfo.nickname)
-      }
       let sessionid = storage.get('sessionIds')
-      // sessionid = 'uJN/qa+3uKO6lXywhZ94epifraF3jWKDjKs='
-      self.sessionid = sessionid
+      console.log(sessionid,'dddddddddddddd')
       if (sessionid) {
-        window.fetchJsonp(config.data().apiurl + '/user/getinfo?sessionid=' + encodeURIComponent(sessionid), {
-          jsonpCallback: 'callback'
-        }).then(function (res) {
-          return res.json()
-        }).then(function (data) {
-          self.mobile = data.data.items.mobile
-          self.nickname = data.data.items.nickname
-          self.userbalance = data.data.items.userbalance
-          if (!self.mobile) {
-            storage.set('returnurl', config.data().burl + '/user/index.html')
-            // window.location.href = '/user/register.html'
-            // window.MIP.viewer.open('/user/register.html', {isMipLink: true});
-            window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + '/user/register.html'), {isMipLink: true})
-          }
-          self.isreg = data.data.items.isreg
-          console.log(self.mobile)
-        })
+          window.fetchJsonp(config.data().apiurl + '/user/getinfo?sessionid=' + encodeURIComponent(sessionid), {
+            jsonpCallback: 'callback'
+          }).then(function (res) {
+            return res.json()
+          }).then(function (data) {
+            self.mobile = data.data.items.mobile
+            self.nickname = data.data.items.nickname
+            self.userbalance = data.data.items.userbalance
+            if (!self.mobile) {
+              storage.set('returnurl', config.data().burl+'/user/index.html')
+              window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + '/user/register.html'), {isMipLink: true});
+            }
+            self.isreg = data.data.items.isreg
+            console.log(self.mobile)
+          })
       }
-    })
 
+      this.$element.customElement.addEventAction('login', event => {
+          
+          console.log(event.sessionId)
+          console.log(event.userInfo.nickname)
+          if (event.sessionId) {
+            storage.set('sessionIds', event.sessionId)
+            storage.set('nickname',event.userInfo.nickname)
+          }
+          let sessionid = storage.get('sessionIds')
+          // sessionid = 'uJN/qa+3uKO6lXywhZ94epifraF3jWKDjKs='
+          self.sessionid = sessionid
+          if (sessionid) {
+            window.fetchJsonp(config.data().apiurl + '/user/getinfo?sessionid=' + encodeURIComponent(sessionid), {
+              jsonpCallback: 'callback'
+            }).then(function (res) {
+              return res.json()
+            }).then(function (data) {
+              self.mobile = data.data.items.mobile
+              self.nickname = data.data.items.nickname
+              self.userbalance = data.data.items.userbalance
+              if (!self.mobile) {
+                storage.set('returnurl', config.data().burl+'/user/index.html')
+                window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + '/user/register.html'), {isMipLink: true});
+              }
+              self.isreg = data.data.items.isreg
+              console.log(self.mobile)
+            })
+          }
+      });
+    
     // console.log(config.data().apiurl)
+    
+
+     
   },
   prerenderAllowed () {
     return true
