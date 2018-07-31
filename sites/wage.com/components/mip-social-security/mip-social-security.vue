@@ -29,7 +29,7 @@
       class="wage">
       <label for="">缴纳基数</label>
       <input
-        :class="{'ip-disable':ok}"
+        :class="{'ip-disable':ok,'c-disable':ok}"
         :value="getBase"
         type="number"
         placeholder="0-1000,000 最多两位小数"
