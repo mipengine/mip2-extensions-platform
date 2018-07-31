@@ -34,6 +34,7 @@
         </span>
       </div>
     </section>
+    <div v-if="html.length>0">
     <section class="jkx_container">
       <h3
         id="panel"
@@ -61,6 +62,7 @@
       </div>
       <span class="jkx_loading"/>
     </section>
+    </div>
   </div>
 </template>
 
