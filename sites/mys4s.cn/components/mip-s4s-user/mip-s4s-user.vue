@@ -181,7 +181,8 @@ export default {
       let self = this
       util.fetchData('v3/violation/order/cancel', param).then(res => {
         if (res.code === 0) {
-          self.getOrder(this.selIndex)
+          // self.getOrder(this.selIndex)
+          self.selTab(self.selIndex)
           self.getOrderStatic()
           util.toast('取消成功')
         }
