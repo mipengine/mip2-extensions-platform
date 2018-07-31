@@ -70,6 +70,30 @@ export default {
   },
   watch: {
     areadata (val) {
+      if (this.area.address !== val.address) {
+        this.area.address = val.address
+        let city = val.show1 && this.num === 0 ? this.area.address.split(' ')[1] : val.address.split(' ')[1]
+        let dist = val.show1 && this.num === 0 ? this.area.address.split(' ')[2] : val.address.split(' ')[2]
+        fetch(`${apiUrl.getByName}?cityName=${city}&distName=${dist}`).then(data => {
+          return data.json()
+        }).then(res => {
+          this.area.cityId = res.data.dist.city.id
+          this.area.distId = res.data.dist.id
+          MIP.setData({
+            orderData: {
+              'cityId': this.area.cityId,
+              'distId': this.area.distId,
+              'address': this.area.address,
+              'detail': this.detail
+            },
+            areaData: {
+              'detail': this.detail,
+              'address': this.area.address,
+              'locationAddress': this.area.address
+            }
+          })
+        })
+      }
       this.area.address = val.show1 && this.num === 0 ? this.area.address : val.address
       this.detail = val.detail
       if (val.show1) this.num++
@@ -89,13 +113,13 @@ export default {
       })
       fetch(`${apiUrl.getByName}?cityName=${res.address.city}&distName=${res.address.district}`).then(data => {
         return data.json()
-      }).then(res => {
-        this.area.cityId = res.data.dist.city.id
-        this.area.distId = res.data.dist.id
+      }).then(res1 => {
+        this.area.cityId = res1.data.dist.city.id
+        this.area.distId = res1.data.dist.id
         MIP.setData({
           orderData: {
-            'cityId': res.data.dist.city.id,
-            'distId': res.data.dist.id,
+            'cityId': this.area.cityId,
+            'distId': this.area.distId,
             'address': this.area.address,
             'detail': this.detail,
             'lat': res.point.lat,
@@ -109,7 +133,7 @@ export default {
         })
       })
     })
-    this.$on('success', res => {
+    this.$on('failed', res => {
       console.log(res)
     })
   },
@@ -177,6 +201,10 @@ export default {
           color: #333;
           line-height: 35px;
           font-size: 14px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+
       }
     }
     .city1,.detail{
