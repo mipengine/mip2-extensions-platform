@@ -3,7 +3,7 @@
     <div class="s4s-body">
       <div class="s4s-car-info">
         <div class="s4s-car-model">
-          <span class="s4s-car-name">{{ car_no || '-' }}</span>
+          <span class="s4s-car-name">{{ provice + car_no || '-' }}</span>
           <span
             class="s4s-car-change"
             @click="gotoForm">更换爱车</span>
@@ -91,7 +91,7 @@ export default {
   },
   data () {
     return {
-      provice: '浙',
+      provice: '省',
       proviceShow: false,
       detail: false,
       src: '',
@@ -100,7 +100,7 @@ export default {
       code: 1,
       lists: [],
       car_no: '',
-      engion: '',
+      engine: '',
       vin: '',
       car: null,
       driveUrl: '',
@@ -109,20 +109,38 @@ export default {
       system: {}
     }
   },
-  watch: {
-    globalData () {
-      console.log(this.globalData)
-    }
+  prerenderAllowed () {
+    return true
   },
   mounted () {
-    console.log(this.globalData, 'globalData')
-    console.log(
-      this.globalData.car_no,
-      this.globalData.engine,
-      this.globalData.vin
-    )
+    if (!this.globalData.car_no && this.getQueryString('carno')) {
+      console.log('url模式')
+      this.globalData.car_no = this.getQueryString('carno').slice(1, 10)
+      this.globalData.provice = this.getQueryString('carno').slice(0, 1)
+      this.globalData.vin = this.getQueryString('vin')
+      this.globalData.engine = this.getQueryString('engine')
+      this.globalData.car_type = this.getQueryString('car_type')
+    }
+    if (this.globalData.car_no) {
+      try {
+        window.localStorage.setItem('violationData', JSON.stringify(this.globalData))
+      } catch (error) {
+        util.toast('由于您处在无痕模式，不能存储您当前的记录')
+      }
+    } else {
+      try {
+        console.log('cache模式')
+        let globalData = window.localStorage.getItem('violationData')
+        if (globalData && JSON.parse(globalData)) {
+          this.globalData = JSON.parse(globalData)
+        }
+      } catch (error) {
+        util.toast('由于您处在无痕模式，不能载入您之前输入的记录')
+      }
+    }
+    this.provice = this.globalData.provice
     this.car_no = this.globalData.car_no
-    this.engion = this.globalData.engine
+    this.engine = this.globalData.engine
     this.vin = this.globalData.vin
     this.car_type = this.globalData.car_type
     if (this.globalData.channel) {
@@ -139,7 +157,6 @@ export default {
 
     const that = this
     this.$on('search', function () {
-      console.log('search')
       that.getIllegal(
         null,
         that.globalData.provice + that.globalData.car_no,
@@ -149,11 +166,16 @@ export default {
     })
   },
   methods: {
+    getQueryString (name) {
+      let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+      let r = window.location.search.substr(1).match(reg)
+      if (r != null) return decodeURIComponent(r[2])
+      return null
+    },
     closeMake () {
       this.detail = false
     },
     gotoTicketPay (item) {
-      console.log(item)
       MIP.setData({
         '#payCarData': item
       })
@@ -161,20 +183,19 @@ export default {
       this.$refs.pay1.click()
     },
     // 获取违章
-    getIllegal (formid, carNo, vin, engion) {
+    getIllegal (formid, carNo, vin, engine) {
       let self = this
       let param = {
         car_no: carNo ? carNo.toUpperCase() : '',
         vin: vin ? vin.toUpperCase() : '',
-        engine: engion ? engion.toUpperCase() : '',
+        engine: engine ? engine.toUpperCase() : '',
         channel: 'baidu',
         car_type: this.globalData.car_type
       }
-      // car_no车牌号，vin车架号，engion发动机，{car_no: 陕KC1166 vin: LSVNJ49J472028756 engion: 020297
+      // car_no车牌号，vin车架号，engion发动机，{car_no: 陕KC1166 vin: LSVNJ49J472028756 engine: 020297
       util
         .fetchData('v3/violation/web/query', param)
         .then(res => {
-          console.log(res)
           if (res.code === 0 && res.data) {
             let newList = []
             if (res.data.Records && res.data.Records.length > 0) {
@@ -202,7 +223,7 @@ export default {
                   ViolationId: item.ViolationId,
                   car_no: carNo ? carNo.toUpperCase() : '',
                   vin: vin ? vin.toUpperCase() : '',
-                  engion: engion ? engion.toUpperCase() : ''
+                  engine: engine ? engine.toUpperCase() : ''
                 })
               })
             }
@@ -220,23 +241,22 @@ export default {
               vin: param.vin ? param.vin.toUpperCase() : '',
               engine: param.engine ? param.engine.toUpperCase() : ''
             }
-            // 接口参数 engion
+            // 接口参数 engine
             util.fetchData('v3/violation/car/manage', addParam).then(res => {
               if (res.code > 0) {
                 util.toast(res.msg)
                 return
               }
               if (res.code === 0) {
-                // console.log(res.data)
                 // util.toast("操作成功");
               }
             })
           } else {
-            util.toast('查询失败,请稍后重试')
+            util.toast(res.msg)
           }
         })
         .catch(function (e, xhr, response) {
-          util.toast('查询失败,请稍后重试')
+          // util.toast('查询失败,请稍后重试:' + response)
         })
     },
     gotoForm () {
@@ -275,16 +295,16 @@ export default {
 .s4s-car-model {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
 }
 
 .s4s-car-name {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   color: #333;
   font-size: .2rem;
 }
@@ -314,10 +334,10 @@ export default {
 .s4s-right {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
   margin-right: 0.1rem;
 }
 
@@ -330,26 +350,25 @@ export default {
 .s4s-illegal-item {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   margin: 0 .12rem .1rem .12rem;
   box-sizing: border-box;
+  -moz-box-sizing:border-box;
+  -webkit-box-sizing:border-box;
 }
 .s4s-illegal-list-body {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   background: #fff;
   border-radius: 0.04rem;
   -webkit-box-shadow: 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.05);
   box-shadow: 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.05);
   padding: .12rem;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -ms-flex-direction: column;
-  flex-direction: column;
+  -webkit-box-orient:vertical;-webkit-box-direction:normal;-moz-box-orient:vertical;-moz-box-direction:normal;flex-direction:column;-webkit-flex-direction:column;
   overflow: hidden;
   border-radius: .05rem;
 }
@@ -357,10 +376,10 @@ export default {
 .s4s-illegal-hd {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
   padding: 0.1rem 0;
   border-bottom: .01rem rgba(0, 0, 0, 0.05) solid;
 }
@@ -371,9 +390,9 @@ export default {
 }
 
 .s4s-illegal-addr {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   font-size: 0.14rem;
   color: #666;
   padding: 0 0.15rem 0 0.1rem;
@@ -406,7 +425,7 @@ export default {
   color: #999;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
 }
@@ -443,21 +462,6 @@ export default {
   width: .93rem;
   font-size: .14rem;
   color: #fff;
-}
-
-.s4s-toast {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  background: rgba(0, 0, 0, 0.7);
-  color: #fff;
-  z-index: 99999;
-  text-align: center;
-  padding: .05rem .1rem;
-  border-radius: .04rem;
-  -webkit-transform: translateX(-50%);
-  transform: translateX(-50%);
-  font-size: .14rem;
 }
 
 .s4s-title {

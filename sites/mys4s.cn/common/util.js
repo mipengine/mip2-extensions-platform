@@ -1,4 +1,4 @@
-// import md5 from './md5.js'
+import md5 from './md5'
 function signData (data, path) {
   let array = []
   let key
@@ -18,8 +18,6 @@ function signData (data, path) {
   }
   param += seed
   param += '/' + path
-  console.log(param, data)
-  let md5 = require('blueimp-md5')
   return md5(param)
 }
 export default {
@@ -62,7 +60,7 @@ export default {
     try {
       params.access_token = window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp')
     } catch (e) {
-      console.log(e)
+      throw (new Error(e))
     }
     params.md5 = signData(params, path)
     for (let i in params) {
@@ -73,10 +71,11 @@ export default {
     return fetch('https://mys4s.cn/' + path, {
       method: 'POST',
       body: JSON.stringify(params),
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      credentials: 'same-origin'
+      // headers: {
+      //   'Content-Type': 'application/json'
+      // },
+      // credentials: 'same-origin',
+      credentials: 'include'
     })
       .then(data => {
         return data.json()

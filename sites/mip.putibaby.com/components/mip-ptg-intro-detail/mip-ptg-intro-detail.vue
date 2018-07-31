@@ -401,12 +401,10 @@ function parseJSON (response) {
 
 API.wrapRet_ = function (api, opts, fn) {
   console.log('posting to ' + api)
+  opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -424,7 +422,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.getMasterInfo = function (masterId, fn) {
   API.wrapRet_(
-    '/api/get_master_info_for_me', {
+    'https://mip.putibaby.com/api/get_master_info_for_me', {
       'master_id': masterId
     },
     fn)
@@ -453,6 +451,9 @@ export default {
   },
   computed: {
 
+  },
+  prerenderAllowed () {
+    return true
   },
   mounted () {
     console.log('This is shanghu detail component !')

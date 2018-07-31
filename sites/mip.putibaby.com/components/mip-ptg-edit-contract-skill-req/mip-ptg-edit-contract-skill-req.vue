@@ -155,7 +155,7 @@ a:hover {
 }
 
 .checked {
-  background-image: url('/i/balance_checked.png');
+  /* background-image: url('/i/balance_checked.png'); */
   background-size: 22px 22px;
   width: 22px;
   height: 22px;
@@ -166,7 +166,7 @@ a:hover {
 }
 
 .unchecked {
-  background-image: url('/i/balance_unchecked.png');
+  /* background-image: url('/i/balance_unchecked.png'); */
   background-size: 22px 22px;
   width: 22px;
   height: 22px;
@@ -178,7 +178,7 @@ a:hover {
 
 input[type="checkbox"] {
   -webkit-appearance: none;
-  background: #f4f4f4 url('/i/checkbox_22px.png');
+  /* background: #f4f4f4 url('/i/checkbox_22px.png'); */
   border-radius: 50%;
   border-style: none;
 }
@@ -210,10 +210,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -230,7 +227,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.saveIt_ = function (opts, fn) {
   API.wrapRet_(
-    '/api/set_contract', {
+    'https://mip.putibaby.com/api/set_contract', {
       'contract_skill_req': opts.contract_skill_req,
       'id': opts.id,
       'order_id': opts.order_id
@@ -239,7 +236,7 @@ API.saveIt_ = function (opts, fn) {
 
 API.ajaxContractSkillReq = function (orderId, fn) {
   API.wrapRet_(
-    '/api/ajax_contract_skill_req', {
+    'https://mip.putibaby.com/api/ajax_contract_skill_req', {
       'id': orderId
     }, fn)
 }
@@ -289,6 +286,9 @@ export default {
   },
   beforeMount () {
 
+  },
+  prerenderAllowed () {
+    return true
   },
   mounted () {
     console.log('This is edit contract_skill_req component !')
@@ -399,9 +399,9 @@ export default {
       })
     },
     submit_ () {
-      var url = '/edit_contract?id=' + JSON.parse(this.dataJsonstr).id
+      var url = 'https://mip.putibaby.com/edit_contract?id=' + JSON.parse(this.dataJsonstr).id
       // window.location.replace(url);
-      window.MIP.viewer.open(url, {replace: true})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl(url), {replace: true})
     }
   }
 }

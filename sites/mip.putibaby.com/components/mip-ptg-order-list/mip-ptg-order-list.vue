@@ -5,11 +5,11 @@
       :key="order.order_number"
       class="row">
       <p class="row_p">
-        <span class="status">
-          {{ order.desc_str }}
-        </span>
         <span class="row_header">
           编号: {{ order.order_number }}
+        </span>
+        <span class="status">
+          {{ order.desc_str }}
         </span>
       </p>
       <div
@@ -33,7 +33,7 @@
             width="12"
             height="12"
             class="iconStar"
-            src="/i/select_master_star.png"/>
+            src="https://mip.putibaby.com/i/select_master_star.png"/>
           <mip-img
             v-for="(item,index) in order.master.star_0_list"
             :key="index"
@@ -41,7 +41,7 @@
             width="12"
             height="12"
             class="iconStar iconStar_no"
-            src="/i/select_master_unstar.png"/>
+            src="https://mip.putibaby.com/i/select_master_unstar.png"/>
 
         </p>
 
@@ -80,10 +80,7 @@
             v-if="order.showBtn_shipinyuyue"
             class="tuijianBtn"
             @click="handleBtn_shipinyuyue(order)">发起视频预约</div>
-          <div
-            v-if="order.showBtn_qianyue"
-            class="tuijianBtn"
-            @click="handleBtn_qianyue(order)">签约</div>
+
           <div
             v-if="order.showBtn_chakanshipin"
             class=""
@@ -105,8 +102,12 @@
             class="tuijianBtn"
             @click="handleBtn_dianhualianxi(order)">电话联系</div>
           <div
-            v-if="order.showBtn_nidinghetong"
+            v-if="true || order.showBtn_lianxikefu"
             class="tuijianBtn"
+            @click="handleBtn_lianxikefu(order)">联系客服</div>
+          <div
+            v-if="order.showBtn_nidinghetong"
+            class="tuijianBtn boldBtn"
             @click="handleBtn_nidinghetong(order)">拟定合同</div>
           <div
             v-if="order.showBtn_chakanhetong"
@@ -114,19 +115,19 @@
             @click="handleBtn_chakanhetong(order)">查看合同</div>
           <div
             v-if="order.showBtn_jiaodingjin"
-            class="tuijianBtn"
+            class="tuijianBtn boldBtn"
             @click="handleBtn_jiaodingjin(order)">交定金</div>
           <div
-            v-if="order.showBtn_shanghu"
-            class="tuijianBtn"
-            @click="handleBtn_shanghu(order)">上户</div>
+            v-if="order.showBtn_qianyue"
+            class="tuijianBtn boldBtn"
+            @click="handleBtn_qianyue(order)">签约</div>
           <div
-            v-if="order.showBtn_lianxikefu"
-            class="tuijianBtn"
-            @click="handleBtn_lianxikefu(order)">联系客服</div>
+            v-if="order.showBtn_shanghu"
+            class="tuijianBtn boldBtn"
+            @click="handleBtn_shanghu(order)">邀请上户</div>
           <div
             v-if="order.showBtn_fukuan"
-            class="tuijianBtn"
+            class="tuijianBtn boldBtn"
             @click="handleBtn_fukuan(order)">付款</div>
             <!-- <div class="btn tuijianBtn" v-if="order.showBtn_xuqian" @click="handleBtn_xuqian(order)">续签</div> -->
         </div>
@@ -166,16 +167,23 @@ body {
   border-bottom: 1px solid #f4f4f4;
 }
 
-.row_header {
+.status {
   height: 30px;
   line-height: 30px;
   margin-right: 10px;
-  color: #666;
+  color: #afd03b;
   cursor: pointer;
   float: right;
+  font-size: 15px;
+}
+.row_header {
+  height: 30px;
+  line-height: 30px;
+  padding-left: 10px;
+  color: #666;
+  cursor: pointer;
   font-size: 13px;
 }
-
 .row_footer {
   border-top: 1px solid #f4f4f4;
   background-color: #fff;
@@ -196,14 +204,6 @@ body {
   margin-left:2px;
   float:left;
 }
-.status {
-  height: 30px;
-  line-height: 30px;
-  padding-left: 10px;
-  color: #666;
-  cursor: pointer;
-  font-size: 13px;
-}
 
 .btn_list {
   float: right;
@@ -213,16 +213,19 @@ body {
 .tuijianBtn {
   border: 1px solid #afd03b;
   display: inline-block;
-  border-radius: 3px;
-  height: 13px;
-  line-height: 13px;
-  font-size: 13px;
-  padding: 3px 3px;
+    border-radius: 15px;
+    height: 14px;
+    line-height: 14px;
+    font-size: 14px;
+    padding: 3px 8px;
   margin: 5px 0px 8px 1px;
   color: #afd03b;
   cursor: pointer;
 }
-
+.boldBtn{
+  background-color: #afd03b;
+  color: #fff;
+}
 .info {
   background: #fff;
   position: relative;
@@ -320,10 +323,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -341,13 +341,13 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.ajaxOrderList = function (obj, fn) {
   API.wrapRet_(
-    '/api/ajax_order_list', obj,
+    'https://mip.putibaby.com/api/ajax_order_list', obj,
     fn)
 }
 
 API.rejectInterview = function (orderId, fn) {
   API.wrapRet_(
-    '/api/reject_interview', {
+    'https://mip.putibaby.com/api/reject_interview', {
       'id': orderId
     },
     fn)
@@ -355,7 +355,7 @@ API.rejectInterview = function (orderId, fn) {
 
 API.zjqd = function (masterId, masterType, fn) {
   API.wrapRet_(
-    '/api/zjqd', {
+    'https://mip.putibaby.com/api/zjqd', {
       'master_id': masterId,
       'master_type': masterType
     },
@@ -364,7 +364,7 @@ API.zjqd = function (masterId, masterType, fn) {
 
 API.changeToContract = function (orderId, fn) {
   API.wrapRet_(
-    '/api/change_to_contract', {
+    'https://mip.putibaby.com/api/change_to_contract', {
       'id': orderId
     },
     fn)
@@ -372,7 +372,7 @@ API.changeToContract = function (orderId, fn) {
 
 API.hideFinishedOrder = function (orderId, fn) {
   API.wrapRet_(
-    '/api/hide_finished_order', {
+    'https://mip.putibaby.com/api/hide_finished_order', {
       'id': orderId
     },
     fn)
@@ -380,7 +380,7 @@ API.hideFinishedOrder = function (orderId, fn) {
 
 API.doShanghu = function (orderId, fn) {
   API.wrapRet_(
-    '/api/do_shanghu', {
+    'https://mip.putibaby.com/api/do_shanghu', {
       'id': orderId
     },
     fn)
@@ -413,6 +413,9 @@ export default {
   computed: {
 
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     console.log('This is pty order list component !')
     var self = this
@@ -436,7 +439,7 @@ export default {
       API.sessionId = event.sessionId
       if (!event.userInfo.isUnion) {
         console.log('logindone to submit_ph')
-        window.MIP.viewer.open('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href), {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
       }
       API.ajaxOrderList({}, function (isOk, res) {
         self.list = res.list
@@ -472,16 +475,16 @@ export default {
     },
     handleBtn (order) {
       // window.location.href = '/master_card?mcode=' + order.master.mcode;
-      window.MIP.viewer.open('https://mip.putibaby.com/master_card?mcode=' + order.master.mcode, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/master_card?mcode=' + order.master.mcode), {})
     },
     handleBtn_tuijian (order) {
       // window.location.href = '/master_card?mcode=' + order.master.mcode;
-      window.MIP.viewer.open('https://mip.putibaby.com/master_card?mcode=' + order.master.mcode, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/master_card?mcode=' + order.master.mcode), {})
     },
 
     handleBtn_shipinyuyue (order) {
       // window.location.href = '/video_interview_master?master_id=' + order.master.id;
-      window.MIP.viewer.open('https://mip.putibaby.com/video_interview_master?master_id=' + order.master.id, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/video_interview_master?master_id=' + order.master.id), {})
     },
     handleBtn_qianyue (order, skip) {
       // window.location.href = '/show_master?u=' + order.master.username;
@@ -508,11 +511,11 @@ export default {
     },
     handleBtn_chakanshipin (order) {
       // window.location.href = '/show_my_qs_list?id=' + order.id;
-      window.MIP.viewer.open('https://mip.putibaby.com/show_my_qs_list?id=' + order.id, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/show_my_qs_list?id=' + order.id), {})
     },
     handleBtn_wodeyuyue (order) {
       // window.location.href = '/show_my_realtime_video_interview?id=' + order.id;
-      window.MIP.viewer.open('https://mip.putibaby.com/show_my_realtime_video_interview?id=' + order.id, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/show_my_realtime_video_interview?id=' + order.id), {})
     },
     handleBtn_buheshi (order, skip) {
       var self = this
@@ -564,15 +567,15 @@ export default {
     },
     handleBtn_nidinghetong (order) {
       // window.location.href = '/edit_contract?id=' + order.id;
-      window.MIP.viewer.open('https://mip.putibaby.com/edit_contract?id=' + order.id, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/edit_contract?id=' + order.id), {})
     },
     handleBtn_chakanhetong (order) {
       // window.location.href = '/edit_contract?id=' + order.id + '&readonly=1';
-      window.MIP.viewer.open('https://mip.putibaby.com/edit_contract?id=' + order.id + '&readonly=1', {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/edit_contract?id=' + order.id + '&readonly=1'), {})
     },
     handleBtn_jiaodingjin (order) {
       // window.location.href = '/pay/v2_do_pay?order_id=' + order.id;
-      window.MIP.viewer.open('https://mip.putibaby.com/pay/v2_do_pay?order_id=' + order.id, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/pay/v2_do_pay?order_id=' + order.id), {})
     },
     handleBtn_shanghu (order, skip) {
       // var self = this;
@@ -599,7 +602,7 @@ export default {
         MIP.viewer.eventAction.execute('doshow', ele, {
           el_id: 'orderlist',
           title: '提示消息',
-          msg: '确定要现在执行上户?',
+          msg: '确定要邀请护理师上户吗?',
           from: this.handleBtn_shanghu,
           data: order })
       }
@@ -610,11 +613,11 @@ export default {
     },
     handleBtn_fukuan (order) {
       // window.location.href = '/pay/v2_do_pay?order_id=' + order.id;
-      window.MIP.viewer.open('https://mip.putibaby.com/pay/v2_do_pay?order_id=' + order.id, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/pay/v2_do_pay?order_id=' + order.id), {})
     },
     handleBtn_xuqian (order) {
       // window.location.href = '/v2_edit_xudan_yuesao_contract?order_id=' + order.id;
-      window.MIP.viewer.open('https://mip.putibaby.com/v2_edit_xudan_yuesao_contract?order_id=' + order.id, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/v2_edit_xudan_yuesao_contract?order_id=' + order.id), {})
     }
   }
 

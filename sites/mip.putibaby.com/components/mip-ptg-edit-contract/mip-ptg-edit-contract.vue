@@ -35,7 +35,7 @@
           width="65"
           height="65"
           class="mama_header"
-          src="../i/logo.png"/>
+          src="https://mip.putibaby.com/i/logo.png"/>
         <div class="mama_name_b">丙方
           <span class="mama_info_span">天津菩提果科技有限公司</span>
         </div>
@@ -62,7 +62,8 @@
               validatetarget="username"
               validatetype="must"
               placeholder="中文姓名"
-              @input="contract_mama_name_change_">
+              @input="contract_mama_name_change_"
+              @change="contract_mama_name_change_">
             <div target="username">姓名不符合规范</div>
           </div>
         </div>
@@ -79,7 +80,8 @@
               validatetarget="phone_number"
               validatetype="must"
               placeholder="手机号码"
-              @input="contract_mama_phone_number_change_">
+              @input="contract_mama_phone_number_change_"
+              @change="contract_mama_phone_number_change_">
             <div target="phone_number">手机号码错误</div>
           </div>
         </div>
@@ -96,7 +98,8 @@
               validatetarget="identity"
               validatetype="must"
               placeholder="身份证号码"
-              @input="contract_mama_id_card_change_">
+              @input="contract_mama_id_card_change_"
+              @change="contract_mama_id_card_change_">
             <div target="identity">身份证号码错误</div>
           </div>
         </div>
@@ -114,12 +117,12 @@
               @change="changeZ" >
             <mip-img
               class="id_photo_z"
-              src="/i/camera_.png"
+              src="https://mip.putibaby.com/i/camera_.png"
               @click="fileSelectZ"/>
             <mip-img
               :class="{'show_opacity':show_z}"
               class="id_photo_zz"
-              src="/i/id_card_z.png"/>
+              src="https://mip.putibaby.com/i/id_card_z.png"/>
             <mip-img
               :src="contract_mama_id_card_zheng"
               :class="{'show_zheng':show_z}"
@@ -142,12 +145,12 @@
 
             <mip-img
               class="id_photo_f"
-              src="/i/camera_.png"
+              src="https://mip.putibaby.com/i/camera_.png"
               @click="fileSelectF"/>
             <mip-img
               :class="{'show_opacity':show_f}"
               class="id_photo_ff"
-              src="/i/id_card_f.png"/>
+              src="https://mip.putibaby.com/i/id_card_f.png"/>
             <mip-img
               :src="contract_mama_id_card_fan"
               :class="{'show_fan':show_f}"
@@ -215,7 +218,8 @@
               class="input_sc"
               type="number"
               value=""
-              @input="contract_shanghu_length_change_" >天
+              @input="contract_shanghu_length_change_"
+              @change="contract_shanghu_length_change_">天
           </div>
         </div>
         <div class="line"/>
@@ -249,7 +253,9 @@
       </div>
 
       <div class="other_info">
-        <a :href="to_contract_skill_req">
+        <a
+          :href="to_contract_skill_req"
+          mip-link>
           <div class="row">
             <div class="left">服务项目</div>
             <div class="extra_text">
@@ -267,7 +273,9 @@
           </div>
         </a>
         <div class="line"/>
-        <a :href="to_contract_extra">
+        <a
+          :href="to_contract_extra"
+          mip-link>
           <div class="row">
             <div class="left">补充条款</div>
             <div
@@ -291,7 +299,8 @@
               type="text"
               value=""
               placeholder="请输入上户的详细地址"
-              @input="contract_location_change_"/>
+              @input="contract_location_change_"
+              @change="contract_location_change_"/>
           </div>
         </div>
       </div>
@@ -881,7 +890,7 @@ p {
 }
 
 .checked {
-  background-image: url('/i/balance_checked.png');
+  /* background-image: url('/i/balance_checked.png'); */
   background-size: 22px 22px;
   width: 22px;
   height: 22px;
@@ -893,7 +902,7 @@ p {
 }
 
 .unchecked {
-  background-image: url('/i/balance_unchecked.png');
+  /* background-image: url('/i/balance_unchecked.png'); */
   background-size: 22px 22px;
   width: 22px;
   height: 22px;
@@ -967,14 +976,10 @@ function parseJSON (response) {
 }
 
 API.wrapRet_ = function (api, opts, fn) {
-  console.log('posting to ' + api)
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -990,7 +995,7 @@ API.wrapRet_ = function (api, opts, fn) {
 }
 API.ajaxContract = function (orderId, readonly, fn) {
   API.wrapRet_(
-    '/api/ajax_contract', {
+    'https://mip.putibaby.com/api/ajax_contract', {
       'id': orderId,
       'readonly': readonly ? 1 : 0
     }, fn)
@@ -998,7 +1003,7 @@ API.ajaxContract = function (orderId, readonly, fn) {
 
 API.uploadFile = function (data, fn) {
   API.wrapRet_(
-    '/api/upload_image', {
+    'https://mip.putibaby.com/api/upload_image', {
       'data': data,
       'target': 'media/image-[md5].jpg'
     },
@@ -1066,18 +1071,16 @@ export default {
     }
   },
   data () {
-    console.log(this)
     var pdata = JSON.parse(this.dataJsonstr)
-    console.log('ttt', pdata)
 
     var toContractExtra
     var toContractSkillReq
     if (pdata.readonly !== '1') {
-      toContractSkillReq = '/edit_contract_skill_req_mip?id=' + pdata.id
-      toContractExtra = '/edit_contract_extra_mip?id=' + pdata.id
+      toContractSkillReq = 'edit_contract_skill_req_mip?id=' + pdata.id
+      toContractExtra = 'edit_contract_extra_mip?id=' + pdata.id
     } else {
-      toContractSkillReq = '/edit_contract_skill_req_mip?id=' + pdata.id + '&readonly=1'
-      toContractExtra = '/edit_contract_extra_mip?id=' + pdata.id + '&readonly=1'
+      toContractSkillReq = 'edit_contract_skill_req_mip?id=' + pdata.id + '&readonly=1'
+      toContractExtra = 'edit_contract_extra_mip?id=' + pdata.id + '&readonly=1'
     }
 
     return {
@@ -1116,45 +1119,36 @@ export default {
       contract_deposit_min: 0,
       to_contract_skill_req: toContractSkillReq,
       to_contract_extra: toContractExtra,
-      err_message: ''
+      err_message: '',
+      ret: 1
     }
   },
   computed: {
 
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
-    console.log('This is my first custom component !')
-    // console.log('mounted:', this)
-    // console.log('mounted:', typeof(this.readonly))
     var readonly = this.readonly ? 1 : 0
-    console.log('readonly:', readonly)
     if (readonly === 1 || readonly === '1') {
       this.rea = true
     }
     var self = this
     this.$element.customElement.addEventAction('echo', function (event, str) {
-      console.log(event)
     })
     this.$element.customElement.addEventAction('dook', function (event, str) {
-      // console.log(event);
-      console.log(event.from)
       event.from.bind(self)(event.data, true)
       // var eval_str = 'this.' + event.handler + '(event_order)'
     })
     this.$element.customElement.addEventAction('docancel', function (event, str) {
-      console.log(event)
-      console.log(str)
     })
 
     function setData (ajaxData) {
-      console.log(ajaxData)
       var pdata = ajaxData
       var data = pdata.order
 
-      console.log('334', data)
       // var masterPrice = data.master.price_26day // 月嫂价格
-      console.log('33', data.contract_is_offer_allday_service)
-      console.log('33', typeof (data.contract_is_offer_allday_service))
       var masterPrice = data.contract_is_offer_allday_service
         ? data.master.yuesao_allday_price
         : data.master.yuesao_daytime_price
@@ -1174,11 +1168,11 @@ export default {
       var toContractExtra
       var toContractSkillReq
       if (pdata.readonly !== '1' && pdata.readonly !== 1) {
-        toContractSkillReq = '/edit_contract_skill_req_mip?id=' + pdata.order.id
-        toContractExtra = '/edit_contract_extra_mip?id=' + pdata.order.id
+        toContractSkillReq = 'edit_contract_skill_req_mip?id=' + pdata.order.id
+        toContractExtra = 'edit_contract_extra_mip?id=' + pdata.order.id
       } else {
-        toContractSkillReq = '/edit_contract_skill_req_mip?id=' + pdata.order.id + '&readonly=1'
-        toContractExtra = '/edit_contract_extra_mip?id=' + pdata.order.id + '&readonly=1'
+        toContractSkillReq = 'edit_contract_skill_req_mip?id=' + pdata.order.id + '&readonly=1'
+        toContractExtra = 'edit_contract_extra_mip?id=' + pdata.order.id + '&readonly=1'
       }
       var showz
       if (data.contract_mama_id_card_list[0] === '') {
@@ -1211,8 +1205,6 @@ export default {
       self.err = false
       self.show_z = showz
       self.show_f = showf
-      // console.log('ajaxData', data.contract_is_offer_allday_service)
-      // console.log('ajaxData', typeof (data.contract_is_offer_allday_service))
       self.contract_is_offer_allday_ser = !!data.contract_is_offer_allday_service
       self.master = pdata.order.master
       self.order = pdata.order
@@ -1242,7 +1234,6 @@ export default {
     }
 
     this.$element.customElement.addEventAction('logindone', function (event, str) {
-      console.log(event)
       API.sessionId = event.sessionId
       self.$set(self, 'isLogin', true)
       self.$set(self, 'isUnion', event.userInfo.isUnion)
@@ -1253,11 +1244,8 @@ export default {
   },
   methods: {
     init () {
-      console.log('should loading')
-      console.log(this.dataJson)
     },
     load_data () {
-      console.log('should set data')
     },
     fileSelectZ () {
       this.cur_image_fn = 'zheng'
@@ -1270,7 +1258,6 @@ export default {
     changeZ () {
       // var pic = document.getElementById('preview')
       var file = document.getElementById('fz')
-      console.log('this', this)
       var ext = file.value.substring(file.value.lastIndexOf('.') + 1).toLowerCase()
       // gif在IE浏览器暂时无法显示
       if (ext !== 'png' && ext !== 'jpg' && ext !== 'jpeg') {
@@ -1285,7 +1272,6 @@ export default {
       var file = document.getElementById('ff')
       var ext = file.value.substring(file.value.lastIndexOf('.') + 1).toLowerCase()
       if (ext !== 'png' && ext !== 'jpg' && ext !== 'jpeg') {
-        console.log('图片的格式必须为png或者jpg或者jpeg格式! ')
         return
       }
       this.html5Reader(file)
@@ -1333,14 +1319,23 @@ export default {
     },
     contract_mama_name_change_ () {
       this.inspect_()
+      if (this.ret !== 2) {
+        return
+      }
       this.saveIt_()
     },
     contract_mama_phone_number_change_ () {
       this.inspect_()
+      if (this.ret !== 2) {
+        return
+      }
       this.saveIt_()
     },
     contract_mama_id_card_change_ () {
       this.inspect_()
+      if (this.ret !== 2) {
+        return
+      }
       this.saveIt_()
     },
     contract_shanghu_at_change_ () {
@@ -1358,11 +1353,17 @@ export default {
         djb = 1.0
       }
       this.contract_deposit_min = djb
-
+      this.inspect_()
+      if (this.ret !== 2) {
+        return
+      }
       this.saveIt_()
     },
     contract_location_change_ (event) {
       this.inspect_()
+      if (this.ret !== 2) {
+        return
+      }
       this.saveIt_()
     },
 
@@ -1409,16 +1410,19 @@ export default {
 
       this._data.ts = new Date()
       localStorage.State = JSON.stringify(this._data)
-      console.log('odj', obj)
       API.wrapRet_(
-        '/api/set_contract', obj,
+        'https://mip.putibaby.com/api/set_contract', obj,
         function (isOk, res) {
           if (isOk) {
-            console.log(res)
           }
         })
     },
+    Trim (str) {
+      var idCard = str.replace(/\s/gi, '')
+      return idCard
+    },
     inspect_ () {
+      this.ret = 1
       if (!/\S+/.test(this.contract_mama_name)) {
         this.err_message = '请填写正确的姓名'
         this.err = true
@@ -1428,12 +1432,65 @@ export default {
         this.err_message = '请填写正确的电话号码'
         this.err = true
         return
-      }
-      if (!/\S+/.test(this.contract_mama_id_card)) {
-        this.err_message = '请填写正确的身份证号'
+      } else if (!this.contract_mama_phone_number.match(/^1\d{10}/)) {
+        this.err_message = '请填写正确的电话号码'
         this.err = true
         return
       }
+      if (!/\S+/.test(this.contract_mama_id_card)) {
+        this.err_message = '请填写身份证号码'
+        this.err = true
+        return
+      } else if (this.contract_mama_id_card) {
+        var idCard = this.contract_mama_id_card
+        this.Trim(idCard)
+        // 15位和18位身份证号码的正则表达式
+        var regIdCard = /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/
+        // 如果通过该验证，说明身份证格式正确，但准确性还需计算
+        if (regIdCard.test(idCard)) {
+          if (idCard.length === 18) {
+            var idCardWi = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2]// 将前17位加权因子保存在数组里
+            var idCardY = [1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2]// 这是除以11后，可能产生的11位余数、验证码，也保存成数组
+            var idCardWiSum = 0// 用来保存前17位各自乖以加权因子后的总和
+            for (var i = 0; i < 17; i++) {
+              idCardWiSum += idCard.substring(i, i + 1) * idCardWi[i]
+            }
+            var idCardMod = idCardWiSum % 11
+            var idCardLast = idCard.substring(17)// 计算出校验码所在数组的位置
+            // 得到最后一位身份证号码
+            // 如果等于2，则说明校验码是10，身份证号码最后一位应该是X
+            if (idCardMod === 2) {
+              if (idCardLast === 'X' || idCardLast === 'x') {
+              } else {
+                this.err_message = '身份证号码错误'
+                this.err = true
+                return
+              }
+            } else {
+              // 用计算出的验证码与最后一位身份证号码匹配，如果一致，说明通过，否则是无效的身份证号码
+              if (parseInt(idCardLast) === idCardY[idCardMod]) {
+              } else {
+                this.err_message = '身份证号码错误'
+                this.err = true
+                return
+              }
+            }
+          } else {
+            this.err_message = '身份证号码错误'
+            this.err = true
+            return
+          }
+        } else {
+          this.err_message = '身份证格式不正确'
+          this.err = true
+          return
+        }
+      } else {
+        this.err_message = '身份证格式不正确'
+        this.err = true
+        return
+      }
+
       if (!/^[1-9]\d*/.test(this.contract_shanghu_length)) {
         this.err_message = '请填写正确的上户时长'
         this.err = true
@@ -1450,11 +1507,13 @@ export default {
         return
       }
       this.err = false
+      this.ret = 2
     },
     contractDetail () {
       var id = this.order.id
-      var url = '/v2_show_ptg_ys_full_contract?id=' + id
-      window.location.href = url
+      var url = 'https://mip.putibaby.com/v2_show_ptg_ys_full_contract?id=' + id
+      // window.location.href = url
+      window.MIP.viewer.open(MIP.util.makeCacheUrl(url), {})
     },
 
     handleSubmit_ (data, skip) {
@@ -1464,51 +1523,24 @@ export default {
         this.contract_deposit = this.contract_price
       }
 
-      var idCard = this.contract_mama_id_card
-
-      function Trim (str) {
-        idCard = str.replace(/\s/gi, '')
-        return idCard
-      }
-      Trim(idCard)
-
-      // // 15位和18位身份证号码的正则表达式
-      // var regIdCard = /^(^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$)|(^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])((\d{4})|\d{3}[Xx])$)$/
-      // // 如果通过该验证，说明身份证格式正确，但准确性还需计算
-      // if (regIdCard.test(idCard)) {
-      //   if (idCard.length === 18) {
-      //     var idCardWi = [7, 9, 10, 5, 8, 4, 2, 1, 6, 3, 7, 9, 10, 5, 8, 4, 2] // 将前17位加权因子保存在数组里
-      //     var idCardY = [1, 0, 10, 9, 8, 7, 6, 5, 4, 3, 2] // 这是除以11后，可能产生的11位余数、验证码，也保存成数组
-      //     var idCardWiSum = 0 // 用来保存前17位各自乖以加权因子后的总和
-      //     for (var i = 0; i < 17; i++) {
-      //       idCardWiSum += idCard.substring(i, i + 1) * idCardWi[i]
-      //     }
-      //     var idCardMod = idCardWiSum % 11 // 计算出校验码所在数组的位置
-      //     var idCardLast = idCard.substring(17) // 得到最后一位身份证号码
-      //     // 如果等于2，则说明校验码是10，身份证号码最后一位应该是X
-      //   }
-      // }
-
-      // var idCard_z = this.contract_mama_id_card_zheng
-      // var idCard_f = this.contract_mama_id_card_fan
-
       var self = this
+      self.inspect_()
+      if (self.ret !== 2) {
+        return
+      }
       if (skip) {
-        console.log(skip)
         API.wrapRet_(
-
-          '/api/submit_contract', {
+          'https://mip.putibaby.com/api/submit_contract', {
             'id': this.order.id
           },
           function (isOk, res) {
             if (isOk) {
-              window.location.href = 'https://mip.putibaby.com/order_list'
-              return
+              // window.location.href = 'https://mip.putibaby.com/order_list'
+              window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {replace: true})
             } else {
               self.err_message = '提交失败请重试'
               self.err = true
             }
-            console.log(res)
           })
       } else {
         var ele = document.getElementById('ptgconfirm')

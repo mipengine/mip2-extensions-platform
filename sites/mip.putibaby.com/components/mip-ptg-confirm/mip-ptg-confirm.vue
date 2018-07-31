@@ -1,15 +1,11 @@
 <template>
   <div
-    v-if="show"
     class="root">
     <mip-fixed
+      v-if="show"
       type="top"
       class="fix_back">
       <div id="fullScreen"/>
-    </mip-fixed>
-    <mip-fixed
-      type="top"
-      class="fix_con">
       <div id="floatLayer">
         <p class="title">{{ title }}</p>
         <p class="msg">{{ msg }}</p>
@@ -22,6 +18,7 @@
             @click="okConfirm">确定</span>
         </div>
       </div>
+
     </mip-fixed>
   </div>
 </template>
@@ -38,7 +35,7 @@
   height:100%;
 }
 .fix_con{
-  z-index:10000;
+  z-index:10000 !important;
 }
 #fullScreen {
   width: 100%;
@@ -56,7 +53,9 @@
   padding-top: 30px;
   text-align: center;
   margin-left:10%;
-  margin-top:50%;
+  position:absolute;
+  z-index:999999;
+  top:200px;
 }
 .msg{
   margin-bottom: 15px;
@@ -120,10 +119,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -171,6 +167,9 @@ export default {
     show: function (val, oldVal) {
       console.log('new: %s, old: %s', val, oldVal)
     }
+  },
+  prerenderAllowed () {
+    return true
   },
   mounted () {
     console.log('This is comfirm component !')

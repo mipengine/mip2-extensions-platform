@@ -1,8 +1,8 @@
 <template>
   <div class="s4s-page">
-    <a
+    <!-- <a
       ref="tel"
-      href="tel://400-000-1199"/>
+      href="tel://400-000-1199" /> -->
     <!-- <div style="background-color:#fff;padding:4%">
                 <h3 style="font-size: .2rem; font-weight:medium; ">尊敬的客户您好</h3>
                 <p style="font-size: .14rem;padding-top: .05rem;color:#666">当前待付款 <span style="color:#f40">{{ statics.UnpaySum || 0}}</span> 条，处理中 <span style="color:#f40">{{ statics.HandleSum || 0}}</span> 条，已完成 <span style="color:#f40">{{ statics.FinishSum || 0}}</span> 条。</p>
@@ -104,7 +104,7 @@
             @click="confirmBtn">确认</span>
         </div>
       </div>
-      <div class="s4s-mask"/>
+      <div class="s4s-mask-user"/>
     </div>
   </div>
 </template>
@@ -163,7 +163,9 @@ export default {
       this.selIndex = index
     },
     closeOrder () {
-      this.$refs.tel.click()
+      // this.$refs.tel.click()
+      util.toast('联系电话 400-000-1199')
+      MIP.viewer.open('tel://400-000-1199')
     },
     // 取消订单
     cancelOrder (id) {
@@ -181,7 +183,8 @@ export default {
       let self = this
       util.fetchData('v3/violation/order/cancel', param).then(res => {
         if (res.code === 0) {
-          self.getOrder(0)
+          // self.getOrder(this.selIndex)
+          self.selTab(self.selIndex)
           self.getOrderStatic()
           util.toast('取消成功')
         }
@@ -269,7 +272,12 @@ export default {
       })
     },
     bindPay (item) {
-      console.log(item)
+      if (!window.localStorage.getItem(
+        'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
+      )) {
+        util.toast('未授权百度账号')
+        return
+      }
       MIP.setData({
         payConfig: {
           fee: item.TotalPrice / 100,
@@ -296,10 +304,10 @@ export default {
   line-height: 45px;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
-  justify-content: center;
+  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
 }
 .s4s-tab-cur {
   border-bottom: 0.03rem #fe7000 solid;
@@ -309,13 +317,14 @@ export default {
 }
 .s4s-tab-item {
   padding: 0 0.1rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
   position: relative;
+  font-size:.15rem;
 }
 .s4s-tab-num {
     background: #fe5a00;
@@ -327,9 +336,9 @@ export default {
     border-radius: 2rem;
     text-align: center;
     color: #fff;
-    align-items: center;
-    justify-content: center;
-    box-sizing: content-box;
+    -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+    -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
+      box-sizing: content-box;-moz-box-sizing: content-box;-webkit-box-sizing: content-box;
     font-size: .12rem;
     line-height: .18rem;
     position: absolute;
@@ -363,36 +372,36 @@ export default {
 .s4s-cell-hd {
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
   padding-bottom: 0.1rem;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
 }
 .s4s-cell-hd p {
   color: #999;
   font-size: 0.14rem;
-  flex: 1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
 }
 .s4s-cell-hd span {
   font-size: 0.14rem;
   color: #fe7000;
 }
 .s4s-cell-hd-time {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   color: #333;
 }
 .s4s-cell-bd {
   padding-top: 0.15rem;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
 }
 .s4s-cell-tit {
   color: #999;
@@ -409,7 +418,7 @@ export default {
   padding-top: 0.15rem;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -webkit-box-pack: end;
   -ms-flex-pack: end;
   justify-content: flex-end;
@@ -441,7 +450,7 @@ export default {
 }
 .s4s-confirm-body {
   width: 76%;
-  position: fixed;
+  position: absolute;
   left: 50%;
   top: 50%;
   background: #fff;
@@ -464,9 +473,9 @@ export default {
 .s4s-confirm-btn {
   height: 0.45rem;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
   -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
   border-top: 0.01rem rgba(0, 0, 0, 0.1) solid;
   font-size: 0.15rem;
 }
@@ -474,16 +483,16 @@ export default {
   line-height: 0.45rem;
   border-right: 0.01rem rgba(0, 0, 0, 0.1) solid;
   display: -ms-flexbox;
-  display: flex;
-  -ms-flex: 1;
-  flex: 1;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   -ms-flex-pack: center;
-  justify-content: center;
+  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
 }
 .s4s-confirm-btn span:last-child {
   border-right: 0;
 }
-.s4s-mask {
+.s4s-mask-user {
   position: absolute;
   top: 0;
   right: 0;
@@ -491,6 +500,5 @@ export default {
   left: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 9998;
-  margin-bottom: -0.5rem;
 }
 </style>

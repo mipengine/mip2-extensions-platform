@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <!-- <slot name="banner" /> -->
     <div class="top_level_1">
       <mip-carousel
         autoplay
@@ -8,9 +9,9 @@
         height="277"
         layout="responsive"
         indicator-id="mip-carousel-example">
-        <mip-img src="/i/b1.png"/>
-        <mip-img src="/i/b2.png"/>
-        <mip-img src="/i/b3.png"/>
+        <mip-img src="https://mip.putibaby.com/i/b1.png"/>
+        <mip-img src="https://mip.putibaby.com/i/b2.png"/>
+        <mip-img src="https://mip.putibaby.com/i/b3.png"/>
       </mip-carousel>
       <div class="mip-carousel-indicator-wrapper">
         <div
@@ -23,21 +24,20 @@
         </div>
       </div>
     </div>
-    <div>
-      <a @click="handleCoupon">
-        <mip-img src="/i/yhq_jt.png"/>
-      </a>
+    <div @click="handleCoupon">
+      <mip-img src="https://mip.putibaby.com/i/yhq_jt.png"/>
+      <!-- <slot name="yhq" /> -->
     </div>
-    <div>
-      <div class="find">
-        <a @click="handleSelectMaster">
-          <mip-img src="/i/find_ys.png"/>
-        </a>
+    <div class="clear_float">
+      <div
+        class="find"
+        @click="handleSelectMaster">
+        <!-- <mip&#45;img src="https://mip.putibaby.com/i/find_ys.png"/> -->
       </div>
-      <div class="help">
-        <a @click="handleUpdateYcq">
-          <mip-img src="/i/help_me.png"/>
-        </a>
+      <div
+        class="help"
+        @click="handleUpdateYcq">
+        <!-- <mip&#45;img src="https://mip.putibaby.com/i/help_me.png"/> -->
       </div>
     </div>
 
@@ -48,14 +48,14 @@
         class="bottom_left"
         href="tel:4006188835">
         <mip-img
-          src="/i/index_phone.png"
+          src="https://mip.putibaby.com/i/index_phone.png"
           width="132px"
           height="22px"
           class="bottom_left_img"/>
       </a>
       <a @click="handleOrderList">
         <mip-img
-          src="/i/ind_person.png"
+          src="https://mip.putibaby.com/i/ind_person.png"
           width="38px"
           height="25px"
           class="bottom_right_img"/>
@@ -69,6 +69,7 @@
   .wrapper {
     margin: 0 auto;
     text-align: center;
+    margin-top:44px;
   }
 
   /* <!-- index.css --> */
@@ -80,12 +81,6 @@
   }
 
   /* <!-- banner.css --> */
-
-  .top_level_1 {
-    width: 100%;
-    position: relative;
-  }
-
   mip-form form {
     position: relative;
     left: 0px;
@@ -118,11 +113,11 @@
   }
 
   .mip-carousel-indicator-wrapper {
+    display: none;
     text-align: center;
     background-color: rgba(0, 0, 0, .0);
-    position: absolute;
-    top: 130px;
-    left: 190px;
+    left: 44%;
+    bottom: 10px;
   }
 
   .mip-layout-container {
@@ -154,20 +149,24 @@
 
   .find {
     width: 44%;
+    background-size: contain;
     margin-left: 4%;
     margin-right: 2%;
     height: 150px;
     text-align: center;
     float: left;
+    background-position:center;
   }
 
   .help {
     width: 44%;
+    background-size: contain;
     margin-left: 2%;
     margin-right: 4%;
     height: 150px;
     text-align: center;
     float: left;
+    background-position:center;
   }
 
   .bottom {
@@ -195,6 +194,10 @@
   .bottom_right_img {
     vertical-align: -6px;
   }
+  .clear_float{
+  clear:both;
+  height:240px;
+  }
 </style>
 
 <script>
@@ -219,10 +222,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -238,6 +238,14 @@ API.wrapRet_ = function (api, opts, fn) {
       console.error(e.message)
       fn(false, e.message)
     })
+}
+
+API.checkUnionAgain = function (opt, fn) {
+  API.wrapRet_(
+    'https://mip.putibaby.com/api/check_union_again', {
+      'opt': opt
+    },
+    fn)
 }
 
 export default {
@@ -260,9 +268,35 @@ export default {
   computed: {
 
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     console.log('This is index component !')
+    window.MIP.viewer.fixedElement.init()
     var self = this
+
+    window.addEventListener('show-page', () => {
+      console.log('show-page')
+      if (self.isUnion || !self.isLogin) {
+        return
+      }
+      API.checkUnionAgain('', function (isOk, res) {
+        if (isOk) {
+          console.log(res)
+          self.isLogin = res.isLogin
+          self.isUnion = res.isUnion
+          // MIP.setData({'#isLogin': true})
+          // MIP.setData({'#isUnion': event.userInfo.isUnion})
+        } else {
+          console.log(res)
+        }
+      })
+    })
+    window.addEventListener('hide-page', () => {
+
+    })
+
     this.$element.customElement.addEventAction('logindone', event => {
       // 这里可以输出登录之后的数据
 
@@ -272,34 +306,29 @@ export default {
 
       self.$set(self, 'isLogin', true)
       self.$set(self, 'isUnion', event.userInfo.isUnion)
-      var origin = API.next_cmd || event.origin || localStorage.getItem('origin')
+
+      console.log(MIP)
+
+      var origin = API.next_cmd || event.origin
+      // origin = origin || sessionStorage.next_cmd || localStorage.getItem('origin')
+
+      API.next_cmd = ''
+      // sessionStorage.next_cmd = ''
+      // localStorage.clear()
 
       if (event.userInfo.isUnion && origin === 'order_list') {
         console.log('logindone to order_list')
-        console.log(window.MIP)
-        window.MIP.viewer.open('https://mip.putibaby.com/order_list', {})
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
-        localStorage.clear()
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
       } else if (event.userInfo.isUnion && origin === 'coupon') {
         console.log('logindone to coupon')
-        window.MIP.viewer.open('https://mip.putibaby.com/coupon', {})
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
-        localStorage.clear()
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/coupon'), {})
       } else if (event.userInfo.isUnion && origin === 'update_ycq') {
         console.log('logindone to update_ycq')
-        window.MIP.viewer.open('https://mip.putibaby.com/update_ycq', {})
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
-        localStorage.clear()
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq'), {})
       } else if (!event.userInfo.isUnion && origin) {
         console.log('logindone to submit_ph')
-        var to = '/' + origin
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
-        localStorage.clear()
-        window.MIP.viewer.open('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to), {})
+        var to = 'https://mip.putibaby.com/' + origin
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
       }
     })
   },
@@ -314,9 +343,9 @@ export default {
     checkLogin_ (cmd) {
       if (!this.isLogin) {
         API.next_cmd = cmd
-        sessionStorage.next_cmd = cmd
-        localStorage.setItem('origin', cmd)
-        console.log(cmd)
+        // sessionStorage.next_cmd = cmd
+        // localStorage.setItem('origin', cmd)
+        // console.log(cmd)
         if (cmd === 'coupon') {
           this.$emit('login1')
         } else if (cmd === 'order_list') {
@@ -326,12 +355,11 @@ export default {
         }
         return false
       }
+      console.log(MIP.getData('isUnion'))
       if (!this.isUnion) {
-        // API.next_cmd = cmd;
-        // sessionStorage.next_cmd = cmd;
-        // localStorage.setItem('origin', cmd);
-        var to = '/' + cmd
-        window.MIP.viewer.open('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to), {})
+        var to = 'https://mip.putibaby.com/' + cmd
+        console.log('uuu' + to)
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
 
         return false
       }
@@ -345,23 +373,23 @@ export default {
     handleCoupon () {
       console.log('handleCoupon')
       if (!this.checkLogin_('coupon')) { return }
-      window.MIP.viewer.open('https://mip.putibaby.com/coupon ', {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/coupon'), {})
     },
     handleSelectMaster () {
       console.log('handleSelectMaster')
       // if (!this.checkLogin_('select_master'))
       //   return;
-      window.MIP.viewer.open('https://mip.putibaby.com/select_master ', {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/select_master'), {})
     },
     handleUpdateYcq () {
       console.log('handleUpdateYcq')
       if (!this.checkLogin_('update_ycq')) { return }
-      window.MIP.viewer.open('https://mip.putibaby.com/update_ycq ', {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq'), {})
     },
     handleOrderList () {
       console.log('handleOrderList')
       if (!this.checkLogin_('order_list')) { return }
-      window.MIP.viewer.open('https://mip.putibaby.com/order_list ', {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
     },
     load_data () {
       console.log('should set data')

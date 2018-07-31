@@ -24,7 +24,7 @@
             width="12"
             height="12"
             class="iconStar"
-            src="/i/select_master_star.png" />
+            src="https://mip.putibaby.com/i/select_master_star.png" />
           <mip-img
             v-for="(item, index) in fav.master.star_0_list"
             :key="index"
@@ -32,7 +32,7 @@
             width="12"
             height="12"
             class="iconStar"
-            src="/i/select_master_unstar.png" />
+            src="https://mip.putibaby.com/i/select_master_unstar.png" />
         </p>
         <div class="price">￥{{ fav.master.price.ptg_price/100 }}</div>
         <div class="info">
@@ -179,10 +179,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -199,7 +196,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.ajaxFavList = function (opt, fn) {
   API.wrapRet_(
-    '/api/ajax_fav_list', opt, fn)
+    'https://mip.putibaby.com/api/ajax_fav_list', opt, fn)
 }
 
 export default {
@@ -220,6 +217,9 @@ export default {
   },
   computed: {
 
+  },
+  prerenderAllowed () {
+    return true
   },
   mounted () {
     console.log('This is my first custom component !')
@@ -250,7 +250,7 @@ export default {
 
     handleBtn (fav) {
       // window.location.href = '/master_card?mcode=' + fav.master.mcode;
-      window.MIP.viewer.open('https://mip.putibaby.com/master_card?mcode=' + fav.master.mcode, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/master_card?mcode=' + fav.master.mcode), {})
     }
 
   }

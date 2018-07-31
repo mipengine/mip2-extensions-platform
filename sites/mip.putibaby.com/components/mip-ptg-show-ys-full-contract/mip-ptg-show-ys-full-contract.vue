@@ -59,12 +59,12 @@
     </p>
     <p>
       （3）签约服务时长：共&nbsp;<i>{{ order.contract_shanghu_length }}</i>&nbsp;天，按照连续自然日计算，预计乙方上户时间自
-      <i>{{ helper.fix_date(order.contract_shanghu_at).getFullYear() }}</i>年
-      <i>{{ helper.fix_date(order.contract_shanghu_at).getMonth() + 1 }}</i>月
-      <i>{{ helper.fix_date(order.contract_shanghu_at).getDate() }}</i>日至
-      <i>{{ new Date(+helper.fix_date(order.contract_shanghu_at) + order.contract_shanghu_length*86400*1000).getFullYear() }}</i>年
-      <i>{{ new Date(+helper.fix_date(order.contract_shanghu_at) + order.contract_shanghu_length*86400*1000).getMonth()+1 }}</i>月
-      <i>{{ new Date(+helper.fix_date(order.contract_shanghu_at) + order.contract_shanghu_length*86400*1000).getDate() }}</i>日止。
+      <i>{{ Helper_fix_date(order.contract_shanghu_at).getFullYear() }}</i>年
+      <i>{{ Helper_fix_date(order.contract_shanghu_at).getMonth() + 1 }}</i>月
+      <i>{{ Helper_fix_date(order.contract_shanghu_at).getDate() }}</i>日至
+      <i>{{ new Date(+Helper_fix_date(order.contract_shanghu_at) + order.contract_shanghu_length*86400*1000).getFullYear() }}</i>年
+      <i>{{ new Date(+Helper_fix_date(order.contract_shanghu_at) + order.contract_shanghu_length*86400*1000).getMonth()+1 }}</i>月
+      <i>{{ new Date(+Helper_fix_date(order.contract_shanghu_at) + order.contract_shanghu_length*86400*1000).getDate() }}</i>日止。
     </p>
     <p>
       （备注：实际上户履行服务时间，以甲方客户生产后护理师上门服务时间为准。带薪休假具体时间和日期由甲方和乙方协商确定）
@@ -73,7 +73,7 @@
       （4）服务地址为（客户地址）：<i>{{ order.contract_location }}</i>
     </p>
     <p>
-      （5）服务费用：月服务费为 <i>{{ (order.contract_price/order.contract_shanghu_length*26).toFixed(0) }}</i>元（按26个连续自然日计算）（人民币大写金额 {{ helper.number_to_chinese(parseInt(order.contract_price/order.contract_shanghu_length*26)) }}元整) 。总服务费为 <i>{{ order.contract_price.toFixed(2) }}</i>    元（人民币大写金额 <i>{{ helper.number_to_chinese(order.contract_price) }}</i> 元整 ）。
+      （5）服务费用：月服务费为 <i>{{ (order.contract_price/order.contract_shanghu_length*26).toFixed(0) }}</i>元（按26个连续自然日计算）（人民币大写金额 {{ Helper_number_to_chinese(parseInt(order.contract_price/order.contract_shanghu_length*26)) }}元整) 。总服务费为 <i>{{ order.contract_price.toFixed(2) }}</i>    元（人民币大写金额 <i>{{ Helper_number_to_chinese(order.contract_price) }}</i> 元整 ）。
 
     </p>
     <p>
@@ -344,12 +344,19 @@
 
 .body p i {
   font-style: normal;
-  ;
   display: inline;
   padding-left: 20px;
   padding-right: 20px;
   border-bottom: 1px solid #999;
   color: #00a0ff;
+}
+.body div i{
+    font-style: normal;
+    display: inline;
+    padding-left: 20px;
+    padding-right: 20px;
+    border-bottom: 1px solid #999;
+    color: #00a0ff;
 }
 
 .body p.title {
@@ -414,10 +421,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -434,62 +438,11 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.submit_ = function (content, mcode, fn) {
   API.wrapRet_(
-    '/api/video_interview_master', {
+    'https://mip.putibaby.com/api/video_interview_master', {
       'info': content,
       'mcode': mcode
     },
     fn)
-}
-function getChineseNumber (v) {
-  if (v > 10) {
-    return 'X'
-  }
-  return '零壹贰叁肆伍陆柒捌玖'.substr(v, 1) || 'X'
-};
-var Helper = {}
-Helper.fix_date = function (v) {
-  // 必须是Date类型，并且不能是invalid date(要求年份 >= 1900)
-  if (!(v instanceof Date && v.getFullYear() >= 1900)) {
-    return new Date('2000-01-01 00:00:00')
-  }
-  return v
-}
-// 把数字 1 转换成 大写的 壹
-Helper.digit_to_chinese = function (v) {
-  v = Math.floor(+v) % 10
-  if (isNaN(v) || v < 0) return '*'
-  return getChineseNumber(v)
-}
-
-// 把数 11 转换为 大写的 壹拾壹
-Helper.number_to_chinese = function (v) {
-  v = Math.floor(+v)
-  if (isNaN(v) || v < 0) return '*'
-
-  var ret = ''
-  if (v >= 10000) {
-    ret += this.number_to_chinese(Math.floor(v / 10000)) + '万'
-    v %= 10000
-  }
-  if (v >= 1000) {
-    ret += this.digit_to_chinese(Math.floor(v / 1000)) + '仟'
-    v %= 1000
-  }
-  if (v >= 100) {
-    ret += this.digit_to_chinese(Math.floor(v / 100)) + '佰'
-    v %= 100
-  }
-  if (v >= 10) {
-    ret += this.digit_to_chinese(Math.floor(v / 10)) + '拾'
-    v %= 10
-  }
-  if (v > 0) {
-    ret += this.digit_to_chinese(v)
-  }
-  if (!ret) {
-    ret = '零'
-  }
-  return ret
 }
 
 export default {
@@ -513,8 +466,7 @@ export default {
     var master = pdata.data.master || {}
     var ysSkills = pdata.data.ys_skills || []
     var helper = pdata.data.helper || []
-
-    console.log('helper:', helper)
+    order.contract_shanghu_at = new Date(order.contract_shanghu_at)
     var cfhl = ysSkills.filter(function (x) {
       return x.title === '产妇护理'
     })[0].list.map(function (x) {
@@ -549,16 +501,20 @@ export default {
       order: order,
       master: master,
       ys_skills: ysSkills,
-      helper: Helper,
+      helper: helper,
       cfhl: cfhl,
       xsrhl: xsrhl,
       yrhl: yrhl,
       qtfw: qtfw,
       bctk: bctk
+
     }
   },
   computed: {
 
+  },
+  prerenderAllowed () {
+    return true
   },
   mounted () {
     var self = this
@@ -583,6 +539,57 @@ export default {
     },
     load_data () {
       console.log('should set data')
+    },
+    getChineseNumber (v) {
+      if (v > 10) {
+        return 'X'
+      }
+      return '零壹贰叁肆伍陆柒捌玖'.substr(v, 1) || 'X'
+    },
+
+    // 必须是Date类型，并且不能是invalid date(要求年份 >= 1900)
+    Helper_fix_date (v) {
+      if (!(v instanceof Date && v.getFullYear() >= 1900)) {
+        return new Date('2009-01-01 00:00:00')
+      }
+      return v
+    },
+    // 把数字 1 转换成 大写的 壹
+    Helper_digit_to_chinese (v) {
+      v = Math.floor(+v) % 10
+      if (isNaN(v) || v < 0) return '*'
+      return this.getChineseNumber(v)
+    },
+
+    // 把数 11 转换为 大写的 壹拾壹
+    Helper_number_to_chinese (v) {
+      v = Math.floor(+v)
+      if (isNaN(v) || v < 0) return '*'
+
+      var ret = ''
+      if (v >= 10000) {
+        ret += this.Helper_number_to_chinese(Math.floor(v / 10000)) + '万'
+        v %= 10000
+      }
+      if (v >= 1000) {
+        ret += this.Helper_digit_to_chinese(Math.floor(v / 1000)) + '仟'
+        v %= 1000
+      }
+      if (v >= 100) {
+        ret += this.Helper_digit_to_chinese(Math.floor(v / 100)) + '佰'
+        v %= 100
+      }
+      if (v >= 10) {
+        ret += this.Helper_digit_to_chinese(Math.floor(v / 10)) + '拾'
+        v %= 10
+      }
+      if (v > 0) {
+        ret += this.Helper_digit_to_chinese(v)
+      }
+      if (!ret) {
+        ret = '零'
+      }
+      return ret
     }
 
   }

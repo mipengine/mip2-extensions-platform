@@ -28,7 +28,7 @@
           </div>
           <div class="renZheng">
             <a
-              href="https://mip.putibaby.com/service_intro"
+              href="service_intro"
               mip-link>
               <span v-if="data.info.certificated">
                 <mip-img
@@ -39,7 +39,7 @@
               </span>
             </a>
             <a
-              href="https://mip.putibaby.com/service_intro"
+              href="service_intro"
               mip-link>
               <span v-if="data.info.market_certificated">
                 <mip-img
@@ -50,14 +50,14 @@
               </span>
             </a>
             <a
-              :href="'https://mip.putibaby.com/master_intro_detail?u='+data.info.username"
+              :href="'master_intro_detail?u='+data.info.username"
               mip-link>
               <div class="details">基本资料详情</div>
             </a>
             <a
               v-if="data.info.is_credited"
               class="yinzhang_a"
-              href="https://mip.putibaby.com/service_intro"
+              href="service_intro"
               mip-link/>
             <mip-img
               v-if="data.info.is_credited"
@@ -106,7 +106,7 @@
         v-if="data.info.offer_service"
         class="serverCard">
         <a
-          :href="'https://mip.putibaby.com/skill_details?u=' + data.info.username"
+          :href="'skill_details?u=' + data.info.username"
           mip-link>
           <div class="sC_head">
             <mip-img
@@ -138,7 +138,7 @@
         v-if="data.info.price_yuer.market_price > 0 || data.info.price_yuer.market_halfday_price > 0"
         class="serverCard">
         <a
-          :href="'https://mip.putibaby.com/skill_details?is_yuer=1&u=' + data.info.username"
+          :href="'skill_details?is_yuer=1&u=' + data.info.username"
           mip-link>
           <div class="sC_head">
             <mip-img
@@ -181,15 +181,25 @@
         <!-- </a> -->
         <div class="picList">
           <p v-if="data.xc_list.length === 0">没有照片</p>
-          <div v-if="data.xc_list.length > 0">
-            <mip-img
+          <div
+            v-if="data.xc_list.length > 0"
+            class="allpic">
+            <!-- <mip-img
               v-for="pic in data.xc_list"
               :key="pic.big"
               :src="pic.big"
               layout="responsive"
               popup
               width="70px"
-              height="70px" />
+              height="70px" /> -->
+            <div
+              v-for="pic in data.xc_list"
+              :key="pic.big"
+              :src="pic.big"
+              :style="{backgroundImage: 'url(' + pic.big + ')', backgroundSize:'contain'}"
+              class="onepic"
+              @click.prevent="show(pic.big)"/>
+
           </div>
 
         </div>
@@ -197,7 +207,7 @@
 
       <div class="pingJiaCard">
         <a
-          :href="'https://mip.putibaby.com/master_shanghu_detail?u=' + data.info.username"
+          :href="'master_shanghu_detail?u=' + data.info.username"
           mip-link>
           <div class="pJC_head">
             <mip-img
@@ -236,7 +246,7 @@
                         width="12px"
                         height="12px"
                         class="iconStar"
-                        src="/i/select_master_star.png" />
+                        src="https://mip.putibaby.com/i/select_master_star.png" />
 
                       <mip-img
                         v-for="(item,index) in data.shanghu_data.star_0_list"
@@ -245,7 +255,7 @@
                         width="12px"
                         height="12px"
                         class="iconStar"
-                        src="/i/select_master_unstar.png" />
+                        src="https://mip.putibaby.com/i/select_master_unstar.png" />
 
                     </div>
                   </td>
@@ -366,6 +376,21 @@
         </tbody>
       </table>
     </mip-fixed>
+    <mip-fixed
+      v-if="showImg"
+      class="img_back"
+      type="top"
+      @click="hideImg">
+      <div
+        v-if="showImg"
+        class="img_div"
+        @touchmove.prevent="noop">
+        <mip-img
+          :src="imgUrl"
+        />
+      </div>
+    </mip-fixed>
+
   </div>
 
 </template>
@@ -415,9 +440,8 @@ body{
     border-radius: 5px;
     color: white;
     box-shadow: 0px 1px 1px 1px #e7ebd0;
-    background-image: url(http://h5.putibaby.com/assets/i/blur_14.jpg);
+    /* background-image: url(http://h5.putibaby.com/assets/i/blur_14.jpg); */
     background-size: cover;
-
 }
 .masterShow .mS_header{
     width: 50px;
@@ -490,7 +514,7 @@ body{
   z-index:99;
 }
 .line{
-    background: url(/i/show_master_card_footer_hb.png);
+    /* background: url(/i/show_master_card_footer_hb.png); */
     width: 100%;
     height: 2px;
     background-size: contain;
@@ -587,7 +611,19 @@ body{
     margin-right: 10px;
     border-radius: 5px;
 }
+.allpic{
 
+    display: inline-block;
+
+}
+.onepic{
+    height: 70px;
+    width: 70px;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 5px;
+}
 .serverCard{
     width: 100%;
     border-radius: 5px;
@@ -913,6 +949,25 @@ td.secondCol {
     margin-right: 10px;
 }
 
+.img_back{
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  top: 0;
+  left: 0;
+  bottom:0;
+  z-index: 99996 !important;
+}
+.img_div{
+  width: 100%;
+  position: absolute;
+  z-index:99999;
+  top: 100px;
+  left: 0;
+}
+.img_div mip-img{
+  width: 100%;
+}
 </style>
 
 <script>
@@ -937,10 +992,7 @@ API.wrapRet_ = function (api, opts, fn) {
   opts.mip_sid = API.sessionId || ''
   fetch(api, {
     method: 'POST',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
+    credentials: 'include',
     body: JSON.stringify(opts)
   })
     .then(checkStatus)
@@ -958,7 +1010,7 @@ API.wrapRet_ = function (api, opts, fn) {
 
 API.getMasterInfo = function (masterId, fn) {
   API.wrapRet_(
-    '/api/get_master_info_for_me',
+    'https://mip.putibaby.com/api/get_master_info_for_me',
     {
       'master_id': masterId
     },
@@ -967,7 +1019,7 @@ API.getMasterInfo = function (masterId, fn) {
 
 API.favMaster = function (masterId, fn) {
   API.wrapRet_(
-    '/api/fav_master',
+    'https://mip.putibaby.com/api/fav_master',
     {
       'master_id': masterId
     },
@@ -976,10 +1028,18 @@ API.favMaster = function (masterId, fn) {
 
 API.unfavMaster = function (masterId, fn) {
   API.wrapRet_(
-    '/api/unfav_master',
+    'https://mip.putibaby.com/api/unfav_master',
     {
       'master_id': masterId
     }, fn)
+}
+
+API.checkUnionAgain = function (opt, fn) {
+  API.wrapRet_(
+    'https://mip.putibaby.com/api/check_union_again', {
+      'opt': opt
+    },
+    fn)
 }
 
 export default {
@@ -1000,7 +1060,9 @@ export default {
     return {
       data: pdata.data,
       isLogin: false,
-      isUnion: false
+      isUnion: false,
+      showImg: false,
+      imgUrl: ''
     }
   },
   computed: {
@@ -1010,6 +1072,42 @@ export default {
     console.log('This is master card component !')
     window.MIP.viewer.fixedElement.init()
     var self = this
+
+    window.addEventListener('show-page', () => {
+      console.log('show-page')
+      if (self.isLogin) {
+        API.getMasterInfo(self.data.info.id, function (isOk, data) {
+          console.log(data)
+          if (isOk) {
+            self.$set(self.data.info, 'isfav', data.fav)
+            self.$set(self.data.info, 'can_online_interview', data.can_online_interview)
+            self.$set(self.data.info, 'order_desc_str', data.order_desc_str)
+          // console.log(self);
+          } else {
+            console.warn(data)
+          }
+        })
+      }
+      if (self.isUnion || !self.isLogin) {
+        return
+      }
+
+      API.checkUnionAgain('', function (isOk, res) {
+        if (isOk) {
+          console.log(res)
+          self.isLogin = res.isLogin
+          self.isUnion = res.isUnion
+          // MIP.setData({'#isLogin': true})
+          // MIP.setData({'#isUnion': event.userInfo.isUnion})
+        } else {
+          console.log(res)
+        }
+      })
+    })
+    window.addEventListener('hide-page', () => {
+
+    })
+
     this.$element.customElement.addEventAction('logindone', event => {
       // 这里可以输出登录之后的数据
 
@@ -1020,29 +1118,27 @@ export default {
       self.$set(self, 'isLogin', true)
       self.$set(self, 'isUnion', event.userInfo.isUnion)
 
-      if (event.userInfo.isUnion &&
-          (API.next_cmd === 'fav' || sessionStorage.next_cmd === 'fav')) {
+      var origin = API.next_cmd || event.origin
+      console.log(origin)
+      API.next_cmd = ''
+
+      if (event.userInfo.isUnion && origin === 'fav') {
         console.log('logindone to fav')
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
         API.favMaster(self.data.info.id, function (isOk, res) {
           if (isOk) { self.$set(self.data.info, 'isfav', true) }
         })
-      } else if (event.userInfo.isUnion &&
-          (API.next_cmd === 'update_time' || sessionStorage.next_cmd === 'update_time')) {
+      } else if (event.userInfo.isUnion && origin === 'update_time') {
         console.log('logindone to update_time')
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
-        window.MIP.viewer.open('https://mip.putibaby.com/update_time_mip?mcode=' + self.data.codeid, {})
-      } else if (event.userInfo.isUnion &&
-          (API.next_cmd === 'order_list' || sessionStorage.next_cmd === 'order_list')) {
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_time_mip?mcode=' + self.data.codeid), {})
+      } else if (event.userInfo.isUnion && origin === 'order_list') {
         console.log('logindone to order_list')
-        API.next_cmd = ''
-        sessionStorage.next_cmd = ''
-        window.MIP.viewer.open('https://mip.putibaby.com/order_list', {})
-      } else if (!event.userInfo.isUnion) {
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
+      } else if (origin === 'fav' && !event.userInfo.isUnion) {
         console.log('go to submit_ph')
-        window.MIP.viewer.open('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href), {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
+      } else if (origin && !event.userInfo.isUnion) {
+        console.log('go to submit_ph')
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/' + origin), {})
       }
 
       API.getMasterInfo(self.data.info.id, function (isOk, data) {
@@ -1069,11 +1165,33 @@ export default {
 
     checkLogin_ (cmd) {
       if (!this.isLogin) {
-        API.next_cmd = cmd
-        sessionStorage.next_cmd = cmd
-        this.$emit('login')
+        // API.next_cmd = cmd
+        // sessionStorage.next_cmd = cmd
+        // this.$emit('login')
+        if (cmd === 'fav') {
+          this.$emit('login1')
+        } else if (cmd === 'order_list') {
+          this.$emit('login2')
+        } else if (cmd === 'update_time') {
+          this.$emit('login3')
+        }
         return false
       }
+      if (!this.isUnion) {
+        var to = '/' + cmd
+        console.log(to)
+        if (cmd === 'fav') {
+          window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
+        } else if (cmd === 'order_list') {
+          window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
+        } else if (cmd === 'update_time') {
+          to = 'https://mip.putibaby.com/update_time_mip?mcode=' + this.data.codeid
+          window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
+        }
+
+        return false
+      }
+
       return true
     },
 
@@ -1085,12 +1203,12 @@ export default {
 
       if (!this.checkLogin_('update_time')) { return }
 
-      window.MIP.viewer.open('https://mip.putibaby.com/update_time_mip?mcode=' + this.data.codeid, {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_time_mip?mcode=' + this.data.codeid), {})
     },
     handleOrderList () {
       console.log('handleOrderList')
       if (!this.checkLogin_('order_list')) { return }
-      window.MIP.viewer.open('https://mip.putibaby.com/order_list', {})
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
     },
     handleFav () {
       console.log('handleFav')
@@ -1112,6 +1230,15 @@ export default {
     },
     load_data () {
       console.log('should set data')
+    },
+    show (e) {
+      this.showImg = true
+      this.imgUrl = e
+    },
+    hideImg () {
+      this.showImg = false
+    },
+    noop () {
     }
   }
 
