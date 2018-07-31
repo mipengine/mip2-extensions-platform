@@ -37,18 +37,18 @@ export default{
     },
     // 表情过滤
     isEmojiCharacter (substring) {
-      for (var i = 0; i < substring.length; i++) {
-        var hs = substring.charCodeAt(i)
+      for (let i = 0; i < substring.length; i++) {
+        let hs = substring.charCodeAt(i)
         if (hs >= 0xd800 && hs <= 0xdbff) {
           if (substring.length > 1) {
-            var ls = substring.charCodeAt(i + 1)
-            var uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000
+            let ls = substring.charCodeAt(i + 1)
+            let uc = ((hs - 0xd800) * 0x400) + (ls - 0xdc00) + 0x10000
             if (uc >= 0x1d000 && uc <= 0x1f77f) {
               return true
             }
           }
         } else if (substring.length > 1) {
-          var Ls = substring.charCodeAt(i + 1)
+          let Ls = substring.charCodeAt(i + 1)
           if (Ls === 0x20e3) {
             return true
           }

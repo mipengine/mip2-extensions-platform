@@ -114,7 +114,7 @@ export default {
   methods: {
     // 搜索地区
     searchVal () {
-      var val = this.inputVal
+      let val = this.inputVal
       if (val) {
         let that = this
         that.province = this.choosedetail.city
@@ -137,7 +137,6 @@ export default {
     Choose (val) {
       // 选择地区
       if (this.inputVal) {
-        console.log(val.location)
         MIP.setData({
           chooseDetail: {
             show: false
