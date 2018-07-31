@@ -198,6 +198,9 @@ export default {
   computed: {
 
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     var self = this
     console.log('This is edit contract_extra component !')

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="wapper">
     <!-- 登陆后的状态 -->
     <div class="mycenter-head">
       <div v-if="isreg === 2">
@@ -8,7 +8,7 @@
             <dt>
               <a href="javascript:;">
                 <mip-img
-                  src="../../static/image/touxiang.png"
+                  src="https://b.kuaifawu.com/static/image/touxiang.png"
                   alt=""
                   class="img"/>
               </a>
@@ -162,6 +162,7 @@
 
 <style scoped>
 *{padding:0;margin:0;list-style:none;text-decoration: none;}
+.wapper{padding-bottom: 1rem;}
 .mycenter-head {display: flex;flex-direction: column;background-color: #00a5d5;width: 100%;text-align: center;
 border-bottom: 1px solid #d9d9d9;}
 .mycenter-head .btn {border:1px solid #fff;width:1rem;margin:0.8rem auto;padding:0.08rem;border-radius:0.03rem;}
@@ -229,6 +230,7 @@ export default {
     }
   },
   mounted () {
+    MIP.viewer.fixedElement.init()
     // 自定义exit事件
     const self = this
     this.$element.customElement.addEventAction('logout', event => {

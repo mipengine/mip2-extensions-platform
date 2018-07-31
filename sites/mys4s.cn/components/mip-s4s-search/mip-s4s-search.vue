@@ -439,12 +439,54 @@ export default {
         return
       }
 
-      let item = {
-        name: list[0].name,
-        size: list[0].size,
-        file: list[0]
+      // let item = {
+      //   name: list[0].name,
+      //   size: list[0].size,
+      //   file: list[0]
+      // }
+
+      const file = list[0]
+      if (file) {
+        console.log(file.size / 1024 / 1024 + 'MB')
+        const isLt2M = file.size / 1024 / 1024 < 2
+        if (!isLt2M) {
+          util.toast('图片大小需要小于 2MB!')
+          return
+        }
+        util.toast('正在上传')
+        const formData = new FormData()
+        formData.append('image', list[0])
+        self.vehiclecardFetch(formData)
       }
-      self.html5Reader(list[0], item, 'travelUrl')
+
+      // let name = 'travelUrl'
+      // const formData1 = new FormData()
+      // formData1.append('image', list[0])
+      // fetch('https://mys4s.cn/car/upload_report_pic', {
+      //   method: 'POST',
+      //   body: formData1
+      // })
+      //   .then(res => res.json())
+      //   .then(data => {
+      //     if (data.code === 0) {
+      //       util.toast('上传成功')
+      //       if (name === 'ticket') {
+      //         self.ticketUrl = data.data
+      //       } else if (name === 'JSZTravel') {
+      //         self.JSZTravelUrl = data.data
+      //       } else if (name === 'JSZDrive') {
+      //         self.JSZDriveUrl = data.data
+      //       } else if (name === 'travelUrl') {
+      //         self.travelUrl = data.data
+      //       } else if (name === 'driveUrl') {
+      //         self.driveUrl = data.data
+      //       }
+      //     } else {
+      //       util.toast(data.msg)
+      //     }
+      //   })
+
+      // self.html5Reader(list[0], item, 'travelUrl')
     },
     html5Reader: function (file, item, name) {
       let imgSrc = new Image()

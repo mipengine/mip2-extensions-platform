@@ -23,6 +23,7 @@
         </div>
       </div>
     </mip-fixed>
+
   </div>
 </template>
 <style scoped>
@@ -38,7 +39,7 @@
   height:100%;
 }
 .fix_con{
-  z-index:10000;
+  z-index:10000 !important;
 }
 #fullScreen {
   width: 100%;
@@ -168,6 +169,9 @@ export default {
     show: function (val, oldVal) {
       console.log('new: %s, old: %s', val, oldVal)
     }
+  },
+  prerenderAllowed () {
+    return true
   },
   mounted () {
     console.log('This is comfirm component !')
