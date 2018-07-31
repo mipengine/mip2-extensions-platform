@@ -224,7 +224,6 @@ export default {
     })
   },
   firstInviewCallback () {
-    this.init()
   },
   methods: {
     init () {
