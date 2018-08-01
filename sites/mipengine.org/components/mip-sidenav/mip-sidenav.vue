@@ -1,5 +1,7 @@
 <template>
-  <div class="sidenav-wrapper">
+  <div
+    ref="sidenavLeft"
+    class="sidenav-wrapper">
     <sidenav-menu
       :menu="menu"
       :url="url"
@@ -64,9 +66,8 @@ export default {
     }
   },
   mounted () {
-    let activeDom = document.querySelectorAll('.activemenu')[0]
+    let activeDom = this.$refs.sidenavLeft.querySelectorAll('.activemenu')[0]
     let activeTop = activeDom ? activeDom.offsetTop : 0
-
     let scrollDom = document.querySelectorAll('.layout-sidebar')[0]
     if (scrollDom) {
       scrollDom.scrollTop = activeTop + 60
