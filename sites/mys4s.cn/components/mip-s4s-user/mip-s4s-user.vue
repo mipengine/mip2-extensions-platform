@@ -322,7 +322,6 @@ export default {
 }
 .s4s-tab-item {
   padding: 0 0.1rem;
-  -webkit-box-box-flex:1;
   -webkit-box-flex:1;
   -moz-box-flex:1;
   flex:1;
@@ -345,7 +344,7 @@ export default {
 }
 .s4s-tab-num {
   background: #fe5a00;
-  background-image:linear-gradient(40deg, #fe5a00 0%, #ff7c00 100%);
+  background-image:linear-gradient(40deg,  #ff7c00 0%, #fe5a00 100%);
   /* min-width: .185rem;
   width:auto;
   padding:0 .0485rem; */
@@ -420,7 +419,6 @@ export default {
   color: #fe7000;
 }
 .s4s-cell-hd-time {
-  -webkit-box-box-flex:1;
   -webkit-box-flex:1;
   -moz-box-flex:1;
   flex:1;
@@ -463,7 +461,7 @@ export default {
 }
 
 .s4s-cell-fd span:last-child {
-  background-image: linear-gradient(-149deg, #ff7907 0%, #ffa018 100%);
+  background-image: linear-gradient(40deg, #ff7907 0%, #ffa018 100%);
   border: none;
 }
 
