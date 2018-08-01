@@ -34,7 +34,7 @@
             <div class="s4s-illegal-hd">
               <span class="s4s-illegal-addr"><mip-img
                 src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/position.png"
-                style="margin-right:.03rem;vertical-align: -.02rem;"
+                style="margin-right:.07rem;vertical-align: -.02rem;"
                 width="10"
                 height="14" />{{ list.Address || '未知' }}</span>
             </div>
@@ -293,20 +293,29 @@ export default {
 }
 
 .s4s-car-model {
-  display: -webkit-box;
+  display:-webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display: -webkit-flex;
+  display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  align-items:center;
+  -webkit-box-align:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
 }
 
 .s4s-car-name {
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   color: #333;
   font-size: .2rem;
+  font-weight: bold;
 }
 
 .s4s-car-illegal {
@@ -333,11 +342,16 @@ export default {
 }
 .s4s-right {
   display: -webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display: -webkit-flex;
+  display: flex;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  align-items:center;
+  -webkit-box-align:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
   margin-right: 0.1rem;
 }
 
@@ -348,27 +362,39 @@ export default {
 }
 
 .s4s-illegal-item {
-  display: -webkit-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
+  display: flex;
   margin: 0 .12rem .1rem .12rem;
   box-sizing: border-box;
   -moz-box-sizing:border-box;
   -webkit-box-sizing:border-box;
 }
 .s4s-illegal-list-body {
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   display: -webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display: -webkit-flex;
+  display: flex;
   background: #fff;
   border-radius: 0.04rem;
   -webkit-box-shadow: 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.05);
   box-shadow: 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.05);
   padding: .12rem;
-  -webkit-box-orient:vertical;-webkit-box-direction:normal;-moz-box-orient:vertical;-moz-box-direction:normal;flex-direction:column;-webkit-flex-direction:column;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -moz-box-orient:vertical;
+  -moz-box-direction:normal;
+  flex-direction:column;
+  -webkit-flex-direction:column;
   overflow: hidden;
   border-radius: .05rem;
 }
@@ -376,10 +402,13 @@ export default {
 .s4s-illegal-hd {
   display: -webkit-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
-  -webkit-box-align: center;
+  display: -moz-box;
+  display: flex;
   -ms-flex-align: center;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  align-items:center;
+  -webkit-box-align:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
   padding: 0.1rem 0;
   border-bottom: .01rem rgba(0, 0, 0, 0.05) solid;
 }
@@ -390,12 +419,14 @@ export default {
 }
 
 .s4s-illegal-addr {
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -ms-box-flex:1;
   font-size: 0.14rem;
   color: #666;
-  padding: 0 0.15rem 0 0.1rem;
+  padding-right: 0.15rem;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
@@ -406,7 +437,9 @@ export default {
   font-size: 0.14rem;
   color: #333;
 }
-
+.s4s-illegal-bd-number{
+  font-weight: bold;
+}
 .s4s-illegal-bd-number span {
   padding: 0 0.03rem;
 }
@@ -423,9 +456,11 @@ export default {
   border-top: 0.01rem rgba(0, 0, 0, 0.05) solid;
   font-size: 0.14rem;
   color: #999;
-  display: -webkit-box;
+  display:-webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display: -webkit-flex;
+  display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
 }
@@ -467,6 +502,7 @@ export default {
 .s4s-title {
   font-size: .2rem;
   padding: .15rem;
+  font-weight: bold;
 }
 .s4s-car-change {
   border: .01rem solid #fe7000;

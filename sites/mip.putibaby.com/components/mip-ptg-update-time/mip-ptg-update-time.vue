@@ -18,6 +18,7 @@
     <textarea
       v-model="content"
       class="textarea"
+      maxlength="200"
       name="info"
       placeholder="您方便的时间段，可不填"/>
     <input

@@ -262,6 +262,12 @@
 <script>
 import config from '../../utils/config'
 export default {
+  props: {
+    payConfig: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
       orders: [],
@@ -270,6 +276,10 @@ export default {
     }
   },
   mounted () {
+    MIP.util.platform.start()
+    console.log(MIP.util.platform.isWechatApp())
+
+    console.log(this.payConfig.endpoint.alipay, '这里是微信支付回调')
     console.log('This is 订单列表 !')
     const self = this
     let state = 0
@@ -314,12 +324,18 @@ export default {
     },
     pay (ordersId, price) {
       console.log(ordersId, price)
+      let wxurl = ''
+      if (MIP.util.platform.isWechatApp()) {
+        wxurl = 'https://m.kuaifawu.com/pay/mip/wxpay'
+      } else {
+        wxurl = config.data().apiurl + '/pay/weixinorders?ordersid=' + ordersId
+      }
       let payConfig = {
         'fee': price,
         'endpoint': {
           // "baifubao":  "https://api.example.com/pay/baifubao",
           'alipay': config.data().apiurl + '/pay/alipayorders?ordersid=' + ordersId,
-          'weixin': config.data().apiurl + '/pay/weixinorders?ordersid=' + ordersId
+          'weixin': wxurl
         },
         'postData': {
           'orderid': ordersId
