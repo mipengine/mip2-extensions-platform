@@ -153,7 +153,7 @@ export default {
         dest: this.destination,
         days: this.day
       }
-      fetch('/order/callback/baidu', {
+      fetch(this.host + '/order/callback/baidu', {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
