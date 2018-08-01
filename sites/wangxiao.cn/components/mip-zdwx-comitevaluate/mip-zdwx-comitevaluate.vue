@@ -144,6 +144,9 @@ export default {
               setTimeout(() => {
                 MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/orderList?token=' + base.getToken()))
               }, 1000)
+            } else {
+              _this.errorMessage = data.message
+              _this.showErrorMessage = true
             }
           })
         })
