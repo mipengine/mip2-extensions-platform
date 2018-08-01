@@ -1,30 +1,26 @@
 <template>
-  <div class="wrapper">
-    <div class="page">
-      <div
-        v-for="(val,index) in providerList"
-        :key="index"
-        class="item-list"
-        type="mip-mustache">
-        <div class="item">
-          <a :href="geturl('/product/info.html?id=' + pid + '_' + ct + '_' + ar + '_' + val.id +'_' + packageid)">
-            <div class="left">
-              <mip-img :src="val.avatar"/>
+    <div class="wrapper">
+        <div class="page">
+            <div class="item-list" v-for="(val,index) in providerList" :key="index" type="mip-mustache">
+                <div class="item">
+                    <a :href="geturl('/product/info.html?id=' + pid + '_' + ct + '_' + ar + '_' + val.id +'_' + packageid)" data-type="mip">
+                        <div class="left">
+                            <mip-img :src="val.avatar"></mip-img>
+                        </div>
+                        <div class="right">
+                            <p class="name">{{val.realname}}</p>
+                            <p class="r-info">{{val.areatitle}}
+                                <span class="line"></span>{{val.workyearnum}}年工作经验
+                                <span class="line"></span>{{val.company}}</p>
+                            <p class="rate">最近三个月接咨询量：
+                                <span>{{val.recentordersnum}}</span>
+                            </p>
+                        </div>
+                    </a>
+                </div>
             </div>
-            <div class="right">
-              <p class="name">{{ val.realname }}</p>
-              <p class="r-info">{{ val.areatitle }}
-                <span class="line"/>{{ val.workyearnum }}年工作经验
-              <span class="line"/>{{ val.company }}</p>
-              <p class="rate">最近三个月接咨询量：
-                <span>{{ val.recentordersnum }}</span>
-              </p>
-            </div>
-          </a>
         </div>
-      </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
@@ -94,61 +90,58 @@
 </style>
 
 <script>
-import config from '../../utils/config'
+import config from "../../utils/config";
 export default {
-  data () {
-    return {
-      searchdata: [],
-      packageInfo: [],
-      providerList: []
-    }
-  },
-  prerenderAllowed () {
-    return true
-  },
-  mounted () {
-    console.log('This is 服务商列表页 !')
-    const self = this
-    let pid = getRequest().pid
-    window
-      .fetchJsonp(
-        'https://api.kuaifawu.com/mip/provider/plist/pid/' + pid,
-        {
-          jsonpCallback: 'callback'
-        }
-      )
-      .then(function (res) {
-        return res.json()
-      })
-      .then(function (data) {
-        self.searchdata = data.data.items.searchData
-        self.pid = data.data.items.searchData.pid
-        self.ct = data.data.items.searchData.ct
-        self.ar = data.data.items.searchData.ar
-        self.packageid = data.data.items.searchData.packageid
-        self.providerList = data.data.items.providerList
-      })
+    data() {
+        return {
+            searchdata: [],
+            packageInfo: [],
+            providerList: []
+        };
+    },
+    mounted() {
+        console.log("This is 服务商列表页 !");
+        const self = this;
+        let pid = getRequest().pid;
+        window
+            .fetchJsonp(
+                "https://api.kuaifawu.com/mip/provider/plist/pid/" + pid,
+                {
+                    jsonpCallback: "callback"
+                }
+            )
+            .then(function(res) {
+                return res.json();
+            })
+            .then(function(data) {
+                self.searchdata = data.data.items.searchData;
+                self.pid = data.data.items.searchData.pid;
+                self.ct = data.data.items.searchData.ct;
+                self.ar = data.data.items.searchData.ar;
+                self.packageid = data.data.items.searchData.packageid;
+                self.providerList = data.data.items.providerList;
+            });
 
-    function getRequest () {
-      let url = location.search // 获取url中"?"符后的字串
-      let theRequest = {}
-      let strs = ''
-      if (url.indexOf('?') !== -1) {
-        let str = url.substr(1)
-        strs = str.split('&')
-        for (let i = 0; i < strs.length; i++) {
-          theRequest[strs[i].split('=')[0]] = unescape(
-            strs[i].split('=')[1]
-          )
+        function getRequest() {
+            let url = location.search; // 获取url中"?"符后的字串
+            let theRequest = {};
+            let strs = "";
+            if (url.indexOf("?") !== -1) {
+                let str = url.substr(1);
+                strs = str.split("&");
+                for (let i = 0; i < strs.length; i++) {
+                    theRequest[strs[i].split("=")[0]] = unescape(
+                        strs[i].split("=")[1]
+                    );
+                }
+            }
+            return theRequest;
         }
-      }
-      return theRequest
+    },
+    methods: {
+        geturl(url) {
+            return MIP.util.makeCacheUrl(config.data().burl + url);
+        }
     }
-  },
-  methods: {
-    geturl (url) {
-      return MIP.util.makeCacheUrl(config.data().burl + url)
-    }
-  }
-}
+};
 </script>

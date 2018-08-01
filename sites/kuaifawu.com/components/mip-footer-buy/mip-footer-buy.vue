@@ -11,6 +11,7 @@
           class="left">点击咨询</a>
         <a
           class="right"
+          data-type="mip"
           @click="removeSku">购买服务</a>
           <!-- <div class="right" on="tap:log.login"> xxxx </div> -->
       </div>
@@ -35,7 +36,7 @@
   border-top: .014rem solid #d9d9d9;
   width: 100%;
   display: flex;
-  z-index: 999;
+  z-index: 1;
   font-size: .17rem;
   color: #fff
 }
@@ -82,7 +83,7 @@ export default {
     }
   },
   prerenderAllowed () {
-    return true
+          return true
   },
   mounted () {
     MIP.viewer.fixedElement.init()

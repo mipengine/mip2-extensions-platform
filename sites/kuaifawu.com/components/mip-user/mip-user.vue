@@ -8,7 +8,7 @@
             <dt>
               <a href="javascript:;">
                 <mip-img
-                  src="https://b.kuaifawu.com/static/image/touxiang.png"
+                  src="../../static/image/touxiang.png"
                   alt=""
                   class="img"/>
               </a>
@@ -32,22 +32,21 @@
       </div>
       <div
         v-if="isreg === 1"
-        class="btn"
-        on="tap:log.login">
+        class="btn" on="tap:log.login">
         <a
           class="word"
-        >注册</a>
+          >注册</a>
         <span class="line"/>
         <a
           class="word"
-        >登录</a>
+          >登录</a>
       </div>
     </div>
     <!-- 列表 -->
     <div class="mycenter-module">
       <ul>
         <li class="mycenter-module-li first-li">
-          <a @click="openurl('order')">
+          <a @click="openurl('order')" data-type="mip">
             <span>
               <b class="list_icon">
                 <mip-img
@@ -61,7 +60,7 @@
           </a>
         </li>
         <li class="mycenter-module-li second_li">
-          <a @click="openurl('coupon')">
+          <a @click="openurl('coupon')" data-type="mip">
             <span>
               <b class="coupon_icon">
                 <mip-img
@@ -79,7 +78,7 @@
     <div class="mycenter-module">
       <ul>
         <li class="mycenter-module-li first-li">
-          <a @click="openurl('evaluate')">
+          <a @click="openurl('evaluate')" data-type="mip">
             <span>
               <b class="evaluate_icon">
                 <mip-img
@@ -93,7 +92,7 @@
           </a>
         </li>
         <li class="mycenter-module-li">
-          <a @click="openurl('refund')">
+          <a @click="openurl('refund')" data-type="mip">
             <span>
               <b class="refund_icon">
                 <mip-img
@@ -111,9 +110,7 @@
     <div class="mycenter-module">
       <ul>
         <li class="mycenter-module-li first-li">
-          <a
-            :href="geturl('/user/question.html')"
-            data-type="mip">
+          <a :href="geturl('/user/question.html')" data-type="mip">
             <span>
               <b class="question_icon">
                 <mip-img
@@ -127,9 +124,7 @@
           </a>
         </li>
         <li class="mycenter-module-li">
-          <a
-            :href="geturl('/user/about.html')"
-            data-type="mip">
+          <a :href="geturl('/user/about.html')" data-type="mip">
             <span>
               <b class="about_icon">
                 <mip-img
@@ -144,20 +139,16 @@
         </li>
       </ul>
     </div>
-    <div
-      v-if="sessionid"
-      class="mycenter-module exit_login">
+    <div class="mycenter-module exit_login" v-if="sessionid">
       <ul>
         <li>
-          <a
-            on="tap:log.logout"
-            @click="removeSession">退出登录</a>
+          <a on="tap:log.logout">退出登录</a>
         </li>
       </ul>
     </div>
-    <div
-      v-else
-      class="mycenter-module exit_login"/>
+    <div class="mycenter-module exit_login" v-else>
+      
+    </div>
   </div>
 </template>
 
@@ -231,82 +222,86 @@ export default {
     }
   },
   mounted () {
-    MIP.viewer.fixedElement.init()
-    // 自定义exit事件
-    const self = this
-    this.$element.customElement.addEventAction('logout', event => {
-      console.log(12312)
-      this.removeSession()
-    })
+      MIP.viewer.fixedElement.init()
+      // 自定义exit事件
+      const self = this
+      this.$element.customElement.addEventAction('logout', event => {
+          console.log(12312)
+          this.removeSession()
+      });
 
-    let CustomStorage = MIP.util.customStorage
-    let storage = new CustomStorage(0)
-    let sessionid = storage.get('sessionIds')
-    console.log(sessionid, 'dddddddddddddd')
-    if (sessionid) {
-      window.fetchJsonp(config.data().apiurl + '/user/getinfo?sessionid=' + encodeURIComponent(sessionid), {
-        jsonpCallback: 'callback'
-      }).then(function (res) {
-        return res.json()
-      }).then(function (data) {
-        self.mobile = data.data.items.mobile
-        self.nickname = data.data.items.nickname
-        self.userbalance = data.data.items.userbalance
-        if (!self.mobile) {
-          storage.set('returnurl', config.data().burl + '/user/index.html')
-          window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + '/user/register.html'), {isMipLink: true})
-        }
-        self.isreg = data.data.items.isreg
-        console.log(self.mobile)
-      })
-    }
-
-    this.$element.customElement.addEventAction('login', event => {
-      console.log(event.sessionId)
-      console.log(event.userInfo.nickname)
-      if (event.sessionId) {
-        storage.set('sessionIds', event.sessionId)
-        storage.set('nickname', event.userInfo.nickname)
-      }
+      let CustomStorage = MIP.util.customStorage
+      let storage = new CustomStorage(0)
       let sessionid = storage.get('sessionIds')
-      // sessionid = 'uJN/qa+3uKO6lXywhZ94epifraF3jWKDjKs='
-      self.sessionid = sessionid
+      console.log(sessionid,'dddddddddddddd')
       if (sessionid) {
-        window.fetchJsonp(config.data().apiurl + '/user/getinfo?sessionid=' + encodeURIComponent(sessionid), {
-          jsonpCallback: 'callback'
-        }).then(function (res) {
-          return res.json()
-        }).then(function (data) {
-          self.mobile = data.data.items.mobile
-          self.nickname = data.data.items.nickname
-          self.userbalance = data.data.items.userbalance
-          if (!self.mobile) {
-            storage.set('returnurl', config.data().burl + '/user/index.html')
-            window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + '/user/register.html'), {isMipLink: true})
-          }
-          self.isreg = data.data.items.isreg
-          console.log(self.mobile)
-        })
+          window.fetchJsonp(config.data().apiurl + '/user/getinfo?sessionid=' + encodeURIComponent(sessionid), {
+            jsonpCallback: 'callback'
+          }).then(function (res) {
+            return res.json()
+          }).then(function (data) {
+            self.mobile = data.data.items.mobile
+            self.nickname = data.data.items.nickname
+            self.userbalance = data.data.items.userbalance
+            if (!self.mobile) {
+              storage.set('returnurl', config.data().burl+'/user/index.html')
+              window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + '/user/register.html'), {isMipLink: true});
+            }
+            self.isreg = data.data.items.isreg
+            console.log(self.mobile)
+          })
       }
-    })
 
+      this.$element.customElement.addEventAction('login', event => {
+          
+          console.log(event.sessionId)
+          console.log(event.userInfo.nickname)
+          if (event.sessionId) {
+            storage.set('sessionIds', event.sessionId)
+            storage.set('nickname',event.userInfo.nickname)
+          }
+          let sessionid = storage.get('sessionIds')
+          // sessionid = 'uJN/qa+3uKO6lXywhZ94epifraF3jWKDjKs='
+          self.sessionid = sessionid
+          if (sessionid) {
+            window.fetchJsonp(config.data().apiurl + '/user/getinfo?sessionid=' + encodeURIComponent(sessionid), {
+              jsonpCallback: 'callback'
+            }).then(function (res) {
+              return res.json()
+            }).then(function (data) {
+              self.mobile = data.data.items.mobile
+              self.nickname = data.data.items.nickname
+              self.userbalance = data.data.items.userbalance
+              if (!self.mobile) {
+                storage.set('returnurl', config.data().burl+'/user/index.html')
+                window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + '/user/register.html'), {isMipLink: true});
+              }
+              self.isreg = data.data.items.isreg
+              console.log(self.mobile)
+            })
+          }
+      });
+    
     // console.log(config.data().apiurl)
+    
+
+     
   },
   prerenderAllowed () {
     return true
   },
   methods: {
     openurl: function (url) {
-      console.log(!this.sessionid, 111)
-      console.log(this.sessionid, 222)
+      console.log(!this.sessionid,111);
+       console.log(this.sessionid,222);
       if (!this.sessionid) {
-        util.toast('请先登录'); return true
+        util.toast('请先登录'); return true;
       }
       switch (url) {
         case 'order':
           // window.location.href = '/user/orders.html'
           // window.MIP.viewer.open('/user/orders.html', {isMipLink: true});
-          window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + '/user/orders.html'), {isMipLink: true})
+          window.MIP.viewer.open(MIP.util.makeCacheUrl(config.data().burl + '/user/orders.html'), {isMipLink: true});
           break
         default:
           util.toast('暂未开放')
@@ -314,14 +309,14 @@ export default {
       }
     },
     removeSession: function () {
-      let CustomStorage = MIP.util.customStorage
-      let storage = new CustomStorage(0)
-      this.sessionid = null
-      storage.rm('sessionIds')
-      this.isreg = 1
-      console.log(this.isreg)
+        let CustomStorage = MIP.util.customStorage
+        let storage = new CustomStorage(0)
+        this.sessionid = null
+        storage.rm('sessionIds')
+        this.isreg = 1
+        console.log(this.isreg)
     },
-    geturl (url) {
+     geturl(url) {
       return MIP.util.makeCacheUrl(config.data().burl + url)
     }
   }
