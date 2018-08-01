@@ -115,14 +115,15 @@
       </div>
       <mip-fixed type="bottom">
         <div class="pay-contaienr">
-          <div>
-            <p>合计金额：<span>¥ {{ (((Number(payForm.money) * 100 + Number(payForm.late_free)* 100 + Number(payForm.own_free)* 100 ) || 0) / 100).toFixed(2) }}</span></p>
-            <p>预计1-5个工作日办理完成 </p>
+          <div class="pay-contaienr-first">
+            <p class="pay-contaienr-p1">合计金额：<span class="pay-contaienr-num">¥ {{ (((Number(payForm.money) * 100 + Number(payForm.late_free)* 100 + Number(payForm.own_free)* 100 ) || 0) / 100).toFixed(2) }}</span></p>
+            <p class="pay-contaienr-p2" >预计1-5个工作日办理完成 </p>
           </div>
           <div
-            :class="agree?'' :'disabled-btn'"
-            @click="payFee" >
-            <span> 立即办理</span>
+            id="pay2btn"
+            :class="agree?'pay-contaienr-last' :'pay-contaienr-last disabled-btn'"
+            on="tap:pay2.pay2event" >
+            立即办理
           </div>
         </div>
       </mip-fixed>
@@ -169,22 +170,52 @@ export default {
   watch: {
     code (val) {
       let tel = /^1\d{10}$/
-      if (!this.cansend && val.length === 4 && tel.test(this.phone)) this.testCode()
+      if (!this.cansend && val.length === 4 && tel.test(this.phone)) {
+        this.testCode()
+      }
     }
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
-    if (this.globalData) {
-      this.orderNumber = this.globalData.orderNumber
-      this.payForm = {
-        money: this.globalData.price || '',
-        renfa_time: this.globalData.date || '',
-        late_free: this.globalData.lateFree || '',
-        own_free: this.globalData.ownFree || '',
-        name: this.globalData.nick,
-        car_no: this.globalData.nickCarNo || '',
-        ticketUrl: this.globalData.ticketUrl || '',
-        drive_no: this.globalData.drive_no || ''
+    MIP.viewer.fixedElement.init()
+    let me = this
+    this.$on('pay2event', event => {
+      console.log('pay2event')
+      me.payFee()
+    })
+
+    if (this.globalData && this.globalData.orderNumber) {
+      try {
+        window.localStorage.setItem(
+          'pay2Data',
+          JSON.stringify(this.globalData)
+        )
+      } catch (error) {
+        util.toast('由于您处在无痕模式，不能存储您当前的记录')
       }
+    } else {
+      try {
+        let globalData = window.localStorage.getItem('pay2Data')
+        if (globalData && JSON.parse(globalData)) {
+          this.globalData = JSON.parse(globalData)
+        }
+      } catch (error) {
+        util.toast('由于您处在无痕模式，不能载入您之前输入的记录')
+      }
+    }
+
+    this.orderNumber = this.globalData.orderNumber
+    this.payForm = {
+      money: this.globalData.price || '',
+      renfa_time: this.globalData.date || '',
+      late_free: this.globalData.lateFree || '',
+      own_free: this.globalData.ownFree || '',
+      name: this.globalData.nick,
+      car_no: this.globalData.nickCarNo || '',
+      ticketUrl: this.globalData.ticketUrl || '',
+      drive_no: this.globalData.drive_no || ''
     }
   },
   methods: {
@@ -271,27 +302,40 @@ export default {
       }
       // let carno = this.provice + this.carno
       let price = Number(this.payForm.money * 100)
-      let totalPrice = Math.round(price) + Math.round(this.payForm.own_free * 100) + Math.round(this.payForm.late_free * 100)
+      let totalPrice =
+        Math.round(price) +
+        Math.round(this.payForm.own_free * 100) +
+        Math.round(this.payForm.late_free * 100)
       let param = {
-        'source': 'xzapp',
+        source: 'xzapp',
         fine: price + '', // 罚金
-        ownFree: (this.payForm.own_free ? Math.round(this.payForm.own_free * 100) : 0) + '', // 服务费
-        lateFree: (this.payForm.late_free ? Math.round(this.payForm.late_free * 100) : 0) + '', // 滞纳金
+        ownFree:
+          (this.payForm.own_free
+            ? Math.round(this.payForm.own_free * 100)
+            : 0) + '', // 服务费
+        lateFree:
+          (this.payForm.late_free
+            ? Math.round(this.payForm.late_free * 100)
+            : 0) + '', // 滞纳金
         totalPrice: totalPrice + '', // 总金额
         notice_num: this.orderNumber.replace(/\s/g, '') || '', // 文书号
-        vio_time: this.payForm.renfa_time ? this.payForm.renfa_time.slice(0, 10) : '', // 文章时间：格式：2017-12-13
+        vio_time: this.payForm.renfa_time
+          ? this.payForm.renfa_time.slice(0, 10)
+          : '', // 文章时间：格式：2017-12-13
         img_url: this.payForm.ticketUrl || '', // 罚单连接
         carno: this.payForm.car_no ? this.payForm.car_no : '',
         mobile: this.phone ? this.phone : window.localStorage.UserTelAll,
         name: this.payForm.name || '', // 罚款人
-        drive_no: this.payForm.drive_no || ''// 驾驶证号
+        drive_no: this.payForm.drive_no || '' // 驾驶证号
       }
       util.fetchData('v3/violation/web/order/create', param).then(res => {
         if (res.code === 0) {
           MIP.setData({
             payConfig: {
               fee: totalPrice / 100,
-              sessionId: window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'),
+              sessionId: window.localStorage.getItem(
+                'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
+              ),
               postData: {
                 order_id: res.data + ''
               }
@@ -309,56 +353,60 @@ export default {
 
 <style scoped>
 .s4s-pay-body {
-  margin-top: .1rem;
+  margin-top: 0.1rem;
   background: #fff;
-  padding: 0 .15rem;
-  padding-top: .2rem;
+  padding: 0 0.15rem;
+  padding-top: 0.25rem;
 }
 .s4s-group mip-img {
-  width: .2rem;
-  height: .2rem;
+  width: 0.2rem;
+  height: 0.2rem;
 }
 .s4s-sum {
-  margin: .2rem .1rem 0 .1rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  margin: 0.2rem 0.1rem 0 0.1rem;
+  -webkit-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
   text-align: left;
-  font-size: .15rem;
+  font-size: 0.15rem;
   color: #50b0de;
 }
 .s4s-sum span {
   color: #f40;
-  padding-right: .05rem;
+  padding-right: 0.05rem;
 }
 
 .s4s-close {
-  width: .35rem;
-  height: .35rem;
+  width: 0.35rem;
+  height: 0.35rem;
   margin: 1.25rem auto 0 auto;
 }
 .s4s-order-container {
   background-color: #fff;
-  padding: .15rem;
-  padding-top: .21rem;
+  padding: 0.15rem;
+  padding-top: 0.25rem;
 }
 .s4s-order-title {
-  font-size: .2rem;
+  font-size: 0.2rem;
   color: #474245;
   font-weight: bold;
 }
 
 .s4s-order-input {
-  border: .01rem solid #eeeeee;
-  border-radius: .04rem;
-  padding: .06rem .1rem;
-  margin-top: .1rem;
+  border: 0.01rem solid #eeeeee;
+  border-radius: 0.04rem;
+  padding: 0.06rem 0.1rem;
+  margin-top: 0.1rem;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
 }
 
 .s4s-order-input input {
@@ -368,9 +416,12 @@ export default {
   flex: 4;
 }
 .s4s-order-input span {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   background: #3388ff;
   margin: 0;
   height: 0.25rem;
@@ -378,10 +429,17 @@ export default {
 }
 .s4s-order-mip-img-container {
   display: -webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  align-items:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
+  -webkit-justify-content:space-around;
+  justify-content:space-around;
+  -moz-box-pack:space-around;
+  -webkit-box-pack:space-around;
   margin: 0.2rem 0;
 }
 .s4s-order-mip-img-container .pic {
@@ -392,103 +450,64 @@ export default {
   flex: 3;
 }
 .s4s-order-mip-img-container .arr {
-  max-width: .11rem;
-  height: .2rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  max-width: 0.11rem;
+  height: 0.2rem;
+  -webkit-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
 }
 .s4s-order-content {
-  font-size: .13rem;
+  font-size: 0.13rem;
   color: #636363;
 }
 .s4s-order-content span {
   text-decoration: underline;
 }
 .agree-container {
-  font-size: .15rem;
+  font-size: 0.15rem;
   color: #999999;
 }
 .agree-container p {
-  padding: .15rem;
+  padding: 0.15rem;
 }
 .agree-container mip-img {
   vertical-align: bottom;
 }
 
-.pay-contaienr {
-  display: flex;
-  width: 100%;
-  background: #fff;
-}
-.pay-contaienr > div:first-child {
-  flex: 1;
-  font-size: .16rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 0 .1rem;
-}
-.pay-contaienr span {
-  color: #fff;
-    font-size: .18rem;
-  font-weight: 300;
-}
-.pay-contaienr p:last-child {
-  color: #999;
-  font-size: .11rem;
-}
-.pay-contaienr > div:last-child {
-  width: 1.2rem;
-  background-image: linear-gradient(40deg, #fe5a00 0%, #ff7c00 100%);
-  text-align: center;
-  line-height: .5rem;
-  font-size: .18rem;
-}
-.pay-contaienr .disabled-btn {
-  background: #e6e6e6 !important;
-}
-.pay-contaienr .disabled-btn span {
-  color: #999999;
-}
 .s4s-group {
-  height: .32rem;
-  border-bottom: .01rem rgba(0, 0, 0, 0.1) solid;
+  position: relative;
+  line-height: 0.15rem;
+  border-bottom: 0.01rem #EAEAEA solid;
   color: #666;
   overflow: hidden;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  align-items:center;
   display: flex;
-  padding: .15rem 0;
+  padding: 0.15rem 0;
   box-sizing: content-box;
 }
 .s4s-group-tit {
-  font-size: .15rem;
-  width: .9rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  font-size: 0.15rem;
+  width: 0.9rem;
+  line-height: .25rem;
+  padding-top:.025rem;
 }
 .s4s-group-txt {
-  font-size: .15rem;
+  font-size: 0.15rem;
   color: #777;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  text-align: right;
 }
 .s4s-group input {
   border: none;
-  font-size: .15rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  font-size: 0.15rem;
   text-align: left;
+  line-height: .25rem;
+  flex: 1;
 }
 select {
-  font-size: .15rem;
+  font-size: 0.15rem;
 }
 .s4s-group input:focus,
 .s4s-group select:focus {
@@ -501,34 +520,118 @@ select {
 }
 .s4s-order-onum {
   background: #f5f5f5;
-  border-radius: .04rem;
-  height: .5rem;
+  border-radius: 0.04rem;
+  height: 0.5rem;
   color: #474245;
-  font-size: .18rem;
+  font-size: 0.18rem;
   font-weight: 400;
-  line-height: .5rem;
-  padding: 0 .15rem;
-  margin-top: .15rem;
+  line-height: 0.5rem;
+  padding: 0 0.15rem;
+  margin-top: 0.15rem;
 }
 .s4s-order-text {
   color: #fe7000;
-  font-size: .12rem;
-  margin-top: .15rem;
+  font-size: 0.12rem;
+  margin-top: 0.15rem;
 }
 .s4s-title {
   font-size: .2rem;
-  /* padding-top: .15rem; */
+  /* padding: .15rem; */
+  /* padding-top: 0.25rem; */
+  font-weight: bold;
 }
-.code-btn, .code-btn-disable{
-  color: #FE5C00;
+.code-btn,
+.code-btn-disable {
+  color: #fe5c00;
   background-color: #fff;
-  border:0;
-  border-radius:.03rem;
-  font-size:0.14rem;
-  border:.01rem solid #FF7B00;
-  padding: .05rem .075rem;
+  border: 0;
+  border-radius: 0.03rem;
+  font-size: 0.14rem;
+  border: 0.01rem solid #ff7b00;
+  padding: 0.05rem 0.075rem;
+  line-height: .20rem;
+  position: absolute;
+  right: 0;
+  top:50%;
+  margin-top:-.15rem
 }
 .code-btn-disable {
   opacity: 0.5;
+}
+
+.pay-contaienr {
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  width: 100%;
+  background: #fff;
+}
+
+.pay-contaienr-first {
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  font-size: 0.16rem;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -moz-box-orient:vertical;
+  -moz-box-direction:normal;
+  flex-direction:column;
+  -webkit-flex-direction:column;
+  -webkit-justify-content:center;
+  justify-content:center;
+  -moz-box-pack:center;
+  -webkit-box-pack:center;
+  -moz-box-pack:center;
+  padding: 0 0.1rem;
+}
+
+.pay-contaienr-num {
+  color: #fe7000;
+  font-size: 0.2rem;
+}
+
+.pay-contaienr-p1 {
+  color: #000;
+  font-size: 0.17rem;
+}
+.pay-contaienr-p2 {
+  color: #999;
+  font-size: 0.11rem;
+}
+
+.pay-contaienr-last {
+  width: 1.2rem;
+  background-image: linear-gradient(40deg,  #ff7c00 0%, #fe5a00 100%);
+  text-align: center;
+  line-height: 0.5rem;
+  font-size: 0.18rem;
+  font-weight: 300;
+  color: #fff;
+}
+
+.disabled-btn {
+  color: #999;
+  background: #e6e6e6 !important;
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #ccc;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color:#ccc;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color:#ccc;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color:#ccc;
 }
 </style>

@@ -7,6 +7,7 @@
       class="textarea"
       name="edit_contract_extra"
       validatetype="must"
+      maxlength="500"
       required
       placeholder="点击输入补充条款，如：上户遇节假日工资多倍结算/休息日约定；双胞胎加收金额；特殊上户要求等……"
       @change="saveIt_"/>
@@ -197,6 +198,9 @@ export default {
   },
   computed: {
 
+  },
+  prerenderAllowed () {
+    return true
   },
   mounted () {
     var self = this

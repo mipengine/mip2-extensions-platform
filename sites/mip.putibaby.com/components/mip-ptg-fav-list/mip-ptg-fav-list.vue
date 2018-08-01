@@ -76,6 +76,7 @@ body{
   height:100%;
   padding: 10px;
   padding-top: 0px;
+  padding-bottom: 40px;
 }
 .root{
   background: #fff;
@@ -218,12 +219,49 @@ export default {
   computed: {
 
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     console.log('This is my first custom component !')
     var self = this
+
+    window.addEventListener('show-page', () => {
+      console.log('show-page')
+
+      API.ajaxFavList({}, function (isOk, res) {
+        if (isOk) {
+          self.favlist = res.favlist
+        } else {
+          console.error(res)
+        }
+      })
+
+      // if (self.isUnion || !self.isLogin) {
+      //   return
+      // }
+
+      // API.checkUnionAgain('', function (isOk, res) {
+      //   if (isOk) {
+      //     console.log(res)
+      //     self.isLogin = res.isLogin
+      //     self.isUnion = res.isUnion
+      //     // MIP.setData({'#isLogin': true})
+      //     // MIP.setData({'#isUnion': event.userInfo.isUnion})
+      //   } else {
+      //     console.log(res)
+      //   }
+      // })
+    })
+    window.addEventListener('hide-page', () => {
+
+    })
+
     this.$element.customElement.addEventAction('logindone', function (event, str) {
       console.log(event)
       API.sessionId = event.sessionId
+      self.$set(self, 'isLogin', true)
+      self.$set(self, 'isUnion', event.userInfo.isUnion)
       API.ajaxFavList({}, function (isOk, res) {
         if (isOk) {
           self.favlist = res.favlist

@@ -1,5 +1,5 @@
-// const outAldhttp = 'https://yz-alipay.fundway.net/'
 const outAldhttp = 'https://jmt.sssvip4.natapp.cc/xmdcwbaidu.com/example/'
+
 function setContainerH (dom) {
   const agent = window.navigator.userAgent
   let containerH = window.innerHeight || document.documentElement.clientHeight

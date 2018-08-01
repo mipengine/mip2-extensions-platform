@@ -12,7 +12,6 @@
   },
   "author": "Raz1o (tyouzu1@163.com)",
   "dependencies": {
-    "blueimp-md5": "^2.10.0"
   },
   "devDependencies": {
     "eslint": "^4.19.1",

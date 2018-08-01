@@ -47,7 +47,8 @@
           name="name"
           class="name your_name"
           required="required"
-          placeholder="请填写您的称呼"></td>
+          placeholder="请填写您的称呼"
+          @keyup="checkAgain"></td>
       </tr>
     </table>
     <div class="g"/>
@@ -59,7 +60,8 @@
           type="date"
           name="ycq"
           class="name ycq"
-          required="required"></td>
+          required="required"
+          @change="checkAgain"></td>
       </tr>
     </table>
     <div
@@ -401,6 +403,9 @@ export default {
   computed: {
 
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     var self = this
     this.$element.customElement.addEventAction('logindone', event => {
@@ -432,6 +437,14 @@ export default {
 
     Checked () {
       this.tuijian = !this.tuijian
+    },
+    checkAgain () {
+      console.log(this)
+      if (this.name === '' || this.date === '') {
+        this.rea = true
+      } else {
+        this.rea = false
+      }
     },
     handleSubmit_ () {
       if (this.name === '' || this.date === '') {

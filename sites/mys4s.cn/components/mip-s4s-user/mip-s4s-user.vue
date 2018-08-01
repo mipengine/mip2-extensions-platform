@@ -1,8 +1,8 @@
 <template>
   <div class="s4s-page">
-    <a
+    <!-- <a
       ref="tel"
-      href="tel://400-000-1199"/>
+      href="tel://400-000-1199" /> -->
     <!-- <div style="background-color:#fff;padding:4%">
                 <h3 style="font-size: .2rem; font-weight:medium; ">尊敬的客户您好</h3>
                 <p style="font-size: .14rem;padding-top: .05rem;color:#666">当前待付款 <span style="color:#f40">{{ statics.UnpaySum || 0}}</span> 条，处理中 <span style="color:#f40">{{ statics.HandleSum || 0}}</span> 条，已完成 <span style="color:#f40">{{ statics.FinishSum || 0}}</span> 条。</p>
@@ -32,7 +32,7 @@
             :key="item.AliOrderId"
             :class="['s4s-cell', (item.Status == 2 || item.Status == 5) ? 's4s-cell-hd-image' : item.Status == 7 ? 's4s-cell-hd-image-down' :'']">
             <div class="s4s-cell-hd" >
-              <p >{{ item.SwiftNum || '-' }}</p><span v-if="item.Status == 0">等待支付</span>
+              <p >{{ item.SwiftNum || '-' }}</p><span v-if="item.Status == 0">等待支付</span><span v-if="item.Status == 3">处理中</span>
             </div>
             <div
               v-if="item.car_no"
@@ -100,7 +100,7 @@
         <div class="s4s-confirm-btn">
           <span @click="cancelBtn">取消</span>
           <span
-            style="color: #108EE9;"
+            style="color: #4f7eff;font-weight: 200;"
             @click="confirmBtn">确认</span>
         </div>
       </div>
@@ -163,7 +163,9 @@ export default {
       this.selIndex = index
     },
     closeOrder () {
-      this.$refs.tel.click()
+      // this.$refs.tel.click()
+      util.toast('退款事宜请拨打客服电话400-000-1199')
+      MIP.viewer.open('tel://400-000-1199')
     },
     // 取消订单
     cancelOrder (id) {
@@ -181,7 +183,8 @@ export default {
       let self = this
       util.fetchData('v3/violation/order/cancel', param).then(res => {
         if (res.code === 0) {
-          self.getOrder(0)
+          // self.getOrder(this.selIndex)
+          self.selTab(self.selIndex)
           self.getOrderStatic()
           util.toast('取消成功')
         }
@@ -269,6 +272,12 @@ export default {
       })
     },
     bindPay (item) {
+      if (!window.localStorage.getItem(
+        'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
+      )) {
+        util.toast('未授权百度账号')
+        return
+      }
       MIP.setData({
         payConfig: {
           fee: item.TotalPrice / 100,
@@ -293,50 +302,74 @@ export default {
   color: #999;
   height: 50px;
   line-height: 45px;
-  display: -webkit-box;
+  display:-webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
-  justify-content: center;
+  -webkit-justify-content:center;
+  justify-content:center;
+  -moz-box-pack:center;
+  -webkit-box-pack:center;
 }
 .s4s-tab-cur {
   border-bottom: 0.03rem #fe7000 solid;
   color: #333;
-      width: 100%;
-    text-align: center;
+  width: 100%;
+  text-align: center;
 }
 .s4s-tab-item {
   padding: 0 0.1rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
+  -webkit-justify-content:center;
+  justify-content:center;
+  -moz-box-pack:center;
+  -webkit-box-pack:center;
   position: relative;
   font-size:.15rem;
 }
 .s4s-tab-num {
-    background: #fe5a00;
-    background-image:linear-gradient(40deg, #fe5a00 0%, #ff7c00 100%);
-    /* min-width: .185rem;
-    width:auto;
-    padding:0 .0485rem; */
-    display: inline-block;
-    border-radius: 2rem;
-    text-align: center;
-    color: #fff;
-    align-items: center;
-    justify-content: center;
-    box-sizing: content-box;
-    font-size: .12rem;
-    line-height: .18rem;
-    position: absolute;
-    right: 0;
-    top: .03rem;
-    padding: .01rem .05rem;
-    font-weight: 100;
+  background: #fe5a00;
+  background-image:linear-gradient(40deg,  #ff7c00 0%, #fe5a00 100%);
+  /* min-width: .185rem;
+  width:auto;
+  padding:0 .0485rem; */
+  display: inline-block;
+  border-radius: 2rem;
+  text-align: center;
+  color: #fff;
+  -webkit-box-pack:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
+  -webkit-justify-content:center;
+  justify-content:center;
+  -moz-box-pack:center;
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  font-size: .12rem;
+  line-height: .18rem;
+  position: absolute;
+  right: 0;
+  top: .03rem;
+  padding: .01rem .07rem;
+  letter-spacing: 1px;
+  font-weight: 100;
+  min-width: .1rem;
 }
 @media screen and (min-width: 590px) {
   .s4s-tab-item {
@@ -361,44 +394,47 @@ export default {
   margin-bottom: 0;
 }
 .s4s-cell-hd {
-  display: -webkit-box;
   display: -ms-flexbox;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -webkit-flex;
   display: flex;
   border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
   padding-bottom: 0.1rem;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
 }
 .s4s-cell-hd p {
   color: #999;
   font-size: 0.14rem;
-  flex: 1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
 }
 .s4s-cell-hd span {
   font-size: 0.14rem;
   color: #fe7000;
 }
 .s4s-cell-hd-time {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   color: #333;
 }
 .s4s-cell-bd {
   padding-top: 0.15rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
 }
 .s4s-cell-tit {
   color: #999;
 }
 .s4s-cell-txt {
   color: #666;
+  font-size: .15rem;
 }
 .s4s-cell-bd:last-child {
   padding-bottom: 0.1rem;
@@ -407,8 +443,10 @@ export default {
   border-top: 0.01rem rgba(0, 0, 0, 0.1) solid;
   margin-top: 0.15rem;
   padding-top: 0.15rem;
-  display: -webkit-box;
+  display:-webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
   -webkit-box-pack: end;
   -ms-flex-pack: end;
@@ -423,7 +461,7 @@ export default {
 }
 
 .s4s-cell-fd span:last-child {
-  background-image: linear-gradient(-149deg, #ff7907 0%, #ffa018 100%);
+  background-image: linear-gradient(40deg, #ff7907 0%, #ffa018 100%);
   border: none;
 }
 
@@ -463,22 +501,36 @@ export default {
 }
 .s4s-confirm-btn {
   height: 0.45rem;
+  display:-webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
   -ms-flex-align: center;
-  align-items: center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
   border-top: 0.01rem rgba(0, 0, 0, 0.1) solid;
   font-size: 0.15rem;
+  font-weight: bold;
+  color: #4f7eff;
 }
 .s4s-confirm-btn span {
   line-height: 0.45rem;
   border-right: 0.01rem rgba(0, 0, 0, 0.1) solid;
+  display:-webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
-  -ms-flex: 1;
-  flex: 1;
+  -ms-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
   -ms-flex-pack: center;
-  justify-content: center;
+  -webkit-justify-content:center;
+  justify-content:center;
+  -moz-box-pack:center;
 }
 .s4s-confirm-btn span:last-child {
   border-right: 0;
