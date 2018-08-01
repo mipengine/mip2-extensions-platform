@@ -77,7 +77,7 @@ export default {
         }
         page++
         resp = resp.map(it => {
-          it.href = '/trip/' + it.id
+          it.href = './trip/' + it.id
           return it
         })
         this.list = this.list.concat(resp)

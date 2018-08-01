@@ -44,7 +44,7 @@
             v-show="index < 4 || showMoreSight"
             :key="index">
             <a
-              :href="'/sight/1/' + item.id"
+              :href="'./sight/1/' + item.id"
               mip-link>
               <div class="sp-img">
                 <mip-img
@@ -221,10 +221,10 @@ export default {
       this.day_list = list
     },
     showSightDetail (poi) {
-      MIP.viewer.open('/sight/1/' + poi)
+      MIP.viewer.open('./sight/1/' + poi)
     },
     showShowDetail (poi) {
-      MIP.viewer.open('/sight/2/' + poi)
+      MIP.viewer.open('./sight/2/' + poi)
     }
   }
 }
