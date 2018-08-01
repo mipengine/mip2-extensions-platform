@@ -11,7 +11,7 @@
           :key="index"
           class="list">
           <a
-            :href="host + '/dest/' + item.name"
+            :href="'./dest/' + item.name"
             mip-link>
             <div class="dest-img">
               <mip-img :src="item.img" />

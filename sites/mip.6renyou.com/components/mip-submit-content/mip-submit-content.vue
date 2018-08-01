@@ -54,6 +54,10 @@ let options = {
 }
 export default {
   props: {
+    'host': {
+      type: String,
+      required: true
+    },
     'des': {
       type: String,
       required: true
@@ -117,7 +121,7 @@ export default {
             this.savePhone()
             if (parseInt(res.status) === 1) {
               this.baiduCB(this.name, this.phone, this.info)
-              MIP.viewer.open('/order/result')
+              MIP.viewer.open(this.host + '/order/result')
             } else {
               toast.show(res.message, options)
             }

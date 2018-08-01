@@ -5,7 +5,7 @@
 <template>
   <div class="six-ft-bar six-ft-btn">
     <a
-      :href="'/order/submit/' + dest + '/' + days + '?tripid=' + tripid"
+      :href="host + '/order/submit/' + dest + '/' + days + '?tripid=' + tripid"
       mip-link
       class="ft-btn-submit">咨询旅行顾问</a>
   </div>
@@ -14,6 +14,10 @@
 <script>
 export default {
   props: {
+    'host': {
+      type: String,
+      required: true
+    },
     'dest': {
       type: String,
       required: true
