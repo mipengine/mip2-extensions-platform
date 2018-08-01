@@ -51,6 +51,10 @@ export default {
     'name': {
       type: String,
       default: ''
+    },
+    'host': {
+      type: String,
+      required: true
     }
   },
   data () {
@@ -77,7 +81,7 @@ export default {
         }
         page++
         resp = resp.map(it => {
-          it.href = './trip/' + it.id
+          it.href = this.host + '/trip/' + it.id
           return it
         })
         this.list = this.list.concat(resp)

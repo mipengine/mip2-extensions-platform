@@ -12,7 +12,7 @@
 
 ## 示例
 
-<mip-submit-content des="巴黎" days="7" tripid="1358" info="{}"></mip-submit-content>
+<mip-submit-content host="https://mip.6renyou.com" des="巴黎" days="7" tripid="1358" info="{}"></mip-submit-content>
 
 ## 属性
 
@@ -20,3 +20,4 @@ des 指定目的地名称，不能为空
 days 行程天数
 tripid 行程蓝本ID
 info   授权用户信息
+host 站点域名，必填
