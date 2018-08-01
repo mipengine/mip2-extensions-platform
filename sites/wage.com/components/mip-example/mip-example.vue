@@ -664,7 +664,7 @@ export default {
 					tax: (wage - taxwage).toFixed(2),
 					taxableIncome: (wage + insure - hold).toFixed(2),
 					taxR:45,
-					tax:13505
+					taxQ:13505
 				};
 			}
 		},
