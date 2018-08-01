@@ -83,7 +83,7 @@ export default {
     }
   },
   prerenderAllowed () {
-          return true
+    return true
   },
   mounted () {
     MIP.viewer.fixedElement.init()
