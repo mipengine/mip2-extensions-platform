@@ -998,8 +998,15 @@
           class="queding"
           on="tap:right-sidebar.close tap:selectmaster.dook">确定</span>
       </mip-sidebar>
-
       <div
+        v-if="state.isGif"
+        class="gif">
+        <mip-img
+          v-if="state.isGif"
+          src="https://mip.putibaby.com/i/jiazai.gif" />
+      </div>
+      <div
+        v-if="list.length > 0"
         id="cardList"
         class="cardList">
         <div
@@ -1078,13 +1085,7 @@
             <p>{{ state.loadMessage }}</p>
           </div>
         </div>
-        <div
-          v-if="state.isGif"
-          class="gif">
-          <mip-img
-            v-if="state.isGif"
-            src="https://mip.putibaby.com/i/jiazai.gif" />
-        </div>
+
       </div>
 
     </div>
@@ -1968,10 +1969,12 @@ export default {
     },
     load_data () {
       console.log('should set data')
+      // document.documentElement.scrollTop = 0
+      // document.body.scrollTop = 0
       this.state.loadMessage = ''
-      this.state.isGif = true
       this.list = []
       var self = this
+      this.state.isGif = true
       this.filter.pn = 0
       API.getSelectMaster(this.filter, function (isOk, res) {
         if (isOk) {
