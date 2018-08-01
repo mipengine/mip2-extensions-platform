@@ -72,10 +72,10 @@
 import config from '../../utils/config'
 export default {
   props: {
-      payConfig: {
-        type: Object,
-        required: true
-      }
+    payConfig: {
+      type: Object,
+      required: true
+    }
   },
   data () {
     return {
@@ -114,11 +114,11 @@ export default {
     MIP.util.platform.start()
     console.log(MIP.util.platform.isWechatApp())
     if (MIP.util.platform.isWechatApp()) {
-        MIP.setData({
-            payConfig: {
-                endpoint: {weixin:'https://m.kuaifawu.com/pay/mip/wxorderspay'}
-            }
-        })
+      MIP.setData({
+        payConfig: {
+          endpoint: {weixin: 'https://m.kuaifawu.com/pay/mip/wxorderspay'}
+        }
+      })
     }
     MIP.viewer.fixedElement.init()
     console.log('This is 订单确认页 !')
