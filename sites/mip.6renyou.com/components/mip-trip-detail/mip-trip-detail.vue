@@ -44,7 +44,7 @@
             v-show="index < 4 || showMoreSight"
             :key="index">
             <a
-              :href="'/sight/1/' + item.id"
+              :href="host + '/sight/1/' + item.id"
               mip-link>
               <div class="sp-img">
                 <mip-img
@@ -167,6 +167,10 @@ export default {
     'tripid': {
       type: Number,
       required: true
+    },
+    'host': {
+      type: String,
+      required: true
     }
   },
   data () {
@@ -221,10 +225,10 @@ export default {
       this.day_list = list
     },
     showSightDetail (poi) {
-      MIP.viewer.open('/sight/1/' + poi)
+      MIP.viewer.open(this.host + '/sight/1/' + poi)
     },
     showShowDetail (poi) {
-      MIP.viewer.open('/sight/2/' + poi)
+      MIP.viewer.open(this.host + '/sight/2/' + poi)
     }
   }
 }

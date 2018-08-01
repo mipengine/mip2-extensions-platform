@@ -34,33 +34,35 @@
         </span>
       </div>
     </section>
-    <section class="jkx_container">
-      <h3
-        id="panel"
-        class="jkx_title nearAddress">附近地址</h3>
-    </section>
-    <section
-      ref="addressList"
-      class="jkx_content nearAddressList">
-      <div>
-        <div
-          ref="addressContent"
-          class="addressContent">
+    <div v-if="html.length>0">
+      <section class="jkx_container">
+        <h3
+          id="panel"
+          class="jkx_title nearAddress">附近地址</h3>
+      </section>
+      <section
+        ref="addressList"
+        class="jkx_content nearAddressList">
+        <div>
           <div
-            v-for="(item,index) in html"
-            :key="index">
-
+            ref="addressContent"
+            class="addressContent">
             <div
-              class="jkx_panel"
-              @click="Choose(item)">
-              <p class="panel_title">{{ item.title||item.name }}</p>
-              <p class="panel_body">{{ item.address?item.address:item.province+" "+ item.city+" "+ item.district }}</p>
+              v-for="(item,index) in html"
+              :key="index">
+
+              <div
+                class="jkx_panel"
+                @click="Choose(item)">
+                <p class="panel_title">{{ item.title||item.name }}</p>
+                <p class="panel_body">{{ item.address?item.address:item.province+" "+ item.city+" "+ item.district }}</p>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <span class="jkx_loading"/>
-    </section>
+        <span class="jkx_loading"/>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -108,7 +110,7 @@ export default {
   },
   mounted () {
     this.$refs.wrapper.style.height = viewport.getHeight() + 'px'
-    this.$refs.addressList.style.height = viewport.getHeight() - 146 + 'px'
+    if (this.html.length > 0) this.$refs.addressList.style.height = viewport.getHeight() - 146 + 'px'
   },
   methods: {
     // 搜索地区

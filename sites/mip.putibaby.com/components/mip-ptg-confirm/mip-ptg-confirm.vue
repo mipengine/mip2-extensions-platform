@@ -3,7 +3,7 @@
     class="root">
     <mip-fixed
       v-if="show"
-      type="top"
+      type="gototop"
       class="fix_back">
       <div id="fullScreen"/>
       <div id="floatLayer">
@@ -208,9 +208,6 @@ export default {
       this.current_el_id = ''
       this.current_el_data = {}
       this.show = false
-      setTimeout(() => {
-        MIP.viewer.fixedElement.init()
-      }, 0)
     },
     okConfirm () {
       var ele = document.getElementById(this.current_el_id)
@@ -221,9 +218,6 @@ export default {
       this.current_el_id = ''
       this.current_el_data = {}
       this.show = false
-      setTimeout(() => {
-        MIP.viewer.fixedElement.init()
-      }, 0)
     }
   }
 

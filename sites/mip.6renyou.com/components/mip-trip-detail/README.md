@@ -12,8 +12,9 @@
 
 ## 示例
 
-<mip-trip-detail tripid="1358"></mip-trip-detail>
+<mip-trip-detail host="https://mip.6renyou.com" tripid="1358"></mip-trip-detail>
 
 ## 属性
 
 tripid 行程蓝本ID
+host  站点域名，必填

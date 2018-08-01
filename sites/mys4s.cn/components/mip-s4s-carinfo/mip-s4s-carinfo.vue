@@ -1,8 +1,8 @@
 <template>
   <div class="s4s-page" >
     <div class="s4s-car-info">
-      <div style=" display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;-webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;">
-        <div style="box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;">
+      <div style="display: flex;align-items:center;">
+        <div style="flex:1;">
           <h2
             class="s4s-car-name"
           >请您上传行驶证，</h2>
@@ -45,11 +45,11 @@
     <div class="s4s-car-info s4s-illegal-body">
       <h2 class="s4s-car-name">或直接输入行驶证信息</h2>
       <div class="s4s-group">
-        <div class="s4s-group-tit">车牌号码</div>
+        <span class="s4s-group-tit">车牌号码</span>
         <div
           class="provice"
           @click="selectProvice" >
-          <div style="height:100%">{{ provice }} <span class="right-arrow"/></div>
+          <div style="height:100%;padding: 4px 0;">{{ provice }} <span class="right-arrow"/></div>
         </div>
         <input
           v-model="car_no"
@@ -544,25 +544,32 @@ export default {
 
 .s4s-user-car {
   margin: -1.1rem 0.1rem 0 0.1rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox
+  ;display: -webkit-flex;
+  display: flex;
   color: #fff;
   font-size: 0.12rem;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  align-items:center;
+  -webkit-box-align:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
 }
 
 .s4s-car-info {
   background-color: #fff;
-  padding: 5%;
+  padding: .25rem 0.15rem;
 }
 
 .s4s-car-name {
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   color: #333333;
   font-size: 0.2rem;
 }
@@ -574,41 +581,33 @@ export default {
 }
 
 .s4s-group {
-  height: 0.32rem;
-  border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
+  position: relative;
+  line-height: 0.15rem;
+  border-bottom: 0.01rem #EAEAEA solid;
   color: #666;
   overflow: hidden;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
-  display: -webkit-box;
-  display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  align-items:center;
+  display: flex;
   padding: 0.15rem 0;
-    box-sizing: content-box;-moz-box-sizing: content-box;-webkit-box-sizing: content-box;
+  box-sizing: content-box;
 }
 .s4s-group-tit {
   font-size: 0.15rem;
   width: 0.9rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  line-height: .25rem;
+  padding-top:.025rem;
 }
 .s4s-group-txt {
   font-size: 0.15rem;
   color: #777;
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   text-align: right;
 }
 .s4s-group input {
   border: none;
   font-size: 0.15rem;
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
   text-align: left;
+  line-height: .25rem;
+  flex: 1;
 }
 select {
   font-size: 0.15rem;
@@ -639,13 +638,13 @@ select {
 }
 
 .provice {
-  background-image: linear-gradient(-149deg, #fe5a00 0%, #ff7c00 100%);
+  background-image: linear-gradient(40deg, #ff7c00 0%, #fe5a00 100%);
   border-radius: 0.04rem;
   color: #fff;
   /* width: 0.45rem; */
   min-width: .5rem;
   height: 0.25rem;
-  margin-right: 0.05rem;
+  margin-right: 0.1rem;
   padding: 0.01rem 0.09rem;
 }
 .right-arrow {
@@ -680,22 +679,36 @@ select {
   font-size: 0.14rem;
 }
 .s4s-provice-tit-hide{
-  width: 33.899999999%;background: #BBC3C7;color: #fff;
+  width: 33.899999999%;
+  background: #BBC3C7;
+  color: #fff;
 }
 @media screen and (min-width: 500px) {
-    .s4s-provice-tit {
-      width: auto;
-      margin-left: 1.09999999%;
-      margin-top: 1.09999999%;
-    }
-    .s4s-provice-tit-hide{
-      width: 98%;
-      margin-left: 1.09999999%;
-      margin-top: 1.09999999%;
-    }
+  .s4s-provice-tit {
+    width: auto;
+    margin-left: 1.09999999%;
+    margin-top: 1.09999999%;
+  }
+  .s4s-provice-tit-hide{
+    width: 98%;
+    margin-left: 1.09999999%;
+    margin-top: 1.09999999%;
+  }
 }
 .s4s-provice-hover {
   background: #bbb;
   color: #fff;
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #ccc;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color:#ccc;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color:#ccc;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color:#ccc;
 }
 </style>
