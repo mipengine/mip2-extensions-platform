@@ -3,7 +3,7 @@
     class="root">
     <mip-fixed
       v-if="show"
-      type="top"
+      type="gototop"
       class="fix_back">
       <div id="fullScreen"/>
       <div id="floatLayer">
