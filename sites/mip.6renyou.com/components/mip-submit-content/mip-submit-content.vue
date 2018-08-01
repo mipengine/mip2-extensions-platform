@@ -117,7 +117,7 @@ export default {
             this.savePhone()
             if (parseInt(res.status) === 1) {
               this.baiduCB(this.name, this.phone, this.info)
-              MIP.viewer.open('/order/result')
+              MIP.viewer.open('./order/result')
             } else {
               toast.show(res.message, options)
             }
