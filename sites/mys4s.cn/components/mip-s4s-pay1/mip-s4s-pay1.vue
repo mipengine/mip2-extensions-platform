@@ -6,7 +6,7 @@
         width="60"
         height="50" />
       <div class="s4s-tips-right">
-        <p>交通违法代缴的办理周期为1-2个工作日，部分地区2-5个工作日，<span style="color:#FE7000">需年检用户如需当日处理完成，请勿下单</span>。其他问题请参见
+        <p>交通违法代缴的办理周期为<span style="color:#FE7000">1-2个工作日，部分地区2-5个工作日</span>，需年检用户如需当日处理完成，请勿下单。其他问题请参见
           <a
             data-type="mip"
             href="help.html"
@@ -811,21 +811,30 @@ export default {
   padding: 0.2rem;
   font-size: 0.12rem;
   color: #4b4b4b;
-  display: -webkit-box;
+  display:-webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
-  -webkit-box-align: center;
+  display: -webkit-flex;
+  display: flex;
   -ms-flex-align: center;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  align-items:center;
+  -webkit-box-align:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
 }
 
 .s4s-tips-right {
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  display: -webkit-box;
+  -webkit-box-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
+  display:-webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
-  display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display: -webkit-flex;
+  display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
   -moz-box-orient:vertical;
@@ -848,12 +857,18 @@ export default {
 
 .s4s-sum {
   margin: 0.2rem 0.1rem 0 0.1rem;
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
+  align-items:center;
+  -webkit-box-align:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
   text-align: left;
   font-size: 0.13rem;
   color: #4b4b4b;
@@ -874,17 +889,22 @@ export default {
 .s4s-group {
   position: relative;
   line-height: 0.15rem;
-  border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
+  border-bottom: 0.01rem #EAEAEA solid;
   color: #666;
   overflow: hidden;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  -webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;
-  display: -webkit-box;
+  align-items:center;
+  -moz-box-align:center;
+  display:-webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display: -webkit-flex;
+  display: flex;
   padding: 0.20rem 0;
-    box-sizing: content-box;-moz-box-sizing: content-box;-webkit-box-sizing: content-box;
+  box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -webkit-box-sizing: content-box;
 }
 .s4s-group-tit {
   font-size: 0.15rem;
@@ -893,16 +913,22 @@ export default {
 .s4s-group-txt {
   font-size: 0.15rem;
   color: #777;
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
 }
 .s4s-group input {
   border: none;
   font-size: 0.15rem;
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   text-align: left;
 }
 select {
@@ -939,7 +965,10 @@ select {
 }
 .group-upload-margin {
   margin: 0.1rem 0.15rem 0.1rem 0;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
 }
 .code-btn,
 .code-btn-disable {
@@ -961,17 +990,36 @@ select {
 }
 
 .pay-contaienr {
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
   width: 100%;
   background: #fff;
 }
 
 .pay-contaienr-first {
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
   font-size: 0.16rem;
-   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
-   -webkit-box-orient:vertical;-webkit-box-direction:normal;-moz-box-orient:vertical;-moz-box-direction:normal;flex-direction:column;-webkit-flex-direction:column;
-  -webkit-justify-content:center;justify-content:center;-moz-box-pack:center;-webkit--moz-box-pack:center;box-pack:center;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -moz-box-orient:vertical;
+  -moz-box-direction:normal;
+  flex-direction:column;
+  -webkit-flex-direction:column;
+  -webkit-justify-content:center;
+  justify-content:center;
+  -moz-box-pack:center;
+  -webkit-box-pack:center;
   padding: 0 0.1rem;
 }
 
@@ -1002,5 +1050,17 @@ select {
 .disabled-btn {
   color: #999;
   background: #e6e6e6 !important;
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #ccc;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color:#ccc;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color:#ccc;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color:#ccc;
 }
 </style>
