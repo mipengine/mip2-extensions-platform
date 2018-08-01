@@ -177,7 +177,7 @@ export default {
 					this.fromWage = false;
 					this.ok = false;
 					this.cok = true;
-					this.fromBase = '';
+					this.fromBase = 0;
 					this.isAfter = true;
 					this.isOnClick = fasle;
 					return ['自定义'];
@@ -200,8 +200,8 @@ export default {
 					this.fromWage = false;
 					this.ok = false;
 					this.cok = false;
-					this.fromBase = '';
-					this.baseMoney = '';
+					this.fromBase = 0;
+					this.baseMoney = 0;
 					this.isOpen?this.isOnClick = true:'';
 					return [
 						'自定义',
@@ -309,6 +309,7 @@ export default {
 	}
 };
 </script>
+
 <style scoped>
 .arrow2{
 	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAUCAYAAACJfM0wAAABe0lEQVQ4T52UYVUDQQyEpxKwQCUUCZyEIoFKoBJAQpEAEqgEKgEkUAnt+97LHOmyu70jv+52s5NJMslCv3YraZ3+3yV9p//a54ck3t1JOmaHRfwAuJN0E2A447iRRICa3UsCGJ/X0gFgwL7iYpB0kLSKRxwvSzbh6zfc/zGAnyQ9S3qRtE0enHHHGXfZHiNDiOxbwJQAx4cibcrzFmmSbjbYUn+AqwZj6kS9yuiuIYwygDNssiUSwHMYux8EI8Omza2x2dKwrhTnqAIJfkYfypqjIgKNWraO3WVSI03qi2WNUjIayjCYLcrhLSXyW1R0MDCHvcnjDiVk6VmODBADAmtKhS0zcK8XKIeHHhYY/gTzPCDuwXYKsGWX2Vrj5VARnD7spwB70VSZVabyRCbXgM2sXDRjyg3gi+bVakzDkBBKyNYa93Fae4x7iyZvxLz9PMXN5vGQJvQWjcvBmkVySBIy/A8txpMWTQABhhooGQFQz7EFTK1wJPq/7AwudHNEfU/AeAAAAABJRU5ErkJggg==) no-repeat 99% 52% !important;
