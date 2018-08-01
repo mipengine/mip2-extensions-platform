@@ -142,7 +142,7 @@ export default {
               _this.errorMessage = data.message
               _this.showErrorMessage = true
               setTimeout(() => {
-                MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/orderList?token=' + base.getToken()))
+                MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'order/list?token=' + base.getToken()))
               }, 1000)
             } else {
               _this.errorMessage = data.message
