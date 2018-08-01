@@ -99,53 +99,57 @@
           style="color:#333">{{ date }}</span>
       </div>
       <div
+        v-if="(illegal.FreeRuleObject && illegal.FreeRuleObject.drive_licence == 1) || (illegal.FreeRuleObject && illegal.FreeRuleObject.travel_licence == 1)"
         class="s4s-group group-upload">
         <span
           class="s4s-group-tit"
           style="padding-top:0"
         >上传行驶证</span>
         <div style="display: flex;flex:1;">
-          <div
-            class="group-upload-margin"
-            @click="chooseImage" >
-            <!-- <span class="s4s-chooseimg">正面</span> -->
-            <mip-img
-              v-if="driveUrl"
-              :src="driveUrl"
-              styel="width:100%;" />
-            <mip-img
-              v-else
-              styel="width:100%;"
-              src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload.png" />
-            <input
-              ref="file"
-              type="file"
-              accept="image/*"
-              multiple="multiple"
-              style="display: none;"
-              @change="uploader">
-          </div>
-          <div
-            class="group-upload-margin"
-            @click="chooseTravel" >
-            <!-- <span class="s4s-chooseimg" style="margin-left: .2rem;">反面</span> -->
-            <mip-img
-              v-if="travelUrl"
-              :src="travelUrl"
-              styel="width:100%;" />
-            <mip-img
-              v-else
-              styel="width:100%;"
-              src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload2.png" />
-            <input
-              ref="XSZTravel"
-              type="file"
-              accept="image/*"
-              multiple="multiple"
-              style="display: none;"
-              @change="uploaderXSZTravel">
-          </div>
-        </div>
+          <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_licence == 1">
+            <div
+              class="group-upload-margin"
+              @click="chooseImage" >
+              <!-- <span class="s4s-chooseimg">正面</span> -->
+              <mip-img
+                v-if="driveUrl"
+                :src="driveUrl"
+                styel="width:100%;" />
+              <mip-img
+                v-else
+                styel="width:100%;"
+                src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload.png" />
+              <input
+                ref="file"
+                type="file"
+                accept="image/*"
+                multiple="multiple"
+                style="display: none;"
+                @change="uploader">
+            </div>
+          </template>
+          <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.travel_licence == 1">
+            <div
+              class="group-upload-margin"
+              @click="chooseTravel" >
+              <!-- <span class="s4s-chooseimg" style="margin-left: .2rem;">反面</span> -->
+              <mip-img
+                v-if="travelUrl"
+                :src="travelUrl"
+                styel="width:100%;" />
+              <mip-img
+                v-else
+                styel="width:100%;"
+                src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload2.png" />
+              <input
+                ref="XSZTravel"
+                type="file"
+                accept="image/*"
+                multiple="multiple"
+                style="display: none;"
+                @change="uploaderXSZTravel">
+            </div>
+        </template></div>
       </div>
       <div
         v-if="(illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_drive_licence == 1) || (illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_travel_licence == 1)"
@@ -203,12 +207,12 @@
       <div class="s4s-title">订单详情</div>
       <div class="s4s-group"><span class="s4s-group-tit">罚款金额</span><span
         class="s4s-group-txt"
-        style="color:#333">¥ {{ price || 0.00 }}</span>
+        style="color:#333">¥ {{ price || 0 }}</span>
       </div>
       <div class="s4s-group">
         <span class="s4s-group-tit">服务费用</span><span
           class="s4s-group-txt"
-          style="color:#FE7000">¥ {{ ownFree || 0.00 }}</span>
+          style="color:#FE7000">¥ {{ ownFree || 0 }}</span>
       </div>
     </div>
 
