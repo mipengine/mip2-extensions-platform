@@ -422,15 +422,15 @@ export default {
     var self = this
     window.addEventListener('show-page', () => {
       console.log('show-page')
-      if (self.isLogin) {
-        API.ajaxOrderList({}, function (isOk, res) {
-          if (isOk) {
-            self.list = res.list
-          } else {
-            console.error(res)
-          }
-        })
-      }
+
+      API.ajaxOrderList({}, function (isOk, res) {
+        if (isOk) {
+          self.list = res.list
+        } else {
+          console.error(res)
+        }
+      })
+
       // if (self.isUnion || !self.isLogin) {
       //   return
       // }

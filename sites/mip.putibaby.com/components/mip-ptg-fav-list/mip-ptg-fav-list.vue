@@ -228,15 +228,15 @@ export default {
 
     window.addEventListener('show-page', () => {
       console.log('show-page')
-      if (self.isLogin) {
-        API.ajaxFavList({}, function (isOk, res) {
-          if (isOk) {
-            self.favlist = res.favlist
-          } else {
-            console.error(res)
-          }
-        })
-      }
+
+      API.ajaxFavList({}, function (isOk, res) {
+        if (isOk) {
+          self.favlist = res.favlist
+        } else {
+          console.error(res)
+        }
+      })
+
       // if (self.isUnion || !self.isLogin) {
       //   return
       // }
