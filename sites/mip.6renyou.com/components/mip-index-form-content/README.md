@@ -12,8 +12,9 @@
 
 ## 示例
 
-<mip-index-form-content currentDest=""></mip-index-form-content>
+<mip-index-form-content host="https://mip.6renyou.com" currentDest=""></mip-index-form-content>
 
 ## 属性
 
 currentDest 当前要填写的目的地名称，默认为空
+host 站点域名，必填

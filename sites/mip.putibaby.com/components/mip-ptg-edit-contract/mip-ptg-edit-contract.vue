@@ -916,10 +916,7 @@ p {
 .err {
   color: #f00;
   position: relative;
-  left: 50%;
-  margin-left: -167.5px;
   top: -14px;
-  width: 335px;
   text-align: center;
 
 }
@@ -1320,21 +1317,21 @@ export default {
     contract_mama_name_change_ () {
       this.inspect_()
       if (this.ret !== 2) {
-        return
+        // return
       }
       this.saveIt_()
     },
     contract_mama_phone_number_change_ () {
       this.inspect_()
       if (this.ret !== 2) {
-        return
+        // return
       }
       this.saveIt_()
     },
     contract_mama_id_card_change_ () {
       this.inspect_()
       if (this.ret !== 2) {
-        return
+        // return
       }
       this.saveIt_()
     },
@@ -1355,14 +1352,14 @@ export default {
       this.contract_deposit_min = djb
       this.inspect_()
       if (this.ret !== 2) {
-        return
+        // return
       }
       this.saveIt_()
     },
     contract_location_change_ (event) {
       this.inspect_()
       if (this.ret !== 2) {
-        return
+        // return
       }
       this.saveIt_()
     },
