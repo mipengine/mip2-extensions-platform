@@ -110,7 +110,7 @@ export default {
   },
   mounted () {
     this.$refs.wrapper.style.height = viewport.getHeight() + 'px'
-    this.$refs.addressList.style.height = viewport.getHeight() - 146 + 'px'
+    if (this.html.length > 0) this.$refs.addressList.style.height = viewport.getHeight() - 146 + 'px'
   },
   methods: {
     // 搜索地区
