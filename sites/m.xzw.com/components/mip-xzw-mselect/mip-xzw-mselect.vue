@@ -198,7 +198,7 @@ export default {
       _this.timeString = time
     })
     _this.$on('pickerChangePlace', (arr) => {
-      _this.placeVal = arr[0] + ',' + arr[1]
+      _this.placeVal = (arr[0] + ',' + arr[1])
       _this.placeString = arr[0] + ', ' + arr[1]
     })
     _this.$on('pickerChangexzPairBoy', (arr2) => {
@@ -248,7 +248,7 @@ export default {
           return false
         }
         let url = href2 + '?' + _this.returnQuery(input2)
-        a2[0].setAttribute('href', url)
+        a2[0].setAttribute('href', (url))
       })
     }
     submit.addEventListener('click', function () {
@@ -286,7 +286,14 @@ export default {
         if (i === input.length - 1) {
           and = ''
         }
-        querys += name + '=' + value + and
+        if (name === 'nick') {
+          querys += ''
+        } else if (name === 'place') {
+          let _v = encodeURI(encodeURI(value))
+          querys += name + '=' + _v + and
+        } else {
+          querys += name + '=' + value + and
+        }
       }
       return q === true ? querys : ''
     }
