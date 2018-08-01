@@ -58,8 +58,8 @@ export default {
 	data () {
 		return {
 			showaddress: false,
-			provinceName: '广东',
-			cityName: '广州市',
+			provinceName: '北京',
+			cityName: '北京市',
 			threshold: 3500,
 			values: [
 				'3500',
@@ -124,7 +124,6 @@ export default {
 		closeCitySelect: function () {
 			this.showaddress = false;
 		}
-
 	}
 };
 
@@ -132,6 +131,7 @@ export default {
 <style scoped>
 .container{
   height: 100%;
+  -webkit-tap-highlight-color: transparent; 
 }
 .z1000{
   z-index: 1000;
@@ -158,26 +158,31 @@ export default {
 .wrapper label {
   width: 10em;
   font-family: PingFang-SC-Medium;
-  font-size: 13px;
-  font-weight: 500;
-  color: #000;
+  font-size: 15px;
+  font-weight: 400;
+  color: #333;
+  -webkit-tap-highlight-color: transparent; 
 }
 
 label {
   position: absolute;
   width: 7em;
-  font-size: 16px;
 }
 
 input {
   width: 100%;
-  padding-left: 7em;
+  padding-left: 6em;
   text-align: right;
   box-sizing: border-box;
   border: none;
   outline: none;
   color:#333;
   letter-spacing:1px;
+  font-size: 15px;
+	font-family: PingFang-SC-Medium;
+	font-weight: 400;
+  -webkit-tap-highlight-color: transparent; 
+
 }
 .w98p{
   width:98%;
@@ -191,6 +196,7 @@ input::placeholder {
   padding-right: 15px;
   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAB+klEQVRIS62Wv4sTQRTHv28DdoJ98ldok8ybNHdcd4o22vnjCkUOEeWw9AeKIocgHlYqFuIV8UepnRbZmVVBG0mllZWiRVJ4guB+5UmuS7KzZ6Yadt9+Pvv2vZlZwZQRQrhKcst7f2NaTMp1mRTU7/f3ZVn2FkADwFlVvZMCmxQzUWCBMcYVkvdtTvKk9/7fvO6YKjBQCOEMAHv7PyJy1Dm3OVfBWHIBwE2TkDzsvX9eRzIzg21QjPEKyYsAfpM86L1/mSpJEowzuQXgPIAtksve+9cpkmQBSYkx3gVwWkR+klxS1aJKkiwYd5MURfGQ5DEAoyzLFjqdzodZkloCA/V6vUar1dq0ggP4LiKLzrmP0yS1BQYaDAa7RqPRU5L7SX7NsqzrnPtca6FVfds8z3eLyBcAewC8UdXO3ASWwXA4fALgAIBvjUaj2263P81FYDVoNpuPARwB8ENEFuZWg3GrPgBwwrqoLMvFbrf7fi5dZPAQwoaIrNpiE5El51ysqlVyF+V5vi4iawB+AVhW1VdVcLufJAghXAZwabwXHfLev0iBJwlijGsk1203tcKq6rNUeKUgxrhKcsPOHADHVfVRHfhMQQjBOsU6xsYpVb1XFz5VUBTF3rIs39mZLCLnnHO3dwKfmUGM8br9VajqtZ3CK2vwP+DtZ/8CVbfLGdhcLzIAAAAASUVORK5CYII=) no-repeat 100% 56%;
   background-size: 10px;
+  -webkit-tap-highlight-color: transparent; 
 }
 
 .ip-disable {
@@ -239,7 +245,7 @@ input::placeholder {
   margin: 20px auto;
   font-size: 17px;
   color: #fff;
-  font-weight: 500;
+  font-weight: 400;
   text-align: center;
   border-radius: 45px;
   background: -webkit-linear-gradient(left, #FF731F, #FFA53A);
