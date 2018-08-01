@@ -1,8 +1,8 @@
 <template>
   <div class="s4s-page" >
     <div class="s4s-car-info">
-      <div style=" display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;-webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;">
-        <div style="box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;">
+      <div style="display: flex;align-items:center;">
+        <div style="flex:1;">
           <h2
             class="s4s-car-name"
           >请您上传行驶证，</h2>
@@ -45,7 +45,7 @@
     <div class="s4s-car-info s4s-illegal-body">
       <h2 class="s4s-car-name">或直接输入行驶证信息</h2>
       <div class="s4s-group">
-        <div class="s4s-group-tit">车牌号码</div>
+        <span class="s4s-group-tit">车牌号码</span>
         <div
           class="provice"
           @click="selectProvice" >
@@ -561,11 +561,10 @@ export default {
 
 .s4s-car-info {
   background-color: #fff;
-  padding: 5%;
+  padding: .25rem 0.15rem;
 }
 
 .s4s-car-name {
-  -webkit-box-box-flex:1;
   -webkit-box-flex:1;
   -moz-box-flex:1;
   flex:1;
@@ -587,52 +586,28 @@ export default {
   border-bottom: 0.01rem #EAEAEA solid;
   color: #666;
   overflow: hidden;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items:center;
-  -webkit-box-align:center;
-  -moz-box-align:center;
-  -webkit-box-align:center;
-  display:-webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
-  padding: 0.20rem 0;
+  padding: 0.15rem 0;
   box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
 }
 .s4s-group-tit {
   font-size: 0.15rem;
   width: 0.9rem;
-  display:-webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
+  line-height: .25rem;
+  padding-top:.025rem;
 }
 .s4s-group-txt {
   font-size: 0.15rem;
   color: #777;
-  -webkit-box-box-flex:1;
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
-  -ms-box-flex:1;
   text-align: right;
 }
 .s4s-group input {
   border: none;
   font-size: 0.15rem;
-  -webkit-box-box-flex:1;
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
-  -ms-box-flex:1;
   text-align: left;
+  line-height: .25rem;
+  flex: 1;
 }
 select {
   font-size: 0.15rem;
@@ -663,7 +638,7 @@ select {
 }
 
 .provice {
-  background-image: linear-gradient(-149deg, #fe5a00 0%, #ff7c00 100%);
+  background-image: linear-gradient(40deg, #ff7c00 0%, #fe5a00 100%);
   border-radius: 0.04rem;
   color: #fff;
   /* width: 0.45rem; */
