@@ -105,6 +105,9 @@ export default {
       providerList: []
     }
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     console.log('This is 服务商列表页 !')
     const self = this

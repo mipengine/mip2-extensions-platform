@@ -8,7 +8,7 @@
             <dt>
               <a href="javascript:;">
                 <mip-img
-                  src="../../static/image/touxiang.png"
+                  src="https://b.kuaifawu.com/static/image/touxiang.png"
                   alt=""
                   class="img"/>
               </a>
@@ -157,7 +157,9 @@
       class="mycenter-module exit_login">
       <ul>
         <li>
-          <a on="tap:log.logout">退出登录</a>
+          <a
+            on="tap:log.logout"
+            @click="removeSession">退出登录</a>
         </li>
       </ul>
     </div>

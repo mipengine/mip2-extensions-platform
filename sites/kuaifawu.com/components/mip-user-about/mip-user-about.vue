@@ -3,7 +3,7 @@
     <h1>关于我们-中国一站式企业法律服务领导者</h1>
     <div class="pic">
       <img
-        src="../../static/image/special_bg.jpg"
+        src="https://b.kuaifawu.com/static/image/special_bg.jpg"
         alt="">
     </div>
     <div class="main">
@@ -12,7 +12,7 @@
       <p> 创业并不是疲惫不堪的身心苦旅，也非一劳永逸的美梦成真。创业，是一次“精神涅槃”。当你在做一件美好的事时，你自己也会变得美好、充实。</p>
       <p> 我们执拗而坚持，带给用户“超预期的服务体验”。我们坚信，终有一天，这个世界会因不懈努力创造美好的人们而改变。</p>
       <p><img
-        src="../../static/image/as_bottom.png"
+        src="https://b.kuaifawu.com/static/image/as_bottom.png"
         alt=""></p>
     </div>
   </div>

@@ -36,7 +36,7 @@
   border-top: .014rem solid #d9d9d9;
   width: 100%;
   display: flex;
-  z-index: 1;
+  z-index: 999;
   font-size: .17rem;
   color: #fff
 }
@@ -81,9 +81,6 @@ export default {
       haverelate: '',
       pp: ''
     }
-  },
-  prerenderAllowed () {
-    return true
   },
   mounted () {
     MIP.viewer.fixedElement.init()

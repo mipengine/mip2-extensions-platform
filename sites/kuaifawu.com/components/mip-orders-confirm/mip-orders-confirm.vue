@@ -6,7 +6,7 @@
       class="choosed"
       type="mip-mustache">
       <div class="title">已选服务：</div>
-      <div class="name flex">
+      <div class="name fx">
         <div class="l-name">{{ val.producttitle }}（{{ val.productsalesattrtitle }}）</div>
         <div class="r-op">
           <a
@@ -14,18 +14,20 @@
             class="down js-num-down"
             @click="down(index)">－</a>
 
-          <span>{{ val.num }}</span>
+          <span class="ropspan">{{ val.num }}</span>
           <a
             href="javascript:;"
             class="down js-num-down"
             @click="add(index)">＋</a>
         </div>
       </div>
-      <div class="infos flex">
+      <div class="ins fx">
         <div>
-          <span>地区：{{ val.areatitle }}</span>
-          <span>服务者：{{ val.providerinfo.realname }}</span>
-          <mip-img :src="val.providerinfo.avatar"/>
+          <span class="inspan">地区：{{ val.areatitle }}</span>
+          <span class="inspan">服务者：{{ val.providerinfo.realname }}</span>
+          <mip-img
+            :src="val.providerinfo.avatar"
+            class="insimg"/>
         </div>
         <div class="r-money">{{ val.saleprice*val.num }}元</div>
       </div>
@@ -36,7 +38,7 @@
       bottom="0">
       <div class="fix-bottom">
         <div>{{ total }}</div>
-        <div class="left">应付：<span>￥{{ moneyTotle }}</span></div>
+        <div class="left">应付：<span class="leftspan">￥{{ moneyTotle }}</span></div>
         <div
           class="right"
           on="tap:payDialog.toggle">去结算
@@ -49,21 +51,20 @@
 
 <style scoped>
     .wrapper {margin: 0 auto;}
-    .flex{display: flex;justify-content: space-between;}
+    .fx{display: flex;justify-content: space-between;}
     .choosed{padding:0.2rem 0.1rem 0rem;border-bottom: 0.014rem solid #d9d9d9;background-color: #fff;}
     .choosed .title{color: #666;margin-bottom: 0.13rem;font-size: 0.16rem;}
     .choosed .name .l-name{color: #333;font-size: 0.18rem;font-weight: bold;width:72%;}
     .choosed .name .r-op{width: 26%;}
-    .choosed .infos{color: #999;font-size: 0.10rem;display: flex;align-items: center;height: 0.5rem;}
-    .choosed .infos span{margin-right: 0.12rem;}
-    .choosed .infos mip-img{width:0.26rem;display: inline-block;vertical-align: middle;}
-    .choosed .infos .r-money{color: #f85555;font-size: 0.18rem;}
+    .choosed .ins{color: #999;font-size: 0.10rem;display: flex;align-items: center;height: 0.5rem;}
+    .choosed .ins .inspan{margin-right: 0.12rem;}
+    .choosed .ins .insimg{width:0.26rem;display: inline-block;vertical-align: middle;}
+    .choosed .ins .r-money{color: #f85555;font-size: 0.18rem;}
     .r-op a{display: inline-block;width:0.2rem;height: 0.2rem;text-align: center;border:0.014rem solid #d9d9d9;float: left;color: #666;}
-    .r-op input{display: inline-block;width:0.4rem;height: 0.2rem;border:0.014rem solid #d9d9d9;border-left: 0;border-right: 0;float: left;text-align: center;outline:none}
-    .r-op span{display: inline-block;width:0.4rem;height: 0.2rem;border:0.014rem solid #d9d9d9;border-left: 0;border-right: 0;float: left;text-align: center;line-height: 0.2rem;}
+    .r-op .ropspan{display: inline-block;width:0.4rem;height: 0.2rem;border:0.014rem solid #d9d9d9;border-left: 0;border-right: 0;float: left;text-align: center;line-height: 0.2rem;}
     .fix-bottom{background-color: #fff;border-top: 0.014rem solid #d9d9d9;height: 0.54rem;line-height: 0.54rem;width:100%;display: flex;}
     .fix-bottom .left{width:70%;color: #999;text-align: right;padding-right: 0.2rem;}
-    .fix-bottom .left span{font-size: 0.2rem;color: #e85555;}
+    .fix-bottom .left .leftspan{font-size: 0.2rem;color: #e85555;}
     .fix-bottom .right{width:30%;background-color: #e85555;color: #fff;text-align: center;}
 </style>
 
@@ -71,10 +72,10 @@
 import config from '../../utils/config'
 export default {
   props: {
-    payConfig: {
-      type: Object,
-      required: true
-    }
+      payConfig: {
+        type: Object,
+        required: true
+      }
   },
   data () {
     return {
@@ -113,14 +114,12 @@ export default {
     MIP.util.platform.start()
     console.log(MIP.util.platform.isWechatApp())
     if (MIP.util.platform.isWechatApp()) {
-      MIP.setData({
-        payConfig: {
-          endpoint: {weixin: 'https://m.kuaifawu.com/pay/mip/wxorderspay'}
-        }
-      })
+        MIP.setData({
+            payConfig: {
+                endpoint: {weixin:'https://m.kuaifawu.com/pay/mip/wxorderspay'}
+            }
+        })
     }
-    console.log(this.payConfig, 'ccccccccc')
-    // console.log(this.payConfig.endpoint.alipay,'这里是微信支付回调')
     MIP.viewer.fixedElement.init()
     console.log('This is 订单确认页 !')
     const self = this
