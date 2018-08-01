@@ -1,10 +1,10 @@
 <template>
   <div class="wd-infinity-chapters">
-    <template v-for="item in chapters">
+    <template v-for="(item, index) in chapters">
       <a
         v-if="level !== 0"
         :key="item.text"
-        :class="{selected: active === item.hash}"
+        :class="{selected: active ? active === item.hash : (index === 0 && level === 1)}"
         :href="item.hash"
         class="chapter-title"
         @click.stop="select(item.hash)"
