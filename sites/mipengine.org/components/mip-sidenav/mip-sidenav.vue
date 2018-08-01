@@ -64,7 +64,9 @@ export default {
     }
   },
   mounted () {
-    let activeTop = document.querySelectorAll('.activemenu')[0].offsetTop || 0
+    let activeDom = document.querySelectorAll('.activemenu')[0]
+    let activeTop = activeDom ? activeDom.offsetTop : 0
+
     let scrollDom = document.querySelectorAll('.layout-sidebar')[0]
     if (scrollDom) {
       scrollDom.scrollTop = activeTop + 60
