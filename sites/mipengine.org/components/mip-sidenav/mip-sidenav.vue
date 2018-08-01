@@ -17,8 +17,6 @@
 
 <style scoped lang="less">
 .sidenav-wrapper {
-  width: 260px;
-  margin: 40px 0 0 100px;
 }
 </style>
 

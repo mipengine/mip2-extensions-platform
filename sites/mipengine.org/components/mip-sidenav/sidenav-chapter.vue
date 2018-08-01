@@ -28,11 +28,12 @@
 <style scoped lang="less">
 .wd-infinity-chapters {
   position: relative;
+  margin-bottom: 16px;
   div[class^="children-"] {
     .chapter-title {
       font-size: 14px;
-      line-height: 20px;
-      color: #6a6b6c;
+      line-height: 24px;
+      color: #555;
       padding: 10px 10px 10px 0;
       display: block;
       cursor: pointer;
@@ -42,9 +43,9 @@
       }
       &.selected {
         >div {
-          color: #24292e;
+          color: #000;
           font-weight: bold;
-          border-left: 2px solid #24292e;
+          border-left: 2px solid #000;
           transition: border .2s linear;
         }
       }
@@ -55,7 +56,7 @@
         margin-left: -12px;
         &::before {
           content: '·';
-          color: #24292e;
+          color: #000;
           display: inline-block;
           padding-right: 5px;
         }
@@ -67,7 +68,6 @@
     border-left: 2px solid #f1f1f1;
     &>.wd-infinity-chapters {
       &>.chapter-title {
-        color: #24292e;
         >div {
           &::before {
             display: none;

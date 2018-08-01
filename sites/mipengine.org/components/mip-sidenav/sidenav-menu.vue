@@ -1,11 +1,13 @@
 <template>
   <div class="wd-infinity-menu">
-    <template v-for="menuItem in menu">
+    <template v-for="(menuItem, idx) in menu">
       <div
         v-if="menuItem.children"
         :class="'l-' + level"
         :key="menuItem.path">
-        <div class="folder show">{{ menuItem.text || menuItem.name }}</div>
+        <div
+          :class="{'active': idx === activeIndex}"
+          class="folder show">{{ menuItem.text || menuItem.name }}</div>
         <div :class="'children-' + level">
           <mip-sidenav
             :menu="menuItem.children"
@@ -51,17 +53,21 @@
       }
     }
     .sub-folder {
-      color: #24292e;
+      color: #000;
       font-weight: bold;
       padding: 12px 10px;
+      margin-bottom: 3px;
+      line-height: 24px;
     }
   }
   .l-0 .folder {
-    color: #24292e;
+    color: #000;
     font-size: 18px;
     line-height: 24px;
-    font-weight: bold;
-    padding: 20px 0 24px 10px;
+    padding: 30px 0 24px 10px;
+    &.active {
+      font-weight: bold;
+    }
   }
   .l-1 .folder {
     // 只有第一级的 folder 不缩进，后续都缩进
@@ -92,7 +98,7 @@
   .children-0 {
     border-left: 2px solid #f1f1f1;
     &>.wd-infinity-chapters>.chapter-title {
-      color: #24292e;
+      color: #000;
       &::before {
         display: none;
       }
@@ -118,8 +124,14 @@ export default {
       default: ''
     }
   },
-  mounted () {
-
+  computed: {
+    activeIndex: function () {
+      return this.menu.findIndex(m => {
+        return m.children && m.children.find(c => {
+          return c.url === this.url
+        })
+      })
+    }
   }
 }
 </script>
