@@ -3,7 +3,8 @@
     <sidenav-menu
       :menu="menu"
       :url="url"
-      :level="level">
+      :level="level"
+      :activeindex="activeIndex">
       <template slot-scope="slotProps">
         <sidenav-chapter
           :chapters="chapters"
@@ -51,6 +52,22 @@ export default {
   data () {
     return {
       activeChapter: decodeURIComponent(location.hash) || ''
+    }
+  },
+  computed: {
+    activeIndex: function () {
+      return this.menu.findIndex(m => {
+        return m.children && m.children.find(c => {
+          return c.url === this.url
+        })
+      })
+    }
+  },
+  mounted () {
+    let activeTop = document.querySelectorAll('.activemenu')[0].offsetTop || 0
+    let scrollDom = document.querySelectorAll('.layout-sidebar')[0]
+    if (scrollDom) {
+      scrollDom.scrollTop = activeTop + 60
     }
   },
   methods: {

@@ -6,7 +6,7 @@
         :class="'l-' + level"
         :key="menuItem.path">
         <div
-          :class="{'active': idx === activeIndex}"
+          :class="{'activemenu': idx === activeindex}"
           class="folder show">{{ menuItem.text || menuItem.name }}</div>
         <div :class="'children-' + level">
           <mip-sidenav
@@ -51,6 +51,11 @@
       &:active {
         background: #f5f5f5;
       }
+      @media (min-width: 768px) {
+        &:hover {
+          background: #f5f5f5;
+        }
+      }
     }
     .sub-folder {
       color: #000;
@@ -65,7 +70,7 @@
     font-size: 18px;
     line-height: 24px;
     padding: 30px 0 24px 10px;
-    &.active {
+    &.activemenu {
       font-weight: bold;
     }
   }
@@ -122,15 +127,10 @@ export default {
     url: {
       type: String,
       default: ''
-    }
-  },
-  computed: {
-    activeIndex: function () {
-      return this.menu.findIndex(m => {
-        return m.children && m.children.find(c => {
-          return c.url === this.url
-        })
-      })
+    },
+    activeindex: {
+      type: Number,
+      default: 0
     }
   }
 }

@@ -28,7 +28,6 @@
 <style scoped lang="less">
 .wd-infinity-chapters {
   position: relative;
-  margin-bottom: 16px;
   div[class^="children-"] {
     .chapter-title {
       font-size: 14px;
@@ -40,6 +39,11 @@
       margin-left: 10px;
       &:active {
         background: #f5f5f5;
+      }
+      @media (min-width: 768px) {
+        &:hover {
+          background: #f5f5f5;
+        }
       }
       &.selected {
         >div {
@@ -67,6 +71,7 @@
     margin-left: 10px;
     border-left: 2px solid #f1f1f1;
     &>.wd-infinity-chapters {
+      margin-bottom: 16px;
       &>.chapter-title {
         >div {
           &::before {
