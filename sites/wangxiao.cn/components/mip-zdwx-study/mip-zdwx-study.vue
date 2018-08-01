@@ -8,7 +8,7 @@
 <script>
 export default {
   mounted () {
-    MIP.viewer.open('http://wap.wangxiao.cn/Course/MyCourse', {isMipLink: false})
+    MIP.viewer.open('https://wap.wangxiao.cn/Course/MyCourse', {isMipLink: false})
   }
 }
 </script>
