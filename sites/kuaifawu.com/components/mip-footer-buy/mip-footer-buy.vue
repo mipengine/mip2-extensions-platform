@@ -82,6 +82,9 @@ export default {
       pp: ''
     }
   },
+  prerenderAllowed () {
+    return true
+  },
   mounted () {
     MIP.viewer.fixedElement.init()
     // 自定义login事件
