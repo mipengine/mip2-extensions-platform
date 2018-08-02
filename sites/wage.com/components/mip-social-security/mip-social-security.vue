@@ -179,7 +179,7 @@ export default {
 					this.cok = true;
 					this.fromBase = 0;
 					this.isAfter = true;
-					this.isOnClick = fasle;
+					this.isOnClick = false;
 					return ['自定义'];
 				}
 			} else { // 社保
