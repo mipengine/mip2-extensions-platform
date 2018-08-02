@@ -12,8 +12,9 @@
 
 ## 示例
 
-<mip-index-trip-list name=""></mip-index-trip-list>
+<mip-index-trip-list name="" host=""></mip-index-trip-list>
 
 ## 属性
 
 name 指定目的地名称，默认为空
+host 站点域名，必填

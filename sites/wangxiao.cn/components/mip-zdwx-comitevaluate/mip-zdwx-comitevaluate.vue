@@ -72,7 +72,9 @@ export default {
       }
     }
   },
-  mounted () {},
+  mounted () {
+    base.setToken(base.getQueryString('token'))
+  },
   methods: {
     comitEvaluate () {
       let _this = this
@@ -103,26 +105,31 @@ export default {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
+          FKID: base.getQueryString('id'),
+          token: base.getToken(),
           Data: {
             CommentDetail: {
               CategoryID: '',
               CommentContent: _this.textareaValue,
-              FKID: base.getQueryString('goodsId'),
+              FKID: base.getQueryString('id'),
               RemarkSource: 1,
               UserName: ''
             },
             CommentItemDetails: [
               {
                 Score: _this.starValue1,
-                ScoreItemID: 4
+                ScoreItemID: 4,
+                ModuleId: 3
               },
               {
                 Score: _this.starValue2,
-                ScoreItemID: 5
+                ScoreItemID: 5,
+                ModuleId: 3
               },
               {
                 Score: _this.starValue3,
-                ScoreItemID: 6
+                ScoreItemID: 6,
+                ModuleId: 3
               }
             ]
           }
@@ -135,8 +142,11 @@ export default {
               _this.errorMessage = data.message
               _this.showErrorMessage = true
               setTimeout(() => {
-                window.MIP.viewer('orderlist.jsp')
+                MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'Order/orderList?token=' + base.getToken()))
               }, 1000)
+            } else {
+              _this.errorMessage = data.message
+              _this.showErrorMessage = true
             }
           })
         })
