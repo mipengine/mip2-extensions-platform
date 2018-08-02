@@ -15,7 +15,7 @@
       <div class="title">
         <div
           class="area"
-          @click="provinceSelected()">{{ Province?Province:info[province-1].name }}</div>
+          @click="provinceSelected()">{{ Province?Province:'北京' }}</div>
         <div
           :class="City?'':'active'"
           :data-id="city"
@@ -56,7 +56,6 @@
 .left {
   float: left;
 }
-
 .address-list {
   display: flex;
   flex-wrap: nowrap;
@@ -78,12 +77,10 @@
   color: #ACA9A7;
   border-bottom: 1px solid #E6E4E1;
 }
-
 .yes-btn {
   float: right;
   color: #FF8D1D;
 }
-
 .myAddress {
   width: 100%;
   background-color: white;
@@ -167,7 +164,7 @@
   font-size: 14px;
   font-family: PingFang-SC-Medium;
   text-align: center;
-  color: #000;
+  color: #333;
 }
 /* 修改的格式 */
 .address ul {
@@ -210,7 +207,7 @@ export default {
 			GetProvinceId: 2,
 			District: false,
 			Province: false,
-			City: false,
+			City: '北京',
 			// v-for循环判断是否为当前
 			selected: false,
 			info: [{
@@ -12703,6 +12700,10 @@ export default {
         } */
 			]
 		};
+	},
+	mounted :function(){
+		this.getProvinceId(1,'北京',0);
+		this.getCityId(1,'北京',0);
 	},
 	methods: {
 		closeAdd: function () {
