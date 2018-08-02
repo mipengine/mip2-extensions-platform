@@ -8,6 +8,9 @@ package-lock.json
 *.svn
 .svn
 .svn/
+*.git
+.git
+.git/
 *.swp
 *.gz
 *.~
