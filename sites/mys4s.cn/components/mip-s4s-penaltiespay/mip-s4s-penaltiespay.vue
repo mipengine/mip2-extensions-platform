@@ -185,6 +185,7 @@ export default {
       console.log('pay2event')
       me.payFee()
     })
+
     if (this.globalData && this.globalData.orderNumber) {
       try {
         window.localStorage.setItem(
@@ -355,7 +356,7 @@ export default {
   margin-top: 0.1rem;
   background: #fff;
   padding: 0 0.15rem;
-  padding-top: 0.2rem;
+  padding-top: 0.25rem;
 }
 .s4s-group mip-img {
   width: 0.2rem;
@@ -363,12 +364,16 @@ export default {
 }
 .s4s-sum {
   margin: 0.2rem 0.1rem 0 0.1rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
   text-align: left;
   font-size: 0.15rem;
   color: #50b0de;
@@ -386,7 +391,7 @@ export default {
 .s4s-order-container {
   background-color: #fff;
   padding: 0.15rem;
-  padding-top: 0.21rem;
+  padding-top: 0.25rem;
 }
 .s4s-order-title {
   font-size: 0.2rem;
@@ -401,7 +406,7 @@ export default {
   margin-top: 0.1rem;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
 }
 
 .s4s-order-input input {
@@ -411,9 +416,12 @@ export default {
   flex: 4;
 }
 .s4s-order-input span {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   background: #3388ff;
   margin: 0;
   height: 0.25rem;
@@ -421,10 +429,17 @@ export default {
 }
 .s4s-order-mip-img-container {
   display: -webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  align-items:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
+  -webkit-justify-content:space-around;
+  justify-content:space-around;
+  -moz-box-pack:space-around;
+  -webkit-box-pack:space-around;
   margin: 0.2rem 0;
 }
 .s4s-order-mip-img-container .pic {
@@ -437,9 +452,12 @@ export default {
 .s4s-order-mip-img-container .arr {
   max-width: 0.11rem;
   height: 0.2rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
 }
 .s4s-order-content {
   font-size: 0.13rem;
@@ -460,15 +478,12 @@ export default {
 }
 
 .s4s-group {
-  height: 0.32rem;
-  border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
+  position: relative;
+  line-height: 0.15rem;
+  border-bottom: 0.01rem #EAEAEA solid;
   color: #666;
   overflow: hidden;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  align-items:center;
   display: flex;
   padding: 0.15rem 0;
   box-sizing: content-box;
@@ -476,24 +491,20 @@ export default {
 .s4s-group-tit {
   font-size: 0.15rem;
   width: 0.9rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  line-height: .25rem;
+  padding-top:.025rem;
 }
 .s4s-group-txt {
   font-size: 0.15rem;
   color: #777;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  text-align: right;
 }
 .s4s-group input {
   border: none;
   font-size: 0.15rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
   text-align: left;
+  line-height: .25rem;
+  flex: 1;
 }
 select {
   font-size: 0.15rem;
@@ -524,8 +535,10 @@ select {
   margin-top: 0.15rem;
 }
 .s4s-title {
-  font-size: 0.2rem;
-  /* padding-top: .15rem; */
+  font-size: .2rem;
+  /* padding: .15rem; */
+  /* padding-top: 0.25rem; */
+  font-weight: bold;
 }
 .code-btn,
 .code-btn-disable {
@@ -536,23 +549,48 @@ select {
   font-size: 0.14rem;
   border: 0.01rem solid #ff7b00;
   padding: 0.05rem 0.075rem;
+  line-height: .20rem;
+  position: absolute;
+  right: 0;
+  top:50%;
+  margin-top:-.15rem
 }
 .code-btn-disable {
   opacity: 0.5;
 }
 
 .pay-contaienr {
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
   width: 100%;
   background: #fff;
 }
 
 .pay-contaienr-first {
-  flex: 1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
   font-size: 0.16rem;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -moz-box-orient:vertical;
+  -moz-box-direction:normal;
+  flex-direction:column;
+  -webkit-flex-direction:column;
+  -webkit-justify-content:center;
+  justify-content:center;
+  -moz-box-pack:center;
+  -webkit-box-pack:center;
+  -moz-box-pack:center;
   padding: 0 0.1rem;
 }
 
@@ -572,7 +610,7 @@ select {
 
 .pay-contaienr-last {
   width: 1.2rem;
-  background-image: linear-gradient(40deg, #fe5a00 0%, #ff7c00 100%);
+  background-image: linear-gradient(40deg,  #ff7c00 0%, #fe5a00 100%);
   text-align: center;
   line-height: 0.5rem;
   font-size: 0.18rem;
@@ -583,5 +621,17 @@ select {
 .disabled-btn {
   color: #999;
   background: #e6e6e6 !important;
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #ccc;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color:#ccc;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color:#ccc;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color:#ccc;
 }
 </style>

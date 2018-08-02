@@ -53,10 +53,7 @@
   </div>
 </template>
 <script>
-// import {fetch} from '@/common/js/fetch'
 import apiUrl from '@/common/js/config.api'
-// import Swipers from 'swiper'
-// import 'swiper/dist/css/swiper.min.css'
 const viewport = MIP.viewport
 export default {
   // 过滤时间同一时间格式
@@ -92,33 +89,33 @@ export default {
     }
   },
   created () {
-    console.log(viewport)
     // 请求好评借口
     fetch(apiUrl.appraiseList).then(data => {
       return data.json()
     }).then(res => {
       this.data = res.data.detail
-      this.$refs.swiperWraper.style.width = this.data.length * viewport.getWidth() + 'px'
+
+      this.$refs.swiperWraper.style.width = this.data.length * viewport.getWidth() * 0.8 + 'px'
       this.$refs.swiperWraper.style.webkitTransform = 'translateX(0)'
     })
   },
   methods: {
     next () {
-      if (this.index < this.data.length) {
+      if (this.index < this.data.length - 1) {
         this.index++
       } else {
-        this.index = this.data.length
+        this.index = 0
       }
-      this.x = this.index * viewport.getWidth() + 'px'
+      this.x = this.index * viewport.getWidth() * 0.8 + 'px'
       this.$refs.swiperWraper.style.webkitTransform = `translateX(-${this.x})`
     },
     prev () {
       if (this.index > 0) {
         this.index--
       } else {
-        this.index = 0
+        this.index = this.data.length - 1
       }
-      this.x = this.index * viewport.getWidth() + 'px'
+      this.x = this.index * viewport.getWidth() * 0.8 + 'px'
       this.$refs.swiperWraper.style.webkitTransform = `translateX(-${this.x})`
     }
   }
@@ -126,16 +123,24 @@ export default {
 </script>
 <style scoped lang="css">
 /*客户评价*/
+
+  .wrapper{
+    width:80%;
+    height: 145px;
+    margin: 0 auto;
+    padding-bottom: 10px;
+  }
   .jkx_evaluation_container {
       position: relative;
   }
   .jkx_evaluation_container .evaluate {
     overflow: hidden;
     width: 100%;
-    height: 180px;
+
     border: 1px solid #eee;
     position: static;
     background: #fff;
+    border-radius: 5px;
   }
   .swiper-wrapper{
     display: flex;
@@ -145,7 +150,6 @@ export default {
   }
   .jkx_evaluation_container .swiper-slide {
     width: 100%;
-    height: 180px;
     overflow: hidden;
     text-align: center;
   }
@@ -155,33 +159,40 @@ export default {
     line-height: 20px;
     display: flex;
     align-items: center;
-    font-size: 15px;
+
+    font-size: 12px;
     color: rgb(153, 153, 153);
     background-color: transparent;
     padding-left: 10px;
     padding-right: 10px;
+    border-bottom: 1px solid #ddd;
+    padding: 0 !important;
+    margin: 10px 0 0 !important;
+    width: 100% !important;
   }
   .jkx_evaluation_container .header-left {
     display: flex;
     padding: 5px 0;
+    margin-left: 10px;
   }
   .jkx_evaluation_container .header-left span:last-child {
     margin-left: 5px;
   }
   .jkx_evaluation_container .header-right {
     margin-left: auto;
+    margin-right: 10px;
   }
   /*客户评价内容*/
   .jkx_evaluation_container .nav {
     margin-top: 15px;
     margin-bottom: 10px;
     text-align: left;
-    height: 70px;
     padding: 0;
     color: rgb(51, 51, 51);
-    font-size: 15px;
+    font-size: 13px;
     line-height: 1.5em;
     padding: 0 10px;
+    height: 55px;
   }
   .jkx_evaluation_container .nav p {
     overflow: hidden;
@@ -219,6 +230,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: left;
+    font-size: 12px;
   }
   .jkx_evaluation_container .problem {
     width: 110px;
@@ -226,6 +238,7 @@ export default {
     overflow: hidden;
     text-overflow: ellipsis;
     margin-left: 15px;
+    font-size: 12px;
   }
   .jkx_evaluation_container .footer_right {
     width: 20%;
@@ -260,9 +273,9 @@ export default {
   /*客户评价左右按钮*/
   .jkx_evaluation_container .swiper-button-next,.jkx_evaluation_container .swiper-button-prev {
     position: absolute;
-    width: 40px;
-    height: 50px;
-    right: 10px;
+    width: 30px;
+    height: 40px;
+    right: -33px;
     top: 50%;
     margin-top: -25px;
     background-color: rgba(0, 0, 0, .08);
@@ -283,7 +296,7 @@ export default {
     display: inline-block;
   }
   .jkx_evaluation_container .swiper-button-prev {
-    left: 10px;
+    left: -31px;
   }
   .jkx_evaluation_container .swiper-button-prev .icon_prev {
     background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAWCAIAAAB7WupNAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA4RpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTExIDc5LjE1ODMyNSwgMjAxNS8wOS8xMC0wMToxMDoyMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDpmNTFjNzcyMS0wZTE1LTlkNDYtYjdiZS0zYmJlOWM0MjgyZTciIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6OTJBRjM5QjIxQzJEMTFFOEE0Q0RGNTI1OEJFMzg1QTIiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6OTJBRjM5QjExQzJEMTFFOEE0Q0RGNTI1OEJFMzg1QTIiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6YjQ3OWUwMTgtZDVjZC1iODQ5LWI4MzMtYWEwNzA2YmNkODdlIiBzdFJlZjpkb2N1bWVudElEPSJhZG9iZTpkb2NpZDpwaG90b3Nob3A6ZGNjZjE2ZTQtZTkzNC0xMWU3LWE5ZWUtYjRlZmU3ZjRmMTMzIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+3DQ+NwAAAJVJREFUeNqE08ENhSAQBNDvUgEHQpuEQghtAgcqIHGMRqOfHfZIXhgYZWut/ZTpveecjTFCREqplDLGECIQ4pwLIQgXMUZrrSwFFmUpXkgTDyLiQlwcaCkwBl3VWon43k4bQaHYBnEIRfQcIQJB3B1xS3edibvn4MS9bqe5bwVTN+np323aP35/Lu+92vi5HwQewi7AAIq/tLxGUxbFAAAAAElFTkSuQmCC) no-repeat;

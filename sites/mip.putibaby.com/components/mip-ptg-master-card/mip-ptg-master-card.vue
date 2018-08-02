@@ -379,7 +379,7 @@
     <mip-fixed
       v-if="showImg"
       class="img_back"
-      type="top"
+      type="gototop"
       @click="hideImg">
       <div
         v-if="showImg"
@@ -1075,9 +1075,23 @@ export default {
 
     window.addEventListener('show-page', () => {
       console.log('show-page')
+      if (self.isLogin) {
+        API.getMasterInfo(self.data.info.id, function (isOk, data) {
+          console.log(data)
+          if (isOk) {
+            self.$set(self.data.info, 'isfav', data.fav)
+            self.$set(self.data.info, 'can_online_interview', data.can_online_interview)
+            self.$set(self.data.info, 'order_desc_str', data.order_desc_str)
+          // console.log(self);
+          } else {
+            console.warn(data)
+          }
+        })
+      }
       if (self.isUnion || !self.isLogin) {
         return
       }
+
       API.checkUnionAgain('', function (isOk, res) {
         if (isOk) {
           console.log(res)

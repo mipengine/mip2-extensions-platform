@@ -29,6 +29,7 @@
             placeholder="请输入处罚决定书编号" >
           <span
             class="s4s-btn"
+            on="tap:info.login"
             @click="ready" >确定</span>
         </div>
         <p class="s4s-order-text">处罚决定书编号、车牌号和处罚人为办单依据，请咨询核对！</p>
@@ -169,22 +170,25 @@
             <input
               v-model="nick"
               type="text"
+              maxlength="22"
               placeholder="请输入被处罚人姓名" >
           </div>
           <div
             v-if="!showName"
             class="s4s-group">
             <span class="s4s-group-tit">车牌号码</span>
-            <div style="display: flex;align-items:center;overflow: hidden;width:1.30rem;">
-              <span
-                class="s4s-sel-provice"
-                style="float: left;"
-                @click="selectProvice">{{ provice }}</span>
+            <div style=" display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;align-items:center;overflow: hidden;">
+              <div
+                class="provice"
+                @click="selectProvice"
+              >
+                <div style="height:100%;padding: 4px 0;">{{ provice }} <span class="right-arrow"/></div>
+              </div>
               <input
                 v-model="nickCarNo2"
                 type="text"
                 maxlength="7"
-                style="text-align: left;line-height:.25rem;width: 1rem;"
+                style="text-align: left;line-height:.25rem;"
                 placeholder="请输入车牌号码" >
             </div>
           </div>
@@ -233,7 +237,7 @@
             <span style="width:auto;color:#fe7000" >¥ {{ ownFree|| 0 }}</span>
           </div>
           <div
-            class="s4s-group"
+            class="s4s-group group-upload"
             style="height:auto">
             <div class="s4s-group-tit">上传罚单</div>
             <mip-img
@@ -295,6 +299,24 @@
         class="s4s-mask"
         @click="closeDate"/>
     </template> -->
+    <mip-fixed type="bottom">
+      <div
+        v-if="showProvice"
+        class="s4s-provice" >
+        <div style="overflow: hidden;padding-bottom: .4rem" >
+          <template v-for="(provice, index) in proviceList">
+            <div
+              :key="index"
+              class="s4s-provice-tit"
+              @click="selProvince(provice)">{{ provice }}</div>
+          </template>
+          <div
+            key="-1"
+            class="s4s-provice-tit-hide"
+            @click="selectProvice" >隐藏</div>
+        </div>
+      </div>
+    </mip-fixed>
   </div>
 </template>
 
@@ -313,14 +335,14 @@ export default {
   },
   data () {
     return {
-      provice: '浙',
+      provice: '省',
       carno: '',
       code: '',
       nick: '',
       phone: '',
       nickCarNo: '',
       nickCarNo2: '',
-      date: '',
+      date: util.formatDateTime().slice(0, 10),
       ticketUrl: '',
       price: '',
       openShow: false,
@@ -342,7 +364,46 @@ export default {
       showForm1: false,
       payForm: null,
       canTryToPay: true,
-      searchAgain: false
+      searchAgain: false,
+      proviceList: [
+        '京',
+        '津',
+        '渝',
+        '沪',
+        '冀',
+        '晋',
+        '辽',
+        '吉',
+        '黑',
+        '苏',
+        '浙',
+        '皖',
+        '闽',
+        '赣',
+        '鲁',
+        '豫',
+        '鄂',
+        '湘',
+        '粤',
+        '琼',
+        '川',
+        '贵',
+        '云',
+        '陕',
+        '甘',
+        '青',
+        '蒙',
+        '桂',
+        '宁',
+        '新',
+        '藏',
+        '使',
+        '领',
+        '警',
+        '学',
+        '港',
+        '澳'
+      ]
     }
   },
   computed: {
@@ -368,10 +429,13 @@ export default {
   },
 
   watch: {
-    price () {
+    price (val) {
+      if (val > 999999) {
+        this.price = val.slice(0, 6)
+      }
       this.getVioFee()
     },
-    date () {
+    date (val) {
       this.getVioFee()
     },
     orderNumber () {
@@ -382,6 +446,10 @@ export default {
   },
   mounted () {},
   methods: {
+    selProvince (val) {
+      this.provice = val
+      this.showProvice = false
+    },
     // 点击办理
     tryToPay () {
       if (this.showForm2) {
@@ -502,7 +570,7 @@ export default {
         this.nick = ''
         this.phone = ''
         this.nickCarNo = ''
-        this.date = ''
+        this.date = util.formatDateTime().slice(0, 10)
         this.price = ''
         this.ownFree = 0
         this.lateFree = 0
@@ -553,6 +621,7 @@ export default {
             this.showForm2 = true
             this.showForm1 = false
           } else {
+            this.$emit('loginAgain')
             this.showNotice = true
             this.showForm2 = false
             this.showForm1 = false
@@ -594,49 +663,19 @@ export default {
         util.toast('最多只能选择1张处罚单。')
         return
       }
-      // let item = {
-      //   name: list[0].name,
-      //   size: list[0].size,
-      //   file: list[0]
-      // }
-      // fix canvas bug
-      const file = list[0]
-      const self = this
-      if (file) {
-        console.log(file.size / 1024 / 1024 + 'MB')
-        const isLt2M = file.size / 1024 / 1024 < 2
-        if (!isLt2M) {
-          util.toast('图片大小需要小于 2MB!')
-          return
-        }
-        util.toast('正在上传')
-        const formData = new FormData()
-        formData.append('image', list[0])
-        // self.vehiclecardFetch(formData)
-        fetch('https://mys4s.cn/car/upload_report_pic', {
-          method: 'POST',
-          body: formData
-        })
-          .then(res => res.json())
-          .then(data => {
-            if (data.code === 0) {
-              util.toast('上传成功')
-              // if (name === 'ticket') {
-              self.ticketUrl = data.data
-              // }
-            } else {
-              util.toast(data.msg)
-            }
-          })
+      let item = {
+        name: list[0].name,
+        size: list[0].size,
+        file: list[0]
       }
-      // this.html5Reader(list[0], item, 'ticket')
+      this.html5Reader(list[0], item)
     },
     // 常见问题
     gotoHelp () {
       MIP.viewer.open('help.html')
     },
     selectProvice () {
-      this.showProvice = true
+      this.showProvice = !this.showProvice
     },
     // 打开处罚单帮助
     openCode () {
@@ -692,7 +731,7 @@ export default {
         }
       })
     },
-    html5Reader: function (file, item, name) {
+    html5Reader: function (file, item) {
       let imgSrc = new Image()
       let reader = new FileReader()
       reader.onload = e => {
@@ -734,27 +773,34 @@ export default {
           // 图片压缩
           context.drawImage(imgSrc, 0, 0, targetWidth, targetHeight)
           // canvas转为blob并上传
-          canvas.toBlob(function (blob) {
-            const formData = new FormData()
-            formData.append('image', blob, item.name)
-
+          // canvas.toBlob(function (blob) {
+          //   const formData = new FormData()
+          //   formData.append('image', blob, item.name)
+          let data = canvas.toDataURL('image/jpeg').split(',')[1]
+          // 获取base64图片大小，返回MB数字
+          let size = parseInt(data.length - (data.length / 8) * 2)
+          console.log(size)
+          if (size) {
+            const isLt2M = size / 1024 / 1024 < 2
+            if (!isLt2M) {
+              util.toast('图片大小需要小于 2MB!')
+              return
+            }
             util.toast('正在上传')
-            fetch('https://mys4s.cn/car/upload_report_pic', {
-              method: 'POST',
-              body: formData
+            util.fetchData('v3/violation/image/upload', {
+              imageString: data
             })
-              .then(res => res.json())
               .then(data => {
                 if (data.code === 0) {
                   util.toast('上传成功')
-                  if (name === 'ticket') {
-                    self.ticketUrl = data.data
-                  }
+                  self.ticketUrl = data.data
                 } else {
                   util.toast(data.msg)
                 }
               })
-          }, file.type || 'image/png')
+          }
+
+          // }, file.type || 'image/png')
         }
       }
       reader.readAsDataURL(file)
@@ -782,11 +828,12 @@ export default {
 
 .s4s-order-container {
   background-color: #fff;
-  padding: 4%;
+  padding: .25rem .15rem;
 }
 .s4s-order-title {
   color: #4b4b4b;
   font-size: .2rem;
+  font-weight: bold;
 }
 
 .s4s-order-input {
@@ -794,7 +841,9 @@ export default {
   border-radius: .04rem;
   margin-top: .15rem;
   display: -webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
   overflow: hidden;
 }
@@ -807,6 +856,10 @@ export default {
   padding: .06rem .1rem;
   font-size: .16rem;
   color:#4F7EFF;
+}
+.group-upload {
+  align-items:end;
+  height: auto;
 }
 .s4s-order-input span {
   color: #fff;
@@ -822,15 +875,23 @@ export default {
 .s4s-order-img-container {
   display: -webkit-box;
   display: -ms-flexbox;
+  display: -moz-box;
+  display: -webkit-flex;
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  align-items:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
+  -webkit-justify-content:space-around;
+  justify-content:space-around;
+  -webkit-box-pack:space-around;
+  -moz-box-pack:space-around;
   margin: 0.2rem 0;
   text-align: center;
 }
 .s4s-order-img-container mip-img + mip-img {
   margin-right: -.22rem;
   margin-left: .16rem;
+  margin-top: .12rem;
 }
 .flex-center {
   margin-bottom: .1rem;
@@ -853,7 +914,9 @@ export default {
 
 .s4s-title {
   font-size: .2rem;
-  padding-bottom: .15rem;
+  /* padding: .15rem; */
+  padding-top: 0.25rem;
+  font-weight: bold;
 }
 .s4s-help-tip {
   float: none;
@@ -865,17 +928,101 @@ export default {
   margin-top: .15rem;
 }
 .flex-center {
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
+  -webkit-justify-content:center;
+  justify-content:center;
+  -moz-box-pack:center;
+  -webkit-box-pack:center;
+  -moz-box-pack:center;
 }
 .s4s-order-tip-text {
   font-size: .13rem;
   color: #636363;
 }
 .image-container {
-      height: 70px;
-    width: 100%;
-    overflow: hidden;
+  height: 70px;
+  width: 100%;
+  overflow: hidden;
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #ccc;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color:#ccc;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color:#ccc;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color:#ccc;
+}
+.provice {
+  background-image: linear-gradient(40deg,  0%#ff7c00, #fe5a00 100%);
+  border-radius: 0.04rem;
+  color: #fff;
+  /* width: 0.45rem; */
+  min-width: .5rem;
+  height: 0.25rem;
+  margin-right: 0.1rem;
+  padding: 0.01rem 0.09rem;
+}
+.right-arrow {
+  display: inline-block;
+  margin-bottom: 2px;
+  width: 0;
+  height: 0;
+  border-left: 0.05rem solid transparent;
+  border-top: 0.05rem solid #fff;
+  border-right: 0.05rem solid transparent;
+}
+.s4s-provice {
+  width: 100%;
+  background: #d8dbdc;
+  /* position: absolute; */
+  /* bottom: 0; */
+  /* left: 0; */
+  transform: translateY(0);
+  -webkit-transform: translateY(0);
+  transition: transform 0.3s ease-out;
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+}
+.s4s-provice-tit,.s4s-provice-tit-hide {
+  float: left;
+  width: 9%;
+  padding: 0.05rem;
+  background: #fff;
+  border-radius: 0.04rem;
+  margin-left: 3.09999999%;
+  margin-top: 3.09999999%;
+  text-align: center;
+  font-size: 0.14rem;
+}
+.s4s-provice-tit-hide{
+  width: 33.899999999%;
+  background: #BBC3C7;
+  color: #fff;
+}
+@media screen and (min-width: 500px) {
+  .s4s-provice-tit {
+    width: auto;
+    margin-left: 1.09999999%;
+    margin-top: 1.09999999%;
+  }
+  .s4s-provice-tit-hide{
+    width: 98%;
+    margin-left: 1.09999999%;
+    margin-top: 1.09999999%;
+  }
+}
+.s4s-provice-hover {
+  background: #bbb;
+  color: #fff;
 }
 </style>

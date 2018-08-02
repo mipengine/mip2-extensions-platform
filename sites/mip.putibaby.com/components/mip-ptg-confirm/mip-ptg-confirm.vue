@@ -1,29 +1,25 @@
 <template>
   <div
-    v-if="show"
     class="root">
     <mip-fixed
-      type="top"
+      v-if="show"
+      type="gototop"
       class="fix_back">
       <div id="fullScreen"/>
-      <mip-fixed
-        type="top"
-        class="fix_con">
-        <div id="floatLayer">
-          <p class="title">{{ title }}</p>
-          <p class="msg">{{ msg }}</p>
-          <div class="btn_div">
-            <span
-              class="btn_cal"
-              @click="cancelConfirm">取消</span>
-            <span
-              class="btn_ok"
-              @click="okConfirm">确定</span>
-          </div>
+      <div id="floatLayer">
+        <p class="title">{{ title }}</p>
+        <p class="msg">{{ msg }}</p>
+        <div class="btn_div">
+          <span
+            class="btn_cal"
+            @click="cancelConfirm">取消</span>
+          <span
+            class="btn_ok"
+            @click="okConfirm">确定</span>
         </div>
-      </mip-fixed>
-    </mip-fixed>
+      </div>
 
+    </mip-fixed>
   </div>
 </template>
 <style scoped>
@@ -39,7 +35,7 @@
   height:100%;
 }
 .fix_con{
-  z-index:10000;
+  z-index:10000 !important;
 }
 #fullScreen {
   width: 100%;
@@ -57,7 +53,9 @@
   padding-top: 30px;
   text-align: center;
   margin-left:10%;
-  margin-top:50%;
+  position:absolute;
+  z-index:999999;
+  top:200px;
 }
 .msg{
   margin-bottom: 15px;
