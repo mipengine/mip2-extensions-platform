@@ -248,7 +248,7 @@ export default {
           return false
         }
         let url = href2 + '?' + _this.returnQuery(input2)
-        a2[0].setAttribute('href', (url))
+        a2[0].setAttribute('href', url)
       })
     }
     submit.addEventListener('click', function () {
