@@ -357,7 +357,7 @@ label {
 }
 
 input {
-    width: 98%;
+    width: 100%;
     padding-left: 6em;
     text-align: right;
     box-sizing: border-box;

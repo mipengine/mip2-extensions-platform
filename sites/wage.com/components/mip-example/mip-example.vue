@@ -10,12 +10,12 @@
           <div class="flex-item">
             <span
               :class="{active:active}"
-              @click="selectTag(1)">计算税后工资</span>
+              @click="selectTag(1,active)">计算税后工资</span>
             <span :class="{active_select:active}"/>
           </div>
           <div class="flex-item"><span
             :class="{active:!active}"
-            @click="selectTag(2)">推算税前工资</span><span :class="{active_select:!active}"/></div>
+            @click="selectTag(2,!active)">推算税前工资</span><span :class="{active_select:!active}"/></div>
         </div>
       </mip-fixed>
       <!--计算税前工资-->
@@ -160,6 +160,7 @@ input::placeholder {
   /* Firefox 3.6 - 15 */
   background: linear-gradient(to right, #FF731F, #FFA53A);
   /* 标准的语法 */
+	-webkit-tap-highlight-color: transparent; 
 }
 
 .tips {
@@ -220,6 +221,7 @@ li {
   font-size: 17px;
   font-family: PingFang-SC-Medium;
   font-weight: 400;
+	-webkit-tap-highlight-color: transparent; 
 }
 
 .active_select {
@@ -318,7 +320,7 @@ export default {
 				}
 			},
 			selectValue: 1,
-			resultShow: false,
+			resultShow: true,
 			resultData: {
 				tag: 1,
 				realIncome: 1000.56,
@@ -334,9 +336,9 @@ export default {
 	},
 	methods: {
 		// 切换税前/税后工资
-		selectTag: function (index) {
+		selectTag: function (index,flag) {
 			this.isClick++;
-			this.active = !this.active;
+			!flag?this.active = !this.active:'';
 			this.tag = index;
 			if (index == 1) {
 				this.title = '税前工资';
