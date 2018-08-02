@@ -5,6 +5,11 @@ npm-debug.log
 Thumbs.db
 package-lock.json
 .DS_Store
+*.svn
+.svn
+.svn/
 *.swp
 *.gz
 *.~
+*.log
+*.lock

@@ -141,134 +141,135 @@
           <table
             id="citybar"
             class="citybar"
-            data-city="">
+            data-city=""
+            @click="setCity">
 
             <tbody>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">北京</td>
+                >北京</td>
                 <td
                   class="citytd"
-                  @click="setCity">天津</td>
+                >天津</td>
                 <td
                   class="citytd"
-                  @click="setCity">哈尔滨</td>
+                >哈尔滨</td>
                 <td
                   class="citytd"
-                  @click="setCity">武汉</td>
+                >武汉</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">上海</td>
+                >上海</td>
                 <td
                   class="citytd"
-                  @click="setCity">长春</td>
+                >长春</td>
                 <td
                   class="citytd"
-                  @click="setCity">济南</td>
+                >济南</td>
                 <td
                   class="citytd"
-                  @click="setCity">长沙</td>
+                >长沙</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">广州</td>
+                >广州</td>
                 <td
                   class="citytd"
-                  @click="setCity">杭州</td>
+                >杭州</td>
                 <td
                   class="citytd"
-                  @click="setCity">洛阳</td>
+                >洛阳</td>
                 <td
                   class="citytd"
-                  @click="setCity">南阳</td>
+                >南阳</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">深圳</td>
+                >深圳</td>
                 <td
                   class="citytd"
-                  @click="setCity">沈阳</td>
+                >沈阳</td>
                 <td
                   class="citytd"
-                  @click="setCity">石家庄</td>
+                >石家庄</td>
                 <td
                   class="citytd"
-                  @click="setCity">西安</td>
+                >西安</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">湘潭</td>
+                >湘潭</td>
                 <td
                   class="citytd"
-                  @click="setCity">徐州</td>
+                >徐州</td>
                 <td
                   class="citytd"
-                  @click="setCity">成都</td>
+                >成都</td>
                 <td
                   class="citytd"
-                  @click="setCity">南京</td>
+                >南京</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">黄石</td>
+                >黄石</td>
                 <td
                   class="citytd"
-                  @click="setCity">郑州</td>
+                >郑州</td>
                 <td
                   class="citytd"
-                  @click="setCity">青岛</td>
+                >青岛</td>
                 <td
                   class="citytd"
-                  @click="setCity">大连</td>
+                >大连</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">常州</td>
+                >常州</td>
                 <td
                   class="citytd"
-                  @click="setCity">唐山</td>
+                >唐山</td>
                 <td
                   class="citytd"
-                  @click="setCity">保定</td>
+                >保定</td>
                 <td
                   class="citytd"
-                  @click="setCity">秦皇岛</td>
+                >秦皇岛</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">呼和浩特</td>
+                >呼和浩特</td>
                 <td
                   class="citytd"
-                  @click="setCity">乌鲁木齐</td>
+                >乌鲁木齐</td>
                 <td
                   class="citytd"
-                  @click="setCity">合肥</td>
+                >合肥</td>
                 <td
                   class="citytd"
-                  @click="setCity">南昌</td>
+                >南昌</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">福州</td>
+                >福州</td>
                 <td
                   class="citytd"
-                  @click="setCity">厦门</td>
+                >厦门</td>
                 <td
                   class="citytd"
-                  @click="setCity">香港</td>
+                >香港</td>
                 <td
                   class="citytd"
-                  @click="setCity">南宁</td>
+                >南宁</td>
               </tr>
             </tbody>
           </table>
@@ -1074,15 +1075,20 @@
           class="queding"
           on="tap:right-sidebar.close tap:selectmaster.dook">确定</span>
       </mip-sidebar>
-      <div
+      <mip-fixed
         v-if="state.isGif"
-        class="gif">
-        <mip-anim
-          layout="fixed"
-          width="110"
-          height="110"
-          src="https://mip.putibaby.com/i/jiazai.gif"/>
-      </div>
+        still
+        type="top"
+        top="250px">
+        <div
+          class="gif">
+          <mip-img
+            layout="fixed"
+            width="110"
+            height="110"
+            src="https://mip.putibaby.com/i/jiazai.gif"/>
+        </div>
+      </mip-fixed>
       <div
         v-if="list.length > 0"
         id="cardList"
@@ -1889,6 +1895,26 @@ export default {
   mounted () {
     window.MIP.viewer.fixedElement.init()
     console.log('This is pty order list component !')
+    // 所有的图片（要是网络太好，自己加图片吧）
+    const imgs = [
+      'https://mip.putibaby.com/i/jiazai.gif'
+
+    ]
+    let len = imgs.length
+
+    /**
+     * 遍历imgs数组，将所有图片加载出来
+     * 可以通过控制台查看网络请求，会发现所有图片均已加载
+     */
+    for (let i = 0; i < len; i++) {
+      let imgObj = new Image() // 创建图片对象
+      imgObj.src = imgs[i]
+
+      imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
+        console.log('imgs' + i + '加载完毕')
+      }, false)
+    }
+
     var self = this
     this.$element.customElement.addEventAction('echo', function (event, str) {
       console.log(event)
@@ -2055,21 +2081,24 @@ export default {
       this.state.isGif = true
       // this.$set(this.state, 'isGif', true)
       this.filter.pn = 0
-      API.getSelectMaster(this.filter, function (isOk, res) {
-        if (isOk) {
+
+      setTimeout(function () {
+        API.getSelectMaster(self.filter, function (isOk, res) {
+          if (isOk) {
           // console.log(res)
-          self.state.isGif = false
-          self.list = res.list
-          if (res.list.length < 10) {
-            self.state.loadMessage = '没有更多数据了!'
+            self.state.isGif = false
+            self.list = res.list
+            if (res.list.length < 10) {
+              self.state.loadMessage = '没有更多数据了!'
+            } else {
+              self.state.loadMessage = '点击加载数据'
+            }
           } else {
-            self.state.loadMessage = '点击加载数据'
+            console.log(res)
+            self.state.loadMessage = '加载数据出错'
           }
-        } else {
-          console.log(res)
-          self.state.loadMessage = '加载数据出错'
-        }
-      })
+        })
+      }, 50)
     },
     load_more () {
       console.log('should set data')
@@ -2177,7 +2206,9 @@ export default {
           self.$set(self.filter, 'sort_by', 'age_asc')
         }
       }
-      self.load_data()
+      setTimeout(function () {
+        self.load_data()
+      }, 5)
     }
 
   }
