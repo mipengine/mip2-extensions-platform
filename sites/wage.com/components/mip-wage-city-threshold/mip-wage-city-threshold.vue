@@ -136,6 +136,9 @@ export default {
 .z1000{
   z-index: 1000;
 }
+.z1000{
+  z-index: 1000;
+}
 .wrapper {
   position: relative;
   margin: 0 15px 10px 15px;
@@ -182,7 +185,6 @@ input {
 	font-family: PingFang-SC-Medium;
 	font-weight: 400;
   -webkit-tap-highlight-color: transparent; 
-
 }
 .w98p{
   width:98%;

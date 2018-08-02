@@ -4,13 +4,13 @@
       src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/banner.png"
       styel="width:100%;" />
     <div class="s4s-car-info">
-      <div style="display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;-webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;">
-        <div style="box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;">
+      <div style="display: flex;align-items:center;">
+        <div style="flex:1;">
           <h2 class="s4s-car-name" >请您上传行驶证，</h2>
           <div class="s4s-car-illegal">系统可直接识别信息，无需填写</div>
         </div>
         <div class="s4s-upload-pic">
-          <div
+          <!-- <div
             v-show="driveUrl"
             class="s4s-ask-upload-btn"
             @click="upload" >
@@ -18,14 +18,14 @@
               ref="imagess"
               :src="driveUrl"
               styel="width:100%;" />
-          </div>
+          </div> -->
           <div
-            v-show="!driveUrl"
             class="s4s-ask-upload-btn"
             @click="upload">
             <mip-img
+              :src="driveUrl||'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload.png'"
               styel="width:100%;"
-              src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload.png" />
+            />
             <input
               ref="file"
               type="file"
@@ -50,9 +50,10 @@
         <div class="s4s-group-tit">车牌号码</div>
         <div
           class="provice"
-          @click="selectProvice" >
-
-          <div style="height:100%">{{ provice }} <span class="right-arrow"/></div>
+          on="tap:info.login"
+          @click="selectProvice"
+        >
+          <div style="height:100%;padding: 4px 0;">{{ provice }} <span class="right-arrow"/></div>
         </div>
         <input
           v-model="car_no"
@@ -113,7 +114,7 @@
     <a
       ref="index"
       data-type="mip"
-      href="index.html"/>
+      href="index.html?current=1"/>
     <mip-fixed type="top">
       <div
         v-if="detail"
@@ -354,8 +355,10 @@ export default {
     this.$on('customError', event => {
       window.localStorage.clear()
       util.toast('授权失败')
-      this.$refs.index.click()
+      // this.$emit('loginAgain')
+      // this.$refs.index.click()
     })
+    // this.$emit('loginAgain')
   },
   methods: {
     selProvince (val) {
@@ -445,50 +448,6 @@ export default {
         size: list[0].size,
         file: list[0]
       }
-
-      // const file = list[0]
-      // if (file) {
-      //   console.log(file.size / 1024 / 1024 + 'MB')
-      //   const isLt2M = file.size / 1024 / 1024 < 2
-      //   if (!isLt2M) {
-      //     util.toast('图片大小需要小于 2MB!')
-      //     return
-      //   }
-      //   util.toast('正在上传')
-      //   const formData = new FormData()
-      //   formData.append('image', list[0])
-      //   self.vehiclecardFetch(formData)
-      // }
-
-      // 对图片进行压缩
-
-      // let name = 'travelUrl'
-      // const formData1 = new FormData()
-      // formData1.append('image', list[0])
-      // fetch('https://mys4s.cn/car/upload_report_pic', {
-      //   method: 'POST',
-      //   body: formData1
-      // })
-      //   .then(res => res.json())
-      //   .then(data => {
-      //     if (data.code === 0) {
-      //       util.toast('上传成功')
-      //       if (name === 'ticket') {
-      //         self.ticketUrl = data.data
-      //       } else if (name === 'JSZTravel') {
-      //         self.JSZTravelUrl = data.data
-      //       } else if (name === 'JSZDrive') {
-      //         self.JSZDriveUrl = data.data
-      //       } else if (name === 'travelUrl') {
-      //         self.travelUrl = data.data
-      //       } else if (name === 'driveUrl') {
-      //         self.driveUrl = data.data
-      //       }
-      //     } else {
-      //       util.toast(data.msg)
-      //     }
-      //   })
-      console.log(list)
       self.html5Reader(list[0], item, 'driveUrl')
     },
     html5Reader: function (file, item, name) {
@@ -592,13 +551,15 @@ export default {
 }
 .s4s-car-info {
   background-color: #fff;
-  padding: 0.15rem;
+  padding: .25rem 0.15rem ;
 }
 
 .s4s-car-name {
-  -webkit-box-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  -ms-box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
-  box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   color: #333333;
   font-size: 0.2rem;
 }
@@ -614,13 +575,13 @@ export default {
 }
 
 .provice {
-  background-image: linear-gradient(-149deg, #fe5a00 0%, #ff7c00 100%);
+  background-image: linear-gradient(40deg,  #ff7c00 0%, #fe5a00 100%);
   border-radius: 0.04rem;
   color: #fff;
   /* width: 0.45rem; */
   min-width: .5rem;
   height: 0.25rem;
-  margin-right: 0.05rem;
+  margin-right: 0.1rem;
   padding: 0.01rem 0.09rem;
 }
 .right-arrow {
@@ -655,22 +616,36 @@ export default {
   font-size: 0.14rem;
 }
 .s4s-provice-tit-hide{
-  width: 33.899999999%;background: #BBC3C7;color: #fff;
+  width: 33.899999999%;
+  background: #BBC3C7;
+  color: #fff;
 }
 @media screen and (min-width: 500px) {
-    .s4s-provice-tit {
-      width: auto;
-      margin-left: 1.09999999%;
-      margin-top: 1.09999999%;
-    }
-    .s4s-provice-tit-hide{
-      width: 98%;
-      margin-left: 1.09999999%;
-      margin-top: 1.09999999%;
-    }
+  .s4s-provice-tit {
+    width: auto;
+    margin-left: 1.09999999%;
+    margin-top: 1.09999999%;
+  }
+  .s4s-provice-tit-hide{
+    width: 98%;
+    margin-left: 1.09999999%;
+    margin-top: 1.09999999%;
+  }
 }
 .s4s-provice-hover {
   background: #bbb;
   color: #fff;
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #ccc;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color:#ccc;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color:#ccc;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color:#ccc;
 }
 </style>

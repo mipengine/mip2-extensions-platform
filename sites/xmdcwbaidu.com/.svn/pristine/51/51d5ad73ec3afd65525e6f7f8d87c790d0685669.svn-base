@@ -1,0 +1,21 @@
+// 颜色定义规范
+@color-background: #f0f0f0;
+@color-remind: #FF4925;
+@color-border: #E6E6E6;
+@color-btn: #00A0E9;
+@color-btn-disable: #f0f0f0;
+// @color-theme: #ffcd32;
+@color-text: #333333;
+@color-text-d: #666666;
+@color-text-l: #999999;
+@color-text-p: #cccccc;
+@color-text-w: #ffffff;
+
+//字体定义规范
+@font-small-s: 10px;
+@font-small: 12px;
+@font-medium: 14px;
+@font-medium-x: 16px;
+@font-large: 18px;
+@font-large-x: 22px;
+
