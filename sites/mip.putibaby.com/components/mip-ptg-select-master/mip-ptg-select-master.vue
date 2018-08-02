@@ -1075,15 +1075,20 @@
           class="queding"
           on="tap:right-sidebar.close tap:selectmaster.dook">确定</span>
       </mip-sidebar>
-      <div
+      <mip-fixed
         v-if="state.isGif"
-        class="gif">
-        <mip-anim
-          layout="fixed"
-          width="110"
-          height="110"
-          src="https://mip.putibaby.com/i/jiazai.gif"/>
-      </div>
+        still
+        type="top"
+        top="250px">
+        <div
+          class="gif">
+          <mip-img
+            layout="fixed"
+            width="110"
+            height="110"
+            src="https://mip.putibaby.com/i/jiazai.gif"/>
+        </div>
+      </mip-fixed>
       <div
         v-if="list.length > 0"
         id="cardList"
@@ -1890,6 +1895,26 @@ export default {
   mounted () {
     window.MIP.viewer.fixedElement.init()
     console.log('This is pty order list component !')
+    // 所有的图片（要是网络太好，自己加图片吧）
+    const imgs = [
+      'https://mip.putibaby.com/i/jiazai.gif'
+
+    ]
+    let len = imgs.length
+
+    /**
+     * 遍历imgs数组，将所有图片加载出来
+     * 可以通过控制台查看网络请求，会发现所有图片均已加载
+     */
+    for (let i = 0; i < len; i++) {
+      let imgObj = new Image() // 创建图片对象
+      imgObj.src = imgs[i]
+
+      imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
+        console.log('imgs' + i + '加载完毕')
+      }, false)
+    }
+
     var self = this
     this.$element.customElement.addEventAction('echo', function (event, str) {
       console.log(event)
@@ -2056,21 +2081,24 @@ export default {
       this.state.isGif = true
       // this.$set(this.state, 'isGif', true)
       this.filter.pn = 0
-      API.getSelectMaster(this.filter, function (isOk, res) {
-        if (isOk) {
+
+      setTimeout(function () {
+        API.getSelectMaster(self.filter, function (isOk, res) {
+          if (isOk) {
           // console.log(res)
-          self.state.isGif = false
-          self.list = res.list
-          if (res.list.length < 10) {
-            self.state.loadMessage = '没有更多数据了!'
+            self.state.isGif = false
+            self.list = res.list
+            if (res.list.length < 10) {
+              self.state.loadMessage = '没有更多数据了!'
+            } else {
+              self.state.loadMessage = '点击加载数据'
+            }
           } else {
-            self.state.loadMessage = '点击加载数据'
+            console.log(res)
+            self.state.loadMessage = '加载数据出错'
           }
-        } else {
-          console.log(res)
-          self.state.loadMessage = '加载数据出错'
-        }
-      })
+        })
+      }, 50)
     },
     load_more () {
       console.log('should set data')
@@ -2178,7 +2206,9 @@ export default {
           self.$set(self.filter, 'sort_by', 'age_asc')
         }
       }
-      self.load_data()
+      setTimeout(function () {
+        self.load_data()
+      }, 5)
     }
 
   }
