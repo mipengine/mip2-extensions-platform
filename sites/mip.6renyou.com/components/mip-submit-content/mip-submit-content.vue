@@ -153,11 +153,15 @@ export default {
         dest: this.destination,
         days: this.day
       }
+      let _data = []
+      for (let k in data) {
+        _data.push(k + '=' + data[k])
+      }
       fetch(this.host + '/order/callback/baidu', {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: _data.join('&'),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/x-www-form-urlencoded'
         }
       }).then(resp => resp.json()).then(resp => {
         console.log(resp)
