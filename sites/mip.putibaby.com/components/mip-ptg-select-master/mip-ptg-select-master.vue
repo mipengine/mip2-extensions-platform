@@ -1077,9 +1077,11 @@
       <div
         v-if="state.isGif"
         class="gif">
-        <mip-img
-          v-if="state.isGif"
-          src="https://mip.putibaby.com/i/jiazai.gif" />
+        <mip-anim
+          layout="fixed"
+          width="110"
+          height="110"
+          src="https://mip.putibaby.com/i/jiazai.gif"/>
       </div>
       <div
         v-if="list.length > 0"
@@ -1760,7 +1762,7 @@ API.wrapRet_ = function (api, opts, fn) {
     .then(checkStatus)
     .then(parseJSON)
     .then(ret => {
-      console.log(ret)
+      // console.log(ret)
       if (ret.success) fn(true, ret.data)
       else fn(false, ret.error)
     })
@@ -1959,16 +1961,6 @@ export default {
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
       }
     })
-
-    var radiobtn = document.querySelectorAll('.radio_btn')
-
-    for (var j = 0; j < radiobtn.length; j++) {
-      radiobtn[j].addEventListener('touchend', function () {
-        removeClass(radiobtn, 'radio_check')
-        addClass(this, 'radio_check')
-        self.filter.shlxRow = this.innerHTML
-      })
-    }
   },
   methods: {
 
@@ -2058,14 +2050,14 @@ export default {
       // document.body.scrollTop = 0
       this.state.loadMessage = ''
       this.list = []
-      this.$set(this, 'list', [])
+      // this.$set(this, 'list', [])
       var self = this
       this.state.isGif = true
-      this.$set(this.state, 'isGif', true)
+      // this.$set(this.state, 'isGif', true)
       this.filter.pn = 0
       API.getSelectMaster(this.filter, function (isOk, res) {
         if (isOk) {
-          console.log(res)
+          // console.log(res)
           self.state.isGif = false
           self.list = res.list
           if (res.list.length < 10) {
