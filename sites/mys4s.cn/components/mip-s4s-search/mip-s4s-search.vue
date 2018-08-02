@@ -4,13 +4,13 @@
       src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/banner.png"
       styel="width:100%;" />
     <div class="s4s-car-info">
-      <div style="display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;-webkit-align-items:center; box-align:center; -moz-box-align:center; -webkit-box-align:center;">
-        <div style="box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;">
+      <div style="display: flex;align-items:center;">
+        <div style="flex:1;">
           <h2 class="s4s-car-name" >请您上传行驶证，</h2>
           <div class="s4s-car-illegal">系统可直接识别信息，无需填写</div>
         </div>
         <div class="s4s-upload-pic">
-          <div
+          <!-- <div
             v-show="driveUrl"
             class="s4s-ask-upload-btn"
             @click="upload" >
@@ -18,14 +18,14 @@
               ref="imagess"
               :src="driveUrl"
               styel="width:100%;" />
-          </div>
+          </div> -->
           <div
-            v-show="!driveUrl"
             class="s4s-ask-upload-btn"
             @click="upload">
             <mip-img
+              :src="driveUrl||'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload.png'"
               styel="width:100%;"
-              src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload.png" />
+            />
             <input
               ref="file"
               type="file"
@@ -353,9 +353,9 @@ export default {
       util.toast('授权成功')
     })
     this.$on('customError', event => {
-      // window.localStorage.clear()
+      window.localStorage.clear()
       util.toast('授权失败')
-      this.$emit('loginAgain')
+      // this.$emit('loginAgain')
       // this.$refs.index.click()
     })
     // this.$emit('loginAgain')
@@ -448,50 +448,6 @@ export default {
         size: list[0].size,
         file: list[0]
       }
-
-      // const file = list[0]
-      // if (file) {
-      //   console.log(file.size / 1024 / 1024 + 'MB')
-      //   const isLt2M = file.size / 1024 / 1024 < 2
-      //   if (!isLt2M) {
-      //     util.toast('图片大小需要小于 2MB!')
-      //     return
-      //   }
-      //   util.toast('正在上传')
-      //   const formData = new FormData()
-      //   formData.append('image', list[0])
-      //   self.vehiclecardFetch(formData)
-      // }
-
-      // 对图片进行压缩
-
-      // let name = 'travelUrl'
-      // const formData1 = new FormData()
-      // formData1.append('image', list[0])
-      // fetch('https://mys4s.cn/car/upload_report_pic', {
-      //   method: 'POST',
-      //   body: formData1
-      // })
-      //   .then(res => res.json())
-      //   .then(data => {
-      //     if (data.code === 0) {
-      //       util.toast('上传成功')
-      //       if (name === 'ticket') {
-      //         self.ticketUrl = data.data
-      //       } else if (name === 'JSZTravel') {
-      //         self.JSZTravelUrl = data.data
-      //       } else if (name === 'JSZDrive') {
-      //         self.JSZDriveUrl = data.data
-      //       } else if (name === 'travelUrl') {
-      //         self.travelUrl = data.data
-      //       } else if (name === 'driveUrl') {
-      //         self.driveUrl = data.data
-      //       }
-      //     } else {
-      //       util.toast(data.msg)
-      //     }
-      //   })
-      console.log(list)
       self.html5Reader(list[0], item, 'driveUrl')
     },
     html5Reader: function (file, item, name) {
@@ -595,11 +551,10 @@ export default {
 }
 .s4s-car-info {
   background-color: #fff;
-  padding: 0.15rem;
+  padding: .25rem 0.15rem ;
 }
 
 .s4s-car-name {
-  -webkit-box-box-flex:1;
   -webkit-box-flex:1;
   -moz-box-flex:1;
   flex:1;
@@ -620,7 +575,7 @@ export default {
 }
 
 .provice {
-  background-image: linear-gradient(-149deg, #fe5a00 0%, #ff7c00 100%);
+  background-image: linear-gradient(40deg,  #ff7c00 0%, #fe5a00 100%);
   border-radius: 0.04rem;
   color: #fff;
   /* width: 0.45rem; */

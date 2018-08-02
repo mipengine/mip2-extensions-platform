@@ -237,7 +237,7 @@
             <span style="width:auto;color:#fe7000" >¥ {{ ownFree|| 0 }}</span>
           </div>
           <div
-            class="s4s-group"
+            class="s4s-group group-upload"
             style="height:auto">
             <div class="s4s-group-tit">上传罚单</div>
             <mip-img
@@ -828,11 +828,12 @@ export default {
 
 .s4s-order-container {
   background-color: #fff;
-  padding: 4%;
+  padding: .25rem .15rem;
 }
 .s4s-order-title {
   color: #4b4b4b;
   font-size: .2rem;
+  font-weight: bold;
 }
 
 .s4s-order-input {
@@ -855,6 +856,10 @@ export default {
   padding: .06rem .1rem;
   font-size: .16rem;
   color:#4F7EFF;
+}
+.group-upload {
+  align-items:end;
+  height: auto;
 }
 .s4s-order-input span {
   color: #fff;
@@ -909,7 +914,9 @@ export default {
 
 .s4s-title {
   font-size: .2rem;
-  padding-bottom: .15rem;
+  /* padding: .15rem; */
+  padding-top: 0.25rem;
+  font-weight: bold;
 }
 .s4s-help-tip {
   float: none;
@@ -957,7 +964,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color:#ccc;
 }
 .provice {
-  background-image: linear-gradient(-149deg, #fe5a00 0%, #ff7c00 100%);
+  background-image: linear-gradient(40deg,  0%#ff7c00, #fe5a00 100%);
   border-radius: 0.04rem;
   color: #fff;
   /* width: 0.45rem; */
