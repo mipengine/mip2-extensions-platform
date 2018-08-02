@@ -65,11 +65,37 @@ export default {
       isShow1: true,
       isShowPopup: false,
       detail: '',
-      num: 0
+      num: 0,
+      isLocation: true
     }
   },
   watch: {
     areadata (val) {
+      if (this.area.address !== val.address) {
+        this.area.address = val.address
+        let city = val.show1 && this.num === 0 ? this.area.address.split(' ')[1] : val.address.split(' ')[1]
+        let dist = val.show1 && this.num === 0 ? this.area.address.split(' ')[2] : val.address.split(' ')[2]
+        this.isLocation = false
+        fetch(`${apiUrl.getByName}?cityName=${city}&distName=${dist}`).then(data => {
+          return data.json()
+        }).then(res => {
+          this.area.cityId = res.data.dist.city.id
+          this.area.distId = res.data.dist.id
+          MIP.setData({
+            orderData: {
+              'cityId': this.area.cityId,
+              'distId': this.area.distId,
+              'address': this.area.address,
+              'detail': this.detail
+            },
+            areaData: {
+              'detail': this.detail,
+              'address': this.area.address,
+              'locationAddress': this.area.address
+            }
+          })
+        })
+      }
       this.area.address = val.show1 && this.num === 0 ? this.area.address : val.address
       this.detail = val.detail
       if (val.show1) this.num++
@@ -77,6 +103,7 @@ export default {
   },
   mounted () {
     this.$on('success', res => {
+      this.isLocation = false
       this.detail = res.address.city + ' ' + res.address.district + ' ' + res.address.street
       this.area.city = res.address.city
       this.area.address = res.address.province + ' ' + res.address.city + ' ' + res.address.district
@@ -89,13 +116,13 @@ export default {
       })
       fetch(`${apiUrl.getByName}?cityName=${res.address.city}&distName=${res.address.district}`).then(data => {
         return data.json()
-      }).then(res => {
-        this.area.cityId = res.data.dist.city.id
-        this.area.distId = res.data.dist.id
+      }).then(res1 => {
+        this.area.cityId = res1.data.dist.city.id
+        this.area.distId = res1.data.dist.id
         MIP.setData({
           orderData: {
-            'cityId': res.data.dist.city.id,
-            'distId': res.data.dist.id,
+            'cityId': this.area.cityId,
+            'distId': this.area.distId,
             'address': this.area.address,
             'detail': this.detail,
             'lat': res.point.lat,
@@ -109,8 +136,9 @@ export default {
         })
       })
     })
-    this.$on('success', res => {
+    this.$on('failed', res => {
       console.log(res)
+      this.isLocation = true
     })
   },
   methods: {
@@ -122,14 +150,24 @@ export default {
       })
     },
     focus () {
-      MIP.setData({
-        chooseDetail: {
-          'show': true
-        },
-        orderData: {
-          'showFixed': true
-        }
-      })
+      // 没有授权获取位置
+      if (this.isLocation) {
+        MIP.setData({
+          alertMsg: {
+            errorTitle: '您没有授权获取位置信息，请您先选择所在城市',
+            isError: true
+          }
+        })
+      } else {
+        MIP.setData({
+          chooseDetail: {
+            'show': true
+          },
+          orderData: {
+            'showFixed': true
+          }
+        })
+      }
     },
     blur () {
       MIP.setData({
@@ -171,12 +209,16 @@ export default {
           font-size: 15px;
       }
       .content{
-          width: 70%;
+          width: 65%;
           height: 35px;
           padding: 5px 0;
           color: #333;
           line-height: 35px;
           font-size: 14px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+
       }
     }
     .city1,.detail{

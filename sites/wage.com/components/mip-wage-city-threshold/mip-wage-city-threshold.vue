@@ -182,7 +182,6 @@ input {
 	font-family: PingFang-SC-Medium;
 	font-weight: 400;
   -webkit-tap-highlight-color: transparent; 
-
 }
 .w98p{
   width:98%;

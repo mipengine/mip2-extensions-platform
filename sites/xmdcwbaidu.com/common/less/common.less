@@ -1,0 +1,252 @@
+@import './const';
+@import "./reset.less";
+@import "./base.less";
+
+body {
+  color: #333333;
+  font-size: 34px;
+}
+
+.mip-shell-header-wrapper {
+  border-bottom: 0.01rem solid #e6e6e6;
+}
+
+.ldf-business-tips {
+  text-align: center;
+  background-color: #FFB369;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  p:first-child {
+    min-width: 6%;
+    align-self: flex-start;
+  }
+  p {
+    color: #F57A27;
+    font-size: 13px;
+  }
+}
+
+.btn-container {
+  box-sizing: border-box;
+  padding: 0.6rem 0.3rem;
+  .ldf-mint-button {
+    display: block;
+    width: 100%;
+    height: 0.88rem;
+    border-radius: 0;
+    color: @color-text-w;
+    font-size: 0.36rem;
+    background-color: @color-btn;
+  }
+}
+
+.ldf-agreement-container {
+  margin-top: 0.3rem;
+  padding-left: 0.6rem;
+  padding-right: 0.3rem;
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  .input_check {
+    position: absolute;
+    visibility: hidden;
+    display: none;
+  }
+  .input_check + label {
+    display: inline-block;
+    width: 0.24rem;
+    height: 0.24rem;
+    border: 0.05rem solid @color-background;
+    border-radius: 0.11rem;
+    background-color: white;
+    position: relative;
+  }
+  .input_check:checked + label {
+    background-color: white;
+  }
+  .input_check:checked + label:after {
+    content: '';
+    position: absolute;
+    // left: 0.25rem;
+    // bottom: 0.75rem;
+    left: 19%;
+    bottom: 42%;
+    width: 0.1rem;
+    height: 0.04rem;
+    border: 0.03rem solid @color-btn;
+    border-top-color: white;
+    border-right-color: white;
+    -ms-transform: rotate(-60deg);
+    -moz-transform: rotate(-60deg);
+    -webkit-transform: rotate(-60deg);
+    transform: rotate(-52deg);
+  }
+  .label-container {
+    display: flex;
+    margin-right: 0.16rem;
+  }
+  .agree-text {
+    font-size: 0.24rem;
+    padding-top: 0.05rem;
+    span {
+      color: @color-btn;
+    }
+  }
+  .item-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+.show-uppercase {
+  input {
+    text-transform: uppercase;
+  }
+}
+.ldf-popup-img {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  left: 30px;
+  right: 30px;
+  transform: translate3d(0, -50%, 0);
+  img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+  }
+}
+.ldf-popup-picker {
+  width: 100%;
+  //.picker-toolbar {
+  //  border-bottom: 1px solid #f2f2f2;
+  //  .mint-datetime-action {
+  //    width: 100%;
+  //    letter-spacing: 0.1rem;
+  //  }
+  //}
+  .picker-toolbar {
+    border-bottom: solid 1px #eaeaea;
+  }
+  .mint-datetime-action {
+    display: block;
+    box-sizing: border-box;
+  }
+  .mint-datetime-cancel {
+    text-align: left;
+    padding-left: 15px;
+  }
+  .mint-datetime-confirm {
+    text-align: right;
+    padding-right: 15px;
+  }
+  .picker {
+    z-index: 5;
+    .picker-item {
+      //font-size: 15px;
+      font-weight: normal;
+      color: #999;
+    }
+    .picker-item.picker-selected {
+      font-weight: bold;
+      color: #333;
+      background-color: @color-background;
+    }
+  }
+}
+.ldf-inline-chose {
+  //border-top: 1px solid @bd-color2;
+  font-size: 16px;
+  min-height: 2.4rem;
+  //padding: 0 10px;
+  display: flex;
+  flex-wrap: nowrap;
+  background-color: white;
+  
+  & > div {
+    display: flex;
+    align-items: center;
+  }
+  
+  .chose-type {
+    justify-content: flex-start;
+    width: 80px;
+  }
+  
+  .chose-item {
+    flex-grow: 2;
+    min-height: inherit;
+    justify-content: center;
+    
+    & > div {
+      margin-right: 0.6rem;
+      display: inline-flex;
+      width: auto;
+      justify-content: space-between;
+      align-items: center;
+      
+      span:last-child {
+        padding-left: 0.3rem;
+        padding-top: 0.2rem;
+      }
+      
+      span:first-child {
+        width: auto;
+        padding: 0;
+      }
+    }
+    
+    & > div:last-child {
+      margin-right: 0;
+    }
+    
+  }
+  
+}
+
+.field-icon {
+  color: @color-text-p;
+}
+
+.btn-container {
+  box-sizing: border-box;
+  padding: 0.6rem 0.3rem;
+  .ldf-mint-button {
+    display: block;
+    width: 100%;
+    height: 0.88rem;
+    border-radius: 0;
+    color: @color-text-w;
+    font-size: 0.36rem;
+    background-color: @color-btn;
+  }
+}
+
+.mint-msgbox-wrapper {
+  .mint-msgbox-btn {
+    font-size: 15px;
+    letter-spacing: 1px;
+  }
+}
+
+//常用标题栏
+.ldf-normal-item {
+  display: flex;
+  align-items: center;
+  min-height: 0.6rem;
+  padding-left: 0.3rem;
+  background: rgba(240, 240, 240, 1);
+  p,span {
+    font-size: 14px;
+    color: #bababa;
+  }
+}
+
+
+
+
+

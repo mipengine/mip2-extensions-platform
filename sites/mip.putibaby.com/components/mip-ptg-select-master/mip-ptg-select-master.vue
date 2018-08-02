@@ -124,6 +124,8 @@
     </mip-fixed>
     <mip-lightbox
       id="my-lightbox2"
+      type="top"
+      still
       layout="nodisplay"
       content-scroll>
 
@@ -143,58 +145,130 @@
 
             <tbody>
               <tr>
-                <td class="citytd">北京</td>
-                <td class="citytd">天津</td>
-                <td class="citytd">哈尔滨</td>
-                <td class="citytd">武汉</td>
+                <td
+                  class="citytd"
+                  @click="setCity">北京</td>
+                <td
+                  class="citytd"
+                  @click="setCity">天津</td>
+                <td
+                  class="citytd"
+                  @click="setCity">哈尔滨</td>
+                <td
+                  class="citytd"
+                  @click="setCity">武汉</td>
               </tr>
               <tr>
-                <td class="citytd">上海</td>
-                <td class="citytd">长春</td>
-                <td class="citytd">济南</td>
-                <td class="citytd">长沙</td>
+                <td
+                  class="citytd"
+                  @click="setCity">上海</td>
+                <td
+                  class="citytd"
+                  @click="setCity">长春</td>
+                <td
+                  class="citytd"
+                  @click="setCity">济南</td>
+                <td
+                  class="citytd"
+                  @click="setCity">长沙</td>
               </tr>
               <tr>
-                <td class="citytd">广州</td>
-                <td class="citytd">杭州</td>
-                <td class="citytd">洛阳</td>
-                <td class="citytd">南阳</td>
+                <td
+                  class="citytd"
+                  @click="setCity">广州</td>
+                <td
+                  class="citytd"
+                  @click="setCity">杭州</td>
+                <td
+                  class="citytd"
+                  @click="setCity">洛阳</td>
+                <td
+                  class="citytd"
+                  @click="setCity">南阳</td>
               </tr>
               <tr>
-                <td class="citytd">深圳</td>
-                <td class="citytd">沈阳</td>
-                <td class="citytd">石家庄</td>
-                <td class="citytd">西安</td>
+                <td
+                  class="citytd"
+                  @click="setCity">深圳</td>
+                <td
+                  class="citytd"
+                  @click="setCity">沈阳</td>
+                <td
+                  class="citytd"
+                  @click="setCity">石家庄</td>
+                <td
+                  class="citytd"
+                  @click="setCity">西安</td>
               </tr>
               <tr>
-                <td class="citytd">湘潭</td>
-                <td class="citytd">徐州</td>
-                <td class="citytd">成都</td>
-                <td class="citytd">南京</td>
+                <td
+                  class="citytd"
+                  @click="setCity">湘潭</td>
+                <td
+                  class="citytd"
+                  @click="setCity">徐州</td>
+                <td
+                  class="citytd"
+                  @click="setCity">成都</td>
+                <td
+                  class="citytd"
+                  @click="setCity">南京</td>
               </tr>
               <tr>
-                <td class="citytd">黄石</td>
-                <td class="citytd">郑州</td>
-                <td class="citytd">青岛</td>
-                <td class="citytd">大连</td>
+                <td
+                  class="citytd"
+                  @click="setCity">黄石</td>
+                <td
+                  class="citytd"
+                  @click="setCity">郑州</td>
+                <td
+                  class="citytd"
+                  @click="setCity">青岛</td>
+                <td
+                  class="citytd"
+                  @click="setCity">大连</td>
               </tr>
               <tr>
-                <td class="citytd">常州</td>
-                <td class="citytd">唐山</td>
-                <td class="citytd">保定</td>
-                <td class="citytd">秦皇岛</td>
+                <td
+                  class="citytd"
+                  @click="setCity">常州</td>
+                <td
+                  class="citytd"
+                  @click="setCity">唐山</td>
+                <td
+                  class="citytd"
+                  @click="setCity">保定</td>
+                <td
+                  class="citytd"
+                  @click="setCity">秦皇岛</td>
               </tr>
               <tr>
-                <td class="citytd">呼和浩特</td>
-                <td class="citytd">乌鲁木齐</td>
-                <td class="citytd">合肥</td>
-                <td class="citytd">南昌</td>
+                <td
+                  class="citytd"
+                  @click="setCity">呼和浩特</td>
+                <td
+                  class="citytd"
+                  @click="setCity">乌鲁木齐</td>
+                <td
+                  class="citytd"
+                  @click="setCity">合肥</td>
+                <td
+                  class="citytd"
+                  @click="setCity">南昌</td>
               </tr>
               <tr>
-                <td class="citytd">福州</td>
-                <td class="citytd">厦门</td>
-                <td class="citytd">香港</td>
-                <td class="citytd">南宁</td>
+                <td
+                  class="citytd"
+                  @click="setCity">福州</td>
+                <td
+                  class="citytd"
+                  @click="setCity">厦门</td>
+                <td
+                  class="citytd"
+                  @click="setCity">香港</td>
+                <td
+                  class="citytd"
+                  @click="setCity">南宁</td>
               </tr>
             </tbody>
           </table>
@@ -231,9 +305,11 @@
               <td>上户类型：</td>
 
               <td class="qt_td"><span
+                id="qtbtn"
                 class="radio_btn radio_check"
                 @click="clickQuantian">全天</span></td>
               <td class="bb_td"><span
+                id="bbbtn"
                 class="radio_btn"
                 @click="clickBaiban">白班</span></td>
 
@@ -998,8 +1074,15 @@
           class="queding"
           on="tap:right-sidebar.close tap:selectmaster.dook">确定</span>
       </mip-sidebar>
-
       <div
+        v-if="state.isGif"
+        class="gif">
+        <mip-img
+          v-if="state.isGif"
+          src="https://mip.putibaby.com/i/jiazai.gif" />
+      </div>
+      <div
+        v-if="list.length > 0"
         id="cardList"
         class="cardList">
         <div
@@ -1078,13 +1161,7 @@
             <p>{{ state.loadMessage }}</p>
           </div>
         </div>
-        <div
-          v-if="state.isGif"
-          class="gif">
-          <mip-img
-            v-if="state.isGif"
-            src="https://mip.putibaby.com/i/jiazai.gif" />
-        </div>
+
       </div>
 
     </div>
@@ -1885,17 +1962,6 @@ export default {
 
     var radiobtn = document.querySelectorAll('.radio_btn')
 
-    var citytd = document.querySelectorAll('.citytd')
-    // var cityVal = document.querySelector('#btn-open').innerHTML
-
-    for (var i = 0; i < citytd.length; i++) {
-      citytd[i].addEventListener('touchend', function () {
-        removeClass(citytd, 'checked')
-        addClass(this, 'checked')
-        self.filter.city = this.innerHTML
-      })
-    }
-
     for (var j = 0; j < radiobtn.length; j++) {
       radiobtn[j].addEventListener('touchend', function () {
         removeClass(radiobtn, 'radio_check')
@@ -1923,10 +1989,30 @@ export default {
         }
       })
     },
-    clickQuantian () {
+    clickQuantian (e) {
+      // console.log(e.srcElement)
+      // console.log(this.lastCityElem)
+      if (this.lastRadioElem) {
+        // console.log(this)
+        this.lastRadioElem.className = 'radio_btn'
+      } else {
+        document.querySelector('#qtbtn').className = 'radio_btn'
+      }
+      addClass(e.srcElement, 'radio_check')
+      this.lastRadioElem = e.srcElement
       this.filter2.shlxRow = '全天'
     },
-    clickBaiban () {
+    clickBaiban (e) {
+      // console.log(e.srcElement)
+      // console.log(this.lastRadioElem)
+      if (this.lastRadioElem) {
+        // console.log(this)
+        this.lastRadioElem.className = 'radio_btn'
+      } else {
+        document.querySelector('#qtbtn').className = 'radio_btn'
+      }
+      addClass(e.srcElement, 'radio_check')
+      this.lastRadioElem = e.srcElement
       this.filter2.shlxRow = '白班'
     },
 
@@ -1968,10 +2054,14 @@ export default {
     },
     load_data () {
       console.log('should set data')
+      // document.documentElement.scrollTop = 0
+      // document.body.scrollTop = 0
       this.state.loadMessage = ''
-      this.state.isGif = true
       this.list = []
+      this.$set(this, 'list', [])
       var self = this
+      this.state.isGif = true
+      this.$set(this.state, 'isGif', true)
       this.filter.pn = 0
       API.getSelectMaster(this.filter, function (isOk, res) {
         if (isOk) {
@@ -2061,7 +2151,17 @@ export default {
     reload_ () {
       window.location.reload()
     },
-
+    setCity (e) {
+      // console.log(e.srcElement)
+      // console.log(this.lastCityElem)
+      if (this.lastCityElem) {
+        // console.log(this)
+        this.lastCityElem.className = 'citytd'
+      }
+      addClass(e.srcElement, 'checked')
+      this.lastCityElem = e.srcElement
+      this.filter.city = e.srcElement.innerHTML
+    },
     sortClick (e) {
       var self = this
       if (e === 'zh') {
