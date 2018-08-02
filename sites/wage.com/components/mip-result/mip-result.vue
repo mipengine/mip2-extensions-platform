@@ -130,7 +130,7 @@ input::placeholder {
     color: #fff;
     font-weight: 500;
     text-align: center;
-    border-radius: 45px;
+    border-radius: 45px !important;
     background: -webkit-linear-gradient(left, #FF731F, #FFA53A);
     /* Safari 5.1 - 6.0 */
     background: -o-linear-gradient(right, #FF731F, #FFA53A);
@@ -140,7 +140,6 @@ input::placeholder {
     background: linear-gradient(to right, #FF731F, #FFA53A);
     /* 标准的语法 */
 }
-
 .tips {
     position: relative;
     bottom: 0;
