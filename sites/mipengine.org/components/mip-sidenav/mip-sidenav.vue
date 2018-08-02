@@ -70,7 +70,7 @@ export default {
     let activeTop = activeDom ? activeDom.offsetTop : 0
     let scrollDom = document.querySelectorAll('.layout-sidebar')[0]
     if (scrollDom) {
-      scrollDom.scrollTop = activeTop + 60
+      scrollDom.scrollTop = activeTop
     }
   },
   methods: {
