@@ -62,7 +62,7 @@
     <mip-result
       v-show="!resultShow"
       :resultdata="resultData"
-      @resetcalculate="reSet"/></mip-result>
+      @resetcalculate="reSet"/>
     <div
       id="tips"
       :class="getPositionValue"
