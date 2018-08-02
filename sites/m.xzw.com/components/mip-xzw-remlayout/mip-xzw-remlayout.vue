@@ -21,7 +21,7 @@ export default {
     }
     const toolbox = document.querySelectorAll('.toolbox')
     if (toolbox.length > 0) {
-      toolbox[0].style.height = (_h - 3.24 * $fontSize) + `px`
+      toolbox[0].style.height = (_h - 3.4 * $fontSize) + `px`
     }
     const gridtwelve = document.querySelectorAll('.gridtwelve')
     if (gridtwelve.length > 0) {

@@ -14,10 +14,12 @@
       </div>
       <div
         :style="getWrapperHeight"
+        :isclick = "getTag"
         class="col-wrapper">
         <ul
           ref="wheel"
           :style="getListTop"
+          :class="{'tm0':isinit}"
           class="wheel-list">
           <li
             v-for="item in scrollValues" 
@@ -51,7 +53,7 @@ while (360 % deg !== 0 && deg <= 360) {
 }
 const singleDeg = deg;
 // 半圆下的内容条数
-const space = Math.floor((360 / singleDeg) / 2);
+const space = 3;
 export default {
 	props: {
 		values: {
@@ -59,7 +61,7 @@ export default {
 			default:function () { return [
 				'按照工资',
 				'按照最低标准',
-				'自定义'
+				'自定义',
 			];}
 		},
 		scrollshow: {
@@ -68,8 +70,12 @@ export default {
 		},
 		tag: {
 			type: Number,
-			default: 1
-		}
+			default: 0,
+		},
+		isclick:{
+			type:Boolean,
+			default:false,
+		},
 	},
 	data () {
 		return {
@@ -85,21 +91,20 @@ export default {
 				start: -space,
 				end: space,
 				space
-			}
+			},
+			valueLenth:1,
+			isinit:false,
 		};
 	},
 	computed: {
 		scrollValues () {
 			const result = [];
-			for (let i = this.range.start; i <= this.range.end; i += 1) {
+			for (let i = 0; i <this.values.length; i++) {
 				result.push({
 					value: this.getRangeData(i),
 					index: i
 				});
 			}
-			result.forEach(function (value, index) {
-				index == 7 ? selectValue = value.value : '';
-			});
 			return result;
 		},
 		getListTop () {
@@ -126,18 +131,22 @@ export default {
 		},
 		animate () {
 			return new Animate();
+		},
+		getTag (){
+			this.initValue();
+			return this.tag;
 		}
-	},
-	mounted () {
-		this.$el.addEventListener('touchstart', this.listenerTouchStart, false);
-		this.$el.addEventListener('touchmove', this.listenerTouchMove, false);
-		this.$el.addEventListener('touchend', this.listenerTouchEnd, false);
 	},
 	/*  beforeDestory() {
     this.$el.removeEventListener('touchstart', this.listenerTouchStart, false);
     this.$el.removeEventListener('touchmove', this.listenerTouchMove, false);
     this.$el.removeEventListener('touchend', this.listenerTouchEnd, false);
-  }, */
+	}, */
+	mounted () {
+		this.$el.addEventListener('touchstart', this.listenerTouchStart, false);
+		this.$el.addEventListener('touchmove', this.listenerTouchMove, false);
+		this.$el.addEventListener('touchend', this.listenerTouchEnd, false);
+	},
 	methods: {
 		initWheelItemDeg (index) {
 			return {
@@ -151,7 +160,8 @@ export default {
 			/* ev.stopPropagation();
       ev.preventDefault(); */
 			/* var mo=function(e){e.preventDefault();};
-      document.body.addEventListener("touchmove",mo,true); */
+			document.body.addEventListener("touchmove",mo,true); */
+			this.isinit = false;
 			isInertial = false;
 			this.finger.startY = ev.targetTouches[0].pageY;
 			this.finger.prevMove = this.finger.currentMove;
@@ -183,7 +193,8 @@ export default {
 		getSelectValue (move) {
 			const index = Math.abs(move / lineHeight);
 			const pickValue = this.getRangeData(index);
-			this.$emit('select', pickValue);
+			// this.$emit('select', pickValue);
+			selectValue = pickValue;
 		},
 		/**
      * 求移动速度（v = s / t），判断用户操作快慢，从而得到惯性的滑动距离
@@ -221,6 +232,18 @@ export default {
 			} else {
 				this.$refs.wheel.style.transition = '';
 			}
+			if(moveDeg<0){
+				moveDeg = 0;
+				deg = 21;
+				actualMove = 0;
+			}
+			if(this.values.length == 3 && actualMove>72){
+				moveDeg = 48;
+				actualMove = 72;
+			}else if(this.values.length == 2 && actualMove >36){
+				moveDeg = 24;
+				actualMove = 36;
+			}
 			this.finger.currentMove = actualMove;
 			this.$refs.wheel.style.transform = `rotate3d(1, 0, 0, ${moveDeg}deg)`;
 			this.updateRange(Math.round(this.finger.currentMove / lineHeight));
@@ -229,17 +252,31 @@ export default {
 		// 关闭选择器
 		closeScrollSelect () {
 			this.$emit('colsescrollselect', '');
+			this.$refs.wheel.style.transform = 'rotate3d(1, 0, 0, 0)';
 		},
 		// 获取选中值，传递到父组件显示
 		getScrollSelectValue (ev) {
 			this.$emit('showselect', selectValue);
-			selectValue = '';
+		},
+		//初始化滚轮
+		initValue () {
+			if(this.tag === 0){
+				this.isinit = false;
+			}else{
+				this.isinit = true;
+			}
 		}
-	}
+	},
 };
 
 </script>
 <style scoped>
+span{
+	-webkit-tap-highlight-color: transparent; 
+}
+.tm0{
+	transform: rotate3d(1,0,0,0) !important;
+}
 .scroll-container {
   width: 100%;
   height: 100%;
@@ -327,6 +364,7 @@ ul {
   left: 50%;
   border-top: 1px solid #FF8D1D;
   border-bottom: 1px solid #FF8D1D;
+	opacity: 0.2;
 }
 
 </style>

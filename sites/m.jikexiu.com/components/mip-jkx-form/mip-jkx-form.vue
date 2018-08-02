@@ -198,15 +198,6 @@ export default {
         })
       } else {
         if (this.form.imgCode.length === 4) {
-          // let formData = new FormData()
-          // formData.append('authcode', this.form.imgCode)
-          // formData.append('sessionkey', this.form.img.sessionkey)
-          // formData.append('mobile', this.form.phone)
-          // let options = {
-          //   authcode: this.form.imgCode,
-          //   sessionkey: this.form.img.sessionkey,
-          //   mobile: this.form.phone
-          // }
           fetch(apiUrl.sendCode, {
             method: 'POST',
             headers: {
@@ -334,12 +325,16 @@ export default {
         width:40%;
       }
       .txt{
-        width: 30%;
-        line-height: 35px;
-        font-size: 13px;
-        color: #fa5e24;
-        text-align: center;
-        text-indent: 20px;
+          line-height: 45px;
+          font-size: 13px;
+          color: #fa5e24;
+          text-align: center;
+          position: absolute;
+          top: 0;
+          right: -10px;
+          width: 100px;
+          height: 45px;
+          background-size: 100% 100%;
       }
       .act{
           color: #ccc;
