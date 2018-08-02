@@ -12703,7 +12703,7 @@ export default {
 	},
 	mounted :function(){
 		this.getProvinceId(1,'北京',0);
-		this.getCityId(1,'北京',0);
+		this.getCityId(1,'北京市',0);
 	},
 	methods: {
 		closeAdd: function () {

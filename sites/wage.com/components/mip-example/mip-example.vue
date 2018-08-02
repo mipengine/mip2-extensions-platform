@@ -10,12 +10,12 @@
           <div class="flex-item">
             <span
               :class="{active:active}"
-              @click="selectTag(1)">计算税后工资</span>
+              @click="selectTag(1,active)">计算税后工资</span>
             <span :class="{active_select:active}"/>
           </div>
           <div class="flex-item"><span
             :class="{active:!active}"
-            @click="selectTag(2)">推算税前工资</span><span :class="{active_select:!active}"/></div>
+            @click="selectTag(2,!active)">推算税前工资</span><span :class="{active_select:!active}"/></div>
         </div>
       </mip-fixed>
       <!--计算税前工资-->
@@ -335,9 +335,9 @@ export default {
 	},
 	methods: {
 		// 切换税前/税后工资
-		selectTag: function (index) {
+		selectTag: function (index,flag) {
 			this.isClick++;
-			this.active = !this.active;
+			!flag?this.active = !this.active:'';
 			this.tag = index;
 			if (index == 1) {
 				this.title = '税前工资';
