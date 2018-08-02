@@ -7,7 +7,7 @@
         :class="{selected: active ? active === item.hash : (index === 0 && level === 1)}"
         :href="item.hash"
         class="chapter-title"
-        @click="select(item.hash)"
+        @click.stop="select(item.hash)"
       >
         <div v-html="item.text"/>
       </a>
