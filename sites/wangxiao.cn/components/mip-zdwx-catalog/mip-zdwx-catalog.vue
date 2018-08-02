@@ -42,6 +42,10 @@
                     <span style="display:inline-block;width: .8rem;height: .8rem;border-radius: 100%;margin-left: .8rem;background: #ff6a4a;"/>
                     <span class="list-item-title">{{ item3.courseName }}</span>
                   </div>
+                  <p
+                    v-show="item3.isShowBtn"
+                    class="right-btn"
+                    @click.stop="goStudy(item3)">{{ item3.btnText }}</p>
                 </div>
               </li>
             </ul>
@@ -65,27 +69,31 @@ export default {
   },
   mounted () {
     let _this = this
-    fetch(base.api.getGoodsCatalog, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        id: base.getQueryString('id')
-      })
-    })
-      .then(function (response) {
-        // 获得后台实际返回的内容
-        response.json().then(function (data) {
-          if (data.data) {
-            _this.headerData = data.data
-          }
+    this.$element.customElement.addEventAction('login', event => {
+      console.log(event.sessionId)
+      fetch(base.api.getGoodsCatalog, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id: base.getQueryString('id'),
+          token: event.sessionId
         })
       })
-      .catch(function (err) {
-        console.log('Fetch Error :-S', err)
-      })
+        .then(function (response) {
+          // 获得后台实际返回的内容
+          response.json().then(function (data) {
+            if (data.data) {
+              _this.headerData = data.data
+            }
+          })
+        })
+        .catch(function (err) {
+          console.log('Fetch Error :-S', err)
+        })
+    })
   },
   methods: {
     firstTitle (index) {
@@ -106,7 +114,7 @@ export default {
       }
     },
     goStudy (item) {
-      console.log(item)
+      MIP.viewer.open(item.btnUrl, {isMipLink: false})
     }
   }
 }
@@ -184,7 +192,6 @@ export default {
   >p{
     float: right;
     font-size: 1.1rem;
-    color: #999;
   }
 }
 .item-item-icon{
@@ -205,4 +212,10 @@ export default {
   padding-left: 1rem;
 }
 a,img,button,input,textarea,div{-webkit-tap-highlight-color:rgba(255,255,255,0);}
+.right-btn{
+  padding: .2rem .4rem;
+  border: 1px solid #e96847;
+  color: #e96847;
+  border-radius: 2.2rem;
+}
 </style>

@@ -11,6 +11,7 @@
           class="left">点击咨询</a>
         <a
           class="right"
+          data-type="mip"
           @click="removeSku">购买服务</a>
           <!-- <div class="right" on="tap:log.login"> xxxx </div> -->
       </div>

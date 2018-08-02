@@ -22,6 +22,9 @@
 export default {
   mounted () {
     MIP.viewer.fixedElement.init()
+  },
+  prerenderAllowed () {
+    return true
   }
 }
 </script>

@@ -605,7 +605,7 @@ export default {
             return true
           } else {
             Dialog.open({
-              message: '暂不支持点击',
+              message: '暂时只能查看违章缴罚订单详情, <br>敬请期待!',
               showCancelButton: false
             })
           }
