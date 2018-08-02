@@ -141,134 +141,135 @@
           <table
             id="citybar"
             class="citybar"
-            data-city="">
+            data-city=""
+            @click="setCity">
 
             <tbody>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">北京</td>
+                >北京</td>
                 <td
                   class="citytd"
-                  @click="setCity">天津</td>
+                >天津</td>
                 <td
                   class="citytd"
-                  @click="setCity">哈尔滨</td>
+                >哈尔滨</td>
                 <td
                   class="citytd"
-                  @click="setCity">武汉</td>
+                >武汉</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">上海</td>
+                >上海</td>
                 <td
                   class="citytd"
-                  @click="setCity">长春</td>
+                >长春</td>
                 <td
                   class="citytd"
-                  @click="setCity">济南</td>
+                >济南</td>
                 <td
                   class="citytd"
-                  @click="setCity">长沙</td>
+                >长沙</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">广州</td>
+                >广州</td>
                 <td
                   class="citytd"
-                  @click="setCity">杭州</td>
+                >杭州</td>
                 <td
                   class="citytd"
-                  @click="setCity">洛阳</td>
+                >洛阳</td>
                 <td
                   class="citytd"
-                  @click="setCity">南阳</td>
+                >南阳</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">深圳</td>
+                >深圳</td>
                 <td
                   class="citytd"
-                  @click="setCity">沈阳</td>
+                >沈阳</td>
                 <td
                   class="citytd"
-                  @click="setCity">石家庄</td>
+                >石家庄</td>
                 <td
                   class="citytd"
-                  @click="setCity">西安</td>
+                >西安</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">湘潭</td>
+                >湘潭</td>
                 <td
                   class="citytd"
-                  @click="setCity">徐州</td>
+                >徐州</td>
                 <td
                   class="citytd"
-                  @click="setCity">成都</td>
+                >成都</td>
                 <td
                   class="citytd"
-                  @click="setCity">南京</td>
+                >南京</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">黄石</td>
+                >黄石</td>
                 <td
                   class="citytd"
-                  @click="setCity">郑州</td>
+                >郑州</td>
                 <td
                   class="citytd"
-                  @click="setCity">青岛</td>
+                >青岛</td>
                 <td
                   class="citytd"
-                  @click="setCity">大连</td>
+                >大连</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">常州</td>
+                >常州</td>
                 <td
                   class="citytd"
-                  @click="setCity">唐山</td>
+                >唐山</td>
                 <td
                   class="citytd"
-                  @click="setCity">保定</td>
+                >保定</td>
                 <td
                   class="citytd"
-                  @click="setCity">秦皇岛</td>
+                >秦皇岛</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">呼和浩特</td>
+                >呼和浩特</td>
                 <td
                   class="citytd"
-                  @click="setCity">乌鲁木齐</td>
+                >乌鲁木齐</td>
                 <td
                   class="citytd"
-                  @click="setCity">合肥</td>
+                >合肥</td>
                 <td
                   class="citytd"
-                  @click="setCity">南昌</td>
+                >南昌</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">福州</td>
+                >福州</td>
                 <td
                   class="citytd"
-                  @click="setCity">厦门</td>
+                >厦门</td>
                 <td
                   class="citytd"
-                  @click="setCity">香港</td>
+                >香港</td>
                 <td
                   class="citytd"
-                  @click="setCity">南宁</td>
+                >南宁</td>
               </tr>
             </tbody>
           </table>
