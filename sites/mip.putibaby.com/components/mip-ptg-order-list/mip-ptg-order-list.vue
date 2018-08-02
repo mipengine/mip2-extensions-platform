@@ -502,13 +502,14 @@ export default {
         from: null})
     },
     reload_ () {
-      window.location.reload()
-      var href = window.location.href
-      if (href.indexOf('?') >= 0) {
-        window.location.href = href + '&_=' + Math.random()
-      } else {
-        window.location.href = href + '?_=' + Math.random()
-      }
+      var self = this
+      API.ajaxOrderList({}, function (isOk, res) {
+        if (isOk) {
+          self.list = res.list
+        } else {
+          console.error(res)
+        }
+      })
     },
     handleBtn (order) {
       // window.location.href = '/master_card?mcode=' + order.master.mcode;
