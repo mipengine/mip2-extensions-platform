@@ -89,6 +89,15 @@ export default {
       show: false
     }
   },
+  watch: {
+    areadata (val) {
+      window.addEventListener('touchmove', function (e) {
+        if (val.show) {
+          e.preventDefault()
+        }
+      }, { passive: false })
+    }
+  },
   created () {
     request(apiUrl.provinceList).then(res => {
       if (res.code === 200) this.proList = res.data.provinceList

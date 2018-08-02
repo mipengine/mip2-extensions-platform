@@ -127,6 +127,12 @@ export default {
   },
   watch: {
     devicedata (val) {
+      document.body.style.overflow = val.show ? 'hidden' : 'scroll'
+      // window.addEventListener('touchmove', function (e) {
+      //   if (val.show) {
+      //     e.preventDefault()
+      //   }
+      // }, { passive: false })
       if (val.last) {
         this.last = val.last
         this.tab = ['类型', '品牌', '型号']
@@ -144,6 +150,12 @@ export default {
     this.$refs.mask.style.height = viewport.getHeight() + 'px'
   },
   created () {
+    document.body.style.overflow = this.devicedata.show ? 'hidden' : 'scroll'
+    // if (this.devicedata.show) {
+    //   window.addEventListener('touchmove', function (e) {
+    //     e.preventDefault()
+    //   }, { passive: false })
+    // }
     if ((this.devicedata.tab || []).length > 2) {
       this.tab = this.devicedata.tab
       this.last = this.devicedata.last
