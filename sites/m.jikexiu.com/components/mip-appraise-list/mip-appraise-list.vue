@@ -53,6 +53,7 @@
   </div>
 </template>
 <script>
+import request from '@/common/js/fetch'
 import apiUrl from '@/common/js/config.api'
 const viewport = MIP.viewport
 export default {
@@ -90,13 +91,12 @@ export default {
   },
   created () {
     // 请求好评借口
-    fetch(apiUrl.appraiseList).then(data => {
-      return data.json()
-    }).then(res => {
-      this.data = res.data.detail
-
-      this.$refs.swiperWraper.style.width = this.data.length * viewport.getWidth() * 0.8 + 'px'
-      this.$refs.swiperWraper.style.webkitTransform = 'translateX(0)'
+    request(apiUrl.appraiseList).then(res => {
+      if (res.code === 200) {
+        this.data = res.data.detail
+        this.$refs.swiperWraper.style.width = this.data.length * viewport.getWidth() * 0.8 + 'px'
+        this.$refs.swiperWraper.style.webkitTransform = 'translateX(0)'
+      }
     })
   },
   methods: {
@@ -123,7 +123,6 @@ export default {
 </script>
 <style scoped lang="css">
 /*客户评价*/
-
   .wrapper{
     width:80%;
     height: 145px;
@@ -136,7 +135,6 @@ export default {
   .jkx_evaluation_container .evaluate {
     overflow: hidden;
     width: 100%;
-
     border: 1px solid #eee;
     position: static;
     background: #fff;
@@ -159,7 +157,6 @@ export default {
     line-height: 20px;
     display: flex;
     align-items: center;
-
     font-size: 12px;
     color: rgb(153, 153, 153);
     background-color: transparent;

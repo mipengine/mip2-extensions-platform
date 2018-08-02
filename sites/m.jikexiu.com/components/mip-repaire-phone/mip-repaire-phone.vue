@@ -16,6 +16,7 @@
   </div>
 </template>
 <script>
+import request from '@/common/js/fetch'
 import apiUrl from '../../common/js/config.api'
 export default {
   data () {
@@ -24,10 +25,10 @@ export default {
     }
   },
   created () {
-    fetch(apiUrl.count).then(data => {
-      return data.json()
-    }).then(res => {
-      this.num = res.data.detail.total_repair.split('')
+    request(apiUrl.count).then(res => {
+      if (res.code === 200) {
+        this.num = res.data.detail.total_repair.split('')
+      }
     })
   }
 }
