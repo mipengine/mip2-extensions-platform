@@ -220,6 +220,7 @@ li {
   font-size: 17px;
   font-family: PingFang-SC-Medium;
   font-weight: 400;
+	-webkit-tap-highlight-color: transparent; 
 }
 
 .active_select {
