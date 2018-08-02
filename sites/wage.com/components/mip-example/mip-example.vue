@@ -62,7 +62,7 @@
     <mip-result
       v-show="!resultShow"
       :resultdata="resultData"
-      @resetcalculate="reSet"/>
+      @resetcalculate="reSet"/></mip-result>
     <div
       id="tips"
       :class="getPositionValue"
@@ -160,6 +160,7 @@ input::placeholder {
   /* Firefox 3.6 - 15 */
   background: linear-gradient(to right, #FF731F, #FFA53A);
   /* 标准的语法 */
+	-webkit-tap-highlight-color: transparent; 
 }
 
 .tips {
@@ -319,7 +320,7 @@ export default {
 				}
 			},
 			selectValue: 1,
-			resultShow: false,
+			resultShow: true,
 			resultData: {
 				tag: 1,
 				realIncome: 1000.56,
