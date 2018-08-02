@@ -1903,9 +1903,9 @@ export default {
     let len = imgs.length
 
     /**
- * 遍历imgs数组，将所有图片加载出来
- * 可以通过控制台查看网络请求，会发现所有图片均已加载
- */
+     * 遍历imgs数组，将所有图片加载出来
+     * 可以通过控制台查看网络请求，会发现所有图片均已加载
+     */
     for (let i = 0; i < len; i++) {
       let imgObj = new Image() // 创建图片对象
       imgObj.src = imgs[i]
@@ -1914,6 +1914,7 @@ export default {
         console.log('imgs' + i + '加载完毕')
       }, false)
     }
+
     var self = this
     this.$element.customElement.addEventAction('echo', function (event, str) {
       console.log(event)
@@ -2080,8 +2081,9 @@ export default {
       this.state.isGif = true
       // this.$set(this.state, 'isGif', true)
       this.filter.pn = 0
+
       setTimeout(function () {
-        API.getSelectMaster(this.filter, function (isOk, res) {
+        API.getSelectMaster(self.filter, function (isOk, res) {
           if (isOk) {
           // console.log(res)
             self.state.isGif = false
