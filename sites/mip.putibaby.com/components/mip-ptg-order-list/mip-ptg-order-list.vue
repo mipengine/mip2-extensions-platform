@@ -530,7 +530,8 @@ export default {
       if (skip) {
         API.zjqd(order.master.id, 'yuesao', function (isOk, data) {
           if (isOk) {
-            self.reload_()
+            window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/edit_contract?id=' + order.id), {})
+            // self.reload_()
           } else {
             console.warn(data)
             self.show_alert(data)
