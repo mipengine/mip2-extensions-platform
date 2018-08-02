@@ -18,7 +18,7 @@
         </div>
         <div
           class="s4s-car-illegal"
-          style="color:#666;margin-bottom:.08rem" >共有未处理违章
+          style="color:#666;" >共有未处理违章
           <span>{{ illegal.total || 0 }} </span>条，扣
           <span>{{ illegal.degree || 0 }} </span>分，罚款
           <span>{{ illegal.fine || 0 }} </span>元。
@@ -43,8 +43,8 @@
                 <span class="s4s-origin">{{ list.Point || 0 }}</span>分  罚款
                 <span class="s4s-origin">{{ list.Fine || 0 }}</span>元
               </div>
-              <div class="s4s-illegal-bd-txt">{{ list.Reason || '未知' }}</div>
-              <span style="color:#999">{{ list.OccTime || '' }}</span>
+              <div class="s4s-illegal-bd-txt" >{{ list.Reason || '未知' }}</div>
+              <span class="s4s-illegal-bd-txt" >{{ list.OccTime || '' }}</span>
             </div>
             <div
               v-if="list.ProcessStatus == 1"
@@ -60,7 +60,6 @@
           </div>
         </div>
       </div>
-
       <div
         v-show="!lists.length"
         class="s4s-empty">
@@ -288,7 +287,7 @@ export default {
 
 .s4s-car-info {
   background-color: #fff;
-  padding: 4%;
+  padding: .25rem 0.15rem ;
   font-size: .15rem;
 }
 
@@ -307,7 +306,6 @@ export default {
 }
 
 .s4s-car-name {
-  -webkit-box-box-flex:1;
   -webkit-box-flex:1;
   -moz-box-flex:1;
   flex:1;
@@ -315,11 +313,11 @@ export default {
   -ms-box-flex:1;
   color: #333;
   font-size: .2rem;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .s4s-car-illegal {
-  padding-top: .1rem;
+  padding-top: .15rem;
   color: #00a1ee;
   font-size: .14rem;
 }
@@ -373,7 +371,6 @@ export default {
   -webkit-box-sizing:border-box;
 }
 .s4s-illegal-list-body {
-  -webkit-box-box-flex:1;
   -webkit-box-flex:1;
   -moz-box-flex:1;
   flex:1;
@@ -388,7 +385,7 @@ export default {
   border-radius: 0.04rem;
   -webkit-box-shadow: 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.05);
   box-shadow: 0 0.01rem 0.03rem 0 rgba(0, 0, 0, 0.05);
-  padding: .12rem;
+  padding: .15rem .15rem .15rem;
   -webkit-box-orient:vertical;
   -webkit-box-direction:normal;
   -moz-box-orient:vertical;
@@ -409,7 +406,7 @@ export default {
   -webkit-box-align:center;
   -moz-box-align:center;
   -webkit-box-align:center;
-  padding: 0.1rem 0;
+  padding: 0.05rem 0 .15rem;
   border-bottom: .01rem rgba(0, 0, 0, 0.05) solid;
 }
 
@@ -419,22 +416,21 @@ export default {
 }
 
 .s4s-illegal-addr {
-  -webkit-box-box-flex:1;
   -webkit-box-flex:1;
   -moz-box-flex:1;
   flex:1;
   -ms-box-flex:1;
-  font-size: 0.14rem;
+  font-size: 0.13rem;
   color: #666;
-  padding-right: 0.15rem;
+  /* padding-right: 0.15rem; */
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
 .s4s-illegal-bd {
-  padding: 0.1rem 0;
-  font-size: 0.14rem;
+  padding: 0.17rem 0;
+  font-size: 0.16rem;
   color: #333;
 }
 .s4s-illegal-bd-number{
@@ -449,6 +445,11 @@ export default {
   padding-top: 0.1rem;
   line-height: 150%;
   color: #999;
+  font-size: .12rem;
+  line-height: .2rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .s4s-illegal-time {
@@ -481,7 +482,7 @@ export default {
 
 .s4s-illegal-btn {
   text-align: right;
-  padding-top: .1rem;
+  padding-top: .15rem;
   border-top: .01rem rgba(0, 0, 0, 0.05) solid;
 }
 .s4s-illegal-btn.disable-btn span {
@@ -490,18 +491,20 @@ export default {
 }
 .s4s-illegal-btn span {
   font-weight: 300;
-  background-image: linear-gradient(-133deg, #ff7907 0%, #ffa018 100%);
+  background-image: linear-gradient(-133deg, #FF7907 0%, #FFA018 100%);
   border-radius: .04rem;
-  padding: .05rem .15rem;
+  padding: .1rem .22rem;
   text-align: center;
   width: .93rem;
   font-size: .14rem;
+  line-height: .3rem;
   color: #fff;
 }
 
 .s4s-title {
   font-size: .2rem;
   padding: .15rem;
+  padding-top: 0.25rem;
   font-weight: bold;
 }
 .s4s-car-change {

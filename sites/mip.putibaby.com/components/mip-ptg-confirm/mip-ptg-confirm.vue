@@ -4,6 +4,7 @@
     <mip-fixed
       v-if="show"
       type="top"
+      still
       class="fix_back">
       <div id="fullScreen"/>
       <div id="floatLayer">

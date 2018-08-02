@@ -88,17 +88,24 @@
                 </div> -->
       <div class="s4s-group">
         <span class="s4s-group-tit">车牌号码</span>
-        <span class="s4s-group-txt">{{ illegal.car_no||illegal.CarNo }}</span>
+        <span
+          class="s4s-group-txt"
+          style="color:#333">{{ illegal.car_no||illegal.CarNo }}</span>
       </div>
       <div class="s4s-group">
         <span class="s4s-group-tit">认罚日期</span>
-        <span class="s4s-group-txt">{{ date }}</span>
+        <span
+          class="s4s-group-txt"
+          style="color:#333">{{ date }}</span>
       </div>
       <div
         v-if="(illegal.FreeRuleObject && illegal.FreeRuleObject.drive_licence == 1) || (illegal.FreeRuleObject && illegal.FreeRuleObject.travel_licence == 1)"
         class="s4s-group group-upload">
-        <span class="s4s-group-tit">上传行驶证</span>
-        <div style=" display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;">
+        <span
+          class="s4s-group-tit"
+          style="padding-top:0"
+        >上传行驶证</span>
+        <div style="display: flex;flex:1;">
           <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_licence == 1">
             <div
               class="group-upload-margin"
@@ -142,14 +149,15 @@
                 style="display: none;"
                 @change="uploaderXSZTravel">
             </div>
-          </template>
-        </div>
+        </template></div>
       </div>
       <div
         v-if="(illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_drive_licence == 1) || (illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_travel_licence == 1)"
         class="s4s-group">
-        <span class="s4s-group-tit">上传驾驶证</span>
-        <div style=" display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;box-flex:1;-webkit-box-flex:1;-moz-box-flex:1;flex:1;-webkit-flex:1;">
+        <span
+          class="s4s-group-tit"
+          style="padding-top:0">上传驾驶证</span>
+        <div style="display: flex;flex:1;">
           <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_drive_licence == 1">
             <mip-img
               v-if="JSZDriveUrl"
@@ -811,38 +819,16 @@ export default {
   padding: 0.2rem;
   font-size: 0.12rem;
   color: #4b4b4b;
-  display:-webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
-  -ms-flex-align: center;
   align-items:center;
-  -webkit-box-align:center;
-  -moz-box-align:center;
-  -webkit-box-align:center;
 }
 
 .s4s-tips-right {
-  -webkit-box-box-flex:1;
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
   flex:1;
-  -webkit-flex:1;
-  -ms-box-flex:1;
-  display:-webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-  -moz-box-orient:vertical;
-  -moz-box-direction:normal;
   flex-direction:column;
-  -webkit-flex-direction:column;
   padding-left: 0.15rem;
-  line-height: 150%;
+  line-height: .2rem;
 }
 
 .s4s-pay-body {
@@ -857,18 +843,13 @@ export default {
 
 .s4s-sum {
   margin: 0.2rem 0.1rem 0 0.1rem;
-  -webkit-box-box-flex:1;
+  -webkit-box-flex:1;
   -webkit-box-flex:1;
   -moz-box-flex:1;
   flex:1;
   -webkit-flex:1;
   -ms-box-flex:1;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items:center;
-  -webkit-box-align:center;
-  -moz-box-align:center;
-  -webkit-box-align:center;
   text-align: left;
   font-size: 0.13rem;
   color: #4b4b4b;
@@ -892,44 +873,28 @@ export default {
   border-bottom: 0.01rem #EAEAEA solid;
   color: #666;
   overflow: hidden;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
   align-items:center;
-  -moz-box-align:center;
-  display:-webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
-  padding: 0.20rem 0;
+  padding: 0.15rem 0;
   box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  -webkit-box-sizing: content-box;
 }
 .s4s-group-tit {
   font-size: 0.15rem;
   width: 0.9rem;
+  line-height: .25rem;
+  padding-top:.025rem;
 }
 .s4s-group-txt {
   font-size: 0.15rem;
   color: #777;
-  -webkit-box-box-flex:1;
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
-  -ms-box-flex:1;
+  text-align: right;
 }
 .s4s-group input {
   border: none;
   font-size: 0.15rem;
-  -webkit-box-box-flex:1;
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
-  -ms-box-flex:1;
   text-align: left;
+  line-height: .25rem;
+  flex: 1;
 }
 select {
   font-size: 0.15rem;
@@ -945,10 +910,11 @@ select {
 }
 
 .s4s-title {
-  font-size: 0.2rem;
-  padding-top: 0.15rem;
+  font-size: .2rem;
+  /* padding: .15rem; */
+  padding-top: 0.25rem;
+  font-weight: bold;
 }
-
 .agree-container {
   font-size: 0.15rem;
   color: #999999;
@@ -958,13 +924,15 @@ select {
 }
 .agree-container mip-img {
   vertical-align: bottom;
+  margin-right: .12rem;
 }
 
 .group-upload {
+  align-items:end;
   height: auto;
 }
 .group-upload-margin {
-  margin: 0.1rem 0.15rem 0.1rem 0;
+  margin: 0.025rem 0.1rem  0.025rem 0;
   -webkit-box-flex:1;
   -moz-box-flex:1;
   flex:1;
@@ -990,10 +958,6 @@ select {
 }
 
 .pay-contaienr {
-  display:-webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
   width: 100%;
   background: #fff;
@@ -1005,27 +969,16 @@ select {
   flex:1;
   -webkit-flex:1;
   font-size: 0.16rem;
-  display:-webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
   display: flex;
-  -webkit-box-orient:vertical;
-  -webkit-box-direction:normal;
-  -moz-box-orient:vertical;
-  -moz-box-direction:normal;
   flex-direction:column;
-  -webkit-flex-direction:column;
-  -webkit-justify-content:center;
   justify-content:center;
-  -moz-box-pack:center;
-  -webkit-box-pack:center;
   padding: 0 0.1rem;
 }
 
 .pay-contaienr-num {
   color: #fe7000;
   font-size: 0.2rem;
+  font-weight: bold;
 }
 
 .pay-contaienr-p1 {
@@ -1039,7 +992,7 @@ select {
 
 .pay-contaienr-last {
   width: 1.2rem;
-  background-image: linear-gradient(40deg, #fe5a00 0%, #ff7c00 100%);
+  background-image: linear-gradient(40deg,  #ff7c00 0%, #fe5a00 100%);
   text-align: center;
   line-height: 0.5rem;
   font-size: 0.18rem;
