@@ -55,6 +55,7 @@ div,span{
 }
 .result-div span{
   font-size:15px;
+  font-weight: 400;
 }
 .cfff{
   color:#fff;
@@ -81,7 +82,7 @@ div,span{
     width: 10em;
     font-family: PingFang-SC-Medium;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 400;
     color: #333;
 }
 
@@ -128,7 +129,7 @@ input::placeholder {
     margin: 20px auto;
     font-size: 17px;
     color: #fff;
-    font-weight: 500;
+    font-weight: 400;
     text-align: center;
     border-radius: 45px !important;
     background: -webkit-linear-gradient(left, #FF731F, #FFA53A);
