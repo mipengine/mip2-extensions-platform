@@ -37,20 +37,26 @@
       <div
         v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_file_number == 1"
         class="s4s-group">
-        <span class="s4s-group-tit">驾驶证档案编号</span>
+        <span class="s4s-group-tit">驾驶证档案号</span>
         <input
           v-model="drive_file_number"
           type="idcard"
           placeholder="请输入驾驶证档案编号" >
+        <span
+          class="s4s-help"
+          @click="openDriveFileNumber">?</span>
       </div>
       <div
         v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_bar_code == 1"
         class="s4s-group">
-        <span class="s4s-group-tit">驾驶证条形码编号</span>
+        <span class="s4s-group-tit">行驶证条码号</span>
         <input
           v-model="drive_bar_code"
           type="idcard"
-          placeholder="请输入驾驶证条形码编号" >
+          placeholder="请输入行驶证条形码编号" >
+        <span
+          class="s4s-help"
+          @click="openDriveBarCode">?</span>
       </div>
 
       <div class="s4s-group">
@@ -112,13 +118,8 @@
               @click="chooseImage" >
               <!-- <span class="s4s-chooseimg">正面</span> -->
               <mip-img
-                v-if="driveUrl"
-                :src="driveUrl"
+                :src="driveUrl || 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload.png'"
                 styel="width:100%;" />
-              <mip-img
-                v-else
-                styel="width:100%;"
-                src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload.png" />
               <input
                 ref="file"
                 type="file"
@@ -134,13 +135,8 @@
               @click="chooseTravel" >
               <!-- <span class="s4s-chooseimg" style="margin-left: .2rem;">反面</span> -->
               <mip-img
-                v-if="travelUrl"
-                :src="travelUrl"
+                :src="travelUrl || 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload2.png'"
                 styel="width:100%;" />
-              <mip-img
-                v-else
-                styel="width:100%;"
-                src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload2.png" />
               <input
                 ref="XSZTravel"
                 type="file"
@@ -149,7 +145,12 @@
                 style="display: none;"
                 @change="uploaderXSZTravel">
             </div>
-        </template></div>
+          </template>
+          <span
+            class="s4s-help"
+            style="margin-top: 0.025rem;"
+            @click="openDriveFile">?</span>
+        </div>
       </div>
       <div
         v-if="(illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_drive_licence == 1) || (illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_travel_licence == 1)"
@@ -158,7 +159,9 @@
           class="s4s-group-tit"
           style="padding-top:0">上传驾驶证</span>
         <div style="display: flex;flex:1;">
-          <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_drive_licence == 1">
+          <template
+            v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_drive_licence == 1"
+          >
             <mip-img
               v-if="JSZDriveUrl"
               :src="JSZDriveUrl"
@@ -168,7 +171,9 @@
               v-show="!JSZDriveUrl"
               class="group-upload-margin"
               @click="chooseJSZDrive">
-              <span class="s4s-chooseimg">正面</span>
+              <mip-img
+                :src="driveUrl||'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload.png'"
+                styel="width:100%;" />
               <input
                 ref="JSZDrive"
                 type="file"
@@ -178,7 +183,9 @@
                 @change="uploaderJSZDrive">
             </div>
           </template>
-          <template v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_travel_licence == 1">
+          <template
+            v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.jsz_travel_licence == 1"
+          >
             <mip-img
               v-if="JSZTravelUrl"
               :src="JSZTravelUrl"
@@ -188,9 +195,10 @@
               v-show="!JSZTravelUrl"
               class="group-upload-margin"
               @click="chooseJSZTravel">
-              <span
-                class="s4s-chooseimg"
-                style="margin-left: .2rem;">反面</span>
+              <mip-img
+                :src="travelUrl||'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload2.png'"
+                styel="width:100%;"
+              />
               <input
                 ref="JSZTravel"
                 type="file"
@@ -200,6 +208,9 @@
                 @change="uploaderJSZTravel">
             </div>
           </template>
+          <span
+            class="s4s-help"
+            @click="openDriverFile">?</span>
         </div>
       </div>
     </div>
@@ -228,14 +239,14 @@
       <p><mip-img
         v-show="!agree"
         src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/disagree.png"
-        width="25"
-        height="25"
+        width="22"
+        height="22"
         @click="goAgree" />
         <mip-img
           v-show="agree"
           src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree.png"
-          width="25"
-          height="25"
+          width="22"
+          height="22"
           @click="goAgree" />
         我同意
         <a
@@ -260,6 +271,18 @@
         >
           立即办理
         </div>
+      </div>
+    </mip-fixed>
+    <mip-fixed type="top">
+      <div
+        v-if="detail"
+        class="s4s-mask"
+        @click="closeMake">
+        <mip-img
+          :src="src"
+          :height="height||293"
+          layout="responsive"
+          width="350" />
       </div>
     </mip-fixed>
   </div>
@@ -304,11 +327,14 @@ export default {
       payType: 'alipay',
       drive_bar_code: '',
       drive_file_number: '',
-      agree: false,
+      agree: true,
       btntext: '获取验证码',
       cansend: true,
       code: '',
-      isTrueCode: false
+      isTrueCode: false,
+      detail: false,
+      src: '',
+      height: ''
     }
   },
   prerenderAllowed () {
@@ -358,6 +384,29 @@ export default {
     this.getVipFee()
   },
   methods: {
+    closeMake () {
+      this.detail = false
+    },
+    openDriveFile () {
+      this.detail = true
+      this.height = 480
+      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveFile.png'
+    },
+    openDriverFile () {
+      this.detail = true
+      this.height = 480
+      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driverFile.png'
+    },
+    openDriveFileNumber () {
+      this.detail = true
+      this.height = 240
+      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveFileNumber.png'
+    },
+    openDriveBarCode () {
+      this.detail = true
+      this.height = 240
+      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveBarCode.png'
+    },
     testCode () {
       util
         .fetchData('v5/user/login', {
@@ -880,7 +929,7 @@ export default {
 }
 .s4s-group-tit {
   font-size: 0.15rem;
-  width: 0.9rem;
+  width: 1rem;
   line-height: .25rem;
   padding-top:.025rem;
 }
@@ -1015,5 +1064,30 @@ input::-moz-placeholder, textarea::-moz-placeholder {
 }
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color:#ccc;
+}
+.s4s-help {
+  border-radius: 50%;
+  border: .02rem solid #FE7000;
+  color: #FE7000;
+  font-size: 0.13rem;
+  height: 0.2rem;
+  min-width: 0.2rem;
+  line-height: 0.18rem;
+  text-align: center;
+  font-weight: bold;
+}
+.s4s-mask {
+  height: 100vh;
+  z-index: 101;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.s4s-mask mip-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translateY(-50%) translateX(-50%);
+  transform: translateY(-50%) translateX(-50%);
+  width: calc( 100% - .3rem );
 }
 </style>

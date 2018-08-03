@@ -13,7 +13,7 @@
         :key="index"
         class="s4s-tab-item">
         <p
-          :class="selIndex == index ? ' s4s-tab-cur' : ''"
+          :class="selIndex == index ? ' s4s-tab-cur' : 's4s-tab-cur-normal'"
           @click="selTab(index)">
           {{ item }}
           <span
@@ -23,6 +23,7 @@
             v-if="index == 2 && statics.HandleSum && HandleSumClick"
             class="s4s-tab-num">{{ statics.HandleSum }}</span>
         </p>
+
       </div>
     </div>
     <div class="s4s-order-body">
@@ -31,6 +32,16 @@
           <div
             :key="item.AliOrderId"
             :class="['s4s-cell', (item.Status == 2 || item.Status == 5) ? 's4s-cell-hd-image' : item.Status == 7 ? 's4s-cell-hd-image-down' :'']">
+            <mip-img
+              class="show-cancel"
+              width="75"
+              height="62"
+              src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/cancel.png" />
+            <mip-img
+              width="75"
+              height="62"
+              class="show-complete"
+              src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/complete.png" />
             <div class="s4s-cell-hd" >
               <p >{{ item.SwiftNum || '-' }}</p><span v-if="item.Status == 0">等待支付</span><span v-if="item.Status == 3">处理中</span>
             </div>
@@ -54,7 +65,7 @@
               <span class="s4s-cell-tit">支付金额：</span>
               <span
                 class="s4s-cell-txt"
-                style="color: #FE7000;">￥{{ ((item&&item.TotalPrice || 0) / 100).toFixed(2) }}</span>
+                style="color: #FE7000;font-weight:bold;">￥{{ ((item&&item.TotalPrice || 0) / 100).toFixed(2) }}</span>
             </div>
             <div class="s4s-cell-bd">
               <span class="s4s-cell-tit">创建时间：</span>
@@ -132,11 +143,18 @@ export default {
     }
   },
   mounted () {
-    this.getOrder(-1)
-    this.getOrderStatic()
+    // this.getOrder(-1)
+    // this.getOrderStatic()
     this.$on('enter', () => {
       this.getOrder(-1)
       this.getOrderStatic()
+    })
+
+    this.$on('customError', event => {
+      window.localStorage.clear()
+      util.toast('授权失败')
+      // this.$emit('loginAgain')
+      // this.$refs.index.click()
     })
   },
   methods: {
@@ -319,6 +337,11 @@ export default {
   color: #333;
   width: 100%;
   text-align: center;
+  height: 100%;
+}
+.s4s-tab-cur-normal {
+  height: 100%;
+  border-bottom: 0.03rem transparent solid;
 }
 .s4s-tab-item {
   padding: 0 0.1rem;
@@ -387,8 +410,9 @@ export default {
   background: #fff;
   margin-bottom: 0.1rem;
   border-radius: 0.04rem;
-  font-size: 0.16rem;
-  padding: 4%;
+  font-size: 0.15rem;
+  padding: .2rem .15rem;
+  position: relative;
 }
 .s4s-cell:last-child {
   margin-bottom: 0;
@@ -399,8 +423,8 @@ export default {
   display: -moz-box;
   display: -webkit-flex;
   display: flex;
-  border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
-  padding-bottom: 0.1rem;
+  border-bottom: 0.01rem #eaeaea solid;
+  padding-bottom: 0.15rem;
   -webkit-box-align: center;
   -ms-flex-align: center;
   -moz-box-align:center;
@@ -415,7 +439,7 @@ export default {
   -webkit-flex:1;
 }
 .s4s-cell-hd span {
-  font-size: 0.14rem;
+  font-size: 0.13rem;
   color: #fe7000;
 }
 .s4s-cell-hd-time {
@@ -427,21 +451,22 @@ export default {
   color: #333;
 }
 .s4s-cell-bd {
-  padding-top: 0.15rem;
+  padding-top: 0.2rem;
 }
 .s4s-cell-tit {
-  color: #999;
+  color: #666;
+  margin-right: .1rem;
 }
 .s4s-cell-txt {
-  color: #666;
+  color: #333;
   font-size: .15rem;
 }
-.s4s-cell-bd:last-child {
+/* .s4s-cell-bd:last-child {
   padding-bottom: 0.1rem;
-}
+} */
 .s4s-cell-fd {
   border-top: 0.01rem rgba(0, 0, 0, 0.1) solid;
-  margin-top: 0.15rem;
+  margin-top: 0.2rem;
   padding-top: 0.15rem;
   display:-webkit-box;
   display: -moz-box;
@@ -456,26 +481,31 @@ export default {
   border-radius: 0.02rem;
   padding: 0.05rem 0.15rem;
   color: #fff;
-  font-size: 0.15rem;
+  font-size: 0.14rem;
   margin-left: 0.1rem;
 }
 
 .s4s-cell-fd span:last-child {
-  background-image: linear-gradient(40deg, #ff7907 0%, #ffa018 100%);
+  background-image: linear-gradient(40deg, #ffa018 0%, #ff7907 100%);
   border: none;
 }
-
-.s4s-cell-hd-image {
-  background-image: url("https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/cancel.png");
-  background-repeat: no-repeat;
-  background-position: 97% 0;
-  background-size: 0.66rem 0.56rem;
+.show-cancel {
+  display: none;
+  top:0;
+  right: .1rem;
 }
-.s4s-cell-hd-image-down {
-  background-image: url("https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/complete.png");
-  background-repeat: no-repeat;
-  background-position: 97% 0;
-  background-size: 0.66rem 0.56rem;
+.show-complete {
+  display: none;
+  top:0;
+  right: .1rem;
+}
+.s4s-cell-hd-image .show-cancel {
+  display: inherit;
+  position: absolute;
+}
+.s4s-cell-hd-image-down .show-complete {
+  display: inherit;
+  position: absolute;
 }
 .s4s-confirm-body {
   width: 76%;
