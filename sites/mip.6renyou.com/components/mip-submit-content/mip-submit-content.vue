@@ -149,7 +149,7 @@ export default {
       let data = {
         name,
         phone,
-        info: this.info,
+        info: JSON.stringify(this.info),
         dest: this.destination,
         days: this.day
       }
