@@ -71,6 +71,12 @@
 <script>
 import config from '../../utils/config'
 export default {
+  props: {
+    payConfig: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
       sessionId: '',
@@ -105,8 +111,15 @@ export default {
     }
   },
   mounted () {
-    // console.log(isMipLink,'213')
-    // window.MIP.viewer.open('../user/index.html', {isMipLink: true});
+    MIP.util.platform.start()
+    console.log(MIP.util.platform.isWechatApp())
+    if (MIP.util.platform.isWechatApp()) {
+      MIP.setData({
+        payConfig: {
+          endpoint: {weixin: 'https://m.kuaifawu.com/pay/mip/wxorderspay'}
+        }
+      })
+    }
     MIP.viewer.fixedElement.init()
     console.log('This is 订单确认页 !')
     const self = this

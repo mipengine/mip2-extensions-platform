@@ -565,6 +565,7 @@ body {
   margin: 0.5rem auto 1rem auto;
   height: 9.55rem;
   background-image: url(../../static/img/idcard.png);
+  /* background-image: url('http://test.xx-motor.com/wzcx.com/static/img/idcard.png'); */
   background-repeat: no-repeat;
   background-position-x: center;
   -moz-background-size: contain;
@@ -593,6 +594,7 @@ body {
   margin: 0.5rem auto 1rem auto;
   height: 9.55rem;
   background-image: url(../../static/img/license.png);
+  /* background-image: url('http://test.xx-motor.com/wzcx.com/static/img/license.png'); */
   background-repeat: no-repeat;
   background-position-x: center;
   -moz-background-size: contain;
@@ -1428,11 +1430,8 @@ export default {
       }
     },
     ckwddd () {
-      // let baseUrl = "https://yz-alipay.fundway.net/";
-      // window.top.location.href =
-      //     baseUrl + "yzcw-web-admin/login/xmd/xmd_baidu_xzh/myOrder/auth";
       MIP.viewer.open(
-        base.outAldhttp + 'yzcw-web-admin/login/xmd/xmd_baidu_xzh/myOrder/auth',
+        base.outAldhttp + 'mip-my-order.html',
         { isMipLink: true }
       )
     },
@@ -1445,17 +1444,16 @@ export default {
         //     "yzcw-web-admin/login/xmd/xmd_baidu_xzh/site_illegal_payment/auth";
         MIP.viewer.open(
           base.outAldhttp +
-            'yzcw-web-admin/login/xmd/xmd_baidu_xzh/site_illegal_payment/auth',
+            'mip-xmd-illegal-index.html?selected=decision',
           { isMipLink: true }
         )
       }
       if (that.getUrlParam('plate_no')) {
         let plateNo = that.getUrlParam('plate_no')
         plateNo = plateNo.substr(0, 1) === '粤' ? plateNo : '粤' + plateNo
+        plateNo = encodeURIComponent(plateNo)
         MIP.viewer.open(
-          base.outAldhttp +
-            'yzcw-web-admin/login/' +
-            'xmd/xmd_baidu_xzh/illegal_result/auth?' +
+          base.outAldhttp + 'mip-xmd-illegal-msg.html?' +
             'PLATENUMBER=' +
             plateNo +
             '&FDJH=' +
@@ -1469,14 +1467,14 @@ export default {
     cxwzcl () {
       MIP.viewer.open(
         base.outAldhttp +
-          'yzcw-web-admin/login/xmd/xmd_baidu_xzh/illegal_payment/auth',
+          'mip-xmd-illegal-index.html?selected=illegal',
         { isMipLink: true }
       )
     },
     wycfjds () {
       MIP.viewer.open(
         base.outAldhttp +
-          'yzcw-web-admin/login/xmd/xmd_baidu_xzh/site_illegal_payment/auth',
+          'mip-xmd-illegal-index.html?selected=decision',
         { isMipLink: true }
       )
     },

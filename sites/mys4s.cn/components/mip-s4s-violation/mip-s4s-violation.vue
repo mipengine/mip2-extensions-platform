@@ -55,7 +55,8 @@
             <div
               v-if="list.ProcessStatus != 1"
               class="s4s-illegal-btn disable-btn" >
-              <span>不可办理</span>
+              <!-- <span>不可办理</span> -->
+              <span>暂不支持处理该类型的违章</span>
             </div>
           </div>
         </div>
@@ -486,7 +487,7 @@ export default {
   border-top: .01rem rgba(0, 0, 0, 0.05) solid;
 }
 .s4s-illegal-btn.disable-btn span {
-  background: #e6e6e6;
+  background: none;
   color: #999;
 }
 .s4s-illegal-btn span {

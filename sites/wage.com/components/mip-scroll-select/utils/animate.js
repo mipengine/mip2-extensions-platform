@@ -10,6 +10,7 @@ export default class Animate {
 			this.stop();
 		}
 		this.timer = requestAnimationFrame(fn);
+		return;
 	}
 	stop(){
 		if (!this.timer) {
@@ -17,5 +18,6 @@ export default class Animate {
 		}
 		cancelAnimationFrame(this.timer);
 		this.timer = null;
+		return;
 	}
 }
