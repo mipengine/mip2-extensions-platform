@@ -35,7 +35,7 @@
   </div>
 </template>
 <script>
-// import {fetch} from '@/common/js/fetch'
+import request from '@/common/js/fetch'
 import apiUrl from '@/common/js/config.api'
 export default {
   data () {
@@ -47,14 +47,7 @@ export default {
   },
   created () {
     this.redirect_uri = './order.html'
-    fetch(apiUrl.hotRepaire, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    }).then(data => {
-      return data.json()
-    }).then(res => {
+    request(apiUrl.hotRepaire, 'POST').then(res => {
       let len = res.data.hotList.length
       if (len % 2 !== 0)res.data.hotList.pop()
       this.data = res.data.hotList
