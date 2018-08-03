@@ -278,8 +278,6 @@ export default {
   mounted () {
     MIP.util.platform.start()
     console.log(MIP.util.platform.isWechatApp())
-
-    console.log(this.payConfig.endpoint.alipay, '这里是微信支付回调')
     console.log('This is 订单列表 !')
     const self = this
     let state = 0

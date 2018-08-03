@@ -47,7 +47,9 @@
     <div class="mycenter-module">
       <ul>
         <li class="mycenter-module-li first-li">
-          <a @click="openurl('order')">
+          <a
+            data-type="mip"
+            @click="openurl('order')">
             <span>
               <b class="list_icon">
                 <mip-img
@@ -61,7 +63,9 @@
           </a>
         </li>
         <li class="mycenter-module-li second_li">
-          <a @click="openurl('coupon')">
+          <a
+            data-type="mip"
+            @click="openurl('coupon')">
             <span>
               <b class="coupon_icon">
                 <mip-img
@@ -79,7 +83,9 @@
     <div class="mycenter-module">
       <ul>
         <li class="mycenter-module-li first-li">
-          <a @click="openurl('evaluate')">
+          <a
+            data-type="mip"
+            @click="openurl('evaluate')">
             <span>
               <b class="evaluate_icon">
                 <mip-img
@@ -93,7 +99,9 @@
           </a>
         </li>
         <li class="mycenter-module-li">
-          <a @click="openurl('refund')">
+          <a
+            data-type="mip"
+            @click="openurl('refund')">
             <span>
               <b class="refund_icon">
                 <mip-img
