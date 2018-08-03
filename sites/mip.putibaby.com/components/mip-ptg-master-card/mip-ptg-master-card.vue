@@ -379,7 +379,8 @@
     <mip-fixed
       v-if="showImg"
       class="img_back"
-      type="gototop"
+      type="top"
+      still
       @click="hideImg">
       <div
         v-if="showImg"

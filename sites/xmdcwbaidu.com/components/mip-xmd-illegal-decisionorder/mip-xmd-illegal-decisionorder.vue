@@ -229,7 +229,7 @@ export default {
         return
       }
       const params = {
-        plateNumber: `粤${self.plateNumber}`,
+        plateNumber: self.plateNumber,
         plateType: self.plateType,
         // engine: window.localStorage.getItem('engine'), // 发动机号待定
         illegals: `[${JSON.stringify(self.illegals)}]`,

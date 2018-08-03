@@ -1,4 +1,4 @@
-# `mip-confirm`
+# `mip-orders-confirm`
 
 标题|内容
 ----|----
@@ -12,7 +12,7 @@
 
 ## 示例
 
-<mip-confirm></mip-confirm>
+<mip-orders-confirm></mip-orders-confirm>
 
 ## 属性
 
