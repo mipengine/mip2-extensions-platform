@@ -116,12 +116,13 @@ export default {
   position: absolute;
   left: 50%;
   top: 35%;
-  margin-left: -50px;
-  margin-top: -50px;
   color: #fff;
   background: #999;
   padding: 1rem;
   border-radius: 6px;
+  text-align: center;
+  max-width: 18rem;
+  transform: translate(-50%,-50%);
 }
 .pay-btn {
     width: 100%;
