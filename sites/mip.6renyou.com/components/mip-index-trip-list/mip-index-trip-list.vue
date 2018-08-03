@@ -24,7 +24,7 @@
             </div>
           </div>
           <div class="tjtrip-btm">
-            <h2 class="tjtrip-title text-overflow">{{ item.title }}</h2>
+            <h2 class="tjtrip-title text-overflow1">{{ item.title }}</h2>
             <p class="tjtrip-dest">{{ item.tocity_name }}</p>
           </div>
         </a>
