@@ -1,4 +1,4 @@
-# `mip-xmd-illegal-pay`
+# `mip-example`
 
 标题|内容
 ----|----

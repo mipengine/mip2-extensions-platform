@@ -711,4 +711,15 @@ input::-moz-placeholder, textarea::-moz-placeholder {
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color:#ccc;
 }
+.s4s-help {
+  border-radius: 50%;
+  border: .02rem solid #FE7000;
+  color: #FE7000;
+  font-size: 0.13rem;
+  height: 0.2rem;
+  min-width: 0.2rem;
+  line-height: 0.18rem;
+  text-align: center;
+  font-weight: bold;
+}
 </style>
