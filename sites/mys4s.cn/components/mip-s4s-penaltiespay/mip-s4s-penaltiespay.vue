@@ -60,6 +60,7 @@
             v-show="cansend"
             type="button"
             class="code-btn"
+            on="tap:info.login"
             @click="sendcode">获取验证码</span>
         </div>
         <!-- <div class="s4s-group" v-else>
@@ -180,6 +181,13 @@ export default {
     return true
   },
   mounted () {
+    this.$on('customError', event => {
+      window.localStorage.clear()
+      util.toast('登陆失败')
+      // this.$emit('loginAgain')
+      // this.$refs.index.click()
+    })
+
     MIP.viewer.fixedElement.init()
     let me = this
     this.$on('pay2event', event => {
