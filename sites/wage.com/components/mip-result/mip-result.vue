@@ -30,7 +30,7 @@
         </div>
         <div class="pd16 fz15">
           <p class="mb10"><span>个人所得税</span><span class="right">{{ resultdata.tax }}元</span></p>
-          <p class="detail">应纳税所得额({{ resultdata.taxableIncome }})*税率({{ resultdata.taxR }}%)-速算扣除数({{ resultdata.taxQ }})</p>
+          <p class="detail">应纳税所得额({{ resultdata.taxableIncome }})*税率({{ resultdata.taxR }}%)-速算扣除数({{ resultdata.taxQ }}.00)</p>
         </div>
         <div class="pd16 fz15">
           <p class="mb10"><span>应纳税所得额</span><span class="right">{{ resultdata.taxableIncome }}元</span></p>
