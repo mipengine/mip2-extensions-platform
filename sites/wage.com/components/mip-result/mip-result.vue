@@ -25,12 +25,12 @@
         @click="closeWageDetail">我的工资计算详情</div>
       <section v-show="isShow">
         <div class="pd16 fz15">
-          <p class="mb10"><span>{{ resultdata.tag==1?afterTitle:beforeTitle }}</span><span class="right">{{ resultdata.realIncome }}元</span></p>
+          <p class="mb10"><span>{{ resultdata.tag==1?afterTitle:beforeTitle }}</span><span class="right">{{ resultdata.tag==1?resultdata.realIncome:resultdata.wage }}元</span></p>
           <p class="detail">税前工资({{ resultdata.tag==1?resultdata.wage:resultdata.realIncome }})-社保个人缴纳({{ resultdata.sociAll }})-公积金个人缴纳({{ resultdata.accumulation }})-个人所得税({{ resultdata.tax }})</p>
         </div>
         <div class="pd16 fz15">
           <p class="mb10"><span>个人所得税</span><span class="right">{{ resultdata.tax }}元</span></p>
-          <p class="detail">应纳税所得额({{ resultdata.taxableIncome }})*税率({{ resultdata.taxR }}%)-速算扣除数({{ resultdata.taxQ}}.00)</p>
+          <p class="detail">应纳税所得额({{ resultdata.taxableIncome }})*税率({{ resultdata.taxR }}%)-速算扣除数({{ resultdata.taxQ }})</p>
         </div>
         <div class="pd16 fz15">
           <p class="mb10"><span>应纳税所得额</span><span class="right">{{ resultdata.taxableIncome }}元</span></p>
