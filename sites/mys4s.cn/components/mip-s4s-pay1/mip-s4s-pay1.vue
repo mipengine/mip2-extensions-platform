@@ -42,6 +42,9 @@
           v-model="drive_file_number"
           type="idcard"
           placeholder="请输入驾驶证档案编号" >
+          <!-- <span
+          class="s4s-help"
+          @click="openDriveFileNumber">?</span> -->
       </div>
       <div
         v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_bar_code == 1"
@@ -51,6 +54,9 @@
           v-model="drive_bar_code"
           type="idcard"
           placeholder="请输入驾驶证条形码编号" >
+          <!-- <span
+          class="s4s-help"
+          @click="openDriveBarCode">?</span> -->
       </div>
 
       <div class="s4s-group">
@@ -228,14 +234,14 @@
       <p><mip-img
         v-show="!agree"
         src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/disagree.png"
-        width="25"
-        height="25"
+        width="22"
+        height="22"
         @click="goAgree" />
         <mip-img
           v-show="agree"
           src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree.png"
-          width="25"
-          height="25"
+          width="22"
+          height="22"
           @click="goAgree" />
         我同意
         <a
@@ -304,7 +310,7 @@ export default {
       payType: 'alipay',
       drive_bar_code: '',
       drive_file_number: '',
-      agree: false,
+      agree: true,
       btntext: '获取验证码',
       cansend: true,
       code: '',
@@ -358,6 +364,12 @@ export default {
     this.getVipFee()
   },
   methods: {
+    openDriveFileNumber () {
+
+    },
+    openDriveBarCode () {
+
+    },
     testCode () {
       util
         .fetchData('v5/user/login', {
@@ -1015,5 +1027,16 @@ input::-moz-placeholder, textarea::-moz-placeholder {
 }
 input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color:#ccc;
+}
+.s4s-help {
+  border-radius: 50%;
+  border: .02rem solid #FE7000;
+  color: #FE7000;
+  font-size: 0.13rem;
+  height: 0.2rem;
+  min-width: 0.2rem;
+  line-height: 0.18rem;
+  text-align: center;
+  font-weight: bold;
 }
 </style>
