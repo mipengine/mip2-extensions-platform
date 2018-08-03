@@ -105,11 +105,17 @@ export default {
       this.html = val.around
       if (!val.show) this.inputVal = ''
       this.show = val.show
+      // window.addEventListener('touchmove', function (e) {
+      //   if (val.show) {
+      //     e.preventDefault()
+      //   }
+      // }, { passive: false })
       this.choosedetail.nowPosition = val.nowPosition
     }
   },
   mounted () {
     this.$refs.wrapper.style.height = viewport.getHeight() + 'px'
+    this.$refs.wrapper.style.overflowY = 'scroll'
     if (this.html.length > 0) this.$refs.addressList.style.height = viewport.getHeight() - 146 + 'px'
   },
   methods: {

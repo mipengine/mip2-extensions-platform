@@ -116,12 +116,25 @@ export default {
   position: absolute;
   left: 50%;
   top: 35%;
-  margin-left: -50px;
-  margin-top: -50px;
   color: #fff;
   background: #999;
   padding: 1rem;
   border-radius: 6px;
+  text-align: center;
+  max-width: 18rem;
+  transform: translate(-50%,-50%);
+}
+.pay-btn {
+    width: 100%;
+    display: inline-block;
+    line-height: 5rem;
+    height: 5rem;
+    color: #fff;
+    text-align: center;
+    background: linear-gradient(to right, #FF8F53, #FF5E59);
+    font-size: 1.6rem;
+    border: none;
+    border-radius: .2rem;
 }
 .pay-btn {
     width: 100%;
