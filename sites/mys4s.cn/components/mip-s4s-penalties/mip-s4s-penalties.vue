@@ -29,7 +29,6 @@
             placeholder="请输入处罚决定书编号" >
           <span
             class="s4s-btn btn-border"
-            on="tap:info.login"
             @click="ready" >确定</span>
         </div>
         <p class="s4s-order-text">处罚决定书编号、车牌号和处罚人为办单依据，请咨询核对！</p>
@@ -240,19 +239,17 @@
             class="s4s-group group-upload"
             style="height:auto">
             <div class="s4s-group-tit">上传罚单</div>
-            <mip-img
-              v-show="ticketUrl"
-              :src="ticketUrl"
-              width="110"
-              height="70"
-              @click="chooseimg" />
-            <mip-img
-              v-show="!ticketUrl"
-              src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/update3.png"
-              width="110"
-              height="70"
-              style="background:#eee"
-              @click="chooseimg" />
+            <div style="flex:1">
+              <mip-img
+                :src="ticketUrl||'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/update3.png'"
+                width="110"
+                height="70"
+                style="background:#eee"
+                @click="chooseimg" />
+            </div>
+            <span
+              class="s4s-help"
+              @click="openTicket">?</span>
             <!-- <div
               v-show="!ticketUrl"
               class="image-container"
@@ -280,10 +277,15 @@
     </div>
     <mip-fixed type="top">
       <div
-        v-show="openShow"
+        v-if="openShow"
         class="s4s-mask"
         @click="closeMake">
-        <mip-img :src="src" />
+        <mip-img
+          :src="src"
+          :height="height||440"
+          layout="responsive"
+          width="350"
+        />
       </div>
     </mip-fixed>
     <!-- <template v-if="dateShow">
@@ -403,7 +405,8 @@ export default {
         '学',
         '港',
         '澳'
-      ]
+      ],
+      height: ''
     }
   },
   computed: {
@@ -444,8 +447,15 @@ export default {
         .replace(/....(?!$)/g, '$& ')
     }
   },
-  mounted () {},
+  mounted () { },
   methods: {
+    // 罚单
+    openTicket () {
+      this.openShow = true
+      this.height = 250
+      this.src =
+        'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/ticketFile.png'
+    },
     selProvince (val) {
       this.provice = val
       this.showProvice = false
@@ -680,6 +690,7 @@ export default {
     // 打开处罚单帮助
     openCode () {
       this.openShow = true
+      this.height = 440
       this.src =
         'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/notice@3x.png'
     },
@@ -834,6 +845,8 @@ export default {
   color: #4b4b4b;
   font-size: .2rem;
   font-weight: bold;
+  display: flex;
+  align-items: center;
 }
 
 .s4s-order-input {
@@ -892,7 +905,7 @@ export default {
 .s4s-order-img-container mip-img + mip-img {
   margin-right: -.22rem;
   margin-left: .16rem;
-  margin-top: .12rem;
+  /* margin-top: .12rem; */
 }
 .flex-center {
   margin-bottom: .1rem;
@@ -924,6 +937,8 @@ export default {
 .s4s-help-tip {
   float: none;
   display: inline-block;
+  margin: 0 .1rem;
+  margin-top: 1px;
 }
 .s4s-order-text {
   color: #fe7000;
