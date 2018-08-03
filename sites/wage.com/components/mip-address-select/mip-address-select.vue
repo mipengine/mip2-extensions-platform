@@ -3,8 +3,7 @@
   <div
     v-show="showaddress"
     class="showChose">
-    <div 
-		class="address">
+    <div class="address">
       <div class="title_header">
         <span
           class="left"
