@@ -26,8 +26,12 @@
       <section v-show="isShow">
         <div class="pd16 fz15">
           <p class="mb10"><span>{{ resultdata.tag==1?afterTitle:beforeTitle }}</span><span class="right">{{ resultdata.realIncome }}元</span></p>
-          <p class="detail" v-if="resultdata.tag == 2">税后工资({{ resultdata.wage }})+社保个人缴纳({{ resultdata.sociAll }})+公积金个人缴纳({{ resultdata.accumulation }})+个人所得税({{ resultdata.tax }})</p>   
-           <p class="detail" v-else="resultdata.tag == 1">税前工资({{ resultdata.wage }})-社保个人缴纳({{ resultdata.sociAll }})-公积金个人缴纳({{ resultdata.accumulation }})-个人所得税({{ resultdata.tax }})</p>       
+          <p 
+            v-if="resultdata.tag == 2"
+            class="detail" >税后工资({{ resultdata.wage }})+社保个人缴纳({{ resultdata.sociAll }})+公积金个人缴纳({{ resultdata.accumulation }})+个人所得税({{ resultdata.tax }})</p>   
+          <p 
+           v-else="resultdata.tag == 1"
+           class="detail">税前工资({{ resultdata.wage }})-社保个人缴纳({{ resultdata.sociAll }})-公积金个人缴纳({{ resultdata.accumulation }})-个人所得税({{ resultdata.tax }})</p>       
         </div>
         <div class="pd16 fz15">
           <p class="mb10"><span>个人所得税</span><span class="right">{{ resultdata.tax }}元</span></p>
