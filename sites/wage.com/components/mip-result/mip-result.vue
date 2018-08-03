@@ -30,8 +30,8 @@
             v-if="resultdata.tag == 2"
             class="detail" >税后工资({{ resultdata.wage }})+社保个人缴纳({{ resultdata.sociAll }})+公积金个人缴纳({{ resultdata.accumulation }})+个人所得税({{ resultdata.tax }})</p>   
           <p 
-           v-else="resultdata.tag == 1"
-           class="detail">税前工资({{ resultdata.wage }})-社保个人缴纳({{ resultdata.sociAll }})-公积金个人缴纳({{ resultdata.accumulation }})-个人所得税({{ resultdata.tax }})</p>       
+            v-else
+            class="detail">税前工资({{ resultdata.wage }})-社保个人缴纳({{ resultdata.sociAll }})-公积金个人缴纳({{ resultdata.accumulation }})-个人所得税({{ resultdata.tax }})</p>       
         </div>
         <div class="pd16 fz15">
           <p class="mb10"><span>个人所得税</span><span class="right">{{ resultdata.tax }}元</span></p>
