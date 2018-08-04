@@ -1838,7 +1838,9 @@ export default {
   },
   data () {
     console.log(this)
-
+    var pdata = JSON.parse(this.dataJsonstr)
+    var city = pdata.city || '北京'
+    console.log(city)
     return {
       isLogin: false,
       isUnion: false,
@@ -1850,13 +1852,14 @@ export default {
         isGif: true
       },
       filter: {
+        city: city,
         pn: 0,
         kw: ''
       },
       filter2: {
         shlxRow: '全天',
         ycq: '',
-        city: '',
+        city: city,
         jiguan: '',
         priceFromSel: 0,
         priceToSel: 50000,
@@ -1994,7 +1997,7 @@ export default {
       var self = this
       console.log('should loading')
       console.log(this.dataJson)
-      API.getSelectMaster({}, function (isOk, res) {
+      API.getSelectMaster(self.filter, function (isOk, res) {
         if (isOk) {
           console.log(res)
           self.list = res.list
@@ -2081,7 +2084,6 @@ export default {
       this.state.isGif = true
       // this.$set(this.state, 'isGif', true)
       this.filter.pn = 0
-
       setTimeout(function () {
         API.getSelectMaster(self.filter, function (isOk, res) {
           if (isOk) {
