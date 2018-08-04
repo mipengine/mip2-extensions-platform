@@ -30,7 +30,8 @@
             type="mip-mustache">
             <a
               :href="geturl('/product/info.html?id=' + val.id + '_' + searchdata.ct + '_' + searchdata.ar)"
-              :class="{active: val.id == searchdata.id && 0 == searchdata.packageid}">{{ val.title }}</a>
+              :class="{active: val.id == searchdata.id && 0 == searchdata.packageid}"
+              data-type="mip">{{ val.title }}</a>
           </div>
         </div>
       </div>
@@ -45,7 +46,8 @@
           type="mip-mustache">
           <a
             :href="geturl('/product/info.html?id=' + val.mainproductsalesattr + '_' + searchdata.ct + '_' + searchdata.ar + '_' + searchdata.providerid + '_' + val.id)"
-            :class="{active: val.id == searchdata.packageid}">{{ val.title }}</a>
+            :class="{active: val.id == searchdata.packageid}"
+            data-type="mip">{{ val.title }}</a>
         </div>
       </div>
       <div
