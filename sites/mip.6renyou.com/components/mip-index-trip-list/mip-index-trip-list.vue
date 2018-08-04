@@ -5,6 +5,12 @@
     overflow:hidden;
     white-space: nowrap;
 }
+.loading{
+    font-size:14px;
+    line-height:30px;
+    text-align:center;
+    color:#999;
+}
 </style>
 
 <template>
@@ -24,11 +30,14 @@
             </div>
           </div>
           <div class="tjtrip-btm">
-            <h2 class="tjtrip-title text-overflow">{{ item.title }}</h2>
+            <h2 class="tjtrip-title text-overflow1">{{ item.title }}</h2>
             <p class="tjtrip-dest">{{ item.tocity_name }}</p>
           </div>
         </a>
       </li>
+      <div
+        v-show="isloading"
+        class="loading">努力加载中...</div>
     </ul>
   </div>
 
@@ -59,7 +68,8 @@ export default {
   },
   data () {
     return {
-      list: []
+      list: [],
+      isloading: false
     }
   },
   mounted () {
@@ -72,8 +82,12 @@ export default {
   },
   methods: {
     load (cb) {
+      if (this.isloading) return
+      this.isloading = true
+
       if (isLoaded) return
       fetch('https://m.6renyou.com/mip_service/get_hot_trip_list?dest=' + destName + '&page=' + page).then(resp => resp.json()).then(resp => {
+        this.isloading = false
         if (!resp || resp === null || resp.length === 0) {
           toast.show('没有更多', options)
           isLoaded = true
@@ -87,6 +101,7 @@ export default {
         this.list = this.list.concat(resp)
         if (cb)setTimeout(() => { cb.call(this) }, 1000)
       }).catch(err => {
+        this.isloading = false
         console.log(err.message)
       })
     },
