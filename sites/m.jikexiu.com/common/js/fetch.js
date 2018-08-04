@@ -62,7 +62,7 @@ function request (url, method = 'get', body = {}, timeout = 30000) {
         str += '&'
       }
       len++
-      str += `${key}=${body[key]}`
+      str += encodeURI(`${key}=${body[key]}`)
     }
     let head = url.indexOf('authentication/mobile') > 0 ? {
       'Content-Type': 'application/x-www-form-urlencoded',
