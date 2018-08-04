@@ -6,6 +6,7 @@
           <span class="s4s-car-name">{{ provice + car_no || '-' }}</span>
           <span
             class="s4s-car-change"
+            on="tap:info.login"
             @click="gotoForm">更换爱车</span>
           <a
             ref="car"
@@ -49,13 +50,15 @@
             <div
               v-if="list.ProcessStatus == 1"
               class="s4s-illegal-btn"
+              on="tap:info.login"
               @click="gotoTicketPay(list)">
               <span>立即办理</span>
             </div>
             <div
               v-if="list.ProcessStatus != 1"
               class="s4s-illegal-btn disable-btn" >
-              <span>不可办理</span>
+              <!-- <span>不可办理</span> -->
+              <span style="padding-right:0;">暂不支持处理该类型的违章</span>
             </div>
           </div>
         </div>
@@ -112,6 +115,13 @@ export default {
     return true
   },
   mounted () {
+    this.$on('customError', event => {
+      window.localStorage.clear()
+      util.toast('登陆失败')
+      // this.$emit('loginAgain')
+      // this.$refs.index.click()
+    })
+
     if (!this.globalData.car_no && this.getQueryString('carno')) {
       console.log('url模式')
       this.globalData.car_no = this.getQueryString('carno').slice(1, 10)
@@ -235,21 +245,21 @@ export default {
             self.lists = newList
             self.code = res.code
 
-            let addParam = {
-              car_no: param.car_no ? param.car_no.toUpperCase() : '',
-              vin: param.vin ? param.vin.toUpperCase() : '',
-              engine: param.engine ? param.engine.toUpperCase() : ''
-            }
-            // 接口参数 engine
-            util.fetchData('v3/violation/car/manage', addParam).then(res => {
-              if (res.code > 0) {
-                util.toast(res.msg)
-                return
-              }
-              if (res.code === 0) {
-                // util.toast("操作成功");
-              }
-            })
+            // let addParam = {
+            //   car_no: param.car_no ? param.car_no.toUpperCase() : '',
+            //   vin: param.vin ? param.vin.toUpperCase() : '',
+            //   engine: param.engine ? param.engine.toUpperCase() : ''
+            // }
+            // // 接口参数 engine
+            // util.fetchData('v3/violation/car/manage', addParam).then(res => {
+            //   if (res.code > 0) {
+            //     util.toast(res.msg)
+            //     return
+            //   }
+            //   if (res.code === 0) {
+            //     // util.toast("操作成功");
+            //   }
+            // })
           } else {
             util.toast(res.msg)
           }
@@ -486,7 +496,7 @@ export default {
   border-top: .01rem rgba(0, 0, 0, 0.05) solid;
 }
 .s4s-illegal-btn.disable-btn span {
-  background: #e6e6e6;
+  background: none;
   color: #999;
 }
 .s4s-illegal-btn span {

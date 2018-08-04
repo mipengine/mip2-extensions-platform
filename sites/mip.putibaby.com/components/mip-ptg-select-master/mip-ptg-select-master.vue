@@ -2084,6 +2084,7 @@ export default {
       this.state.isGif = true
       // this.$set(this.state, 'isGif', true)
       this.filter.pn = 0
+
       setTimeout(function () {
         API.getSelectMaster(self.filter, function (isOk, res) {
           if (isOk) {

@@ -41,7 +41,7 @@
             type="text"
             maxlength="11"
             style="width:auto;max-width:3rem;min-width:1.05rem"
-            placeholder="请输入手机号码" >
+            placeholder="输入手机号码接受订单状态" >
 
         </div>
         <div class="s4s-group">
@@ -60,6 +60,7 @@
             v-show="cansend"
             type="button"
             class="code-btn"
+            on="tap:info.login"
             @click="sendcode">获取验证码</span>
         </div>
         <!-- <div class="s4s-group" v-else>
@@ -71,13 +72,13 @@
           <span class="s4s-group-tit">罚款金额</span>
           <span
             class="s4s-group-txt"
-            style="color:#ff7a00">¥ {{ payForm&&payForm.money || 0 }}</span>
+            style="color:#333">¥ {{ payForm&&payForm.money || 0 }}</span>
         </div>
         <div class="s4s-group">
           <span class="s4s-group-tit">滞纳金额</span>
           <span
             class="s4s-group-txt"
-            style="color:#ff7a00">¥ {{ payForm&&payForm.late_free || 0 }}</span>
+            style="color:#333">¥ {{ payForm&&payForm.late_free || 0 }}</span>
         </div>
         <div class="s4s-group">
           <span class="s4s-group-tit">服务费用</span>
@@ -96,14 +97,14 @@
         <p><mip-img
           v-show="!agree"
           src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/disagree.png"
-          width="25"
-          height="25"
+          width="22"
+          height="22"
           @click="goAgree" />
           <mip-img
             v-show="agree"
             src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree.png"
-            width="25"
-            height="25"
+            width="22"
+            height="22"
             @click="goAgree" />
           我同意
           <a
@@ -113,6 +114,7 @@
           <!-- <span style="color: #666666;text-decoration:underline" @click="gotoAgreement">《服务协议》</span> -->
           中的说明</p>
       </div>
+      <div style="height:.6rem;"/>
       <mip-fixed type="bottom">
         <div class="pay-contaienr">
           <div class="pay-contaienr-first">
@@ -161,7 +163,7 @@ export default {
       out_trade_no: '',
       payType: 'alipay',
       system: {},
-      agree: false,
+      agree: true,
       btntext: '获取验证码',
       isTrueCode: false,
       cansend: true
@@ -179,6 +181,13 @@ export default {
     return true
   },
   mounted () {
+    this.$on('customError', event => {
+      window.localStorage.clear()
+      util.toast('登陆失败')
+      // this.$emit('loginAgain')
+      // this.$refs.index.click()
+    })
+
     MIP.viewer.fixedElement.init()
     let me = this
     this.$on('pay2event', event => {
@@ -475,6 +484,7 @@ export default {
 }
 .agree-container mip-img {
   vertical-align: bottom;
+  margin-right: .12rem;
 }
 
 .s4s-group {
@@ -597,6 +607,7 @@ select {
 .pay-contaienr-num {
   color: #fe7000;
   font-size: 0.2rem;
+  font-weight: bold;
 }
 
 .pay-contaienr-p1 {

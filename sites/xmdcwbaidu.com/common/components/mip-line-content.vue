@@ -22,24 +22,24 @@ export default {
 
 .line-word {
   display: flex;
-  padding: 0 0.5rem;
+  /*padding: 0 0.5rem;*/
   flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
   text-align: center;
+  .line-left,
+  .line-right {
+    width: 27%;
+    /*padding: 0 0.6rem;*/
+    border: 0.01rem solid @color-text-p;
+  }
+
+  .word-content {
+    width: 27%;
+    font-size: 12px;
+    color: #bababa;
+    // color: @f-color3;
+  }
 }
 
-.line-left,
-.line-right {
-  width: 1.5rem;
-  padding: 0 0.6rem;
-  border: 0.01rem solid @color-text-p;
-}
-
-.word-content {
-  width: 3.75rem;
-  font-size: 12px;
-  color: #bababa;
-  // color: @f-color3;
-}
 </style>

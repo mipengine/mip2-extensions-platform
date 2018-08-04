@@ -61,8 +61,7 @@
     </div>
     <mip-result
       v-show="!resultShow"
-      :resultdata="resultData"
-      @resetcalculate="reSet"/>
+      :resultdata="resultData"/>
     <div
       id="tips"
       :class="getPositionValue"
@@ -79,6 +78,7 @@
 .container{
   height: 50px;
   top:88px;
+	z-index: 1000;
 }
 .wrapper {
   position: relative;
@@ -102,7 +102,7 @@
   width: 10em;
   font-family: PingFang-SC-Medium;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 400;
   color: #333;
 }
 
@@ -149,7 +149,7 @@ input::placeholder {
   margin: 20px auto;
   font-size: 17px;
   color: #fff;
-  font-weight: 500;
+  font-weight: 400;
   text-align: center;
   border-radius: 45px;
   background: -webkit-linear-gradient(left, #FF731F, #FFA53A);
@@ -322,9 +322,7 @@ export default {
 			selectValue: 1,
 			resultShow: true,
 			resultData: {
-				tag: 1,
-				realIncome: 1000.56,
-				wage: 1000.78
+				realIncome: 5000,
 			},
 			small: false,
 			isClick:0,
@@ -536,10 +534,10 @@ export default {
 			if ($data.tag == 1) {
 				// 计算个人缴纳社保
 				this.resultData = this.getTax($data.wage, sociall + accumulation, $data.threshold);
-				this.resultData.tag = 1;
+				this.resultData.tag = $data.tag;
 			} else {
 				this.resultData = this.after2wage($data.wage, sociall + accumulation, $data.threshold);
-				this.resultData.tag = 2;
+				this.resultData.tag = $data.tag;
 			}
 			this.resultData.threshold = $data.threshold.toFixed(2);
 			this.resultData.sociAll = sociall.toFixed(2);
@@ -590,8 +588,17 @@ export default {
 		after2wage: function (taxwage, insure, threshold) {
 			let hold = threshold;
 			let wage = taxwage;
+			let zero = 0;
 			// 第一段
-			if (wage < hold) { return wage; }
+			if (wage < hold) { 
+				return {
+					realIncome: (wage + insure).toFixed(2),
+					tax: zero.toFixed(2),
+					taxableIncome: zero.toFixed(2),
+					taxR:0,
+					taxQ:0,
+				}; 
+			}
 			// 第二段
 			wage = (taxwage - 3500 * 0.03) / (1 - 0.03);
 			if (wage > hold && wage <= hold + 1500) {

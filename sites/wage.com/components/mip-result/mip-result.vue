@@ -25,12 +25,17 @@
         @click="closeWageDetail">我的工资计算详情</div>
       <section v-show="isShow">
         <div class="pd16 fz15">
-          <p class="mb10"><span>{{ resultdata.tag==1?afterTitle:beforeTitle }}</span><span class="right">{{ resultdata.tag==1?resultdata.realIncome:resultdata.wage }}元</span></p>
-          <p class="detail">税前工资({{ resultdata.tag==1?resultdata.wage:resultdata.realIncome }})-社保个人缴纳({{ resultdata.sociAll }})-公积金个人缴纳({{ resultdata.accumulation }})-个人所得税({{ resultdata.tax }})</p>
+          <p class="mb10"><span>{{ resultdata.tag==1?afterTitle:beforeTitle }}</span><span class="right">{{ resultdata.realIncome }}元</span></p>
+          <p 
+            v-if="resultdata.tag == 2"
+            class="detail" >税后工资({{ resultdata.wage }})+社保个人缴纳({{ resultdata.sociAll }})+公积金个人缴纳({{ resultdata.accumulation }})+个人所得税({{ resultdata.tax }})</p>   
+          <p 
+            v-else
+            class="detail">税前工资({{ resultdata.wage }})-社保个人缴纳({{ resultdata.sociAll }})-公积金个人缴纳({{ resultdata.accumulation }})-个人所得税({{ resultdata.tax }})</p>       
         </div>
         <div class="pd16 fz15">
           <p class="mb10"><span>个人所得税</span><span class="right">{{ resultdata.tax }}元</span></p>
-          <p class="detail">应纳税所得额({{ resultdata.taxableIncome }})*税率({{ resultdata.taxR }}%)-速算扣除数({{ resultdata.taxQ }})</p>
+          <p class="detail">应纳税所得额({{ resultdata.taxableIncome }})*税率({{ resultdata.taxR }}%)-速算扣除数({{ resultdata.taxQ }}.00)</p>
         </div>
         <div class="pd16 fz15">
           <p class="mb10"><span>应纳税所得额</span><span class="right">{{ resultdata.taxableIncome }}元</span></p>
@@ -42,7 +47,7 @@
     <div
       class="calculateBtn"
       @click="resetCalculate"><a
-        href="http://wbg.do1.com.cn/gzjsq.html"
+        href="https://m.baidu.com/wishwing/c/wbg.do1.com.cn/gzjsq.html"
         class="cfff">重新计算</a></div>
     <p><a
       class="tip2"
@@ -55,6 +60,7 @@ div,span{
 }
 .result-div span{
   font-size:15px;
+  font-weight: 400;
 }
 .cfff{
   color:#fff;
@@ -81,7 +87,7 @@ div,span{
     width: 10em;
     font-family: PingFang-SC-Medium;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 400;
     color: #333;
 }
 
@@ -128,7 +134,7 @@ input::placeholder {
     margin: 20px auto;
     font-size: 17px;
     color: #fff;
-    font-weight: 500;
+    font-weight: 400;
     text-align: center;
     border-radius: 45px !important;
     background: -webkit-linear-gradient(left, #FF731F, #FFA53A);
