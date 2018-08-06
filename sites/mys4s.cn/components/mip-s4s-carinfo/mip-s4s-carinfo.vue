@@ -5,7 +5,10 @@
         <div style="flex:1;">
           <h2
             class="s4s-car-name"
-          >请您上传行驶证，</h2>
+          >请您上传行驶证 <span
+            class="s4s-help"
+            style="margin-left:.1rem;"
+            @click="openDriveFile">?</span></h2>
           <div class="s4s-car-illegal">系统可直接识别信息，无需填写</div>
         </div>
         <div class="s4s-upload-pic">
@@ -572,6 +575,8 @@ export default {
   -ms-box-flex:1;
   color: #333333;
   font-size: 0.2rem;
+  display: flex;
+  align-items: center;
 }
 
 .s4s-car-illegal {
