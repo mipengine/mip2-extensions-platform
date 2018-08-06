@@ -12,8 +12,8 @@
           class="onOff_off"/></div>
     </div>
     <div 
-		v-show="isOnClick"
-		class="list">
+      v-show="isOnClick"
+      class="list">
       <div
         v-show="isOpen"
         :scrollshow="scrollshow"
@@ -30,8 +30,8 @@
     </div>
     
     <div 
-		v-show="isOpen"
-		:class="{'bb':!isshow}"
+	  v-show="isOpen"
+	  :class="{'bb':!isshow}"
       class="wage list">
       <label for="">缴纳基数</label>
       <input
