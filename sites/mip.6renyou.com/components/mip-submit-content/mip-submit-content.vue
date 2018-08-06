@@ -146,10 +146,14 @@ export default {
       return storage.get('phone')
     },
     baiduCB (name, phone, info) {
+      if (!info || !info.userInfo || !info.userInfo.userinfo) return
+      let openid = info.userInfo.userinfo.openid
+      let accessToken = info.userInfo['access_token']
       let data = {
         name,
         phone,
-        info: this.info,
+        openid,
+        accessToken,
         dest: this.destination,
         days: this.day
       }
