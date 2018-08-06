@@ -1,7 +1,7 @@
 <template>
   <div class="wrapper">
-    <div class="">
-      <label for="">
+    <div class="list">
+      <label>
         <slot/>
       </label>
       <div
@@ -11,7 +11,9 @@
           :class="{active:isOpen}"
           class="onOff_off"/></div>
     </div>
-    <div v-show="isOnClick">
+    <div 
+		v-show="isOnClick"
+		class="list">
       <div
         v-show="isOpen"
         :scrollshow="scrollshow"
@@ -29,7 +31,8 @@
     
     <div
       v-show="isOpen"
-      class="wage">
+	  :class="{'bb':!isshow}"
+      class="wage list">
       <label for="">缴纳基数</label>
       <input
         :class="{'ip-disable':ok}"
@@ -38,11 +41,9 @@
         placeholder="0-1000,000 最多两位小数"
         @input="inputBaseMoney">
     </div>
-    <!-- <span>{{tag}}</span> -->
-    <!--  <div v-show="isshow"> -->
     <div
       v-show="isOpen && isshow"
-      class="wage wage2 arrow arrow2">
+      class="wage wage2 arrow arrow2 list">
       <label for="">缴纳比例</label>
       <input
         type="number"
@@ -63,7 +64,6 @@
         @showselect="showSelect"
         @colsescrollselect="colseScrollSelect"/>
     </mip-fixed>
-
   </div>
 </template>
 <script>
@@ -340,7 +340,12 @@ div{
     color: #999;
     border-bottom: 1px solid #F5F5F5;
 }
-
+.list:nth-last-of-type(1){
+	border-bottom: none;
+}
+.bb{
+	border-bottom: none !important;
+}
 .wrapper label {
     width: 10em;
     font-family: PingFang-SC-Medium;
@@ -361,7 +366,7 @@ input {
     padding-left: 6em;
     text-align: right;
     box-sizing: border-box;
-    border: none;
+    border: none;;
     outline: none;
 	color: #333;
 	letter-spacing:1px;

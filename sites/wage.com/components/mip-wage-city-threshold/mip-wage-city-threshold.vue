@@ -1,6 +1,6 @@
 <template type="mip-mustache">
   <div class="wrapper">
-    <div class="wage">
+    <div class="wage bb">
       <label>
         <slot/>
       </label>
@@ -11,7 +11,7 @@
         @input="numberAmount">
     </div>
     <div
-      class="arrow"
+      class="arrow bb"
       @click="openAddressSelect()">
       <label>缴纳城市</label>
       <input
@@ -152,9 +152,11 @@ export default {
   font-size: 16px;
   text-align: left;
   color: #999;
+  
+}
+.bb{
   border-bottom: 1px solid #F5F5F5;
 }
-
 .wrapper label {
   width: 10em;
   font-family: PingFang-SC-Medium;
