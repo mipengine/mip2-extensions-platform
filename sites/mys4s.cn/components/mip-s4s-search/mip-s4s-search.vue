@@ -6,10 +6,11 @@
     <div class="s4s-car-info">
       <div style="display: flex;align-items:center;">
         <div style="flex:1;">
-          <h2 class="s4s-car-name" >请您上传行驶证，
-            <!-- <span
+          <h2 class="s4s-car-name" >请您上传行驶证
+            <span
               class="s4s-help"
-              @click="openDriveFileNumber">?</span> -->
+              style="margin-left:.1rem;"
+              @click="openDriveFile">?</span>
           </h2>
           <div class="s4s-car-illegal">系统可直接识别信息，无需填写</div>
         </div>
@@ -54,7 +55,6 @@
         <div class="s4s-group-tit">车牌号码</div>
         <div
           class="provice"
-          on="tap:info.login"
           @click="selectProvice"
         >
           <div style="height:100%;padding: 4px 0;">{{ provice }} <span class="right-arrow"/></div>
@@ -399,6 +399,11 @@ export default {
       this.src =
         'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/classNo.png'
     },
+    // 查看行驶证
+    openDriveFile () {
+      this.detail = true
+      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveFileA.png'
+    },
     // 查看发动机号
     engineDetail () {
       this.detail = true
@@ -567,6 +572,7 @@ export default {
   color: #333333;
   font-size: 0.2rem;
   display: flex;
+  align-items: center;
 }
 
 .s4s-car-illegal {
