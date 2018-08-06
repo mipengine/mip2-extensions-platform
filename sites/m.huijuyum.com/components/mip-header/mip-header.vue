@@ -1,8 +1,14 @@
 <template>
   <div class="headerBox">
     <div class="search-content">
-      <input type="text" v-model="keyword" placeholder="请输入企业关键词" />
-      <span class="search-btn" @click="search()"></span>
+      <input
+        v-model="keyword"
+        type="text"
+        placeholder="请输入企业关键词" >
+      <span
+        class="search-btn"
+        @click="search()">
+      </span>
     </div>
   </div>
 </template>
@@ -42,35 +48,35 @@
 
 <script>
 let util = MIP.util
-let CustomStorage = util.customStorage;
-let storage = new CustomStorage(0);
+let CustomStorage = util.customStorage
+let storage = new CustomStorage(0)
 export default {
-    data(){
-       return{
-           keyword:''
-       }
-    },
-    methods: {
-        /**
+  data () {
+    return {
+      keyword: ''
+    }
+  },
+  mounted () {
+    this.initHeader()
+    this.search()
+  },
+  methods: {
+    /**
          * 初始化组件
          *
          */
-        initHeader(){
-            this.keyword=storage.get('keyword')?storage.get('keyword'):this.keyword;
-        },
-        /**
+    initHeader () {
+      this.keyword = storage.get('keyword') ? storage.get('keyword') : this.keyword
+    },
+    /**
          * 把搜索数据存入缓存，触发搜索方法
          *
          */
-       search(){
-           storage.set('keyword',this.keyword);
-           console.log(this.keyword);
-           this.$emit('search');
-       }
-    },
-    mounted () {
-      this.initHeader();
-      this.search();
+    search () {
+      storage.set('keyword', this.keyword)
+      console.log(this.keyword)
+      this.$emit('search')
     }
+  }
 }
 </script>

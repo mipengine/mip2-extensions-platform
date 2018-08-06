@@ -1,54 +1,84 @@
 <template>
   <div class="brandList">
-     <div class="tips">
-       <span class="nums">汇桔云为您找到相关结果<a>{{total}}</a>条</span>
-       <span class="filterLink" on="tap:right-sidebar.open">筛选</span>
-     </div>
-      <div ref="brandListContainer">
-         <div class="listItem"
-              v-for="(item, index) in dataList"
-              :key="index"
-         >
-             <p class="itemTitle"><mip-img popup :alt="item.brandName" class='brandImg' :src="item.imgurl"></mip-img><a data-type="mip" data-title="目标页面标题" href="www.baidu.com"><span>商标名称：</span><span v-html="item.brandName||'--'"></span></a></p>
-            <p class="itemInfo">
-               <span class="leftText ws3">注 册 号：</span>
-               <span class="rightText" >{{item.regCode||'--'}}</span>
-            </p>
-            <p class="itemInfo">
-             <span class="leftText">申请日期：</span>
-             <span class="rightText">{{item.applyDate||'--'}}</span>
-           </p>
-            <p class="itemInfo">
-             <span class="leftText ws2">类 别：</span>
-             <span class="rightText">第{{item.intCls||'--'}}类 {{item.className||'--'}}</span>
-           </p>
-            <p class="itemInfo">
-             <span class="leftText ws2">状 态：</span>
-             <span class="rightText">{{item.flowStatus||''}}</span>
-             <!--<span class="brandStatus warm">风险</span>-->
-           </p>
-            <span v-if="item.addStatus" class="itemBtn" @click="addEntrust(item.id,item.brandName)">加入托管</span>
-             <span v-else class="itemBtn entrusted">已托管</span>
-         </div>
-          <div class="seeMore" @click="seeMore">点击加载更多</div>
+    <div class="tips">
+      <span class="nums">汇桔云为您找到相关结果<a>{{ total }}</a>条</span>
+      <span
+        class="filterLink"
+        on="tap:right-sidebar.open">
+          筛选
+      </span>
+    </div>
+    <div ref="brandListContainer">
+      <div
+        v-for="(item, index) in dataList"
+        :key="index"
+        class="listItem">
+        <p class="itemTitle">
+            <mip-img
+              :alt="item.brandName"
+              :src="item.imgurl"
+              popup
+              class="brandImg">
+            </mip-img>
+            <a
+            data-type="mip"
+            data-title="目标页面标题"
+            href="www.baidu.com">
+                <span>商标名称：</span>
+                <span v-html="item.brandName||'--'"></span>
+            </a>
+        </p>
+        <p class="itemInfo">
+          <span class="leftText ws3">注 册 号：</span>
+          <span class="rightText" >{{ item.regCode||'--' }}</span>
+        </p>
+        <p class="itemInfo">
+          <span class="leftText">申请日期：</span>
+          <span class="rightText">{{ item.applyDate||'--' }}</span>
+        </p>
+        <p class="itemInfo">
+          <span class="leftText ws2">类 别：</span>
+          <span class="rightText">第{{ item.intCls||'--' }}类 {{ item.className||'--' }}</span>
+        </p>
+        <p class="itemInfo">
+          <span class="leftText ws2">状 态：</span>
+          <span class="rightText">{{ item.flowStatus||'' }}</span>
+          <!--<span class="brandStatus warm">风险</span>-->
+        </p>
+        <span
+          v-if="item.addStatus"
+          class="itemBtn"
+          @click="addEntrust(item.id,item.brandName)">加入托管</span>
+        <span
+          v-else
+          class="itemBtn
+           entrusted">
+            已托管
+        </span>
       </div>
-      <mip-sidebar
-              id="right-sidebar"
-              layout="nodisplay"
-              side="right"
-              class="mip-hidden">
-              <div class="filterBox">
-                 <div class="filterType">
-                     <p class="typeTitle"><span>申请类别</span><i class="showUp"></i></p>
-                     <ul class="filterItems">
-                         <li><span>01.化学原料</span>(232)</li>
-                         <li><span>01.化学原料</span>(232)</li>
-                         <li><span>01.化学原料</span>(232)</li>
-                         <li><span>01.化学原料</span>(232)</li>
-                     </ul>
-                 </div>
-              </div>
-      </mip-sidebar>
+      <div
+        class="seeMore"
+        @click="seeMore">点击加载更多</div>
+    </div>
+    <mip-sidebar
+      id="right-sidebar"
+      layout="nodisplay"
+      side="right"
+      class="mip-hidden">
+      <div class="filterBox">
+        <div class="filterType">
+          <p class="typeTitle"><span>申请类别</span>
+              <i class="showUp"></i>
+          </p>
+          <ul class="filterItems">
+            <li><span>01.化学原料</span>(232)</li>
+            <li><span>01.化学原料</span>(232)</li>
+            <li><span>01.化学原料</span>(232)</li>
+            <li><span>01.化学原料</span>(232)</li>
+          </ul>
+        </div>
+      </div>
+    </mip-sidebar>
   </div>
 </template>
 
@@ -201,90 +231,89 @@
 </style>
 
 <script>
-    let util = MIP.util
-    let CustomStorage = util.customStorage;
-    let storage = new CustomStorage(0);
-    export default {
-        data(){
-            return{
-                keyword:'',
-                pageSize: 10,
-                pageNo: 1,
-                condition:'',
-                dataList:[],
-                total:0
-            }
-        },
-        methods: {
-            /**
+let util = MIP.util
+let CustomStorage = util.customStorage
+let storage = new CustomStorage(0)
+export default {
+  data () {
+    return {
+      keyword: '',
+      pageSize: 10,
+      pageNo: 1,
+      condition: '',
+      dataList: [],
+      total: 0
+    }
+  },
+  updated () {
+    this.getDefaultImg()
+  },
+  mounted () {
+    this.getDefaultImg()
+    this.init()
+  },
+  methods: {
+    /**
              * 初始化组件
              *
              */
-            init(){
-               this.search();
-               this.registerEvent();
-            },
-            /**
+    init () {
+      this.search()
+      this.registerEvent()
+    },
+    /**
              * 注册
              *
              */
-            registerEvent () {
-                // 外部触发搜索
-                this.$on('search', () => {
-                    this.pageNo=1;
-                    this.search();
-                })
-            },
-            //获取搜索数据
-            getFitles(){
+    registerEvent () {
+      // 外部触发搜索
+      this.$on('search', () => {
+        this.pageNo = 1
+        this.search()
+      })
+    },
+    // 获取搜索数据
+    getFitles () {
 
-            },
-            /**
+    },
+    /**
              * 把搜索数据存入缓存，触发搜索方法
              *
              */
-            search(){
-                let keyword=storage.get('keyword',this.keyword);
-                fetch(`https://huijuyun.com/openBrand/findBrandPage?keyword=${keyword}&pageNo=${this.pageNo}`).then((response)=>{
-                    return response.json();
-                }).then((data)=>{
-                    if(data.code==1&&data.object){
-                        this.total= data.object.count;
-                        if(data.object.pageNo==1){
-                            this.dataList=data.object.list;
-                        }else{
-                            this.dataList=[...this.dataList,...data.object.list];
-                        }
-
-                    }
-                }).catch((e)=>{console.log(e);});
-            },
-            getDefaultImg(){
-                let items=document.getElementsByTagName('img');
-                for(var item of items){
-                    if (!item.complete || (typeof item.naturalWidth == "undefined" && item.naturalWidth == 0) || !item.src) {
-                        item.src='/static/image/default.jpg';
-                    }
-
-                }
-
-            },
-            /*加入托管*/
-            addEntrust(id){
-
-            },
-            /*查看更多*/
-            seeMore(){
-               this.pageNo++;
-               this.search();
-            }
-        },
-        updated(){
-            this.getDefaultImg();
-        },
-        mounted () {
-            this.getDefaultImg();
-            this.init();
+    search () {
+      let keyword = storage.get('keyword', this.keyword)
+      fetch(`https://huijuyun.com/openBrand/findBrandPage?keyword=${keyword}&pageNo=${this.pageNo}`).then((response) => {
+        return response.json()
+      }).then((data) => {
+        if (data.code === 1 && data.object) {
+          this.total = data.object.count
+          if (data.object.pageNo === 1) {
+            this.dataList = data.object.list
+          } else {
+            this.dataList = [...this.dataList, ...data.object.list]
+          }
         }
+      }).catch(e => {
+        console.log(e)
+      })
+    },
+    getDefaultImg () {
+      let items = document.getElementsByTagName('img')
+      for (let item of items) {
+        if (!item.complete || (typeof item.naturalWidth === 'undefined' && item.naturalWidth === 0) || !item.src) {
+          item.src = '/static/image/default.jpg'
+        }
+      }
+    },
+    /* 加入托管 */
+    addEntrust (id) {
+
+    },
+    /* 查看更多 */
+    seeMore () {
+      this.pageNo++
+      this.search()
     }
+  }
+}
 </script>
