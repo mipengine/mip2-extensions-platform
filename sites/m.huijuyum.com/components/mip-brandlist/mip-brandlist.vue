@@ -5,7 +5,7 @@
       <span
         class="filterLink"
         on="tap:right-sidebar.open">
-          筛选
+        筛选
       </span>
     </div>
     <div ref="brandListContainer">
@@ -14,19 +14,18 @@
         :key="index"
         class="listItem">
         <p class="itemTitle">
-            <mip-img
-              :alt="item.brandName"
-              :src="item.imgurl"
-              popup
-              class="brandImg">
-            </mip-img>
-            <a
+          <mip-img
+            :alt="item.brandName"
+            :src="item.imgurl"
+            popup
+            class="brandImg"/>
+          <a
             data-type="mip"
             data-title="目标页面标题"
             href="www.baidu.com">
-                <span>商标名称：</span>
-                <span v-html="item.brandName||'--'"></span>
-            </a>
+            <span>商标名称：</span>
+            <span v-html="item.brandName||'--'"/>
+          </a>
         </p>
         <p class="itemInfo">
           <span class="leftText ws3">注 册 号：</span>
@@ -53,7 +52,7 @@
           v-else
           class="itemBtn
            entrusted">
-            已托管
+          已托管
         </span>
       </div>
       <div
@@ -68,7 +67,7 @@
       <div class="filterBox">
         <div class="filterType">
           <p class="typeTitle"><span>申请类别</span>
-              <i class="showUp"></i>
+            <i class="showUp"/>
           </p>
           <ul class="filterItems">
             <li><span>01.化学原料</span>(232)</li>

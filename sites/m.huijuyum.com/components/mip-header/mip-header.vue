@@ -4,11 +4,10 @@
       <input
         v-model="keyword"
         type="text"
-        placeholder="请输入企业关键词" >
+        placeholder="请输入企业关键词">
       <span
         class="search-btn"
-        @click="search()">
-      </span>
+        @click="search()"/>
     </div>
   </div>
 </template>
