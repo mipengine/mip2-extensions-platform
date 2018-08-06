@@ -360,6 +360,11 @@ export default {
     }
   },
   methods: {
+    // 查看行驶证
+    openDriveFile () {
+      this.detail = true
+      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveFileA.png'
+    },
     selProvince (val) {
       this.provice = val
       MIP.setData({ '#globalData': { provice: val } })
