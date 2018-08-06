@@ -11,7 +11,7 @@
           :class="{active:isOpen}"
           class="onOff_off"/></div>
     </div>
-    <div 
+    <div
 		v-show="isOnClick"
 		class="list">
       <div
