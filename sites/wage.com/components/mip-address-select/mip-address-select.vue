@@ -15,7 +15,7 @@
       <div class="title">
         <div
           class="area"
-          @click="provinceSelected()">{{ Province?Province:info[province-1].name }}</div>
+          @click="provinceSelected()">{{ Province?Province:'北京' }}</div>
         <div
           :class="City?'':'active'"
           :data-id="city"
@@ -56,7 +56,6 @@
 .left {
   float: left;
 }
-
 .address-list {
   display: flex;
   flex-wrap: nowrap;
@@ -78,12 +77,10 @@
   color: #ACA9A7;
   border-bottom: 1px solid #E6E4E1;
 }
-
 .yes-btn {
   float: right;
   color: #FF8D1D;
 }
-
 .myAddress {
   width: 100%;
   background-color: white;
@@ -167,7 +164,7 @@
   font-size: 14px;
   font-family: PingFang-SC-Medium;
   text-align: center;
-  color: #000;
+  color: #333;
 }
 /* 修改的格式 */
 .address ul {
@@ -197,7 +194,31 @@ export default {
 	},
 	data () {
 		return {
-			socialSecurity: {},
+			socialSecurity: {
+				aged: {
+					baseMoney: 3384,
+					maxMoney: 25401,
+					proportion: 8
+				},
+				noWork: {
+					baseMoney: 3387,
+					maxMoney: 25401,
+					proportion: 0.2
+				},
+				medical: {
+					baseMoney: 5080,
+					maxMoney: 25401,
+					proportion: 2
+				},
+				disease: {
+					baseMoney: 0,
+					proportion: 0
+				},
+				accumulation: {
+					baseMoney: 2273,
+					maxMoney: 25401
+				}
+			},
 			showChose: true,
 			showProvince: true,
 			showCity: false,
@@ -210,7 +231,7 @@ export default {
 			GetProvinceId: 2,
 			District: false,
 			Province: false,
-			City: false,
+			City: '北京',
 			// v-for循环判断是否为当前
 			selected: false,
 			info: [{
@@ -12704,6 +12725,23 @@ export default {
 			]
 		};
 	},
+	watch:{
+		showaddress(newVal,oldVal){
+			if(newVal == true){
+				let cssStr = 'overflow-y: hidden !important;height:100vh !important';
+				document.getElementsByTagName('html')[0].style.cssText = cssStr;
+				document.body.style.cssText = cssStr;
+			}else{
+				let cssStr = 'overflow-y: auto !important;height:100vh !important';
+				document.getElementsByTagName('html')[0].style.cssText = cssStr;
+				document.body.style.cssText = cssStr;
+			}
+		}
+	},
+	mounted :function(){
+		this.getProvinceId(1,'北京',0);
+		this.getCityId(1,'北京市',0);
+	},
 	methods: {
 		closeAdd: function () {
 			this.$emit('closecityselect', '');
@@ -12746,7 +12784,7 @@ export default {
 		getCityId: function (code, input, index, socialSecurity) {
 			this.city = code;
 			this.City = input;
-			this.socialSecurity = socialSecurity; // 城市社保数据
+			this.socialSecurity = socialSecurity?socialSecurity:this.socialSecurity; // 城市社保数据
 			/* this.showProvince = false; */
 			this.showCity = true;
 			/* this.showDistrict = true;

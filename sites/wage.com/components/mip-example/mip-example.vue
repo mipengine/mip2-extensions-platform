@@ -1,17 +1,23 @@
 <template>
   <div id="Container">
-    <div v-show="resultShow">
-      <div class="tag-nav">
-        <div class="flex-item">
-          <span
-            :class="{active:active}"
-            @click="selectTag(1)">计算税后工资</span>
-          <span :class="{active_select:active}"/>
+    <div 
+      v-show="resultShow"
+      class="pt55">
+      <mip-fixed 
+        type="top" 
+        class="tag-nav-top">
+        <div class="tag-nav">
+          <div class="flex-item">
+            <span
+              :class="{active:active}"
+              @click="selectTag(1,active)">计算税后工资</span>
+            <span :class="{active_select:active}"/>
+          </div>
+          <div class="flex-item"><span
+            :class="{active:!active}"
+            @click="selectTag(2,!active)">推算税前工资</span><span :class="{active_select:!active}"/></div>
         </div>
-        <div class="flex-item"><span
-          :class="{active:!active}"
-          @click="selectTag(2)">推算税前工资</span><span :class="{active_select:!active}"/></div>
-      </div>
+      </mip-fixed>
       <!--计算税前工资-->
       <div :class="{box:isOk}">
         <mip-wage-city-threshold
@@ -21,6 +27,7 @@
         <mip-social-security
           :fromwage="wage"
           :tag="tag"
+          :isclick = "isClick"
           :socialsecurity="socialSecurity"
           @securityselect="securitySelect"
           @getsecuritybase="getSecurityBase"
@@ -30,6 +37,7 @@
           :isshow="show"
           :fromwage="wage"
           :tag="tag"
+          :isclick = "isClick"
           @securityselect="securitySelect"
           @getsecuritybase="getSecurityBase"
           @getproportion="getProportion"
@@ -53,8 +61,7 @@
     </div>
     <mip-result
       v-show="!resultShow"
-      :resultdata="resultData"
-      @resetcalculate="reSet"/>
+      :resultdata="resultData"/>
     <div
       id="tips"
       :class="getPositionValue"
@@ -62,9 +69,16 @@
   </div>
 </template>
 <style scoped>
+.pt55{
+	padding-top: 55px;
+}
+.tag-nav-top{
+	margin-top: 44px !important;
+}
 .container{
   height: 50px;
   top:88px;
+	z-index: 1000;
 }
 .wrapper {
   position: relative;
@@ -88,8 +102,8 @@
   width: 10em;
   font-family: PingFang-SC-Medium;
   font-size: 13px;
-  font-weight: 500;
-  color: #000;
+  font-weight: 400;
+  color: #333;
 }
 
 label {
@@ -135,7 +149,7 @@ input::placeholder {
   margin: 20px auto;
   font-size: 17px;
   color: #fff;
-  font-weight: 500;
+  font-weight: 400;
   text-align: center;
   border-radius: 45px;
   background: -webkit-linear-gradient(left, #FF731F, #FFA53A);
@@ -146,6 +160,7 @@ input::placeholder {
   /* Firefox 3.6 - 15 */
   background: linear-gradient(to right, #FF731F, #FFA53A);
   /* 标准的语法 */
+	-webkit-tap-highlight-color: transparent; 
 }
 
 .tips {
@@ -205,7 +220,8 @@ li {
   text-align: center;
   font-size: 17px;
   font-family: PingFang-SC-Medium;
-  font-weight: 500;
+  font-weight: 400;
+	-webkit-tap-highlight-color: transparent; 
 }
 
 .active_select {
@@ -277,21 +293,21 @@ export default {
 					baseMoney: 0
 				}
 			},
-			// 默认广州-社保公积金基数
+			// 默认北京-社保公积金基数
 			socialSecurity: {
 				aged: {
-					baseMoney: 3469,
-					maxMoney: 20004,
+					baseMoney: 3384,
+					maxMoney: 25401,
 					proportion: 8
 				},
 				noWork: {
-					baseMoney: 2100,
-					maxMoney: 24654,
+					baseMoney: 3387,
+					maxMoney: 25401,
 					proportion: 0.2
 				},
 				medical: {
-					baseMoney: 4931,
-					maxMoney: 24654,
+					baseMoney: 5080,
+					maxMoney: 25401,
 					proportion: 2
 				},
 				disease: {
@@ -299,18 +315,17 @@ export default {
 					proportion: 0
 				},
 				accumulation: {
-					baseMoney: 1895,
-					maxMoney: 24654
+					baseMoney: 2273,
+					maxMoney: 25401
 				}
 			},
 			selectValue: 1,
-			resultShow: false,
+			resultShow: true,
 			resultData: {
-				tag: 1,
-				realIncome: 1000.56,
-				wage: 1000.78
+				realIncome: 5000,
 			},
-			small: false
+			small: false,
+			isClick:0,
 		};
 	},
 	mounted: function () {
@@ -319,8 +334,9 @@ export default {
 	},
 	methods: {
 		// 切换税前/税后工资
-		selectTag: function (index) {
-			this.active = !this.active;
+		selectTag: function (index,flag) {
+			this.isClick++;
+			!flag?this.active = !this.active:'';
 			this.tag = index;
 			if (index == 1) {
 				this.title = '税前工资';
@@ -424,7 +440,7 @@ export default {
 			this.tipShow = false;
 			setTimeout(() => {
 				this.tipShow = true;
-			}, 1000);
+			}, 2000);
 		},
 		getInputWage: function (obj) {
 			let wage = obj.detail[0];
@@ -518,10 +534,10 @@ export default {
 			if ($data.tag == 1) {
 				// 计算个人缴纳社保
 				this.resultData = this.getTax($data.wage, sociall + accumulation, $data.threshold);
-				this.resultData.tag = 1;
+				this.resultData.tag = $data.tag;
 			} else {
 				this.resultData = this.after2wage($data.wage, sociall + accumulation, $data.threshold);
-				this.resultData.tag = 2;
+				this.resultData.tag = $data.tag;
 			}
 			this.resultData.threshold = $data.threshold.toFixed(2);
 			this.resultData.sociAll = sociall.toFixed(2);
@@ -572,15 +588,26 @@ export default {
 		after2wage: function (taxwage, insure, threshold) {
 			let hold = threshold;
 			let wage = taxwage;
+			let zero = 0;
 			// 第一段
-			if (wage < hold) { return wage; }
+			if (wage < hold) { 
+				return {
+					realIncome: (wage + insure).toFixed(2),
+					tax: zero.toFixed(2),
+					taxableIncome: zero.toFixed(2),
+					taxR:0,
+					taxQ:0,
+				}; 
+			}
 			// 第二段
 			wage = (taxwage - 3500 * 0.03) / (1 - 0.03);
 			if (wage > hold && wage <= hold + 1500) {
 				return {
 					realIncome: (wage + insure).toFixed(2),
 					tax: (wage - taxwage).toFixed(2),
-					taxableIncome: (wage + insure - hold).toFixed(2)
+					taxableIncome: (wage + insure - hold).toFixed(2),
+					taxR:3,
+					taxQ:0,
 				};
 			}
 			// 第三段
@@ -589,7 +616,9 @@ export default {
 				return {
 					realIncome: (wage + insure).toFixed(2),
 					tax: (wage - taxwage).toFixed(2),
-					taxableIncome: (wage + insure - hold).toFixed(2)
+					taxableIncome: (wage + insure - hold).toFixed(2),
+					taxR:10,
+					taxQ:105
 				};
 			}
 			// 第四段
@@ -598,7 +627,9 @@ export default {
 				return {
 					realIncome: (wage + insure).toFixed(2),
 					tax: (wage - taxwage).toFixed(2),
-					taxableIncome: (wage + insure - hold).toFixed(2)
+					taxableIncome: (wage + insure - hold).toFixed(2),
+					taxR:20,
+					taxQ:555,
 				};
 			}
 			// 第五段
@@ -607,7 +638,9 @@ export default {
 				return {
 					realIncome: (wage + insure).toFixed(2),
 					tax: (wage - taxwage).toFixed(2),
-					taxableIncome: (wage + insure - hold).toFixed(2)
+					taxableIncome: (wage + insure - hold).toFixed(2),
+					taxR:25,
+					taxQ:1005,
 				};
 			}
 			// 第六段
@@ -616,7 +649,9 @@ export default {
 				return {
 					realIncome: (wage + insure).toFixed(2),
 					tax: (wage - taxwage).toFixed(2),
-					taxableIncome: (wage + insure - hold).toFixed(2)
+					taxableIncome: (wage + insure - hold).toFixed(2),
+					taxR:30,
+					taxQ:2755,
 				};
 			}
 			// 第七段
@@ -625,7 +660,9 @@ export default {
 				return {
 					realIncome: (wage + insure).toFixed(2),
 					tax: (wage - taxwage).toFixed(2),
-					taxableIncome: (wage + insure - hold).toFixed(2)
+					taxableIncome: (wage + insure - hold).toFixed(2),
+					taxR:35,
+					taxQ:5505
 				};
 			}
 			// 第八段
@@ -634,9 +671,9 @@ export default {
 				return {
 					realIncome: (wage + insure).toFixed(2),
 					tax: (wage - taxwage).toFixed(2),
-					taxableIncome: (wage + insure - hold).toFixed(2)
-					/* taxR: R * 100,
-            taxQ:Q, */
+					taxableIncome: (wage + insure - hold).toFixed(2),
+					taxR:45,
+					taxQ:13505
 				};
 			}
 		},

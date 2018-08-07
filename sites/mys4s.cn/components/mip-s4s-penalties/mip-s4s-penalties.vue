@@ -20,7 +20,7 @@
             @click="openCode">
             !
           </span>
-        <span style="color:#999;font-size:.14rem;">15-16位</span></p>
+        <span class="s4s-input-size">15-16位</span></p>
         <div class="s4s-order-input">
           <input
             v-model="orderNumber"
@@ -28,8 +28,7 @@
             maxlength="19"
             placeholder="请输入处罚决定书编号" >
           <span
-            class="s4s-btn"
-            on="tap:info.login"
+            class="s4s-btn btn-border"
             @click="ready" >确定</span>
         </div>
         <p class="s4s-order-text">处罚决定书编号、车牌号和处罚人为办单依据，请咨询核对！</p>
@@ -132,15 +131,15 @@
             <span class="s4s-group-tit">罚款金额</span>
             <span
               class="s4s-group-tit"
-              style="width:auto;color:#fe7000">¥ {{ payForm.money }}</span>
+              style="width:auto;color:#fe7000;">¥ {{ payForm.money }}</span>
           </div>
           <div class="s4s-group">
             <span class="s4s-group-tit">滞纳金</span>
-            <span style="width:auto;color:#fe7000" >¥ {{ payForm.late_free || 0 }}</span>
+            <span style="width:auto;color:#fe7000;" >¥ {{ payForm.late_free || 0 }}</span>
           </div>
           <div class="s4s-group">
             <span class="s4s-group-tit">服务费</span>
-            <span style="width:auto;color:#fe7000" >¥ {{ payForm.own_free || 0 }}</span>
+            <span style="width:auto;color:#fe7000;" >¥ {{ payForm.own_free || 0 }}</span>
           </div>
           <div class="s4s-group">
             <span class="s4s-group-tit">违法时间</span>
@@ -228,31 +227,29 @@
           </div>
           <div class="s4s-group">
             <span class="s4s-group-tit">滞纳金额</span>
-            <span style="width:auto;color:#fe7000" >¥ {{ lateFree|| 0 }}</span>
+            <span style="width:auto;color:#fe7000;" >¥ {{ lateFree|| 0 }}</span>
           </div>
           <div class="s4s-group">
             <span class="s4s-group-tit">服务费用</span>
             <!-- <span style="width:auto;color:#959595;font-size:0.14rem;margin-right:0.10rem" v-if="price && price > 0">已优惠5元</span> -->
             <!-- <span style="width:auto;color:#959595; text-decoration:line-through;margin-right:0.15rem;font-size:0.14rem" >¥ {{ ownFree + 5 || 5 }}</span> -->
-            <span style="width:auto;color:#fe7000" >¥ {{ ownFree|| 0 }}</span>
+            <span style="width:auto;color:#fe7000;" >¥ {{ ownFree|| 0 }}</span>
           </div>
           <div
             class="s4s-group group-upload"
             style="height:auto">
             <div class="s4s-group-tit">上传罚单</div>
-            <mip-img
-              v-show="ticketUrl"
-              :src="ticketUrl"
-              width="110"
-              height="70"
-              @click="chooseimg" />
-            <mip-img
-              v-show="!ticketUrl"
-              src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/update3.png"
-              width="110"
-              height="70"
-              style="background:#eee"
-              @click="chooseimg" />
+            <div style="flex:1">
+              <mip-img
+                :src="ticketUrl||'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/update3.png'"
+                width="110"
+                height="70"
+                style="background:#eee"
+                @click="chooseimg" />
+            </div>
+            <span
+              class="s4s-help"
+              @click="openTicket">?</span>
             <!-- <div
               v-show="!ticketUrl"
               class="image-container"
@@ -280,10 +277,15 @@
     </div>
     <mip-fixed type="top">
       <div
-        v-show="openShow"
+        v-if="openShow"
         class="s4s-mask"
         @click="closeMake">
-        <mip-img :src="src" />
+        <mip-img
+          :src="src"
+          :height="height||440"
+          layout="responsive"
+          width="350"
+        />
       </div>
     </mip-fixed>
     <!-- <template v-if="dateShow">
@@ -403,7 +405,8 @@ export default {
         '学',
         '港',
         '澳'
-      ]
+      ],
+      height: ''
     }
   },
   computed: {
@@ -444,8 +447,15 @@ export default {
         .replace(/....(?!$)/g, '$& ')
     }
   },
-  mounted () {},
+  mounted () { },
   methods: {
+    // 罚单
+    openTicket () {
+      this.openShow = true
+      this.height = 250
+      this.src =
+        'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/ticketFile.png'
+    },
     selProvince (val) {
       this.provice = val
       this.showProvice = false
@@ -560,7 +570,7 @@ export default {
         }
       })
       if (this.orderNumber.length > 19 || this.orderNumber.length < 18) {
-        util.toast('罚单格式错误,请重新填写（15-16位）')
+        util.toast('请输入正确的处罚决定书，处罚决定书为15-16位')
         this.showNotice = true
         this.showForm2 = false
         this.showForm1 = false
@@ -599,9 +609,9 @@ export default {
               // util.toast(res.data.msg);
             } else if (res.data.code === 1000) {
               if (res.data.Violation == null || !res.data.Violation) {
-                util.toast('您的罚单已缴费，\n无需处理')
+                util.toast('您的罚单已经缴费，\n无需处理')
               } else if (res.data.Violation.renfa_time === '') {
-                util.toast('您的罚单尚未认罚，\n请认罚后处理')
+                util.toast('您的罚单尚未认罚，\n请认罚后再进行处理')
               } else {
                 this.showNotice = false
                 this.payForm = res.data.Violation
@@ -680,6 +690,7 @@ export default {
     // 打开处罚单帮助
     openCode () {
       this.openShow = true
+      this.height = 440
       this.src =
         'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/notice@3x.png'
     },
@@ -834,6 +845,8 @@ export default {
   color: #4b4b4b;
   font-size: .2rem;
   font-weight: bold;
+  display: flex;
+  align-items: center;
 }
 
 .s4s-order-input {
@@ -854,8 +867,9 @@ export default {
   -ms-flex: 5;
   flex: 5;
   padding: .06rem .1rem;
-  font-size: .16rem;
+  font-size: .2rem;
   color:#4F7EFF;
+  font-weight: 400;
 }
 .group-upload {
   align-items:end;
@@ -891,21 +905,23 @@ export default {
 .s4s-order-img-container mip-img + mip-img {
   margin-right: -.22rem;
   margin-left: .16rem;
-  margin-top: .12rem;
+  /* margin-top: .12rem; */
 }
 .flex-center {
   margin-bottom: .1rem;
 }
 .s4s-order-content {
-  font-size: .13rem;
-  color: #636363;
+  font-size: .12rem;
+  padding: 0 .1rem;
+  color: #999;
+  line-height: .21rem;
 }
 .s4s-order-content span {
   text-decoration: underline;
 }
 .s4s-select-date {
   border: none;
-  color: #666;
+  color: #333;
   -webkit-box-flex: none;
   -ms-flex: none;
   flex: none;
@@ -921,6 +937,8 @@ export default {
 .s4s-help-tip {
   float: none;
   display: inline-block;
+  margin: 0 .1rem;
+  margin-top: 1px;
 }
 .s4s-order-text {
   color: #fe7000;
@@ -944,7 +962,7 @@ export default {
 }
 .s4s-order-tip-text {
   font-size: .13rem;
-  color: #636363;
+  color: #666;
 }
 .image-container {
   height: 70px;
@@ -1024,5 +1042,31 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 .s4s-provice-hover {
   background: #bbb;
   color: #fff;
+}
+.s4s-input-size {
+  color:#999;
+  font-size:.14rem;
+  font-weight:normal;
+  vertical-align: middle;
+  margin-left:.1rem;
+}
+.btn-border {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+  font-weight: normal!important;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+  font-weight: normal!important;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+  font-weight: normal!important;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  font-weight: normal!important;
+}
+input {
+  color:#333;
 }
 </style>

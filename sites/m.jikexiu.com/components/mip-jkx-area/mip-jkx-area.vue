@@ -57,7 +57,7 @@
   </div>
 </template>
 <script>
-// import {fetch} from '../../common/js/fetch'
+import request from '@/common/js/fetch'
 import apiUrl from '../../common/js/config.api'
 const viewport = MIP.viewport
 export default {
@@ -89,11 +89,18 @@ export default {
       show: false
     }
   },
+  watch: {
+    areadata (val) {
+      window.addEventListener('touchmove', function (e) {
+        if (val.show) {
+          e.preventDefault()
+        }
+      }, { passive: false })
+    }
+  },
   created () {
-    fetch(apiUrl.provinceList).then(data => {
-      return data.json()
-    }).then(response => {
-      this.proList = response.data.provinceList
+    request(apiUrl.provinceList).then(res => {
+      if (res.code === 200) this.proList = res.data.provinceList
     })
       .catch(error => {
         console.log(error)
@@ -143,27 +150,17 @@ export default {
     chooseCity (city) {
       this.area.cityId = city.id
       this.area.city = city.name
-      fetch(`${apiUrl.distList}?cityId=${city.id}`)
-        .then(data => {
-          return data.json()
-        }).then(response => {
-          this.districtList = response.data.distList
-        })
-        .catch(error => {
-          console.log(error)
+      request(`${apiUrl.distList}?cityId=${city.id}`)
+        .then(res => {
+          if (res.code === 200) this.districtList = res.data.distList
         })
     },
     choosepro (pro) {
       this.area.proId = pro.id
       this.area.province = pro.name
-      fetch(`${apiUrl.cityList}?provinceId=${pro.id}`).then(data => {
-        return data.json()
-      }).then(response => {
-        this.cityList = response.data.cityList
+      request(`${apiUrl.cityList}?provinceId=${pro.id}`).then(res => {
+        if (res.code === 200) this.cityList = res.data.cityList
       })
-        .catch(error => {
-          console.log(error)
-        })
     }
   }
 }

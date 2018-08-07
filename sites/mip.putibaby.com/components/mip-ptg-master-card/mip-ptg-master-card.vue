@@ -379,7 +379,8 @@
     <mip-fixed
       v-if="showImg"
       class="img_back"
-      type="gototop"
+      type="top"
+      still
       @click="hideImg">
       <div
         v-if="showImg"
@@ -1138,7 +1139,21 @@ export default {
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
       } else if (origin && !event.userInfo.isUnion) {
         console.log('go to submit_ph')
-        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/' + origin), {})
+        if (origin === 'update_time') {
+          console.log('submit_ph to update_time')
+          var to = 'https://mip.putibaby.com/update_time_mip?mcode=' + self.data.codeid
+          window.MIP.viewer.open(MIP.util.makeCacheUrl(
+            'https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
+
+          window.MIP.viewer.open(MIP.util.makeCacheUrl(), {})
+        } else {
+          console.log('submit_ph to' + origin)
+          var to2 = 'https://mip.putibaby.com/' + origin
+          window.MIP.viewer.open(MIP.util.makeCacheUrl(
+            'https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to2)), {})
+        }
+      } else {
+        console.log('no op while logindone')
       }
 
       API.getMasterInfo(self.data.info.id, function (isOk, data) {

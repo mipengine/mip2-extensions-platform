@@ -1,8 +1,9 @@
 <template>
-  <div v-show="devicedata.show">
+  <div
+    v-show="devicedata.show">
     <div
       ref="mask"
-      class="mask" >
+      class="mask">
       <div
         class="mask-wrapper"
         @click.self="close">
@@ -82,7 +83,7 @@
 
 </template>
 <script>
-// import { fetch } from '@/common/js/fetch'
+import request from '@/common/js/fetch'
 import apiUrl from '@/common/js/config.api'
 const viewport = MIP.viewport
 export default {
@@ -126,6 +127,12 @@ export default {
   },
   watch: {
     devicedata (val) {
+      document.body.style.overflow = val.show ? 'hidden' : 'scroll'
+      // window.addEventListener('touchmove', function (e) {
+      //   if (val.show) {
+      //     e.preventDefault()
+      //   }
+      // }, { passive: false })
       if (val.last) {
         this.last = val.last
         this.tab = ['类型', '品牌', '型号']
@@ -143,6 +150,12 @@ export default {
     this.$refs.mask.style.height = viewport.getHeight() + 'px'
   },
   created () {
+    document.body.style.overflow = this.devicedata.show ? 'hidden' : 'scroll'
+    // if (this.devicedata.show) {
+    //   window.addEventListener('touchmove', function (e) {
+    //     e.preventDefault()
+    //   }, { passive: false })
+    // }
     if ((this.devicedata.tab || []).length > 2) {
       this.tab = this.devicedata.tab
       this.last = this.devicedata.last
@@ -168,14 +181,14 @@ export default {
     },
     // 获取分类：
     getSort () {
-      fetch(apiUrl.categoryList).then(data => {
-        return data.json()
-      }).then(res => {
-        this.data1 = res.data.list
-        if (this.changeColor === 1 && this.data1.length > 0) {
-          this.data2 = this.data1[0].brandList
-        } else {
-          this.data2 = this.data1[0].brandList
+      request(apiUrl.categoryList).then(res => {
+        if (res.code === 200) {
+          this.data1 = res.data.list
+          if (this.changeColor === 1 && this.data1.length > 0) {
+            this.data2 = this.data1[0].brandList
+          } else {
+            this.data2 = this.data1[0].brandList
+          }
         }
       })
     },
@@ -184,23 +197,21 @@ export default {
       MIP.setData({
         loading: true
       })
-      fetch(`${apiUrl.deviceList}?categoryId=${this.categoryId}&brandId=${this.brandId}`).then(data => {
-        return data.json()
-      }).then(res => {
-        this.data3 = res.data.list
-        MIP.setData({
-          loading: false
-        })
+      request(`${apiUrl.deviceList}?categoryId=${this.categoryId}&brandId=${this.brandId}`).then(res => {
+        if (res.code === 200) {
+          this.data3 = res.data.list
+          MIP.setData({
+            loading: false
+          })
+        }
       })
     },
     // 获取设备故障
     getMalfunction () {
       // let options = {deviceId: this.color, attributeIds: this.attr, attributeValues: this.attrValue}
-      fetch(`${apiUrl.getMalfunction}?deviceId=${this.color}&attributeIds=${this.attr}&attributeValues=${this.attrValue}`)
-        .then(data => {
-          return data.json()
-        }).then(res => {
-          this.data4 = res.data.list
+      request(`${apiUrl.getMalfunction}?deviceId=${this.color}&attributeIds=${this.attr}&attributeValues=${this.attrValue}`)
+        .then(res => {
+          if (res.code === 200) this.data4 = res.data.list
         })
     },
     queryBrand () {
@@ -304,25 +315,19 @@ export default {
     // 获取颜色
     queryColor (id) {
       this.deviceId = id
-      fetch(apiUrl.getUserOrderList, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `deviceId=${id}`
-      }).then(data => {
-        return data.json()
-      }).then(res => {
-        this.color = res.data.list[0].deviceId
-        this.attr = res.data.list[0].attributeId
-        this.attrValue = res.data.list[0].id
-        MIP.setData({orderData: {
-          'deviceId': this.color,
-          'attributeId': this.attr,
-          'attrValue': this.attrValue,
-          changeColor: this.changeColor,
-          changeColor1: this.changeColor1
-        }})
+      request(apiUrl.getUserOrderList, 'post', {deviceId: id}).then(res => {
+        if (res.code === 200) {
+          this.color = res.data.list[0].deviceId
+          this.attr = res.data.list[0].attributeId
+          this.attrValue = res.data.list[0].id
+          MIP.setData({orderData: {
+            'deviceId': this.color,
+            'attributeId': this.attr,
+            'attrValue': this.attrValue,
+            changeColor: this.changeColor,
+            changeColor1: this.changeColor1
+          }})
+        }
       })
     },
     close () {
