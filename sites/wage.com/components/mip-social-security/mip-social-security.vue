@@ -29,9 +29,9 @@
       </div>	
     </div>
     
-    <div 
-	  v-show="isOpen"
-	  :class="{'bb':!isshow}"
+    <div
+	v-show="isOpen"
+	:class="{'bb':!isshow}"
       class="wage list">
       <label for="">缴纳基数</label>
       <input
