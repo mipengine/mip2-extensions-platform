@@ -142,7 +142,7 @@
             @click="goCarList">管理爱车</span>
       </div>
       <div
-        v-for="(item, index) in localCarList.slice(0,all?-1:3)"
+        v-for="(item, index) in localCarList.slice(0,all ? 100 : 3)"
         :key="index"
         class="car-item"
         @click="goSearch(index)">
@@ -421,7 +421,7 @@ export default {
       util.toast('授权成功')
     })
     this.$on('customError', event => {
-      window.localStorage.clear()
+      // window.localStorage.clear()
       util.toast('授权失败')
       // this.$emit('loginAgain')
       // this.$refs.index.click()
