@@ -175,8 +175,26 @@ export default {
       util
         .fetchData('v3/violation/car/list')
         .then(res => {
-          if (res.code === 0) {
+          if (res.code === 40000) {
+
+          } else if (res.code === 0) {
             self.list = res.data ? res.data : []
+            // 本地存储一波 保持本地localstorage为最新的
+            try {
+              let newLocalCarList = []
+              self.list.forEach(car => {
+                newLocalCarList.push({
+                  carNo: car.CarNo,
+                  engine: car.EngineNo,
+                  vin: car.ClassNo,
+                  car_type: car.CarType || ''
+                })
+              })
+              window.localStorage.setItem('localCarList', JSON.stringify(newLocalCarList))
+            } catch (error) {
+              console.log(error)
+              // util.toast('由于您处在无痕模式，不能存储您的爱车的记录')
+            }
           } else {
             util.toast(res.msg)
           }
