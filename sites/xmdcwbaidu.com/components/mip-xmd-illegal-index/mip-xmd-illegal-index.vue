@@ -43,7 +43,7 @@
       class="illegal">
       <div class="input-container">
         <div class="before-input-tips">
-          <p>支持广东省小型汽车交通违法缴罚</p>
+          <p>支持粤牌小型汽车和小型能源汽车交通违法缴罚</p>
         </div>
         <div class="input-content">
           <div class="mint-cell mint-field mint-input-inline">
@@ -753,8 +753,8 @@ export default {
       const urlParams = Url.getUrlData()
       const decisinNumInput = Storage.get('decisinNumInput') || null
       const illegalIndexInput = Storage.get('illegalIndexInput') || null
-      console.log('urlParams', urlParams, urlParams.hasOwnProperty('decision'))
       if (urlParams) {
+        console.log('urlParams', urlParams, urlParams.hasOwnProperty('decision'))
         self.selected = urlParams.hasOwnProperty('selected') && urlParams.selected === 'decision' ? 'decision' : 'illegal'
       }
       if (decisinNumInput) {

@@ -245,21 +245,52 @@ export default {
             self.lists = newList
             self.code = res.code
 
-            // let addParam = {
-            //   car_no: param.car_no ? param.car_no.toUpperCase() : '',
-            //   vin: param.vin ? param.vin.toUpperCase() : '',
-            //   engine: param.engine ? param.engine.toUpperCase() : ''
-            // }
-            // // 接口参数 engine
-            // util.fetchData('v3/violation/car/manage', addParam).then(res => {
-            //   if (res.code > 0) {
-            //     util.toast(res.msg)
-            //     return
-            //   }
-            //   if (res.code === 0) {
-            //     // util.toast("操作成功");
-            //   }
-            // })
+            let addParam = {
+              car_no: param.car_no ? param.car_no.toUpperCase() : '',
+              vin: param.vin ? param.vin.toUpperCase() : '',
+              engine: param.engine ? param.engine.toUpperCase() : '',
+              car_type: param.car_type ? param.car_type : ''
+            }
+            console.log(this.globalData.dont ? '不' : '', '存储')
+            if (!this.globalData.dont) {
+              // 本地存储一波
+              try {
+                let localCarList = []
+                let localCarListString = window.localStorage.getItem('localCarList')
+                if (localCarListString) {
+                  localCarList = JSON.parse(localCarListString)
+                }
+                let newLocalCarList = [...localCarList].filter(item => {
+                  return item.carNo !== addParam.car_no
+                })
+                if (addParam.car_no) {
+                  newLocalCarList.unshift({
+                    carNo: addParam.car_no,
+                    engine: addParam.engine,
+                    vin: addParam.vin,
+                    car_type: addParam.car_type
+                  })
+                }
+
+                window.localStorage.setItem('localCarList', JSON.stringify(newLocalCarList))
+              } catch (error) {
+                util.toast('由于您处在无痕模式，不能存储您所查询存储的记录')
+              }
+
+              // 个人账号存储一波
+              // 接口参数 engine
+              util.fetchData('v3/violation/car/manage', addParam).then(res => {
+              // if (res.code > 0) {
+              //   util.toast(res.msg)
+              //   return
+              // }
+              // if (res.code === 0) {
+              //   // util.toast("操作成功");
+              // }
+              }).catch(e => {
+
+              })
+            }
           } else {
             util.toast(res.msg)
           }
@@ -269,8 +300,39 @@ export default {
         })
     },
     gotoForm () {
+      let localCarList = []
+      try {
+        let localCarListString = window.localStorage.getItem('localCarList')
+        if (localCarListString) {
+          localCarList = JSON.parse(localCarListString)
+        }
+      } catch (e) {
+        console.log(e)
+        // this.getCar()
+        this.$refs.car.click()
+      }
+      // 如果本地有数据 同步
+      if (localCarList.length) {
+        util.toast('爱车同步中，请稍后')
+        const promiseList = []
+        localCarList.forEach((item, index) => {
+          promiseList.push(util.fetchData('v3/violation/car/manage', {
+            car_no: item.carNo ? item.carNo.toUpperCase() : '',
+            vin: item.vin ? item.vin.toUpperCase() : '',
+            engine: item.engine ? item.engine.toUpperCase() : '',
+            car_type: item.car_type ? item.car_type : ''
+          }).catch(e => {
+          }))
+        })
+        Promise.all(promiseList).then(res => {
+          // this.getCar()
+          this.$refs.car.click()
+        })
+      } else {
+        // this.getCar()
+        this.$refs.car.click()
+      }
       // MIP.viewer.open("car.html");
-      this.$refs.car.click()
     }
   }
 }
