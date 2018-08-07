@@ -982,7 +982,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color:#ccc;
 }
 .provice {
-  background-image: linear-gradient(40deg,  0%#ff7c00, #fe5a00 100%);
+  background-image: linear-gradient(40deg, #ff7c00 0%, #fe5a00 100%);
   border-radius: 0.04rem;
   color: #fff;
   /* width: 0.45rem; */
