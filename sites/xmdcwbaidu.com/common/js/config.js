@@ -1,5 +1,5 @@
 export const gConst = {
-  BASE_URL: 'https://jmt.sssvip4.natapp.cc/yzcw-web-admin/',
+  BASE_URL: 'https://test.xx-motor.com:8443/yzcw-web-admin/',
   // BASE_URL_PAGE: 'https://jmt.sssvip4.natapp.cc/xmdcwbaidu.com/example/'
   BASE_URL_PAGE: './'
 
