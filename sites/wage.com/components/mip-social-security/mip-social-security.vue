@@ -32,8 +32,7 @@
     <div
 	v-show="isOpen"
 	:class="{'bb':!isshow}"
-	class="wage list"
-	>
+	class="wage list">
       <label for="">缴纳基数</label>
       <input
         :class="{'ip-disable':ok}"
