@@ -152,7 +152,7 @@ export default {
 
     this.$on('customError', event => {
       window.localStorage.clear()
-      util.toast('授权失败')
+      util.toast('登陆失败')
       // this.$emit('loginAgain')
       // this.$refs.index.click()
     })

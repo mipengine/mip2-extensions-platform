@@ -68,12 +68,15 @@ export default {
   methods: {
     signUp () {
       let _this = this
+      if (!_this.userInfo) {
+        return
+      }
       if (_this.userInfo && _this.userInfo.isBuy) {
         MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'user/study?token=' + base.getToken()))
       } else {
-        if (_this.userInfo.userStatus === 1) {
+        if (_this.userInfo && _this.userInfo.userStatus === 1) {
           MIP.viewer.open(_this.userInfo.url, {isMipLink: false})
-        } else if (_this.userInfo.userStatus === 0) {
+        } else if (_this.userInfo && _this.userInfo.userStatus === 0) {
           if (_this.iscomit) {
             return
           } else {
