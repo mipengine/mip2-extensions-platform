@@ -6,10 +6,11 @@
     <div class="s4s-car-info">
       <div style="display: flex;align-items:center;">
         <div style="flex:1;">
-          <h2 class="s4s-car-name" >请您上传行驶证，
-            <!-- <span
+          <h2 class="s4s-car-name" >请您上传行驶证
+            <span
               class="s4s-help"
-              @click="openDriveFileNumber">?</span> -->
+              style="margin-left:.1rem;"
+              @click="openDriveFile">?</span>
           </h2>
           <div class="s4s-car-illegal">系统可直接识别信息，无需填写</div>
         </div>
@@ -54,10 +55,9 @@
         <div class="s4s-group-tit">车牌号码</div>
         <div
           class="provice"
-          on="tap:info.login"
           @click="selectProvice"
         >
-          <div style="height:100%;padding: 4px 0;">{{ provice }} <span class="right-arrow"/></div>
+          <div style="height:100%;display: flex;align-items: center;">{{ provice }} <span class="right-arrow"/></div>
         </div>
         <input
           v-model="car_no"
@@ -108,13 +108,68 @@
           @click="engineDetail">?</span>
       </div>
     </div>
+    <div
+      class="save-container"
+      @click="changeSave" >
+      <mip-img
+        v-show="!save"
+        key="disagree"
+        src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/disagree.png"
+        width="22"
+        height="22"
+      />
+      <mip-img
+        v-show="save"
+        key="agree"
+        src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree.png"
+        width="22"
+        height="22"
+      />
+      <span>保存爱车，下次直接查违章</span>
+    </div>
     <button
       class="s4s-btn"
+      style="margin-top:0;width:calc( 100% - .3rem )"
       @click="formSubmit"> 查询违章 </button>
+    <div
+      v-if="localCarList.length"
+      class="car-list">
+      <div class="car-title">
+        <h2
+          class="s4s-car-name"
+          style="flex:1;display:inline-block;" >我的爱车</h2><span
+            on="tap:info.login"
+            @click="goCarList">管理爱车</span>
+      </div>
+      <div
+        v-for="(item, index) in localCarList.slice(0,all ? 100 : 3)"
+        :key="index"
+        class="car-item"
+        @click="goSearch(index)">
+        <span style="flex:1;">{{ item.carNo }}</span>
+        <mip-img
+          :key="index*100"
+          src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/search.png"
+          width="22"
+          height="22"
+        />
+      </div>
+      <div
+        v-if="localCarList.length>3"
+        class="car-item"
+        style="text-align:center;justify-content: center;"
+        @click="all = !all">
+        {{ all?'收起':'显示全部' }}
+      </div>
+    </div>
     <a
       ref="violation"
       data-type="mip"
       href="violation.html"/>
+    <a
+      ref="car"
+      data-type="mip"
+      href="car.html"/>
     <a
       ref="index"
       data-type="mip"
@@ -149,6 +204,12 @@
         </div>
       </div>
     </mip-fixed>
+    <div style="text-align:center;font-size:.13rem;line-height:.19rem;color:#989898;bottom: 20px;width:100%;margin:.3rem auto;">
+      <p>本服务由齐车大圣提供</p>
+      <p>客服电话：<a
+        style="color:#FE7000;font-weight:bold"
+        href="tel:400000119">400-000-1199</a></p>
+    </div>
   </div>
 </template>
 
@@ -170,6 +231,9 @@ export default {
       vinLength: 6,
       engineNoLength: 6,
       cartype: '',
+      save: true,
+      localCarList: [],
+      all: false,
       carTypeList: [
         {
           value: '02',
@@ -357,14 +421,68 @@ export default {
       util.toast('授权成功')
     })
     this.$on('customError', event => {
-      window.localStorage.clear()
+      // window.localStorage.clear()
       util.toast('授权失败')
       // this.$emit('loginAgain')
       // this.$refs.index.click()
     })
     // this.$emit('loginAgain')
+
+    try {
+      let localCarList = window.localStorage.getItem('localCarList')
+      if (localCarList) {
+        let newList = JSON.parse(localCarList)
+        this.localCarList = newList
+      }
+    } catch (error) {
+      util.toast('由于您处在无痕模式，不能载入您之前存储的记录')
+      this.localCarList = []
+    }
   },
   methods: {
+    goCarList () {
+      let localCarList = []
+      try {
+        let localCarListString = window.localStorage.getItem('localCarList')
+        if (localCarListString) {
+          localCarList = JSON.parse(localCarListString)
+        }
+      } catch (e) {
+        console.log(e)
+        // this.getCar()
+        this.$refs.car.click()
+      }
+      // 如果本地有数据 同步
+      if (localCarList.length) {
+        util.toast('爱车同步中，请稍后')
+        const promiseList = []
+        localCarList.forEach((item, index) => {
+          promiseList.push(util.fetchData('v3/violation/car/manage', {
+            car_no: item.carNo ? item.carNo.toUpperCase() : '',
+            vin: item.vin ? item.vin.toUpperCase() : '',
+            engine: item.engine ? item.engine.toUpperCase() : '',
+            car_type: item.car_type || ''
+          }).catch(e => {
+          }))
+        })
+        Promise.all(promiseList).then(res => {
+          // this.getCar()
+          this.$refs.car.click()
+        })
+      } else {
+        // this.getCar()
+        this.$refs.car.click()
+      }
+    },
+    changeSave () {
+      this.save = !this.save
+      // 存储 dont=false 不存储 dont = true
+      MIP.setData({
+        '#globalData': {
+          dont: !this.save
+        }
+      })
+    },
     selProvince (val) {
       this.provice = val
       this.showProvice = false
@@ -398,6 +516,11 @@ export default {
       this.detail = true
       this.src =
         'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/classNo.png'
+    },
+    // 查看行驶证
+    openDriveFile () {
+      this.detail = true
+      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveFileA.png'
     },
     // 查看发动机号
     engineDetail () {
@@ -435,6 +558,19 @@ export default {
         return
       }
       // MIP.viewer.open("violation.html");
+      this.$refs.violation.click()
+    },
+    goSearch (index) {
+      let item = this.localCarList[index]
+      MIP.setData({
+        '#globalData': {
+          'provice': item.carNo.slice(0, 1),
+          'car_no': item.carNo.slice(1, 10),
+          'vin': item.vin,
+          'engine': item.engine,
+          'car_type': item.car_type || ''
+        }
+      })
       this.$refs.violation.click()
     },
     upload () {
@@ -567,6 +703,7 @@ export default {
   color: #333333;
   font-size: 0.2rem;
   display: flex;
+  align-items: center;
 }
 
 .s4s-car-illegal {
@@ -588,11 +725,14 @@ export default {
   height: 0.25rem;
   margin-right: 0.1rem;
   padding: 0.01rem 0.09rem;
+  display: flex;
+  align-items: center;
 }
 .right-arrow {
   display: inline-block;
   margin-bottom: 2px;
   width: 0;
+  margin-left: 2px;
   height: 0;
   border-left: 0.05rem solid transparent;
   border-top: 0.05rem solid #fff;
@@ -663,5 +803,41 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   line-height: 0.18rem;
   text-align: center;
   font-weight: bold;
+}
+
+.save-container {
+  margin: .1rem .15rem;
+  display: flex;
+  align-items: center;
+}
+
+.save-container span {
+  margin-left: .1rem;
+  color:#666;
+}
+
+.car-list {
+  padding: .25rem 0.15rem 0;
+  color:#333;
+  background-color: #fff;
+}
+
+.car-item {
+  border-bottom: .01rem solid #eaeaea;
+  line-height: .4rem;
+  display: flex;
+  align-items: center;
+}
+
+.car-item:last-child {
+  border-bottom:none;
+}
+.car-title {
+  display: flex;
+  align-items: center;
+}
+
+.car-title span{
+  color:#FE7000;
 }
 </style>

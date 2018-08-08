@@ -143,11 +143,18 @@ export default {
     }
   },
   mounted () {
-    this.getOrder(-1)
-    this.getOrderStatic()
+    // this.getOrder(-1)
+    // this.getOrderStatic()
     this.$on('enter', () => {
       this.getOrder(-1)
       this.getOrderStatic()
+    })
+
+    this.$on('customError', event => {
+      window.localStorage.clear()
+      util.toast('登陆失败')
+      // this.$emit('loginAgain')
+      // this.$refs.index.click()
     })
   },
   methods: {
@@ -330,8 +337,10 @@ export default {
   color: #333;
   width: 100%;
   text-align: center;
+  height: 100%;
 }
 .s4s-tab-cur-normal {
+  height: 100%;
   border-bottom: 0.03rem transparent solid;
 }
 .s4s-tab-item {
