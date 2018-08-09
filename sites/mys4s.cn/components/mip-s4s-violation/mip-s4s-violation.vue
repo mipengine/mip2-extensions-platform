@@ -6,6 +6,7 @@
           <span class="s4s-car-name">{{ provice + car_no || '-' }}</span>
           <span
             class="s4s-car-change"
+            on="tap:info.login"
             @click="gotoForm">更换爱车</span>
           <a
             ref="car"
@@ -49,6 +50,7 @@
             <div
               v-if="list.ProcessStatus == 1"
               class="s4s-illegal-btn"
+              on="tap:info.login"
               @click="gotoTicketPay(list)">
               <span>立即办理</span>
             </div>
@@ -56,7 +58,7 @@
               v-if="list.ProcessStatus != 1"
               class="s4s-illegal-btn disable-btn" >
               <!-- <span>不可办理</span> -->
-              <span>暂不支持处理该类型的违章</span>
+              <span style="padding-right:0;">暂不支持处理该类型的违章</span>
             </div>
           </div>
         </div>
@@ -113,6 +115,13 @@ export default {
     return true
   },
   mounted () {
+    this.$on('customError', event => {
+      window.localStorage.clear()
+      util.toast('登陆失败')
+      // this.$emit('loginAgain')
+      // this.$refs.index.click()
+    })
+
     if (!this.globalData.car_no && this.getQueryString('carno')) {
       console.log('url模式')
       this.globalData.car_no = this.getQueryString('carno').slice(1, 10)
@@ -239,18 +248,49 @@ export default {
             let addParam = {
               car_no: param.car_no ? param.car_no.toUpperCase() : '',
               vin: param.vin ? param.vin.toUpperCase() : '',
-              engine: param.engine ? param.engine.toUpperCase() : ''
+              engine: param.engine ? param.engine.toUpperCase() : '',
+              car_type: param.car_type ? param.car_type : ''
             }
-            // 接口参数 engine
-            util.fetchData('v3/violation/car/manage', addParam).then(res => {
-              if (res.code > 0) {
-                util.toast(res.msg)
-                return
+            console.log(this.globalData.dont ? '不' : '', '存储')
+            if (!this.globalData.dont) {
+              // 本地存储一波
+              try {
+                let localCarList = []
+                let localCarListString = window.localStorage.getItem('localCarList')
+                if (localCarListString) {
+                  localCarList = JSON.parse(localCarListString)
+                }
+                let newLocalCarList = [...localCarList].filter(item => {
+                  return item.carNo !== addParam.car_no
+                })
+                if (addParam.car_no) {
+                  newLocalCarList.unshift({
+                    carNo: addParam.car_no,
+                    engine: addParam.engine,
+                    vin: addParam.vin,
+                    car_type: addParam.car_type
+                  })
+                }
+
+                window.localStorage.setItem('localCarList', JSON.stringify(newLocalCarList))
+              } catch (error) {
+                util.toast('由于您处在无痕模式，不能存储您所查询存储的记录')
               }
-              if (res.code === 0) {
-                // util.toast("操作成功");
-              }
-            })
+
+              // 个人账号存储一波
+              // 接口参数 engine
+              util.fetchData('v3/violation/car/manage', addParam).then(res => {
+              // if (res.code > 0) {
+              //   util.toast(res.msg)
+              //   return
+              // }
+              // if (res.code === 0) {
+              //   // util.toast("操作成功");
+              // }
+              }).catch(e => {
+
+              })
+            }
           } else {
             util.toast(res.msg)
           }
@@ -260,8 +300,39 @@ export default {
         })
     },
     gotoForm () {
+      let localCarList = []
+      try {
+        let localCarListString = window.localStorage.getItem('localCarList')
+        if (localCarListString) {
+          localCarList = JSON.parse(localCarListString)
+        }
+      } catch (e) {
+        console.log(e)
+        // this.getCar()
+        this.$refs.car.click()
+      }
+      // 如果本地有数据 同步
+      if (localCarList.length) {
+        util.toast('爱车同步中，请稍后')
+        const promiseList = []
+        localCarList.forEach((item, index) => {
+          promiseList.push(util.fetchData('v3/violation/car/manage', {
+            car_no: item.carNo ? item.carNo.toUpperCase() : '',
+            vin: item.vin ? item.vin.toUpperCase() : '',
+            engine: item.engine ? item.engine.toUpperCase() : '',
+            car_type: item.car_type ? item.car_type : ''
+          }).catch(e => {
+          }))
+        })
+        Promise.all(promiseList).then(res => {
+          // this.getCar()
+          this.$refs.car.click()
+        })
+      } else {
+        // this.getCar()
+        this.$refs.car.click()
+      }
       // MIP.viewer.open("car.html");
-      this.$refs.car.click()
     }
   }
 }

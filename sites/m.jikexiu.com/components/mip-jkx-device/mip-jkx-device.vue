@@ -35,7 +35,7 @@
 </template>
 
 <script>
-// import { fetch } from '@/common/js/fetch'
+import request from '@/common/js/fetch'
 import apiUrl from '@/common/js/config.api'
 export default {
   props: {
@@ -103,50 +103,45 @@ export default {
       })
     } else if (href.indexOf('modelName') > 0) {
       let NAME = decodeURI(href.split('?')[1].split('=')[1])
-      fetch(apiUrl.getSms, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `ids=${NAME}`
-      }).then(data => {
-        return data.json()
+      request(apiUrl.getSms, 'post', {
+        ids: NAME
       }).then(res => {
-        console.log(res)
-        this.name = res.data.device.model
-        this.name1 = res.data.sms[0].malfunctionName
-        this.price = res.data.sms[0].price
-        this.malfunctionId = res.data.sms[0].malfunctionId
-        this.deviceId = res.data.device.id
-        let per
-        if (res.data.sms[0].warrantyPeriod > 0) {
-          per = `质保${res.data.sms[0].warrantyPeriod}天`
-        } else if (res.data.sms[0].warrantyPeriod === 0) {
-          per = '不质保'
-        } else {
-          per = '终身质保'
-        }
-        MIP.setData({
-          deviceData: {
-            show: false,
-            name: this.name,
-            name1: this.name1,
-            showTxt1: true,
-            showTxt2: true,
-            price: this.price > 0 ? `￥${this.price}` : '待检测'
-          },
-          orderData: {
-            price: this.price > 0 ? `￥${this.price}` : '待检测',
-            device: this.name,
-            solution: this.name1,
-            malfunctionId: this.malfunctionId,
-            attributeId: this.attr,
-            attrValue: this.attrValue,
-            deviceId: this.deviceId,
-            fault: res.data.sms[0].method,
-            period: `(${per})`
+        if (res.code === 200) {
+          this.name = res.data.device.model
+          this.name1 = res.data.sms[0].malfunctionName
+          this.price = res.data.sms[0].price
+          this.malfunctionId = res.data.sms[0].malfunctionId
+          this.deviceId = res.data.device.id
+          let per
+          if (res.data.sms[0].warrantyPeriod > 0) {
+            per = `质保${res.data.sms[0].warrantyPeriod}天`
+          } else if (res.data.sms[0].warrantyPeriod === 0) {
+            per = '不质保'
+          } else {
+            per = '终身质保'
           }
-        })
+          MIP.setData({
+            deviceData: {
+              show: false,
+              name: this.name,
+              name1: this.name1,
+              showTxt1: true,
+              showTxt2: true,
+              price: this.price > 0 ? `￥${this.price}` : '待检测'
+            },
+            orderData: {
+              price: this.price > 0 ? `￥${this.price}` : '待检测',
+              device: this.name,
+              solution: this.name1,
+              malfunctionId: this.malfunctionId,
+              attributeId: this.attr,
+              attrValue: this.attrValue,
+              deviceId: this.deviceId,
+              fault: res.data.sms[0].method,
+              period: `(${per})`
+            }
+          })
+        }
       })
     }
   },

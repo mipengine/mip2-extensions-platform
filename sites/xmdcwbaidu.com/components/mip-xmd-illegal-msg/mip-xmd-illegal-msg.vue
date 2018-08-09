@@ -772,7 +772,7 @@ export default {
             margin-left: 0.4rem;
             margin-top: 0.2rem;
             p {
-              font-size: 0.36em;
+              font-size: 0.36rem;
               font-family: PingFang-SC-Regular;
               color: rgba(0, 0, 0, 1);
             }
