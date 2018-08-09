@@ -38,6 +38,22 @@ const serviceModule = {
       tip: true,
       isAlertErr: false
     }, params)
+  },
+  popupCheckMsmCode (params) {
+    return Req({
+      url: 'code/checkMsmCode',
+      method: 'post',
+      tip: true,
+      isAlertErr: false
+    }, params)
+  },
+  popupLoginBecomeMember (params) {
+    return Req({
+      url: 'login/login',
+      method: 'post',
+      tip: true,
+      isAlertErr: false
+    }, params)
   }
 }
 const ApiSetting = { ...serviceModule }

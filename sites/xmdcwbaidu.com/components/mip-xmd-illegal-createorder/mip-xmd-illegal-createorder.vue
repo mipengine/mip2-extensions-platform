@@ -293,7 +293,7 @@ export default {
             showCancelButton: true
           }, function (action) {
             if (action === 'confirm') {
-              // MIP.viewer.open(gConst.BASE_URL_PAGE+'mip-xmd-illegal-illegalorder.html')
+              MIP.viewer.open(gConst.BASE_URL_PAGE + 'mip-my-order.html')
             }
           })
         } else {

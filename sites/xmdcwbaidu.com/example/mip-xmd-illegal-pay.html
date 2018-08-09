@@ -16,6 +16,11 @@
     .payContain {
       font-size: 16px !important;
     }
+    .payContain .payTypeList__listIcon.baifubao svg {
+      width: 28px !important;
+      height: 28px !important;
+    }
+
   </style>
   <!-- <script src="https://cdn.bootcss.com/vConsole/3.2.0/vconsole.min.js"></script>
   <script>
@@ -154,15 +159,15 @@
         "clientId": "CCOZnKgoLZByUAFYOKPm5aLDKjAMrbfr",
         "id": "info",
         "autologin": true,
-        "endpoint": "https://jmt.sssvip4.natapp.cc/yzcw-web-admin/login/MIPAuth",
+        "endpoint": "https://test.xx-motor.com:8443/yzcw-web-admin/login/MIPAuth",
         "isGlobal": false
       },
       "payConfig": {
         "subject": "支付商品",
         "fee": 300,
-        "redirectUrl": "https://api.example.com/pay/verifypay",
+        "redirectUrl": "https://www.baidu.com/",
         "endpoint": {
-          "baifubao": "https://jmt.sssvip4.natapp.cc/yzcw-web-admin/baiduPay/MIPPay"
+          "baifubao": "https://test.xx-motor.com:8443/yzcw-web-admin/baiduPay/MIPPay"
         },
         "postData": {}
       }
@@ -178,7 +183,8 @@
 </div>
 <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
 <script src="https://c.mipcdn.com/static/v2/mip-shell-inservice/mip-shell-inservice.js"></script>
-<script src="../dist/mip-xmd-illegal-pay/mip-xmd-illegal-pay.js"></script>
+<!-- <script src="../dist/mip-xmd-illegal-pay/mip-xmd-illegal-pay.js"></script> -->
+<script src="https://c.mipcdn.com/extensions/platform/v2/xmdcwbaidu.com/mip-xmd-illegal-pay/mip-xmd-illegal-pay.js"></script>
 <script type="text/javascript" src="https://c.mipcdn.com/static/v2/mip-inservice-pay/mip-inservice-pay.js"></script>
 <script type="text/javascript" src="https://c.mipcdn.com/static/v2/mip-inservice-login/mip-inservice-login.js"></script>
 </body>

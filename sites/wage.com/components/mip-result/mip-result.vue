@@ -21,20 +21,25 @@
     <div class="result-div mt10">
       <div
         :class="{'no-bor':!isTrue,'my-wage-detail':isTrue}"
-        class="my-wage-detail2 h43"
+        class="my-wage-detail2 h43 fz15"
         @click="closeWageDetail">我的工资计算详情</div>
       <section v-show="isShow">
-        <div class="pd16">
-          <p class="mb10"><span>{{ resultdata.tag==1?afterTitle:beforeTitle }}</span><span class="right">{{ resultdata.tag==1?resultdata.realIncome:resultdata.wage }}元</span></p>
-          <p class="detail">税前工资({{ resultdata.tag==1?resultdata.wage:resultdata.realIncome }})-社保个人缴纳({{ resultdata.sociAll }})-公积金个人缴纳({{ resultdata.accumulation }})-个人所得税({{ resultdata.tax }})</p>
+        <div class="pd16 fz15">
+          <p class="mb10"><span>{{ resultdata.tag==1?afterTitle:beforeTitle }}</span><span class="right">{{ resultdata.realIncome }}元</span></p>
+          <p 
+            v-if="resultdata.tag == 2"
+            class="detail" >税后工资({{ resultdata.wage }})+社保个人缴纳({{ resultdata.sociAll }})+公积金个人缴纳({{ resultdata.accumulation }})+个人所得税({{ resultdata.tax }})</p>   
+          <p 
+            v-else
+            class="detail">税前工资({{ resultdata.wage }})-社保个人缴纳({{ resultdata.sociAll }})-公积金个人缴纳({{ resultdata.accumulation }})-个人所得税({{ resultdata.tax }})</p>       
         </div>
-        <div class="pd16">
+        <div class="pd16 fz15">
           <p class="mb10"><span>个人所得税</span><span class="right">{{ resultdata.tax }}元</span></p>
-          <p class="detail">应纳税所得额({{ resultdata.taxableIncome }})*税率({{ resultdata.taxR }}%)-速算扣除数({{ resultdata.taxQ }})</p>
+          <p class="detail">应纳税所得额({{ resultdata.taxableIncome }})*税率({{ resultdata.taxR }}%)-速算扣除数({{ resultdata.taxQ }}.00)</p>
         </div>
-        <div class="pd16">
+        <div class="pd16 fz15">
           <p class="mb10"><span>应纳税所得额</span><span class="right">{{ resultdata.taxableIncome }}元</span></p>
-          <p class="detail">税前工资({{ resultdata.tag==1?resultdata.wage:resultdata.realIncome }})-社保个人缴纳({{ resultdata.sociAll }})-公积金个人缴纳({{ resultdata.accumulation }})-起征点({{ resultdata.threshold }}.00)</p>
+          <p class="detail">税前工资({{ resultdata.tag==1?resultdata.wage:resultdata.realIncome }})-社保个人缴纳({{ resultdata.sociAll }})-公积金个人缴纳({{ resultdata.accumulation }})-起征点({{ resultdata.threshold }})</p>
         </div>
       </section>
     </div>
@@ -42,14 +47,21 @@
     <div
       class="calculateBtn"
       @click="resetCalculate"><a
-        href="http://wbg.do1.com.cn/gzjsq.html"
+        href="https://m.baidu.com/wishwing/c/wbg.do1.com.cn/gzjsq.html"
         class="cfff">重新计算</a></div>
     <p><a
       class="tip2"
-      href="https://mo.mbd.baidu.com/cguzdvn?f=cp">关注我们,获取更多实用工具</a></p>
+      href="https://mo.mbd.baidu.com/cguzdvn?f=cp">关注我们，获取更多实用工具</a></p>
   </div>
 </template>
 <style scoped>
+div,span{
+  -webkit-tap-highlight-color: transparent; 
+}
+.result-div span{
+  font-size:15px;
+  font-weight: 400;
+}
 .cfff{
   color:#fff;
 }
@@ -75,8 +87,8 @@
     width: 10em;
     font-family: PingFang-SC-Medium;
     font-size: 13px;
-    font-weight: 500;
-    color: #000;
+    font-weight: 400;
+    color: #333;
 }
 
 label {
@@ -122,9 +134,9 @@ input::placeholder {
     margin: 20px auto;
     font-size: 17px;
     color: #fff;
-    font-weight: 500;
+    font-weight: 400;
     text-align: center;
-    border-radius: 45px;
+    border-radius: 45px !important;
     background: -webkit-linear-gradient(left, #FF731F, #FFA53A);
     /* Safari 5.1 - 6.0 */
     background: -o-linear-gradient(right, #FF731F, #FFA53A);
@@ -134,7 +146,6 @@ input::placeholder {
     background: linear-gradient(to right, #FF731F, #FFA53A);
     /* 标准的语法 */
 }
-
 .tips {
     position: relative;
     bottom: 0;
@@ -145,7 +156,9 @@ input::placeholder {
     color: #ACA9A7;
     text-align: center;
 }
-
+.fz15 {
+  font-size:15px;
+}
 .mb21 {
     margin-bottom: 21px;
 }
@@ -180,6 +193,7 @@ li {
   color: #FF8D1D;
   font-size: 14px;
   margin-top: 20px;
+  text-decoration:underline;
 }
 
 .head {
@@ -240,7 +254,7 @@ li {
   margin: -45px auto 0 auto;
   padding: 0 14px;
   font-size: 13px;
-  color: #000;
+  color: #333;
   background: #fff;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -251,9 +265,8 @@ li {
 
 .result-div div {
   width: 100%;
-
   text-align: left;
-  border-bottom: 1px solid #E0E0E0;
+  border-bottom: 1px solid #F5F5F5;
 }
 
 .h43 {

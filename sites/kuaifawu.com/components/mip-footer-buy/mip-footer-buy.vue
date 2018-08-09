@@ -7,10 +7,11 @@
       class="fb">
       <div class="fix-bottom">
         <a
-          href="tel:4006683666"
+          href="tel:01089172605"
           class="left">点击咨询</a>
         <a
           class="right"
+          data-type="mip"
           @click="removeSku">购买服务</a>
           <!-- <div class="right" on="tap:log.login"> xxxx </div> -->
       </div>

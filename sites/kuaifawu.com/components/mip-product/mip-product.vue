@@ -30,7 +30,8 @@
             type="mip-mustache">
             <a
               :href="geturl('/product/info.html?id=' + val.id + '_' + searchdata.ct + '_' + searchdata.ar)"
-              :class="{active: val.id == searchdata.id && 0 == searchdata.packageid}">{{ val.title }}</a>
+              :class="{active: val.id == searchdata.id && 0 == searchdata.packageid}"
+              data-type="mip">{{ val.title }}</a>
           </div>
         </div>
       </div>
@@ -45,7 +46,8 @@
           type="mip-mustache">
           <a
             :href="geturl('/product/info.html?id=' + val.mainproductsalesattr + '_' + searchdata.ct + '_' + searchdata.ar + '_' + searchdata.providerid + '_' + val.id)"
-            :class="{active: val.id == searchdata.packageid}">{{ val.title }}</a>
+            :class="{active: val.id == searchdata.packageid}"
+            data-type="mip">{{ val.title }}</a>
         </div>
       </div>
       <div
@@ -70,6 +72,7 @@
         </div>
         <a
           :href="geturl('/provider/list.html?pid=' + id + '_' + ct + '_' + ar + '_0_0_0_0_0')"
+          data-type="mip"
           class="change">
           <span>查看全部 &gt;</span>
         </a>
@@ -189,7 +192,7 @@
 </template>
 
 <style scoped>
-  .wrapper {margin: 0 auto;padding:0;padding-bottom:100px;}
+  .wrapper {margin: 0 auto;padding:0;padding-bottom:0.6rem;}
   .info {padding:0.1rem 0.1rem 0 0.1rem;border-bottom: 0.01rem solid #d9d9d9;}
   .info h2 {font-size: 0.2rem;font-weight: normal;margin-bottom: 0.14rem;}
   .info .item {color: #666;font-size: 0.14rem;display: flex;margin-bottom: 0.1rem;align-items: center;}
