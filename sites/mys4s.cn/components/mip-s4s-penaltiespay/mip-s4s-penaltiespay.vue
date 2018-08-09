@@ -149,7 +149,14 @@
         <div class="pay-contaienr">
           <div class="pay-contaienr-first">
             <p class="pay-contaienr-p1">合计金额：<span class="pay-contaienr-num">¥ {{ (((Number(payForm.money) * 100 + Number(payForm.late_free)* 100 + Number(payForm.own_free)* 100 + ( canQuick?quick?Number(quickFee) * 100:0:0) ) || 0) / 100).toFixed(2) }}</span></p>
-            <p class="pay-contaienr-p2" >预计1-5个工作日办理完成 </p>
+            <p class="pay-contaienr-p2" >
+              {{ canQuick
+                ? quick
+                  ?'预计2个小时内办理完成'
+                  :'预计1-5个工作日办理完成'
+                :'预计1-5个工作日办理完成'
+              }}
+            </p>
           </div>
           <div
             id="pay2btn"

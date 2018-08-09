@@ -143,10 +143,9 @@ export default {
     }
   },
   mounted () {
-    // this.getOrder(-1)
-    // this.getOrderStatic()
     this.$on('enter', () => {
-      this.getOrder(-1)
+      this.selTab(this.selIndex)
+      // this.getOrder(-1)
       this.getOrderStatic()
     })
 
