@@ -152,9 +152,9 @@
             <p class="pay-contaienr-p2" >
               {{ canQuick
                 ? quick
-                  ?'预计2个小时内办理完成'
-                  :'预计1-5个工作日办理完成'
-                :'预计1-5个工作日办理完成'
+                  ?'预计2小时内办理完成'
+                  :'预计24小时内办理完成'
+                :'预计24小时内办理完成'
               }}
             </p>
           </div>
@@ -304,7 +304,7 @@ export default {
         if (res.code === 0) {
           self.payForm.own_free = Number(res.data.OwnFree) / 100
           self.payForm.late_free = Number(res.data.LateFree) / 100
-          self.canQuick = !!Number(res.data.Quick) || 1
+          self.canQuick = res.data.Quick
           self.quickFee = Number(res.data.Qfee) / 100
         } else {
           util.toast(res.msg)

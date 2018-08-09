@@ -471,7 +471,10 @@ export default {
           util.toast('请输入当事人姓名')
           return
         }
-
+        if (this.price < 40) {
+          util.toast('请输入正确的罚款金额，一般大于40元')
+          return
+        }
         if (this.nickCarNo2) {
           this.nickCarNo = this.nickCarNo.toUpperCase()
         }

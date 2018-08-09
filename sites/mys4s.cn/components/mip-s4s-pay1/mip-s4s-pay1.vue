@@ -6,7 +6,7 @@
         width="60"
         height="50" />
       <div class="s4s-tips-right">
-        <p>交通违法代缴的办理周期为<span style="color:#FE7000">1-2个工作日，部分地区2-5个工作日</span>，需年检用户如需当日处理完成，请勿下单。其他问题请参见
+        <p>交通违法代缴的办理周期为1-2个工作日，部分地区2-5个工作日，<span style="color:#FE7000">需年检用户如需当日处理完成，请勿下单</span>。其他问题请参见
           <a
             data-type="mip"
             href="help.html"
