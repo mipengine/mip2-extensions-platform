@@ -437,7 +437,8 @@ export default {
               ),
               postData: {
                 order_id: res.data + ''
-              }
+              },
+              redirectUrl: 'https://mys4s.cn/static/vio/xz/success.html?orderId=' + res.data
             }
           })
           this.$emit('canpay', {})

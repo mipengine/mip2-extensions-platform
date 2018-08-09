@@ -440,7 +440,7 @@ export default {
         .fetchData('v5/user/code', { tel: this.phone })
         .then(res => {
           if (res.code === 0) {
-            util.toast(res.data)
+            util.toast('发送成功')
           } else {
             util.toast(res.msg)
           }
@@ -815,7 +815,8 @@ export default {
                 ),
                 postData: {
                   order_id: res.data + ''
-                }
+                },
+                redirectUrl: 'https://mys4s.cn/static/vio/xz/success.html?orderId=' + res.data
               }
             })
             this.$emit('canpay', {})

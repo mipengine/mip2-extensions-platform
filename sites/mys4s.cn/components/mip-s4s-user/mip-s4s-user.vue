@@ -303,7 +303,8 @@ export default {
           ),
           postData: {
             order_id: item.id + ''
-          }
+          },
+          redirectUrl: 'https://mys4s.cn/static/vio/xz/success.html?orderId=' + item.id
         }
       })
       this.$emit('canpay', {})
