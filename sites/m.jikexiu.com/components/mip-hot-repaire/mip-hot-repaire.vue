@@ -85,7 +85,7 @@ export default {
         // 设置登录组件的config属性中，重定向地址:redirectUri为订单页地址
         MIP.setData({
           config: {
-            redirectUri: 'https://t.jikexiu.com/resources/mip/' + href
+            redirectUri: 'https://m.jikexiu.com/resources/mip/' + href
           }
         })
         // 在下一个执行时机触发事件
