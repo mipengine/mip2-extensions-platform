@@ -102,6 +102,19 @@
       }
     }
   }
+
+  // 特殊第4层
+  .children-2 {
+    &>.wd-infinity-chapters {
+      padding-left: 10px;
+      &>.chapter-title {
+        >div {
+          padding-left: 30px;
+          margin-left: -22px;
+        }
+      }
+    }
+  }
 }
 </style>
 
