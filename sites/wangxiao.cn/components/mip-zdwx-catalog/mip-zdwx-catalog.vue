@@ -69,8 +69,29 @@ export default {
   },
   mounted () {
     let _this = this
+    fetch(base.api.getGoodsCatalog, {
+      method: 'POST',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        id: base.getQueryString('id'),
+        token: base.getToken()
+      })
+    })
+      .then(function (response) {
+        // 获得后台实际返回的内容
+        response.json().then(function (data) {
+          if (data.data) {
+            _this.headerData = data.data
+          }
+        })
+      })
+      .catch(function (err) {
+        console.log('Fetch Error :-S', err)
+      })
     this.$element.customElement.addEventAction('login', event => {
-      console.log(event.sessionId)
       fetch(base.api.getGoodsCatalog, {
         method: 'POST',
         headers: {
