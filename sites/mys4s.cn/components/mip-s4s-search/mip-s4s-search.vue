@@ -1,8 +1,39 @@
 <template>
   <div class="s4s-page" >
-    <mip-img
+    <!-- <mip-img
       src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/banner.png"
-      styel="width:100%;" />
+      styel="width:100%;" /> -->
+    <div
+      v-if="localCarList.length"
+      class="car-list">
+      <div class="car-title">
+        <h2
+          class="s4s-car-name"
+          style="flex:1;display:inline-block;" >我的爱车</h2><span
+            on="tap:info.login"
+            @click="goCarList">管理爱车</span>
+      </div>
+      <div
+        v-for="(item, index) in localCarList.slice(0,all ? 100 : 2)"
+        :key="index"
+        class="car-item"
+        @click="goSearch(index)">
+        <span style="flex:1;">{{ item.carNo }}</span>
+        <mip-img
+          :key="index*100"
+          src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/search.png"
+          width="22"
+          height="22"
+        />
+      </div>
+      <div
+        v-if="localCarList.length>2"
+        class="car-item"
+        style="text-align:center;justify-content: center;"
+        @click="all = !all">
+        {{ all?'收起':'显示全部' }}
+      </div>
+    </div>
     <div class="s4s-car-info">
       <div style="display: flex;align-items:center;">
         <div style="flex:1;">
@@ -112,15 +143,13 @@
       class="save-container"
       @click="changeSave" >
       <mip-img
-        v-show="!save"
-        key="disagree"
+        v-if="!save"
         src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/disagree.png"
         width="22"
         height="22"
       />
       <mip-img
-        v-show="save"
-        key="agree"
+        v-if="save"
         src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree.png"
         width="22"
         height="22"
@@ -131,37 +160,6 @@
       class="s4s-btn"
       style="margin-top:0;width:calc( 100% - .3rem )"
       @click="formSubmit"> 查询违章 </button>
-    <div
-      v-if="localCarList.length"
-      class="car-list">
-      <div class="car-title">
-        <h2
-          class="s4s-car-name"
-          style="flex:1;display:inline-block;" >我的爱车</h2><span
-            on="tap:info.login"
-            @click="goCarList">管理爱车</span>
-      </div>
-      <div
-        v-for="(item, index) in localCarList.slice(0,all ? 100 : 3)"
-        :key="index"
-        class="car-item"
-        @click="goSearch(index)">
-        <span style="flex:1;">{{ item.carNo }}</span>
-        <mip-img
-          :key="index*100"
-          src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/search.png"
-          width="22"
-          height="22"
-        />
-      </div>
-      <div
-        v-if="localCarList.length>3"
-        class="car-item"
-        style="text-align:center;justify-content: center;"
-        @click="all = !all">
-        {{ all?'收起':'显示全部' }}
-      </div>
-    </div>
     <a
       ref="violation"
       data-type="mip"
@@ -427,19 +425,27 @@ export default {
       // this.$refs.index.click()
     })
     // this.$emit('loginAgain')
-
-    try {
-      let localCarList = window.localStorage.getItem('localCarList')
-      if (localCarList) {
-        let newList = JSON.parse(localCarList)
-        this.localCarList = newList
-      }
-    } catch (error) {
-      util.toast('由于您处在无痕模式，不能载入您之前存储的记录')
-      this.localCarList = []
-    }
+    this.fetchLocalCar()
+    const that = this
+    window.addEventListener('show-page', () => {
+      console.log('show-page')
+      that.fetchLocalCar()
+    })
   },
   methods: {
+    fetchLocalCar () {
+      console.log('获取本地车辆信息')
+      try {
+        let localCarList = window.localStorage.getItem('localCarList')
+        if (localCarList) {
+          let newList = JSON.parse(localCarList)
+          this.localCarList = newList
+        }
+      } catch (error) {
+        util.toast('由于您处在无痕模式，不能载入您之前存储的记录')
+        this.localCarList = []
+      }
+    },
     goCarList () {
       let localCarList = []
       try {
@@ -820,6 +826,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   padding: .25rem 0.15rem 0;
   color:#333;
   background-color: #fff;
+  margin-bottom: .12rem;
 }
 
 .car-item {
