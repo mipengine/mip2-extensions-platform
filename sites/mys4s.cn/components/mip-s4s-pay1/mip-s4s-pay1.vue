@@ -66,7 +66,7 @@
           type="text"
           maxlength="11"
           style="width:auto;max-width:3rem;min-width:1.05rem"
-          placeholder="请输入手机号码" >
+          placeholder="请输入手机号码接收订单状态" >
 
       </div>
       <div class="s4s-group">

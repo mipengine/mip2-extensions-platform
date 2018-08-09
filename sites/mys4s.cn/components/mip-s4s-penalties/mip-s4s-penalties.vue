@@ -592,7 +592,7 @@ export default {
       this.searchAgain = true
       // let self = this
       let param = {
-        access_token: '3b2P0oarLbtrU/IkydUON5pfdQhGW4fWzFgFqOZZDi8=',
+        // access_token: '3b2P0oarLbtrU/IkydUON5pfdQhGW4fWzFgFqOZZDi8=',
         document: this.orderNumber.replace(/\s/g, '')
       }
       util
@@ -982,7 +982,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color:#ccc;
 }
 .provice {
-  background-image: linear-gradient(40deg, #ff7c00 0%, #fe5a00 100%);
+  background-image: linear-gradient(40deg,  #ff7c00 0%, #fe5a00 100%);
   border-radius: 0.04rem;
   color: #fff;
   /* width: 0.45rem; */
