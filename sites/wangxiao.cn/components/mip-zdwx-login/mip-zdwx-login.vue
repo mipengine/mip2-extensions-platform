@@ -5,12 +5,14 @@
       <button
         v-if="userInfo && userInfo.isBuy"
         class="pay-btn"
+        on="tap:user.login"
         @click="signUp">
         去学习
       </button>
       <button
         v-else
         class="pay-btn"
+        on="tap:user.login"
         @click="signUp">
         立即报名
       </button>
@@ -53,6 +55,7 @@ export default {
       if (_this.userInfo && _this.userInfo.isBuy) {
         _this.btnMessage = '去学习'
       }
+      _this.signUp()
       // if (event.userInfo.userStatus === 1 || event.userInfo.userStatus === 0) {
       //   if (event.userInfo.url) {
       //     MIP.viewer.open(event.userInfo.url, {isMipLink: false})
