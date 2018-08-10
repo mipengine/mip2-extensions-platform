@@ -1,0 +1,49 @@
+{
+    "name": "mip.xin.com",
+    "version": "1.0.0",
+    "description": "优信二手车页面改造",
+    "scripts": {
+        "dev": "mip2 dev",
+        "build": "mip2 build",
+        "lint": "npm run lint:js",
+        "lint:js": "eslint --ext .vue,.js .",
+        "fix": "npm run fix:js",
+        "fix:js": "eslint --ext .vue,.js . --fix",
+        "watch": "node app",
+        "start": "mip2 build && node app",
+        "build:test": "echo build:test ok",
+        "build:prod": "echo build:prod ok",
+        "start:test": "node server/app/app",
+        "start:prod": "node server/app/app"
+    },
+    "dependencies": {
+        "babel-preset-stage-3": "^6.24.1",
+        "ejs": "^2.6.1",
+        "koa": "^2.5.2",
+        "koa-bodyparser": "^4.2.1",
+        "koa-convert": "^1.2.0",
+        "koa-ejs": "^4.1.1",
+        "koa-json": "^2.0.2",
+        "koa-logger": "^3.2.0",
+        "koa-static": "^5.0.0",
+        "node-fetch": "^2.2.0",
+        "node-uuid": "^1.4.8",
+        "redis": "^2.8.0",
+        "string-random": "^0.1.0",
+        "xzh-sdk": "0.0.3"
+    },
+    "devDependencies": {
+        "eslint": "^4.19.1",
+        "eslint-config-standard": "^11.0.0",
+        "eslint-plugin-import": "^2.12.0",
+        "eslint-plugin-jsdoc": "^3.7.1",
+        "eslint-plugin-node": "^6.0.1",
+        "eslint-plugin-promise": "^3.8.0",
+        "eslint-plugin-standard": "^3.1.0",
+        "eslint-plugin-vue": "^4.5.0"
+
+
+
+        
+    }
+}
