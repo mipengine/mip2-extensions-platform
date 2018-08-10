@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html mip>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=no">
+    <title>
+        <%-title%>
+    </title>
+    <link rel="canonical" href="https://www.xin.com/">
+    <link rel="shortcut icon" href="//m.xin.com/favicon.ico">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+</head>
+<style mip-custom>
+    /* 设置弹层透明度 */
+
+    #MIP-LLIGTBOX-MASK {
+        opacity: 0.5;
+    }
+</style>
+
+<body data-env="<%-global.HOST_CONFIG.name%>" data-carid="<%-query.carId%>" data-ajaxtoken="<%-ajaxToken%>" data-optoken="<%-query.optoken%>">
+    <mip-shell>
+        <script type="application/json">
+            {
+                "routes": [{
+                    "pattern": "*",
+                    "meta": {
+                        "header": {
+                            "show": true,
+                            "xiongzhang": true,
+                            "title": "优信二手车",
+                            "logo": "http://c2.xinstatic.com/f3/20180727/1951/5b5b072fb1a77543583.png",
+                            "buttonGroup": [{
+                                "name": "search",
+                                "text": "search",
+                                "link": "https://somesite.com/mip/anotherMIPPage.html"
+                            }]
+                        },
+                        "view": {
+                            "isIndex": false
+                        }
+
+                    }
+                }]
+            }
+        </script>
+    </mip-shell>
+    <mip-data>
+        <script type="application/json">
+            {
+                "#query": <%-JSON.stringify(query)%>,
+                "ajaxToken": "<%=ajaxToken%>",
+                "#info": {},
+                "config": {
+                    appid: '1578861028762702',
+                    clientId: 'BO22CQpZg73mpUhpAI2BfjpMhfUaCgfg',
+                    id: 'info',
+                    autologin: false,
+                    endpoint: '//mip.xin.com/auth_end',
+                    isGlobal: true,
+                    redirectUri: 'https://mip.xin.com<%-request.url%>'
+                }
+            }
+        </script>
+    </mip-data>
+    <div>
+        <mip-car-detailcontainer m-bind:info="info" m-bind:config="config" m-bind:query="query" m-bind:token="ajaxToken"></mip-car-detailcontainer>
+    </div>
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="https://c.mipcdn.com/static/v1/mip-lightbox/mip-lightbox.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-toast/mip-toast.js"></script>
+    <script src="https://c.mipcdn.com/static/v1/mip-fixed/mip-fixed.js"></script>
+    <script src=" https://c.mipcdn.com/static/v2/mip-toast/mip-toast.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-inservice-login/mip-inservice-login.js"></script>
+    <!-- <script src="/mip-car-file/mip-car-file.js"></script> -->
+    <script src="/mip-car-detailcontainer/mip-car-detailcontainer.js"></script>
+    <script src="/mip-car-price/mip-car-price.js"></script>
+    <script src="/mip-car-detect/mip-car-detect.js"></script>
+    <script src="/mip-car-certification/mip-car-certification.js"></script>
+    <script src="/mip-car-askprice/mip-car-askprice.js"></script>
+    <script src="/mip-car-similar/mip-car-similar.js"></script>
+    <script src="/mip-swiper/mip-swiper.js"></script>
+    <script src="/mip-car-card/mip-car-card.js"></script>
+    <script src="/mip-title/mip-title.js"></script>
+    <script src="/mip-swiper-position/mip-swiper-position.js"></script>
+    <script src="/mip-big-image/mip-big-image.js"></script>
+    <script src="/mip-flaw-switch/mip-flaw-switch.js"></script>
+    <script src="/mip-flaw-tab/mip-flaw-tab.js"></script>
+    <script src="/mip-car-flawcount/mip-car-flawcount.js"></script>
+    <script src="/mip-car-params/mip-car-params.js"></script>
+    <script src="/mip-car-button/mip-car-button.js"></script>
+    <script src="/mip-loading/mip-loading.js"></script>
+
+</body>
+
+</html>
