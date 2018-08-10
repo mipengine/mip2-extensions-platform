@@ -33,17 +33,13 @@
 </style>
 <script>
 import "./mip-1688seo-list.less";
-import "@/common/mtop";
 import Util from  "@/common/util";
 
-lib.mtop.config.prefix = "h5api";
-lib.mtop.config.subDomain = "m";
-lib.mtop.config.mainDomain = "1688.com";
-const MTOP_URL_OFFERS = "mtop.1688.offerService.getOffers";
 
 export default {
-  props: ["list", "pageIndex", "totalPage", "sortType"],
+  props: ["list", "pageIndex", "totalPage", "sortType","canonicalUrl"],
   data() {
+    this.list =  this.list || [];
     return {
       list: this.list.map(item => {
         if (item.type == "p4p" || item.type == "bid") {
@@ -57,9 +53,8 @@ export default {
     };
   },
   mounted() {
-    console.log(MIP.util);
-    var searchQuery = Util.getUrlParms(location.href);
-    const searchParam = Object.assign({},searchQuery, { appName:'wap', beginPage: 1, pageSize: 20 });
+    // var searchQuery = Util.getUrlParms(location.href);
+    // const searchParam = Object.assign({},searchQuery, { appName:'wap', beginPage: 1, pageSize: 20 });
     // lib.mtop
     //   .request({
     //     api: MTOP_URL_OFFERS,
@@ -71,18 +66,9 @@ export default {
     //   });
   },
   methods: {
-    pre() {
-      let pageIndex = this.pageIndex - 1;
-      let _href = window.location.href;
-      if (_href.indexOf("?") != -1) {
-        window.location.href = _href + "&beginPage=" + pageIndex;
-      } else {
-        window.location.href = _href + "?beginPage=" + pageIndex;
-      }
-    },
     next() {
       let pageIndex = this.pageIndex + 1;
-      let _href = window.location.href;
+      let _href = this.canonicalUrl || "";
       if (_href.indexOf("?") != -1) {
         window.location.href = _href + "&beginPage=" + pageIndex;
       } else {
