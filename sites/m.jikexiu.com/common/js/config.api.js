@@ -2,7 +2,7 @@
  * @author hbb
  * @time 2018-01-23
  * 项目相关接口配置文件
-*/
+ */
 const baseurl = 'https://api.jikexiu.com/v1/'
 const accountUrl = 'https://account.jikexiu.com/'
 const apiUrl = {

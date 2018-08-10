@@ -123,11 +123,11 @@ export default {
         mobile: self.mobile,
         code: self.vCode
       }
-      commonApi.checkMsmCode(params).then(() => {
+      commonApi.popupCheckMsmCode(params).then(() => {
         const loginParams = {
           mobile: self.mobile
         }
-        commonApi.loginBecomeMember(loginParams).then((data) => {
+        commonApi.popupLoginBecomeMember(loginParams).then((data) => {
           // let loginInfo = Storage.get('loginInfo')
           // console.log('loginInfo信息',loginInfo.userInfo)
           // if(loginInfo.userInfo){
@@ -144,8 +144,12 @@ export default {
             })
           }, 20)
         })
-      }).catch(() => {
-
+      }).catch((err) => {
+        setTimeout(() => {
+          Toast.open({
+            message: err.msg
+          })
+        }, 20)
       })
     },
     inputCheck () {

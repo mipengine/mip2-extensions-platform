@@ -468,27 +468,33 @@ export default ({
 
       // iscroll初始化
       scrollInit: function (index, num) {
+        console.log('查看index:' + index)
         let self = this
-        if (index === 1) {
+
+        if (self.options.pickerType === 'time') {
           let date = new Date()
           let hour = date.getHours() + 1
-          if (hour > 22) {
-            num = 0
-          } else {
-            num = hour
+          if (index === 0) {
+            console.log('时间日期处理:' + hour)
+            if (hour > 23) {
+              num = 1
+            }
           }
-
-        //   let hourItem = document.getElementById('picker-wrapper1').getElementsByClassName('sethours')
-        //   let hourItemSet = Array.prototype.slice.call(hourItem)
-        //   for (let i = 0; i < hour; i++) {
-        //     hourItemSet[i].style.display = 'none'
-        //   }
+          if (index === 1) {
+            if (hour > 23) {
+              num = 0
+            } else {
+              num = hour
+            }
+          }
         }
 
+        console.log()
         // 每个选项对的高度
         let wrapperList = document.querySelector('#picker-wrapper0').childNodes[0]
         let itemHeight = wrapperList.childNodes[0].clientHeight
         let id = '#picker-wrapper' + index
+
         self.scrollArray[index] = new Scroll(id, {
           // 步长（每次滚动固定距离）
           step: itemHeight,
@@ -498,6 +504,7 @@ export default ({
 
           // 滚动结束回调函数
           callback: function (params) {
+            console.log('滚动结束后的回调')
             let num = params.index + 2
             let node = params.node[num]
             self.setItemList(node, index)
@@ -514,20 +521,26 @@ export default ({
               let value = year + '-' + month + '-' + date
               if (self.options.type === 5 && params.node.length === 12) {
                 if (value === days) {
+                  if (hour > 23) {
+                    hour = 23
+                  }
                   let moveLen = hour * itemHeight
                   setTimeout(function () {
                     self.textArray[1].value = ' ' + hour
                     self.scrollArray[1].scrollTo(0, moveLen, 500)
                   }, 0)
                 } else {
-                  let moveLen = 0
+                  let moveLen = 9 * itemHeight
                   setTimeout(function () {
-                    self.textArray[1].value = ' 0'
+                    self.textArray[1].value = ' 9'
                     self.scrollArray[1].scrollTo(0, moveLen, 500)
                   }, 0)
                 }
               } else if (self.options.type === 5 && params.node.length === 28) {
                 if (value === days && hours < hour) {
+                  if (hour > 23) {
+                    hour = 23
+                  }
                   let moveLen = hour * itemHeight
                   setTimeout(function () {
                     self.textArray[1].value = ' ' + hour
@@ -743,7 +756,7 @@ export default ({
         let mipElement = self.mipElement
         let picker = mipElement.querySelector('.picker')
         let pickerMask = mipElement.querySelector('.picker-mask')
-        console.log('测试')
+
         setTimeout(function () {
           mipElement.removeChild(picker)
           mipElement.removeChild(pickerMask)
@@ -1046,15 +1059,21 @@ export default ({
           let month = (new Date(now.getTime() + oneDay * j).getMonth()) + 1
           let date = new Date(now.getTime() + oneDay * j).getDate()
           let day = new Date(now.getTime() + oneDay * j).getDay()
-          //   let hours = new Date().getHours()
-          //   if(hours > 22){
-
-          //   }
+          let hours = new Date().getHours() + 1
           let value = year + '-' + month + '-' + date
           let show = month + '月' + date + '日'
           if (j === 0) {
             show = '今天' + show
+            console.log(index + '===' + value)
             self.setDefaultItem(index, value)
+            if (hours > 23) {
+              let m = 1
+              let years = new Date(now.getTime() + oneDay * m).getFullYear()
+              let months = (new Date(now.getTime() + oneDay * m).getMonth()) + 1
+              let dates = new Date(now.getTime() + oneDay * m).getDate()
+              let values = years + '-' + months + '-' + dates
+              self.setDefaultItem(index, values)
+            }
           } else if (j === 1) {
             show = '明天' + show
           } else if (j === 2) {
@@ -1069,6 +1088,7 @@ export default ({
         document.querySelector(
           '#picker-wrapper' + index
         ).childNodes[0].innerHTML = list
+        console.log('查看默认值:' + defaultNum)
         setTimeout(function () {
           self.scrollInit(index, defaultNum)
         }, 0)
@@ -1104,12 +1124,20 @@ export default ({
             self.setDefaultItem(index, ' 01')
           }
         } else {
+        //   console.log('=========================')
           for (let j = 0; j <= 23; j++) {
             count = j < 10 ? prefix + j : j
             list += '<li  data-value=" ' + count + '"  class="sethours">' + count + unit + '</li>'
           }
           let date = new Date()
-          let hour = ' ' + (date.getHours() + 1)
+          let hourNow = date.getHours() + 1
+          let hour = null
+          if (hourNow > 23) {
+            hour = ' ' + 0
+          } else {
+            hour = ' ' + hourNow
+          }
+          console.log(hour)
           self.setDefaultItem(index, hour)
         }
 
