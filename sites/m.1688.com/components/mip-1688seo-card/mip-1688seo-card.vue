@@ -66,6 +66,7 @@
 			}
 		}
 }
+
 </style>
 <script>
 export default {
