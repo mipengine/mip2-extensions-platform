@@ -1,102 +1,102 @@
-/* global __weex_env__ */
-
 /// ================== Copy from 'universal-env' =====================
-export const isWeb = typeof navigator === 'object' && (navigator.appCodeName === 'Mozilla' || navigator.product === 'Gecko');
-export const isNode = typeof process !== 'undefined' && !!(process.versions && process.versions.node);
-export const isWeex = typeof callNative === 'function';
-export const isReactNative = typeof __fbBatchedBridgeConfig !== 'undefined';
+export const isWeb = typeof navigator === 'object' && (navigator.appCodeName === 'Mozilla' || navigator.product === 'Gecko')
+export const isNode = typeof process !== 'undefined' && !!(process.versions && process.versions.node)
+export const isWeex = typeof callNative === 'function'
+export const isReactNative = typeof __fbBatchedBridgeConfig !== 'undefined'
 /// ==================================================================
 
 const tryGetUA = (ua) => {
   if (ua == null && typeof window !== 'undefined') {
-    ua = window.navigator.userAgent;
+    ua = window.navigator.userAgent
   }
 
-  return ua;
-};
-
-const defaultUA = tryGetUA();
-
-const REGEX_IS_WECHAT = /MicroMessenger/;
-const REGEX_IS_IOS = /iPhone|iPad|iPod/;
-const REGEX_IS_ANDROID = /[Aa]ndroid/;
-const REGEX_IS_IOS_VERSION = /\(i[^;]+;( U;)? CPU.+Mac OS X.+Version\/(\d+)/;
-
-let isAndroid = false;
-let isIOS = false;
-let isWeChat = false;
-let iOSVersion = null;
-
-if (defaultUA) {
-  isAndroid = REGEX_IS_ANDROID.test(defaultUA);
-  isIOS = REGEX_IS_IOS.test(defaultUA);
-  isWeChat = REGEX_IS_WECHAT.test(defaultUA);
-
-  const m = REGEX_IS_IOS_VERSION.exec(defaultUA);
-  iOSVersion = m && m[2];
+  return ua
 }
 
-export { isAndroid, isIOS, isWeChat, iOSVersion };
+const defaultUA = tryGetUA()
+
+const REGEX_IS_WECHAT = /MicroMessenger/
+const REGEX_IS_IOS = /iPhone|iPad|iPod/
+const REGEX_IS_ANDROID = /[Aa]ndroid/
+const REGEX_IS_IOS_VERSION = /\(i[^;]+;( U;)? CPU.+Mac OS X.+Version\/(\d+)/
+
+let isAndroid = false
+let isIOS = false
+let isWeChat = false
+let iOSVersion = null
+
+if (defaultUA) {
+  isAndroid = REGEX_IS_ANDROID.test(defaultUA)
+  isIOS = REGEX_IS_IOS.test(defaultUA)
+  isWeChat = REGEX_IS_WECHAT.test(defaultUA)
+
+  const m = REGEX_IS_IOS_VERSION.exec(defaultUA)
+  iOSVersion = m && m[2]
+}
+
+export { isAndroid, isIOS, isWeChat, iOSVersion }
 
 /**
  * 根据传入的 UA 或当期环境的 UA 返回 App 信息
+ *
  * @param {string?} ua 允许用户手动传入 userAgent
  */
 export const detect = (ua) => {
-  ua = tryGetUA(ua);
+  ua = tryGetUA(ua)
 
   // 集团 UA 规范
-  const REGEX_ALIAPP = /AliApp\(([^\/]+)\/([^\/]+)\)/;
+  const REGEX_ALIAPP = /AliApp(([^/]+)\/([^/]+))/
   // 以 -PD 结尾的认为是 pad 的标识
-  const REGEX_IS_PAD = /-PD$/;
+  const REGEX_IS_PAD = /-PD$/
 
   if (isWeex) {
     // eslint-disable-next-line
     const appCode = navigator.appName;
     // eslint-disable-next-line
     const version = navigator.appVersion;
-    const isPad = REGEX_IS_PAD.test(appCode);
+    const isPad = REGEX_IS_PAD.test(appCode)
 
     return {
       appCode,
       version,
       isPhone: !isPad,
       isPad
-    };
+    }
   }
 
-  const m = REGEX_ALIAPP.exec(ua);
+  const m = REGEX_ALIAPP.exec(ua)
   // appCode 和版本号同时匹配上
   if (m && m[1] && m[2]) {
-    const appCode = m[1];
-    const version = m[2];
-    const isPad = REGEX_IS_PAD.test(appCode);
+    const appCode = m[1]
+    const version = m[2]
+    const isPad = REGEX_IS_PAD.test(appCode)
 
     return {
       appCode,
       version,
       isPhone: !isPad,
       isPad
-    };
+    }
   }
 
-  return null;
-};
+  return null
+}
 
-export const appInfo = detect();
+export const appInfo = detect()
 
 /**
  * 判断当前环境是否与传入的 appCode 一致
+ *
  * @param {string} appCode 用于判断的 appCode
  * @param {string?} ua 允许用户手动传入 userAgent
  */
 export const is = (appCode, ua) => {
   if (ua == null) {
-    ua = defaultUA;
+    ua = defaultUA
   }
 
-  return !!appInfo && appInfo.appCode === appCode;
-};
+  return !!appInfo && appInfo.appCode === appCode
+}
 
 // ==================== 集团 App 环境判断 =====================
 export const appEnvConstantsMap = {
@@ -120,17 +120,17 @@ export const appEnvConstantsMap = {
   'AS': 'isAlibabaSeller',
   // 零售通
   'RetailTrader': 'isRetailTrader'
-};
-export const isQN = is('QN');
-export const is1688 = is('1688');
-export const isTaoBao = is('TB');
-export const isTMall = is('TM');
-export const isDingTalk = is('DingTalk');
-export const isAlipayMercant = is('AM');
-export const isAlipay = is('AP');
-export const isAlibabaBuyer = is('EA');
-export const isAlibabaSeller = is('AS');
-export const isRetailTrader = is('RetailTrader');
+}
+export const isQN = is('QN')
+export const is1688 = is('1688')
+export const isTaoBao = is('TB')
+export const isTMall = is('TM')
+export const isDingTalk = is('DingTalk')
+export const isAlipayMercant = is('AM')
+export const isAlipay = is('AP')
+export const isAlibabaBuyer = is('EA')
+export const isAlibabaSeller = is('AS')
+export const isRetailTrader = is('RetailTrader')
 
 /// =================== dynamic way will fail for static es2015 module definition =============
 // const appEnvConstants = {}
