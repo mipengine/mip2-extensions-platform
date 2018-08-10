@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html mip>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <title>MIP page</title>
+  <link rel="canonical" href="对应的原页面地址">
+  <link rel="stylesheet" href="https://bos.nj.bpc.baidu.com/assets/mip/projects/mip.css">
+  <style mip-custom>
+  /* 自定义样式 */
+
+  h2 {
+    margin: 50px auto;
+    text-align: center;
+  }
+
+  .mip-shell-header .mip-shell-header-logo-title .mip-shell-header-logo {
+    width: 50px;
+    border: none;
+  }
+  .result{
+    position: relative;
+    width: 100%;
+    height: 150px;
+    padding-top: 25px;
+    text-align: center;
+    font-size: 13px;
+    color:#fff;
+    font-family: PingFang-SC-Medium;
+    font-weight: 500;
+    background: -webkit-linear-gradient(left, #FF731F , #FFA53A); /* Safari 5.1 - 6.0 */
+  background: -o-linear-gradient(right, #FF731F, #FFA53A); /* Opera 11.1 - 12.0 */
+  background: -moz-linear-gradient(right, #FF731F, #FFA53A); /* Firefox 3.6 - 15 */
+  background: linear-gradient(to right, #FF731F , #FFA53A); /* 标准的语法 */
+  }
+    .left-wage{
+      margin: 15px 0 25px;
+      font-size: 29px;
+      color:#fff;
+      font-weight: bold;  
+      font-family:  PingFang-SC-Bold;
+
+    }
+    .right-wage{
+      font-size: 22px;
+    }
+    .detail{
+      position: absolute;
+        width: 100%;
+    /* left: 50%; */
+    /* margin-left: -45%; */
+    padding: 0 15px;
+    height: 180px;
+    margin-top: -45px;
+    /* background: #fff; */
+    border-radius: 6px;
+    box-sizing: border-box;
+    }
+    .trigger-layout{
+      background: #B5B5B5;
+    }
+    .detail>div{
+      height:45px;
+      line-height:  45px;
+      font-size:  13px;
+      font-family:  PingFang-SC-Medium;
+      font-weight: 500;
+      color:#000;
+      padding: 0 13px;
+      background: #fff;
+    }
+    .detail>div span{
+      color:#000;
+    }
+    .right{
+      float: right;
+    }
+  </style>
+</head>
+
+<body>
+  <mip-data>
+     <script type="application/json">
+    {
+        leftWage:"",
+        rightWage:"00",
+        title:"税前工资",
+        resultTitle:"税后工资",
+        inputWage:0
+    }
+    </script>
+  </mip-data>
+  <mip-shell>
+    <script type="application/json">
+    {
+      "routes": [{
+        "pattern": "*",
+        "meta": {
+          "header": {
+            "show": true,
+            "xiongzhang": true,
+            "title": "计算结果",
+            "logo": ""
+          },
+          "view": {
+            "isIndex": false
+          }
+        }
+      }]
+    }
+    console.log(6666)
+
+    </script>
+  </mip-shell>
+  <div>
+    <div class="result">
+        <p m-text="resultTitle"></p> 
+        <p  class="left-wage"><span m-text="leftWage"></span>.<span m-text="rightWage" class="right-wage"></span></p>
+    </div>
+    <div class="detail">
+      <div>
+        <span m-text="title"></span>
+        <span class="right">
+        <span m-text="inputWage"></span><span>元</span></span>
+      </div>
+      <div><span>个人所得税</span><span class="right"><span class="" m-text="result.incomeTax"></span><span>元</span></span></div>
+      <div><span>社保个人缴纳</span><span class="right"><span class="" m-text="result.baseMoneyTax"></span><span>元</span></span></div>
+      <div><span>公积金个人缴纳</span><span class="right"><span class="" m-text="result.accumulationTax"></span><span>元</span></span></div>
+    </div>
+  </div>
+  <script src="https://bos.nj.bpc.baidu.com/assets/mip/projects/mip.js"></script>
+  <script src="/mip-example/mip-example.js"></script>
+  <script src="https://c.mipcdn.com/static/v1/mip-mustache/mip-mustache.js"></script>
+  <script>
+      var resultWage = m.result.resultWage;
+      var leftL = m.result.resultWage.toString().indexOf(".");
+      var left = parseInt(m.result.resultWage);
+      var right = m.result.resultWage.toString().substring(leftL+1,leftL+3);
+      MIP.setData({
+        "leftWage":left,
+        "rightWage":right,
+        "inputWage":localStorage.getItem("inputWage")
+      });
+      if(m.result.isSelect != "1"){
+          MIP.setData({"title":"税后工资"});
+          MIP.setData({"resultTitle":"税前工资"});
+      }
+  </script>
+</body>
+
+</html>

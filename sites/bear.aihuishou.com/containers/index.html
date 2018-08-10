@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html mip>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+  <title>爱回收百度熊掌号</title>
+  <link rel="shortcut icon" href="https://static.aijihui.net/estore/favicon.ico">
+  <link rel="canonical" href="对应的原页面地址">
+  <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+  <script src="../fonts/iconfont.js"></script>
+  <script>
+    (function () {
+      //初始化REM
+      var w = 750;
+      var setFontSize = function () {
+        var width = document.documentElement.clientWidth;
+
+        //width = width > w ? w: width;
+        var fontSize = parseInt(width / w * 200);
+        document.getElementsByTagName("html")[0].style.fontSize = fontSize + "px";
+      };
+      setFontSize();
+      window.onresize = setFontSize;
+    })();
+  </script>
+  <style mip-custom>
+    html,
+    body {
+      background-color: #f8f8f8;
+    }
+
+    /* 自定义样式 */
+
+    h2 {
+      margin: 50px auto;
+      text-align: center;
+    }
+
+    /* 組件間距 */
+    .comp-home-header-container,
+    .comp-home-process-container,
+    .comp-home-category-container,
+    .comp-home-hotbrands-container,
+    .comp-home-hotproducts-noslide-container,
+    .com-home-operatorhub-container {
+      margin-bottom: 0.1rem;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div>
+    <!-- <mip-iframe
+        layout="responsive"
+        src="https://neon.aihuishou.com/boot/qwe"
+        allowfullscreen
+        width="400"
+        height="1000"
+        scrolling="yes"
+        allowtransparency="true">
+    </mip-iframe> -->
+
+    <!-- header -->
+    <mip-header></mip-header>
+    <!-- category -->
+    <mip-category></mip-category>
+    <!-- process -->
+    <mip-process></mip-process>
+    <!-- operatorhub -->
+    <mip-operatorhub></mip-operatorhub>
+    <!-- sale button -->
+    <mip-salebtn></mip-salebtn>
+  </div>
+
+  <mip-shell-inservice mip-shell>
+    <script type="application/json" src="../router.json"></script>
+  </mip-shell-inservice>
+  <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+  <!-- the way to include the component -->
+  <script src="/mip-header/mip-header.js"></script>
+  <script src="/mip-category/mip-category.js"></script>
+  <script src="/mip-process/mip-process.js"></script>
+  <script src="/mip-operatorhub/mip-operatorhub.js"></script>
+  <script src="/mip-salebtn/mip-salebtn.js"></script>
+</body>
+
+</html>

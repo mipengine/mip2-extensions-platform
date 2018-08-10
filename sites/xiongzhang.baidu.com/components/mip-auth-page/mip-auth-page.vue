@@ -12,13 +12,14 @@
 
 <script>
 
-import {getQuery, getUUID, getRedirectUrl} from './util'
+import {getQuery, getUUID, getRedirectUrl, log} from './util'
 
 export default {
   data () {
     /* eslint-disable */
     let redirect_uri = getQuery('redirect_uri')
     let client_id = getQuery('client_id')
+    let xzh_id = getQuery('appid')
 
 
     let uuid = getUUID()
@@ -33,6 +34,7 @@ export default {
       config: {
         redirect_uri,
         client_id,
+        xzh_id,
         state,
         uuid
       },
@@ -40,6 +42,7 @@ export default {
       url: 'https://openapi.baidu.com/oauth/2.0/mip/authorize?response_type=code' +
                 '&scope=snsapi_userinfo' +
                 '&confirm_login=2' +
+                '&modal=1' +
                 '&client_id=' + client_id +
                 '&redirect_uri=' + encodeURIComponent(redirect_uri) +
                 '&state=' + encodeURIComponent(JSON.stringify(state)) +
@@ -122,6 +125,11 @@ export default {
             {isMipLink: true, replace: true}
           )
         }
+      } else if (type === 'oauth-page-log') {
+        let { action, ext = {} } = value
+        /* eslint-disable */
+        log(action, ext, config.xzh_id)
+        /* eslint-enable */
       }
     }
   }
