@@ -1,202 +1,60 @@
 <template>
-  <div class="wrapper">
-    <!-- <slot name="banner" /> -->
-    <div class="top_level_1">
-      <mip-carousel
-        autoplay
-        defer="3000"
-        width="400"
-        height="277"
-        layout="responsive"
-        indicator-id="mip-carousel-example">
-        <mip-img src="https://mip.putibaby.com/i/b1.png"/>
-        <mip-img src="https://mip.putibaby.com/i/b2.png"/>
-        <mip-img src="https://mip.putibaby.com/i/b3.png"/>
-      </mip-carousel>
-      <div class="mip-carousel-indicator-wrapper">
-        <div
-          id="mip-carousel-example"
-          class="mip-carousel-indicatorDot">
-          <div class="mip-carousel-activeitem mip-carousel-indecator-item"/>
-          <div class="mip-carousel-indecator-item"/>
-          <div class="mip-carousel-indecator-item"/>
-          <div class="mip-carousel-indecator-item"/>
-        </div>
-      </div>
-    </div>
-    <div @click="handleCoupon">
-      <mip-img src="https://mip.putibaby.com/i/yhq_jt.png"/>
-      <!-- <slot name="yhq" /> -->
-    </div>
-    <div class="clear_float">
-      <div
-        class="find"
-        @click="handleSelectMaster">
-        <!-- <mip&#45;img src="https://mip.putibaby.com/i/find_ys.png"/> -->
-      </div>
-      <div
-        class="help"
-        @click="handleCustom">
-        <!-- <mip&#45;img src="https://mip.putibaby.com/i/help_me.png"/> -->
-      </div>
-    </div>
 
-    <mip-fixed
+  <div class="wrapper">
+    <div class="text">基于个性化需求，通过菩提果服务大数据找到最适合您的好月嫂，已服务数万妈妈，是众多网红妈妈推荐的找月嫂靠谱新模式。</div>
+    <div class="img"><mip-img src="https://mip.putibaby.com/i/four.png"/></div>
+    <div class="bot_div">
+      <img src="https://mip.putibaby.com/i/bot.png">
+      <div class="start"><a @click="handleUpdateYcq">开始定制</a></div>
+    </div>
+    <!-- <mip-fixed
       type="bottom"
       class="bottom">
-      <a
-        class="bottom_left"
-        href="tel:4006188835">
-        <mip-img
-          src="https://mip.putibaby.com/i/index_phone.png"
-          width="132px"
-          height="22px"
-          class="bottom_left_img"/>
-      </a>
-      <a @click="handleOrderList">
-        <mip-img
-          src="https://mip.putibaby.com/i/ind_person.png"
-          width="38px"
-          height="25px"
-          class="bottom_right_img"/>
-      </a>
-    </mip-fixed>
+      <div class="start"><a @click="handleUpdateYcq">开始定制</a></div>
+    </mip-fixed> -->
 
   </div>
 </template>
 
 <style scoped>
   .wrapper {
-    margin: 0 auto;
-    text-align: center;
-    margin-top:44px;
+    /* margin: 0 auto; */
+    /* text-align: center; */
+    /*background-color: #f1f5e2;*/
+    /* margin-top:44px; */
   }
 
-  /* <!-- index.css --> */
-
-  p {
-    margin: 0px;
-    padding: 0px;
-    font-family: '黑体';
-  }
-
-  /* <!-- banner.css --> */
-  mip-form form {
-    position: relative;
-    left: 0px;
-    width: 90vw;
-  }
-
-  mip-form input[type='text'] {
-    padding-right: 30px;
-    width: 80%;
-    margin: auto;
-    position: relative;
-    top: 20px;
-    background-color: rgba(0, 0, 0, 0);
-  }
-
-  mip-form input[type='submit'] {
-    border: 1px solid #fe7834;
-    border-radius: 5px;
-    color: #333;
-    background-color: #fe7834;
-    width: 98%;
-    margin: auto;
-    position: relative;
-    top: 40px;
-  }
-
-  mip-carousel {
-    width: 100%;
-    height: 73.8%;
-  }
-
-  .mip-carousel-indicator-wrapper {
-    display: none;
-    text-align: center;
-    background-color: rgba(0, 0, 0, .0);
-    left: 44%;
-    bottom: 10px;
-  }
-
-  .mip-layout-container {
-    /* display: block; */
-    position: relative;
-    display: inline-block;
-    width: 100%;
-    margin: auto;
-  }
-
-  .mip-login-container {
-    display: inline-block;
-  }
-
-  .test-login-div {
-    margin-bottom: 130px;
-  }
-
-  mip-form div {
-    display: none;
-    color: #ec1f5c;
-    font-size: 12px;
-    text-align: left;
-    padding: 0 10% 0 3%;
-    position: relative;
-    left: 30px;
-    top: 28px;
-  }
-
-  .find {
-    width: 44%;
-    background-size: contain;
-    margin-left: 4%;
-    margin-right: 2%;
-    height: 150px;
-    text-align: center;
-    float: left;
-    background-position:center;
-  }
-
-  .help {
-    width: 44%;
-    background-size: contain;
-    margin-left: 2%;
-    margin-right: 4%;
-    height: 150px;
-    text-align: center;
-    float: left;
-    background-position:center;
-  }
-
-  .bottom {
-    bottom: 0;
-    height: 45px;
-    line-height: 45px;
+  .text{
+    margin:15px;
+    margin-bottom: 12px;
+    font-size: 15px;
+    color: #666;
+    line-height: 22px;
     background-color: #fff;
-    width: 100%;
-    z-index: 9999;
+
+  }
+  .img{
+    margin-left: 15px;
+    margin-right: 15px;
   }
 
-  .bottom_left {
-    width: 80%;
-    height: 45px;
+  .bot_div{
+    margin-top:10px;
+    padding:18px 10px 10px 10px;
+    /* background-color: #f1f5e2; */
+  }
+  .start{
+    margin-top: 15px;
     text-align: center;
-    display: inline-block;
-    color: black;
-    padding-left: 0;
+    color: #fff;
+    height: 47px;
+    line-height: 47px;
+    border-radius:5px;
+    background-color: #afd03b;
   }
-
-  .bottom_left_img {
-    vertical-align: -6px;
-  }
-
-  .bottom_right_img {
-    vertical-align: -6px;
-  }
-  .clear_float{
-  clear:both;
-  height:240px;
+  .start a{
+    color: #fff;
+    font-size: 18px;
   }
 </style>
 
@@ -370,30 +228,10 @@ export default {
     reload_ () {
       console.log('reloading')
     },
-    handleCoupon () {
-      console.log('handleCoupon')
-      if (!this.checkLogin_('coupon')) { return }
-      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/coupon'), {})
-    },
-    handleSelectMaster () {
-      console.log('handleSelectMaster')
-      // if (!this.checkLogin_('select_master'))
-      //   return;
-      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/select_master'), {})
-    },
     handleUpdateYcq () {
       console.log('handleUpdateYcq')
       if (!this.checkLogin_('update_ycq')) { return }
       window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq'), {})
-    },
-    handleCustom () {
-      console.log('handleCustom')
-      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/custom'), {})
-    },
-    handleOrderList () {
-      console.log('handleOrderList')
-      if (!this.checkLogin_('order_list')) { return }
-      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
     },
     load_data () {
       console.log('should set data')
