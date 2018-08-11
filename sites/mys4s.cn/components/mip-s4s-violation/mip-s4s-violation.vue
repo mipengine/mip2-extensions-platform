@@ -381,7 +381,8 @@ export default {
       }
       // car_no车牌号，vin车架号，engion发动机，{car_no: 陕KC1166 vin: LSVNJ49J472028756 engine: 020297
       util
-        .fetchData('v3/violation/web/query', param)
+        .fetchData('v3/violation/smapp/query', param)
+        // .fetchData('v3/violation/web/query', param)
         .then(res => {
           // res.code = 90027
           if (res.code === 90027) {
@@ -682,7 +683,7 @@ export default {
   color: #666;
   /* padding-right: 0.15rem; */
   overflow: hidden;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   text-overflow: ellipsis;
 }
 
@@ -706,7 +707,7 @@ export default {
   font-size: .12rem;
   line-height: .2rem;
   overflow: hidden;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   text-overflow: ellipsis;
 }
 
