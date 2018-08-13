@@ -54,7 +54,6 @@
 <style scoped lang="less">
 </style>
 <script>
-
 import './mip-1688seo-list.less'
 export default {
   props: {
@@ -87,6 +86,4 @@ export default {
     }
   }
 }
-
 </script>
-
