@@ -1,14 +1,14 @@
-let util = MIP.util;
-let CustomStorage = util.customStorage;
-let storage = new CustomStorage(0);
+let util = MIP.util
+let CustomStorage = util.customStorage
+let storage = new CustomStorage(0)
 //基础模块
 export default ({
-    setMediaBase: function() {
+    setMediaBase: function () {
         let b = document
         let a = {}
         a.Html = b.getElementsByTagName('html')[0]
         let htmls = b.getElementsByTagName('html')
-        a.widthProportion = function() {
+        a.widthProportion = function () {
             // 获取屏幕宽度并存入缓存
             if (!storage.get('sc')) {
                 storage.set('sc', b.body.clientWidth)
@@ -17,7 +17,7 @@ export default ({
             let c = (b.body.clientWidth || a.Html.offsetWidth) / 750
             return c > 1 ? 1 : c < 0.4 ? 0.4 : c
         }
-        a.changePage = function() {
+        a.changePage = function () {
             let length = htmls.length
             let remValue = a.widthProportion() * 100
             let rem = sessionStorage.getItem('rem');
@@ -36,11 +36,11 @@ export default ({
         a.changePage()
     },
     // 拼接字符串
-    setUrlParam: function(obj) {
-        const params = [];
+    setUrlParam: function (obj) {
+        const params = []
         Object.keys(obj).forEach((key) => {
             let value = obj[key]
-                // 如果值为undefined我们将其置空
+            // 如果值为undefined我们将其置空
             if (typeof value === 'undefined') {
                 value = ''
             }
@@ -49,15 +49,15 @@ export default ({
         });
         return params.join('&')
     },
-    setSession: function(datas) {
+    setSession: function (datas) {
         sessionStorage.setItem('lxndata', JSON.stringify(datas))
     },
-    getSession: function() {
+    getSession: function () {
         let data = sessionStorage.getItem('lxndata')
-            // console.log(JSON.stringify(JSON.parse(data), null, 2))
+        // console.log(JSON.stringify(JSON.parse(data), null, 2))
         return JSON.parse(data)
     },
-    timeformat: function(date, format) {
+    timeformat: function (date, format) {
         // 全局时间格式化输出     new Date().format('yyyy-MM-dd hh:mm:ss')
         let args = {
             'M+': date.getMonth() + 1,
@@ -68,30 +68,36 @@ export default ({
             'q+': Math.floor((date.getMonth() + 3) / 3), // quarter
             'S': date.getMilliseconds()
         }
-        if (/(y+)/.test(format)) { format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length)) }
+        if (/(y+)/.test(format)) {
+            format = format.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length))
+        }
         for (let i in args) {
             let n = args[i]
-            if (new RegExp('(' + i + ')').test(format)) { format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? n : ('00' + n).substr(('' + n).length)) }
+            if (new RegExp('(' + i + ')').test(format)) {
+                format = format.replace(RegExp.$1, RegExp.$1.length === 1 ? n : ('00' + n).substr(('' + n).length))
+            }
         }
         return format
     },
-    getbaiduLogMsg: function() {
+    getbaiduLogMsg: function () {
         let keys = 'mip-login-xzh:sessionId://www.lanxiniu.com/Baidu/back'
         return localStorage.getItem(keys)
     },
     // 使用MIP2同步数据
-    mipSetGlobalData: function(newVal) {
+    mipSetGlobalData: function (newVal) {
         try {
-            MIP.setData({ '#lxndata': newVal })
-        } catch (e) {}
+            MIP.setData({
+                '#lxndata': newVal
+            })
+        } catch (e) { }
     },
     // 使用MIP2合并数据用于本地存储
-    mipExtendData: function(oldVal, newVal) {
+    mipExtendData: function (oldVal, newVal) {
         let data = MIP.util.fn.extend({}, oldVal, newVal)
         return data
     },
     // 获取url中"?"符后的字串
-    getRequest: function() {
+    getRequest: function () {
         let url = location.search
         let theRequest = {}
         if (url.indexOf('?') !== -1) {
