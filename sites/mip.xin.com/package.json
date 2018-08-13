@@ -8,16 +8,9 @@
         "lint": "npm run lint:js",
         "lint:js": "eslint --ext .vue,.js .",
         "fix": "npm run fix:js",
-        "fix:js": "eslint --ext .vue,.js . --fix",
-        "watch": "node app",
-        "start": "mip2 build && node app",
-        "build:test": "echo build:test ok",
-        "build:prod": "echo build:prod ok",
-        "start:test": "node server/app/app",
-        "start:prod": "node server/app/app"
+        "fix:js": "eslint --ext .vue,.js . --fix"
     },
     "dependencies": {
-        "babel-preset-stage-3": "^6.24.1"
     },
     "devDependencies": {
         "eslint": "^4.19.1",
