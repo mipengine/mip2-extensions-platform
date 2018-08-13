@@ -649,7 +649,7 @@ export default {
     },
     uploadBase64 (data, name) {
       let self = this
-      util.fetchData('/v3/violation/image/upload', {
+      util.fetchData('v3/violation/image/upload', {
         imageString: data
       })
         .then(data => {
@@ -793,7 +793,7 @@ export default {
           jsz_drive_url: this.JSZDriveUrl || '', // 驾驶证正面
           jsz_travel_url: this.JSZTravelUrl || '', // 驾驶证反面
           vin: this.illegal.vin || '',
-          engion: this.illegal.engion || '',
+          engion: this.illegal.engine || this.illegal.engion || '',
           drive_bar_code: this.drive_bar_code || '',
           drive_file_number: this.drive_file_number || ''
         }
