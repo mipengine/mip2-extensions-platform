@@ -1178,7 +1178,7 @@
       type="right"
       bottom="50px"
       class="rec_a">
-      <a @click="handleUpdateYcq">
+      <a @click="handleCustom">
         <slot name="bwtj"/>
       </a>
     </mip-fixed>
@@ -2068,6 +2068,10 @@ export default {
       }
       window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq '), {})
     },
+    handleCustom () {
+      console.log('handleCustom')
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/custom'), {})
+    },
     handleOrderList () {
       console.log('handleOrderList')
       if (!this.checkLogin_('order_list')) { return }
@@ -2084,7 +2088,6 @@ export default {
       this.state.isGif = true
       // this.$set(this.state, 'isGif', true)
       this.filter.pn = 0
-
       setTimeout(function () {
         API.getSelectMaster(self.filter, function (isOk, res) {
           if (isOk) {
