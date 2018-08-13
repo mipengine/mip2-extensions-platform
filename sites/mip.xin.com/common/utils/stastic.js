@@ -255,10 +255,10 @@ export const clickPoint = (ev = '', values = {}, completeFun, commonParam) => {
 export const exposurePoint = (pl = '', values, ds, commonParam) => {
   checkEvPl(pl, 'pl不允许为空')
   getExposureDsValus(ds)
-  ((params = getEvPlValues(HandleTypeNameEnum.PL, pl, values)) => {
-    params['type'] = HandleTypeValueEnum.EXPOSURE
-    params['ds'] = getExposureDsValus(ds)
-    params = Object.assign(params, commonParam)
-    postPoint(params, null)
-  })()
+    ((params = getEvPlValues(HandleTypeNameEnum.PL, pl, values)) => {
+      params['type'] = HandleTypeValueEnum.EXPOSURE
+      params['ds'] = getExposureDsValus(ds)
+      params = Object.assign(params, commonParam)
+      postPoint(params, null)
+    })()
 }
