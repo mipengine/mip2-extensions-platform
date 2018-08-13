@@ -7,14 +7,14 @@ const HOST_CONFIG = {
     // domain: 'http://openapix.zyj.xin.com',
     h5Host: 'http://h5.ceshi.xin.com',
     mHost: 'http://m.ceshi.xin.com',
-    pustUrl: pustUrl //埋点提交地址
+    pustUrl: pustUrl // 埋点提交地址
   },
   'production': {
     domain: 'https://openapix.xin.com',
     // domain: 'http://openapix.ceshi.xin.com',
     h5Host: 'https://h5.xin.com',
     mHost: 'https://m.xin.com',
-    pustUrl: pustUrl //埋点提交地址
+    pustUrl: pustUrl // 埋点提交地址
   }
 }
 
@@ -24,5 +24,5 @@ let config = {
 };
 
 config = Object.assign(config, HOST_CONFIG[ENV])
-//导出
+// 导出
 export default config

@@ -10,9 +10,9 @@ const getApiPath = (action) => {
     // 走node接口 对当前域名进行请求
     return action
   }
-  if (!action) return config.domain;
+  if (!action) return config.domain
   if (config.env === 'production' || config.env === 'build') {
-    return config.domain + action;
+    return config.domain + action
   }
   var path = (config.apiActionMap[action] || config.domain) + action
   return path
@@ -21,26 +21,26 @@ const getApiPath = (action) => {
 // 默认参数
 let baseParams = {
   param: {},
-  headers: "application/json",
-  method: "GET"
-};
-export const requestFun = function (url = "", options = {}) {
-  let sn = getLocalStorage("ajaxToken") || ''
+  headers: 'application/json',
+  method: 'GET'
+}
+export const requestFun = function (url = '', options = {}) {
+  let sn = getLocalStorage('ajaxToken') || ''
   let requestOptions = Object.assign(baseParams, options)
-  let contentType = "application/json"
-  let requestUrl = getApiPath(url) + "?source=mip"
+  let contentType = 'application/json'
+  let requestUrl = getApiPath(url) + '?source=mip'
   let params = {}
   let body = JSON.stringify({
     sn: sn,
     params: requestOptions.param
   })
-  if (requestOptions.method == "POST") {
+  if (requestOptions.method === 'POST') {
     params = {
       body: body,
       method: requestOptions.method,
       headers: {
-        "X-Requested-With": "xmlhttprequest", //需要加上这个请求头
-        "content-type": contentType // 默认值
+        'X-Requested-With': 'xmlhttprequest', // 需要加上这个请求头
+        'content-type': contentType // 默认值
       }
     }
     if (requestUrl.indexOf('/apis/') > -1) {
@@ -68,7 +68,7 @@ export const requestFun = function (url = "", options = {}) {
         }
       })
       .catch(err => {
-        reject(err);
+        reject(err)
       })
   })
 }

@@ -6,7 +6,7 @@ import {
 } from './reqUtils'
 
 export const jsSdkCheck = (options = {}) => {
-  let url = options.url || 'https://mip.xin.com/help';
+  let url = options.url || 'https://mip.xin.com/help'
   return requestFun('/apis/js_sdk_sign', {
     method: 'GET',
     param: {

@@ -36,14 +36,14 @@ export const getCityId = function () {
   return cityid
 }
 
-//简单对象序列化
+// 简单对象序列化
 export const serialize = (params) => {
 
   if (typeof params === 'string') {
     return params
   }
-  let query = ""
-  for (var key in params) {
+  let query = ''
+  for (let key in params) {
     // 浏览器会丢失部分值所以做一下转化
     query += `${key}=${encodeURIComponent(params[key])}&`
   }
@@ -51,7 +51,7 @@ export const serialize = (params) => {
   query = query.slice(0, query.length - 1)
   return query
 }
-//获取query
+// 获取query
 export const getQuery = function () {
   let query = MIP.getData('query')
   return query

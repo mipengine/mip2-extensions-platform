@@ -1,7 +1,7 @@
 import config from './config'
 import {
   serialize
-} from "./utils"
+} from './utils'
 let util = MIP.util
 let CustomStorage = util.customStorage
 let storage = new CustomStorage(0)
@@ -14,14 +14,14 @@ const PIDMAP = {
   '/pages/bigimage': 'u2_107', // 大图页
 }
 // 埋点数据提交地址
-const postUrl = config.pustUrl;
+const postUrl = config.pustUrl
 // const postUrl = 'https://ab.xin.com/hitlog.gif';
-let system_cid = '';
+let system_cid = ''
 let lon = '',
-  lat = ''; //经纬度
-let networkType = ''; //网络环境
-// let sc = '';//屏幕宽度
-let source = ''; //来源
+  lat = '' // 经纬度
+let networkType = '' // 网络环境
+// let sc = '';// 屏幕宽度
+let source = '' //来源
 // SetLocation()
 // 获取guid
 function getGid() {
@@ -60,7 +60,7 @@ const HandleTypeNameEnum = {
 }
 
 const getCityID = () => {
-  let key = 'currentCity';
+  let key = 'currentCity'
   try {
     // 城市信息为json字符串需要转化为对象
     var value = storage.get(key)
@@ -146,33 +146,33 @@ const BaseParams = () => {
 
 // 埋点数据提交
 const postPoint = (params = {}, completeFun, commonParam) => {
-  var p1 = Object.assign(BaseParams(), params);
-  commonParam = commonParam || {};
-  let lastParam = Object.assign(p1, commonParam);
+  var p1 = Object.assign(BaseParams(), params)
+  commonParam = commonParam || {}
+  let lastParam = Object.assign(p1, commonParam)
   if (lastParam.pid.indexOf('/pages/') > -1) {
     // pid取值
-    lastParam.pid = PIDMAP[lastParam.pid.toLowerCase()] || '';
+    lastParam.pid = PIDMAP[lastParam.pid.toLowerCase()] || ''
   }
   // 请求数据
   try {
     let requestUrl = postUrl + '?' + serialize(lastParam)
     fetch(requestUrl)
       .then(response => {
-        return response.json();
+        return response.json()
       })
       .then(res => {
-        if (res.error_code && res.error_code != 200) {
-          return;
+        if (res.error_code && res.error_code !== 200) {
+          return
         }
         if (res.data && res.error_code === 200) {
-          completeFun && completeFun();
+          completeFun && completeFun()
         } else {
-          completeFun && completeFun();
+          completeFun && completeFun()
         }
       })
       .catch(err => {
-        completeFun && completeFun();
-      });
+        completeFun && completeFun()
+      })
   } catch (e) {
 
   }
@@ -186,7 +186,7 @@ const checkEvPl = (key, msg) => {
   }
 }
 
-/**生成ev/pl 的值
+/** 生成ev/pl 的值
  * @param  {[NAME]} key 名称 如 ev pl
  * @param  {[evpl]} evpl值
  * @param  {[values]} evpl对应的数据
@@ -210,7 +210,7 @@ const getEvPlValues = (NAME, evpl, values) => {
   return params
 }
 
-//浏览埋点  ev是事件标识 和 values
+// 浏览埋点  ev是事件标识 和 values
 const viewAndClickPoint = (TYPE, ev = '', values = {}, completeFun, commonParam) => {
   // checkEvPl(ev, 'ev不允许为空');
   ((params = getEvPlValues(HandleTypeNameEnum.EV, ev, values)) => {
@@ -219,7 +219,7 @@ const viewAndClickPoint = (TYPE, ev = '', values = {}, completeFun, commonParam)
   })()
 }
 
-//生成曝光埋点的ds字符串
+// 生成曝光埋点的ds字符串
 const getExposureDsValus = (ds) => {
   if (ds.length === 0) {
     return ''
@@ -227,10 +227,10 @@ const getExposureDsValus = (ds) => {
   let dsStr = ''
   ds.forEach((item, index) => {
     dsStr += getDsItemStr(item) + ';'
-  });
+  })
   return dsStr ? dsStr.slice(0, dsStr.length - 1) : dsStr
 }
-//生成ds 内一项的字符串结果
+// 生成ds 内一项的字符串结果
 const getDsItemStr = (item) => {
   let str = ''
   for (var key in item) {
@@ -239,19 +239,19 @@ const getDsItemStr = (item) => {
   return str.slice(0, str.length - 1)
 }
 
-//浏览埋点  ev是事件标识 和 values
+// 浏览埋点  ev是事件标识 和 values
 export const viewPoint = (ev = '', values = {}, commonParam) => {
 
   viewAndClickPoint(HandleTypeValueEnum.VIEW, ev, values, null, commonParam)
 }
-//点击埋点
+// 点击埋点
 export const clickPoint = (ev = '', values = {}, completeFun, commonParam) => {
   viewAndClickPoint(HandleTypeValueEnum.CLICK, ev, values, completeFun, commonParam)
 }
 
 
-//曝光埋点
-//param: pl 曝光名称,values 埋点数据,ds 曝光数据, commonParam 公共参数
+// 曝光埋点
+// param: pl 曝光名称,values 埋点数据,ds 曝光数据, commonParam 公共参数
 export const exposurePoint = (pl = '', values, ds, commonParam) => {
   checkEvPl(pl, 'pl不允许为空')
   getExposureDsValus(ds)
