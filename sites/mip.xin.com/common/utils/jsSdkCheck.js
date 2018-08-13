@@ -3,14 +3,14 @@
  */
 import {
   requestFun
-} from "./reqUtils";
+} from './reqUtils'
 
 export const jsSdkCheck = (options = {}) => {
-  var url = options.url || 'https://mip.xin.com/help';
-  return requestFun("/apis/js_sdk_sign", {
-    method: "GET",
+  let url = options.url || 'https://mip.xin.com/help';
+  return requestFun('/apis/js_sdk_sign', {
+    method: 'GET',
     param: {
       url: url
     }
-  });
+  })
 }

@@ -20,7 +20,7 @@ export default ({
     a.changePage = function () {
       let length = htmls.length
       let remValue = a.widthProportion() * 100
-      let rem = sessionStorage.getItem('rem');
+      let rem = sessionStorage.getItem('rem')
       // MIP.viewer.page.isRootPage  技术服务开始页初始化session
       if (rem !== null && !MIP.viewer.page.isRootPage) {
         for (let i = 0; i < length; i++) {
@@ -46,7 +46,7 @@ export default ({
       }
       // 对于需要编码的文本（比如说中文）我们要进行编码
       params.push([key, encodeURIComponent(value)].join('='))
-    });
+    })
     return params.join('&')
   },
   setSession: function (datas) {
