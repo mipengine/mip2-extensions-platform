@@ -38,6 +38,9 @@
       <div
         v-show="isloading"
         class="loading">努力加载中...</div>
+      <div
+        v-show="!isloading"
+        class="loading">已经到底了</div>
     </ul>
   </div>
 
@@ -69,7 +72,7 @@ export default {
   data () {
     return {
       list: [],
-      isloading: false
+      isloading: true
     }
   },
   mounted () {
@@ -82,15 +85,12 @@ export default {
   },
   methods: {
     load (cb) {
-      if (this.isloading) return
-      this.isloading = true
-
       if (isLoaded) return
       fetch('https://m.6renyou.com/mip_service/get_hot_trip_list?dest=' + destName + '&page=' + page).then(resp => resp.json()).then(resp => {
-        this.isloading = false
         if (!resp || resp === null || resp.length === 0) {
           toast.show('没有更多', options)
           isLoaded = true
+          this.isloading = false
           return
         }
         page++
