@@ -107,11 +107,9 @@ export default {
         isClosed: false,
         day: new Date().getDate()
       }
-      // console.log(data)
       localStorage.setItem('bookList', JSON.stringify(data))
       this.bookList = JSON.parse(localStorage.getItem('bookList'))
     }
-    console.log(this.bookList)
     // 这个时候不管是不是第一次，我们的书单都已经准备好，可以使用了。
     // 判断该书是否被关闭，并且是当天被关闭，就不显示广告，不满足其一，就显示。
     if (this.bookList[this.book].isClosed && this.bookList[this.book].day === new Date().getDate()) {
