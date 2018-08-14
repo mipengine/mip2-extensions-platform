@@ -88,7 +88,7 @@ export default {
     // 从localstorage中获取书单
     this.bookList = localStorage.getItem('bookList')
     // 从url获取本书
-    this.book = getQuery().books
+    this.book = getQuery().bkid
     // 如果有过书单（不是第一次进入这个页面），则将该书单赋值给data - bookList。
     if (this.bookList) {
       this.bookList = JSON.parse(this.bookList)
@@ -140,77 +140,87 @@ export default {
 </script>
 
 <style lang="less" scoped>
-  .bot_bar {
-    width: 100%;
-    height: 50px;
-    transform: translateY(0px);
-    transition: transform .2s ease-in-out;
-    background-color: rgba(255, 255, 255, .96);
-    overflow: hidden;
-    div {
-      position: absolute;
-      &.close_btn {
-        width: 45px;
-        height: 50px;
-        top: 0px;
-        left: 0px;
-        box-sizing: border-box;
-        .close_icon {
-          position: absolute;
-          top: 16px;
-          left: 17px;
-        }
-      }
-      &.logo_icon {
-        width: 36px;
-        height: 36px;
-        background-size: 100% 100%;
-        top: 6px;
-        left: 45px;
-        img {
-          width: 36px;
-          height: 36px;
-        }
-      }
-      &.word_wrapper {
-        top: 8px;
-        left: 89px;
-        .title {
-          font-size: 17px;
-          height: 17px;
-          line-height: 17px;
-          color: #000000;
-          margin: 0;
-          padding: 0;
-        }
-        .brief {
-          font-size: 12px;
-          height: 12px;
-          line-height: 12px;
-          margin-top: 5px;
-          color: #999999;
-        }
-      }
-    }
-    .link_btn {
-      position: absolute;
-      width: 57px;
-      height: 28px;
-      line-height: 28px;
-      text-align: center;
-      border: 1px solid #3388FF;
-      border-radius: 2px;
-      color: #3388FF;
-      top: 11px;
-      box-sizing: border-box;
-      right: 17px;
-      font-size: 13px;
-    }
-    .whole_link_btn {
-      position: absolute;
+    .bot_bar {
       width: 100%;
       height: 50px;
-      margin-left: 45px;
+      transform: translateY(0);
+      transition: transform 0.2s ease-in-out;
+      background-color: rgba(255, 255, 255, 0.96);
+      overflow: hidden;
+
+      div {
+        position: absolute;
+
+        &.close_btn {
+          width: 45px;
+          height: 50px;
+          top: 0;
+          left: 0;
+          box-sizing: border-box;
+
+          .close_icon {
+            position: absolute;
+            top: 16px;
+            left: 17px;
+          }
+        }
+
+        &.logo_icon {
+          width: 36px;
+          height: 36px;
+          background-size: 100% 100%;
+          top: 6px;
+          left: 45px;
+
+          img {
+            width: 36px;
+            height: 36px;
+          }
+        }
+
+        &.word_wrapper {
+          top: 8px;
+          left: 89px;
+
+          .title {
+            font-size: 17px;
+            height: 17px;
+            line-height: 17px;
+            color: #000;
+            margin: 0;
+            padding: 0;
+          }
+
+          .brief {
+            font-size: 12px;
+            height: 12px;
+            line-height: 12px;
+            margin-top: 5px;
+            color: #999;
+          }
+        }
+      }
+
+      .link_btn {
+        position: absolute;
+        width: 57px;
+        height: 28px;
+        line-height: 28px;
+        text-align: center;
+        border: 1px solid #38f;
+        border-radius: 2px;
+        color: #38f;
+        top: 11px;
+        box-sizing: border-box;
+        right: 17px;
+        font-size: 13px;
+      }
+
+      .whole_link_btn {
+        position: absolute;
+        width: 100%;
+        height: 50px;
+        margin-left: 45px;
+      }
     }
-  }
 </style>
