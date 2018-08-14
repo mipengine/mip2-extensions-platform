@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html mip>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>工资计算器</title>
+  <link rel="stylesheet" href="https://bos.nj.bpc.baidu.com/assets/mip/projects/mip.css">
+  <link rel="canonical" href="http://wbg.do1.com.cn/gzjsq.html">
+  <style mip-custom>
+  /* 自定义样式 */
+
+  html,
+  body {
+    min-height: 100% !important;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    font-family: PingFang-SC-Medium;
+    font-size: 16px;
+    background: #F2F3F6;
+  }
+  body {
+    height: 100%;
+  }
+
+  h2,
+  a {
+    margin: 50px auto;
+    text-align: center;
+  }
+
+  .mip-shell-header .mip-shell-header-logo-title .mip-shell-header-logo {
+    width: 20px;
+    height: 20px;
+    margin-top: 11px;
+    margin-right: 5px;
+    border-radius: 0;
+    border: none;
+  }
+
+  a {
+    display: block;
+    margin: 0 auto;
+    font-size: 15pt;
+  }
+
+  .mip-vd-tabs-nav {
+    margin-bottom: 10pt;
+  }
+
+  .mip-shell-header-title {
+    font-size: 19px;
+    color: #323232;
+    font-weight: 500;
+  }
+
+  .mip-vd-tabs .mip-vd-tabs-nav-li {
+    font-size: 17px;
+    font-weight: 500;
+    color: #888685;
+  }
+
+  .mip-vd-tabs-nav-selected {
+    border-bottom-color: #FF8D1D !important;
+    color: #FF8D1D !important;
+  }
+
+  .tipsMes {
+    top: 88px;
+    left: 0;
+    height: 45px;
+    line-height: 45px;
+    margin: 0 auto;
+    text-align: center;
+    color: #fff;
+    background: #FF8D1D;
+    opacity: 0.8;
+    z-index: 100;
+    width: 100%;
+    border: none;
+    border-radius: 0;
+  }
+
+  .calculateBtn a {
+    color: #fff;
+  }
+
+  .footer {
+    position: absolute;
+  }
+
+  </style>
+</head>
+
+<body layout="container">
+  <mip-shell>
+    <script type="application/json">
+    {
+      "routes": [{
+        "pattern": "*",
+        "meta": {
+          "header": {
+            "show": true,
+            "xiongzhang": true,
+            "title": "企微云工资计算器",
+            "logo": "http://wbg.do1.com.cn/xueyuan/wp-content/uploads/2018/07/ICON.png"
+          },
+          "view": {
+            "isIndex": true
+          }
+        }
+      }]
+    }
+
+    </script>
+  </mip-shell>
+  <mip-data>
+    <script type="application/json">
+    {
+      "wage": 0,
+      "tipsMes": "请输入税前工资",
+      "selectValue": 1,
+      "small": false,
+    }
+
+    </script>
+  </mip-data>
+  <mip-example m-bind:wage="wage" m-bind:tipsmes="tipsMes" m-show="false" m-bind:small="small"></mip-example>
+</body>
+<script src="https://bos.nj.bpc.baidu.com/assets/mip/projects/mip.js"></script>
+<script src="https://c.mipcdn.com/static/v1/mip-bind/mip-bind.js"></script>
+<script src="https://c.mipcdn.com/static/v1/mip-fixed/mip-fixed.js"></script>
+<script src="/mip-example/mip-example.js"></script>
+<script src="/mip-social-security/mip-social-security.js"></script>
+<script src="/mip-wage-city-threshold/mip-wage-city-threshold.js"></script>
+<script src="/mip-address-select/mip-address-select.js"></script>
+<script src="/mip-scroll-select/mip-scroll-select.js"></script>
+<script src="/mip-result/mip-result.js"></script>
+</html>
