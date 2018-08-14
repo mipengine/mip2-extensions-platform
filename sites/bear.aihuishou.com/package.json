@@ -1,0 +1,30 @@
+{
+  "name": "baidu_bears",
+  "version": "0.0.1",
+  "description": "A MIP project",
+  "scripts": {
+    "dev": "mip2 dev",
+    "build": "mip2 build",
+    "lint": "npm run lint:js",
+    "lint:js": "eslint --ext .vue,.js .",
+    "fix": "npm run fix:js",
+    "fix:js": "eslint --ext .vue,.js . --fix"
+  },
+  "author": "殷煌 (huang.yin@aihuishou.com)",
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.12.0",
+    "eslint-plugin-jsdoc": "^3.7.1",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.8.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "eslint-plugin-vue": "^4.5.0",
+    "express": "^4.16.3",
+    "http-proxy-middleware": "^0.18.0",
+    "js-base64": "^2.4.8"
+  }
+}
