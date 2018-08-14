@@ -1,88 +1,128 @@
 <template>
   <div>
     <mip-carousel
-      defer="3000"
+      v-if="totalLenght.length>0"
       id="carousel"
+      :index="currentIndex"
+      defer="3000"
       layout="responsive"
       width="750"
       height="500"
-      :index="currentIndex"
-      on="switchCompleted:position.change"
-      v-if="totalLenght.length>0">
-      <block v-for="(item,index) in big_image_info.img_six" :key="index">
-        <mip-img @click="handleShowMaskClick" :src="item.pic" v-if="index != 0"></mip-img>
-        <mip-img  @click="handlePlayVideo" :src="item.pic" v-if="index == 0"></mip-img>
-        <mip-img v-if="index==0&&big_image_info.is_video && status == 1" class="play" @click="handlePlayVideo" src="http://c2.xinstatic.com/f3/20180323/1111/5ab470517f150445829.png"></mip-img>   
-        <mip-img v-if="status == -1" class="play-sold" src="http://c2.xinstatic.com/f3/20180731/1427/5b600155b5fc8949695.png"></mip-img>   
+      on="switchCompleted:position.change">
+      <block
+        v-for="(item,index) in big_image_info.img_six"
+        :key="index">
+        <mip-img
+          v-if="index!=0"
+          :src="item.pic"
+          @click="handleShowMaskClick(index)"/>
+        <mip-img
+          v-if="index == 0"
+          :src="item.pic"
+          @click="handlePlayVideo" />
+        <mip-img
+          v-if="index==0&&big_image_info.is_video && status == 1"
+          class="play"
+          src="http://c2.xinstatic.com/f3/20180323/1111/5ab470517f150445829.png"
+          @click="handlePlayVideo"/>
+        <mip-img
+          v-if="status == -1"
+          class="play-sold"
+          src="http://c2.xinstatic.com/f3/20180731/1427/5b600155b5fc8949695.png"/>
       </block>
     </mip-carousel>
-    <mip-xin-position @changeNum="changeCurrentNum" :status="status" id="position" :show-play="big_image_info.is_video" :total="totalLenght.length" :carid="big_image_info.carid"></mip-xin-position>
-    <!-- <mip-xin-image :carid="carid" :car-info="carInfo" :cityid="cityMessage.cityid" v-if="carInfo&&isHideMask" :current-index='this.currentIndex' @changeMask="handleHideMaskClick" :big-image="big_image_info.img_six" :price="price"></mip-xin-image> -->
+    <mip-xin-position
+      id="position"
+      :status="status"
+      :show-play="big_image_info.is_video"
+      :total="totalLenght.length"
+      :carid="big_image_info.carid"
+      @changeNum="changeCurrentNum"/>
+      <!-- <mip-xin-image :carid="carid" :car-info="carInfo" :cityid="cityMessage.cityid" v-if="carInfo&&isHideMask" :current-index='this.currentIndex' @changeMask="handleHideMaskClick" :big-image="big_image_info.img_six" :price="price"></mip-xin-image> -->
   </div>
 </template>
 
 <script>
-import base from "../../common/utils/base";
-import { requestFun } from "../../common/utils/reqUtils";
-import { clickPoint } from "../../common/utils/stastic.js";
-import { setLocalStorage, getLocalStorage } from "../../common/utils/utils.js";
-const pid = "/pages/detail";
-const pidReport = "/pages/report";
+import base from '../../common/utils/base'
+import { requestFun } from '../../common/utils/reqUtils'
+import { clickPoint } from '../../common/utils/stastic.js'
+import { setLocalStorage, getLocalStorage } from '../../common/utils/utils.js'
+const pid = '/pages/detail'
+const pidReport = '/pages/report'
 export default {
-  props: ["carid", "cityMessage", "carInfo", "status"],
-  data() {
+  props: {
+    carid: {
+      type: String,
+      default: ''
+    },
+    cityMessage: {
+      type: String,
+      default: ''
+    },
+    carInfo: {
+      type: String,
+      default: ''
+    },
+    status: {
+      type: Object,
+      default: function () {
+
+      }
+    }
+  },
+  data () {
     return {
       big_image_info: [],
       currentIndex: 1,
       isHideMask: false,
       totalLenght: [],
-      price: 0,
-      carInfo: ""
-    };
+      price: 0
+    }
   },
-  created() {
-    base.setMediaBase();
-    var that = this;
+  watch: {
+    isHideMask (newVal) {
+      this.$emit('handleBigImg', newVal)
+    }
   },
-  mounted() {
-    var that = this;
-    requestFun("/ajax/car/big_image", {
-      method: "POST",
+  created () {
+    base.setMediaBase()
+  },
+  mounted () {
+    let that = this
+    requestFun('/ajax/car/big_image', {
+      method: 'POST',
       param: { carid: this.carid, cityid: JSON.parse(this.cityMessage).cityid }
     })
       .then(res => {
         if (res.img_six) {
-          that.big_image_info = res;
-          that.totalLenght = res.img_six;
-          that.price = res.price;
+          that.big_image_info = res
+          that.totalLenght = res.img_six
+          that.price = res.price
           // 有视频时需要第一张要多出来显示
-          if (that.big_image_info.is_video == 1) {
-            that.big_image_info.img_six.unshift(that.big_image_info.img_six[0]);
+          if (that.big_image_info.is_video === 1) {
+            that.big_image_info.img_six.unshift(that.big_image_info.img_six[0])
           }
-          setLocalStorage("carImgInfo", JSON.stringify(res));
+          setLocalStorage('carImgInfo', JSON.stringify(res))
         }
       })
       .catch(err => {
-        console.log(err);
-      });
-    this.carInfo && (this.carInfo = JSON.parse(this.carInfo));
+        console.log(err)
+      })
+    this.carInfo && (this.carInfo = JSON.parse(this.carInfo))
   },
   methods: {
-    changeCurrentNum: function(currentIndex) {
-      this.currentIndex = currentIndex.detail[0];
+    changeCurrentNum (currentIndex) {
+      this.currentIndex = currentIndex.detail[0]
     },
-    handleHideMaskClick(e) {
-      this.isHideMask = e.detail[0];
+    handleHideMaskClick (e) {
+      this.isHideMask = e.detail[0]
     },
-    handleShowMaskClick() {
-      if (this.status == 1) {
-        // this.isHideMask = true;
-        let opurl = getLocalStorage("locationUrl")
-          ? getLocalStorage("locationUrl") + "&"
-          : "?";
-        // let opurl = getLocalStorage("optoken")
-        //   ? `&optoken=${getLocalStorage("optoken")}`
-        //   : "";
+    handleShowMaskClick (index) {
+      if (this.status === 1) {
+        // this.isHideMask = true
+        let opurl = getLocalStorage('locationUrl')
+          ? getLocalStorage('locationUrl') + '&'
+          : '?'
         MIP.viewer.open(
           `/car/big_image.html${opurl}currentIndex=${this.currentIndex}&carid=${
             this.carid
@@ -90,16 +130,28 @@ export default {
           {
             isMipLink: true
           }
-        );
+        )
+        if (index === 1) {
+          clickPoint(
+            'examine_video_detail',
+            {
+              carid: this.carid
+            },
+            null,
+            {
+              pid: pid
+            }
+          )
+        }
       }
     },
-    handlePlayVideo() {
-      if (this.big_image_info.is_video == 1 && this.status == 1) {
-        let opurl = getLocalStorage("locationUrl")
-          ? getLocalStorage("locationUrl") + "&"
-          : "?";
-        let options = `/report_${this.carid}.html${opurl}`;
-        let ev = "video_examine";
+    handlePlayVideo () {
+      if (this.big_image_info.is_video === 1 && this.status === 1) {
+        let opurl = getLocalStorage('locationUrl')
+          ? getLocalStorage('locationUrl') + '&'
+          : '?'
+        let options = `/report_${this.carid}.html${opurl}`
+        let ev = 'video_examine'
         clickPoint(
           ev,
           {
@@ -109,15 +161,15 @@ export default {
           () => {
             MIP.viewer.open(options, {
               isMipLink: true
-            });
+            })
           },
           {
             pid: pidReport
           }
-        );
+        )
       } else {
         clickPoint(
-          "examine_video_detail",
+          'examine_video_detail',
           {
             carid: this.carid
           },
@@ -125,18 +177,14 @@ export default {
           {
             pid: pid
           }
-        );
-        this.handleShowMaskClick();
+        )
+        this.handleShowMaskClick()
       }
     }
-  },
-  watch: {
-    isHideMask(newVal) {
-      this.$emit("handleBigImg", newVal);
-    }
   }
-};
+}
 </script>
+
 <style scoped>
 .play {
   display: block;
@@ -160,49 +208,4 @@ export default {
 .mip-fill-content {
   min-width: 0;
 }
-/* .swiper-position {
-        display: flex;
-        justify-content: space-between;
-        position: absolute;
-        bottom: 0.27rem;
-        left: 0;
-        margin: 0 0.3rem;
-        width: 6.9rem;
-    }
-    
-    .swiper-position .video {
-        display: inline-block;
-        width: 1rem;
-        height: 0.5rem;
-        line-height: 0.5rem;
-        border-radius: 25px;
-        background: #F85D00;
-        text-align: center;
-        color: #fff;
-        font-size: 0.24rem;
-    }
-    
-    .swiper-position .current {
-        display: inline-block;
-        width: 1.28rem;
-        height: 0.5rem;
-        line-height: 0.5rem;
-        border-radius: 25px;
-        background: rgba(0, 0, 0, 0.3957);
-        text-align: center;
-        font-size: 0.24rem;
-        color: #fff;
-    }
-    
-    .swiper-position .code {
-        display: inline-block;
-        width: 2.63rem;
-        height: 0.5rem;
-        line-height: 0.5rem;
-        border-radius: 25px;
-        background: rgba(0, 0, 0, 0.3957);
-        text-align: center;
-        color: #fff;
-        font-size: 0.24rem;
-    } */
 </style>

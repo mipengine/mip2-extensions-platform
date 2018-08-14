@@ -1,39 +1,39 @@
 <template>
   <div>
     <div class="bdline">
-        <span class='car-file'>为您推荐相似车辆</span>
+      <span class="car-file">为您推荐相似车辆</span>
     </div>
   </div>
 </template>
 <script>
-import { requestFun } from "../../common/utils/reqUtils";
+import { requestFun } from '../../common/utils/reqUtils'
 export default {
-  data() {
-    return {};
+  data () {
+    return {}
   },
-  mounted() {
+  mounted () {
     let param = {
-      carid: "45358654"
-    };
-    requestFun("/ajax/car/get_similar_carlist", {
-      method: "POST",
+      carid: '45358654'
+    }
+    requestFun('/ajax/car/get_similar_carlist', {
+      method: 'POST',
       param: param
     })
-      .then(res => {})
+      .then(res => {
+
+      })
       .catch(err => {
-        console.log(err);
-      });
-  },
-  created() {},
-  methods: {}
-};
+        console.log(err)
+      })
+  }
+}
 </script>
 <style scoped>
 .bdline {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #f1f1f1;
+  border-bottom: 0.01rem solid #f1f1f1;
   border-left: 0.04rem solid rgb(248, 93, 0);
 }
 .car-file {

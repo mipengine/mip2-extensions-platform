@@ -1,7 +1,12 @@
 <template>
   <div>
-    <mip-fixed type="top" :class="{'show-back' : showMask}" style="height: 100%;">
-      <mip-fixed type="top"   class="mask-loading">
+    <mip-fixed
+      :class="{'show-back' : showMask}"
+      type="top"
+      style="height: 100%;">
+      <mip-fixed
+        type="top"
+        class="mask-loading">
         加载中...
       </mip-fixed>
     </mip-fixed>
@@ -34,9 +39,15 @@
 
 <script>
 export default {
-  props: ["showMask"],
-  mounted() {
-    console.log("This is my first custom component !");
+  // props: ['showMask'],
+  props: {
+    showMask: {
+      type: Boolean,
+      default: false
+    }
+  },
+  mounted () {
+    console.log('This is my first custom component !')
   }
-};
+}
 </script>

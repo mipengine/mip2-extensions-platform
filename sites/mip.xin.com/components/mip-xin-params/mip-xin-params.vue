@@ -1,33 +1,50 @@
 <template>
-<div>
-  <div class="car-info">{{this.carname}}</div>
-  <div class="boxlist">
-    <div v-for="(paramItem,index) in detailed_params" :key="index">
-      <div class="box-list-tit">
-        <div class="tip-title">
+  <div>
+    <div class="car-info">{{ carname }}</div>
+    <div class="boxlist">
+      <div
+        v-for="(paramItem,index) in detailed_params"
+        :key="index">
+        <div class="box-list-tit">
+          <div class="tip-title">
             <span>
-               {{paramItem.pcname}}
+              {{ paramItem.pcname }}
             </span>
-            <div v-if="index==0" class="have-pic">
-                <span>注：</span>
-                <span class="biao">标配</span>
+            <div
+              v-if="index==0"
+              class="have-pic">
+              <span>注：</span>
+              <span class="biao">标配</span>
             </div>
-        </div>
-    </div>
-      <div class="box-list-bot" v-for="(item,index) in paramItem.items" :key="index">
-          <div class="params-list">
-              <span class="params-list-left">
-                  {{item.ccname}}
-              </span>
-              <span class="params-list-right">
-                  {{item.ccvalue}}
-              </span>
           </div>
+        </div>
+        <div
+          v-for="(item,index) in paramItem.items"
+          :key="index"
+          class="box-list-bot">
+          <div class="params-list">
+            <span class="params-list-left">
+              {{ item.ccname }}
+            </span>
+            <span class="params-list-right">
+              <span
+                v-if="item.ccvalue === '●'"
+                class="params-list-li"/>
+              <span
+                v-else
+                class="params-list-txt">
+                {{ item.ccvalue }}
+              </span>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
+    <mip-xin-button
+      v-if="imUrl"
+      :source="2"
+      :im-url="imUrl"/>
   </div>
-  <mip-xin-button :source="2" :im-url="imUrl" v-if="imUrl"></mip-xin-button>
-</div>
 </template>
 
 <style scoped>
@@ -61,11 +78,11 @@
 .params-list {
   width: 100%;
   line-height: 0.4rem;
-  font-size: 0.3rem;
   position: relative;
 }
 
 .params-list-left {
+  font-size: 0.3rem;
   display: inline-block;
   margin-left: 0.3rem;
   width: 46%;
@@ -77,9 +94,21 @@
   right: 0;
   display: inline-block;
   width: 48%;
+}
+
+.params-list-txt{
+  font-size: 0.3rem;
   color: #333;
 }
 
+.params-list-li {
+  width: 0.1rem;
+  height: 0.1rem;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+  background: #333;
+}
 .biao {
   margin-left: 0.1rem;
   position: relative;
@@ -120,13 +149,11 @@
 } */
 </style>
 <script>
-import base from "../../common/utils/base";
-import { setLocalStorage } from "../../common/utils/utils.js";
-import { requestFun } from "../../common/utils/reqUtils";
-import { viewPoint, clickPoint } from "../../common/utils/stastic.js";
-let carid = "";
-let options = {};
-let pid = "/pages/params";
+import base from '../../common/utils/base'
+import { setLocalStorage } from '../../common/utils/utils.js'
+import { requestFun } from '../../common/utils/reqUtils'
+import { viewPoint } from '../../common/utils/stastic.js'
+let pid = '/pages/params'
 export default {
   props: {
     query: {
@@ -138,7 +165,7 @@ export default {
       required: true
     }
   },
-  data() {
+  data () {
     return {
       page: { a: 1 },
       rows: 10,
@@ -148,39 +175,40 @@ export default {
       detailed_params: [],
       carId: this.query.carId,
       imUrl: this.query.imUrl
-    };
+    }
   },
-  created() {
-    base.setMediaBase();
+  created () {
+    base.setMediaBase()
     // 获取上个页面传过来的参数
   },
-  mounted() {
-    viewPoint("", null, {
+  mounted () {
+    viewPoint('', null, {
       pid: pid
-    });
-    var that = this;
+    })
+    let that = this
     if (this.token) {
-      setLocalStorage("ajaxToken", this.token);
+      setLocalStorage('ajaxToken', this.token)
     }
-    requestFun("/ajax/car/get_config", {
-      method: "POST",
+    requestFun('/ajax/car/get_config', {
+      method: 'POST',
       param: { carid: this.carId }
     })
       .then(res => {
-        that.carname = res.carinfo.carname;
-        that.detailed_params = res.config;
+        that.carname = res.carinfo.carname
+        that.detailed_params = res.config
+        console.log(that.detailed_params)
       })
       .catch(err => {
-        console.log(err);
+        console.log(err)
       })
       .catch(err => {
-        console.log(err);
-      });
+        console.log(err)
+      })
   },
   methods: {
-    btnClick() {
-      this.page = 2;
+    btnClick () {
+      this.page = 2
     }
   }
-};
+}
 </script>

@@ -1,94 +1,94 @@
 <template>
   <div v-if="showCarMessage">
-    <mip-xin-askprice 
-    id="cardetail"
-    @closeToast="close"
-    @hiddenButton="hiddenBottom"
-    :show-toast="showToast"
-    :is-direct="isDirect" 
-    :city-message="cityMessage"  
-    :carid="carid" 
-    :info="info"
-    :car-price="carPrice"/>
-    <mip-inservice-login id="customlog" :config="config" on="login:cardetail.clientLogin logout:cardetail.clientLogout">
-    </mip-inservice-login>
-    <mip-xin-swiper style="width:7.5rem;height:5rem" :car-info="carInfo" :status = 'status' :carid="carid" :city-message="cityMessage" @handleBigImg="handleBig" v-if="carInfo"></mip-xin-swiper>
-    <mip-xin-price @showAllMessage="showMessage" :carid="carid" 
-      :city-message="cityMessage" 
-      :show-message="showCarMessgae" 
+    <mip-xin-askprice
+      id="cardetail"
+      :show-toast="showToast"
+      :is-direct="isDirect"
+      :city-message="cityMessage"
+      :carid="carid"
+      :info="info"
+      :car-price="carPrice"
+      @closeToast="close"
+      @hiddenButton="hiddenBottom"/>
+    <mip-inservice-login
+      id="customlog"
+      :config="config"
+      on="login:cardetail.clientLogin logout:cardetail.clientLogout"/>
+    <mip-xin-swiper
+      v-if="carInfo"
+      :car-info="carInfo"
+      :status = "status"
+      :carid="carid"
+      :city-message="cityMessage"
+      style="width:7.5rem;height:5rem"
+      @handleBigImg="handleBig"/>
+    <mip-xin-price
+      :carid="carid"
+      :city-message="cityMessage"
+      :show-message="showCarMessgae"
       :car-price="carPrice"
       :show-similarmodule="showSimilarmodule"
+      @showAllMessage="showMessage"
       @showPrice="showPrice"
       @getImurl="getImurl"/>
-    <mip-xin-button :carid="carid" :is-bai-cheng='isBaicheng' 
-        :im-url='imUrl' 
-        :car-info="carInfo"
-        :source="1" 
-        :is-show-button="isShowButton"
-        :cityid="cityMessage.cityid"
-          v-if="isShowButton&& carInfo  && imUrl && status == 1"
-          @showConsultingToast="showConsulting"></mip-xin-button>
+    <mip-xin-button
+      v-if="isShowButton&& carInfo && imUrl && status == 1"
+      :carid="carid"
+      :is-bai-cheng="isBaicheng"
+      :im-url="imUrl"
+      :car-info="carInfo"
+      :source="1"
+      :is-show-button="isShowButton"
+      :cityid="cityMessage.cityid"
+      @showConsultingToast="showConsulting"/>
     <div v-if="showCarMessgae">
-      <mip-xin-detect :carid="carid"></mip-xin-detect>
-      <mip-xin-switch :is-detail='1' :carid="carid"  >
+      <mip-xin-detect :carid="carid"/>
+      <mip-xin-switch
+        :is-detail="1"
+        :carid="carid" >
         <div slot="bottomTitle">
-          <div class="car-set-bottom" @click='openParams'>
+          <div
+            class="car-set-bottom"
+            @click="openParams">
             <a class="lookParams" >免费查看详细检测报告</a>
-            <span class="paramsArrow"></span>
+            <span class="paramsArrow"/>
           </div>
         </div>
       </mip-xin-switch>
       <!-- <mip-xin-config :url="url" :carid="carid" params="查看详细检测报告"></mip-xin-config> -->
-      <mip-xin-certification 
-        :carid="carid" 
-        :status="status" 
-        :city-message="cityMessage" 
-        :is-direct="isDirect"></mip-xin-certification>
+      <mip-xin-certification
+        :carid="carid"
+        :status="status"
+        :city-message="cityMessage"
+        :is-direct="isDirect"/>
     </div>
     <!-- <mip-lightbox  content-scroll id="my-lightbox" layout="nodisplay">
       <mip-xin-askprice :is-direct="isDirect" :city-message="cityMessage"  :carid="carid" :car-price="carPrice"/>
     </mip-lightbox> -->
-    <mip-xin-title :title="similarTitle" v-if="showSimilarmodule"></mip-xin-title>
-    <mip-xin-card :carid="carid" :city-message="cityMessage" :fromSimilar="1"  @showSimilar="showSimilar"></mip-xin-card>
+    <mip-xin-title
+      v-if="showSimilarmodule"
+      :title="similarTitle"/>
+    <mip-xin-card
+      :carid="carid"
+      :city-message="cityMessage"
+      :from-similar="1"
+      @showSimilar="showSimilar"/>
   </div>
 </template>
 
 <script>
-import "../../common/css/base.css";
-import base from "../../common/utils/base";
-import { requestFun } from "../../common/utils/reqUtils";
-import { viewPoint, clickPoint } from "../../common/utils/stastic.js";
+import '../../common/css/base.css'
+import base from '../../common/utils/base'
+import { requestFun } from '../../common/utils/reqUtils'
+import { viewPoint, clickPoint } from '../../common/utils/stastic.js'
 import {
   setLocalStorage,
   getLocalStorage,
   getQuery,
   removeLocalStorage
-} from "../../common/utils/utils.js";
-const pid = "/pages/detail";
+} from '../../common/utils/utils.js'
+const pid = '/pages/detail'
 export default {
-  data() {
-    return {
-      carPrice: "", //车辆价格
-      carInfo: {}, //车辆基本信息
-      docs: {}, //车辆档案
-      needCcid: [], //车辆配置
-      showCarMessgae: false, //是否显示”展开全部车辆信息“按钮”
-      similarTitle: "相似推荐",
-      carid: this.query.carId,
-      // carid: "71896519",
-      cityMessage: {}, //城市信息
-      isDirect: "0",
-      showCarMessage: false, //显示车辆信息
-      url: "", //详细检测报告的链接
-      isBaicheng: "", //是否百城
-      imUrl: "", //进入M站的IM路径
-      showToast: false, //是否显示询价弹层
-      showSimilarmodule: true, //是否显示相似推荐title
-      isShowButton: true, //是否显示底部按钮，默认显示，显示大图时，不显示，大图隐藏时显示
-      status: 1, //车辆是否已售 1未售，-1已售
-      info: this.info
-    };
-  },
   props: {
     query: {
       type: Object,
@@ -107,88 +107,113 @@ export default {
       required: true
     }
   },
-  mounted() {
-    console.log("this.info", this.info);
-    if (typeof this.info == "string") {
-      this.info = JSON.parse(this.info);
+  data () {
+    return {
+      carPrice: '', // 车辆价格
+      carInfo: {}, // 车辆基本信息
+      docs: {}, // 车辆档案
+      needCcid: [], // 车辆配置
+      showCarMessgae: false, // 是否显示”展开全部车辆信息“按钮”
+      similarTitle: '相似推荐',
+      carid: this.query.carId,
+      // carid: "71896519",
+      cityMessage: {}, // 城市信息
+      isDirect: '0',
+      showCarMessage: false, // 显示车辆信息
+      url: '', // 详细检测报告的链接
+      isBaicheng: '', // 是否百城
+      imUrl: '', // 进入M站的IM路径
+      showToast: false, // 是否显示询价弹层
+      showSimilarmodule: true, // 是否显示相似推荐title
+      isShowButton: true, // 是否显示底部按钮，默认显示，显示大图时，不显示，大图隐藏时显示
+      status: 1 // 车辆是否已售 1未售，-1已售
     }
-    let that = this;
+  },
+  mounted () {
+    console.log('this.info', this.info)
+    if (typeof this.info === 'string') {
+      this.info = JSON.parse(this.info)
+    }
+    let that = this
     let param = {
       is_rank: 1
-    };
-    this.storageHandle();
+    }
+    this.storageHandle()
     // this.getAuthMessage();
 
     if (getQuery().ename) {
-      Object.assign(param, { ename: getQuery().ename });
+      Object.assign(param, { ename: getQuery().ename })
     }
+    console.log(getQuery().state)
     if (getQuery().state) {
-      this.showToast = true;
+      this.showToast = true
     }
-    requestFun("/ajax/city/get_location", {
-      method: "POST",
+    requestFun('/ajax/city/get_location', {
+      method: 'POST',
       param: param
     })
       .then(res => {
         if (res.cityid) {
-          that.cityMessage = res;
+          that.cityMessage = res
           // 从此处获取是否百城的字段；
-          that.isBaicheng = res.city_rank ? res.city_rank : 0;
-          that.imUrl = res.im_url;
-          that.showCarMessage = true;
+          that.isBaicheng = res.city_rank ? res.city_rank : 0
+          that.imUrl = res.im_url
+          that.showCarMessage = true
           // 需要存储json字符串
-          setLocalStorage("currentCity", JSON.stringify(res));
-          this.url = `/report_${this.carid}.html`;
+          setLocalStorage('currentCity', JSON.stringify(res))
+          this.url = `/report_${this.carid}.html`
         } else {
-          console.log("接口返回错误");
+          console.log('接口返回错误')
         }
       })
       .catch(err => {
-        console.log(err);
-      });
-    viewPoint("", null, {
+        console.log(err)
+      })
+    viewPoint('', null, {
       pid: pid
-    });
+    })
   },
-  created() {
-    base.setMediaBase();
+  created () {
+    base.setMediaBase()
   },
   methods: {
-    //显示车辆信息
-    showMessage(e) {
-      this.showCarMessgae = true;
+    // 显示车辆信息
+    showMessage (e) {
+      this.showCarMessgae = true
     },
     // // 显示询底价弹框
-    showConsulting() {
-      this.showToast = true;
+    showConsulting () {
+      this.showToast = true
       // window.document
       //   .querySelector("#body")
       //   .setAttribute("style", "overflow:hidden,height:100%");
     },
-    close() {
-      this.showToast = false;
-      this.isShowButton = true;
+    close () {
+      this.showToast = false
+      this.isShowButton = true
       // 相似推荐跳转后页面会出现在iframe里，导致无法关闭弹框，所以需要移除dom
-      if (window.document.querySelector("#callmaskSimilar")) {
-        let target1 = window.document.querySelector("#callmaskSimilar");
-        let parent1 = window.document.querySelector("#callmaskSimilar");
-        if (parent1.nodeName == "BODY") {
-          parent1.removeChild(target1);
+      if (window.document.querySelector('#callmaskSimilar')) {
+        let target1 = window.document.querySelector('#callmaskSimilar')
+        let parent1 = window.document.querySelector('#callmaskSimilar')
+        if (parent1.nodeName === 'BODY') {
+          parent1.removeChild(target1)
         }
         window.document
-          .querySelector("#callmaskSimilar")
-          .setAttribute("v-if", "false");
+          .querySelector('#callmaskSimilar')
+          .setAttribute('v-if', 'false')
       }
-      if (window.document.querySelector("#callmask")) {
-        let target2 = window.document.querySelector("#callmask");
-        let parent2 = window.document.querySelector("#callmask").parentElement;
-        if (parent2.nodeName == "BODY") {
-          parent2.removeChild(target2);
+      if (window.document.querySelector('#callmask')) {
+        let target2 = window.document.querySelector('#callmask')
+        let parent2 = window.document.querySelector('#callmask').parentElement
+        if (parent2.nodeName === 'BODY') {
+          parent2.removeChild(target2)
         }
       }
-      // 如果是从百度跳转过来的需要去掉后面的参数
+      // 如果是从百度跳转过来的需要去掉后面的参数，使用h5 api无刷新跳转
       if (getQuery().state) {
-        window.location.href = window.location.href.split("?")[0];
+        // let href = window.location.href.split("?")[0];
+        // window.history.pushState(null, "车辆详情", href);
+        window.location.href = window.location.href.split('?')[0]
       }
     },
     // showSimilar(e) {
@@ -196,30 +221,30 @@ export default {
     //   this.showAskToast = false;
     //   this.showSimilarToast = true;
     // },
-    //询底价需要价格
-    showPrice(e) {
+    // 询底价需要价格
+    showPrice (e) {
       if (e.detail && e.detail[0]) {
-        let carInfo = e.detail[0];
-        this.carInfo = carInfo;
-        this.carPrice = carInfo.panel_price;
-        this.isDirect = carInfo.is_zg_car || "0";
-        this.status = carInfo.status;
+        let carInfo = e.detail[0]
+        this.carInfo = carInfo
+        this.carPrice = carInfo.panel_price
+        this.isDirect = carInfo.is_zg_car || '0'
+        this.status = carInfo.status
       }
     },
-    getImurl(e) {
-      this.imUrl = e.detail[0];
+    getImurl (e) {
+      this.imUrl = e.detail[0]
     },
-    //是否显示相似推荐标题
-    showSimilar() {
-      this.showSimilarmodule = false;
-      this.showCarMessgae = true;
+    // 是否显示相似推荐标题
+    showSimilar () {
+      this.showSimilarmodule = false
+      this.showCarMessgae = true
     },
-    openParams() {
-      let opurl = getLocalStorage("locationUrl")
-        ? getLocalStorage("locationUrl") + "&"
-        : "?";
-      let options = `/report_${this.carid}.html${opurl}`;
-      let ev = "examine_report_detail";
+    openParams () {
+      let opurl = getLocalStorage('locationUrl')
+        ? getLocalStorage('locationUrl') + '&'
+        : '?'
+      let options = `/report_${this.carid}.html${opurl}`
+      let ev = 'examine_report_detail'
       clickPoint(
         ev,
         {
@@ -228,74 +253,74 @@ export default {
         () => {
           MIP.viewer.open(options, {
             isMipLink: true
-          });
+          })
         },
         {
           pid: pid
         }
-      );
+      )
     },
-    handleBig(e) {
-      this.isShowButton = !e.detail[0];
+    handleBig (e) {
+      this.isShowButton = !e.detail[0]
     },
-    getAuthMessage() {
-      if (this.query.state && getLocalStorage("carList")) {
-        console.log("successState", this.query.state);
-        console.log("显示");
-        this.showToast = true;
+    getAuthMessage () {
+      if (this.query.state && getLocalStorage('carList')) {
+        console.log('successState', this.query.state)
+        console.log('显示')
+        this.showToast = true
       }
     },
-    storageHandle() {
+    storageHandle () {
       if (this.query && this.query.optoken) {
-        setLocalStorage("optoken", this.query.optoken);
+        setLocalStorage('optoken', this.query.optoken)
       }
       if (this.query && this.query.channel) {
-        setLocalStorage("channel", this.query.channel);
+        setLocalStorage('channel', this.query.channel)
       }
-      //存储ajaxToken
+      // 存储ajaxToken
       if (this.token) {
-        setLocalStorage("ajaxToken", this.token);
+        setLocalStorage('ajaxToken', this.token)
       }
-      if (!this.query.optoken && getLocalStorage("optoken")) {
-        removeLocalStorage("optoken");
+      if (!this.query.optoken && getLocalStorage('optoken')) {
+        removeLocalStorage('optoken')
       }
-      if (!this.query.channel && getLocalStorage("channel")) {
-        removeLocalStorage("channel");
+      if (!this.query.channel && getLocalStorage('channel')) {
+        removeLocalStorage('channel')
       } else if (this.query && this.query.optoken && this.query.channel) {
         // 存储跳转url
         setLocalStorage(
-          "locationUrl",
+          'locationUrl',
           `?optoken=${this.query.optoken}&channel=${this.query.channel}`
-        );
+        )
       } else if (this.query && this.query.optoken && !this.query.channel) {
-        setLocalStorage("locationUrl", `?optoken=${this.query.optoken}`);
+        setLocalStorage('locationUrl', `?optoken=${this.query.optoken}`)
       } else if (this.query && !this.query.optoken && this.query.channel) {
-        setLocalStorage("locationUrl", `?channel=${this.query.channel}`);
+        setLocalStorage('locationUrl', `?channel=${this.query.channel}`)
       } else if (this.query && !this.query.optoken && !this.query.channel) {
-        removeLocalStorage("locationUrl");
+        removeLocalStorage('locationUrl')
       }
     },
     /**
      * 隐藏底部button
      */
-    hiddenBottom() {
-      this.isShowButton = false;
+    hiddenBottom () {
+      this.isShowButton = false
     }
   }
-};
+}
 </script>
 <style scoped>
 .car-set-bottom {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid rgba(241, 241, 241, 1);
+  border-top: 0.01rem solid rgba(241, 241, 241, 1);
   padding-bottom: 0.37rem;
   padding-top: 0.37rem;
   border-bottom: 0.18rem solid rgba(241, 241, 241, 1);
 }
 .lookParams {
-  font-size: 0.26rem;
+  font-size: 0.28rem;
   text-align: center;
   margin-left: 0.04rem;
   font-family: PingFangSC-Regular;
@@ -307,6 +332,6 @@ export default {
   height: 0.14rem;
   transform: rotate(-315deg);
   border: solid #dbdada;
-  border-width: 2px 2px 0 0;
+  border-width: 0.02rem 0.02rem 0 0;
 }
 </style>

@@ -12,24 +12,22 @@
 </style>
 
 <script>
-import xzh from "xzh-sdk";
-import { requestFun } from "../../common/utils/reqUtils";
-import { jsSdkCheck} from "../../common/utils/jsSdkCheck";
-let context = null;
+import xzh from 'xzh-sdk'
+import { jsSdkCheck } from '../../common/utils/jsSdkCheck'
+let context = null
 export default {
-  mounted() {
-    console.log("This is my first custom component !");
-    var tel = this.tel();
+  mounted () {
+    this.tel()
   },
-  created() {
-    this.init();
+  created () {
+    this.init()
   },
   methods: {
-    init() {
+    init () {
       if (!context) {
         context = Promise.resolve()
           .then(() => {
-            return jsSdkCheck();
+            return jsSdkCheck()
           })
           .then(data => {
             return xzh.init({
@@ -40,26 +38,26 @@ export default {
                 timestamp: data.timestamp,
                 url: data.url
               }
-            });
-          });
+            })
+          })
       }
-      return context;
+      return context
     },
-    async tel() {
+    async tel () {
       try {
-        //获取400电话 逻辑 
-        let context = await this.init();
-        let res = await xzh.tel({
+        // 获取400电话 逻辑
+        let context = await this.init()
+        await xzh.tel({
           data: {
-            tel: "18888888888",
+            tel: '18888888888',
             sendData: {}
           },
           context
-        });
+        })
       } catch (err) {
-        console.log(err);
+        console.log(err)
       }
     }
   }
-};
+}
 </script>

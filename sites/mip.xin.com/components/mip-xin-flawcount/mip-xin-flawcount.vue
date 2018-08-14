@@ -1,14 +1,22 @@
 <template>
   <div class="wrapper">
-        <div class="flawDescWrap" v-if="currentIndex == index || (item.flawIndex != 0 && !item.flawIndex)"   v-for="(item,index) in imgArr" :key="index">
-                <div class="flawDesc">
-                    <span class="flawIndex">{{ item.flawIndex==0 || item.flawIndex ? item.flawIndex +1:index+1}}</span>
-                    <span class="flawDescContent" v-if="item.u2_name"> {{item.u2_name}} : </span>
-                    <span class="flawDescContent"> {{item.flaw_desc}}</span>
-                </div>
-                <div class="imgNum" v-if="imgArr.length > 1 && item.flawIndex==0 || item.flawIndex">{{index+1}} / {{imgArr.length}}</div>
-        </div>
+    <div
+      v-for="(item,index) in imgArr"
+      v-if="currentIndex == index || (item.flawIndex != 0 && !item.flawIndex)"
+      :key="index"
+      class="flawDescWrap">
+      <div class="flawDesc">
+        <span class="flawIndex">{{ item.flawIndex==0 || item.flawIndex ? item.flawIndex +1:index+1 }}</span>
+        <span
+          v-if="item.u2_name"
+          class="flawDescContent"> {{ item.u2_name }} : </span>
+        <span class="flawDescContent"> {{ item.flaw_desc }}</span>
+      </div>
+      <div
+        v-if="imgArr.length > 1 && item.flawIndex==0 || item.flawIndex"
+        class="imgNum">{{ index+1 }} / {{ imgArr.length }}</div>
     </div>
+  </div>
 </template>
 
 <style scoped>
@@ -57,21 +65,21 @@ export default {
       required: true
     }
   },
-  mounted() {
-    let vm = this;
-    this.$on("handle", function(event) {
-      vm.handle(event);
-    });
+  watch: {
+    currentIndex () {
+      this.currentIndex = this.currentIndex
+    }
+  },
+  mounted () {
+    let vm = this
+    this.$on('handle', function (event) {
+      vm.handle(event)
+    })
   },
   method: {
-    handle: function(event) {
-      console.log(event);
-    }
-  },
-  watch: {
-    currentIndex() {
-      this.currentIndex = this.currentIndex;
+    handle: function (event) {
+      console.log(event)
     }
   }
-};
+}
 </script>

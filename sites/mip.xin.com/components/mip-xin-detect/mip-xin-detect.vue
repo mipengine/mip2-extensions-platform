@@ -1,103 +1,123 @@
 <template>
-  <div class="certification" v-if="haveReport">
-    <div class='car-test'>
-      <div id="scroll2" style="border-left: 0.04rem solid rgba(248, 93, 0, 1)">
+  <div
+    v-if="haveReport"
+    class="certification">
+    <div class="car-test">
+      <div
+        id="scroll2"
+        style="border-left: 0.04rem solid rgba(248, 93, 0, 1)">
         <span class="title">车辆检测</span>
         <!-- <span class="car-test-ask">咨询车况</span > -->
       </div>
-      <div class="car-bottom"></div>
-      <div class="testerWrap">
-        <div class='testerContent'>
-        <mip-img class='testerIcon' src='http://c2.xinstatic.com/f3/20180321/1450/5ab200c91cd19349288.png' />
+      <div class="car-bottom"/>
+      <div class="testerContent">
+        <mip-img
+          class="testerIcon"
+          src="http://c2.xinstatic.com/f3/20180321/1450/5ab200c91cd19349288.png" />
         <div class="testerRight">
           <div>
-            <span class='testerName'>{{testMessage.fullname}}</span>
-            <span class='testerTag testerDiff'>保证真实车况</span>
+            <span class="testerName">{{ testMessage.fullname }}</span>
+            <span class="testerTag testerDiff">保证真实车况</span>
           </div>
           <div>
-            <span class='testerInfo'>车辆检测员 {{testMessage.report_time}} 完成车辆检测 </span>
+            <span class="testerInfo">车辆检测员 {{ testMessage.report_time }} 完成车辆检测 </span>
           </div>
         </div>
-        
-      </div>
       </div>
       <div class="car-test-desc">
-        <p>{{carRepairdesc}}</p>
+        <p>{{ carRepairdesc }}</p>
       </div>
-      <div class="car-bottom"></div>
-      <div class='car-test-content'  v-for="(item, index) in carRepairList" :key="index" @click="openTester(index + 1)">
+      <div class="car-bottom"/>
+      <div
+        v-for="(item, index) in carRepairList"
+        :key="index"
+        class="car-test-content"
+        @click="openTester(index + 1)">
         <div class="testList">
           <div>
-            <span  class="testListLeft">{{item.cat_name}}</span>
+            <span class="testListLeft">{{ item.cat_name }}</span>
           </div>
           <div class="testListRight">
-            <div class="testFlaw" v-if="item.flaw_all_num > 0">
-              <span class="test-list-value" >{{item.flaw_all_num}}项</span>
-              <mip-img class="testFlawimg" src="http://c2.xinstatic.com/f3/20180416/1840/5ad47da23e611535388.png"/>
+            <div
+              v-if="item.flaw_all_num > 0"
+              class="testFlaw">
+              <span class="test-list-value" >{{ item.flaw_all_num }}项</span>
+              <mip-img
+                class="testFlawimg"
+                src="http://c2.xinstatic.com/f3/20180416/1840/5ad47da23e611535388.png"/>
             </div>
-             <div class="testNormal" v-if="item.all_num - item.flaw_all_num > 0">
-              <span class="test-list-value" >{{item.all_num - item.flaw_all_num}}项</span>
-              <mip-img class="testNormalimg" src="http://c2.xinstatic.com/f3/20180416/1840/5ad47da23e2e4430972.png"/>
+            <div
+              v-if="item.all_num - item.flaw_all_num > 0"
+              class="testNormal">
+              <span class="test-list-value" >{{ item.all_num - item.flaw_all_num }}项</span>
+              <mip-img
+                class="testNormalimg"
+                src="http://c2.xinstatic.com/f3/20180416/1840/5ad47da23e2e4430972.png"/>
             </div>
-            <div class="testArrow">
-            </div>
+            <div class="testArrow"/>
           </div>
         </div>
-        <div class="car-bottom"></div>
+        <!-- <div class="car-bottom"/> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { requestFun } from "../../common/utils/reqUtils";
-import { viewPoint, clickPoint } from "../../common/utils/stastic.js";
-import { getLocalStorage } from "../../common/utils/utils.js";
-const pid = "/pages/detail";
+import { requestFun } from '../../common/utils/reqUtils'
+import { clickPoint } from '../../common/utils/stastic.js'
+import { getLocalStorage } from '../../common/utils/utils.js'
+const pid = '/pages/detail'
 export default {
-  data() {
+  // props: ['carid'],
+  props: {
+    carid: {
+      type: String,
+      default: ''
+    }
+  },
+  data () {
     return {
-      carRepairList: [], //故障列表
-      carRepairdesc: "", //描述信息
-      carRepairName: "", //检测员姓名
-      carRepairImg: "", //检测员头像
+      carRepairList: [], // 故障列表
+      carRepairdesc: '', // 描述信息
+      carRepairName: '', // 检测员姓名
+      carRepairImg: '', // 检测员头像
       testMessage: {},
       haveReport: false
-    };
+    }
   },
-  props: ["carid"],
-  mounted() {
+  mounted () {
     let param = {
       carid: this.carid
-    };
-    requestFun("/ajax/report/report_main", {
-      method: "POST",
+    }
+    requestFun('/ajax/report/report_main', {
+      method: 'POST',
       param: param
     })
       .then(res => {
-        this.haveReport = res.is_have_report;
+        this.haveReport = res.is_have_report
         if (res.car_repair_num) {
-          this.carRepairList = res.car_repair_num;
+          this.carRepairList = res.car_repair_num
         }
         if (res.sketch) {
-          this.carRepairdesc = res.sketch;
+          this.carRepairdesc = res.sketch
         }
         if (res.master_info) {
-          this.testMessage = res.master_info;
+          this.testMessage = res.master_info
         }
       })
       .catch(err => {
-        console.log(err);
-      });
+        console.log(err)
+      })
   },
   methods: {
-    openTester(index) {
-      let opurl = getLocalStorage("locationUrl")
-        ? getLocalStorage("locationUrl") + "&"
-        : "?";
+    openTester (index) {
+      let opurl = getLocalStorage('locationUrl')
+        ? getLocalStorage('locationUrl') + '&'
+        : '?'
 
       clickPoint(
-        "examine_list_detail",
+        'examine_list_detail',
         {
           carid: this.carid,
           button: index
@@ -108,15 +128,15 @@ export default {
             {
               isMipLink: true
             }
-          );
+          )
         },
         {
           pid: pid
         }
-      );
+      )
     }
   }
-};
+}
 </script>
 <style scoped>
 .ico-position {
@@ -158,35 +178,35 @@ export default {
   margin-right: 0.4rem;
 }
 .testerWrap{
-  position: relative;
   height: 1.5rem;
+  background-color: #bfa;
 }
 .testerContent {
-  position: absolute;
-  left:0;
-  top: 50%;
-  margin-top: -0.45rem;
+  position: relative;
   display: flex;
-  height: 0.9rem;
+  height: 1.5rem;
 }
 
 .testerIcon {
-  width: 0.7rem;
-  height: 0.7rem;
-  border-radius: 0.7rem;
-  margin-left: 0.4rem;
-  line-height: 0.7rem;
+  position: absolute;
+  top:0.4rem;
+  left:0.4rem;
+  width: 0.74rem;
+  height: 0.74rem;
+  border-radius: 50%;
   resize-mode: contain;
-  vertical-align: middle;   
-  margin-top: 0.1rem;
+  vertical-align: middle;
 }
 
 .testerRight {
+  position: absolute;
+  top:0.42rem;
+  left: 1.39rem;
+  height: 0.65rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  height: 0.9rem;
-  margin-left: 0.25rem;
+  box-sizing: border-box;
 }
 
 .testerName {
@@ -198,16 +218,13 @@ export default {
 .testerTag {
   font-size: 0.22rem;
   background-color: #ecf5ff;
-  /* height: 0.32rem; */
   margin-top: 0.04rem;
-  color: #4ea2ff;
   margin-left: 0.15rem;
   font-family: PingFangSC-Regular;
   color: rgba(165, 201, 114, 1);
 }
 
 .testerDiff {
-  color: #a5c972;
   background-color: #f6f9f0;
   padding: 0.02rem 0.09rem;
 }
@@ -215,7 +232,6 @@ export default {
 .testerInfo {
   font-size: 0.22rem;
   color: #848484;
-  margin-top: 0.03rem;
 }
 .car-test-desc {
   padding-left: 0.4rem;
@@ -242,6 +258,7 @@ export default {
   height: 0.9rem;
   display: flex;
   justify-content: space-between;
+  border-bottom: 0.01rem solid #f1f1f1;
 }
 
 .testListLeft {
@@ -312,4 +329,3 @@ export default {
   margin-top: 0.24rem;
 }
 </style>
-

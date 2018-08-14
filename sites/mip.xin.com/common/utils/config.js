@@ -11,7 +11,7 @@ const HOST_CONFIG = {
   },
   'production': {
     domain: 'https://openapix.xin.com',
-    // domain: 'http://openapix.ceshi.xin.com',
+    // domain: 'http://jira-15387.openapix.ceshi.xin.com',
     h5Host: 'https://h5.xin.com',
     mHost: 'https://m.xin.com',
     pustUrl: pustUrl // 埋点提交地址
@@ -21,7 +21,7 @@ const HOST_CONFIG = {
 let config = {
   env: ENV,
   apiActionMap: {}
-};
+}
 
 config = Object.assign(config, HOST_CONFIG[ENV])
 // 导出

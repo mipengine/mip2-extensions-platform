@@ -1,47 +1,73 @@
 <template>
   <div>
     <div class="car-infor car-infor-bottom">
-      <div class='car-title'>
-        <span class="car-desc">{{carInfo.carname}}</span>
+      <div class="car-title">
+        <span class="car-desc">{{ carInfo.carname }}</span>
       </div>
-      <div class='price-info '>
-        <div class="car-price-content" v-if="carInfo.panel_price != 0">
-          <span class="car-price">{{carInfo.panel_price}}</span>
-          <span class='car-price-unit' v-if="carInfo.panel_price">万</span>
+      <div class="price-info ">
+        <div
+          v-if="carInfo.panel_price != 0"
+          class="car-price-content">
+          <span class="car-price">{{ carInfo.panel_price }}</span>
+          <span
+            v-if="carInfo.panel_price"
+            class="car-price-unit">万</span>
           <!-- <img class="car-price-trend" src="https://s1.xinstatic.com/static/newcar-m/imgs/car-detail/price-trend_c4e8f6d.png" /> -->
-          <div class="beyond-value-box"  v-if="beyondUrl" @click="beyondCompare">
-            <mip-img class="car-price-trend"   src="https://s1.xinstatic.com/static/newcar-m/imgs/car-detail/price-trend_c4e8f6d.png" />            
+          <div
+            v-if="beyondUrl"
+            class="beyond-value-box"
+            @click="beyondCompare">
+            <mip-img
+              class="car-price-trend"
+              src="https://s1.xinstatic.com/static/newcar-m/imgs/car-detail/price-trend_c4e8f6d.png" />
             <span class="beyond-value" >车价超值</span>
-            <div  class="next-page next-page-overcolor"></div>
+            <div class="next-page next-page-overcolor"/>
           </div>
         </div>
       </div>
     </div>
-    <div class='spokes-person-price' :class="{'spokes-person-pricebottom' : showSimilarmodule || showMessage}">
-      <div class="open-fanice" v-if="carInfo.show_price && carInfo.monthly_price">
-        <span class='pay-detail'  v-if="carInfo.is_direct_rent_car == 1"> 一成首付{{carInfo.show_price}} 月供{{carInfo.monthly_price}} </span>
-        <span class='pay-detail' v-if="carInfo.is_direct_rent_car == 0"> 首付{{carInfo.show_price}} 月供{{carInfo.monthly_price}} </span>
-        <div class="car-fanice-see" @click="openFance">
+    <div
+      :class="{'spokes-person-pricebottom' : showSimilarmodule || showMessage}"
+      class="spokes-person-price">
+      <div
+        v-if="carInfo.show_price && carInfo.monthly_price"
+        class="open-fanice">
+        <span
+          v-if="carInfo.is_direct_rent_car == 1"
+          class="pay-detail"> 一成首付{{ carInfo.show_price }} 月供{{ carInfo.monthly_price }} </span>
+        <span
+          v-if="carInfo.is_direct_rent_car == 0"
+          class="pay-detail"> 首付{{ carInfo.show_price }} 月供{{ carInfo.monthly_price }} </span>
+        <div
+          class="car-fanice-see"
+          @click="openFance">
           <span>查看详细金融方案</span>
-          <div class="next-page-color next-page "></div>
+          <div class="next-page-color next-page "/>
         </div>
       </div>
-      <div class="open-car-allmessagebox" v-if="!showMessage && carInfo.panel_price && showSimilarmodule" @click="openMessage">
+      <div
+        v-if="!showMessage && carInfo.panel_price && showSimilarmodule"
+        class="open-car-allmessagebox"
+        @click="openMessage">
         <div class="open-car-allmessage">
           <div>展开全部车辆信息</div>
           <div class="show-carmessage-icon">
-            <div class="open-message-icon1"></div>
-            <div class="open-message-icon2" style="margin-top: -2px;"></div>
+            <div class="open-message-icon1"/>
+            <div
+              class="open-message-icon2"
+              style="margin-top: -0.02rem;"/>
           </div>
         </div>
-        
+
       </div>
     </div>
 
-    <div class="car-params" v-if="showMessage || !showSimilarmodule">
+    <div
+      v-if="showMessage || !showSimilarmodule"
+      class="car-params">
       <div class="bdline">
         <div class="car-params-title">
-          <span class='car-file'>车辆档案</span>
+          <span class="car-file">车辆档案</span>
           <!-- <span class="car-shelf-time">今日上架</span> -->
         </div>
       </div>
@@ -49,26 +75,26 @@
         <div class="drive-info-list">
           <div class="driveList drive-width">
             <div>
-              <span class="driveKey">{{regist_date.title}}</span>
+              <span class="driveKey">{{ regist_date.title }}</span>
             </div>
             <div class="driveValue">
-              <span>{{regist_date.value}}</span>
+              <span>{{ regist_date.value }}</span>
             </div>
           </div>
           <div class="driveList drive-width">
             <div>
-              <span class="driveKey">{{mileage.title || '表显里程'}}</span>
+              <span class="driveKey">{{ mileage.title || '表显里程' }}</span>
             </div>
             <div class="driveValue">
-              <span>{{mileage.value}}</span>
+              <span>{{ mileage.value }}</span>
             </div>
           </div>
           <div class="driveList get-car">
             <div>
-              <span class="driveKey">{{emission.title || "排放标准"}}</span>
+              <span class="driveKey">{{ emission.title || "排放标准" }}</span>
             </div>
             <div class="driveValue">
-              <span>{{emission.value}}</span>
+              <span>{{ emission.value }}</span>
             </div>
           </div>
         </div>
@@ -81,18 +107,18 @@
                         <span>2017.05.16</span >
                     </div> -->
             <div>
-              <span class="driveKey">{{color.title || "颜色"}}</span>
+              <span class="driveKey">{{ color.title || "颜色" }}</span>
             </div>
-            <div  class="driveValue">
-              <span>{{color.value}}</span>
+            <div class="driveValue">
+              <span>{{ color.value }}</span>
             </div>
           </div>
           <div class="driveList drive-width ">
             <div>
-              <span class="driveKey">{{engine_type.title || "涡轮增压"}}</span>
+              <span class="driveKey">{{ engine_type.title || "涡轮增压" }}</span>
             </div>
             <div class="driveValue">
-              <span>{{engine_type.value}}</span>
+              <span>{{ engine_type.value }}</span>
             </div>
           </div>
           <!-- <div class="driveList get-car">
@@ -103,138 +129,180 @@
               <span>{{北京}}</span>
             </div>
           </div> -->
-          <div class="driveList get-car" v-if="lift_time.title && lift_time.value">
-                    <div>
-                        <span class="driveKey">{{lift_time.title}}</span >
-                    </div>
-                    <div class="driveValue">
-                        <span >{{lift_time.value}}</span >
-                    </div>
-                </div>
+          <div
+            v-if="lift_time.title && lift_time.value"
+            class="driveList get-car">
+            <div>
+              <span class="driveKey">{{ lift_time.title }}</span >
+            </div>
+            <div class="driveValue">
+              <span >{{ lift_time.value }}</span >
+            </div>
+          </div>
         </div>
       </div>
-      <div class='car-set'>
-        <div class="car-set-content" v-for="(item, index) in needCcid" :key="index"  v-if='index < 4'>
-          <div class="paramsInfo car-set-config" @click="openConfig(item.jump_page)">
-            <mip-img class="paramsIcon" :src="imageTitle + item.u_icon" />
+      <div class="car-set">
+        <div
+          v-for="(item, index) in needCcid"
+          v-if="index < 4"
+          :key="index"
+          class="car-set-content">
+          <div
+            class="paramsInfo car-set-config"
+            @click="openConfig(item.jump_page)">
+            <mip-img
+              :src="imageTitle + item.u_icon"
+              class="paramsIcon" />
             <div class="car-highlight">
-              <span class="paramName">{{item.ccname}}</span>
+              <span class="paramName">{{ item.ccname }}</span>
             </div>
           </div>
         </div>
       </div>
 
-      <mip-xin-config :url="url" :carid="carid" params="查看详细参数配置" :im-url="imUrl"></mip-xin-config>
+      <mip-xin-config
+        :url="url"
+        :carid="carid"
+        :im-url="imUrl"
+        params="查看详细参数配置"/>
     </div>
   </div>
 </template>
 <script>
-import { requestFun } from "../../common/utils/reqUtils";
-import { viewPoint, clickPoint } from "../../common/utils/stastic.js";
-import config from "../../common/utils/config";
+import { requestFun } from '../../common/utils/reqUtils'
+import { clickPoint } from '../../common/utils/stastic.js'
+import config from '../../common/utils/config'
 import {
   setLocalStorage,
   getLocalStorage,
   getCarId,
   getCityId
-} from "../../common/utils/utils.js";
-const pid = "/pages/detail";
+} from '../../common/utils/utils.js'
+const pid = '/pages/detail'
 export default {
-  props: ["carInfo"],
-  data() {
+  // props: [
+  //   'showMessage',
+  //   'carPrice',
+  //   'ename',
+  //   'showSimilarmodule',
+  //   'cityMessage'
+  // ],
+  props: {
+    showMessage: {
+      type: Boolean,
+      default: false
+    },
+    carPrice: {
+      type: String,
+      default: ''
+    },
+    ename: {
+      type: String,
+      default: ''
+    },
+    showSimilarmodule: {
+      type: Boolean,
+      default: true
+    },
+    cityMessage: {
+      type: String,
+      default: ''
+    }
+  },
+  data () {
     return {
-      carInfo: {}, //车辆基本信息
-      carid: "",
-      cityid: "",
-      docs: {}, //车辆档案
-      needCcid: [], //车辆配置
+      carInfo: {}, // 车辆基本信息
+      carid: '',
+      cityid: '',
+      docs: {}, // 车辆档案
+      needCcid: [], // 车辆配置
       color: {},
       emission: {},
       engine_type: {},
       lift_time: {},
       mileage: {},
       regist_date: {},
-      imageTitle: "https:", //图片地址头
-      url: "",
-      isDirect: 0, //直购车标志
-      beyondUrl: "", //超值链接
-      imUrl: "" //M站的IM客服路径
-    };
+      imageTitle: 'https:', // 图片地址头
+      url: '',
+      isDirect: 0, // 直购车标志
+      beyondUrl: '', // 超值链接
+      imUrl: '' // M站的IM客服路径
+    }
   },
-  props: [
-    "showMessage",
-    "carPrice",
-    "ename",
-    "showSimilarmodule",
-    "cityMessage"
-  ],
-  mounted() {
+  watch: {
+    carInfo (newval, oldval) {
+      if (typeof newval === 'string') {
+        this.carInfo = JSON.parse(newval)
+      }
+    }
+  },
+  mounted () {
     let param = {
       carid: getCarId(),
       cityid: getCityId()
-    };
-    requestFun("/ajax/car", {
-      method: "POST",
+    }
+    requestFun('/ajax/car', {
+      method: 'POST',
       param: param
     })
       .then(res => {
         if (res.car_info) {
-          this.carInfo = res.car_info;
-          this.isDirect = res.car_info.is_zg_car;
-          setLocalStorage('isDirect',JSON.stringify(res.car_info.is_zg_car));
+          this.carInfo = res.car_info
+          this.isDirect = res.car_info.is_zg_car
+          setLocalStorage('isDirect', JSON.stringify(res.car_info.is_zg_car))
           let url = `/c/config_${getCarId()}.html${getLocalStorage(
-            "locationUrl"
-          )}`;
-          this.url = url;
-          this.beyondUrl = res.car_info.super_url;
-          this.imUrl = res.im_url;
-          this.$emit("showPrice", this.carInfo);
-          this.$emit("getImurl", res.im_url);
+            'locationUrl'
+          )}`
+          this.url = url
+          this.beyondUrl = res.car_info.super_url
+          this.imUrl = res.im_url
+          this.$emit('showPrice', this.carInfo)
+          this.$emit('getImurl', res.im_url)
         }
         if (res.docs) {
-          this.docs = res.docs;
-          this.color = this.docs.color;
-          this.emission = this.docs.emission;
-          this.engine_type = this.docs.engine_type;
-          this.lift_time = this.docs.lift_time;
-          this.mileage = this.docs.mileage;
-          this.regist_date = this.docs.regist_date;
+          this.docs = res.docs
+          this.color = this.docs.color
+          this.emission = this.docs.emission
+          this.engine_type = this.docs.engine_type
+          this.lift_time = this.docs.lift_time
+          this.mileage = this.docs.mileage
+          this.regist_date = this.docs.regist_date
         }
         if (res.need_ccid) {
-          this.needCcid = res.need_ccid;
+          this.needCcid = res.need_ccid
         }
       })
       .catch(err => {
-        console.log(err);
-      });
+        console.log(err)
+      })
   },
-  created() {},
+  created () {},
   methods: {
-    openConfig(url) {
-      MIP.viewer.open(url + getLocalStorage("locationUrl"), {
+    openConfig (url) {
+      MIP.viewer.open(url + getLocalStorage('locationUrl'), {
         isMipLink: true
-      });
+      })
     },
-    openParmas() {
+    openParmas () {
       clickPoint(
-        "collocation_more",
+        'collocation_more',
         {
           carid: getCarId()
         },
         () => {
           MIP.viewer.open(this.url, {
             isMipLink: true
-          });
+          })
         },
         {
           pid: pid
         }
-      );
+      )
     },
-    openFance() {
-      let opurl = getLocalStorage("locationUrl")
-        ? getLocalStorage("locationUrl") + "&"
-        : "?";
+    openFance () {
+      let opurl = getLocalStorage('locationUrl')
+        ? getLocalStorage('locationUrl') + '&'
+        : '?'
       MIP.viewer.open(
         `${
           config.mHost
@@ -244,9 +312,9 @@ export default {
         {
           isMipLink: true
         }
-      );
+      )
       clickPoint(
-        "halfplan_detail",
+        'halfplan_detail',
         {
           carid: getCarId(),
           icon: this.carInfo.is_direct_rent_car
@@ -255,13 +323,13 @@ export default {
         {
           pid: pid
         }
-      );
+      )
     },
-    openMessage() {
-      this.$emit("showAllMessage", '{ param: "333" }');
-      console.log(getCarId(), this.isDirect);
+    openMessage () {
+      this.$emit('showAllMessage', '{ param: "333" }')
+      console.log(getCarId(), this.isDirect)
       clickPoint(
-        "open_config_detail",
+        'open_config_detail',
         {
           carid: getCarId(),
           type: this.isDirect
@@ -270,22 +338,15 @@ export default {
         {
           pid: pid
         }
-      );
+      )
     },
-    beyondCompare() {
-      MIP.viewer.open(this.beyondUrl + `${getLocalStorage("locationUrl")}`, {
+    beyondCompare () {
+      MIP.viewer.open(this.beyondUrl + `${getLocalStorage('locationUrl')}`, {
         isMipLink: true
-      });
-    }
-  },
-  watch: {
-    carInfo(newval, oldval) {
-      if (typeof newval == "string") {
-        this.carInfo = JSON.parse(newval);
-      }
+      })
     }
   }
-};
+}
 </script>
 <style scoped>
 .car-infor {
@@ -390,7 +451,7 @@ export default {
 }
 .beyond-value {
   text-align: center;
-  border-radius: 4px;
+  border-radius: 0.04rem;
   font-size: 0.26rem;
   font-family: PingFangSC-Regular;
   color: rgba(248, 93, 0, 1);
@@ -404,9 +465,9 @@ export default {
 }
 
 .car-price-discount {
-  border: 1px solid #f85d00;
-  border-radius: 2px;
-  padding: 6px;
+  border: 0.01rem solid #f85d00;
+  border-radius: 0.02rem;
+  padding: 0.06rem;
   font-size: 0.28rem;
   color: #f85d00;
   text-align: center;
@@ -457,12 +518,12 @@ export default {
 
 .next-page-color {
   border: solid rgba(88, 88, 88, 1);
-  border-width: 1px 1px 0 0;
+  border-width: 0.01rem 0.01rem 0 0;
 }
 
 .next-page-overcolor {
   border: solid rgb(248, 93, 0);
-  border-width: 1px 1px 0 0;
+  border-width: 0.01rem 0.01rem 0 0;
 }
 
 .open-car-allmessage {
@@ -472,7 +533,7 @@ export default {
   height: 0.7rem;
   background: rgba(255, 255, 255, 1);
   border-radius: 0.06rem;
-  border: 2px solid rgba(248, 93, 0, 1);
+  border: 0.04rem solid rgba(248, 93, 0, 1);
   font-size: 0.28rem;
   font-family: PingFangSC-Regular;
   color: rgba(248, 93, 0, 1);
@@ -528,7 +589,7 @@ export default {
 .car-params-title {
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(241, 241, 241, 1);
+  border-bottom: 0.01rem solid rgba(241, 241, 241, 1);
   align-items: center;
   height: 1.1rem;
   border-left: 0.04rem solid rgba(248, 93, 0, 1);
@@ -558,7 +619,7 @@ export default {
 }
 
 .drive-list-bottom {
-  border-bottom: 1px solid rgba(241, 241, 241, 1);
+  border-bottom: 0.01rem solid rgba(241, 241, 241, 1);
 }
 
 .drive-info-list {
@@ -597,7 +658,7 @@ export default {
 }
 
 .car-info-bottom {
-  height: 1px;
+  height: 0.01rem;
   width: 100%;
   background-color: #f1f1f1;
   margin-top: 0.4rem;
@@ -654,7 +715,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid rgba(241, 241, 241, 1);
+  border-top: 0.01rem solid rgba(241, 241, 241, 1);
   padding-bottom: 0.37rem;
   padding-top: 0.37rem;
   border-bottom: 0.18rem solid rgba(241, 241, 241, 1);
@@ -678,7 +739,7 @@ export default {
   height: 0.14rem;
   transform: rotate(-315deg);
   border: solid #dbdada;
-  border-width: 2px 2px 0 0;
+  border-width: 0.02rem 0.02rem 0 0;
 }
 
 .open-message-icon1 {
@@ -690,7 +751,7 @@ export default {
   transform: rotate(-225deg);
   margin-top: 0.03rem;
   border: solid rgb(255, 142, 75);
-  border-width: 1px 1px 0 0;
+  border-width: 0.01rem 0.01rem 0 0;
 }
 .open-message-icon2 {
   width: 0.12rem;
@@ -701,7 +762,7 @@ export default {
   transform: rotate(-225deg);
   margin-top: 0.03rem;
   border: solid rgb(248, 93, 0);
-  border-width: 1px 1px 0 0;
+  border-width: 0.01rem 0.01rem 0 0;
 }
 .show-carmessage-icon {
   margin-top: -0.15rem;

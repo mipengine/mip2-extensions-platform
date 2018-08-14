@@ -1,15 +1,21 @@
 <template>
   <div class="wrapper">
-    <!-- <mip-video id="test"  width="640" height="360" class="video" :poster="videoImg" autoplay controls  
-      layout="responsive"   
-      :src="videoUrl" v-if="videoUrl">
-    </mip-video> -->
-    <mip-video  id="test" width="640" height="360" layout="responsive" autoplay controls   :poster="videoImg" v-if="videoUrl">
-    <source :src="videoUrl" type="video/mp4">
-</mip-video>
+    <div v-if="videoUrl">
+      <mip-video
+        id="test"
+        :poster="videoImg"
+        width="640"
+        height="360"
+        layout="responsive"
+        controls>
+        <source
+          :src="videoUrl"
+          type="video/mp4">
+      </mip-video>
+    </div>
   </div>
 </template>
-<style scoped>  
+<style scoped>
 .wrapper {
   margin: 0 auto;
   text-align: center;
@@ -21,25 +27,31 @@
 </style>
 
 <script>
-import base from '../../common/utils/base.js';
-import '../../common/css/base.css';
+import base from '../../common/utils/base.js'
+import '../../common/css/base.css'
 export default {
-  props:['videoImg','videoUrl'],
-  data(){
-    return{
-      isPlay:false
+  props: {
+    videoImg: {
+      type: String,
+      default: ''
+    },
+    videoUrl: {
+      type: String,
+      default: ''
     }
   },
-  created() {
-    base.setMediaBase();
+  data () {
+    return {
+      isPlay: false
+    }
+  },
+  created () {
+    base.setMediaBase()
   },
   mounted () {
-      this.$nextTick(() => {
-        this.isPlay = true
-      });
-  },
-  methods:{
-    
+    this.$nextTick(() => {
+      this.isPlay = true
+    })
   }
 }
 </script>

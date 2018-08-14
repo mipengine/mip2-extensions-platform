@@ -1,24 +1,52 @@
 <template>
   <div >
-    <mip-fixed type="bottom" class="buttonWrap" v-if="source == 1">
-        <!-- 非百城我要优惠为询底价 百城我要优惠为IM-->
-        <button class="preButton button"    @click='showAsk'>我要优惠</button>
-        <!-- 电话组件，非百城拨打普通400电话  百城拨打天津400电话池-->
-         <a ref='telPhone' :href="'tel:' + telPhone" ></a>
-         <button class="callButton button"  @click="call">电话客服</button>
-        <!-- 非百城 普通IM  百城 专家IM-->
-        <button @click="gotoIm"  class="chatButton button">在线客服</button>
+    <mip-fixed
+      v-if="source == 1"
+      type="bottom"
+      class="buttonWrap">
+      <!-- 非百城我要优惠为询底价 百城我要优惠为IM-->
+      <button
+        class="preButton button"
+        @click="showAsk">我要优惠</button>
+      <!-- 电话组件，非百城拨打普通400电话  百城拨打天津400电话池-->
+      <a
+        ref="telPhone"
+        :href="'tel:' + telPhone"/>
+      <button
+        class="callButton button"
+        @click="call">电话客服</button>
+      <!-- 非百城 普通IM  百城 专家IM-->
+      <button
+        class="chatButton button"
+        @click="gotoIm">在线客服</button>
     </mip-fixed>
     <mip-fixed type="bottom">
-        <button @click="gotoIm" class="chatButton button fixedButton" v-if="source==2" >在线客服</button>
+      <button
+        v-if="source==2"
+        class="chatButton button fixedButton"
+        @click="gotoIm">在线客服</button>
     </mip-fixed>
     <div v-if="source==3">
-        <a class="trigger-button" id="telPhoneButton" ref='telPhone' :href="'tel:' + telPhone"></a>
-        <button class=" askCall bigImgCall " id="bigImgCall"  @click="call">电话咨询</button>
+      <a
+        id="telPhoneButton"
+        ref="telPhone"
+        :href="'tel:' + telPhone"
+        class="trigger-button"/>
+      <button
+        id="bigImgCall"
+        class=" askCall bigImgCall "
+        @click="call">电话咨询</button>
     </div>
-    <mip-fixed type="bottom" class=" buttonWrap reportButton" v-if="source == 4">
-         <a ref='telPhone' :href="'tel:' + telPhone" ></a>
-         <button class="askCall button"  @click="call">电话客服</button>
+    <mip-fixed
+      v-if="source == 4"
+      type="bottom"
+      class=" buttonWrap reportButton">
+      <a
+        ref="telPhone"
+        :href="'tel:' + telPhone"/>
+      <button
+        class="askCall button"
+        @click="call">电话客服</button>
     </mip-fixed>
   </div>
 </template>
@@ -86,188 +114,191 @@ h1 {
 </style>
 
 <script>
-import { viewPoint, clickPoint } from "../../common/utils/stastic.js";
-import "../../common/css/base.css";
-import base from "../../common/utils/base.js";
-import { requestFun } from "../../common/utils/reqUtils.js";
-import { jsSdkCheck } from "../../common/utils/jsSdkCheck";
+import { clickPoint } from '../../common/utils/stastic.js'
+import '../../common/css/base.css'
+import base from '../../common/utils/base.js'
+import { requestFun } from '../../common/utils/reqUtils.js'
 import {
   getLocalStorage,
   getCarId,
   getCityId
-} from "../../common/utils/utils.js";
-const pid = "/pages/detail";
-const pidParams = "/pages/params";
-const pidReport = "/pages/report";
-let context = null;
+} from '../../common/utils/utils.js'
+const pid = '/pages/detail'
+const pidParams = '/pages/params'
+const pidReport = '/pages/report'
 export default {
   // source 1 :车辆详情 2 :参数配置页 3 大图 4 检测报告页
   props: {
     isBaiCheng: {
-      type: String
+      type: String,
+      default: ''
     },
     imUrl: {
-      type: String
+      type: String,
+      default: ''
     },
     source: {
-      type: String
+      type: String,
+      default: ''
     },
     carInfo: {
-      type: Object
+      type: Object,
+      default: null
     },
     isShowButton: {
-      type: Boolean
+      type: Boolean,
+      default: false
     }
   },
-  data() {
+  data () {
     return {
-      telPhone: "",
-      isDirect: ""
-    };
+      telPhone: '',
+      isDirect: ''
+    }
   },
-  created() {
-    base.setMediaBase();
+  created () {
+    base.setMediaBase()
   },
-  mounted() {
-    this.isDirect = getLocalStorage("isDirect");
-    this.imUrl = this.imUrl;
+  mounted () {
+    this.isDirect = getLocalStorage('isDirect')
+    this.imUrl = this.imUrl
     // 不要删，此处是用于监听轮播图滚动的。。。。
-    let vm = this;
-    this.$on("change", function(event) {
-      vm.change(event);
-    });
+    let vm = this
+    this.$on('change', function (event) {
+      vm.change(event)
+    })
   },
   methods: {
-    call() {
+    call () {
       // 详情页电话客服执行的方法
-      requestFun("/ajax/common/get_tel_400", {
-        method: "POST",
+      requestFun('/ajax/common/get_tel_400', {
+        method: 'POST',
         param: {
           carid: getCarId(),
           cityid: getCityId()
         }
       }).then(res => {
-        this.telPhone = res.tel;
+        this.telPhone = res.tel
         this.$nextTick(() => {
-            this.$refs.telPhone.click();
-        });
-        if (this.source == 1) {
+          this.$refs.telPhone.click()
+        })
+        if (this.source === '1') {
         // 详情页埋点
-        clickPoint(
-          "tel_consulting_detail",
-          {
-            carid: getCarId(),
-            "400_num": res.tel,
-            type: this.carInfo.is_zg_car, //0为非直购，1为直购
-            button:2
-          },
-          null,
-          {
-            pid: pid
-          }
-        );
-      } else if (this.source == 3) {
-        // 大图埋点
-        clickPoint(
-          "tel_consulting_pic",
-          {
-            carid: getCarId(),
-            "400_num": res.tel,
-            type: this.isDirect //0为非直购，1为直购
-          },
-          null,
-          {
-            pid: pid
-          }
-        );
-      }else if(this.source == 4){
-        // 检测报告页
-        clickPoint(
-          "tel_consulting_examine",
-          {
-            carid: getCarId(),
-            "400_num": res.tel
-          },
-          null,
-          {
-            pid: pidReport
-          }
-        );
-      }
-      });
-    },
-    showAsk() {
-      if(this.isBaiCheng == 1){
           clickPoint(
-          "bottomprice_vehicle_detail",
-          {
-            carid: getCarId(),
-            type: this.carInfo.is_zg_car //0为非直购，1为直购
-          },
-          () => {
-            MIP.viewer.open(this.imUrl, {
-                isMipLink: true
-            });
-          },
-          {
-            pid: pid
-          }
-        );
-      }else{
-          this.$emit("showConsultingToast");
-          clickPoint(
-            "bottomprice_vehicle_detail",
+            'tel_consulting_detail',
             {
               carid: getCarId(),
-              type: this.carInfo.is_zg_car //0为非直购，1为直购
+              '400_num': res.tel,
+              type: this.carInfo.is_zg_car, // 0为非直购，1为直购
+              button: 2
             },
             null,
             {
               pid: pid
             }
-          );
-      }
+          )
+        } else if (this.source === '3') {
+          // 大图埋点
+          clickPoint(
+            'tel_consulting_pic',
+            {
+              carid: getCarId(),
+              '400_num': res.tel,
+              type: this.isDirect // 0为非直购，1为直购
+            },
+            null,
+            {
+              pid: pid
+            }
+          )
+        } else if (this.source === '4') {
+          // 检测报告页
+          clickPoint(
+            'tel_consulting_examine',
+            {
+              carid: getCarId(),
+              '400_num': res.tel
+            },
+            null,
+            {
+              pid: pidReport
+            }
+          )
+        }
+      })
     },
-    gotoIm() {
-      if (this.source == 1) {
+    showAsk () {
+      if (this.isBaiCheng === '1') {
         clickPoint(
-          "im",
+          'bottomprice_vehicle_detail',
           {
             carid: getCarId(),
-            type: this.carInfo.is_zg_car //0为非直购，1为直购
+            type: this.carInfo.is_zg_car // 0为非直购，1为直购
           },
           () => {
             MIP.viewer.open(this.imUrl, {
-                isMipLink: true
-            });
+              isMipLink: true
+            })
           },
           {
             pid: pid
           }
-        );
-      } else if (this.source == 2) {
+        )
+      } else {
+        this.$emit('showConsultingToast')
         clickPoint(
-          "im_config",
+          'bottomprice_vehicle_detail',
           {
             carid: getCarId(),
-            type: this.isDirect //0为非直购，1为直购
+            type: this.carInfo.is_zg_car // 0为非直购，1为直购
+          },
+          null,
+          {
+            pid: pid
+          }
+        )
+      }
+    },
+    gotoIm () {
+      if (this.source === '1') {
+        clickPoint(
+          'im',
+          {
+            carid: getCarId(),
+            type: this.carInfo.is_zg_car // 0为非直购，1为直购
           },
           () => {
             MIP.viewer.open(this.imUrl, {
-                isMipLink: true
-            });
+              isMipLink: true
+            })
+          },
+          {
+            pid: pid
+          }
+        )
+      } else if (this.source === '2') {
+        clickPoint(
+          'im_config',
+          {
+            carid: getCarId(),
+            type: this.isDirect // 0为非直购，1为直购
+          },
+          () => {
+            MIP.viewer.open(this.imUrl, {
+              isMipLink: true
+            })
           },
           {
             pid: pidParams
           }
-        );
+        )
       }
     },
-    // 监听大图页滑动   
+    // 监听大图页滑动
     // 不要删，此处是用于监听轮播图滚动的。。。。
-    change(event) {
-      this.$emit("changeNum", event.currIndex);
+    change (event) {
+      this.$emit('changeNum', event.currIndex)
     }
   }
-};
+}
 </script>

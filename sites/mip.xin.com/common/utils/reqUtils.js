@@ -14,7 +14,7 @@ const getApiPath = (action) => {
   if (config.env === 'production' || config.env === 'build') {
     return config.domain + action
   }
-  var path = (config.apiActionMap[action] || config.domain) + action
+  let path = (config.apiActionMap[action] || config.domain) + action
   return path
 }
 
@@ -56,7 +56,7 @@ export const requestFun = function (url = '', options = {}) {
         return response.json()
       })
       .then(res => {
-        if (res.error_code && res.error_code != 200) {
+        if (res.error_code && res.error_code !== 200) {
           reject(res)
           return
         }

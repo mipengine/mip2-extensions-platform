@@ -1,6 +1,6 @@
 <template>
   <div class="look-params">查看详细参数配置
-    <span class="params-arrow"></span>
+    <span class="params-arrow"/>
   </div>
 </template>
 
@@ -24,23 +24,23 @@
 }
 </style>
 <script>
-import base from '../../common/utils/base';
-import {requestFun} from  '../../common/utils/reqUtils';
+import base from '../../common/utils/base'
+import {requestFun} from '../../common/utils/reqUtils'
 
 export default {
-   data(){
-      return{
-       
-      }
-    },
-    created () {
-      base.setMediaBase()
-    },
-    mounted(){
-     
-    },
-    methods:{
-      
+  data () {
+    return {
+
     }
+  },
+  created () {
+    base.setMediaBase()
+  },
+  mounted () {
+
+  },
+  methods: {
+
+  }
 }
 </script>

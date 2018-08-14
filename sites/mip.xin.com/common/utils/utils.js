@@ -7,7 +7,7 @@ export const setLocalStorage = function (key, value) {
     storage.set(key, value)
   }
 }
-//获取
+// 获取
 export const getLocalStorage = function (key) {
   let value = ''
   if (key) {
@@ -38,7 +38,6 @@ export const getCityId = function () {
 
 // 简单对象序列化
 export const serialize = (params) => {
-
   if (typeof params === 'string') {
     return params
   }

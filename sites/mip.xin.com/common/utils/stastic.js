@@ -5,45 +5,43 @@ import {
 let util = MIP.util
 let CustomStorage = util.customStorage
 let storage = new CustomStorage(0)
-let platform = util.platform
 // pid 映射表. 设置的不全
 const PIDMAP = {
   '/pages/detail': 'u2_104', // 详情页面
   '/pages/report': 'u2_105', // 检测报告详情页
   '/pages/params': 'u2_106', // 参数配置页
-  '/pages/bigimage': 'u2_107', // 大图页
+  '/pages/bigimage': 'u2_107' // 大图页
 }
 // 埋点数据提交地址
 const postUrl = config.pustUrl
 // const postUrl = 'https://ab.xin.com/hitlog.gif';
-let system_cid = ''
-let lon = '',
-  lat = '' // 经纬度
+let systemCid = ''
+let lon = ''
+
+let lat = '' // 经纬度
 let networkType = '' // 网络环境
 // let sc = '';// 屏幕宽度
-let source = '' //来源
 // SetLocation()
 // 获取guid
-function getGid() {
-  var key = 'system_cid'
+function getGid () {
+  let key = 'system_cid'
   try {
-    var value = storage.get(key)
+    let value = storage.get(key)
     if (!value) {
       value = gid()
       storage.set(key, value)
       return value
     }
     return value || ''
-
   } catch (e) {
     return ''
   }
 
-  function gid() {
-    function S4() {
+  function gid () {
+    function S4 () {
       return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1)
     }
-    return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4())
+    return (S4() + S4() + '-' + S4() + '-' + S4() + '-' + S4() + '-' + S4() + S4() + S4())
   }
 }
 
@@ -63,7 +61,7 @@ const getCityID = () => {
   let key = 'currentCity'
   try {
     // 城市信息为json字符串需要转化为对象
-    var value = storage.get(key)
+    let value = storage.get(key)
     if (value) {
       return JSON.parse(value).cityid || ''
     }
@@ -73,23 +71,23 @@ const getCityID = () => {
   }
 }
 
-const getUID = () => {
-  let key = 'userMobile'
-  try {
-    var value = storage.get(key)
-    if (value) {
-      return value.userid || ''
-    }
-    return ''
-  } catch (e) {
-    return ''
-  }
-}
+// const getUID = () => {
+//   let key = 'userMobile'
+//   try {
+//     let value = storage.get(key)
+//     if (value) {
+//       return value.userid || ''
+//     }
+//     return ''
+//   } catch (e) {
+//     return ''
+//   }
+// }
 // 获取optoken
 const getToken = () => {
   let key = 'optoken'
   try {
-    var value = storage.get(key)
+    let value = storage.get(key)
     if (value) {
       return value || ''
     }
@@ -102,7 +100,7 @@ const getToken = () => {
 const getChannel = () => {
   let key = 'channel'
   try {
-    var value = storage.get(key)
+    let value = storage.get(key)
     if (value) {
       return value || ''
     }
@@ -111,17 +109,17 @@ const getChannel = () => {
     return ''
   }
 }
-//返回基础数据
+// 返回基础数据
 const BaseParams = () => {
-  if (!system_cid) {
-    system_cid = getGid()
+  if (!systemCid) {
+    systemCid = getGid()
   }
   return {
     app_id: 'u2_0',
     app: '2.0',
     uid: '',
-    cid: system_cid, // 设备标识
-    xdid: system_cid, // 新设备标识
+    cid: systemCid, // 设备标识
+    xdid: systemCid, // 新设备标识
     cityid: getCityID(), // 城市id
     platform: 'applet', // 平台类型
     net: networkType,
@@ -140,13 +138,13 @@ const BaseParams = () => {
     location: (lon + lat) === '' ? '' : (lon + ',' + lat), // 地址位置
     keywordid: '',
     creative: '',
-    mediaid: '',
+    mediaid: ''
   }
 }
 
 // 埋点数据提交
 const postPoint = (params = {}, completeFun, commonParam) => {
-  var p1 = Object.assign(BaseParams(), params)
+  let p1 = Object.assign(BaseParams(), params)
   commonParam = commonParam || {}
   let lastParam = Object.assign(p1, commonParam)
   if (lastParam.pid.indexOf('/pages/') > -1) {
@@ -171,15 +169,14 @@ const postPoint = (params = {}, completeFun, commonParam) => {
         }
       })
       .catch(err => {
-        completeFun && completeFun()
+        completeFun && completeFun(err)
       })
   } catch (e) {
 
   }
-
 }
 
-//检测ev pl 是否为空 为空抛出异常
+// 检测ev pl 是否为空 为空抛出异常
 const checkEvPl = (key, msg) => {
   if (!key) {
     throw msg
@@ -187,6 +184,7 @@ const checkEvPl = (key, msg) => {
 }
 
 /** 生成ev/pl 的值
+ *
  * @param  {[NAME]} key 名称 如 ev pl
  * @param  {[evpl]} evpl值
  * @param  {[values]} evpl对应的数据
@@ -233,7 +231,7 @@ const getExposureDsValus = (ds) => {
 // 生成ds 内一项的字符串结果
 const getDsItemStr = (item) => {
   let str = ''
-  for (var key in item) {
+  for (let key in item) {
     str += `${key}#${item[key]},`
   }
   return str.slice(0, str.length - 1)
@@ -241,7 +239,6 @@ const getDsItemStr = (item) => {
 
 // 浏览埋点  ev是事件标识 和 values
 export const viewPoint = (ev = '', values = {}, commonParam) => {
-
   viewAndClickPoint(HandleTypeValueEnum.VIEW, ev, values, null, commonParam)
 }
 // 点击埋点
@@ -249,16 +246,15 @@ export const clickPoint = (ev = '', values = {}, completeFun, commonParam) => {
   viewAndClickPoint(HandleTypeValueEnum.CLICK, ev, values, completeFun, commonParam)
 }
 
-
 // 曝光埋点
 // param: pl 曝光名称,values 埋点数据,ds 曝光数据, commonParam 公共参数
 export const exposurePoint = (pl = '', values, ds, commonParam) => {
   checkEvPl(pl, 'pl不允许为空')
-  getExposureDsValus(ds)
-    ((params = getEvPlValues(HandleTypeNameEnum.PL, pl, values)) => {
-      params['type'] = HandleTypeValueEnum.EXPOSURE
-      params['ds'] = getExposureDsValus(ds)
-      params = Object.assign(params, commonParam)
-      postPoint(params, null)
-    })()
+  getExposureDsValus(ds);
+  ((params = getEvPlValues(HandleTypeNameEnum.PL, pl, values)) => {
+    params['type'] = HandleTypeValueEnum.EXPOSURE
+    params['ds'] = getExposureDsValus(ds)
+    params = Object.assign(params, commonParam)
+    postPoint(params, null)
+  })()
 }

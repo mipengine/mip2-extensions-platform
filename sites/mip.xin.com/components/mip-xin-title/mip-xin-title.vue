@@ -1,6 +1,6 @@
 <template>
   <div class="title">
-    <span class="title-con">{{this.title}}</span>
+    <span class="title-con">{{ title }}</span>
   </div>
 </template>
 
@@ -11,7 +11,7 @@
   border-left: 0.04rem solid #f85d00;
   border-bottom: 0.01rem solid #f1f1f1;
   font-size: 0.34rem;
-  font-weight: 600;
+  font-weight: bold;
   color: #333;
 }
 .title .title-con {
@@ -19,18 +19,16 @@
 }
 </style>
 <script>
-import base from "../../common/utils/base";
-import { requestFun } from "../../common/utils/reqUtils";
-
+import base from '../../common/utils/base'
 export default {
-  props: ["title"],
-  data() {
-    return {};
+  props: {
+    title: {
+      type: String,
+      required: true
+    }
   },
-  created() {
-    base.setMediaBase();
-  },
-  mounted() {},
-  methods: {}
-};
+  created () {
+    base.setMediaBase()
+  }
+}
 </script>
