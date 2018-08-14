@@ -23,9 +23,8 @@
         <span class="carprice">{{ item.panel_price }}万</span>
 
         <div class="pricedetail">
-          <span
-            v-if="item.is_ycg_car == 1"
-            class="percent">一成购</span>
+          <div
+            class="percent">一成购</div>
           <span class="instalment">首付{{ item.show_price }}万 月供{{ item.monthly_price }}元</span>
         </div>
         <div class="line"/>
@@ -205,17 +204,20 @@ export default {
 
 .content-right .pricedetail .percent {
     display: inline-block;
-    width: .8rem;
+     /**width: .8rem;
     height: .26rem;
-    line-height: .32rem;
+    line-height: .3rem;**/
     border-radius: .03rem;
-    -webkit-border-radius: .03rem;
     background: #f85d00;
     font-size: .18rem;
     color: #fff;
     text-align: center;
     margin-right: .06rem;
-    vertical-align: -0.4rem;
+     display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.02rem 0.08rem;
+
 }
 .content-right .instalment {
   font-size: 0.26rem;

@@ -92,7 +92,7 @@
             为您推荐相似车源，一键询价，秒知底价
           </span>
         </div>
-        <div style="max-height: 5rem;overflow: scroll;">
+        <div style="max-height: 5rem;overflow: scroll;background: #fff;">
           <div
             v-for="(item, index) in carList"
             :key="index"
@@ -548,7 +548,8 @@ export default {
   padding-bottom: 0.2rem;
 }
 .carcontent-bottom-scroll {
-  border-bottom: 0.01rem solid rgba(246, 246, 249, 1);
+  border: solid rgba(246, 246, 249, 1);
+  border-width: 0 0 0.01rem 0;
 }
 /* .contentleft img {
   width: 2.56rem;

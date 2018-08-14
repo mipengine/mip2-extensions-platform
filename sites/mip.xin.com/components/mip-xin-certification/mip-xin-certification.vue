@@ -34,7 +34,7 @@
           @click="certified('2')">
           <mip-img
             class="paramsIcon u-certified-img"
-            src="http://c2.xinstatic.com/f3/20180515/1139/5afa565b9b22c896559.png" />
+            src="http://c2.xinstatic.com/f4/20180814/1853/5b72b4b882a0e565755.png" />
           <div>
             <span class="u-certified-name ">一年保修</span>
           </div>
@@ -47,7 +47,7 @@
           @click="certified('3')">
           <mip-img
             class="paramsIcon u-certified-img"
-            src="http://c2.xinstatic.com/f3/20180515/1140/5afa56a0d3c6b900432.png" />
+            src="http://c2.xinstatic.com/f4/20180814/1853/5b72b4b9088da186218.png" />
           <div>
             <span class="u-certified-name">315项排查</span>
           </div>
@@ -60,7 +60,7 @@
           @click="certified('4')">
           <mip-img
             class="paramsIcon u-certified-img"
-            src="http://c2.xinstatic.com/f3/20180515/1140/5afa56a0d9c63712615.png" />
+            src="http://c2.xinstatic.com/f4/20180814/1853/5b72b4b9218ac500018.png" />
           <div>
             <span class="u-certified-name">全国联保</span>
           </div>

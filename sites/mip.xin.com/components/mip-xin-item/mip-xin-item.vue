@@ -19,15 +19,13 @@
       v-if="isShowVideo">
       <div class="boxTop"/>
       <div v-if="videoUrl&&videoImg">
-        <mip-video
-          width="640"
-          height="360"
-          layout="responsive"
-          controls>
+        <video
+          class="video"
+          controls="controls">
           <source
             :src="videoUrl"
-            type="video/mp4">
-        </mip-video>
+            type="video/mp4"><source>
+        </video>
       </div>
     </div>
     <diV
@@ -174,7 +172,7 @@ export default {
           console.log('视频加载over')
           this.videoUrl = video.video_url
           this.videoImg = res.report_complete_video.pic
-        }, 5000)
+        }, 1000)
         // end
 
         this.videoTime = video.duration / (1000 * 60)
@@ -448,6 +446,10 @@ export default {
   line-height: 0.8rem;
   width: 0.32rem;
   height: 0.32rem;
+}
+.video{
+  width: 7.5rem;
+  height: 4.2rem;
 }
 .videoMask {
   width: 7.5rem;
