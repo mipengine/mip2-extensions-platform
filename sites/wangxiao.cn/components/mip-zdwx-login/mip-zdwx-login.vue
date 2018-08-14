@@ -5,12 +5,14 @@
       <button
         v-if="userInfo && userInfo.isBuy"
         class="pay-btn"
+        on="tap:user.login"
         @click="signUp">
         去学习
       </button>
       <button
         v-else
         class="pay-btn"
+        on="tap:user.login"
         @click="signUp">
         立即报名
       </button>
@@ -53,6 +55,7 @@ export default {
       if (_this.userInfo && _this.userInfo.isBuy) {
         _this.btnMessage = '去学习'
       }
+      _this.signUp()
       // if (event.userInfo.userStatus === 1 || event.userInfo.userStatus === 0) {
       //   if (event.userInfo.url) {
       //     MIP.viewer.open(event.userInfo.url, {isMipLink: false})
@@ -68,12 +71,15 @@ export default {
   methods: {
     signUp () {
       let _this = this
+      if (!_this.userInfo) {
+        return
+      }
       if (_this.userInfo && _this.userInfo.isBuy) {
         MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'user/study?token=' + base.getToken()))
       } else {
-        if (_this.userInfo.userStatus === 1) {
+        if (_this.userInfo && _this.userInfo.userStatus === 1) {
           MIP.viewer.open(_this.userInfo.url, {isMipLink: false})
-        } else if (_this.userInfo.userStatus === 0) {
+        } else if (_this.userInfo && _this.userInfo.userStatus === 0) {
           if (_this.iscomit) {
             return
           } else {

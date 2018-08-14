@@ -6,7 +6,7 @@
         width="60"
         height="50" />
       <div class="s4s-tips-right">
-        <p>交通违法代缴的办理周期为<span style="color:#FE7000">1-2个工作日，部分地区2-5个工作日</span>，需年检用户如需当日处理完成，请勿下单。其他问题请参见
+        <p>交通违法代缴的办理周期为1-2个工作日，部分地区2-5个工作日，<span style="color:#FE7000">需年检用户如需当日处理完成，请勿下单</span>。其他问题请参见
           <a
             data-type="mip"
             href="help.html"
@@ -66,7 +66,7 @@
           type="text"
           maxlength="11"
           style="width:auto;max-width:3rem;min-width:1.05rem"
-          placeholder="请输入手机号码" >
+          placeholder="请输入手机号码接收订单状态" >
 
       </div>
       <div class="s4s-group">
@@ -440,7 +440,7 @@ export default {
         .fetchData('v5/user/code', { tel: this.phone })
         .then(res => {
           if (res.code === 0) {
-            util.toast(res.data)
+            util.toast('发送成功')
           } else {
             util.toast(res.msg)
           }
@@ -649,7 +649,7 @@ export default {
     },
     uploadBase64 (data, name) {
       let self = this
-      util.fetchData('/v3/violation/image/upload', {
+      util.fetchData('v3/violation/image/upload', {
         imageString: data
       })
         .then(data => {
@@ -793,7 +793,7 @@ export default {
           jsz_drive_url: this.JSZDriveUrl || '', // 驾驶证正面
           jsz_travel_url: this.JSZTravelUrl || '', // 驾驶证反面
           vin: this.illegal.vin || '',
-          engion: this.illegal.engion || '',
+          engion: this.illegal.engine || this.illegal.engion || '',
           drive_bar_code: this.drive_bar_code || '',
           drive_file_number: this.drive_file_number || ''
         }
@@ -815,7 +815,8 @@ export default {
                 ),
                 postData: {
                   order_id: res.data + ''
-                }
+                },
+                redirectUrl: 'https://mys4s.cn/static/vio/xz/success.html?orderId=' + res.data
               }
             })
             this.$emit('canpay', {})
