@@ -50,11 +50,11 @@
     </nav>
   </div>
 </template>
-
 <style scoped lang="less">
 </style>
 <script>
-import "./mip-1688seo-list.less";
+
+import './mip-1688seo-list.less'
 export default {
   props: {
     list: {
@@ -78,20 +78,20 @@ export default {
       required: true
     }
   },
-  data() {
-    return {};
+  data () {
+    return {}
   },
-  mounted() {},
+  mounted () {},
   methods: {
-    next() {
-      let pageIndex = 2;
-      let _href = this.canonicalUrl || "";
-      if (_href.indexOf("?") !== -1) {
-        window.location.href = _href + "&beginPage=" + pageIndex;
+    next () {
+      let pageIndex = 2
+      let _href = this.canonicalUrl || ''
+      if (_href.indexOf('?') !== -1) {
+        window.location.href = _href + '&beginPage=' + pageIndex
       } else {
-        window.location.href = _href + "?beginPage=" + pageIndex;
+        window.location.href = _href + '?beginPage=' + pageIndex
       }
     }
   }
-};
+}
 </script>
