@@ -65,7 +65,7 @@
               <span class="s4s-cell-tit">支付金额：</span>
               <span
                 class="s4s-cell-txt"
-                style="color: #FE7000;font-weight:bold;">￥{{ ((item&&item.TotalPrice || 0) / 100).toFixed(2) }}</span>
+                style="color: #FE7000;font-weight:bold;">￥{{ ((item&&item.TotalPrice || 0) / 100).toFixed(2) }} {{ item.Urge?"(加急)":"" }}</span>
             </div>
             <div class="s4s-cell-bd">
               <span class="s4s-cell-tit">创建时间：</span>
@@ -143,16 +143,15 @@ export default {
     }
   },
   mounted () {
-    // this.getOrder(-1)
-    // this.getOrderStatic()
     this.$on('enter', () => {
-      this.getOrder(-1)
+      this.selTab(this.selIndex)
+      // this.getOrder(-1)
       this.getOrderStatic()
     })
 
     this.$on('customError', event => {
-      window.localStorage.clear()
-      util.toast('授权失败')
+      // window.localStorage.clear()
+      util.toast('登陆失败')
       // this.$emit('loginAgain')
       // this.$refs.index.click()
     })
@@ -304,7 +303,8 @@ export default {
           ),
           postData: {
             order_id: item.id + ''
-          }
+          },
+          redirectUrl: 'https://mys4s.cn/static/vio/xz/success.html?orderId=' + item.id
         }
       })
       this.$emit('canpay', {})

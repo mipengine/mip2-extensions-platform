@@ -1178,7 +1178,7 @@
       type="right"
       bottom="50px"
       class="rec_a">
-      <a @click="handleUpdateYcq">
+      <a @click="handleCustom">
         <slot name="bwtj"/>
       </a>
     </mip-fixed>
@@ -1838,7 +1838,9 @@ export default {
   },
   data () {
     console.log(this)
-
+    var pdata = JSON.parse(this.dataJsonstr)
+    var city = pdata.city || '北京'
+    console.log(city)
     return {
       isLogin: false,
       isUnion: false,
@@ -1850,13 +1852,14 @@ export default {
         isGif: true
       },
       filter: {
+        city: city,
         pn: 0,
         kw: ''
       },
       filter2: {
         shlxRow: '全天',
         ycq: '',
-        city: '',
+        city: city,
         jiguan: '',
         priceFromSel: 0,
         priceToSel: 50000,
@@ -1872,6 +1875,23 @@ export default {
 
   },
   beforeMount () {
+    function getParameterByName (name, url) {
+      if (!url) url = window.location.href
+      name = name.replace(/[[\]]/g, '\\$&')
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+      var results = regex.exec(url)
+      if (!results) return null
+      if (!results[2]) return ''
+      return decodeURIComponent(results[2].replace(/\+/g, ' '))
+    }
+    var qcity = getParameterByName('city')
+    var cities = ['北京市', '天津市', '哈尔滨市', '武汉市', '上海市', '长春市', '济南市', '长沙市', '广州市', '杭州市', '洛阳市', '南阳市', '深圳市', '沈阳市', '石家庄市', '西安市', '湘潭市', '徐州市', '成都市', '南京市', '黄石市', '郑州市', '青岛市', '大连市', '常州市', '唐山市', '保定市', '秦皇岛市', '襄阳市', '太原市', '昆明市', '兰州市', '呼和浩特市', '乌鲁木齐市', '合肥市', '南昌市', '福州市', '厦门市', '南宁市']
+    if (cities.lastIndexOf(qcity) >= 0) {
+      this.filter.city = qcity.replace('市', '')
+      console.log(qcity)
+      console.log(this.filter)
+    }
+
     this.init()
     var self = this
     window.addEventListener('scroll', function (e) {
@@ -1894,6 +1914,7 @@ export default {
   },
   mounted () {
     window.MIP.viewer.fixedElement.init()
+
     console.log('This is pty order list component !')
     // 所有的图片（要是网络太好，自己加图片吧）
     const imgs = [
@@ -1994,7 +2015,7 @@ export default {
       var self = this
       console.log('should loading')
       console.log(this.dataJson)
-      API.getSelectMaster({}, function (isOk, res) {
+      API.getSelectMaster(self.filter, function (isOk, res) {
         if (isOk) {
           console.log(res)
           self.list = res.list
@@ -2065,6 +2086,10 @@ export default {
       }
       window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq '), {})
     },
+    handleCustom () {
+      console.log('handleCustom')
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/custom'), {})
+    },
     handleOrderList () {
       console.log('handleOrderList')
       if (!this.checkLogin_('order_list')) { return }
@@ -2081,7 +2106,6 @@ export default {
       this.state.isGif = true
       // this.$set(this.state, 'isGif', true)
       this.filter.pn = 0
-
       setTimeout(function () {
         API.getSelectMaster(self.filter, function (isOk, res) {
           if (isOk) {
