@@ -1,7 +1,7 @@
 <template>
   <div class="search-list">
     <div class="title_warp">
-      共<span>{{ totalPage }}</span>件<h1>{{ keyword }}</h1>相关产品
+      共<span>{{ totalCount }}</span>件<h1>{{ keyword }}</h1>相关产品
     </div>
     <div class="list_column">
       <div
@@ -71,7 +71,11 @@ export default {
     },
     keyword: {
       type: String,
-      required: false
+      required: true
+    },
+    totalCount: {
+      type: Number,
+      required: true
     }
   },
   data() {
