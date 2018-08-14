@@ -205,8 +205,8 @@ export default {
 .content-right .pricedetail .percent {
     display: inline-block;
      /**width: .8rem;
-    height: .26rem;
     line-height: .3rem;**/
+    height: .26rem;
     border-radius: .03rem;
     background: #f85d00;
     font-size: .18rem;
@@ -216,7 +216,7 @@ export default {
      display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0.02rem 0.08rem;
+    padding: 0.01rem 0.1rem 0 0.1rem;
 
 }
 .content-right .instalment {

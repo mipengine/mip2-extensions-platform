@@ -16,15 +16,21 @@
           v-if="index!=0"
           :src="item.pic"
           @click="handleShowMaskClick(index)"/>
-        <mip-img
-          v-if="index == 0"
-          :src="item.pic"
-          @click="handlePlayVideo" />
-        <mip-img
-          v-if="index==0&&big_image_info.is_video && status == 1"
-          class="play"
-          src="http://c2.xinstatic.com/f3/20180323/1111/5ab470517f150445829.png"
-          @click="handlePlayVideo"/>
+        <a
+          :href="urlReport">
+          <mip-img
+            v-if="index == 0"
+            :src="item.pic"
+            @click="handlePlayVideo" />
+        </a>
+        <a
+          :href="urlReport">
+          <mip-img
+            v-if="index==0&&big_image_info.is_video && status == 1"
+            class="play"
+            src="http://c2.xinstatic.com/f3/20180323/1111/5ab470517f150445829.png"
+            @click="handlePlayVideo"/>
+        </a>
         <mip-img
           v-if="status == -1"
           class="play-sold"
@@ -76,7 +82,8 @@ export default {
       currentIndex: 1,
       isHideMask: false,
       totalLenght: [],
-      price: 0
+      price: 0,
+      urlReport: ''
     }
   },
   watch: {
@@ -101,6 +108,8 @@ export default {
           // 有视频时需要第一张要多出来显示
           if (that.big_image_info.is_video === 1) {
             that.big_image_info.img_six.unshift(that.big_image_info.img_six[0])
+            let opurl = getLocalStorage('locationUrl')
+            this.urlReport = `/report_${this.carid}.html${opurl}`
           }
           setLocalStorage('carImgInfo', JSON.stringify(res))
         }
@@ -146,11 +155,8 @@ export default {
       }
     },
     handlePlayVideo () {
+      console.log(this.urlReport)
       if (this.big_image_info.is_video === 1 && this.status === 1) {
-        let opurl = getLocalStorage('locationUrl')
-          ? getLocalStorage('locationUrl') + '&'
-          : '?'
-        let options = `/report_${this.carid}.html${opurl}`
         let ev = 'video_examine'
         clickPoint(
           ev,
@@ -158,15 +164,14 @@ export default {
             carid: this.carid,
             operation: 1
           },
-          () => {
-            MIP.viewer.open(options, {
-              isMipLink: true
-            })
-          },
+          null,
           {
             pid: pidReport
           }
         )
+        MIP.viewer.open(this.urlReport, {
+          isMipLink: true
+        })
       } else {
         clickPoint(
           'examine_video_detail',

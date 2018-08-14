@@ -19,13 +19,16 @@
       v-if="isShowVideo">
       <div class="boxTop"/>
       <div v-if="videoUrl&&videoImg">
-        <video
-          class="video"
-          controls="controls">
+        <mip-video
+          :poster="videoImg"
+          width="640"
+          height="360"
+          layout="responsive"
+          controls>
           <source
             :src="videoUrl"
-            type="video/mp4"><source>
-        </video>
+            type="video/mp4">
+        </mip-video>
       </div>
     </div>
     <diV
@@ -172,6 +175,7 @@ export default {
           console.log('视频加载over')
           this.videoUrl = video.video_url
           this.videoImg = res.report_complete_video.pic
+          console.log(video.video_url, res.report_complete_video.pic)
         }, 1000)
         // end
 

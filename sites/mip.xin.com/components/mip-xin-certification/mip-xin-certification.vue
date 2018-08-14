@@ -292,7 +292,7 @@
   </div>
 </template>
 <script>
-import xzh from 'xzh-sdk'
+// import xzh from 'xzh-sdk'
 import { requestFun } from '../../common/utils/reqUtils'
 import config from '../../common/utils/config'
 import { clickPoint } from '../../common/utils/stastic.js'
@@ -301,9 +301,9 @@ import {
   getCityId,
   getLocalStorage
 } from '../../common/utils/utils.js'
-import { jsSdkCheck } from '../../common/utils/jsSdkCheck'
+// import { jsSdkCheck } from '../../common/utils/jsSdkCheck'
 const pid = '/pages/detail'
-let context = null
+// let context = null
 export default {
   props: {
     isDirect: {
@@ -330,27 +330,27 @@ export default {
   },
   mounted () {},
   methods: {
-    init () {
-      if (!context) {
-        context = Promise.resolve()
-          .then(() => {
-            return jsSdkCheck()
-          })
-          .then(data => {
-            console.log(data)
-            return xzh.init({
-              data: {
-                appid: data.appid,
-                nonce_str: data.nonce_str,
-                signature: data.sign,
-                timestamp: data.timestamp,
-                url: data.url
-              }
-            })
-          })
-      }
-      return context
-    },
+    // init () {
+    //   if (!context) {
+    //     context = Promise.resolve()
+    //       .then(() => {
+    //         return jsSdkCheck()
+    //       })
+    //       .then(data => {
+    //         console.log(data)
+    //         return xzh.init({
+    //           data: {
+    //             appid: data.appid,
+    //             nonce_str: data.nonce_str,
+    //             signature: data.sign,
+    //             timestamp: data.timestamp,
+    //             url: data.url
+    //           }
+    //         })
+    //       })
+    //   }
+    //   return context
+    // },
     async tel (tel) {
       try {
         // 获取400电话 逻辑
