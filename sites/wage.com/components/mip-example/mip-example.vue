@@ -8,7 +8,7 @@
         class="tag-nav-top">
         <div 
 					v-show="resultShow"
-      class="tag-nav">
+      		class="tag-nav">
           <div class="flex-item">
             <span
               :class="{active:active}"
