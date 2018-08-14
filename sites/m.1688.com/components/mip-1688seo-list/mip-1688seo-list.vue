@@ -1,7 +1,7 @@
 <template>
   <div class="search-list">
     <div class="title_warp">
-      共<span>2000</span>件<h1>连衣裙</h1>相关产品
+      共<span>{{totalPage}}</span>件<h1>{{keyword}}</h1>相关产品
     </div>
     <div class="list_column">
       <div
@@ -68,6 +68,10 @@ export default {
     canonicalUrl: {
       type: String,
       required: true
+    },
+    keyword:{
+      type:String,
+      required:false
     }
   },
   data () {
