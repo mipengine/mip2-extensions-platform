@@ -7,7 +7,7 @@
         type="top" 
         class="tag-nav-top">
         <div 
-          v-show='resultShow'
+          v-show="resultShow"
           class="tag-nav">
           <div class="flex-item">
             <span
