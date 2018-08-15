@@ -1,7 +1,7 @@
 <template>
   <div class="search-list">
     <div class="title_warp">
-      共<span>2000</span>件<h1>连衣裙</h1>相关产品
+      共<span>{{ totalCount }}</span>件<h1>{{ keyword }}</h1>相关产品
     </div>
     <div class="list_column">
       <div
@@ -29,7 +29,6 @@
               </div>
             </div>
           </div>
-
         </a>
       </div>
     </div>
@@ -50,10 +49,10 @@
     </nav>
   </div>
 </template>
-
 <style scoped lang="less">
 </style>
 <script>
+
 import './mip-1688seo-list.less'
 export default {
   props: {
@@ -67,6 +66,14 @@ export default {
     },
     canonicalUrl: {
       type: String,
+      required: true
+    },
+    keyword: {
+      type: String,
+      required: true
+    },
+    totalCount: {
+      type: Number,
       required: true
     }
   },
