@@ -111,6 +111,7 @@
               id="fz"
               :disabled="rea"
               type="file"
+              accept="image/*"
               class="uploadfile"
               name="f"
               display="none"
