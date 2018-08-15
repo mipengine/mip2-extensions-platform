@@ -916,10 +916,7 @@ p {
 .err {
   color: #f00;
   position: relative;
-  left: 50%;
-  margin-left: -167.5px;
   top: -14px;
-  width: 335px;
   text-align: center;
 
 }
@@ -1320,21 +1317,21 @@ export default {
     contract_mama_name_change_ () {
       this.inspect_()
       if (this.ret !== 2) {
-        return
+        // return
       }
       this.saveIt_()
     },
     contract_mama_phone_number_change_ () {
       this.inspect_()
       if (this.ret !== 2) {
-        return
+        // return
       }
       this.saveIt_()
     },
     contract_mama_id_card_change_ () {
       this.inspect_()
       if (this.ret !== 2) {
-        return
+        // return
       }
       this.saveIt_()
     },
@@ -1355,14 +1352,14 @@ export default {
       this.contract_deposit_min = djb
       this.inspect_()
       if (this.ret !== 2) {
-        return
+        // return
       }
       this.saveIt_()
     },
     contract_location_change_ (event) {
       this.inspect_()
       if (this.ret !== 2) {
-        return
+        // return
       }
       this.saveIt_()
     },
@@ -1511,7 +1508,7 @@ export default {
     },
     contractDetail () {
       var id = this.order.id
-      var url = 'https://mip.putibaby.com/v2_show_ptg_ys_full_contract?id=' + id
+      var url = 'https://mip.putibaby.com/v2_show_ptg_ys_full_contract?id=' + id + '&_=' + Math.random()
       // window.location.href = url
       window.MIP.viewer.open(MIP.util.makeCacheUrl(url), {})
     },

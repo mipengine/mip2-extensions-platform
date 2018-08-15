@@ -54,6 +54,10 @@ let options = {
 }
 export default {
   props: {
+    'host': {
+      type: String,
+      required: true
+    },
     'des': {
       type: String,
       required: true
@@ -117,7 +121,7 @@ export default {
             this.savePhone()
             if (parseInt(res.status) === 1) {
               this.baiduCB(this.name, this.phone, this.info)
-              MIP.viewer.open('/order/result')
+              MIP.viewer.open(this.host + '/order/result')
             } else {
               toast.show(res.message, options)
             }
@@ -142,18 +146,26 @@ export default {
       return storage.get('phone')
     },
     baiduCB (name, phone, info) {
+      if (!info || !info.userInfo || !info.userInfo.userinfo) return
+      let openid = info.userInfo.userinfo.openid
+      let accessToken = info.userInfo['access_token']
       let data = {
         name,
         phone,
-        info: this.info,
+        openid,
+        accessToken,
         dest: this.destination,
         days: this.day
       }
-      fetch('/order/callback/baidu', {
+      let _data = []
+      for (let k in data) {
+        _data.push(k + '=' + data[k])
+      }
+      fetch(this.host + '/order/callback/baidu', {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: _data.join('&'),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/x-www-form-urlencoded'
         }
       }).then(resp => resp.json()).then(resp => {
         console.log(resp)

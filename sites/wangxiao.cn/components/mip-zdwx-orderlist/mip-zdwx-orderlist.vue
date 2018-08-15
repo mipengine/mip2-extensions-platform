@@ -9,10 +9,15 @@
       <div>
         <div
           v-for="(allOrder,index) in allOrderList"
+          v-show="allOrderList.length != 0"
           :key="index"
-          class="order-course-scoped">
+          class="order-course-scoped"
+          @click.stop="goOrderDetail(allOrder,index)">
           <div class="br"/>
-          <p class="order-num">订单编号：{{ allOrder.orderNumber }}</p>
+          <div class="order-title-content">
+            <p class="order-num">订单编号：{{ allOrder.orderNumber }}</p>
+            <span class="order-statusstr">{{ allOrder.orderStatusStr }}</span>
+          </div>
           <div class="order-course">
             <mip-img
               :src="allOrder.img"
@@ -30,99 +35,120 @@
             <span>共1个商品</span>
             <span>合计￥{{ allOrder.currentPrice }}元（含运费￥{{ allOrder.sysExpressPrice }}）</span>
           </div>
-          <div class="btn-group">
+          <div
+            v-show="allOrder.payStatus !== 1 && allOrder.orderStatus !== 3"
+            class="btn-group">
+            <span
+              v-show="allOrder.payStatus === 0"
+              class="order-btn"
+              @click.stop="cancelOrder(allOrder,index)">取消订单</span>
+            <span
+              v-show="allOrder.payStatus === 0"
+              class="order-btn order-btn-red"
+              @click.stop="goPay(allOrder,index)">去付款</span>
+          </div>
+          <div
+            v-show="allOrder.payStatus === 1"
+            class="btn-group">
             <span
               v-show="allOrder.evaluate === 0"
               class="order-btn"
-              @click="goEvaluate(allOrder,index)">去评价</span>
-            <span
-              v-show="allOrder.payStatus === 0"
-              class="order-btn"
-              @click="cancelOrder(allOrder,index)">取消订单</span>
+              @click.stop="goEvaluate(allOrder,index)">去评价</span>
             <span
               v-show="allOrder.payStatus === 1"
               class="order-btn order-btn-red"
-              @click="goStudy(allOrder,index)">去学习</span>
-            <span
-              v-show="allOrder.payStatus === 0"
-              class="order-btn order-btn-red"
-              @click="goPay(allOrder,index)">去付款</span>
+              @click.stop="goStudy(allOrder,index)">去学习</span>
           </div>
         </div>
       </div>
       <div>
         <div
-          v-for="(unpaiyOrder,index) in unpaiyList"
+          v-for="(unpayOrder,index) in unpayList"
+          v-show="unpayList.length != 0"
           :key="index"
-          class="order-course-scoped">
+          class="order-course-scoped"
+          @click.stop="goOrderDetail(unpayOrder,index)">
           <div class="br"/>
-          <p class="order-num">订单编号：{{ unpaiyOrder.orderNumber }}</p>
+          <div class="order-title-content">
+            <p class="order-num">订单编号：{{ unpayOrder.orderNumber }}</p>
+            <span class="order-statusstr">{{ unpayOrder.orderStatusStr }}</span>
+          </div>
           <div class="order-course">
             <mip-img
-              :src=" unpaiyOrder.img "
+              :src=" unpayOrder.img "
               width="130"
               height="76"/>
             <div>
               <p>
-                <span>{{ unpaiyOrder.title }}</span>
-                <span>￥{{ unpaiyOrder.currentPrice }}</span>
+                <span>{{ unpayOrder.title }}</span>
+                <span>￥{{ unpayOrder.currentPrice }}</span>
               </p>
-              <p>过期时间：{{ unpaiyOrder.expiresTime }}</p>
+              <p>过期时间：{{ unpayOrder.expiresTime }}</p>
             </div>
           </div>
           <div class="total">
             <span>共1个商品</span>
-            <span>合计￥{{ unpaiyOrder.currentPrice }}元（含运费￥{{ unpaiyOrder.sysExpressPrice }}）</span>
+            <span>合计￥{{ unpayOrder.currentPrice }}元（含运费￥{{ unpayOrder.sysExpressPrice }}）</span>
           </div>
           <div class="btn-group">
             <span
-              v-show="unpaiyOrder.payStatus === 0"
+              v-show="unpayOrder.payStatus === 0"
               class="order-btn"
-              @click="cancelOrder(unpaiyOrder,index)">取消订单</span>
+              @click.stop="cancelOrder(unpayOrder,index)">取消订单</span>
             <span
-              v-show="unpaiyOrder.payStatus === 0"
+              v-show="unpayOrder.payStatus === 0"
               class="order-btn order-btn-red"
-              @click="goPay(unpaiyOrder,index)">去付款</span>
+              @click.stop="goPay(unpayOrder,index)">去付款</span>
           </div>
         </div>
       </div>
       <div>
         <div
-          v-for="(paiyOrder,index) in paiyList"
+          v-for="(payOrder,index) in payList"
+          v-show="payList.length != 0"
           :key="index"
-          class="order-course-scoped">
+          class="order-course-scoped"
+          @click.stop="goOrderDetail(payOrder,index)">
           <div class="br"/>
-          <p class="order-num">订单编号：{{ paiyOrder.orderNumber }}</p>
+          <div class="order-title-content">
+            <p class="order-num">订单编号：{{ payOrder.orderNumber }}</p>
+            <span class="order-statusstr">{{ payOrder.orderStatusStr }}</span>
+          </div>
           <div class="order-course">
             <mip-img
-              :src=" paiyOrder.img "
+              :src=" payOrder.img "
               width="130"
               height="76"/>
             <div>
               <p>
-                <span>{{ paiyOrder.title }}</span>
-                <span>￥{{ paiyOrder.currentPrice }}</span>
+                <span>{{ payOrder.title }}</span>
+                <span>￥{{ payOrder.currentPrice }}</span>
               </p>
-              <p>过期时间：{{ paiyOrder.expiresTime }}</p>
+              <p>过期时间：{{ payOrder.expiresTime }}</p>
             </div>
           </div>
           <div class="total">
             <span>共1个商品</span>
-            <span>合计￥{{ paiyOrder.currentPrice }}元（含运费￥{{ paiyOrder.sysExpressPrice }}）</span>
+            <span>合计￥{{ payOrder.currentPrice }}元（含运费￥{{ payOrder.sysExpressPrice }}）</span>
           </div>
           <div class="btn-group">
             <span
-              v-show="paiyOrder.evaluate === 0"
+              v-show="payOrder.evaluate === 0"
               class="order-btn"
-              @click="goEvaluate(paiyOrder,index)">去评价</span>
+              @click.stop="goEvaluate(payOrder,index)">去评价</span>
             <span
-              v-show="paiyOrder.payStatus === 1"
+              v-show="payOrder.payStatus === 1"
               class="order-btn order-btn-red"
-              @click="goStudy(paiyOrder,index)">去学习</span>
+              @click.stop="goStudy(payOrder,index)">去学习</span>
           </div>
         </div>
       </div>
     </mip-vd-tabs>
+    <div
+      v-show="showErrorMessage"
+      class="errorMessage">
+      {{ errorMessage }}
+    </div>
   </div>
 </template>
 <script>
@@ -132,45 +158,81 @@ export default {
   data () {
     return {
       allOrderList: [],
-      unpaiyList: [],
-      paiyList: []
+      unpayList: [],
+      payList: [],
+      currentOrderId: '',
+      showErrorMessage: false,
+      errorMessage: ''
     }
   },
   computed: {},
+  watch: {
+    showErrorMessage: function (newQuestion, oldQuestion) {
+      if (newQuestion) {
+        setTimeout(() => {
+          this.showErrorMessage = !this.showErrorMessage
+        }, 2000)
+      }
+    }
+  },
   mounted () {
+    base.setToken(base.getQueryString('token'))
     let _this = this
-    fetch(base.api.getOrderList, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-      })
+    this.$element.customElement.addEventAction('login', event => {
+      if (event.sessionId) {
+        base.setToken(event.sessionId)
+      }
+      if (event.userInfo.userStatus === 0) {
+        _this.getPageData()
+      } else if (event.userInfo.userStatus === 3) {
+        _this.errorMessage = '异常访问！'
+        _this.showErrorMessage = true
+      } else {
+        _this.errorMessage = '网络异常！'
+        _this.showErrorMessage = true
+      }
     })
-      .then(function (response) {
-        // 获得后台实际返回的内容
-        response.json().then(function (data) {
-          _this.allOrderList = data.data.total
-          _this.unpaiyList = data.data.noPay
-          _this.paiyList = data.data.pay
-        })
-      })
-      .catch(function (err) {
-        console.log('Fetch Error :-S', err)
-      })
   },
   methods: {
+    getPageData () {
+      let _this = this
+      fetch(base.api.getOrderList, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          token: base.getToken() || base.getQueryString('token')
+        })
+      })
+        .then(function (response) {
+          // 获得后台实际返回的内容
+          response.json().then(function (data) {
+            _this.allOrderList = data.data.total
+            _this.unpayList = data.data.noPay
+            _this.payList = data.data.pay
+          })
+        })
+        .catch(function (err) {
+          console.log('Fetch Error :-S', err)
+        })
+    },
     goEvaluate (order, index) {
       let goodsId = order.goodsId || ''
-      window.MIP.viewer('payorder.jsp?goodsId=' + goodsId)
+      let orderId = order.orderNumber || ''
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'order/evaluate?id=' + goodsId + '&orderId=' + orderId + '&token=' + base.getToken()))
     },
     goStudy (order, index) {
-      window.top.location.href = order.url
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'user/study?token=' + base.getToken()))
     },
     goPay (order, index) {
       let orderId = order.orderNumber || ''
-      window.MIP.viewer('evaluate.jsp?orderId=' + orderId)
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'order/pay?orderId=' + orderId + '&token=' + base.getToken()))
+    },
+    goOrderDetail (order) {
+      let orderId = order.orderNumber || ''
+      MIP.viewer.open(MIP.util.makeCacheUrl(base.url + 'order/detail?orderId=' + orderId + '&token=' + base.getToken()))
     },
     cancelOrder (order, index) {
       let orderId = order.orderNumber || ''
@@ -178,6 +240,7 @@ export default {
         return
       }
       let _this = this
+      this.currentOrderId = order.orderId
       fetch(base.api.cancelOrder, {
         method: 'POST',
         headers: {
@@ -185,19 +248,19 @@ export default {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          orderNumber: orderId
+          orderNumber: orderId,
+          token: base.getToken() || base.getQueryString('token')
         })
       })
         .then(function (response) {
           // 获得后台实际返回的内容
           response.json().then(function (data) {
-            // 判断如果取消成功了，需要重新渲染数据。修改allOrderList和unpaiyList对应的数据。
-            _this.allOrderList.forEach(function (value, key) {
-              value.orderStatus = data.orderStatus
-            })
-            _this.unpaiyList.forEach(function (value, key) {
-              value.orderStatus = data.orderStatus
-            })
+            // 判断如果取消成功了，需要重新渲染数据。修改allOrderList和unpayList对应的数据。
+            if (data.code === '000000') {
+              _this.getPageData()
+              _this.errorMessage = '订单取消成功！'
+              _this.showErrorMessage = true
+            }
           })
         })
         .catch(function (err) {
@@ -215,20 +278,41 @@ export default {
 .order-course-scoped .order-course {
   background-color: #f8f8f8;
 }
-
+.order-title-content {
+  display: flex;
+  justify-content: space-between;
+  padding-right: 1rem;
+  background: #fff;
+  align-items: center;
+}
 .order-num,
 .order-course > span:first-of-type {
   font-size: 1.3rem;
   color: #333;
 }
-
+.errorMessage {
+  position: absolute;
+  left: 50%;
+  top: 35%;
+  color: #fff;
+  background: #999;
+  padding: 1rem;
+  border-radius: 6px;
+  text-align: center;
+  max-width: 18rem;
+  transform: translate(-50%,-50%);
+}
 .order-num {
   padding: 0 1.2rem;
   height: 3.3rem;
   line-height: 3.3rem;
   background-color: #fff;
+  display: inline-block;
 }
-
+.order-statusstr {
+  font-size: 1.3rem;
+  color: #ff6a4c;
+}
 .order-course {
   padding: 1rem 1.2rem;
   display: flex;
@@ -297,7 +381,7 @@ export default {
 }
 .order-btn {
   font-size: 1.2rem;
-  padding: 0.8rem;
+  padding: 0.4rem 0.8rem;
   border: 1px solid #333;
   margin-right: 1.2rem;
   border-radius: 2.8rem;

@@ -38,7 +38,7 @@
       </div>
       <span
         class="phoncode-btn"
-        @click="getPhoneCode">{{ phonCodeBtnText }}</span>
+        @click="getPhoneCode">{{ phoneCodeBtnText }}</span>
     </div>
     <div
       class="btn"
@@ -69,9 +69,10 @@ export default {
       phoneNumber: '',
       phoneCodeNumber: '',
       imgCode: '',
-      phonCodeBtnText: '获取验证码',
+      phoneCodeBtnText: '获取验证码',
+      iscomit: false,
       getingPhoneCode: false,
-      imgCodeUrl: 'https://api.wangxiao.cn/app/Validate.ashx?validatekey='
+      imgCodeUrl: 'https://mip.wangxiao.cn/baiduUser/getImageCode?token=' + base.getToken()
     }
   },
   computed: {},
@@ -85,7 +86,8 @@ export default {
     }
   },
   mounted () {
-    this.imgCodeUrl = this.imgCodeUrl + base.getQueryString('validatekey')
+    base.setToken(base.getQueryString('token'))
+    this.imgCodeUrl = this.imgCodeUrl + '&v=' + Math.random()
   },
   methods: {
     getImgCode () {
@@ -109,7 +111,8 @@ export default {
           },
           body: JSON.stringify({
             phone: _this.phoneNumber,
-            imageCode: _this.imgCode
+            imageCode: _this.imgCode,
+            token: base.getQueryString('token') || base.getToken()
           })
         })
           .then(function (response) {
@@ -117,14 +120,15 @@ export default {
             response.json().then(function (data) {
               if (data.code === '000000') {
                 _this.getingPhoneCode = true
-                _this.phonCodeBtnText = 60
+                _this.phoneCodeBtnText = 60
                 let timer = setInterval(() => {
-                  if (_this.phonCodeBtnText === 0) {
-                    _this.phonCodeBtnText = '获取验证码'
+                  if (_this.phoneCodeBtnText === 0) {
+                    _this.phoneCodeBtnText = '获取验证码'
                     clearInterval(timer)
                     _this.getingPhoneCode = false
+                  } else {
+                    _this.phoneCodeBtnText = --_this.phoneCodeBtnText
                   }
-                  _this.phonCodeBtnText = --_this.phonCodeBtnText
                 }, 1000)
               } else {
                 _this.errorMessage = data.message
@@ -162,6 +166,11 @@ export default {
         _this.showErrorMessage = true
         return
       }
+      if (_this.iscomit) {
+        return
+      } else {
+        _this.iscomit = true
+      }
       fetch(base.api.compareMessageCode, {
         method: 'POST',
         headers: {
@@ -170,7 +179,9 @@ export default {
         },
         body: JSON.stringify({
           code: _this.phoneCodeNumber,
-          phone: _this.phoneNumber
+          phone: _this.phoneNumber,
+          goodsId: base.getQueryString('goodsId') || '',
+          token: base.getQueryString('token') || base.getToken()
         })
       })
         .then(function (response) {
@@ -179,10 +190,38 @@ export default {
             if (data.code === '100000') {
               _this.errorMessage = data.message
               _this.showErrorMessage = true
+            } else {
+              fetch(base.api.placeOrder, {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  goodsId: base.getQueryString('goodsId') || '',
+                  token: base.getQueryString('token') || base.getToken()
+                })
+              })
+                .then(function (response) {
+                  _this.iscomit = false
+                  // 获得后台实际返回的内容
+                  response.json().then(function (response) {
+                    if (response.data.orderId) {
+                      MIP.viewer.open('https://mip.wangxiao.cn/order/pay?orderId=' + response.data.orderId, {isMipLink: false})
+                    } else {
+                      _this.errorMessage = '下单失败，请重新下单！'
+                      _this.showErrorMessage = true
+                      setTimeout(() => {
+                        MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.wangxiao.cn/course/detail?id=' + base.getQueryString('goodsId')))
+                      }, 2000)
+                    }
+                  })
+                })
             }
           })
         })
         .catch(function (err) {
+          _this.iscomit = false
           console.log('Fetch Error :-S', err)
         })
     }
@@ -197,12 +236,13 @@ export default {
     position: absolute;
     left: 50%;
     top: 35%;
-    margin-left: -50px;
-    margin-top: -50px;
     color: #fff;
     background: #999;
     padding: 1rem;
     border-radius: 6px;
+    text-align: center;
+    max-width: 18rem;
+    transform: translate(-50%,-50%);
   }
   .form-group {
     display: flex;

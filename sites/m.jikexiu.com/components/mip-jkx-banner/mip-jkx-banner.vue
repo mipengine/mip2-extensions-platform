@@ -7,19 +7,25 @@
     </div>
     <div v-else>
       <mip-carousel
+        autoplay
+        defer="3000"
         layout="responsive"
         width="375"
         height="158"
+        indicator-id="mip-carousel-example"
       >
-        <mip-img
+        <a
           v-for="item in banner_list"
           :key="item.id"
-          :src="item.pic"
-          class="banner"/>
+          :href="item.url"
+          target="_blank">
+          <mip-img
+            :src="item.pic"
+            class="banner"/>
+        </a>
       </mip-carousel>
     </div>
   </div>
-
 </template>
 
 <style scoped>
@@ -29,6 +35,7 @@
 }
 </style>
 <script>
+import request from '../../common/js/fetch.js'
 import apiUrl from '../../common/js/config.api'
 export default {
   data () {
@@ -38,14 +45,8 @@ export default {
     }
   },
   created () {
-    fetch(apiUrl.bannerList, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: 'scene_key=m_index'
-    }).then(data => {
-      return data.json()
+    request(apiUrl.bannerList, 'post', {
+      scene_key: 'm_index'
     }).then(res => {
       if (res.code === 200) {
         if (res.data.bannerList.length === 1) this.img = res.data.bannerList[0].pic

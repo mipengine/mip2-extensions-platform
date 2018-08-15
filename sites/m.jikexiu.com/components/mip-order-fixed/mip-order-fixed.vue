@@ -20,7 +20,7 @@
   </div>
 </template>
 <script>
-// import { fetch } from '../../common/js/fetch'
+import request from '../../common/js/fetch'
 import apiUrl from '../../common/js/config.api'
 export default {
   props: {
@@ -57,6 +57,21 @@ export default {
       this.period = val.period
       this.show = val.showFixed
     }
+  },
+  mounted () {
+    this.$element.customElement.addEventAction('login', event => {
+      // 这里可以输出登录之后的数据
+      MIP.setData({
+        info: {
+          isLogin: true,
+          sessionId: event.sessionId,
+          userInfo: event.userInfo
+        }
+      })
+      // 获取用户信息
+
+      // 后端交互会话标识
+    })
   },
   methods: {
     //  下单流程 先判断有没有登陆有酒直接验证短信吗是否正确-再保存订单，没有先注册（登陆），在验证短信验证码
@@ -156,14 +171,9 @@ export default {
     },
     //  验证短信呀没整嘛
     validate () {
-      fetch(apiUrl.codeValidate, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `sessionkey=${this.orderdata.codeSessionkey}&authcode=${this.orderdata.code}`
-      }).then(data => {
-        return data.json()
+      request(apiUrl.codeValidate, 'post', {
+        sessionkey: this.orderdata.codeSessionkey,
+        authcode: this.orderdata.code
       }).then(res => {
         if (res.code === 200) {
           this.saveOrder()
@@ -200,15 +210,13 @@ export default {
     },
     //  注册
     register () {
-      fetch(apiUrl.login, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Authorization': 'Basic dGVzdC1qa3g6amt4c2VjcmV0'
-        },
-        body: `mobile=${this.orderdata.phone}&authcode=${this.orderdata.code}&sessionKey=${this.orderdata.codeSessionkey}&isAppend=true&userName=${this.orderdata.name}&code=''`
-      }).then(data => {
-        return data.json()
+      request(apiUrl.login, 'post', {
+        mobile: this.orderdata.phone,
+        authcode: this.orderdata.code,
+        sessionKey: this.orderdata.codeSessionkey,
+        isAppend: true,
+        userName: this.orderdata.name,
+        code: ''
       }).then(res => {
         if (res.expires_in) {
           res.expires_in = new Date().getTime() + res.expires_in * 1000
@@ -229,20 +237,25 @@ export default {
     },
     //  刷新token
     refreshToken () {
-      fetch(apiUrl.refreshToken, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: `grant_type='refresh_token'& refresh_token=${JSON.parse(localStorage.getItem('tokenMsg')).refresh_token}&scope='all'`
-      }).then(data => {
-        return data.json()
+      request(apiUrl.refreshToken, 'post', {
+        grant_type: 'refresh_token',
+        refresh_token: JSON.parse(localStorage.getItem('tokenMsg')).refresh_token,
+        scope: 'all'
       }).then(res => {
-        localStorage.removeItem('tokenMsg')
-        res.expires_in = new Date().getTime() + res.expires_in * 1000
-        localStorage.setItem('tokenMsg', JSON.stringify(res))
-        //  保存订单
-        this.validate()
+        if (res.expires_in) {
+          localStorage.removeItem('tokenMsg')
+          res.expires_in = new Date().getTime() + res.expires_in * 1000
+          localStorage.setItem('tokenMsg', JSON.stringify(res))
+          //  保存订单
+          this.validate()
+        } else {
+          MIP.setData({
+            alertMsg: {
+              errorTitle: res.message,
+              isError: true
+            }
+          })
+        }
       }).catch(error => {
         console.log(error)
         this.register()
@@ -250,82 +263,49 @@ export default {
     },
     //  保存订单
     saveOrder () {
-      let subjosn = {
-        message: this.orderdata.desc || '',
-        repairMethod: 1,
-        serviceCenterId: '',
-        deviceId: this.orderdata.deviceId,
-        name: this.orderdata.name,
-        mobile: this.orderdata.phone,
-        brandId: this.orderdata.brandId,
-        cityId: this.orderdata.cityId,
-        distId: this.orderdata.distId,
-        addr: this.orderdata.detail,
-        doorStartDate: '',
-        doorEndDate: '',
-        orderSource: 1,
-        orderOrigin: 497,
-        lat: this.orderdata.lat,
-        lng: this.orderdata.lng,
-        ___user_id: this.info.userInfo.openid,
-        //  维修方案故障ID 数组
-        'solutionMalfunctionList[0].malfunctionId': this.orderdata.malfunctionId,
-        'orderAttributeValueList[0].attributeId': this.orderdata.attributeId,
-        'orderAttributeValueList[0].valueId': this.orderdata.attrValue
-      }
-      let str = ''
-      for (let key in subjosn) {
-        if (key !== 'orderAttributeValueList[0].valueId') {
-          str += (key + ' = ' + subjosn[key] + '&')
-        } else {
-          str += (key + ' = ' + subjosn[key])
+      if (this.info.userInfo && this.info.userInfo.openid) {
+        let subjosn = {
+          message: this.orderdata.desc || '',
+          repairMethod: 1,
+          serviceCenterId: '',
+          deviceId: this.orderdata.deviceId || '',
+          name: this.orderdata.name,
+          mobile: this.orderdata.phone,
+          brandId: this.orderdata.brandId || '',
+          cityId: this.orderdata.cityId || '',
+          distId: this.orderdata.distId || '',
+          addr: this.orderdata.detail,
+          doorStartDate: '',
+          doorEndDate: '',
+          orderSource: 1,
+          orderOrigin: 497,
+          lat: this.orderdata.lat || '',
+          lng: this.orderdata.lng || '',
+          ___user_id: this.info.userInfo.openid || '',
+          //  维修方案故障ID 数组
+          'solutionMalfunctionList[0].malfunctionId': this.orderdata.malfunctionId,
+          'orderAttributeValueList[0].attributeId': this.orderdata.attributeId,
+          'orderAttributeValueList[0].valueId': this.orderdata.attrValue
         }
-      }
-      console.log(str)
-      // let formData = new FormData()
-      // formData.append('message', this.orderdata.desc)
-      // formData.append('repairMethod', 1)
-      // formData.append('serviceCenterId', '')
-      // formData.append('deviceId', this.orderdata.deviceId)
-      // formData.append('name', this.orderdata.name)
-      // formData.append('mobile', this.orderdata.phone)
-      // formData.append('brandId', this.orderdata.brandId)
-      // formData.append('cityId', this.orderdata.cityId)
-      // formData.append('distId', this.orderdata.distId)
-      // formData.append('addr', this.orderdata.detail)
-      // formData.append('doorStartDate', '')
-      // formData.append('doorEndDate', '')
-      // formData.append('orderSource', 1)
-      // formData.append('orderOrigin', 497)
-      // formData.append('lat', this.orderdata.lat)
-      // formData.append('lng', this.orderdata.lng)
-      // formData.append('___user_id', this.info.userInfo.openid)
-      // formData.append('solutionMalfunctionList[0].malfunctionId', this.orderdata.malfunctionId)
-      // formData.append('orderAttributeValueList[0].attributeId', this.orderdata.attributeId)
-      // formData.append('orderAttributeValueList[0].valueId', this.orderdata.attrValue)
-      fetch(apiUrl.saveOrder, {
-        method: 'POST',
-        headers: {
-          // 'Accept': 'application/json',
-          'Content-Type': 'application/x-www-form-urlencoded',
-          // 'Content-Type': 'application/json',
-          'Authorization': `bearer ${JSON.parse(localStorage.getItem('tokenMsg')).access_token}`
-        },
-        body: `message=${this.orderdata.desc || ''}&repairMethod=1&serviceCenterId=&deviceId=${this.orderdata.deviceId}&name=${this.orderdata.name}&mobile=${this.orderdata.phone}&brandId=${this.orderdata.brandId}&cityId=${this.orderdata.cityId}&distId=${this.orderdata.distId}&addr=${this.orderdata.detail}&doorStartDate=''&doorEndDate=''&orderSource=1&orderOrigin=497&lat=${this.orderdata.lat}&lng=${this.orderdata.lng}&___user_id=${this.info.userInfo.openid}&solutionMalfunctionList[0].malfunctionId=${this.orderdata.malfunctionId}&orderAttributeValueList[0].attributeId=${this.orderdata.attributeId}&orderAttributeValueList[0].valueId=${this.orderdata.attrValue}`
-      }).then(data => {
-        return data.json()
-      })
-        .then(res => {
+        request(apiUrl.saveOrder, 'post', subjosn).then(res => {
           MIP.setData({
             loading: false
           })
           if (res.code === 200) {
             this.orderId = res.data.orderId
             localStorage.removeItem('sessionkey')
-            // window.location.href = './success.html'
             MIP.viewer.open('./success.html')
           }
         })
+      } else {
+        MIP.setData({
+          loading: false,
+          alertMsg: {
+            errorTitle: '没有获取到您的openid',
+            isError: true
+          }
+        })
+      }
     }
   }
 }

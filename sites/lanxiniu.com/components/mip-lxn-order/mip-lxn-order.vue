@@ -21,9 +21,9 @@
         </li>
       </ul>
     </div>
-    <div class="banner-content">
+    <!-- <div class="banner-content">
       <mip-img src="https://www.lanxiniu.com/Public/baidumip/banners.png"/>
-    </div>
+    </div> -->
     <div class="tab">
       <div class="tab-div">
         <ul class="lxn-tab-title">
@@ -242,6 +242,10 @@ export default {
     userlogin: {
       type: Object,
       default: function () { return {} }
+    },
+    mipClickToken: {
+      type: String,
+      default: function () { return '' }
     }
   },
   data () {
@@ -482,6 +486,11 @@ export default {
 
     // 设置波纹效果
     this.clickRipple()
+
+    // setTimeout(() => {
+    //   console.log('测试=====click_token=======')
+    //   console.log(this.mipClickToken)
+    // }, 2000)
   },
 
   methods: {
@@ -779,9 +788,11 @@ export default {
         remark: 'lxntest'
       }
       console.log(JSON.stringify(data, null, 2))
+      console.log(this.mipClickToken)
       let updata = {
         from_detail: 'baidu',
         fr: 'xiongzhanghao',
+        click_token: this.mipClickToken,
         token: sessionid,
         couponsId: 0, // 所用的优惠券id(默认0)
         OrderNum: '', // 订单号(空为新建订单)这里默认新建订单
@@ -1258,10 +1269,10 @@ export default {
 }
 
 .head-ul li:nth-child(1)::after {
-  width: 2rem;
-  height: 0.08rem;
+  width: 1.2rem;
+  height: 0.06rem;
   background: #39a1e8;
-  bottom: 0;
+  bottom: .01rem;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -1280,7 +1291,7 @@ export default {
 
 .tab {
   padding: 0 0.2rem;
-  margin-top: 0.2rem;
+  margin-top: 0.3rem;
 }
 .tab-div {
   background: #ffffff;

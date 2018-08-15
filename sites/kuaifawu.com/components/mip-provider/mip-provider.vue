@@ -7,7 +7,9 @@
         class="item-list"
         type="mip-mustache">
         <div class="item">
-          <a :href="geturl('/product/info.html?id=' + pid + '_' + ct + '_' + ar + '_' + val.id +'_' + packageid)">
+          <a
+            :href="geturl('/product/info.html?id=' + pid + '_' + ct + '_' + ar + '_' + val.id +'_' + packageid)"
+            data-type="mip">
             <div class="left">
               <mip-img :src="val.avatar"/>
             </div>
@@ -102,6 +104,9 @@ export default {
       packageInfo: [],
       providerList: []
     }
+  },
+  prerenderAllowed () {
+    return true
   },
   mounted () {
     console.log('This is 服务商列表页 !')

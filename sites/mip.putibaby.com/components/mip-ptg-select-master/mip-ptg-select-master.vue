@@ -124,6 +124,8 @@
     </mip-fixed>
     <mip-lightbox
       id="my-lightbox2"
+      type="top"
+      still
       layout="nodisplay"
       content-scroll>
 
@@ -139,62 +141,135 @@
           <table
             id="citybar"
             class="citybar"
-            data-city="">
+            data-city=""
+            @click="setCity">
 
             <tbody>
               <tr>
-                <td class="citytd">北京</td>
-                <td class="citytd">天津</td>
-                <td class="citytd">哈尔滨</td>
-                <td class="citytd">武汉</td>
+                <td
+                  class="citytd"
+                >北京</td>
+                <td
+                  class="citytd"
+                >天津</td>
+                <td
+                  class="citytd"
+                >哈尔滨</td>
+                <td
+                  class="citytd"
+                >武汉</td>
               </tr>
               <tr>
-                <td class="citytd">上海</td>
-                <td class="citytd">长春</td>
-                <td class="citytd">济南</td>
-                <td class="citytd">长沙</td>
+                <td
+                  class="citytd"
+                >上海</td>
+                <td
+                  class="citytd"
+                >长春</td>
+                <td
+                  class="citytd"
+                >济南</td>
+                <td
+                  class="citytd"
+                >长沙</td>
               </tr>
               <tr>
-                <td class="citytd">广州</td>
-                <td class="citytd">杭州</td>
-                <td class="citytd">洛阳</td>
-                <td class="citytd">南阳</td>
+                <td
+                  class="citytd"
+                >广州</td>
+                <td
+                  class="citytd"
+                >杭州</td>
+                <td
+                  class="citytd"
+                >洛阳</td>
+                <td
+                  class="citytd"
+                >南阳</td>
               </tr>
               <tr>
-                <td class="citytd">深圳</td>
-                <td class="citytd">沈阳</td>
-                <td class="citytd">石家庄</td>
-                <td class="citytd">西安</td>
+                <td
+                  class="citytd"
+                >深圳</td>
+                <td
+                  class="citytd"
+                >沈阳</td>
+                <td
+                  class="citytd"
+                >石家庄</td>
+                <td
+                  class="citytd"
+                >西安</td>
               </tr>
               <tr>
-                <td class="citytd">湘潭</td>
-                <td class="citytd">徐州</td>
-                <td class="citytd">成都</td>
-                <td class="citytd">南京</td>
+                <td
+                  class="citytd"
+                >湘潭</td>
+                <td
+                  class="citytd"
+                >徐州</td>
+                <td
+                  class="citytd"
+                >成都</td>
+                <td
+                  class="citytd"
+                >南京</td>
               </tr>
               <tr>
-                <td class="citytd">黄石</td>
-                <td class="citytd">郑州</td>
-                <td class="citytd">青岛</td>
-                <td class="citytd">大连</td>
+                <td
+                  class="citytd"
+                >黄石</td>
+                <td
+                  class="citytd"
+                >郑州</td>
+                <td
+                  class="citytd"
+                >青岛</td>
+                <td
+                  class="citytd"
+                >大连</td>
               </tr>
               <tr>
-                <td class="citytd">常州</td>
-                <td class="citytd">唐山</td>
-                <td class="citytd">保定</td>
-                <td class="citytd">秦皇岛</td>
+                <td
+                  class="citytd"
+                >常州</td>
+                <td
+                  class="citytd"
+                >唐山</td>
+                <td
+                  class="citytd"
+                >保定</td>
+                <td
+                  class="citytd"
+                >秦皇岛</td>
               </tr>
               <tr>
-                <td class="citytd">呼和浩特</td>
-                <td class="citytd">乌鲁木齐</td>
-                <td class="citytd">合肥</td>
-                <td class="citytd">南昌</td>
+                <td
+                  class="citytd"
+                >呼和浩特</td>
+                <td
+                  class="citytd"
+                >乌鲁木齐</td>
+                <td
+                  class="citytd"
+                >合肥</td>
+                <td
+                  class="citytd"
+                >南昌</td>
               </tr>
               <tr>
-                <td class="citytd">福州</td>
-                <td class="citytd">厦门</td>
-                <td class="citytd">香港</td>
-                <td class="citytd">南宁</td>
+                <td
+                  class="citytd"
+                >福州</td>
+                <td
+                  class="citytd"
+                >厦门</td>
+                <td
+                  class="citytd"
+                >香港</td>
+                <td
+                  class="citytd"
+                >南宁</td>
               </tr>
             </tbody>
           </table>
@@ -231,9 +306,11 @@
               <td>上户类型：</td>
 
               <td class="qt_td"><span
+                id="qtbtn"
                 class="radio_btn radio_check"
                 @click="clickQuantian">全天</span></td>
               <td class="bb_td"><span
+                id="bbbtn"
                 class="radio_btn"
                 @click="clickBaiban">白班</span></td>
 
@@ -998,8 +1075,22 @@
           class="queding"
           on="tap:right-sidebar.close tap:selectmaster.dook">确定</span>
       </mip-sidebar>
-
+      <mip-fixed
+        v-if="state.isGif"
+        still
+        type="top"
+        top="250px">
+        <div
+          class="gif">
+          <mip-img
+            layout="fixed"
+            width="110"
+            height="110"
+            src="https://mip.putibaby.com/i/jiazai.gif"/>
+        </div>
+      </mip-fixed>
       <div
+        v-if="list.length > 0"
         id="cardList"
         class="cardList">
         <div
@@ -1072,6 +1163,7 @@
         <div class="mip-infinitescroll-results" />
         <div class="bg">
           <div
+            v-if="!state.isGif"
             class="mip-infinitescroll-loading"
             @click="loadMoreClick">
             <p>{{ state.loadMessage }}</p>
@@ -1086,7 +1178,7 @@
       type="right"
       bottom="50px"
       class="rec_a">
-      <a @click="handleUpdateYcq">
+      <a @click="handleCustom">
         <slot name="bwtj"/>
       </a>
     </mip-fixed>
@@ -1095,6 +1187,16 @@
 </template>
 
 <style scoped>
+  .gif{
+    width: 100%;
+    text-align: center;
+    margin-top: 200px;
+  }
+  .gif mip-img{
+    width: 130px;
+    height: 130px;
+    margin: 0 auto;
+  }
   .wrapper {
     margin: 0 auto;
     text-align: center;
@@ -1666,7 +1768,7 @@ API.wrapRet_ = function (api, opts, fn) {
     .then(checkStatus)
     .then(parseJSON)
     .then(ret => {
-      console.log(ret)
+      // console.log(ret)
       if (ret.success) fn(true, ret.data)
       else fn(false, ret.error)
     })
@@ -1736,24 +1838,28 @@ export default {
   },
   data () {
     console.log(this)
-
+    var pdata = JSON.parse(this.dataJsonstr)
+    var city = pdata.city || '北京'
+    console.log(city)
     return {
       isLogin: false,
       isUnion: false,
       list: null,
       state: {
         isLoadingMore: false,
-        loadMessage: '数据正在加载中...',
-        hasMoreData: false
+        loadMessage: '',
+        hasMoreData: false,
+        isGif: true
       },
       filter: {
+        city: city,
         pn: 0,
         kw: ''
       },
       filter2: {
         shlxRow: '全天',
         ycq: '',
-        city: '',
+        city: city,
         jiguan: '',
         priceFromSel: 0,
         priceToSel: 50000,
@@ -1769,6 +1875,23 @@ export default {
 
   },
   beforeMount () {
+    function getParameterByName (name, url) {
+      if (!url) url = window.location.href
+      name = name.replace(/[[\]]/g, '\\$&')
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+      var results = regex.exec(url)
+      if (!results) return null
+      if (!results[2]) return ''
+      return decodeURIComponent(results[2].replace(/\+/g, ' '))
+    }
+    var qcity = getParameterByName('city')
+    var cities = ['北京市', '天津市', '哈尔滨市', '武汉市', '上海市', '长春市', '济南市', '长沙市', '广州市', '杭州市', '洛阳市', '南阳市', '深圳市', '沈阳市', '石家庄市', '西安市', '湘潭市', '徐州市', '成都市', '南京市', '黄石市', '郑州市', '青岛市', '大连市', '常州市', '唐山市', '保定市', '秦皇岛市', '襄阳市', '太原市', '昆明市', '兰州市', '呼和浩特市', '乌鲁木齐市', '合肥市', '南昌市', '福州市', '厦门市', '南宁市']
+    if (cities.lastIndexOf(qcity) >= 0) {
+      this.filter.city = qcity.replace('市', '')
+      console.log(qcity)
+      console.log(this.filter)
+    }
+
     this.init()
     var self = this
     window.addEventListener('scroll', function (e) {
@@ -1791,7 +1914,28 @@ export default {
   },
   mounted () {
     window.MIP.viewer.fixedElement.init()
+
     console.log('This is pty order list component !')
+    // 所有的图片（要是网络太好，自己加图片吧）
+    const imgs = [
+      'https://mip.putibaby.com/i/jiazai.gif'
+
+    ]
+    let len = imgs.length
+
+    /**
+     * 遍历imgs数组，将所有图片加载出来
+     * 可以通过控制台查看网络请求，会发现所有图片均已加载
+     */
+    for (let i = 0; i < len; i++) {
+      let imgObj = new Image() // 创建图片对象
+      imgObj.src = imgs[i]
+
+      imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
+        console.log('imgs' + i + '加载完毕')
+      }, false)
+    }
+
     var self = this
     this.$element.customElement.addEventAction('echo', function (event, str) {
       console.log(event)
@@ -1864,27 +2008,6 @@ export default {
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
       }
     })
-
-    var radiobtn = document.querySelectorAll('.radio_btn')
-
-    var citytd = document.querySelectorAll('.citytd')
-    // var cityVal = document.querySelector('#btn-open').innerHTML
-
-    for (var i = 0; i < citytd.length; i++) {
-      citytd[i].addEventListener('touchend', function () {
-        removeClass(citytd, 'checked')
-        addClass(this, 'checked')
-        self.filter.city = this.innerHTML
-      })
-    }
-
-    for (var j = 0; j < radiobtn.length; j++) {
-      radiobtn[j].addEventListener('touchend', function () {
-        removeClass(radiobtn, 'radio_check')
-        addClass(this, 'radio_check')
-        self.filter.shlxRow = this.innerHTML
-      })
-    }
   },
   methods: {
 
@@ -1892,10 +2015,11 @@ export default {
       var self = this
       console.log('should loading')
       console.log(this.dataJson)
-      API.getSelectMaster({}, function (isOk, res) {
+      API.getSelectMaster(self.filter, function (isOk, res) {
         if (isOk) {
           console.log(res)
           self.list = res.list
+          self.state.isGif = false
           if (res.list.length < 10) {
             self.state.loadMessage = '没有更多数据了!'
           } else {
@@ -1904,10 +2028,30 @@ export default {
         }
       })
     },
-    clickQuantian () {
+    clickQuantian (e) {
+      // console.log(e.srcElement)
+      // console.log(this.lastCityElem)
+      if (this.lastRadioElem) {
+        // console.log(this)
+        this.lastRadioElem.className = 'radio_btn'
+      } else {
+        document.querySelector('#qtbtn').className = 'radio_btn'
+      }
+      addClass(e.srcElement, 'radio_check')
+      this.lastRadioElem = e.srcElement
       this.filter2.shlxRow = '全天'
     },
-    clickBaiban () {
+    clickBaiban (e) {
+      // console.log(e.srcElement)
+      // console.log(this.lastRadioElem)
+      if (this.lastRadioElem) {
+        // console.log(this)
+        this.lastRadioElem.className = 'radio_btn'
+      } else {
+        document.querySelector('#qtbtn').className = 'radio_btn'
+      }
+      addClass(e.srcElement, 'radio_check')
+      this.lastRadioElem = e.srcElement
       this.filter2.shlxRow = '白班'
     },
 
@@ -1942,6 +2086,10 @@ export default {
       }
       window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq '), {})
     },
+    handleCustom () {
+      console.log('handleCustom')
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/custom'), {})
+    },
     handleOrderList () {
       console.log('handleOrderList')
       if (!this.checkLogin_('order_list')) { return }
@@ -1949,24 +2097,32 @@ export default {
     },
     load_data () {
       console.log('should set data')
-      this.state.loadMessage = '数据正在加载中...'
+      // document.documentElement.scrollTop = 0
+      // document.body.scrollTop = 0
+      this.state.loadMessage = ''
       this.list = []
+      // this.$set(this, 'list', [])
       var self = this
+      this.state.isGif = true
+      // this.$set(this.state, 'isGif', true)
       this.filter.pn = 0
-      API.getSelectMaster(this.filter, function (isOk, res) {
-        if (isOk) {
-          console.log(res)
-          self.list = res.list
-          if (res.list.length < 10) {
-            self.state.loadMessage = '没有更多数据了!'
+      setTimeout(function () {
+        API.getSelectMaster(self.filter, function (isOk, res) {
+          if (isOk) {
+          // console.log(res)
+            self.state.isGif = false
+            self.list = res.list
+            if (res.list.length < 10) {
+              self.state.loadMessage = '没有更多数据了!'
+            } else {
+              self.state.loadMessage = '点击加载数据'
+            }
           } else {
-            self.state.loadMessage = '点击加载数据'
+            console.log(res)
+            self.state.loadMessage = '加载数据出错'
           }
-        } else {
-          console.log(res)
-          self.state.loadMessage = '加载数据出错'
-        }
-      })
+        })
+      }, 50)
     },
     load_more () {
       console.log('should set data')
@@ -1975,6 +2131,7 @@ export default {
       API.getSelectMaster(this.filter, function (isOk, res) {
         if (isOk) {
           // console.log(res);
+          self.state.isGif = false
           self.list = self.list.concat(res.list)
           if (res.list.length >= 10) {
             self.state.loadMessage = '点击加载数据'
@@ -2039,7 +2196,17 @@ export default {
     reload_ () {
       window.location.reload()
     },
-
+    setCity (e) {
+      // console.log(e.srcElement)
+      // console.log(this.lastCityElem)
+      if (this.lastCityElem) {
+        // console.log(this)
+        this.lastCityElem.className = 'citytd'
+      }
+      addClass(e.srcElement, 'checked')
+      this.lastCityElem = e.srcElement
+      this.filter.city = e.srcElement.innerHTML
+    },
     sortClick (e) {
       var self = this
       if (e === 'zh') {
@@ -2063,7 +2230,9 @@ export default {
           self.$set(self.filter, 'sort_by', 'age_asc')
         }
       }
-      self.load_data()
+      setTimeout(function () {
+        self.load_data()
+      }, 5)
     }
 
   }

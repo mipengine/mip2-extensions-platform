@@ -2,7 +2,8 @@
   <div
     v-show="show"
     id="addressSelect"
-    ref="wrapper">
+    ref="wrapper"
+  >
     <div class="jkx_item">
       <div class="item_right pl_20">
         <div class="jkx_form delete">
@@ -33,27 +34,35 @@
         </span>
       </div>
     </section>
-    <section class="jkx_container">
-      <h3
-        id="panel"
-        class="jkx_title nearAddress">附近地址</h3>
-    </section>
-    <section class="jkx_content nearAddressList">
-      <div>
-        <div
-          v-for="(item,index) in html"
-          :key="index">
-
+    <div v-if="html.length>0">
+      <section class="jkx_container">
+        <h3
+          id="panel"
+          class="jkx_title nearAddress">附近地址</h3>
+      </section>
+      <section
+        ref="addressList"
+        class="jkx_content nearAddressList">
+        <div>
           <div
-            class="jkx_panel"
-            @click="Choose(item)">
-            <p class="panel_title">{{ item.title||item.name }}</p>
-            <p class="panel_body">{{ item.address?item.address:item.province+" "+ item.city+" "+ item.district }}</p>
+            ref="addressContent"
+            class="addressContent">
+            <div
+              v-for="(item,index) in html"
+              :key="index">
+
+              <div
+                class="jkx_panel"
+                @click="Choose(item)">
+                <p class="panel_title">{{ item.title||item.name }}</p>
+                <p class="panel_body">{{ item.address?item.address:item.province+" "+ item.city+" "+ item.district }}</p>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      <span class="jkx_loading"/>
-    </section>
+        <span class="jkx_loading"/>
+      </section>
+    </div>
   </div>
 </template>
 
@@ -87,7 +96,8 @@ export default {
       cacheAddress: [],
       province: '',
       show: false,
-      address: ''
+      address: '',
+      cHeight: 0
     }
   },
   watch: {
@@ -95,11 +105,18 @@ export default {
       this.html = val.around
       if (!val.show) this.inputVal = ''
       this.show = val.show
+      // window.addEventListener('touchmove', function (e) {
+      //   if (val.show) {
+      //     e.preventDefault()
+      //   }
+      // }, { passive: false })
       this.choosedetail.nowPosition = val.nowPosition
     }
   },
   mounted () {
     this.$refs.wrapper.style.height = viewport.getHeight() + 'px'
+    this.$refs.wrapper.style.overflowY = 'scroll'
+    if (this.html.length > 0) this.$refs.addressList.style.height = viewport.getHeight() - 146 + 'px'
   },
   methods: {
     // 搜索地区
@@ -113,6 +130,8 @@ export default {
           return data.json()
         }).then(data => {
           that.html = data.result
+          that.$refs.addressContent.style.height = data.result.length * 50 + 'px'
+          that.$refs.addressContent.style.marginBottom = viewport.getHeight() - 196 > data.result.length * 50 ? 0 : 100 + 'px'
         })
       } else {
         this.html = this.choosedetail.around
@@ -342,12 +361,13 @@ export default {
   }
   .nearAddressList {
     width: 100%;
+    height: 65%;
     margin-bottom: 0;
     border-top: 1px solid #e4e4e4;
     background-color: #f4f4f4;
     padding: 0;
     overflow-y: scroll;
-    -webkit-overflow-scrolling: touch
+    -webkit-overflow-scrolling: touch;
   }
   /*详细地址选择*/
   .nearAddressList .jkx_panel {

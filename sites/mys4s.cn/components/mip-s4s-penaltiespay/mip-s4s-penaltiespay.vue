@@ -41,7 +41,7 @@
             type="text"
             maxlength="11"
             style="width:auto;max-width:3rem;min-width:1.05rem"
-            placeholder="请输入手机号码" >
+            placeholder="请输入手机号码接收订单状态" >
 
         </div>
         <div class="s4s-group">
@@ -60,6 +60,7 @@
             v-show="cansend"
             type="button"
             class="code-btn"
+            on="tap:info.login"
             @click="sendcode">获取验证码</span>
         </div>
         <!-- <div class="s4s-group" v-else>
@@ -67,17 +68,39 @@
                         <span class="s4s-group-txt">{{this.phone ? this.phone : (this.user.Tel || '-')}}</span>
                         <p  @click="refillTelClick" class="s4s-group-btn">更换</p>
                     </div> -->
+
+        <div
+          v-if="canQuick"
+          class="s4s-group">
+          <span
+            class="s4s-group-tit"
+            style="width:auto;flex: 1;">2小时加急办理
+            <span
+              class="s4s-help"
+              @click="openQ">
+              ?
+            </span>
+          </span>
+          <span
+            class="s4s-group-txt"
+            style="text-align:right;">
+            <span
+              :class="{'weui-switch-on' : quick}"
+              class="weui-switch"
+              @click="toggleQuick"/>
+          </span>
+        </div>
         <div class="s4s-group">
           <span class="s4s-group-tit">罚款金额</span>
           <span
             class="s4s-group-txt"
-            style="color:#ff7a00">¥ {{ payForm&&payForm.money || 0 }}</span>
+            style="color:#333">¥ {{ payForm&&payForm.money || 0 }}</span>
         </div>
         <div class="s4s-group">
           <span class="s4s-group-tit">滞纳金额</span>
           <span
             class="s4s-group-txt"
-            style="color:#ff7a00">¥ {{ payForm&&payForm.late_free || 0 }}</span>
+            style="color:#333">¥ {{ payForm&&payForm.late_free || 0 }}</span>
         </div>
         <div class="s4s-group">
           <span class="s4s-group-tit">服务费用</span>
@@ -88,6 +111,14 @@
             style="color:#ff7a00" >¥ {{ payForm&&payForm.own_free || 0 }}</span>
             <!-- <span>{{ ((ownFree || 0) / 100).toFixed(2) }}</span> 元 滞纳金：<span>{{ ((lateFree || 0) / 100).toFixed(2) }}</span> 元 -->
         </div>
+        <div
+          v-if="canQuick&&quick"
+          class="s4s-group">
+          <span class="s4s-group-tit">加急费用</span>
+          <span
+            class="s4s-group-txt"
+            style="color:#ff7a00">¥ {{ quickFee || 0 }}</span>
+        </div>
       </div>
       <a
         ref="newWebpay"
@@ -96,14 +127,14 @@
         <p><mip-img
           v-show="!agree"
           src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/disagree.png"
-          width="25"
-          height="25"
+          width="22"
+          height="22"
           @click="goAgree" />
           <mip-img
             v-show="agree"
             src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree.png"
-            width="25"
-            height="25"
+            width="22"
+            height="22"
             @click="goAgree" />
           我同意
           <a
@@ -113,17 +144,38 @@
           <!-- <span style="color: #666666;text-decoration:underline" @click="gotoAgreement">《服务协议》</span> -->
           中的说明</p>
       </div>
+      <div style="height:.6rem;"/>
       <mip-fixed type="bottom">
         <div class="pay-contaienr">
           <div class="pay-contaienr-first">
-            <p class="pay-contaienr-p1">合计金额：<span class="pay-contaienr-num">¥ {{ (((Number(payForm.money) * 100 + Number(payForm.late_free)* 100 + Number(payForm.own_free)* 100 ) || 0) / 100).toFixed(2) }}</span></p>
-            <p class="pay-contaienr-p2" >预计1-5个工作日办理完成 </p>
+            <p class="pay-contaienr-p1">合计金额：<span class="pay-contaienr-num">¥ {{ (((Number(payForm.money) * 100 + Number(payForm.late_free)* 100 + Number(payForm.own_free)* 100 + ( canQuick?quick?Number(quickFee) * 100:0:0) ) || 0) / 100).toFixed(2) }}</span></p>
+            <p class="pay-contaienr-p2" >
+              {{ canQuick
+                ? quick
+                  ?'预计2小时内办理完成'
+                  :'预计24小时内办理完成'
+                :'预计24小时内办理完成'
+              }}
+            </p>
           </div>
           <div
             id="pay2btn"
             :class="agree?'pay-contaienr-last' :'pay-contaienr-last disabled-btn'"
             on="tap:pay2.pay2event" >
             立即办理
+          </div>
+        </div>
+      </mip-fixed>
+      <mip-fixed type="top">
+        <div
+          v-if="showQ"
+          class="s4s-mask"
+          @click="closeMake">
+          <div class="quick-container">
+            <div class="quick-title">温馨提示</div>
+            <div class="quick-item"><span class="quick-num">1</span><div>勾选“2小时加急”选项，我们将在<span style="color:#FE7000;" >2小时</span>内缴纳罚款至银行。</div></div>
+            <div class="quick-item"><span class="quick-num">2</span><div>未勾选“2小时加急”选项，我们将在<span style="color:#FE7000;" >24小时</span>内缴纳罚款至银行。</div></div>
+            <div class="quick-btn" >我知道了</div>
           </div>
         </div>
       </mip-fixed>
@@ -161,10 +213,14 @@ export default {
       out_trade_no: '',
       payType: 'alipay',
       system: {},
-      agree: false,
+      agree: true,
       btntext: '获取验证码',
       isTrueCode: false,
-      cansend: true
+      cansend: true,
+      canQuick: false,
+      quickFee: 0,
+      showQ: false,
+      quick: false
     }
   },
   watch: {
@@ -179,12 +235,20 @@ export default {
     return true
   },
   mounted () {
+    this.$on('customError', event => {
+      // window.localStorage.clear()
+      util.toast('登陆失败')
+      // this.$emit('loginAgain')
+      // this.$refs.index.click()
+    })
+
     MIP.viewer.fixedElement.init()
     let me = this
     this.$on('pay2event', event => {
       console.log('pay2event')
       me.payFee()
     })
+
     if (this.globalData && this.globalData.orderNumber) {
       try {
         window.localStorage.setItem(
@@ -216,8 +280,37 @@ export default {
       ticketUrl: this.globalData.ticketUrl || '',
       drive_no: this.globalData.drive_no || ''
     }
+
+    this.getFee()
   },
   methods: {
+    closeMake () {
+      this.showQ = false
+    },
+    openQ () {
+      this.showQ = true
+    },
+    toggleQuick () {
+      this.quick = !this.quick
+    },
+    getFee () {
+      let param = {
+        notice_num: this.globalData.orderNumber,
+        fine: Number(this.globalData.price) * 100 + '',
+        vio_time: this.globalData.date
+      }
+      let self = this
+      util.fetchData('v3/violation/fee', param).then((res) => {
+        if (res.code === 0) {
+          self.payForm.own_free = Number(res.data.OwnFree) / 100
+          self.payForm.late_free = Number(res.data.LateFree) / 100
+          self.canQuick = res.data.Quick
+          self.quickFee = Number(res.data.Qfee) / 100
+        } else {
+          util.toast(res.msg)
+        }
+      })
+    },
     testCode () {
       util
         .fetchData('v5/user/login', {
@@ -251,7 +344,7 @@ export default {
         .fetchData('v5/user/code', { tel: this.phone })
         .then(res => {
           if (res.code === 0) {
-            util.toast(res.data)
+            util.toast('发送成功')
           } else {
             util.toast(res.msg)
           }
@@ -327,6 +420,13 @@ export default {
         name: this.payForm.name || '', // 罚款人
         drive_no: this.payForm.drive_no || '' // 驾驶证号
       }
+      if (this.canQuick && this.quick) {
+        // 如果加急
+        param.totalPrice = totalPrice + Math.round(this.quickFee * 100) + ''
+        param.urge = 1
+        param.qfee = this.quickFee * 100
+        totalPrice = param.totalPrice
+      }
       util.fetchData('v3/violation/web/order/create', param).then(res => {
         if (res.code === 0) {
           MIP.setData({
@@ -337,7 +437,8 @@ export default {
               ),
               postData: {
                 order_id: res.data + ''
-              }
+              },
+              redirectUrl: 'https://mys4s.cn/static/vio/xz/success.html?orderId=' + res.data
             }
           })
           this.$emit('canpay', {})
@@ -355,7 +456,7 @@ export default {
   margin-top: 0.1rem;
   background: #fff;
   padding: 0 0.15rem;
-  padding-top: 0.2rem;
+  padding-top: 0.25rem;
 }
 .s4s-group mip-img {
   width: 0.2rem;
@@ -363,12 +464,16 @@ export default {
 }
 .s4s-sum {
   margin: 0.2rem 0.1rem 0 0.1rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  align-items: center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
   text-align: left;
   font-size: 0.15rem;
   color: #50b0de;
@@ -386,7 +491,7 @@ export default {
 .s4s-order-container {
   background-color: #fff;
   padding: 0.15rem;
-  padding-top: 0.21rem;
+  padding-top: 0.25rem;
 }
 .s4s-order-title {
   font-size: 0.2rem;
@@ -401,7 +506,7 @@ export default {
   margin-top: 0.1rem;
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+   display:-webkit-box;display: -moz-box;display: -ms-flexbox;display: -webkit-flex;display: flex;
 }
 
 .s4s-order-input input {
@@ -411,9 +516,12 @@ export default {
   flex: 4;
 }
 .s4s-order-input span {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   background: #3388ff;
   margin: 0;
   height: 0.25rem;
@@ -421,10 +529,17 @@ export default {
 }
 .s4s-order-mip-img-container {
   display: -webkit-box;
+  display: -moz-box;
   display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
-  align-items: center;
-  justify-content: space-around;
+  align-items:center;
+  -moz-box-align:center;
+  -webkit-box-align:center;
+  -webkit-justify-content:space-around;
+  justify-content:space-around;
+  -moz-box-pack:space-around;
+  -webkit-box-pack:space-around;
   margin: 0.2rem 0;
 }
 .s4s-order-mip-img-container .pic {
@@ -437,9 +552,12 @@ export default {
 .s4s-order-mip-img-container .arr {
   max-width: 0.11rem;
   height: 0.2rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-flex:1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
 }
 .s4s-order-content {
   font-size: 0.13rem;
@@ -457,18 +575,16 @@ export default {
 }
 .agree-container mip-img {
   vertical-align: bottom;
+  margin-right: .12rem;
 }
 
 .s4s-group {
-  height: 0.32rem;
-  border-bottom: 0.01rem rgba(0, 0, 0, 0.1) solid;
+  position: relative;
+  line-height: 0.15rem;
+  border-bottom: 0.01rem #EAEAEA solid;
   color: #666;
   overflow: hidden;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  display: -webkit-box;
-  display: -ms-flexbox;
+  align-items:center;
   display: flex;
   padding: 0.15rem 0;
   box-sizing: content-box;
@@ -476,24 +592,20 @@ export default {
 .s4s-group-tit {
   font-size: 0.15rem;
   width: 0.9rem;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+  line-height: .25rem;
+  padding-top:.025rem;
 }
 .s4s-group-txt {
   font-size: 0.15rem;
   color: #777;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  text-align: right;
 }
 .s4s-group input {
   border: none;
   font-size: 0.15rem;
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
   text-align: left;
+  line-height: .25rem;
+  flex: 1;
 }
 select {
   font-size: 0.15rem;
@@ -524,8 +636,10 @@ select {
   margin-top: 0.15rem;
 }
 .s4s-title {
-  font-size: 0.2rem;
-  /* padding-top: .15rem; */
+  font-size: .2rem;
+  /* padding: .15rem; */
+  /* padding-top: 0.25rem; */
+  font-weight: bold;
 }
 .code-btn,
 .code-btn-disable {
@@ -536,29 +650,55 @@ select {
   font-size: 0.14rem;
   border: 0.01rem solid #ff7b00;
   padding: 0.05rem 0.075rem;
+  line-height: .20rem;
+  position: absolute;
+  right: 0;
+  top:50%;
+  margin-top:-.15rem
 }
 .code-btn-disable {
   opacity: 0.5;
 }
 
 .pay-contaienr {
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
   width: 100%;
   background: #fff;
 }
 
 .pay-contaienr-first {
-  flex: 1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
   font-size: 0.16rem;
+  display:-webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  -webkit-box-orient:vertical;
+  -webkit-box-direction:normal;
+  -moz-box-orient:vertical;
+  -moz-box-direction:normal;
+  flex-direction:column;
+  -webkit-flex-direction:column;
+  -webkit-justify-content:center;
+  justify-content:center;
+  -moz-box-pack:center;
+  -webkit-box-pack:center;
+  -moz-box-pack:center;
   padding: 0 0.1rem;
 }
 
 .pay-contaienr-num {
   color: #fe7000;
   font-size: 0.2rem;
+  font-weight: bold;
 }
 
 .pay-contaienr-p1 {
@@ -572,7 +712,7 @@ select {
 
 .pay-contaienr-last {
   width: 1.2rem;
-  background-image: linear-gradient(40deg, #fe5a00 0%, #ff7c00 100%);
+  background-image: linear-gradient(40deg,  #ff7c00 0%, #fe5a00 100%);
   text-align: center;
   line-height: 0.5rem;
   font-size: 0.18rem;
@@ -583,5 +723,126 @@ select {
 .disabled-btn {
   color: #999;
   background: #e6e6e6 !important;
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #ccc;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color:#ccc;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color:#ccc;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color:#ccc;
+}
+.weui-switch {
+  display: inline-block;
+  position: relative;
+  width: 52px;
+  height: 32px;
+  border: 1px solid #DFDFDF;
+  outline: 0;
+  border-radius: 16px;
+  box-sizing: border-box;
+  background-color: #DFDFDF;
+  transition: background-color 0.1s, border 0.1s;
+  cursor: pointer;
+}
+.weui-switch:before {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: #FDFDFD;
+  transition: transform 0.35s cubic-bezier(0.45, 1, 0.4, 1);
+}
+.weui-switch:after {
+  content: " ";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: #FFFFFF;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  transition: transform 0.35s cubic-bezier(0.4, 0.4, 0.25, 1.35);
+}
+.weui-switch-on {
+  border-color: #1AAD19;
+  background-color: #1AAD19;
+}
+.weui-switch-on:before {
+  border-color: #1AAD19;
+  background-color: #1AAD19;
+}
+.weui-switch-on:after {
+  transform: translateX(20px);
+}
+
+.quick-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  background: #fff;
+  border-radius: .05rem;
+  width: 75%;
+}
+.quick-btn {
+  text-align: center;
+  color:#4F7EFF;
+  font-size: .14rem;
+  padding:.16rem 0 .13rem;
+  margin-top: .21rem;
+  border-top: .01rem solid #EAEAEA;
+}
+.quick-item {
+  display: flex;
+  margin:0 .18rem .15rem .2rem;
+  color:#6F6F6F;
+}
+.quick-num {
+  font-size: .15rem;
+  color:#fff;
+  background: #D8D8D8;
+  border-radius: 50%;
+  line-height: .185rem;
+  width: .185rem;
+  display: inline-block;
+  margin-right: .06rem;
+  height: .19rem;
+  min-width: .19rem;
+  text-align: center;
+  flex:1;
+  margin-right: .065rem;
+}
+.quick-title {
+  font-size: .16rem;
+  font-weight: bold;
+  margin:.21rem auto .125rem;
+  text-align: center;
+}
+.s4s-mask {
+  height: 100%;
+  height: 100vh;
+  z-index: 101;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+.s4s-help {
+  border-radius: 50%;
+  border: .02rem solid #FE7000;
+  color: #FE7000;
+  font-size: 0.13rem;
+  height: 0.2rem;
+  min-width: 0.2rem;
+  line-height: 0.18rem;
+  text-align: center;
+  font-weight: bold;
+  display: inline-block;
 }
 </style>

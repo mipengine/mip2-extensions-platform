@@ -1,30 +1,67 @@
 <template>
   <div class="s4s-page" >
-    <mip-img
+    <!-- <mip-img
       src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/banner.png"
-      styel="width:100%;" />
+      styel="width:100%;" /> -->
+    <div
+      v-if="localCarList.length"
+      class="car-list">
+      <div class="car-title">
+        <h2
+          class="s4s-car-name"
+          style="flex:1;display:inline-block;" >我的爱车</h2><span
+            on="tap:info.login"
+            @click="goCarList">管理爱车</span>
+      </div>
+      <div
+        v-for="(item, index) in localCarList.slice(0,all ? 100 : 2)"
+        :key="index"
+        class="car-item"
+        @click="goSearch(index)">
+        <span style="flex:1;">{{ item.carNo }}</span>
+        <mip-img
+          :key="index*100"
+          src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/search.png"
+          width="22"
+          height="22"
+        />
+      </div>
+      <div
+        v-if="localCarList.length>2"
+        class="car-item"
+        style="text-align:center;justify-content: center;"
+        @click="all = !all">
+        {{ all?'收起':'显示全部' }}
+      </div>
+    </div>
     <div class="s4s-car-info">
-      <div style="display: flex;align-items: center;">
-        <div style="flex: 1;">
-          <h2 class="s4s-car-name" >请您上传行驶证，</h2>
+      <div style="display: flex;align-items:center;">
+        <div style="flex:1;">
+          <h2 class="s4s-car-name" >请您上传行驶证
+            <span
+              class="s4s-help"
+              style="margin-left:.1rem;"
+              @click="openDriveFile">?</span>
+          </h2>
           <div class="s4s-car-illegal">系统可直接识别信息，无需填写</div>
         </div>
         <div class="s4s-upload-pic">
-          <div
+          <!-- <div
             v-show="driveUrl"
             class="s4s-ask-upload-btn"
             @click="upload" >
             <mip-img
+              ref="imagess"
               :src="driveUrl"
               styel="width:100%;" />
-          </div>
+          </div> -->
           <div
-            v-show="!driveUrl"
             class="s4s-ask-upload-btn"
             @click="upload">
             <mip-img
+              :src="driveUrl||'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload.png'"
               styel="width:100%;"
-              src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/upload.png" />
+            />
             <input
               ref="file"
               type="file"
@@ -49,9 +86,9 @@
         <div class="s4s-group-tit">车牌号码</div>
         <div
           class="provice"
-          @click="selectProvice" >
-          <div style="margin-right:.05rem;">{{ provice }}</div>
-          <div class="right-arrow"/>
+          @click="selectProvice"
+        >
+          <div style="height:100%;display: flex;align-items: center;">{{ provice }} <span class="right-arrow"/></div>
         </div>
         <input
           v-model="car_no"
@@ -94,7 +131,7 @@
         </div>
         <input
           :maxlength="engineNoLength === 99 ? '' : 6"
-          v-model="engion"
+          v-model="engine"
           :placeholder="engineNoLength === 99 ? '请输入完整的发动机号' : '请输入发动机号后六位'"
           type="text" >
         <span
@@ -102,17 +139,39 @@
           @click="engineDetail">?</span>
       </div>
     </div>
+    <div
+      class="save-container"
+      @click="changeSave" >
+      <mip-img
+        v-if="!save"
+        src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/disagree.png"
+        width="22"
+        height="22"
+      />
+      <mip-img
+        v-if="save"
+        src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/agree.png"
+        width="22"
+        height="22"
+      />
+      <span>保存爱车，下次直接查违章</span>
+    </div>
     <button
       class="s4s-btn"
+      style="margin-top:0;width:calc( 100% - .3rem )"
       @click="formSubmit"> 查询违章 </button>
     <a
       ref="violation"
       data-type="mip"
       href="violation.html"/>
     <a
+      ref="car"
+      data-type="mip"
+      href="car.html"/>
+    <a
       ref="index"
       data-type="mip"
-      href="index.html"/>
+      href="index.html?current=1"/>
     <mip-fixed type="top">
       <div
         v-if="detail"
@@ -125,22 +184,29 @@
           height="263" />
       </div>
     </mip-fixed>
-    <div
-      v-if="showProvice"
-      class="s4s-provice" >
-      <div style="overflow: hidden;padding-bottom: .4rem" >
-        <template v-for="(provice, index) in proviceList">
+    <mip-fixed type="bottom">
+      <div
+        v-if="showProvice"
+        class="s4s-provice" >
+        <div style="overflow: hidden;padding-bottom: .4rem" >
+          <template v-for="(provice, index) in proviceList">
+            <div
+              :key="index"
+              class="s4s-provice-tit"
+              @click="selProvince(provice)">{{ provice }}</div>
+          </template>
           <div
-            :key="index"
-            class="s4s-provice-tit"
-            @click="selProvince(provice)">{{ provice }}</div>
-        </template>
-        <div
-          key="-1"
-          class="s4s-provice-tit"
-          style="width: 33.899999999%;background: #BBC3C7;color: #fff;"
-          @click="selectProvice" >隐藏</div>
+            key="-1"
+            class="s4s-provice-tit-hide"
+            @click="selectProvice" >隐藏</div>
+        </div>
       </div>
+    </mip-fixed>
+    <div style="text-align:center;font-size:.13rem;line-height:.19rem;color:#989898;bottom: 20px;width:100%;margin:.3rem auto;">
+      <p>本服务由齐车大圣提供</p>
+      <p>客服电话：<a
+        style="color:#FE7000;font-weight:bold"
+        href="tel:400000119">400-000-1199</a></p>
     </div>
   </div>
 </template>
@@ -154,7 +220,7 @@ export default {
       provice: '省',
       showProvice: false,
       car_no: '',
-      engion: '',
+      engine: '',
       vin: '',
       detail: false,
       src: '',
@@ -163,6 +229,9 @@ export default {
       vinLength: 6,
       engineNoLength: 6,
       cartype: '',
+      save: true,
+      localCarList: [],
+      all: false,
       carTypeList: [
         {
           value: '02',
@@ -328,7 +397,7 @@ export default {
         }
       })
     },
-    engion (val) {
+    engine (val) {
       MIP.setData({
         '#globalData': {
           engine: val
@@ -350,16 +419,80 @@ export default {
       util.toast('授权成功')
     })
     this.$on('customError', event => {
-      window.localStorage.clear()
+      // window.localStorage.clear()
       util.toast('授权失败')
-      this.$refs.index.click()
+      // this.$emit('loginAgain')
+      // this.$refs.index.click()
+    })
+    // this.$emit('loginAgain')
+    this.fetchLocalCar()
+    const that = this
+    window.addEventListener('show-page', () => {
+      console.log('show-page')
+      that.fetchLocalCar()
     })
   },
   methods: {
+    fetchLocalCar () {
+      console.log('获取本地车辆信息')
+      try {
+        let localCarList = window.localStorage.getItem('localCarList')
+        if (localCarList) {
+          let newList = JSON.parse(localCarList)
+          this.localCarList = newList
+        }
+      } catch (error) {
+        util.toast('由于您处在无痕模式，不能载入您之前存储的记录')
+        this.localCarList = []
+      }
+    },
+    goCarList () {
+      let localCarList = []
+      try {
+        let localCarListString = window.localStorage.getItem('localCarList')
+        if (localCarListString) {
+          localCarList = JSON.parse(localCarListString)
+        }
+      } catch (e) {
+        console.log(e)
+        // this.getCar()
+        this.$refs.car.click()
+      }
+      // 如果本地有数据 同步
+      if (localCarList.length) {
+        util.toast('爱车同步中，请稍后')
+        const promiseList = []
+        localCarList.forEach((item, index) => {
+          promiseList.push(util.fetchData('v3/violation/car/manage', {
+            car_no: item.carNo ? item.carNo.toUpperCase() : '',
+            vin: item.vin ? item.vin.toUpperCase() : '',
+            engine: item.engine ? item.engine.toUpperCase() : '',
+            car_type: item.car_type || ''
+          }).catch(e => {
+          }))
+        })
+        Promise.all(promiseList).then(res => {
+          // this.getCar()
+          this.$refs.car.click()
+        })
+      } else {
+        // this.getCar()
+        this.$refs.car.click()
+      }
+    },
+    changeSave () {
+      this.save = !this.save
+      // 存储 dont=false 不存储 dont = true
+      MIP.setData({
+        '#globalData': {
+          dont: !this.save
+        }
+      })
+    },
     selProvince (val) {
       this.provice = val
-      MIP.setData({ '#globalData': { provice: val } })
       this.showProvice = false
+      MIP.setData({ '#globalData': { provice: val } })
     },
     onStatusChange (val) {
       this.showProvice = val
@@ -372,7 +505,7 @@ export default {
       this.provice = val.plateno ? val.plateno.substring(0, 1) : '浙'
       this.car_no = val.plateno ? val.plateno.substring(1) : ''
       this.vin = val.vin || ''
-      this.engion = val.engineno || ''
+      this.engine = val.engineno || ''
       this.driveUrl = driveUrl
       if (val.vehicletype.indexOf('小') !== -1) {
         this.cartype = '02'
@@ -389,6 +522,11 @@ export default {
       this.detail = true
       this.src =
         'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/classNo.png'
+    },
+    // 查看行驶证
+    openDriveFile () {
+      this.detail = true
+      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveFileA.png'
     },
     // 查看发动机号
     engineDetail () {
@@ -421,11 +559,24 @@ export default {
         util.toast('请输入正确的车架号')
         return
       }
-      if (this.engion.length < 6 && this.engineNoLength !== 0) {
+      if (this.engine.length < 6 && this.engineNoLength !== 0) {
         util.toast('请输入正确的发动机号')
         return
       }
       // MIP.viewer.open("violation.html");
+      this.$refs.violation.click()
+    },
+    goSearch (index) {
+      let item = this.localCarList[index]
+      MIP.setData({
+        '#globalData': {
+          'provice': item.carNo.slice(0, 1),
+          'car_no': item.carNo.slice(1, 10),
+          'vin': item.vin,
+          'engine': item.engine,
+          'car_type': item.car_type || ''
+        }
+      })
       this.$refs.violation.click()
     },
     upload () {
@@ -436,57 +587,14 @@ export default {
       let list = this.$refs.file.files
       if (list.length !== 1) {
         util.toast('最多只能选择1张驾驶证。')
-        return
       }
 
-      // let item = {
-      //   name: list[0].name,
-      //   size: list[0].size,
-      //   file: list[0]
-      // }
-
-      const file = list[0]
-      if (file) {
-        console.log(file.size / 1024 / 1024 + 'MB')
-        const isLt2M = file.size / 1024 / 1024 < 2
-        if (!isLt2M) {
-          util.toast('图片大小需要小于 2MB!')
-          return
-        }
-        util.toast('正在上传')
-        const formData = new FormData()
-        formData.append('image', list[0])
-        self.vehiclecardFetch(formData)
+      let item = {
+        name: list[0].name,
+        size: list[0].size,
+        file: list[0]
       }
-
-      // let name = 'travelUrl'
-      // const formData1 = new FormData()
-      // formData1.append('image', list[0])
-      // fetch('https://mys4s.cn/car/upload_report_pic', {
-      //   method: 'POST',
-      //   body: formData1
-      // })
-      //   .then(res => res.json())
-      //   .then(data => {
-      //     if (data.code === 0) {
-      //       util.toast('上传成功')
-      //       if (name === 'ticket') {
-      //         self.ticketUrl = data.data
-      //       } else if (name === 'JSZTravel') {
-      //         self.JSZTravelUrl = data.data
-      //       } else if (name === 'JSZDrive') {
-      //         self.JSZDriveUrl = data.data
-      //       } else if (name === 'travelUrl') {
-      //         self.travelUrl = data.data
-      //       } else if (name === 'driveUrl') {
-      //         self.driveUrl = data.data
-      //       }
-      //     } else {
-      //       util.toast(data.msg)
-      //     }
-      //   })
-
-      // self.html5Reader(list[0], item, 'travelUrl')
+      self.html5Reader(list[0], item, 'driveUrl')
     },
     html5Reader: function (file, item, name) {
       let imgSrc = new Image()
@@ -530,24 +638,30 @@ export default {
           // 图片压缩
           context.drawImage(imgSrc, 0, 0, targetWidth, targetHeight)
           // canvas转为blob并上传
-          canvas.toBlob(function (blob) {
+          let data = canvas.toDataURL('image/jpeg').split(',')[1]
+          // 获取base64图片大小，返回MB数字
+          let size = parseInt(data.length - data.length / 8 * 2)
+          console.log(size)
+          if (size) {
+            const isLt2M = size / 1024 / 1024 < 2
+            if (!isLt2M) {
+              util.toast('图片大小需要小于 2MB!')
+              return
+            }
             util.toast('正在上传')
-            const formData = new FormData()
-            formData.append('image', blob, item.name)
-            self.vehiclecardFetch(formData)
-          }, file.type || 'image/png')
+            self.vehiclecardFetch(data)
+          }
         }
       }
       reader.readAsDataURL(file)
     },
     // 识别行驶证
-    vehiclecardFetch (formData) {
+    vehiclecardFetch (data) {
       let self = this
-      fetch('https://mys4s.cn/v2/car/recognize_vehiclecard', {
-        method: 'POST',
-        body: formData
-      })
-        .then(res => res.json())
+      util
+        .fetchData('v2/car/b64/recognize_vehiclecard', {
+          imageString: data
+        })
         .then(data => {
           if (data.code === 0) {
             if (data.data && data.data.img_url) {
@@ -568,7 +682,7 @@ export default {
 
 <style scoped>
 .s4s-car-info.s4s-illegal-body {
-  margin-top: .12rem;
+  margin-top: 0.12rem;
   padding-bottom: 0;
 }
 
@@ -583,21 +697,25 @@ export default {
 }
 .s4s-car-info {
   background-color: #fff;
-  padding: .15rem;
+  padding: .25rem 0.15rem ;
 }
 
 .s4s-car-name {
-  -webkit-box-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
+  -webkit-box-flex:1;
+  -moz-box-flex:1;
+  flex:1;
+  -webkit-flex:1;
+  -ms-box-flex:1;
   color: #333333;
-  font-size: .2rem;
+  font-size: 0.2rem;
+  display: flex;
+  align-items: center;
 }
 
 .s4s-car-illegal {
-  padding-top: .05rem;
+  padding-top: 0.05rem;
   color: #999999;
-  font-size: .14rem;
+  font-size: 0.14rem;
 }
 
 .s4s-upload-pic {
@@ -605,50 +723,128 @@ export default {
 }
 
 .provice {
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  background-image: linear-gradient(-149deg, #fe5a00 0%, #ff7c00 100%);
-  justify-content: center;
-  border-radius: .04rem;
+  background-image: linear-gradient(40deg,  #ff7c00 0%, #fe5a00 100%);
+  border-radius: 0.04rem;
   color: #fff;
   /* width: 0.45rem; */
+  min-width: .5rem;
   height: 0.25rem;
-  margin-right: .05rem;
-  padding: .01rem .09rem;
+  margin-right: 0.1rem;
+  padding: 0.01rem 0.09rem;
+  display: flex;
+  align-items: center;
 }
 .right-arrow {
   display: inline-block;
+  margin-bottom: 2px;
   width: 0;
+  margin-left: 2px;
   height: 0;
-  border-left: .05rem solid transparent;
-  border-top: .05rem solid #fff;
-  border-right: .05rem solid transparent;
+  border-left: 0.05rem solid transparent;
+  border-top: 0.05rem solid #fff;
+  border-right: 0.05rem solid transparent;
 }
 .s4s-provice {
   width: 100%;
   background: #d8dbdc;
-  position: absolute;
-  bottom: 0;
-  left: 0;
+  /* position: absolute; */
+  /* bottom: 0; */
+  /* left: 0; */
   transform: translateY(0);
   -webkit-transform: translateY(0);
   transition: transform 0.3s ease-out;
   -webkit-transition: -webkit-transform 0.3s ease-out;
 }
-.s4s-provice-tit {
+.s4s-provice-tit,.s4s-provice-tit-hide {
   float: left;
   width: 9%;
   padding: 0.05rem;
   background: #fff;
-  border-radius: .04rem;
+  border-radius: 0.04rem;
   margin-left: 3.09999999%;
   margin-top: 3.09999999%;
   text-align: center;
   font-size: 0.14rem;
 }
+.s4s-provice-tit-hide{
+  width: 33.899999999%;
+  background: #BBC3C7;
+  color: #fff;
+}
+@media screen and (min-width: 500px) {
+  .s4s-provice-tit {
+    width: auto;
+    margin-left: 1.09999999%;
+    margin-top: 1.09999999%;
+  }
+  .s4s-provice-tit-hide{
+    width: 98%;
+    margin-left: 1.09999999%;
+    margin-top: 1.09999999%;
+  }
+}
 .s4s-provice-hover {
   background: #bbb;
   color: #fff;
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #ccc;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color:#ccc;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color:#ccc;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color:#ccc;
+}
+.s4s-help {
+  border-radius: 50%;
+  border: .02rem solid #FE7000;
+  color: #FE7000;
+  font-size: 0.13rem;
+  height: 0.2rem;
+  min-width: 0.2rem;
+  line-height: 0.18rem;
+  text-align: center;
+  font-weight: bold;
+}
+
+.save-container {
+  margin: .1rem .15rem;
+  display: flex;
+  align-items: center;
+}
+
+.save-container span {
+  margin-left: .1rem;
+  color:#666;
+}
+
+.car-list {
+  padding: .25rem 0.15rem 0;
+  color:#333;
+  background-color: #fff;
+  margin-bottom: .12rem;
+}
+
+.car-item {
+  border-bottom: .01rem solid #eaeaea;
+  line-height: .4rem;
+  display: flex;
+  align-items: center;
+}
+
+.car-item:last-child {
+  border-bottom:none;
+}
+.car-title {
+  display: flex;
+  align-items: center;
+}
+
+.car-title span{
+  color:#FE7000;
 }
 </style>

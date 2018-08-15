@@ -44,7 +44,7 @@
             v-show="index < 4 || showMoreSight"
             :key="index">
             <a
-              :href="'/sight/1/' + item.id"
+              :href="host + '/sight/1/' + item.id"
               mip-link>
               <div class="sp-img">
                 <mip-img
@@ -56,7 +56,9 @@
             </a>
           </li>
         </ul>
-        <div class="spec-more">
+        <div
+          v-show="popular_sight.length > 4"
+          class="spec-more">
           <a
             v-show="showMoreSight == false"
             href="javascript:void(0);"
@@ -141,14 +143,14 @@
                 </div>
               </div>
 
-              <!-- 备注 -->
-              <div
-                v-if="item.desc != ''"
-                class="day-item day-remark">
-                <i class="itrip itrip-remark"/>
-                <div class="day-item-cont remark-inf">
-                  {{ item.desc }}
-                </div>
+            </div>
+            <!-- 备注 -->
+            <div
+              v-if="item.desc != ''"
+              class="day-item day-remark">
+              <i class="itrip itrip-remark"/>
+              <div class="day-item-cont remark-inf">
+                {{ item.desc }}
               </div>
             </div>
           </div>
@@ -166,6 +168,10 @@ export default {
   props: {
     'tripid': {
       type: Number,
+      required: true
+    },
+    'host': {
+      type: String,
       required: true
     }
   },
@@ -187,7 +193,12 @@ export default {
       if (!resp || resp == null) return
       this.title = resp.title
       this.feature = resp.feature
-      this.popular_sight = resp.popular_sight
+      this.popular_sight = resp.popular_sight.map(it => {
+        if (it.cover.indexOf('http') !== 0) {
+          it.cover = 'https://m.6renyou.com/statics/img/default.png'
+        }
+        return it
+      })
 
       this.day_list = resp.day_list.map(d => {
         d.status = true
@@ -221,10 +232,10 @@ export default {
       this.day_list = list
     },
     showSightDetail (poi) {
-      MIP.viewer.open('/sight/1/' + poi)
+      MIP.viewer.open(this.host + '/sight/1/' + poi)
     },
     showShowDetail (poi) {
-      MIP.viewer.open('/sight/2/' + poi)
+      MIP.viewer.open(this.host + '/sight/2/' + poi)
     }
   }
 }

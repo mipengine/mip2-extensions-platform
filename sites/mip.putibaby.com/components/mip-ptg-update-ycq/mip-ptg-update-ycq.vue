@@ -47,7 +47,8 @@
           name="name"
           class="name your_name"
           required="required"
-          placeholder="请填写您的称呼"></td>
+          placeholder="请填写您的称呼"
+          @keyup="checkAgain"></td>
       </tr>
     </table>
     <div class="g"/>
@@ -59,7 +60,8 @@
           type="date"
           name="ycq"
           class="name ycq"
-          required="required"></td>
+          required="required"
+          @change="checkAgain"></td>
       </tr>
     </table>
     <div
@@ -387,7 +389,20 @@ export default {
     console.log(this)
     // var pdata = JSON.parse(this.dataJsonstr)
     // var data = pdata.order
-
+    if (sessionStorage.savedState) {
+      var saved = JSON.parse(sessionStorage.savedState)
+      console.log(saved)
+      sessionStorage.clear()
+      return {
+        isLogin: false,
+        isUnion: false,
+        rea: false,
+        dateChecked: saved.dateChecked,
+        name: saved.name,
+        date: saved.date,
+        tuijian: saved.tuijian
+      }
+    }
     return {
       isLogin: false,
       isUnion: false,
@@ -415,10 +430,10 @@ export default {
 
       self.$set(self, 'isLogin', true)
       self.$set(self, 'isUnion', event.userInfo.isUnion)
-      if (!event.userInfo.isUnion) {
-        console.log('logindone to submit_ph')
-        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
-      }
+      // if (!event.userInfo.isUnion) {
+      //   console.log('logindone to submit_ph')
+      //   window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
+      // }
     })
   },
   firstInviewCallback () {
@@ -436,7 +451,27 @@ export default {
     Checked () {
       this.tuijian = !this.tuijian
     },
+    checkAgain () {
+      console.log(this)
+      if (this.name === '' || this.date === '') {
+        this.rea = true
+      } else {
+        this.rea = false
+      }
+    },
     handleSubmit_ () {
+      // save to sessionStorage
+      sessionStorage.savedState = JSON.stringify({
+        name: this.name,
+        date: this.date,
+        dateChecked: this.dateChecked,
+        tuijian: this.tuijian
+      })
+
+      if (!this.isUnion) {
+        console.log('logindone to submit_ph')
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {replace: true})
+      }
       if (this.name === '' || this.date === '') {
         this.rea = true
         return
