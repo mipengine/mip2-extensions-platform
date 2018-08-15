@@ -38,6 +38,9 @@
       <div
         v-show="isloading"
         class="loading">努力加载中...</div>
+      <div
+        v-show="!isloading"
+        class="loading">已经到底了</div>
     </ul>
   </div>
 
@@ -69,7 +72,7 @@ export default {
   data () {
     return {
       list: [],
-      isloading: false
+      isloading: true
     }
   },
   mounted () {
@@ -91,6 +94,7 @@ export default {
         if (!resp || resp === null || resp.length === 0) {
           toast.show('没有更多', options)
           isLoaded = true
+          this.isloading = false
           return
         }
         page++
