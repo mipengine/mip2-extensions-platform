@@ -1,6 +1,6 @@
 <template>
   <div class="search-list">
-    <div class="title_warp">
+    <div class="title_warp aaa">
       共<span>{{ totalCount }}</span>件<h1>{{ keyword }}</h1>相关产品
     </div>
     <div class="list_column">
