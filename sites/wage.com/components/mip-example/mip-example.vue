@@ -3,8 +3,8 @@
     <div 
       v-show="resultShow"
       class="pt55">
-      <mip-fixed 
-        type="top" 
+      <mip-fixed still
+        type = "top"
         class="tag-nav-top">
         <div 
           v-show="resultShow"
