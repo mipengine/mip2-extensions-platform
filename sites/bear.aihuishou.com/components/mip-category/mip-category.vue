@@ -16,31 +16,21 @@
   </div>
 </template>
 <script>
-import Request from '../../common/request.js'
 import config from '../../config.js'
 const baseUrl = config[config.env]['baseUrl'] // 获取当前环境下的baseUrl
 export default {
   data: () => ({
-    categoryList: [],
+    categoryList: [
+      {'id': 1, 'isLeaf': true, 'name': '手机', 'order': 1, 'active': true, 'parent': null, 'position': 0},
+      {'id': 5, 'isLeaf': true, 'name': '笔记本', 'order': 3, 'active': true, 'parent': null, 'position': 1},
+      {'id': 6, 'isLeaf': true, 'name': '平板电脑', 'order': 2, 'active': true, 'parent': null, 'position': 2},
+      {'id': 3, 'isLeaf': false, 'name': '智能数码', 'order': 5, 'active': true, 'parent': null, 'position': 3}],
     baseUrl
   }),
   computed: {
     categoryLength () {
       return this.categoryList.length
     }
-  },
-  async mounted () {
-    const opts = {
-      url: 'https://neon.aihuishou.com/v1/current_app/categories'
-    }
-    let res = null
-    try {
-      res = await Request(opts)
-    } catch (e) {
-      console.warn(e)
-      return false
-    }
-    this.categoryList = res
   }
 }
 </script>
