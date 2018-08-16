@@ -32,7 +32,6 @@ export default {
   },
 
   mounted () {
-    console.log('info', MIP.getData('info'))
     // 自定义login事件
     this.$on('customLogin', event => {
       // 这里可以输出登录之后的数据

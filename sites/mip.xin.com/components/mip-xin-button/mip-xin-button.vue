@@ -9,9 +9,6 @@
         class="preButton button"
         @click="showAsk">我要优惠</button>
       <!-- 电话组件，非百城拨打普通400电话  百城拨打天津400电话池-->
-      <a
-        ref="telPhone"
-        :href="'tel:' + telPhone"/>
       <button
         class="callButton button"
         @click="call">电话客服</button>
@@ -41,9 +38,6 @@
       v-if="source == 4"
       type="bottom"
       class=" buttonWrap reportButton">
-      <a
-        ref="telPhone"
-        :href="'tel:' + telPhone"/>
       <button
         class="askCall button"
         @click="call">电话客服</button>
@@ -180,7 +174,7 @@ export default {
       }).then(res => {
         this.telPhone = res.tel
         this.$nextTick(() => {
-          this.$refs.telPhone.click()
+          window.location.href = 'tel:' + this.telPhone
         })
         if (this.source === '1') {
         // 详情页埋点
