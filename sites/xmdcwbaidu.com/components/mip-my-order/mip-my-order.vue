@@ -569,6 +569,7 @@ export default {
     toPay (theOrder, orderId, orderType) {
       let self = this
       let orderName = self.busType(theOrder.orderType, theOrder.remark)
+      let apitoken = Storage.get('apitoken')
       MIP.setData({
         payConfig: {
           fee: theOrder.amount,
@@ -576,7 +577,8 @@ export default {
           postData: {
             orderId: orderId,
             orderType: orderType,
-            orderName: orderName
+            orderName: orderName,
+            apitoken: apitoken
           }
         }
       })
