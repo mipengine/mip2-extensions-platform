@@ -128,7 +128,9 @@
                     texts: ''
                 },
                 action:'',
-                sure:true
+                sure:true,
+                userId: localStorage.getItem('userId'),
+                token:localStorage.getItem('token')
             }
         },
         mounted () {
@@ -137,7 +139,7 @@
         methods: {
             getState() {
                 var that = this;
-                var url = "/daoway/rest/order/" + that.orderId + "?userId=" + base.userId + "&channel=" + base.channel;
+                var url = "/daoway/rest/order/" + that.orderId + "?userId=" + that.userId + "&channel=" + base.channel;
                 fetch(url, {
                     method: 'get',
                     credentials: "include",
@@ -399,7 +401,28 @@
                     MIP.viewer.open(base.htmlhref.reservation+'?orderId=' + orderId, { isMipLink: true })
                     //再次购买
                 }else  if(action == 'pay'){
-                    //支付
+                    console.log(that.orderhtml)
+                    let totalPrice = that.orderhtml.totalPrice
+                    let couponBill = that.orderhtml.couponBill;
+                    let couponId = that.orderhtml.couponId;
+                    let fixFee = that.orderhtml.fixFee;
+                    let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect='+ encodeURIComponent('http://test.daoway.cn/mip/components/mip-dw-orderdetail/example/mip-dw-orderdetail.html?orderId='+payparam.orderid);
+                    MIP.setData({'payConfig':{
+                        "fee": (totalPrice +fixFee - couponBill).toFixed(2),
+                        "sessionId": that.token,
+                        "redirectUrl":redirectUrl,
+                        "postData":{
+                            orderId: orderId,
+                            token: that.token,
+                            bill: (totalPrice + fixFee - couponBill).toFixed(2),
+                            userId: that.userId,
+                            wallet: 0,
+                            couponId:couponId || '',
+                            "appendOrderId": '',
+                            "returnUrl":redirectUrl
+                        }
+                    }});
+                    that.$emit('actionpay')
                 }else if(action == 'cancelBtn'){
                     that.warn.show = true;
                     that.warn.texts = '确认取消该订单吗';
@@ -425,7 +448,7 @@
             },
             closesure(orderId,action){
                 let that =this;
-                let url = "/daoway/rest/order/" + orderId + "/" + action + "?channel=" + base.channel+"&userId="+ base.userId;
+                let url = "/daoway/rest/order/" + orderId + "/" + action + "?channel=" + base.channel+"&userId="+ that.userId;
                 fetch(url, {
                     method: 'POST',
                     credentials: "include",
@@ -445,11 +468,11 @@
                             that.warn.show = true;
                             that.warn.texts = '订单已完成';
                         }
-
                         setTimeout(() => {
                             that.warn.show = false
                         }, 600)
-                        that.getState();
+                        MIP.viewer.open(base.htmlhref.orderdetail+"?orderId="+that.orderId,{isMipLink: false})
+                        //that.getState();
                     }else {
                         that.warn.show = true;
                         that.warn.texts = text.msg;
@@ -614,13 +637,17 @@
         line-height: 23px;
         background: #fff;
         font-size: 14px;
-        height: 70px;
+        height:100%;
     }
 
     .user div, .city div {
         display: inline-block;
+        line-height: 30px;
     }
 
+    .user{
+       height: 30px;
+    }
 
     .last {
         margin-bottom: 55px;

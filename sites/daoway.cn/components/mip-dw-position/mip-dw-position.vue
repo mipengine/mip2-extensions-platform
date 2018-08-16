@@ -117,9 +117,9 @@
             BaiduMap
         },
         mounted () {
-
-            if(base.userId && base.token){
-                this.userAddress(base.userId,base.token)
+            let userId = localStorage.getItem('userId'),token = localStorage.getItem('token');
+            if(userId && token){
+                this.userAddress(userId)
             }
         },
         methods: {
@@ -166,15 +166,21 @@
                         return res.json();
                     }
                 }).then(function (text) {
-                    that.useraddr2 = text.data;
-                    if(text.data.length > 2){
-                        that.tapshow = true;
-                        that.useraddr = text.data.slice(0,2);
+                    console.log(text)
+                    if(text.status == 'ok'){
+                        that.useraddr2 = text.data;
+                        if(text.data.length > 2){
+                            that.tapshow = true;
+                            that.useraddr = text.data.slice(0,2);
+                        }
+                        that.useraddr3 = text.data.slice(0,2);
+                    }else {
+                        that.warn.show = true;
+                        that.warn.texts = text.msg;
                     }
-                    that.useraddr3 = text.data.slice(0,2);
+
                 }).catch(function (error) {
-                    this.warn.show = true;
-                    this.warn.texts = error.msg;
+                    console.log(error)
                 });
             },
             taptoggle(){
@@ -205,10 +211,15 @@
                         return res.json();
                     }
                 }).then(function (text) {
-                    that.cityList = text.data;
+                    if(text.status == 'ok'){
+                        that.cityList = text.data;
+                    }else {
+                        this.warn.show = true;
+                        this.warn.texts = text.msg;
+                    }
+
                 }).catch(function (error) {
-                    this.warn.show = true;
-                    this.warn.texts = error.msg;
+                    console.log(error)
                 });
             },
             tocity(){
@@ -243,8 +254,7 @@
                     }
                     that.cityLists = ary;
                 }).catch(function (error) {
-                    this.warn.show = true;
-                    this.warn.texts = error.msg;
+                    console.log(error)
                 });
             },
             tocommunity(city){

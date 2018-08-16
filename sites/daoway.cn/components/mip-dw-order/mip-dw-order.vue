@@ -70,13 +70,19 @@
     import '../../common/utils/base.less'
     import login from '../../common/utils/login'
     export default {
+        props: {
+            payConfig: {
+                type: Object,
+                default: function () { return {} }
+            },
+        },
         data(){
             return {
                 index: 0,
                 filter: 'ALL',
                 noList: false,
                 noMoreList: false,
-                userPhone: base.userId,
+                userPhone: '',
                 loading:'',
                 param:{},
                 sure:true,
@@ -123,13 +129,20 @@
                 client_id:'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
                 ClientSecret:'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
                 code: base.getRequest(location.href).code,
+                userId:localStorage.getItem('userId'),
+                token:localStorage.getItem('token')
             }
         },
         mounted () {
-            if(this.code){
-                login.codelogin(this.code);
+            if(this.token && this.userId){
+                this.getOrderList(0)
+            }else {
+                if(this.code){
+                    login.codelogin(this.code);
+                }else {
+                    this.goLoginPage();
+                }
             }
-            this.getOrderList(0)
         },
         methods: {
             getOrderList(index) {
@@ -144,8 +157,7 @@
                     status = "&status=" + filter;
                 }
                 var start = orderitem.items.length;
-
-                let url = "/daoway/rest/orders/bought_by/" + base.userId + "?channel=" + base.channel + "&start=" + start + "&size=20" + status;
+                let url = "/daoway/rest/orders/bought_by/" + that.userId + "?channel=" + base.channel + "&start=" + start + "&size=50" + status;
                 fetch(url, {
                     method: 'get',
                     credentials: "include"
@@ -173,6 +185,7 @@
                         }
                         return;
                     }
+
                     for (var i = 0; i < len; i++) {
                         var item = text.data[i];
                         var statusId = item.statusId;
@@ -222,8 +235,8 @@
                                     action: 'confirmBtn',
                                     param: item.orderId
                                 };
-                                var appendBill = item.appendBill;
-                                /* if (appendBill == 0) {
+                                /*var appendBill = item.appendBill;
+                                 if (appendBill == 0) {
                                  item.button2 = {
                                  text: "补差价",
                                  action: 'fn',
@@ -320,8 +333,7 @@
                     that.filter = filter;
                     that.orderitems = orderitems;
                 }).catch(function (error) {
-                    that.warn.show = true;
-                    that.warn.texts = error;
+                    console.log(error)
                 });
             },
             changeTab: function (index) {
@@ -355,6 +367,7 @@
             // 完成订单
             toaction: function (param) {
                 var that = this;
+                let payparam = param.param
                 var text = param.text;
                 if(param.text == '再次购买'){
                     MIP.viewer.open(base.htmlhref.reservation+'?orderId=' + param.param.orderId, { isMipLink: true })
@@ -367,7 +380,23 @@
                     that.warn.texts = '确定取消订单？';
                     that.param = param;
                 }else if(param.text == '立即支付'){
-                    console.log('立即支付')
+                    let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect='+ encodeURIComponent('http://test.daoway.cn/mip/components/mip-dw-orderdetail/example/mip-dw-orderdetail.html?orderId='+payparam.orderid);
+                    MIP.setData({'payConfig':{
+                        "fee": (payparam.totalPrice + payparam.fixFee - payparam.coupon).toFixed(2),
+                        "sessionId": that.token,
+                        "redirectUrl":redirectUrl,
+                        "postData":{
+                            orderId: payparam.orderid,
+                            token: that.token,
+                            bill: (payparam.totalPrice + payparam.fixFee - payparam.coupon).toFixed(2),
+                            userId: that.userId,
+                            wallet: 0,
+                            couponId:payparam.couponId || '',
+                            "appendOrderId": '',
+                            "returnUrl":redirectUrl
+                        }
+                    }});
+                    that.$emit('actionpay');
                 }
             },
             close(){
@@ -385,8 +414,7 @@
             },
             closesure(orderId,action){
                 let that = this;
-                //console.log(orderId,action)
-                let url = "/daoway/rest/order/" + orderId + "/" + action + "?channel=" + base.channel +"&userId="+ base.userId;
+                let url = "/daoway/rest/order/" + orderId + "/" + action + "?channel=" + base.channel +"&userId="+ that.userId;
                 fetch(url, {
                     method: 'POST',
                     credentials: "include",
@@ -401,18 +429,17 @@
                             that.sure = false;
                             that.warn.show = true;
                             that.warn.texts = '订单已取消';
-                            console.log(that.warn.texts)
                         }else if(action == "buyer_confirm"){
                             that.sure = false;
                             that.warn.show = true;
                             that.warn.texts = '订单已完成';
-
                         }
-                        that.getOrderList(that.index)
+
                         setTimeout(() => {
                             that.warn.show = false;
+                            MIP.viewer.open(base.htmlhref.order,{isMipLink: false})
                         }, 600)
-                        //MIP.viewer.open(base.htmlhref.order,{isMipLink: true});
+
                     }else {
                         that.warn.show = true;
                         that.warn.texts = text.msg;
@@ -423,6 +450,11 @@
             },
             toorderdetail(id){
                 MIP.viewer.open(base.htmlhref.orderdetail+'?orderId='+id, { isMipLink: true })
+            },
+            goLoginPage: function () {
+                let that = this;
+                let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id='+that.client_id+'&redirect_uri='+that.redirect_uri+'&scope=snsapi_userinfo&state=STATE';
+                MIP.viewer.open(url)
             }
         }
 

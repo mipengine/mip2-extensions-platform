@@ -17,11 +17,31 @@
     </style>
 </head>
 <body>
+<mip-data>
+    <script type="application/json">
+        {
+            "payConfig": {
+                "subject": "到位订单支付",
+                "fee": 0,
+                "sessionId": "",
+                "redirectUrl": "",
+                "endpoint": {
+                    "alipay":"http://t.daoway.cn/daoway/rest/pay/ali_mip_prepay",
+                    "weixin":"https://test.daoway.cn/daoway/rest/pay/wx_mip_prepay"
+                },
+                "postData": {
 
-<div><mip-dw-orderdetail></mip-dw-orderdetail></div>
+                }
+            }
+        }
+    </script>
+</mip-data>
+<mip-inservice-pay m-bind:pay-config="payConfig" id="payDialog"></mip-inservice-pay>
+<div><mip-dw-orderdetail on="actionpay:payDialog.toggle"></mip-dw-orderdetail></div>
 
 
-<script src="https://bos.nj.bpc.baidu.com/assets/mip/projects/mip.js"></script>
+<script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+<script src="https://c.mipcdn.com/static/v2/mip-inservice-pay/mip-inservice-pay.js"></script>
 <script src="/mip-dw-orderdetail/mip-dw-orderdetail.js"></script>
 <!--
 <script src="https://c.mipcdn.com/static/v2/mip.js"></script>

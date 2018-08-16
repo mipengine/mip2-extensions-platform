@@ -7,7 +7,7 @@
                     <img :src="userInfo.levelIcon" class="starimg">
                 </div>
             </div>
-            <div class="txt2" v-else="" @click="goLoginPage">请登录</div>
+            <div class="txt2" v-if="!userId" @click="goLoginPage">请登录</div>
         </div>
         <div class="mylist" v-if="userInfo.couponCount" style='margin-top:0; border:0' @click="goVouchersPage" >
             <div class="item">
@@ -46,7 +46,6 @@
                 <p class="layer-sure active-layer" @touchend="closeLayer">知道了</p>
             </div>
         </div>
-
     </div>
 </template>
 <script>
@@ -74,11 +73,12 @@
             }
         },
         mounted () {
-            this.userId = base.userId ||localStorage.getItem('userId');
-            if(this.code){
-                login.codelogin(this.code)
-            }
-            if(this.userId){
+            this.userId =localStorage.getItem('userId');
+            if(this.code || this.userId){
+                login.codelogin(this.code);
+                let token = localStorage.getItem('token');
+                document.cookie = 'token='+token;
+                this.token = token;
                 this.getmyhtml();
             }
         },
@@ -95,12 +95,16 @@
                 fetch(url, {
                     method: 'get',
                     credentials: "include",
-                    headers: {'content-type': 'application/x-www-form-urlencoded'},
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded',
+                        'cookie':'token='+ this.token
+                    },
                 }).then(function (res) {
                     if (res && res.status == "200") {
                         return res.json();
                     }
                 }).then(function (text) {
+                    console.log(text);
                     if(text.status == 'ok'){
                         var data = text.data;
                         let userInfo = {};
@@ -127,8 +131,8 @@
                         }
                         that.userInfo = userInfo;
                     }else {
-                        that.warn.show = true;
-                        that.warn.texts = text.msg;
+                       /* that.warn.show = true;
+                        that.warn.texts = text.msg;*/
                     }
                 }).catch(function (error) {
                     console.log(error)
@@ -157,8 +161,6 @@
             toabout(){
                 MIP.viewer.open(base.htmlhref.about, { isMipLink: true })
             }
-
-
         }
     }
 </script>

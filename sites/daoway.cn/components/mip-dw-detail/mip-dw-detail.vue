@@ -171,16 +171,15 @@
                 apptime :null,
                 appointTime:'',
                 limitNum:1,
-                redirect_uri:'http://test.daoway.cn/mip/components/mip-dw-detail/example/mip-dw-detail.html?id='+id,
+                redirect_uri:'',
                 client_id:'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
                 ClientSecret:'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
                 code: base.getRequest(location.href).code,
+                id2:'',
+                toservation:''
             }
         },
         mounted () {
-            if(this.code){
-                login.codelogin(this.code);
-            }
             this.detailstr();
         },
         methods: {
@@ -195,10 +194,11 @@
                     }
                 }).then(function (text) {
                     let data = text.data;
+                    console.log(data)
                     that.service = data.service;
-                    var sericePrice = data.sericePrice;
+                    let sericePrice = data.sericePrice;
                     that.sericePrice = sericePrice;
-                    var lastComment = data.service.lastComment;
+                    let lastComment = data.service.lastComment;
                     lastComment.time = base.timeformat(lastComment.createtime, "yyyy-MM-dd");
                     that.appointTime = data.service.nextAppointTime;
                     that.service.nextime = base.timeformat(data.service.nextAppointTime, "appDate HH:mm")
@@ -314,16 +314,20 @@
                 var price = that.price;
                 var totalPrices = price * quantity;
                 sessionStorage.setItem('apptime','');
+                let userId = localStorage.getItem('userId');
+                let token = localStorage.getItem('token');
+
+                /*跳转带出去的参数*/
+                let priceId = that.priceId;
+                let priceMap = {};
+                priceMap.id = priceId;
+                priceMap.quantity = quantity;
                 if (minBuyPrice > totalPrices) {
                     this.warn.show = true;
                     this.warn.texts = '该店铺需满' + minBuyPrice + '元起购，还差' + (minBuyPrice - totalPrices) + '元即可下单哦~';
                 } else {
-                    if(base.userId && base.token){
-                        var priceId = that.priceId;
-                        var priceMap = {};
-                        priceMap.id = priceId;
-                        priceMap.quantity = quantity;
-                        var param = {
+                    if(userId && token){
+                        let param = {
                             serviceId: that.serviceId,
                             priceId: that.priceId,
                             quantity: quantity,
@@ -333,15 +337,20 @@
                         param =JSON.stringify(param);
                         MIP.viewer.open(base.htmlhref.reservation+"?param="+encodeURIComponent(param), { isMipLink: true })
                     }else {
-                        let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id='+that.client_id+'&redirect_uri='+that.redirect_uri+'&scope=snsapi_userinfo&state=STATE';
-                        MIP.viewer.open(url)
+                        let baseparam = base.setUrlParam({
+                            serviceId: that.serviceId,
+                            priceId: that.priceId,
+                            quantity: quantity,
+                            appointTime: that.appointTime,
+                            priceType: that.priceType
+                        });
+                        let redirect_uri = 'http://test.daoway.cn/mip/components/mip-dw-reservation/example/mip-dw-reservation.html?'+baseparam;
+
+                        let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id='+that.client_id+'&redirect_uri='+ encodeURIComponent(redirect_uri) +'&scope=snsapi_userinfo&state=STATE';
+                        MIP.viewer.open(url, { isMipLink: true })
                     }
-
                 }
-
-
             }
-
         }
     }
 </script>

@@ -10,16 +10,26 @@
 
         <div class="banner" >
             <swiper :options="swiperOption">
-                <div class="swiper-slide" v-for="i in banners">
-                    <img :src="i.imgUrl" @click="link(i.target)">
+               <div class="swiper-slide" v-for="i in banners">
+                   <img :src="i.imgUrl" @click="link(i.target)">
+               </div>
+               <div class="swiper-pagination" slot="pagination"></div>
+           </swiper>
+            <div class="mip-carousel-indicator-wrapper">
+                <div class="mip-carousel-indicatorDot" id="mip-carousel-example">
+                    <div class="mip-carousel-activeitem mip-carousel-indecator-item"></div>
+                    <div class="mip-carousel-indecator-item"></div>
+                    <div class="mip-carousel-indecator-item"></div>
                 </div>
-                <div class="swiper-pagination" slot="pagination"></div>
-            </swiper>
+            </div>
         </div>
         <div class="service-item">
-            <ul>
-                <li v-for="m in fenleiary" v-bind:id="m.id" @click="toserviceclass(m.id)"><img :src="m.iconUrl2"><i>{{m.name}}</i></li>
-            </ul>
+            <swiper :options="swiperOption2">
+                <ul class="swiper-slide" v-for="m in fenleiary">
+                    <li v-for="t in m" v-bind:id="m.id" @click="toserviceclass(t.id)"><img :src="t.iconUrl2"><i>{{t.name}}</i></li>
+                </ul>
+                <div style="bottom: 5px" class="swiper-pagination" slot="pagination"></div>
+            </swiper>
         </div>
         <div class="project">
             <div class="h2">即刻达<span>最快30分钟上门</span></div>
@@ -60,8 +70,6 @@
     import { swiper, swiperSlide } from 'vue-awesome-swiper'
     import BaiduMap from '../../node_modules/vue-baidu-map/components/map/Map.vue'
 
-
-
     export default {
         data() {
             return {
@@ -89,6 +97,18 @@
                         clickable: true
                     }
                 },
+                swiperOption2: {
+                    spaceBetween: 30,
+                    autoplay: {
+                        delay: 0,
+                        stopOnLastSlide: true,
+                        disableOnInteraction: true,
+                    },
+                    pagination: {
+                        el: '.swiper-pagination',
+                        clickable: true
+                    }
+                },
                 ak: 'epGAmM09OL7Lwy7cIu47pxzK',
                 scroll:false
             }
@@ -100,6 +120,7 @@
         },
         mounted () {
             let that = this;
+            window.addEventListener('scroll', that.handleScroll)
             window.addEventListener('show-page', (e) => {
                 that.position = base.getposition();
                 that.callBack();
@@ -109,7 +130,6 @@
                 that.position = base.getposition();
                 that.callBack();
             }
-            window.addEventListener('scroll', that.handleScroll)
         },
         methods: {
             handler ({BMap}) {
@@ -138,12 +158,16 @@
                         return res.json();
                     }
                 }).then(function (text) {
-                    that.position = text.data[0];
-                    that.callBack();
-                    that.position = base.position(that.position);
+                    if(text.status == 'ok'){
+                        that.position = text.data[0];
+                        that.callBack();
+                        that.position = base.position(that.position);
+                    }else {
+                        this.warn.show = true;
+                        this.warn.texts = error;
+                    }
                 }).catch(function (error) {
-                    this.warn.show = true;
-                    this.warn.texts = error;
+                    console.log(error)
                 });
             },
             handleScroll () {
@@ -153,7 +177,6 @@
                 }else {
                     this.scroll = false
                 }
-
             },
             callBack(){
                 var that = this;
@@ -197,6 +220,7 @@
                 let that = this;
                 let position = that.position;
                 let url = "/daoway/rest/category/for_filter?manualCity=" + encodeURIComponent(position.city) + "&weidian=true&recommendOnly=true&includeChaoshi=false&includeSecondPage=true&hasChaoshi=false&includeExtCategory=true&channel=" + base.channel;
+
                 fetch(url, {
                     method: 'get'
                 }).then(function (res) {
@@ -204,14 +228,17 @@
                         return res.json();
                     }
                 }).then(function (text) {
+                    console.log(text)
                     let data = text.data;
+                    var filterArr = [];
+                    var arr1 = data.splice(0, 10);
+                    filterArr.push(arr1, data);
                     let ext = text.ext;
-                    that.fenleiary = data.splice(0, 10);
+                    that.fenleiary = filterArr;
                     that.ext = ext;
 
                 }).catch(function (error) {
-                    this.warn.show = true;
-                    this.warn.texts = error.msg;
+                   console.log(error)
                 });
             },
             servicelist(){//分类
@@ -242,8 +269,8 @@
             },
             toposition(){//跳转到服务列表页
                 MIP.viewer.open(base.htmlhref.position, {isMipLink: true})
-            },
-        },
+            }
+        }
 
     };
 </script>
@@ -303,11 +330,12 @@
     .banner {
         height: 155px;
         position: relative;
-        bottom: 40px;
+        bottom: 0;
     }
 
     .swiper-slide img{
-        width: 100%;
+        height: 155px;
+        width: auto;
     }
     .swiper-pagination-bullets .swiper-pagination-bullet-active{
         background: #fb461c;

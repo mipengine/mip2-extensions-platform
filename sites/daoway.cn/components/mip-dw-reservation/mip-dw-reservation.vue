@@ -20,7 +20,7 @@
                     <div @touchend ='totime'><i class="re-time">{{formatTime}}</i><img class="re-more" src="https://www.daoway.cn/h5/image/go_06.png">
                     </div>
                 </li>
-                <li v-if="canChooseTechnician" v-bind:id="selectedTechnical.technicianId" @touchend="totechnical(selectedTechnical.technicianId)"><span><img src="https://www.daoway.cn/images/icon3.jpg">服务人员</span>
+                <li v-if="canChooseTechnician && selectedTechnical" v-bind:id="selectedTechnical.technicianId" @touchend="totechnical(selectedTechnical.technicianId)"><span><img src="https://www.daoway.cn/images/icon3.jpg">服务人员</span>
                     <div><i class="re-tech">{{selectedTechnical.name}} {{selectedTechnical.sex}} <img :src="selectedTechnical.photoURL"></i><img class="re-more" src="https://www.daoway.cn/h5/image/go_06.png"></div>
                 </li>
             </ul>
@@ -67,14 +67,12 @@
             </div>
 
 
+
             <div class="footer">
-
-
-
                 <div class="gomai">
                     待支付
                     <div class="pricenum">{{alltotalPrices}}元</div>
-                    <button  class="btn2" @click="tobuy">立即购买</button>
+                    <button class="btn2" @click="tobuy">立即购买</button><!-- -->
                 </div>
             </div>
         </div>
@@ -89,45 +87,26 @@
                 <p class="layer-sure active-layer" @touchend="closeLayer">知道了</p>
             </div>
         </div>
+
+
+
+
+
+
     </div>
 </template>
 
 <script>
     import base from '../../common/utils/base'
     import '../../common/utils/base.less'
+    import login from '../../common/utils/login'
+    base.setHtmlRem()
     export default {
         props: {
-            globaldata: {
-                type: Object,
-                default: function () { return {} }
-            },
             payConfig: {
                 type: Object,
-                default: function () { return {
-                
-                payConfig:{
-                        subject:"支付商品",
-                        fee: 300,
-                        sessionId:"c8fbd3e0-a617-4eac-84b3-1f289c5ce857",
-                        redirectUrl:"https://api.example.com/pay/verifypay",
-                        endpoint:{
-                            baifubao:  "https://api.example.com/pay/baifubao",
-                            alipay:  "https://api.example.com/pay/alipay",
-                            weixin:  "https://api.example.com/pay/weixin"
-                        },
-                        postData:{
-                            orderId: 235,
-                            token: "xxxx",
-                            anydata:"anydata"
-                        }
-                }
-                
-                } }
-            },
-            userlogin: {
-                type: Object,
                 default: function () { return {} }
-            }
+            },
         },
         data(){
             return{
@@ -140,12 +119,13 @@
                 totalPrice:0,
                 prices: [],
                 formatTime: '',
+                priceId:base.getRequest(location.href).priceId || '',
                 nextAppointTime: '',
-                appointTime: '',
+                appointTime: base.getRequest(location.href).appointTime || '',
                 noFixFeePrice:0,
                 fixFee: 0,
                 minBuyPrice: 0,
-                quantity:0,
+                quantity: base.getRequest(location.href).quantity || 1,
                 realyFixFee:0,
                 alltotalPrices:0,
                 minBuyNum:1,
@@ -157,13 +137,21 @@
                 addr : '',
                 communityId:'',
                 canChooseTechnician:false,
-                serviceId:'',
+                serviceId:base.getRequest(location.href).serviceId || '',
                 coupone:'',
                 orderId:base.getRequest(location.href).orderId,
+                orderInfo:{},
+                code:base.getRequest(location.href).code,
+                userId:localStorage.getItem('userId') || base.userId,
             };
+
         },
         mounted () {
+            //this.setdatas();
             var that = this;
+            if(this.code && !this.userId){
+                login.codelogin(this.code);
+            }
             that.position = base.getposition();
             if(that.orderId){
                 that.buyAgain(that.orderId)
@@ -199,10 +187,11 @@
             gethtml(){
                 let that = this;
                 let position = that.position;
-                that.prices = that.param.prices || '';
+                //that.prices = that.param.prices || '';
                 that.appointTime = that.param.appointTime || '';
-                that.quantity= that.param.quantity;
-                let url = "/daoway/rest/service/" + that.param.serviceId || that.serviceId + "?manualCity=" + encodeURIComponent(position.city)+ "&lot=" + position.lot + "&lat=" + position.lat + "&channel=" + base.channel;
+                that.quantity= that.param.quantity || that.quantity;
+                let serviceId = that.param.serviceId || that.serviceId;
+                let url = "/daoway/rest/service/" + serviceId + "?manualCity=" + encodeURIComponent(position.city)+ "&lot=" + position.lot + "&lat=" + position.lat + "&channel=" + base.channel;
                 fetch(url, {
                     method: 'get',
                 }).then(function (res) {
@@ -210,47 +199,52 @@
                         return res.json();
                     }
                 }).then(function (text) {
-                    let data = text.data;
-                    let pricesItem = data.prices;
-                    let priceIds = that.param.priceId;
-                    let prices = [];
-                    if(pricesItem) {
-                        for(let i = 0; i < pricesItem.length; i++) {
-                            if(priceIds == pricesItem[i].id) {
-                                prices.push(pricesItem[i]);
+                    if(text.status == 'ok'){
+                        let data = text.data;
+                        let pricesItem = data.prices;
+                        let priceIds = that.param.priceId ||that.priceId;
+                        let prices = [];
+                        if(pricesItem) {
+                            for(let i = 0; i < pricesItem.length; i++) {
+                                if(priceIds == pricesItem[i].id) {
+                                    prices.push(pricesItem[i]);
+                                }
                             }
-                        }
-
-                        if(!prices) {
+                            if(!prices) {
+                                that.warn.show = true;
+                                that.warn.texts = "该项目已下线";
+                            }
+                        } else {
                             that.warn.show = true;
                             that.warn.texts = "该项目已下线";
                         }
-                    } else {
+                        let apptime = Number(sessionStorage.getItem('apptime'));
+                        that.serviceId = data.id;
+                        that.noFixFeePrice = data.noFixFeePrice;
+                        that.fixFee = data.fixFee;
+                        that.nextAppointTime = data.nextAppointTime;
+                        that.appointTime = apptime ? apptime: that.param.appointTime  || data.nextAppointTime;
+                        that.formatTime = base.timeformat(that.appointTime, "MM月dd日(day) HH:mm");
+                        that.prices = prices;
+                        that.minBuyNum = prices[0].minBuyNum ||1;
+                        that.quantity =  that.param.quantity || that.quantity;
+                        that.totalPrice = (prices[0].price* that.quantity).toFixed(2);
+                        that.alltotalPrices = Number(that.totalPrice + data.fixFee).toFixed(2);
+                        that.canChooseTechnician = data.canChooseTechnician;
+                        that.setFixFee(data);
+                        that.setPostion();
+                    }else {
                         that.warn.show = true;
-                        that.warn.texts = "该项目已下线";
+                        that.warn.texts = text.msg;
                     }
-                    let apptime = Number(sessionStorage.getItem('apptime'));
-                    that.serviceId = data.id;
-                    that.noFixFeePrice = data.noFixFeePrice;
-                    that.fixFee = data.fixFee;
-                    that.nextAppointTime = data.nextAppointTime;
-                    that.appointTime = apptime ? apptime: that.param.appointTime  || data.nextAppointTime;
-                    that.formatTime = base.timeformat(that.appointTime, "MM月dd日(day) HH:mm");
-                    that.prices = prices;
-                    that.minBuyNum = prices[0].minBuyNum;
-                    that.totalPrice = prices[0].price*that.param.quantity.toFixed(2);
-                    that.alltotalPrices = that.totalPrice + data.fixFee;
-                    that.canChooseTechnician = data.canChooseTechnician;
-                    that.setFixFee(data);
-                    that.setPostion();
+
                 }).catch(function (error) {
-                    that.warn.show = true;
-                    that.warn.texts = error.msg;
+                    console.log(error)
                 });
             },
             getCoupone(){
                 let that = this;
-                let url ='/daoway/rest/coupon/user/' + base.userId +'?serviceId='+ that.serviceId + "&bill=" + that.totalPrice +'&ignoreMinBill=false&priceIds='+ (that.param.priceIds || that.priceId) + '&channel=' + base.channel;
+                let url ='/daoway/rest/coupon/user/' + that.userId +'?serviceId='+ that.serviceId + "&bill=" + that.totalPrice +'&ignoreMinBill=false&priceIds='+ (that.param.priceIds || that.priceId) + '&channel=' + base.channel;
                 fetch(url, {
                     method: 'get',
                     credentials: "include"
@@ -260,7 +254,7 @@
                     }
                 }).then(function (text) {
                     if(text.status== 'ok'){
-                        if(text.data && text.data[0].bill >0){
+                        if(text.data[0] &&　text.data[0].bill >0){
                             that.coupone = text.data[0];
                             that.alltotalPrices = parseFloat((that.totalPrice + that.realyFixFee - that.coupone.bill).toFixed(2));
                         }
@@ -285,6 +279,7 @@
                 that.getCoupone();
             },
             add(counter,price){
+                counter = Number(counter)
                 var that = this;
                 if(counter > that.prices.limit){
                     this.warn.show = true;
@@ -302,6 +297,7 @@
             },
             jian(counter,price){
                 var that = this;
+                counter = Number(counter)
                 let couponebill = 0;
                 if(that.coupone){
                     couponebill = that.coupone.bill || 0;
@@ -352,6 +348,7 @@
                 if (that.doorNum) {
                     url += "&house=" + encodeURIComponent(that.doorNum);
                 }
+                console.log(url)
                 fetch(url, {
                     method: 'get',
                 }).then(function (res) {
@@ -380,6 +377,7 @@
             toposition(){
                 MIP.viewer.open(base.htmlhref.position+'?technicianId='+id+'&reservation=true', { isMipLink: true })
             },
+
             tovouchers(){
                 let that = this;
                 let serviceId = that.serviceId;
@@ -403,7 +401,7 @@
             },
             buyAgain(orderId) {
                 var that = this;
-                let url = "/daoway/rest/order/" + orderId + "/again?userId=" + base.userId + "&channel=" + base.channel;
+                let url = "/daoway/rest/order/" + orderId + "/again?userId=" + that.userId + "&channel=" + base.channel;
                 fetch(url, {
                     method: 'get'
                 }).then(function (res) {
@@ -461,13 +459,113 @@
 
             },
             tobuy(){
-            /* 	 console.log("tobuy");
-            	document.getElementById("payDialog").toggle(); 
-            	 console.log(document.getElementById("payDialog"));*/
-            	 let self = this;
-            	 self.$emit('actionpay')
-            },
+                let that = this;
+                let token = localStorage.getItem('token');
+                document.cookie = 'token='+token +';path=/';
+                let tobaiduorder = '';
+                let addr = that.addr;
+                let doorNum = that.doorNum;
+                let contactPerson = that.contactPerson;
+                let phone = that.phone;
+                let reg1 = /^1[3,4,5,8,7][0-9]{9}$/;
+                if (!addr) {
+                    that.warn.show = true;
+                    that.warn.texts = "请选择地址";
+                }if (!doorNum) {
+                    that.warn.show = true;
+                    that.warn.texts = "请填写楼层，门牌号";
+                } else if (!contactPerson) {
+                    that.warn.show = true;
+                    that.warn.texts = "请填写联系人姓名";
+                } else if (!phone) {
+                    that.warn.show = true;
+                    that.warn.texts = "请填写手机号";
+                } else if (!reg1.test(phone)) {
+                    that.warn.show = true;
+                    that.warn.texts = "请填写正确的手机号";
+                } else if (that.minBuyPrice > that.totalPrice) {
+                    var temp = (that.minBuyPrice - that.totalPrice).toFixed(2);
+                    that.warn.show = true;
+                    that.warn.texts = '该店铺需满' + that.minBuyPrice + '元起购，还差' + temp + '元即可下单哦~';
+                }else {
+                    let position = that.position;
+                    let ary =[];
+                    for (let i = 0; i < that.prices.length; i++){
+                        let items = {};
+                        let pr = that.prices[i];
+                        items.priceId = pr.id;
+                        items.quantity = that.quantity;
+                        ary.push(items);
+                    }
+                    let token = localStorage.getItem('token');
+                    let anydata = {
+                        "userId": that.userId,
+                        "serviceId": that.serviceId,
+                        "note": that.note || null,
+                        "address": that.addr + " " + that.doorNum,
+                        "appointTime": base.timeformat(that.appointTime, "yyyy-MM-dd HH:mm:ss"),
+                        "contactPerson": contactPerson,
+                        "items": ary,
+                        "addrLot": position.lot,
+                        "addrLat": position.lat,
+                        "city": position.city,
+                        "communityId": position.communityId || position.id,
+                        "street": position.addr,
+                        "house": position.doorNum,
+                        "fixFee": that.realyFixFee,
+                        "phone": that.phone,
+                        "technicianId":that.selectedTechnical?that.selectedTechnical.technicianId: '',
+                        "extraFee": 0,
+                        "extraInfo": "",
+                        "couponId": that.coupone ? that.coupone.id :null
+                    };
+                   anydata = JSON.stringify(anydata);
+                    let url = "/daoway/rest/orders/v2?h5=true&channel=" + base.channel;
+                    fetch(url, {
+                        method: 'POST',
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: anydata,
+                    }).then(function (res) {
+                        if (res && res.status == "200") {
+                            return res.json();
+                        }
+                    }).then(function (text) {
+                        if(text.status == 'ok'){
+                            console.log(text.data)
+                            let tobaiduorder = text.data.orderId;
+                            let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect='+ encodeURIComponent('http://test.daoway.cn/mip/components/mip-dw-orderdetail/example/mip-dw-orderdetail.html?orderId='+payparam.orderid);
+                            console.log(that.coupone)
+                            MIP.setData({'payConfig':{
+                                "fee": that.alltotalPrices,
+                                "sessionId": token,
+                                "redirectUrl":redirectUrl,
+                                "postData":{
+                                    "orderId": tobaiduorder,
+                                    "token": token,
+                                    bill: that.alltotalPrices,
+                                    userId: that.userId,
+                                    wallet: 0,
+                                    couponId:that.coupone?that.coupone.id :'',
+                                    "appendOrderId": '',
+                                    "returnUrl":redirectUrl
+                                }
+                            }});
+                            that.$emit('actionpay')
+                        }else {
+                            that.warn.show = true;
+                            that.warn.texts = text.msg;
+                        }
+                    }).catch(function (error) {
+                        console.log(error)
+                    });
 
+
+                }
+
+            },
 
         }
     }
