@@ -185,9 +185,7 @@ export default {
     }
   },
   mounted () {
-    console.log('info', MIP.getData('info'))
     this.info = MIP.getData('info')
-    console.log('this.info1', this.info)
     this.telValue = getLocalStorage('phoneAskNumber')
     if (this.telValue) {
       this.telCorrect = true
@@ -199,7 +197,6 @@ export default {
       // 后端交互会话标识
       // event.sessionId;
       if (event.userInfo && getQuery().state) {
-        console.log(this, event.userInfo)
         this.bottomPrice()
       }
       console.log('授权成功')
@@ -223,7 +220,6 @@ export default {
       document
         .querySelector('#askPrice')
         .addEventListener('touchmove', function (e) {
-          console.log([e.target])
           if (
             e.target.className.indexOf('-scroll') < 0 &&
             e.target.parentNode.className.indexOf('-scroll') < 0
@@ -280,7 +276,6 @@ export default {
         param: param
       })
         .then(res => {
-          console.log('res', res)
           if (res.reco) {
             this.carList = res.reco
             this.carList.map((item, index) => {

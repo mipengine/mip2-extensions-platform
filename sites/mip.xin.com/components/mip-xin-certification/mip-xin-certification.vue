@@ -773,6 +773,7 @@ export default {
 .car-unprofor-desc {
   color: #848484;
   font-size: 0.26rem;
+  white-space: nowrap;
 }
 
 .car-unprofor-box {
