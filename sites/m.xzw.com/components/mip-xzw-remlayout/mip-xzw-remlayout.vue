@@ -27,7 +27,7 @@ export default {
       MIP.viewport.on('resize', function () {
         that.screenWidth = MIP.viewport.getWidth()
       })
-    }  
+    }
   },
   methods: {
     remChange: function (vw) {
