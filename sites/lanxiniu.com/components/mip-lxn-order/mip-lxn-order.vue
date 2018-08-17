@@ -449,6 +449,10 @@ export default {
   },
   watch: {
     globaldata (val, oldval) {
+      console.log('查看之前的城市:' + oldval.ordercity + '=============现在的城市:' + val.ordercity)
+      if (val.ordercity !== oldval.ordercity) {
+        this.getCurrentCityCarTypes(val.ordercity)
+      }
       this.calPrice()
     }
   },
@@ -486,11 +490,6 @@ export default {
 
     // 设置波纹效果
     this.clickRipple()
-
-    // setTimeout(() => {
-    //   console.log('测试=====click_token=======')
-    //   console.log(this.mipClickToken)
-    // }, 2000)
   },
 
   methods: {
@@ -614,7 +613,6 @@ export default {
               this.floorAndTime.move.data = item.stairsFee
             }
           })
-
           this.RestoreData()
         })
     },
@@ -851,6 +849,8 @@ export default {
     },
     // 切换车型数据
     changeTabData (index, isRestoreData) {
+      console.log('查看当前数据:' + index)
+      console.log('查看当前数据:' + isRestoreData)
       let move = this.floorAndTime.move
       let data = this.carTypes[index]
       //   更新当前楼层价格数据
@@ -994,6 +994,17 @@ export default {
     },
 
     RestoreData () {
+      let promas = base.getRequest()
+      if (promas.hasOwnProperty('cardnum')) {
+        //   有从卡片进入的标志
+        this.homePageInto()
+      } else {
+        //  无从卡片进入的标志
+        this.reduction()
+      }
+    },
+    // 还原数据-----级别与homePageInto相同
+    reduction () {
       let floorAndTime = this.floorAndTime
       let data = base.getSession()
       console.log(data)
@@ -1016,7 +1027,16 @@ export default {
             carTypeItem.index = 2
             break
         }
-
+        if (this.hide && carTypeItem.index === 2) {
+          carTypeItem.index = 0
+          let obj = {
+            carType: 3
+          }
+          console.log(JSON.stringify(obj, null, 2))
+          let datas = base.mipExtendData(this.globaldata, obj)
+          base.mipSetGlobalData(obj)
+          base.setSession(datas)
+        }
         this.changeTab(carTypeItem, true)
 
         let str1 = ',楼层费'
@@ -1047,6 +1067,40 @@ export default {
           this.calPrice()
         }, 300)
       }
+    },
+
+    // 从卡片进入页面根据url参数进行车型选择
+    homePageInto () {
+      console.log('========从卡片进入页面根据url参数进行车型选择==============')
+      let promas = base.getRequest()
+      //   if (promas.hasOwnProperty('cardnum')) {
+      let index = promas.cardnum
+      //   let carTypeItem = {
+      //     index: index
+      //   }
+
+      //   sessionStorage.setItem('bdcardfrom', index)
+
+      //   this.changeTab(carTypeItem, true)
+      let data = ''
+      if (this.carTypes.length < 3) {
+        data = this.carTypes[0]
+      } else {
+        data = this.carTypes[index]
+      }
+      let obj = {
+        carType: data.type
+      }
+      console.log(JSON.stringify(obj, null, 2))
+      let datas = base.mipExtendData(this.globaldata, obj)
+      base.mipSetGlobalData(obj)
+      base.setSession(datas)
+
+      this.reduction()
+      // setTimeout(() => {
+      //   this.calPrice()
+      // }, 200)
+    //   }
     },
 
     // 点击波纹效果
