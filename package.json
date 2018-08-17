@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "eslint {**/*,**}.{vue,js}",
     "validate": "sh tools/validate.sh",
-    "deploy:preview": "sh tools/build.sh"
+    "deploy:preview": "sh tools/build.sh",
+    "fix": "eslint --ext .vue,.js . --fix"
   },
   "husky": {
     "hooks": {
