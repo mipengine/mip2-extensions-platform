@@ -50,7 +50,6 @@
 </template>
 <script>
     import base from '../../common/utils/base'
-    import '../../common/utils/base.less'
     import login from '../../common/utils/login'
 
     export default {

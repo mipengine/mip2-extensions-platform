@@ -41,10 +41,8 @@
 </style>
 
 <script>
-  import base from '../../common/utils/base'
 export default {
   mounted () {
-    console.log(MIP.getData('position'))
   }
 }
 </script>

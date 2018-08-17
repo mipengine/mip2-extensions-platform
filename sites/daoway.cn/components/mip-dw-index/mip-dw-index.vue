@@ -1,35 +1,18 @@
 
 <template>
-    <div class="wrapper" >
-        <baidu-map v-if="!position" ak="epGAmM09OL7Lwy7cIu47pxzK" :center="center" :zoom="zoom"  @ready="handler"></baidu-map>
-        <mip-fixed type="top" class="index-fixed" :class="{fixedscroll:scroll}">
+    <div class="wrapper">
+        <mip-fixed type="top" class="indexed" :class="{fiscroll:scroll}">
             <img class="i-p-img" :src="scroll?'/common/images/position.png':'http://www.daoway.cn/images/position1.png'">
-            <span class="spn" @touchend="toposition">{{position.name ?position.name :position.addr}} ∨</span>
+            <span class="spn" @touchend="toposition">{{position.name ? position.name : position.addr}}∨</span>
             <!--<input class="search" :class="{searchscroll:scroll}" @click="search" type="text" name="search" placeholder="快速搜索商家、服务">-->
         </mip-fixed>
-
-        <div class="banner" >
-            <swiper :options="swiperOption">
-               <div class="swiper-slide" v-for="i in banners">
-                   <img :src="i.imgUrl" @click="link(i.target)">
-               </div>
-               <div class="swiper-pagination" slot="pagination"></div>
-           </swiper>
-            <div class="mip-carousel-indicator-wrapper">
-                <div class="mip-carousel-indicatorDot" id="mip-carousel-example">
-                    <div class="mip-carousel-activeitem mip-carousel-indecator-item"></div>
-                    <div class="mip-carousel-indecator-item"></div>
-                    <div class="mip-carousel-indecator-item"></div>
-                </div>
-            </div>
+        <div class="banner">
+           <div class="imgban"><img :src="banners.imgUrl" @click="link(banners.target)"></div>
         </div>
         <div class="service-item">
-            <swiper :options="swiperOption2">
-                <ul class="swiper-slide" v-for="m in fenleiary">
-                    <li v-for="t in m" v-bind:id="m.id" @click="toserviceclass(t.id)"><img :src="t.iconUrl2"><i>{{t.name}}</i></li>
-                </ul>
-                <div style="bottom: 5px" class="swiper-pagination" slot="pagination"></div>
-            </swiper>
+            <ul class="swiper-slide">
+                <li v-for="t in fenleiary" v-bind:id="t.id" @click="toserviceclass(t.id)"><img :src="t.iconUrl2"><i>{{t.name}}</i></li>
+            </ul>
         </div>
         <div class="project">
             <div class="h2">即刻达<span>最快30分钟上门</span></div>
@@ -65,15 +48,10 @@
 <script>
 
     import base from '../../common/utils/base.js'
-    import '../../common/utils/base.less'
-    require('swiper/dist/css/swiper.css')
-    import { swiper, swiperSlide } from 'vue-awesome-swiper'
-    import BaiduMap from '../../node_modules/vue-baidu-map/components/map/Map.vue'
-
     export default {
         data() {
             return {
-                channel: base.channel,
+                channel: 'baidu',
                 zoom: 3,
                 city:'',
                 position: '',
@@ -85,72 +63,53 @@
                     show: false,
                     texts: ''
                 },
-                swiperOption: {
-                    spaceBetween: 30,
-                    autoplay: {
-                        delay: 3000,
-                        stopOnLastSlide: false,
-                        disableOnInteraction: false,
-                    },
-                    pagination: {
-                        el: '.swiper-pagination',
-                        clickable: true
-                    }
-                },
-                swiperOption2: {
-                    spaceBetween: 30,
-                    autoplay: {
-                        delay: 0,
-                        stopOnLastSlide: true,
-                        disableOnInteraction: true,
-                    },
-                    pagination: {
-                        el: '.swiper-pagination',
-                        clickable: true
-                    }
-                },
-                ak: 'epGAmM09OL7Lwy7cIu47pxzK',
                 scroll:false
             }
         },
-        components: {
-            BaiduMap,
-            swiper,
-            swiperSlide,
-        },
         mounted () {
             let that = this;
-            window.addEventListener('scroll', that.handleScroll)
-            window.addEventListener('show-page', (e) => {
-                that.position = base.getposition();
-                that.callBack();
-            });
+            window.addEventListener('scroll', that.handleScroll);
             let position = localStorage.getItem('position');
             if(position){
                 that.position = base.getposition();
                 that.callBack();
+            }else {
+                this.handler()
             }
+            window.addEventListener('show-page', (e) => {
+                that.position = base.getposition();
+                that.callBack();
+            });
+
         },
         methods: {
-            handler ({BMap}) {
-                var that = this;
-                var geolocation = new BMap.Geolocation();
-                geolocation.getCurrentPosition(function (r) {
-                    if (r.point) {
-                        var city = r.address.city;
-                        that.city = city.replace(/市$/g,"");
-                        that.getCommunity(r.point.lat,r.point.lng)
-                    }else{
-                        this.warn.show = true;
-                        this.warn.texts = 'GPS定位失败！请手动搜索小区';
-                        MIP.viewer.open(base.htmlhref.position, {isMipLink: true})
+            handler () {
+                let that = this;
+                let url ='/daoway/rest/user/city';
+                fetch(url, {
+                    method: 'get'
+                }).then(function (res) {
+                    if (res && res.status == "200") {
+                        return res.json();
                     }
-                })
-
+                }).then(function (text) {
+                    if(text.status == 'ok'){
+                        let data = text.data;
+                        let tempLot = data.lot;
+                        let tempLat = data.lat;
+                        that.city = data.city.replace(/市$/g, "") || "北京";
+                        that.getCommunity(tempLat, tempLot)
+                    }else {
+                        this.warn.show = true;
+                        this.warn.texts = text.msg;
+                    }
+                }).catch(function (error) {
+                    console.log(error)
+                });
             },
             getCommunity(lat, lng) {
                 var that = this;
-                var url = "/daoway/rest/community/autoPosition?lot=" + lng + "&lat=" + lat + "&channel=" + base.channel
+                var url = "/daoway/rest/community/autoPosition?lot=" + lng + "&lat=" + lat;
                 fetch(url, {
                     method: 'get'
                 }).then(function (res) {
@@ -163,8 +122,8 @@
                         that.callBack();
                         that.position = base.position(that.position);
                     }else {
-                        this.warn.show = true;
-                        this.warn.texts = error;
+                        that.warn.show = true;
+                        that.warn.texts = text.msg;
                     }
                 }).catch(function (error) {
                     console.log(error)
@@ -195,15 +154,20 @@
                         return res.json();
                     }
                 }).then(function (text) {
-                    that.banners = text.data;
+                    let ary = [];
+                    for(let i=0; i<text.data.length; i++){
+                        let ban = {};
+                        ban.imgUrl = text.data[i].imgUrl;
+                        ban.target = text.data[i].target;
+                        ary.push(ban)
+                    }
+                    that.banners = ary[0];
                 }).catch(function (error) {
-                    this.warn.show = true;
-                    this.warn.texts = error.msg;
+                    console.log(error)
                 });
 
             },
             link(target){
-                console.log(target)
                 if (/openSuper/g.test(target)) {
                     var code = (/(\d+)/g).exec(target)[1];
                     MIP.viewer.open(base.htmlhref.detail + "?detailid=" + code, {isMipLink: true})
@@ -219,8 +183,7 @@
             fenlei(){//分类
                 let that = this;
                 let position = that.position;
-                let url = "/daoway/rest/category/for_filter?manualCity=" + encodeURIComponent(position.city) + "&weidian=true&recommendOnly=true&includeChaoshi=false&includeSecondPage=true&hasChaoshi=false&includeExtCategory=true&channel=" + base.channel;
-
+                let url = "/daoway/rest/category/for_filter?manualCity=" + encodeURIComponent(position.city) + "&weidian=true&recommendOnly=true&includeChaoshi=false&includeSecondPage=true&hasChaoshi=false&includeExtCategory=true&channel=" + that.channel;
                 fetch(url, {
                     method: 'get'
                 }).then(function (res) {
@@ -228,13 +191,12 @@
                         return res.json();
                     }
                 }).then(function (text) {
-                    console.log(text)
                     let data = text.data;
                     var filterArr = [];
                     var arr1 = data.splice(0, 10);
                     filterArr.push(arr1, data);
                     let ext = text.ext;
-                    that.fenleiary = filterArr;
+                    that.fenleiary = filterArr[0];
                     that.ext = ext;
 
                 }).catch(function (error) {
@@ -244,7 +206,7 @@
             servicelist(){//分类
                 let that = this;
                 let position = that.position;
-                let url = "/daoway/rest/service_items/recommend_top?start=0&size=3&lot=" + position.lot + "&lat=" + position.lat + "&manualCity=" + encodeURIComponent(position.city) + "&includeNotInScope=true&channel=" + base.channel;
+                let url = "/daoway/rest/service_items/recommend_top?start=0&size=3&lot=" + position.lot + "&lat=" + position.lat + "&manualCity=" + encodeURIComponent(position.city) + "&includeNotInScope=true&channel=" + that.channel;
                 fetch(url, {
                     method: 'get'
                 }).then(function (res) {
@@ -254,8 +216,7 @@
                 }).then(function (text) {
                     that.list = text.data;
                 }).catch(function (error) {
-                    this.warn.show = true;
-                    this.warn.texts = error.msg;
+                    console.log(error)
                 });
             },
             toservicedetail(id){//跳转到服务列表页
@@ -268,6 +229,8 @@
                 MIP.viewer.open(base.htmlhref.serviceclass + "?category=" + id + "&tag=" + name, {isMipLink: true})
             },
             toposition(){//跳转到服务列表页
+                //console.log(11)
+                //MIP.setData({'banners':{'banner':[1,2,3]}})
                 MIP.viewer.open(base.htmlhref.position, {isMipLink: true})
             }
         }
@@ -297,6 +260,13 @@
     .regclolr{
         color:#f64e4e ;
     }
+    .banner{
+        width: 100%;
+        height: 160px;
+    }
+    .banner img{
+        height: 160px;
+    }
     .bottomnav{
         width: 100%;
         background: #fff;
@@ -317,20 +287,14 @@
         text-align: center;
         margin: 0 auto;
     }
-    .index-fixed{
+    .indexed{
         height: 40px;
     }
-    .fixedscroll{
+    .fiscroll{
         background: #fff;
     }
-    .fixedscroll .spn{
+    .fiscroll .spn{
         color: #898989;
-    }
-
-    .banner {
-        height: 155px;
-        position: relative;
-        bottom: 0;
     }
 
     .swiper-slide img{
@@ -377,14 +341,6 @@
 
     .servicePro [role=listitem] li > p {
         text-align: center
-    }
-
-    #semi-fixed2 div {
-        position: relative;
-        width: 97%;
-        height: 40px;
-        z-index: 999;
-        padding-left: 3%;
     }
 
     .search {
@@ -436,13 +392,6 @@
     .h2 span {
         float: right;
         color: #898989
-    }
-
-    #semi-fixed2 {
-        position: -webkit-sticky;
-        position: sticky;
-        top: 0;
-        background: none;
     }
 
     .project, .box {

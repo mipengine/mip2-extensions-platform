@@ -25,7 +25,6 @@
 
 <script>
     import base from '../../common/utils/base'
-    import '../../common/utils/base.less'
     export default {
         data(){
             return {

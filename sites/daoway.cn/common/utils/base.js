@@ -2,7 +2,9 @@
 // const lxnhttp = 'https://www.lanxiniu.com/BdMipDev/'
  //const lxnhttp = 'http://127.0.0.1:8111/example/';
 
-const lxnhttp = '/components/';
+//const lxnhttp = '/components/';
+const lxnhttp = 'http://t.daoway.cn/example/';
+
 //const lxnhttp = 'http://test.daoway.cn/baiduapp/components/';//测试urL
 
 const tranObjUrlToCache = urls => {
@@ -31,19 +33,21 @@ export default ({
   // 测试
 
        htmlhref: tranObjUrlToCache({
-       index: lxnhttp + 'mip-dw-index/example/mip-dw-index.html',
-       serviceclass: lxnhttp + 'mip-dw-serviceclass/example/mip-dw-serviceclass.html',
-       order: lxnhttp + 'mip-dw-order/example/mip-dw-order.html',
-       my: lxnhttp + 'mip-dw-my/example/mip-dw-my.html',
-       detail: lxnhttp + 'mip-dw-detail/example/mip-dw-detail.html',
-       comments: lxnhttp + 'mip-dw-comments/example/mip-dw-comments.html',
-       reservation: lxnhttp + 'mip-dw-reservation/example/mip-dw-reservation.html',
-       time: lxnhttp + 'mip-dw-time/example/mip-dw-time.html',
-       xuzhi: lxnhttp + 'mip-dw-xuzhi/example/mip-dw-xuzhi.html',
-       technician: lxnhttp + 'mip-dw-technician/example/mip-dw-technician.html',
-       position: lxnhttp + 'mip-dw-position/example/mip-dw-position.html',
-       vouchers: lxnhttp + 'mip-dw-vouchers/example/mip-dw-vouchers.html',
-       about: lxnhttp + 'mip-dw-about/example/mip-dw-about.html',
+       index: lxnhttp + 'mip-dw-index.html',
+       serviceclass: lxnhttp + 'mip-dw-serviceclass.html',
+       order: lxnhttp + 'mip-dw-order.html',
+       my: lxnhttp + 'mip-dw-my.html',
+       detail: lxnhttp + 'mip-dw-detail.html',
+       orderdetail: lxnhttp + 'mip-dw-orderdetail.html',
+       comments: lxnhttp + 'mip-dw-comments.html',
+       reservation: lxnhttp + 'mip-dw-reservation.html',
+       time: lxnhttp + 'mip-dw-time.html',
+       xuzhi: lxnhttp + 'mip-dw-xuzhi.html',
+       technician: lxnhttp + 'example/mip-dw-technician.html',
+       position: lxnhttp + 'mip-dw-position.html',
+       vouchers: lxnhttp + 'mip-dw-vouchers.html',
+       about: lxnhttp + 'mip-dw-about.html',
+       login: lxnhttp + 'mip-dw-login.html',
 
 
        //community:lxnhttp + 'mip-dw-community/example/mip-dw-community.html',
@@ -55,8 +59,8 @@ export default ({
        //userguide: lxnhttp + 'userguide.html'
      }),
    channel:'baidu',
-   userId:localStorage.getItem('userId'),
-   token: document.cookie,
+   userId:'4112a2d5a7264360aeb3936a48ace9a6',//localStorage.getItem('userId'),
+   token: '6929484f51c71559b374ca8080ea2df3',//document.cookie,
   setHtmlRem: function () {
     let b = document
     let a = {}

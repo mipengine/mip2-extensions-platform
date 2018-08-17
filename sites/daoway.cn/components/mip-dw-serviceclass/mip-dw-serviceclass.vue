@@ -1,5 +1,6 @@
 <template>
     <div class="wrapper">
+        <mip-fixed type="top">
         <div class="sc-nav">
             <mip-scrollbox data-type="row" layout="fixed-height">
                 <div data-wrapper>
@@ -13,6 +14,7 @@
                 </div>
             </mip-scrollbox>
         </div>
+        </mip-fixed>
         <div class="sc-box">
             <div class="sc-box-list" v-bind:id="i.id" v-for="i in item" @click="todetail(i.id)">
                 <div class="scbl-left">
@@ -36,16 +38,12 @@
                     </ul>
                 </div>
             </div>
+            <p class="loding" v-if="loding">加载中...</p>
         </div>
     </div>
 </template>
 <script>
     import base from '../../common/utils/base'
-    import '../../common/utils/base.less'
-
-
-
-
     export default {
         data(){
             return {
@@ -55,7 +53,11 @@
                 tag:decodeURI(base.getRequest(location.href).tag),
                 item:[],
                 indx:0,
-                tags:''
+                tags:'',
+                sw:true,
+                ary:[],
+                loding:false,
+                channel:'baidu'
             }
         },
         mounted(){
@@ -64,12 +66,13 @@
             let tag = this.tag;
             this.nav();
             this.getServicelist(0,category,tag);
+            window.addEventListener('scroll', this.morelist)
         },
         methods:{
             nav(){
                 let that = this;
                 let category = that.category;
-                let url = "/daoway/rest/category/for_filter?manualCity=" + encodeURIComponent(that.position.city)+ "&category="+ category +"&weidian=false&recommendOnly=true&includeChaoshi=false&includeSecondPage=false&hasChaoshi=false&hasTagImg=true&channel=" + base.channel;
+                let url = "/daoway/rest/category/for_filter?manualCity=" + encodeURIComponent(that.position.city)+ "&category="+ category +"&weidian=false&recommendOnly=true&includeChaoshi=false&includeSecondPage=false&hasChaoshi=false&hasTagImg=true&channel=" + that.channel;
                 fetch(url, {
                     method: 'get'
                 }).then(function (res) {
@@ -86,13 +89,13 @@
                     filterAry.unshift(filter);
                     that.filterAry = filterAry;
                 }).catch(function (error) {
-                    console.error('Error:', error)
+                    console.error( error)
                 });
             },
             getServicelist(index, category, tag){
                 let that = this;
                 let position = that.position;
-                let url = "/daoway/rest/service_items/filter?start=" + index + "&size=50&manualCity=" + encodeURIComponent(position.city) + "&lot=" +position.lot + "&lat=" + position.lat + "&category=" + category + "&channel=" + base.channel +that.tags;
+                let url = "/daoway/rest/service_items/filter?start=" + index + "&size=30&manualCity=" + encodeURIComponent(position.city) + "&lot=" +position.lot + "&lat=" + position.lat + "&category=" + category + "&channel=" + that.channel +tag;
                 fetch(url, {
                     method: 'get'
                 }).then(function (res) {
@@ -101,7 +104,7 @@
                     }
                 }).then(function (text) {
                     let datas = text.data.items;
-                    let ary = [];
+                    let ary = that.ary;
                     for(var i=0; i<datas.length; i++){
                         let data = datas[i];
                         let promotion = data.promotion;
@@ -131,17 +134,19 @@
                             total_reduce: total_reduce ? total_reduce[0] : null,
                             first_reduce: first_reduce ? first_reduce : null
                         };
+
                         ary.push(obj);
                     }
                     that.item = ary;
+                    that.sw = true;
                 }).catch(function (error) {
-                    console.error('Error:', error)
+                    console.error( error)
                 });
 
             },
             tapnav(index){
                 var that = this;
-                that.item = [];
+                that.ary = [];
                 let category = that.category;
                 that.tag = that.filterAry[index].name;
                 if (that.tag == '全部') {
@@ -149,8 +154,21 @@
                 } else {
                     that.tags = '&tag=' + encodeURIComponent(that.tag);
                 }
-
                 that.getServicelist(0,category,that.tags)
+            },
+            morelist(){
+                let that = this;
+                let category = that.category;
+                let index  = that.ary.length;
+                if(document.body.scrollTop||document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight) {
+                    if(that.sw==true){
+                        that.sw = false;
+                        setTimeout(() => {
+                           that.loding = true
+                    }, 100)
+                    that.getServicelist(index,category,that.tags)
+                    }
+                }
             },
             todetail(id){
                 MIP.viewer.open("http://t.daoway.cn/components/mip-dw-detail/example/mip-dw-detail.html?detailid="+id, { isMipLink: true })
@@ -173,15 +191,14 @@
         list-style: none
     }
 
+    .loding{
+        text-align: center;
+    }
     .sc-nav {
-        position: fixed;
-        top: 0;
-        left: 0;
         width: 100%;
         height: 80px;
         padding: 5px 0;
         background: #fff;
-        z-index: 99;
     }
 
     .sc-list {
@@ -267,7 +284,7 @@
         display: block;
         width: 100%;
         text-align: center;
-        font-size: 12px
+        font-size: 10px
     }
 
     .scbl-right ul li.scbl-aciy span {
@@ -279,7 +296,9 @@
     }
 
     .scbl-right ul li.scbl-aciy span:first-child {
-        border-bottom: 1px solid red
+        border-bottom: 1px solid red;
+        background: #ff7871;
+        color: #fff;
     }
 
     .scbl-right ul li.scbl-right ul li.scbl-aciy span:first-child {

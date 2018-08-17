@@ -31,13 +31,13 @@
                 <li></li>
             </ul>
         </div>
-        <div class="d-hh" v-if="similarItems> 0" v-bind:id="priceId" @click="thidpage(priceId)">
+        <div class="d-hh" v-if="similarItems>0" v-bind:id="priceId" on="tap:my-lightbox2.toggle" id="btn-open" role="button" tabindex="0"><!--@click="thidpage(priceId)"-->
             <div class="d-hh-l"><i>已选</i>{{sericePrice.name}}</div>
             <div class="d-hh-r">类似项目<img class="d-more" src="/common/images/go_06.png"></div>
         </div>
         <div class="d-hh">
             <div class="d-hh-l d-timet">服务时间</div>
-            <div class="d-hh-r">最近可约<i class="d-time" v-html="service.nextime"></i>
+            <div class="d-hh-r">最近可约<i class="d-time" v-text="service.nextime"></i>
             </div>
         </div>
         <div class="d-text">
@@ -48,12 +48,12 @@
             <div class="d-hh-r"><i class="lv">接单率{{sericePrice.orderTakingRate}}</i> <i class="lv">好评率{{sericePrice.positiveCommentRate}}</i>
             </div>
         </div>
-        <div class="d-hh d-hhline" @click="tocomments()">
+        <div class="d-hh d-hhline" v-if="lastComment" @click="tocomments()">
             <div class="d-hh-l d-timet">用户评论</div>
             <div class="d-hh-r"><i class="lv">{{lastComment.commentCount}}条评论</i><img class="d-more" src="/common/images/go_06.png">
             </div>
         </div>
-        <div class="d-comment">
+        <div class="d-comment" v-if="lastComment">
             <div class="d-comment-l">
                 <img class="d-icon" :src="lastComment.iconUrl?lastComment.iconUrl:'/common/images/iconimg.png'">
             </div>
@@ -77,7 +77,7 @@
             <p v-text="service.orderingNotice"></p>
         </div>
         <div class="d-img-box">
-            <p @touchend="moreimg" v-if="images.length>0">↑点击查看图文详情</p>
+            <p v-if="images2.length >0 && !scroll">↑滑动查看图文详情</p>
             <img v-for="img in images" :src="img.img">
         </div>
 
@@ -103,7 +103,6 @@
                 </div>
 
         </mip-fixed>
-
         <div v-show="warn.show" class="layer">
             <div class="layer-content zoomIn">
                 <p class="layer-text" v-text="warn.texts"></p>
@@ -112,16 +111,15 @@
         </div>
 
         <!--弹出层-->
-
-        <div class="commodity_screen" v-if="showpops">
-            <div class="commodity_attr_box">
+        <mip-lightbox id="my-lightbox2" layout="nodisplay" class="mip-hidden" content-scroll>
+            <div class="lightbox">
                 <div class="headtit">
                     <div class="hh">选择服务项目</div>
                     <div class="smalltit">{{service.title}}{{pops[0].catName}}</div>
-                    <img @touchend="close()" class="close" src="/common/images/close2.jpg">
+                    <img on="tap:my-lightbox2.toggle" class="close" src="/common/images/close2.jpg">
                 </div>
                 <div class="commodity-list">
-                    <div class="comlist" :class="{activity:index == activity}" v-for="(p,index) in pops" v-bind:id="p.id" @touchend="tap(index)">{{pops[index].selected}}
+                    <div class="comlist" :class="{activity:index == activity}" v-for="(p,index) in pops" v-bind:id="p.id" @click="tap(index)">{{pops[index].selected}}
                         <div class="listconter">{{p.name}}<i class='poptxt' v-if="totalPromotions">满{{p.totalPromotions[0].total}}减{{p.totalPromotions[0].reduce}}</i>
                         </div>
                         <div class="listprice">{{p.price}}
@@ -129,19 +127,21 @@
                         </div>
                     </div>
                 </div>
-                <button class="d-btn" @touchend="confirm()">确定选择</button>
+
+                <span on="tap:my-lightbox2.toggle" @touchend="confirm()" class="lightbox-close">确定选择</span>
             </div>
-        </div>
+        </mip-lightbox>
+
     </div>
 </template>
 <script>
     import base from '../../common/utils/base'
-    import '../../common/utils/base.less'
     import login from '../../common/utils/login'
     export default {
         data() {
             return {
                 id:base.getRequest(location.href).detailid,
+                channel:'baidu',
                 sericePrice: {},
                 service: {},
                 lastComment: {},
@@ -176,16 +176,18 @@
                 ClientSecret:'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
                 code: base.getRequest(location.href).code,
                 id2:'',
-                toservation:''
+                toservation:'',
+                scroll:false,
             }
         },
         mounted () {
             this.detailstr();
+            window.addEventListener('scroll', this.moreimg)
         },
         methods: {
             detailstr(){
                 let that = this;
-                let url = "/daoway/rest/service/full/" + that.id + "?channel=" + base.channel;
+                let url = "/daoway/rest/service/full/" + that.id + "?channel=" + that.channel;
                 fetch(url, {
                     method: 'get',
                 }).then(function (res) {
@@ -194,16 +196,17 @@
                     }
                 }).then(function (text) {
                     let data = text.data;
-                    console.log(data)
                     that.service = data.service;
                     let sericePrice = data.sericePrice;
                     that.sericePrice = sericePrice;
                     let lastComment = data.service.lastComment;
-                    lastComment.time = base.timeformat(lastComment.createtime, "yyyy-MM-dd");
+                    if(lastComment){
+                        lastComment.time = base.timeformat(lastComment.createtime, "yyyy-MM-dd");
+                        lastComment.commentCount = data.service.commentCount;
+                    }
                     that.appointTime = data.service.nextAppointTime;
-                    that.service.nextime = base.timeformat(data.service.nextAppointTime, "appDate HH:mm")
-                    lastComment.commentCount = data.service.commentCount;
-                    that.lastComment = lastComment;
+                    that.service.nextime = base.timeformat(data.service.nextAppointTime, "appDate HH:mm");
+                    that.lastComment = lastComment ? lastComment : '';
                     that.promotion = data.promotion;
                     that.images2 = data.imgs;
                     that.counter = sericePrice.minBuyNum;
@@ -215,6 +218,7 @@
                     that.priceType = sericePrice.priceType;
                     that.similarItems = data.similarItems;
                     that.limitNum = data.sericePrice.limitNum;
+                    that.thidpage(that.priceId)
                 }).catch(function (error) {
                     console.error('Error:', error)
                 });
@@ -240,7 +244,10 @@
                 }
             },
             moreimg(){
-                this.images = this.images2;
+                if(document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight ){
+                    this.images = this.images2;
+                    this.scroll = true;
+                }
             },
             closeLayer () {
                 this.warn.show = false
@@ -254,14 +261,6 @@
             toxuzhi(){
                 MIP.viewer.open(base.htmlhref.xuzhi, { isMipLink: true })
             },
-            /*totime(){
-                var parm = {
-                    serviceId:this.serviceId,
-                    priceId:this.priceId
-                };
-                parm =JSON.stringify(parm)
-                MIP.viewer.open("http://t.daoway.cn/components/mip-dw-time/example/mip-dw-time.html?parm="+ encodeURIComponent(parm), { isMipLink: true })
-            },*/
             tocomments(){
                 let serviceId = this.serviceId;
                 let priceId = this.priceId;
@@ -269,12 +268,12 @@
             },
             tap(index){
                 this.activity = index;
-                this.similarPricesId = this.pops[index].id
+                this.similarPricesId = this.pops[index].id;
             },
             thidpage: function (priceId) {//选择服务项目
                 var that = this;
                 var position =  base.getposition();
-                var url = "/daoway/rest/servicePrice/similarPricesByPriceId?priceId=" + priceId + "&city=" + encodeURIComponent(position.city) + '&lot=' + position.lot + '&lat=' + position.lat + "&channel=" + base.channel;
+                var url = "/daoway/rest/servicePrice/similarPricesByPriceId?priceId=" + priceId + "&city=" + encodeURIComponent(position.city) + '&lot=' + position.lot + '&lat=' + position.lat + "&channel=" + that.channel;
                 fetch(url, {
                     method: 'get',
                 }).then(function (res) {
@@ -284,12 +283,10 @@
                 }).then(function (text) {
                     if(text.status == "ok"){
                         that.pops = text.data;
-                        that.showpops = true;
                     }else {
                         that.warn.show = true;
                         that.warn.texts = text.msg;
                     }
-
                 }).catch(function (error) {
                     console.log(error)
                 });
@@ -369,6 +366,19 @@
         list-style: none
     }
 
+    mip-lightbox{
+        height: 100%;
+    }
+    mip-lightbox:hover{
+        bottom: 0;
+    }
+    .lightbox{
+        background: #fff;
+        position: relative;
+        top:40%;
+        height: 60%;
+        width: 100%;
+    }
 
     .detail-banner {
         background: #fff
@@ -566,7 +576,8 @@
 
     .d-img-box img {
         width: 100%;
-        height: auto
+        height: auto;
+        vertical-align: top;
     }
 
     .footer {
@@ -610,17 +621,6 @@
     }
 
 
-    @keyframes fade-in {
-        0% {opacity: 0;}/*初始状态 透明度为0*/
-        40% {opacity: 0;}/*过渡状态 透明度为0*/
-        100% {opacity: 1;}/*结束状态 透明度为1*/
-    }
-    @-webkit-keyframes fade-in {/*针对webkit内核*/
-        0% {opacity: 0;}
-        40% {opacity: 0;}
-        100% {opacity: 1;}
-    }
-
     .commodity_screen {
         width: 100%;
         height: 100%;
@@ -638,10 +638,6 @@
     .commodity_attr_box {
         width: 100%;
         overflow: hidden;
-        position: fixed;
-        top: 40%;
-        left: 0;
-        z-index: 2000;
         background: #fff;
         padding: 10px 0;
         height: 100%;
@@ -653,10 +649,6 @@
         line-height: 30px;
         width: 100%;
         text-align: center;
-        position: absolute;
-        top: 0;
-        left: 0;
-        z-index: 99;
     }
 
     .close {
@@ -674,9 +666,9 @@
 
     .commodity-list {
         width: 94%;
-        margin: 55px auto 0;
+        margin: 15px auto 0;
         overflow-y: scroll;
-        height: 42%;
+        height: 65%;
         border-bottom: 1px solid #f5f5f5;
     }
 
@@ -722,17 +714,19 @@
         background-size: 7% 70%;
     }
 
-    .d-btn {
-        position: fixed;
-        border: none;
-        width: 90%;
-        bottom: 10px;
-        left: 5%;
+    .lightbox-close {
+        width: 86%;
         height: 40px;
         line-height: 40px;
         background: #f93030;
         color: #fff;
         border-radius: 4px;
+        margin:10px auto;
+        display: block;
+        text-align: center;
+        position: absolute;
+        bottom: 0;
+        left: 7%;
     }
 
     .unit2 {
@@ -742,6 +736,8 @@
     .comlist div {
         display: inline-block;
     }
+
+
 
 
 </style>

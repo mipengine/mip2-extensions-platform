@@ -16,12 +16,7 @@ export default {
         }).then(function (text) {
             if(text.status == "ok"){
                 localStorage.setItem('userId',text.data.userId);
-                base.userId = text.data.text;
-                that.userId = text.data.text;
-                console.log(text.data);
-               /* var cookie = text.header['Set-Cookie'];
-                var token = cookie.split(";")[0];
-                localStorage.setItem('token',token);*/
+                localStorage.setItem('token',text.data.token);
             }else {
                 that.warn.show = true;
                 that.warn.texts = text.msg;

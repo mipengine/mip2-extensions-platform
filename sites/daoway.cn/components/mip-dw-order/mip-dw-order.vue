@@ -2,10 +2,12 @@
     <div class="wrapper">
 
         <div class="order-nav">
-            <div class="list" @click="changeTab(index)" :class="{acty:o.id == filter?'acty':none}" v-for="(o,index) in orderitems">
-                <img :src="o.image">{{o.name}}
-                <div class="number" v-if="o.count>0 && o.name!= '全部'">{{o.count}}</div>
-            </div>
+            <mip-fixed type="top">
+                <div class="list" @click="changeTab(index)" :class="{acty:o.id == filter?'acty':none}" v-for="(o,index) in orderitems">
+                    <img :src="o.image">{{o.name}}
+                    <div class="number" v-if="o.count>0 && o.name!= '全部'">{{o.count}}</div>
+                </div>
+            </mip-fixed>
         </div>
         <div class="order-box">
             <div class="orderbox" >
@@ -39,6 +41,7 @@
                         </div>
                     </div>
                 </div>
+                <p class="loding" v-if="loding">加载中...</p>
                 <div class="noorder" v-if="noList">
                     <img src="https://www.daoway.cn/h5/image/dingdanye_03.png">
                     <div class="classname">还没有订单哦~</div>
@@ -47,7 +50,7 @@
                 <div v-if="noMoreList" class="zhexie">~暂时只有这些了~</div>
             </div>
         </div>
-        <mip-fixed type="bottom">
+        <mip-fixed class="mipfd" type="bottom">
             <div class="bottomnav">
                 <a  data-type="mip" data-title="首页" href="/components/mip-dw-index/example/mip-dw-index" @click="toindex"><img src="/common/images/home2.png">首页</a>
                 <a class="regclolr" data-type="mip" data-title="订单" href="/components/mip-dw-order/example/mip-dw-order"><img src="/common/images/order.png">订单</a>
@@ -67,7 +70,6 @@
 </template>
 <script>
     import base from '../../common/utils/base'
-    import '../../common/utils/base.less'
     import login from '../../common/utils/login'
     export default {
         props: {
@@ -130,12 +132,16 @@
                 ClientSecret:'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
                 code: base.getRequest(location.href).code,
                 userId:localStorage.getItem('userId'),
-                token:localStorage.getItem('token')
+                token:localStorage.getItem('token'),
+                sw:true,
+                loding:false,
+                channel:'baidu'
             }
         },
         mounted () {
             if(this.token && this.userId){
                 this.getOrderList(0)
+                window.addEventListener('scroll', this.morelist)
             }else {
                 if(this.code){
                     login.codelogin(this.code);
@@ -143,6 +149,7 @@
                     this.goLoginPage();
                 }
             }
+
         },
         methods: {
             getOrderList(index) {
@@ -157,7 +164,8 @@
                     status = "&status=" + filter;
                 }
                 var start = orderitem.items.length;
-                let url = "/daoway/rest/orders/bought_by/" + that.userId + "?channel=" + base.channel + "&start=" + start + "&size=50" + status;
+                let url = "/daoway/rest/orders/bought_by/" + that.userId + "?channel=" + that.channel + "&start=" + start + "&size=30" + status;
+
                 fetch(url, {
                     method: 'get',
                     credentials: "include"
@@ -331,7 +339,9 @@
                     }
                     that.index = index;
                     that.filter = filter;
-                    that.orderitems = orderitems;
+                    that.sw = true;
+                    that.orderitems = orderitems
+
                 }).catch(function (error) {
                     console.log(error)
                 });
@@ -414,7 +424,7 @@
             },
             closesure(orderId,action){
                 let that = this;
-                let url = "/daoway/rest/order/" + orderId + "/" + action + "?channel=" + base.channel +"&userId="+ that.userId;
+                let url = "/daoway/rest/order/" + orderId + "/" + action + "?channel=" + that.channel +"&userId="+ that.userId;
                 fetch(url, {
                     method: 'POST',
                     credentials: "include",
@@ -455,7 +465,31 @@
                 let that = this;
                 let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id='+that.client_id+'&redirect_uri='+that.redirect_uri+'&scope=snsapi_userinfo&state=STATE';
                 MIP.viewer.open(url)
-            }
+            },
+            morelist(){
+                let that = this;
+                let index  = that.index;
+                let orderitems = that.orderitems;
+                let tager = orderitems[that.index];
+                if(document.body.scrollTop||document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight) {
+                        that.loading = tager.loading;
+                        if (that.loading != "noList") {
+                            if (that.loading != "noMoreList") {
+                                if(that.sw==true){
+                                    that.sw = false;
+                                    setTimeout(() => {
+                                        that.loding = true
+                                    }, 10)
+                                    that.getOrderList(index);
+                                }
+                            } else {
+                                // 暂时只有这些了
+                                that.noList = false;
+                                that.noMoreList = true
+                            }
+                    }
+                }
+            },
         }
 
     }
@@ -481,12 +515,19 @@
         margin: 0;
         border-radius: 0;
     }
+    .zhexie{
+        text-align: center;
+        margin-bottom: 10px;
+    }
     .layer p:first-child{
         border-radius: 0;
         border-right: 1px solid #ededed;
     }
     .regclolr{
         color:#f64e4e ;
+    }
+    .loding{
+        text-align: center;
     }
 
     body,body:before{
@@ -524,15 +565,11 @@
         margin: 0 auto;
     }
 
-    .order-nav {
+    .mipfd{
         width: 100%;
         height: 70px;
-        position: fixed;
-        top: 0;
-        left: 0;
         background: #fff;
-        padding-top: 15px;
-        z-index: 100;
+        padding-top: 10px;
     }
     .order-nav img{
         width: 20px;
@@ -563,14 +600,14 @@
         position: absolute;
         top: -8px;
         right: 26%;
-        width: 15px;
-        height: 15px;
-        line-height: 15px;
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
         text-align: center;
         border: 1px solid #f93030;
         color: #f93030;
         border-radius: 100%;
-        font-size: 12px;
+        font-size: 10px;
         z-index: 99;
         background: #fff;
     }

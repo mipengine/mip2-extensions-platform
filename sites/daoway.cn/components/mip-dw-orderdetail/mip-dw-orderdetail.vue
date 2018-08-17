@@ -92,13 +92,15 @@
        <!-- <div class="od-daigou" v-if="userPhone &&　userPhone !=　orderhtml.userPhone">该订单由您的好友{{orderhtml.userPhone}}为您订购</div>-->
         <div class="last"></div>
         <div class="footer">
-            <div class="call">
-                <img src="http://www.daoway.cn/call.png" style="width:20px; height:auto">联系商家
-            </div>
-            <div class="rightbtn">
-                <button v-if="orderhtml.button1" @click="buybtn(orderhtml.button1)">{{orderhtml.button1.text}}</button>
-                <button class="bgred" v-if="orderhtml.button2" @click="buybtn(orderhtml.button2)">{{orderhtml.button2.text}}</button>
-            </div>
+            <mip-fixed class="mipfds" type="bottom">
+                <div class="call">
+                    <img src="http://www.daoway.cn/call.png">联系商家
+                </div>
+                <div class="rightbtn">
+                    <button v-if="orderhtml.button1" @click="buybtn(orderhtml.button1)">{{orderhtml.button1.text}}</button>
+                    <button class="bgred" v-if="orderhtml.button2" @click="buybtn(orderhtml.button2)">{{orderhtml.button2.text}}</button>
+                </div>
+            </mip-fixed>
         </div>
         <!--提示-->
         <div v-show="warn.show" class="layer">
@@ -114,7 +116,6 @@
 </template>
 <script>
     import base from '../../common/utils/base'
-    import '../../common/utils/base.less'
     export default {
         data(){
             return {
@@ -129,6 +130,7 @@
                 },
                 action:'',
                 sure:true,
+                channel:'baidu',
                 userId: localStorage.getItem('userId'),
                 token:localStorage.getItem('token')
             }
@@ -139,7 +141,7 @@
         methods: {
             getState() {
                 var that = this;
-                var url = "/daoway/rest/order/" + that.orderId + "?userId=" + that.userId + "&channel=" + base.channel;
+                var url = "/daoway/rest/order/" + that.orderId + "?userId=" + that.userId + "&channel=" + that.channel;
                 fetch(url, {
                     method: 'get',
                     credentials: "include",
@@ -401,12 +403,11 @@
                     MIP.viewer.open(base.htmlhref.reservation+'?orderId=' + orderId, { isMipLink: true })
                     //再次购买
                 }else  if(action == 'pay'){
-                    console.log(that.orderhtml)
                     let totalPrice = that.orderhtml.totalPrice
                     let couponBill = that.orderhtml.couponBill;
                     let couponId = that.orderhtml.couponId;
                     let fixFee = that.orderhtml.fixFee;
-                    let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect='+ encodeURIComponent('http://test.daoway.cn/mip/components/mip-dw-orderdetail/example/mip-dw-orderdetail.html?orderId='+payparam.orderid);
+                    let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect='+ encodeURIComponent('http://test.daoway.cn/mip/components/mip-dw-orderdetail/example/mip-dw-orderdetail.html?orderId='+orderId);
                     MIP.setData({'payConfig':{
                         "fee": (totalPrice +fixFee - couponBill).toFixed(2),
                         "sessionId": that.token,
@@ -448,7 +449,7 @@
             },
             closesure(orderId,action){
                 let that =this;
-                let url = "/daoway/rest/order/" + orderId + "/" + action + "?channel=" + base.channel+"&userId="+ that.userId;
+                let url = "/daoway/rest/order/" + orderId + "/" + action + "?channel=" + that.channel+"&userId="+ that.userId;
                 fetch(url, {
                     method: 'POST',
                     credentials: "include",
@@ -499,6 +500,14 @@
 
     li, ol {
         list-style: none
+    }
+    .call img{
+        width: 18px;
+        height: auto;
+    }
+    .mipfds{
+        width: 94%;
+        margin: 0 auto 6px;
     }
 
     .theclose{width: 80%; margin: 0 auto}
@@ -655,12 +664,9 @@
     }
 
     .footer {
-        position: fixed;
-        bottom: 0;
         width: 100%;
         height: 50px;
         background: #fff;
-        z-index: 99;
         padding: 0 3%;
         border-top: 1px solid #e5e5e5;
     }
@@ -676,7 +682,7 @@
 
     .rightbtn {
         float: right;
-        padding: 10px 0 0;
+        padding: 5px 0 0;
     }
 
     .rightbtn button {
@@ -697,7 +703,7 @@
     }
 
     .call {
-        margin-top: 7px;
+        margin-top:2px;
         font-size: 12px;
         color: #4c4c4c;
         float: left;

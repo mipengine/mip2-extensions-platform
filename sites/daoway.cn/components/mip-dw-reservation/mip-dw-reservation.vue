@@ -17,10 +17,10 @@
         <div class="re-input re-input2">
             <ul class="re-form re-form2">
                 <li><span><img src="https://www.daoway.cn/images/icon2.jpg">服务时间</span>
-                    <div @touchend ='totime'><i class="re-time">{{formatTime}}</i><img class="re-more" src="https://www.daoway.cn/h5/image/go_06.png">
+                    <div @click ='totime'><i class="re-time">{{formatTime}}</i><img class="re-more" src="https://www.daoway.cn/h5/image/go_06.png">
                     </div>
                 </li>
-                <li v-if="canChooseTechnician && selectedTechnical" v-bind:id="selectedTechnical.technicianId" @touchend="totechnical(selectedTechnical.technicianId)"><span><img src="https://www.daoway.cn/images/icon3.jpg">服务人员</span>
+                <li v-if="canChooseTechnician && selectedTechnical" v-bind:id="selectedTechnical.technicianId" @click="totechnical(selectedTechnical.technicianId)"><span><img src="https://www.daoway.cn/images/icon3.jpg">服务人员</span>
                     <div><i class="re-tech">{{selectedTechnical.name}} {{selectedTechnical.sex}} <img :src="selectedTechnical.photoURL"></i><img class="re-more" src="https://www.daoway.cn/h5/image/go_06.png"></div>
                 </li>
             </ul>
@@ -35,15 +35,15 @@
                         {{p.price}}{{p.price_unit}}
                     </div>
                     <div class="gadd">
-                        <img class="jia" src="http://www.daoway.cn/images/jian.jpg" @touchend="jian(quantity,p.price)">
+                        <img class="jia" src="http://www.daoway.cn/images/jian.jpg" @click="jian(quantity,p.price)">
                         <div class="nub">{{quantity}}</div>
-                        <img class="jian" src="http://www.daoway.cn/images/jia.jpg" @touchend="add(quantity,p.price)">
+                        <img class="jian" src="http://www.daoway.cn/images/jia.jpg" @click="add(quantity,p.price)">
                     </div>
                 </div>
                 <div class="quan">
                     <div class="quantxt">代金券</div>
                     <div class="noquan act"  v-if="coupone">{{coupone.name}}</div>
-                    <div class="guize guize1" v-bind:id="coupone.id" v-if="coupone" @touchend="tovouchers">-{{coupone.bill}}元<img class="re-more" src="https://www.daoway.cn/h5/image/go_06.png"></div>
+                    <div class="guize guize1" v-bind:id="coupone.id" v-if="coupone" @click="tovouchers">-{{coupone.bill}}元<img class="re-more" src="https://www.daoway.cn/h5/image/go_06.png"></div>
                     <div class="guize guize1" v-else>暂无适用代金券</div>
                 </div>
                 <div class="quan" style="padding:8px 0">
@@ -67,18 +67,14 @@
             </div>
 
 
-
-            <div class="footer">
+            <mip-fixed class="fbotom" type="bottom">
                 <div class="gomai">
                     待支付
                     <div class="pricenum">{{alltotalPrices}}元</div>
                     <button class="btn2" @click="tobuy">立即购买</button><!-- -->
                 </div>
-            </div>
+            </mip-fixed>
         </div>
-
-
-
 
         <!--提示-->
         <div v-show="warn.show" class="layer">
@@ -88,19 +84,12 @@
             </div>
         </div>
 
-
-
-
-
-
     </div>
 </template>
 
 <script>
     import base from '../../common/utils/base'
-    import '../../common/utils/base.less'
     import login from '../../common/utils/login'
-    base.setHtmlRem()
     export default {
         props: {
             payConfig: {
@@ -143,6 +132,7 @@
                 orderInfo:{},
                 code:base.getRequest(location.href).code,
                 userId:localStorage.getItem('userId') || base.userId,
+                channel:'baidu'
             };
 
         },
@@ -191,7 +181,7 @@
                 that.appointTime = that.param.appointTime || '';
                 that.quantity= that.param.quantity || that.quantity;
                 let serviceId = that.param.serviceId || that.serviceId;
-                let url = "/daoway/rest/service/" + serviceId + "?manualCity=" + encodeURIComponent(position.city)+ "&lot=" + position.lot + "&lat=" + position.lat + "&channel=" + base.channel;
+                let url = "/daoway/rest/service/" + serviceId + "?manualCity=" + encodeURIComponent(position.city)+ "&lot=" + position.lot + "&lat=" + position.lat + "&channel=" + that.channel;
                 fetch(url, {
                     method: 'get',
                 }).then(function (res) {
@@ -244,7 +234,7 @@
             },
             getCoupone(){
                 let that = this;
-                let url ='/daoway/rest/coupon/user/' + that.userId +'?serviceId='+ that.serviceId + "&bill=" + that.totalPrice +'&ignoreMinBill=false&priceIds='+ (that.param.priceIds || that.priceId) + '&channel=' + base.channel;
+                let url ='/daoway/rest/coupon/user/' + that.userId +'?serviceId='+ that.serviceId + "&bill=" + that.totalPrice +'&ignoreMinBill=false&priceIds='+ (that.param.priceIds || that.priceId) + '&channel=' + that.channel;
                 fetch(url, {
                     method: 'get',
                     credentials: "include"
@@ -344,7 +334,7 @@
                 let position = that.position;
                 let serviceId = that.param.serviceId || that.serviceId
                 let time = base.timeformat(that.appointTime, "yyyy-MM-dd HH:mm:ss");
-                let url = "/daoway/rest/service/" + serviceId  + "/avalible_technician?manualCity=" + encodeURIComponent(position.city || that.city) + "&lot=" + (position.lot || that.lot) + "&lat=" + (position.lat || that.lat) + "&street=" + encodeURIComponent(position.addr || that.street) + "&includeBusyFlag=true&priceId=" + (that.param.priceId || that.priceId) + "&quantity=" + that.quantity  + "&serviceTime=" + encodeURIComponent(time) + "&channel=" + base.channel;
+                let url = "/daoway/rest/service/" + serviceId  + "/avalible_technician?manualCity=" + encodeURIComponent(position.city || that.city) + "&lot=" + (position.lot || that.lot) + "&lat=" + (position.lat || that.lat) + "&street=" + encodeURIComponent(position.addr || that.street) + "&includeBusyFlag=true&priceId=" + (that.param.priceId || that.priceId) + "&quantity=" + that.quantity  + "&serviceTime=" + encodeURIComponent(time) + "&channel=" + that.channel;
                 if (that.doorNum) {
                     url += "&house=" + encodeURIComponent(that.doorNum);
                 }
@@ -375,7 +365,7 @@
                 MIP.viewer.open(base.htmlhref.technician+'?technicianId='+id, { isMipLink: true })
             },
             toposition(){
-                MIP.viewer.open(base.htmlhref.position+'?technicianId='+id+'&reservation=true', { isMipLink: true })
+                MIP.viewer.open(base.htmlhref.position+'?reservation=true', { isMipLink: true })
             },
 
             tovouchers(){
@@ -401,7 +391,7 @@
             },
             buyAgain(orderId) {
                 var that = this;
-                let url = "/daoway/rest/order/" + orderId + "/again?userId=" + that.userId + "&channel=" + base.channel;
+                let url = "/daoway/rest/order/" + orderId + "/again?userId=" + that.userId + "&channel=" + that.channel;
                 fetch(url, {
                     method: 'get'
                 }).then(function (res) {
@@ -520,7 +510,7 @@
                         "couponId": that.coupone ? that.coupone.id :null
                     };
                    anydata = JSON.stringify(anydata);
-                    let url = "/daoway/rest/orders/v2?h5=true&channel=" + base.channel;
+                    let url = "/daoway/rest/orders/v2?h5=true&channel=" + that.channel;
                     fetch(url, {
                         method: 'POST',
                         credentials: "include",
@@ -534,10 +524,8 @@
                         }
                     }).then(function (text) {
                         if(text.status == 'ok'){
-                            console.log(text.data)
                             let tobaiduorder = text.data.orderId;
-                            let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect='+ encodeURIComponent('http://test.daoway.cn/mip/components/mip-dw-orderdetail/example/mip-dw-orderdetail.html?orderId='+payparam.orderid);
-                            console.log(that.coupone)
+                            let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect='+ encodeURIComponent('http://test.daoway.cn/mip/components/mip-dw-orderdetail/example/mip-dw-orderdetail.html?orderId='+tobaiduorder);
                             MIP.setData({'payConfig':{
                                 "fee": that.alltotalPrices,
                                 "sessionId": token,
@@ -579,6 +567,9 @@
         box-sizing: border-box;
     }
 
+    input{
+        border: none;
+    }
     i {
         font-style: normal
     }
@@ -587,6 +578,9 @@
         list-style: none
     }
 
+    .fbotom{
+        background: #fff;
+    }
     .re-form {
         margin-left: 3%
     }
@@ -758,12 +752,9 @@
     }
 
     .footer {
-        position: fixed;
-        bottom: 0;
         height: 50px;
         width: 100%;
         background: #fff;
-        z-index: 99;
         text-align: inherit;
         border-top: 1px solid #e5e5e5
     }

@@ -1,20 +1,23 @@
 <template>
   <div class="wrapper">
-
-    <div class="t-nav">
-      <div class="data">
-        <div v-for="(t,index) in timeary" class="item" :class="{atv:inds == index}"  @touchend="getime(index)">{{t.week}}
-          <div class="datanum" v-text="t.day"></div>
+    <mip-fixed type="top">
+      <div class="t-nav">
+          <div class="data">
+          <div v-for="(t,index) in timeary" class="item" :class="{atv:inds == index}"  @touchend="getime(index)">{{t.week}}
+            <div class="datanum" v-text="t.day"></div>
+          </div>
         </div>
       </div>
-    </div>
+    </mip-fixed>
     <div class="t-box">
       <div v-for="(m,index) in timeary[tab].times" class="time" :class="{man:m.busy,activity:dis == index }" @touchend="getli(index)">{{m.time}}</div>
     </div>
+    <mip-fixed class="fixbotm" type="bottom">
     <div class="t-footer">
       <div class="beizhu">实际到达时间可能会有30分钟的浮动</div>
       <button class="t-btn" @touchend="sure()">确定选择</button>
     </div>
+      </mip-fixed>
     <div v-show="warn.show" class="layer">
       <div class="layer-content zoomIn">
         <p class="layer-text" v-text="warn.texts"></p>
@@ -28,8 +31,6 @@
 
 <script>
   import base from '../../common/utils/base'
-  import '../../common/utils/base.less'
-
   export default {
     data(){
       return{
@@ -43,6 +44,7 @@
         timeary:[],
         tab:0,
         dis:null,
+        channel:'baidu'
       }
 
     },
@@ -55,7 +57,7 @@
         let parm = that.parm;
         let position =  base.getposition();
         let communityId = position.id || position.communityId;
-        let url ="/daoway/rest/service/" + parm.serviceId + "/appointable_times?includeBusyFlag=true&channel=" + base.channel + "&manualCity=" + encodeURIComponent(position.city) + "&lot=" + position.lot + "&lat=" + position.lat + "&communityId=" + communityId;
+        let url ="/daoway/rest/service/" + parm.serviceId + "/appointable_times?includeBusyFlag=true&channel=" + that.channel + "&manualCity=" + encodeURIComponent(position.city) + "&lot=" + position.lot + "&lat=" + position.lat + "&communityId=" + communityId;
         if (parm.street){
           url += "&street=" + encodeURIComponent(parm.street);
         }
@@ -83,8 +85,7 @@
             that.timeary.push(data) ;
           }
         }).catch(function (error) {
-          this.warn.show = true;
-          this.warn.texts = error.msg;
+          console.log(error)
         });
       },
       getime(index){
@@ -115,10 +116,6 @@
 }
 
 .t-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 99;
   width: 100%;
   height: 60px;
   background: #fff;
@@ -155,9 +152,12 @@
   overflow-y: scroll;
   text-align: left;
 }
+.fixbotm{
+  bottom: 10px;
+}
 
 .time {
-  width: 22%;
+  width: 21%;
   display: inline-block;
   text-align: center;
   height: 33px;
@@ -194,9 +194,6 @@
 .t-footer{
   width: 100%;
   text-align: center;
-  position: fixed;
-  bottom: 10px;
-  left: 0;
 }
   .t-btn{
     width: 90%;

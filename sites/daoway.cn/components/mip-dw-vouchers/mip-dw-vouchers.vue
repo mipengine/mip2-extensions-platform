@@ -48,29 +48,26 @@
         },
         noquan:false,
         coupone:[],
-        unableCoupone:[]
-
+        unableCoupone:[],
+        userId:localStorage.getItem('userId'),
+        channel:'baidu'
       };
     },
-    created () {
 
-    },
     mounted () {
       if(base.getRequest(location.href).requestUrl){
         this.requestUrl = JSON.parse(decodeURIComponent(base.getRequest(location.href).requestUrl))
       }else {
         this.requestUrl = '';
       }
-
       this.getCoupone();
-
     },
     methods: {
       getCoupone(){
         let that = this;
         let serviceId = that.requestUrl.serviceId || null;
         let priceIds = that.requestUrl.priceIds;
-        let url = '/daoway/rest/coupon/user/' + base.userId +'?serviceId='+ serviceId  + '&ignoreMinBill=true&channel=' + base.channel;
+        let url = '/daoway/rest/coupon/user/' + that.userId +'?serviceId='+ serviceId  + '&ignoreMinBill=true&channel=' + that.channel;
         let bill =  that.requestUrl? that.requestUrl.bill: null;
         if (bill) {
           url += '&bill=' + bill;
@@ -106,8 +103,7 @@
             that.noquan =  true;
           }
         }).catch(function (error) {
-          that.warn.show = true;
-          that.warn.texts = error.msg;
+          console.log(error)
         });
       },
       back(c){

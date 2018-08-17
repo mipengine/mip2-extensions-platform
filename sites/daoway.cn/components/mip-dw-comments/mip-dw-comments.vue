@@ -1,12 +1,11 @@
 <template>
   <div class="wrapper">
 
-
-    <div class="cm-nav">
+      <mip-fixed class="mipnav" type="top">
       <div class="item" :class="{atv:index == indx }" v-bind:id="h.id" v-for="(h,index) in commentTab" @touchend="commentnav(index)">
         <div class="datanum">{{h.count}}</div>{{h.name}}
       </div>
-    </div>
+      </mip-fixed>
     <div class="cm-box">
       <div class="class">
         <div class="list"  v-for="com in commentTab[index]['comment']">
@@ -33,22 +32,18 @@
           </div>
           <img src="/common/images/maijia_03.png" class="chengjiao" />
         </div>
-        <div class="list2" >
+        <div class="list2" v-if="nocomments">
           <img src="/common/images/pingjia.png" style="width:100px; height:100px; display:block; margin:0 auto;" />
           <div class="jianyi">您的评价是最好的建议</div>
         </div>
-        <div class="zhexie">~暂时只有这些了~</div>
+        <div class="zhexie" v-if="loding">加载中...</div>
+        <div class="zhexie" v-if="over">~暂时只有这些了~</div>
       </div>
     </div>
-
-
-
-
   </div>
 </template>
 <script>
   import base from '../../common/utils/base'
-  import '../../common/utils/base.less'
   export default {
     data(){
       return{
@@ -57,6 +52,7 @@
         filter: 'all',
         index: 0,
         indx:0,
+        loding:false,
         commentTab: [
           {
             id: 'all',
@@ -85,23 +81,23 @@
             comment: []
           }
         ],
-        noComments:false,
-        img:[]
+        img:[],
+        nocomments:false,
+        over:false
       }
     },
     mounted () {
       var that = this;
-      console.log(that.serviceId,that.priceId)
-      that.commentlist(that.serviceId, that.priceId, 0)
+      that.commentlist(that.serviceId, that.priceId, 0,0);
+      window.addEventListener('scroll', this.morelist)
     },
     methods: {
-      commentlist(serviceId, priceId, index){
+      commentlist(serviceId, priceId, index,start){
         let that = this;
         let commentTab = that.commentTab;
         let tager = commentTab[index];
         let filter = tager.id; // 评论类别 all/good/average/bad/hasImg
-        let commnets = tager.comment;
-        let start = commnets.length;
+        //console.log(serviceId,start,filter,index)
         let url = "/daoway/rest/service/" + serviceId + "/comments?start=" + start + "&size=30&filter=" + filter + "&channel=" + base.channel;
         if (that.priceId) {
           url += "&priceId=" + that.priceId
@@ -114,6 +110,7 @@
           }
         }).then(function (text) {
           let data = text.data;
+          //console.log(data)
           if (that.filter == 'all') {
             for (var c = 0; c < 5; c++) {
               var ct = that.commentTab[c];
@@ -137,8 +134,6 @@
               }
             }
           }
-
-          that.commentTab[index].comment = [];
           for (var i = 0; i < data.comments.length; i++) {
             var comment = data.comments[i];
             comment.imgThumbPath = comment.imgThumbPath ? comment.imgThumbPath.split(",") : [];
@@ -151,8 +146,9 @@
             if (!comment.iconUrl) {
               comment.iconUrl = '/common/images/iconimg.png';
             };
+            that.commentTab[index].comment.push(comment);
           }
-          that.commentTab[index].comment = data.comments;
+          that.sw = true;
         }).catch(function (error) {
           console.error('Error:', error)
         });
@@ -165,9 +161,31 @@
         that.filter = tager.id;
         that.index = index;
         that.indx = index;
-        that.commentlist(that.serviceId,that.priceId,index)
-      }
+        if(tager.count == 0){
+          that.nocomments = true;
+          that.loding = false;
+        }
+        that.commentlist(that.serviceId,that.priceId,index,0)
 
+      },
+      morelist(){
+        let that = this;
+        if(document.body.scrollTop||document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight) {
+          if(that.sw==true){
+            that.sw = false;
+            let comm = that.commentTab[that.index];
+            let start = that.commentTab[that.index].comment.length;
+              if(start == comm.count){
+                that.loding = false;
+                that.over = true;
+                that.nocomments = false
+              }else {
+                that.loding = true
+              }
+            that.commentlist(that.serviceId, that.priceId, that.index,start)
+          }
+        }
+      },
     }
   }
 </script>
@@ -176,18 +194,16 @@
   margin: 0 auto;
   text-align: center;
 }
-.cm-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 99;
-  width: 100%;
-  height: 60px;
-  border-bottom: 1px solid #e5e5e5;
-  background: #fff;
-  padding: 10px 0;
-}
 
+.mipnav[type=top]{
+  height: 42px;
+  border-bottom: 1px solid #e5e5e5;
+  padding: 10px 0;
+  background: #fff;
+}
+.cm-box{
+  margin-top: 60px;
+}
 .item {
   width: 16%;
   margin: 0 2%;
@@ -195,6 +211,9 @@
   height: 40px;
   line-height: 20px;
   float: left;
+}
+.zhexie{
+  padding: 15px 0;
 }
 
 .picture img.tapimg:hover{
@@ -212,10 +231,6 @@
 
 .datanum {
   font-size: 14px;
-}
-
-.cm-box {
-  margin-top: 70px;
 }
 
 .list {
