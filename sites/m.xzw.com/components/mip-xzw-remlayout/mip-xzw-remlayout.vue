@@ -7,16 +7,7 @@ export default {
     }
   },
   watch: {
-    screenWidth: function () {
-      if (!this.timer) {
-        this.timer = true
-        let that = this
-        setTimeout(function () {
-          that.remChange(that.screenWidth)
-          that.timer = false
-        }, 200)
-      }
-    }
+    
   },
   mounted () {
     const that = this
