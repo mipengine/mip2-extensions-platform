@@ -18,17 +18,6 @@ export default {
       }
     }
   },
-  mounted () {
-    const that = this
-    const isAndroid = MIP.util.platform.isAndroid()
-    const version = isAndroid === true ? MIP.util.platform.getOsVersion() : 0
-    if (version && MIP.sandbox.String(version).substr(0, 1) < 5) {
-      that.remChange(that.screenWidth)
-      MIP.viewport.on('resize', function () {
-        that.screenWidth = MIP.viewport.getWidth()
-      })
-    }
-  },
   methods: {
     remChange: function (vw) {
       const width = vw
