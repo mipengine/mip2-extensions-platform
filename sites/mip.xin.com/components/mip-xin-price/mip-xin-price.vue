@@ -327,7 +327,6 @@ export default {
     },
     openMessage () {
       this.$emit('showAllMessage', '{ param: "333" }')
-      console.log(getCarId(), this.isDirect)
       clickPoint(
         'open_config_detail',
         {
@@ -341,7 +340,11 @@ export default {
       )
     },
     beyondCompare () {
-      MIP.viewer.open(this.beyondUrl + `${getLocalStorage('locationUrl')}`, {
+      let url = ''
+      if (getLocalStorage('locationUrl')) {
+        url = '&' + getLocalStorage('locationUrl').split('?')[1]
+      }
+      MIP.viewer.open(this.beyondUrl + `${url}`, {
         isMipLink: true
       })
     }

@@ -59,7 +59,7 @@
 .address-list {
   display: flex;
   flex-wrap: nowrap;
-  height: 100%;
+  height: 210px;
 }
 
 .title_header {

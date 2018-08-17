@@ -172,10 +172,8 @@ export default {
           //  无分级视频时，使用完整视频
         // 视频数据延迟渲染
         setTimeout(() => {
-          console.log('视频加载over')
           this.videoUrl = video.video_url
           this.videoImg = res.report_complete_video.pic
-          console.log(video.video_url, res.report_complete_video.pic)
         }, 1000)
         // end
 
