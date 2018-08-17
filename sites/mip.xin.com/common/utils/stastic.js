@@ -191,7 +191,6 @@ const checkEvPl = (key, msg) => {
  * @return {[object]} 返回为object
  */
 const getEvPlValues = (NAME, evpl, values) => {
-  console.log(NAME, evpl, values)
   let params = {}
   let index = 0
   for (let key in values) {

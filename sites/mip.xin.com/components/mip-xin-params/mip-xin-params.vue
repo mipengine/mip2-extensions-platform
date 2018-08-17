@@ -196,7 +196,6 @@ export default {
       .then(res => {
         that.carname = res.carinfo.carname
         that.detailed_params = res.config
-        console.log(that.detailed_params)
       })
       .catch(err => {
         console.log(err)
