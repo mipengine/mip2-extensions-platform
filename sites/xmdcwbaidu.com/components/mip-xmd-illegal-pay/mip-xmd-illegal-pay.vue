@@ -126,6 +126,7 @@ export default {
           sessionId: event.sessionId
         }
       })
+      Storage.set('apitoken', event.userInfo.apitoken)
     })
     // 自定义exit事件
     this.$element.customElement.addEventAction('exit', event => {
@@ -162,6 +163,7 @@ export default {
     },
     toPay () {
       let self = this
+      let apitoken = Storage.get('apitoken')
       MIP.setData({
         payConfig: {
           fee: self.illegalPayParams.totalFee,
@@ -169,7 +171,8 @@ export default {
           postData: {
             orderId: self.illegalPayParams.orderId,
             orderType: self.illegalPayParams.orderType,
-            orderName: self.illegalPayParams.orderName
+            orderName: self.illegalPayParams.orderName,
+            apitoken: apitoken
           }
         }
       })
