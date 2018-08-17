@@ -16,21 +16,27 @@
           v-if="index!=0"
           :src="item.pic"
           @click="handleShowMaskClick(index)"/>
-        <a
-          :href="urlReport">
-          <mip-img
-            v-if="index == 0"
-            :src="item.pic"
-            @click="handlePlayVideo" />
-        </a>
-        <a
-          :href="urlReport">
-          <mip-img
-            v-if="index==0&&big_image_info.is_video && status == 1"
-            class="play"
-            src="http://c2.xinstatic.com/f3/20180323/1111/5ab470517f150445829.png"
-            @click="handlePlayVideo"/>
-        </a>
+        <div v-if="index == 0 && big_image_info.is_video == 1 && status == 1">
+          <a
+            :href="urlReport">
+            <mip-img
+              :src="item.pic"
+              @click="handlePlayVideo" />
+          </a>
+        </div>
+        <div v-if="index==0&&big_image_info.is_video == 1 && status == 1">
+          <a
+            :href="urlReport">
+            <mip-img
+              class="play"
+              src="http://c2.xinstatic.com/f3/20180323/1111/5ab470517f150445829.png"
+              @click="handlePlayVideo"/>
+          </a>
+        </div>
+        <mip-img
+          v-if="index == 0 && big_image_info.is_video == 0 && status == 1"
+          :src="item.pic"
+          @click="handlePlayVideo" />
         <mip-img
           v-if="status == -1"
           class="play-sold"
@@ -155,7 +161,6 @@ export default {
       }
     },
     handlePlayVideo () {
-      console.log(this.urlReport)
       if (this.big_image_info.is_video === 1 && this.status === 1) {
         let ev = 'video_examine'
         clickPoint(
@@ -169,9 +174,9 @@ export default {
             pid: pidReport
           }
         )
-        MIP.viewer.open(this.urlReport, {
-          isMipLink: true
-        })
+        // MIP.viewer.open(this.urlReport, {
+        //   isMipLink: true
+        // })
       } else {
         clickPoint(
           'examine_video_detail',

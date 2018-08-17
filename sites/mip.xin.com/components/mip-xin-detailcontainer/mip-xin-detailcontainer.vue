@@ -47,12 +47,14 @@
         :is-detail="1"
         :carid="carid" >
         <div slot="bottomTitle">
-          <div
-            class="car-set-bottom"
-            @click="openParams">
-            <a class="lookParams" >免费查看详细检测报告</a>
-            <span class="paramsArrow"/>
-          </div>
+          <a :href="urlReport">
+            <div
+              class="car-set-bottom"
+              @click="openParams">
+              <span class="lookParams" >免费查看详细检测报告</span>
+              <span class="paramsArrow"/>
+            </div>
+          </a>
         </div>
       </mip-xin-switch>
       <!-- <mip-xin-config :url="url" :carid="carid" params="查看详细检测报告"></mip-xin-config> -->
@@ -126,11 +128,11 @@ export default {
       showToast: false, // 是否显示询价弹层
       showSimilarmodule: true, // 是否显示相似推荐title
       isShowButton: true, // 是否显示底部按钮，默认显示，显示大图时，不显示，大图隐藏时显示
-      status: 1 // 车辆是否已售 1未售，-1已售
+      status: 1, // 车辆是否已售 1未售，-1已售
+      urlReport: ''
     }
   },
   mounted () {
-    console.log('this.info', this.info)
     if (typeof this.info === 'string') {
       this.info = JSON.parse(this.info)
     }
@@ -144,7 +146,6 @@ export default {
     if (getQuery().ename) {
       Object.assign(param, { ename: getQuery().ename })
     }
-    console.log(getQuery().state)
     if (getQuery().state) {
       this.showToast = true
     }
@@ -240,21 +241,13 @@ export default {
       this.showCarMessgae = true
     },
     openParams () {
-      let opurl = getLocalStorage('locationUrl')
-        ? getLocalStorage('locationUrl') + '&'
-        : '?'
-      let options = `/report_${this.carid}.html${opurl}`
       let ev = 'examine_report_detail'
       clickPoint(
         ev,
         {
           carid: this.carid
         },
-        () => {
-          MIP.viewer.open(options, {
-            isMipLink: true
-          })
-        },
+        null,
         {
           pid: pid
         }
@@ -263,13 +256,11 @@ export default {
     handleBig (e) {
       this.isShowButton = !e.detail[0]
     },
-    getAuthMessage () {
-      if (this.query.state && getLocalStorage('carList')) {
-        console.log('successState', this.query.state)
-        console.log('显示')
-        this.showToast = true
-      }
-    },
+    // getAuthMessage () {
+    //   if (this.query.state && getLocalStorage('carList')) {
+    //     this.showToast = true
+    //   }
+    // },
     storageHandle () {
       if (this.query && this.query.optoken) {
         setLocalStorage('optoken', this.query.optoken)
@@ -299,6 +290,10 @@ export default {
       } else if (this.query && !this.query.optoken && !this.query.channel) {
         removeLocalStorage('locationUrl')
       }
+      let opurl = getLocalStorage('locationUrl')
+        ? getLocalStorage('locationUrl') + '&'
+        : '?'
+      this.urlReport = `/report_${this.carid}.html${opurl}`
     },
     /**
      * 隐藏底部button
