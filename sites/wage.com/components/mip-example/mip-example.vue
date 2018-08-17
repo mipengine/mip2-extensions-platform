@@ -4,7 +4,8 @@
       v-show="resultShow"
       class="pt55">
       <mip-fixed 
-        type="top" 
+        still
+        type = "top"
         class="tag-nav-top">
         <div 
           v-show="resultShow"

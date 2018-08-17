@@ -1794,6 +1794,15 @@ API.checkUnionAgain = function (opt, fn) {
     fn)
 }
 
+API.reportVisit = function (zw, city, fn) {
+  API.wrapRet_(
+    'https://mip.putibaby.com/api/ajax_report_visit', {
+      'zw_id': zw,
+      'city': city
+    },
+    fn)
+}
+
 function addClass (element, newName) {
   if (!element || !newName) return false
   if (element.className) {
@@ -1875,23 +1884,6 @@ export default {
 
   },
   beforeMount () {
-    function getParameterByName (name, url) {
-      if (!url) url = window.location.href
-      name = name.replace(/[[\]]/g, '\\$&')
-      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
-      var results = regex.exec(url)
-      if (!results) return null
-      if (!results[2]) return ''
-      return decodeURIComponent(results[2].replace(/\+/g, ' '))
-    }
-    var qcity = getParameterByName('city')
-    var cities = ['北京市', '天津市', '哈尔滨市', '武汉市', '上海市', '长春市', '济南市', '长沙市', '广州市', '杭州市', '洛阳市', '南阳市', '深圳市', '沈阳市', '石家庄市', '西安市', '湘潭市', '徐州市', '成都市', '南京市', '黄石市', '郑州市', '青岛市', '大连市', '常州市', '唐山市', '保定市', '秦皇岛市', '襄阳市', '太原市', '昆明市', '兰州市', '呼和浩特市', '乌鲁木齐市', '合肥市', '南昌市', '福州市', '厦门市', '南宁市']
-    if (cities.lastIndexOf(qcity) >= 0) {
-      this.filter.city = qcity.replace('市', '')
-      console.log(qcity)
-      console.log(this.filter)
-    }
-
     this.init()
     var self = this
     window.addEventListener('scroll', function (e) {
@@ -2015,6 +2007,34 @@ export default {
       var self = this
       console.log('should loading')
       console.log(this.dataJson)
+
+      function getParameterByName (name, url) {
+        if (!url) url = window.location.href
+        name = name.replace(/[[\]]/g, '\\$&')
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+        var results = regex.exec(url)
+        if (!results) return null
+        if (!results[2]) return ''
+        return decodeURIComponent(results[2].replace(/\+/g, ' '))
+      }
+      var qcity = getParameterByName('city') || ''
+      qcity = qcity.replace('市', '')
+      var cities = ['北京', '天津', '哈尔滨', '武汉', '上海', '长春', '济南', '长沙', '广州', '杭州', '洛阳', '南阳', '深圳', '沈阳', '石家庄', '西安', '湘潭', '徐州', '成都', '南京', '黄石', '郑州', '青岛', '大连', '常州', '唐山', '保定', '秦皇岛', '襄阳', '太原', '昆明', '兰州', '呼和浩特', '乌鲁木齐', '合肥', '南昌', '福州', '厦门', '南宁']
+      if (cities.lastIndexOf(qcity) >= 0) {
+        this.filter.city = qcity
+        console.log(qcity)
+      }
+
+      var city = this.filter.city || ''
+      API.reportVisit(1, city, function (isOk, res) {
+        if (isOk) {
+          console.log(res)
+        } else {
+          console.log(res)
+        }
+      })
+
+      this.filter.city = this.filter.city || '北京'
       API.getSelectMaster(self.filter, function (isOk, res) {
         if (isOk) {
           console.log(res)
