@@ -17,7 +17,7 @@ export default {
         }, 200)
       }
     }
-},
+  },
   mounted () {
     const that = this
     const isAndroid = MIP.util.platform.isAndroid()
