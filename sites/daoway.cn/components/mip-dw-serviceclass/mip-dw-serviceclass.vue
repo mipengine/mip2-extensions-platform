@@ -1,180 +1,198 @@
 <template>
-    <div class="wrapper">
-        <mip-fixed type="top">
-        <div class="sc-nav">
-            <mip-scrollbox data-type="row" layout="fixed-height">
-                <div data-wrapper>
-                    <div data-inner>
-                        <div data-scroller>
-                            <div v-for="(f,index) in filterAry"  data-item class="sc-list" :class="{activity:tag == f.name}" @click="tapnav(index)">
-                                <img :src="f.url"/><i>{{f.name}}</i>
-                            </div>
-                        </div>
-                    </div>
+  <div class="wrapper">
+    <mip-fixed type="top">
+      <div class="sc-nav">
+        <mip-scrollbox
+          data-type="row"
+          layout="fixed-height">
+          <div data-wrapper>
+            <div data-inner>
+              <div data-scroller>
+                <div
+                  v-for="(f,index) in filterAry"
+                  :class="{activity:tag == f.name}"
+                  data-item
+                  class="sc-list"
+                  @click="tapnav(index)">
+                  <img :src="f.url"><i>{{ f.name }}</i>
                 </div>
-            </mip-scrollbox>
-        </div>
-        </mip-fixed>
-        <div class="sc-box">
-            <div class="sc-box-list" v-bind:id="i.id" v-for="i in item" @click="todetail(i.id)">
-                <div class="scbl-left">
-                    <img :src="i.pic_url"/>
-                </div>
-                <div class="scbl-right">
-                    <ul>
-                        <li class="sc-r-tit" v-html="i.name"></li>
-                        <li class="sc-r-text" v-html="i.description"></li>
-                        <li class="sc-r-price">{{i.price}}<i>{{i.price_unit}}</i>
-                            <span v-if="i.first_reduce">首单立减{{i.first_reduce}}</span>
-                            <span v-if="i.total_reduce">满{{i.total_reduce.total}}减{{i.total_reduce.reduce}}</span>
-                        </li>
-                        <li class="sc-r-home"><img class="sc-home" src="https://www.daoway.cn/h5/image/home1.png" />{{i.serviceTitle}}
-                            <div class="sc-home-yishou"><span v-if="i.salesNum >0">已售 {{i.salesNum}}</span><span>好评 {{i.positiveCommentRate}}</span></div>
-                        </li>
-                        <li class="scbl-right-fixd scbl-aciy">
-                            <span>最快上门</span>
-                            <span>{{i.aheadHours}}</span>
-                        </li>
-                    </ul>
-                </div>
+              </div>
             </div>
-            <p class="loding" v-if="loding">加载中...</p>
+          </div>
+        </mip-scrollbox>
+      </div>
+    </mip-fixed>
+    <div class="sc-box">
+      <div
+        v-for="i in item"
+        :id="i.id"
+        class="sc-box-list"
+        @click="todetail(i.id)">
+        <div class="scbl-left">
+          <img :src="i.pic_url">
         </div>
+        <div class="scbl-right">
+          <ul>
+            <li
+              class="sc-r-tit"
+              v-html="i.name"/>
+            <li
+              class="sc-r-text"
+              v-html="i.description"/>
+            <li class="sc-r-price">{{ i.price }}<i>{{ i.price_unit }}</i>
+              <span v-if="i.first_reduce">首单立减{{ i.first_reduce }}</span>
+              <span v-if="i.total_reduce">满{{ i.total_reduce.total }}减{{ i.total_reduce.reduce }}</span>
+            </li>
+            <li class="sc-r-home"><img
+              class="sc-home"
+              src="https://www.daoway.cn/h5/image/home1.png" >{{ i.serviceTitle }}
+              <div class="sc-home-yishou"><span v-if="i.salesNum >0">已售 {{ i.salesNum }}</span><span>好评 {{ i.positiveCommentRate }}</span></div>
+            </li>
+            <li class="scbl-right-fixd scbl-aciy">
+              <span>最快上门</span>
+              <span>{{ i.aheadHours }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <p
+        v-if="loding"
+        class="loding">加载中...</p>
     </div>
+  </div>
 </template>
 <script>
-    import base from '../../common/utils/base'
-    export default {
-        data(){
-            return {
-                position:JSON.parse(localStorage.getItem("position")),
-                category:base.getRequest(location.href).category,
-                filterAry:[],
-                tag:decodeURI(base.getRequest(location.href).tag),
-                item:[],
-                indx:0,
-                tags:'',
-                sw:true,
-                ary:[],
-                loding:false,
-                channel:'baidu'
-            }
-        },
-        mounted(){
-            var that = this;
-            let category = this.category;
-            let tag = this.tag;
-            this.nav();
-            this.getServicelist(0,category,tag);
-            window.addEventListener('scroll', this.morelist)
-        },
-        methods:{
-            nav(){
-                let that = this;
-                let category = that.category;
-                let url = "/daoway/rest/category/for_filter?manualCity=" + encodeURIComponent(that.position.city)+ "&category="+ category +"&weidian=false&recommendOnly=true&includeChaoshi=false&includeSecondPage=false&hasChaoshi=false&hasTagImg=true&channel=" + that.channel;
-                fetch(url, {
-                    method: 'get'
-                }).then(function (res) {
-                    if (res && res.status == "200") {
-                        return res.json();
-                    }
-                }).then(function (text) {
-                    let data = text.data[0];
-                    let filterAry = data.tagsInfo;
-                    var filter = {
-                        name: '全部',
-                        url: '/common/images/all.png'
-                    };
-                    filterAry.unshift(filter);
-                    that.filterAry = filterAry;
-                }).catch(function (error) {
-                    console.error( error)
-                });
-            },
-            getServicelist(index, category, tag){
-                let that = this;
-                let position = that.position;
-                let url = "/daoway/rest/service_items/filter?start=" + index + "&size=30&manualCity=" + encodeURIComponent(position.city) + "&lot=" +position.lot + "&lat=" + position.lat + "&category=" + category + "&channel=" + that.channel +tag;
-                fetch(url, {
-                    method: 'get'
-                }).then(function (res) {
-                    if (res && res.status == "200") {
-                        return res.json();
-                    }
-                }).then(function (text) {
-                    let datas = text.data.items;
-                    let ary = that.ary;
-                    for(var i=0; i<datas.length; i++){
-                        let data = datas[i];
-                        let promotion = data.promotion;
-                        let total_reduce = promotion.total_reduce;
-                        let first_reduce = promotion.first_reduce;
-                        let positiveCommentRate;
-                        if (data.salesNum == 0) {
-                            positiveCommentRate = '暂无评价';
-                        } else {
-                            if (data.positiveCommentRate && data.positiveCommentRate != "--") {
-                                positiveCommentRate = '好评' + data.positiveCommentRate;
-                            } else {
-                                positiveCommentRate = '暂无评价';
-                            }
-                        }
-                        var obj = {
-                            aheadHours: data.fastestDay ? data.fastestDay : data.aheadHours + '小时',
-                            description: data.description,
-                            id: data.id,
-                            name: data.name,
-                            pic_url: data.pic_url,
-                            positiveCommentRate: positiveCommentRate,
-                            price: data.price,
-                            price_unit: data.price_unit,
-                            salesNum: data.salesNum,
-                            serviceTitle: data.serviceTitle,
-                            total_reduce: total_reduce ? total_reduce[0] : null,
-                            first_reduce: first_reduce ? first_reduce : null
-                        };
-
-                        ary.push(obj);
-                    }
-                    that.item = ary;
-                    that.sw = true;
-                }).catch(function (error) {
-                    console.error( error)
-                });
-
-            },
-            tapnav(index){
-                var that = this;
-                that.ary = [];
-                let category = that.category;
-                that.tag = that.filterAry[index].name;
-                if (that.tag == '全部') {
-                    that.tags = '';
-                } else {
-                    that.tags = '&tag=' + encodeURIComponent(that.tag);
-                }
-                that.getServicelist(0,category,that.tags)
-            },
-            morelist(){
-                let that = this;
-                let category = that.category;
-                let index  = that.ary.length;
-                if(document.body.scrollTop||document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight) {
-                    if(that.sw==true){
-                        that.sw = false;
-                        setTimeout(() => {
-                           that.loding = true
-                    }, 100)
-                    that.getServicelist(index,category,that.tags)
-                    }
-                }
-            },
-            todetail(id){
-                MIP.viewer.open("http://t.daoway.cn/components/mip-dw-detail/example/mip-dw-detail.html?detailid="+id, { isMipLink: true })
-            }
-        }
+import base from '../../common/utils/base'
+export default {
+  data () {
+    return {
+      position: JSON.parse(localStorage.getItem('position')),
+      category: base.getRequest(location.href).category,
+      filterAry: [],
+      tag: decodeURI(base.getRequest(location.href).tag),
+      item: [],
+      indx: 0,
+      tags: '',
+      sw: true,
+      ary: [],
+      loding: false,
+      channel: 'baidu'
     }
+  },
+  mounted () {
+    let that = this
+    let category = this.category
+    let tag = this.tag
+    this.nav()
+    this.getServicelist(0, category, tag)
+    window.addEventListener('scroll', this.morelist)
+  },
+  methods: {
+    nav () {
+      let that = this
+      let category = that.category
+      let url = '/daoway/rest/category/for_filter?manualCity=' + encodeURIComponent(that.position.city) + '&category=' + category + '&weidian=false&recommendOnly=true&includeChaoshi=false&includeSecondPage=false&hasChaoshi=false&hasTagImg=true&channel=' + that.channel
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        if (res && res.status == '200') {
+          return res.json()
+        }
+      }).then(function (text) {
+        let data = text.data[0]
+        let filterAry = data.tagsInfo
+        let filter = {
+          name: '全部',
+          url: '/common/images/all.png'
+        }
+        filterAry.unshift(filter)
+        that.filterAry = filterAry
+      }).catch(function (error) {
+        console.error(error)
+      })
+    },
+    getServicelist (index, category, tag) {
+      let that = this
+      let position = that.position
+      let url = '/daoway/rest/service_items/filter?start=' + index + '&size=30&manualCity=' + encodeURIComponent(position.city) + '&lot=' + position.lot + '&lat=' + position.lat + '&category=' + category + '&channel=' + that.channel + tag
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        if (res && res.status == '200') {
+          return res.json()
+        }
+      }).then(function (text) {
+        let datas = text.data.items
+        let ary = that.ary
+        for (let i = 0; i < datas.length; i++) {
+          let data = datas[i]
+          let promotion = data.promotion
+          let total_reduce = promotion.total_reduce
+          let first_reduce = promotion.first_reduce
+          let positiveCommentRate
+          if (data.salesNum == 0) {
+            positiveCommentRate = '暂无评价'
+          } else {
+            if (data.positiveCommentRate && data.positiveCommentRate != '--') {
+              positiveCommentRate = '好评' + data.positiveCommentRate
+            } else {
+              positiveCommentRate = '暂无评价'
+            }
+          }
+          let obj = {
+            aheadHours: data.fastestDay ? data.fastestDay : data.aheadHours + '小时',
+            description: data.description,
+            id: data.id,
+            name: data.name,
+            pic_url: data.pic_url,
+            positiveCommentRate: positiveCommentRate,
+            price: data.price,
+            price_unit: data.price_unit,
+            salesNum: data.salesNum,
+            serviceTitle: data.serviceTitle,
+            total_reduce: total_reduce ? total_reduce[0] : null,
+            first_reduce: first_reduce || null
+          }
+
+          ary.push(obj)
+        }
+        that.item = ary
+        that.sw = true
+      }).catch(function (error) {
+        console.error(error)
+      })
+    },
+    tapnav (index) {
+      let that = this
+      that.ary = []
+      let category = that.category
+      that.tag = that.filterAry[index].name
+      if (that.tag == '全部') {
+        that.tags = ''
+      } else {
+        that.tags = '&tag=' + encodeURIComponent(that.tag)
+      }
+      that.getServicelist(0, category, that.tags)
+    },
+    morelist () {
+      let that = this
+      let category = that.category
+      let index = that.ary.length
+      if (document.body.scrollTop || document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight) {
+        if (that.sw == true) {
+          that.sw = false
+          setTimeout(() => {
+            that.loding = true
+          }, 100)
+          that.getServicelist(index, category, that.tags)
+        }
+      }
+    },
+    todetail (id) {
+      MIP.viewer.open('http://t.daoway.cn/components/mip-dw-detail/example/mip-dw-detail.html?detailid=' + id, { isMipLink: true })
+    }
+  }
+}
 </script>
 <style scoped>
     * {
@@ -359,5 +377,3 @@
     }
 
 </style>
-
-

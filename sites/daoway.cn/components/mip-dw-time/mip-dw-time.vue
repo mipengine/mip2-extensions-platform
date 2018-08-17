@@ -2,111 +2,129 @@
   <div class="wrapper">
     <mip-fixed type="top">
       <div class="t-nav">
-          <div class="data">
-          <div v-for="(t,index) in timeary" class="item" :class="{atv:inds == index}"  @touchend="getime(index)">{{t.week}}
-            <div class="datanum" v-text="t.day"></div>
+        <div class="data">
+          <div
+            v-for="(t,index) in timeary"
+            :class="{atv:inds == index}"
+            class="item"
+            @touchend="getime(index)">{{ t.week }}
+            <div
+              class="datanum"
+              v-text="t.day"/>
           </div>
         </div>
       </div>
     </mip-fixed>
     <div class="t-box">
-      <div v-for="(m,index) in timeary[tab].times" class="time" :class="{man:m.busy,activity:dis == index }" @touchend="getli(index)">{{m.time}}</div>
+      <div
+        v-for="(m,index) in timeary[tab].times"
+        :class="{man:m.busy,activity:dis == index }"
+        class="time"
+        @touchend="getli(index)">{{ m.time }}</div>
     </div>
-    <mip-fixed class="fixbotm" type="bottom">
-    <div class="t-footer">
-      <div class="beizhu">实际到达时间可能会有30分钟的浮动</div>
-      <button class="t-btn" @touchend="sure()">确定选择</button>
-    </div>
-      </mip-fixed>
-    <div v-show="warn.show" class="layer">
+    <mip-fixed
+      class="fixbotm"
+      type="bottom">
+      <div class="t-footer">
+        <div class="beizhu">实际到达时间可能会有30分钟的浮动</div>
+        <button
+          class="t-btn"
+          @touchend="sure()">确定选择</button>
+      </div>
+    </mip-fixed>
+    <div
+      v-show="warn.show"
+      class="layer">
       <div class="layer-content zoomIn">
-        <p class="layer-text" v-text="warn.texts"></p>
-        <p class="layer-sure active-layer" @touchend="closeLayer">知道了</p>
+        <p
+          class="layer-text"
+          v-text="warn.texts"/>
+        <p
+          class="layer-sure active-layer"
+          @touchend="closeLayer">知道了</p>
       </div>
     </div>
 
   </div>
 </template>
 
-
 <script>
-  import base from '../../common/utils/base'
-  export default {
-    data(){
-      return{
-        parm:JSON.parse(decodeURIComponent(base.getRequest(location.href).parm)),
-        warn: {
-          // 弹窗
-          show: false,
-          texts: ''
-        },
-        inds:0,
-        timeary:[],
-        tab:0,
-        dis:null,
-        channel:'baidu'
+import base from '../../common/utils/base'
+export default {
+  data () {
+    return {
+      parm: JSON.parse(decodeURIComponent(base.getRequest(location.href).parm)),
+      warn: {
+        // 弹窗
+        show: false,
+        texts: ''
+      },
+      inds: 0,
+      timeary: [],
+      tab: 0,
+      dis: null,
+      channel: 'baidu'
+    }
+  },
+  mounted () {
+    this.timelist()
+  },
+  methods: {
+    timelist () {
+      let that = this
+      let parm = that.parm
+      let position = base.getposition()
+      let communityId = position.id || position.communityId
+      let url = '/daoway/rest/service/' + parm.serviceId + '/appointable_times?includeBusyFlag=true&channel=' + that.channel + '&manualCity=' + encodeURIComponent(position.city) + '&lot=' + position.lot + '&lat=' + position.lat + '&communityId=' + communityId
+      if (parm.street) {
+        url += '&street=' + encodeURIComponent(parm.street)
       }
-
-    },
-    mounted (){
-      this.timelist();
-    },
-    methods: {
-      timelist(){
-        let that = this;
-        let parm = that.parm;
-        let position =  base.getposition();
-        let communityId = position.id || position.communityId;
-        let url ="/daoway/rest/service/" + parm.serviceId + "/appointable_times?includeBusyFlag=true&channel=" + that.channel + "&manualCity=" + encodeURIComponent(position.city) + "&lot=" + position.lot + "&lat=" + position.lat + "&communityId=" + communityId;
-        if (parm.street){
-          url += "&street=" + encodeURIComponent(parm.street);
-        }
-        if (parm.house){
-          url += "&house=" + encodeURIComponent(parm.house);
-        }
-        if (parm.priceId){
-          url += '&priceId=' + parm.priceId;
-        }
-        if (parm.quantity) {
-          url += "&quantity=" + parm.quantity;
-        }
-        fetch(url, {
-          method: 'get',
-        }).then(function (res) {
-          if (res && res.status == "200") {
-            return res.json();
-          }
-        }).then(function (text) {
-          let datas = text.data;
-          for (let i = 0, len = datas.length; i < len; i++) {
-            let data = datas[i];
-            data.week = base.timeformat(data.date, "day");
-            data.day = base.timeformat(data.date, "MM-dd");
-            that.timeary.push(data) ;
-          }
-        }).catch(function (error) {
-          console.log(error)
-        });
-      },
-      getime(index){
-        let that = this;
-        that.inds = index;
-        that.tab = index;
-      },
-      getli(index){
-        this.dis = index;
-      },
-      sure(){
-        let that = this;
-        let tab = that.timeary[that.tab];
-        let dis = tab.times[that.dis].time;
-        let date = base.timeformat(tab.date, "yyyy/MM/dd");
-        let appointTime = new Date(date + " " + dis).getTime();
-        sessionStorage.setItem('apptime',appointTime);
-        MIP.viewer.page.back();
+      if (parm.house) {
+        url += '&house=' + encodeURIComponent(parm.house)
       }
+      if (parm.priceId) {
+        url += '&priceId=' + parm.priceId
+      }
+      if (parm.quantity) {
+        url += '&quantity=' + parm.quantity
+      }
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        if (res && res.status == '200') {
+          return res.json()
+        }
+      }).then(function (text) {
+        let datas = text.data
+        for (let i = 0, len = datas.length; i < len; i++) {
+          let data = datas[i]
+          data.week = base.timeformat(data.date, 'day')
+          data.day = base.timeformat(data.date, 'MM-dd')
+          that.timeary.push(data)
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    getime (index) {
+      let that = this
+      that.inds = index
+      that.tab = index
+    },
+    getli (index) {
+      this.dis = index
+    },
+    sure () {
+      let that = this
+      let tab = that.timeary[that.tab]
+      let dis = tab.times[that.dis].time
+      let date = base.timeformat(tab.date, 'yyyy/MM/dd')
+      let appointTime = new Date(date + ' ' + dis).getTime()
+      sessionStorage.setItem('apptime', appointTime)
+      MIP.viewer.page.back()
     }
   }
+}
 </script>
 
 <style scoped>
@@ -205,4 +223,3 @@
     border-radius: 4px;
   }
 </style>
-

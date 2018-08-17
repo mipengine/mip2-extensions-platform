@@ -1,119 +1,141 @@
 <template>
   <div class="wrapper">
     <div class="div">
-      <div class="list" v-bind:info="c" v-for="c in coupone" @click="back(c)">
-        <img class="vimg" src="/common/images/vouchersbg1.jpg" style="width:344px; height:86px">
-        <div class="tit">{{c.categoryName}}</div>
-        <div class="vname">{{c.name}}</div>
-        <div class="vn">{{c.note}}</div>
-        <div class="time">有效期{{c.startTime}}至{{c.endTime}}</div>
+      <div
+        v-for="c in coupone"
+        :info="c"
+        class="list"
+        @click="back(c)">
+        <img
+          class="vimg"
+          src="/common/images/vouchersbg1.jpg"
+          style="width:344px; height:86px">
+        <div class="tit">{{ c.categoryName }}</div>
+        <div class="vname">{{ c.name }}</div>
+        <div class="vn">{{ c.note }}</div>
+        <div class="time">有效期{{ c.startTime }}至{{ c.endTime }}</div>
         <div class="nub">
           <div class="yang">¥</div>
-          <div class="yuan">{{c.bill}}</div>
+          <div class="yuan">{{ c.bill }}</div>
         </div>
       </div>
-      <img class="fenge" v-if="unableCoupone.length > 0" src="/common/images/fengexian.jpg" style="width:343px; height:12px">
-      <div class="list gray" v-for="u in unableCoupone">
-        <img class="vimg" src="/common/images/vouchersbg2.jpg" style="width:344px; height:86px">
-        <div class="tit">{{u.categoryName}}</div>
-        <div class="vname">{{u.name}}</div>
-        <div class="vn">{{u.note}}</div>
-        <div class="time">有效期{{u.startTime}}至{{u.endTime}}</div>
+      <img
+        v-if="unableCoupone.length > 0"
+        class="fenge"
+        src="/common/images/fengexian.jpg"
+        style="width:343px; height:12px">
+      <div
+        v-for="u in unableCoupone"
+        class="list gray">
+        <img
+          class="vimg"
+          src="/common/images/vouchersbg2.jpg"
+          style="width:344px; height:86px">
+        <div class="tit">{{ u.categoryName }}</div>
+        <div class="vname">{{ u.name }}</div>
+        <div class="vn">{{ u.note }}</div>
+        <div class="time">有效期{{ u.startTime }}至{{ u.endTime }}</div>
         <div class="nub">
           <div class="yang">¥</div>
-          <div class="yuan">{{u.bill}}</div>
+          <div class="yuan">{{ u.bill }}</div>
         </div>
       </div>
     </div>
-    <mip-fixed type="bottom" @touchend="back">
+    <mip-fixed
+      type="bottom"
+      @touchend="back">
       <button class="btn3">不使用代金券</button>
     </mip-fixed>
 
-    <div class="noquan" v-if="noquan">
-      <img src="/common/images/coupon.png" style="width:200px; height:200px">
+    <div
+      v-if="noquan"
+      class="noquan">
+      <img
+        src="/common/images/coupon.png"
+        style="width:200px; height:200px">
       <div class="classname">暂无可用代金券</div>
     </div>
   </div>
 </template>
 <script>
-  import base from '../../common/utils/base'
-  export default {
-    data(){
-      return{
-        requestUrl:'',
-        warn: {
-          // 弹窗
-          show: false,
-          texts: '',
-        },
-        noquan:false,
-        coupone:[],
-        unableCoupone:[],
-        userId:localStorage.getItem('userId'),
-        channel:'baidu'
-      };
-    },
-
-    mounted () {
-      if(base.getRequest(location.href).requestUrl){
-        this.requestUrl = JSON.parse(decodeURIComponent(base.getRequest(location.href).requestUrl))
-      }else {
-        this.requestUrl = '';
-      }
-      this.getCoupone();
-    },
-    methods: {
-      getCoupone(){
-        let that = this;
-        let serviceId = that.requestUrl.serviceId || null;
-        let priceIds = that.requestUrl.priceIds;
-        let url = '/daoway/rest/coupon/user/' + that.userId +'?serviceId='+ serviceId  + '&ignoreMinBill=true&channel=' + that.channel;
-        let bill =  that.requestUrl? that.requestUrl.bill: null;
-        if (bill) {
-          url += '&bill=' + bill;
-        }
-        if(priceIds){
-          url += '&priceIds=' + priceIds;
-        }
-        fetch(url, {
-          method: 'get',credentials: "include"
-        }).then(function (res) {
-          if (res && res.status == "200") {
-            return res.json();
-          }
-        }).then(function (text) {
-          let datas = text.data;
-          console.log(datas)
-          if (datas.length > 0){
-            var coupone = [];
-            var unableCoupone = [];
-            for (var i = 0; i < datas.length; i++) {
-              var data = datas[i];
-              data.endTime = base.timeformat(data.endTime, "yyyy-MM-dd");
-              data.startTime = base.timeformat(data.startTime, "yyyy-MM-dd");
-              if (bill && bill < data.minBill) {
-                unableCoupone.push(data);
-              } else {
-                coupone.push(data);
-              }
-            }
-            that.coupone = coupone;
-            that.unableCoupone = unableCoupone;
-          } else {
-            that.noquan =  true;
-          }
-        }).catch(function (error) {
-          console.log(error)
-        });
+import base from '../../common/utils/base'
+export default {
+  data () {
+    return {
+      requestUrl: '',
+      warn: {
+        // 弹窗
+        show: false,
+        texts: ''
       },
-      back(c){
-        //MIP.setData(c);
-        sessionStorage.setItem('coupone',JSON.stringify(c))
-        MIP.viewer.page.back();
-      }
-
+      noquan: false,
+      coupone: [],
+      unableCoupone: [],
+      userId: localStorage.getItem('userId'),
+      channel: 'baidu'
     }
+  },
+
+  mounted () {
+    if (base.getRequest(location.href).requestUrl) {
+      this.requestUrl = JSON.parse(decodeURIComponent(base.getRequest(location.href).requestUrl))
+    } else {
+      this.requestUrl = ''
+    }
+    this.getCoupone()
+  },
+  methods: {
+    getCoupone () {
+      let that = this
+      let serviceId = that.requestUrl.serviceId || null
+      let priceIds = that.requestUrl.priceIds
+      let url = '/daoway/rest/coupon/user/' + that.userId + '?serviceId=' + serviceId + '&ignoreMinBill=true&channel=' + that.channel
+      let bill = that.requestUrl ? that.requestUrl.bill : null
+      if (bill) {
+        url += '&bill=' + bill
+      }
+      if (priceIds) {
+        url += '&priceIds=' + priceIds
+      }
+      fetch(url, {
+        method: 'get', credentials: 'include'
+      }).then(function (res) {
+        if (res && res.status == '200') {
+          return res.json()
+        }
+      }).then(function (text) {
+        let datas = text.data
+        console.log(datas)
+        if (datas.length > 0) {
+          let coupone = []
+          let unableCoupone = []
+          for (let i = 0; i < datas.length; i++) {
+            let data = datas[i]
+            data.endTime = base.timeformat(data.endTime, 'yyyy-MM-dd')
+            data.startTime = base.timeformat(data.startTime, 'yyyy-MM-dd')
+            if (bill && bill < data.minBill) {
+              unableCoupone.push(data)
+            } else {
+              coupone.push(data)
+            }
+          }
+          that.coupone = coupone
+          that.unableCoupone = unableCoupone
+        } else {
+          that.noquan = true
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    back (c) {
+      // MIP.setData(c);
+      sessionStorage.setItem('coupone', JSON.stringify(c))
+      MIP.viewer.page.back()
+    }
+
   }
+}
 </script>
 <style scoped>
   .wrapper {
@@ -210,7 +232,6 @@
     border-top: 1px solid #ccc;
   }
 
-
   .noquan {
     text-align: center;
   }
@@ -227,5 +248,3 @@
   }
 
 </style>
-
-

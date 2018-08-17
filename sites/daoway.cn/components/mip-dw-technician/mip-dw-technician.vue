@@ -1,60 +1,70 @@
 <template>
-    <div class="wrapper">
-        <div class="weui-cell" v-for="(t,index) in technician" v-bind:id="t.technicianId">
-            <div class="weui-cell__hd">
-                <img :src="t.photoURL ? t.photoURL : '/common/images/iconimg.png'">
-            </div>
-            <div class="weui-cell__cd">
-                <i v-html="t.name"></i>
-                <i v-html="t.sex"></i>
-                <i v-html="t.age"></i>
-                <div class="star">
-                    <img v-for="(i,index) in [1, 2, 3, 4, 5]"
-                         :src="t.level < index ? '/common/images/star.png/' : '/common/images/red_star.png'"/>
-                    <div style="display:inline-block; margin-left: 10px;">已接{{t.orderAmount}}单</div>
-                </div>
-                <div>{{t.description}}</div>
-            </div>
-            <div class="weui-cell__bd"  @touchend="getlist(t.technicianId,index)">
-                <button class="mini-btn"  :class="{acty:t.technicianId == technicianId}" v-if="t.technicianId == technicianId" >已选</button>
-                <button class="mini-btn" v-else>选择</button>
-            </div>
+  <div class="wrapper">
+    <div
+      v-for="(t,index) in technician"
+      :id="t.technicianId"
+      class="weui-cell">
+      <div class="weui-cell__hd">
+        <img :src="t.photoURL ? t.photoURL : '/common/images/iconimg.png'">
+      </div>
+      <div class="weui-cell__cd">
+        <i v-html="t.name"/>
+        <i v-html="t.sex"/>
+        <i v-html="t.age"/>
+        <div class="star">
+          <img
+            v-for="(i,index) in [1, 2, 3, 4, 5]"
+            :src="t.level < index ? '/common/images/star.png/' : '/common/images/red_star.png'">
+          <div style="display:inline-block; margin-left: 10px;">已接{{ t.orderAmount }}单</div>
         </div>
+        <div>{{ t.description }}</div>
+      </div>
+      <div
+        class="weui-cell__bd"
+        @touchend="getlist(t.technicianId,index)">
+        <button
+          v-if="t.technicianId == technicianId"
+          :class="{acty:t.technicianId == technicianId}"
+          class="mini-btn" >已选</button>
+        <button
+          v-else
+          class="mini-btn">选择</button>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
-    import base from '../../common/utils/base'
-    export default {
-        data(){
-            return {
-                technician: [],
-                technicianId:base.getRequest(location.href).technicianId
-            }
-        },
-        mounted () {
-            this.technician =JSON.parse(localStorage.getItem('technician')).technicianList;
-        },
-        methods: {
-            getlist(id,index){
-                let that = this;
-                that.technicianId = id;
-                let techindex = that.technician[index];
-                let tech = {
-                    photoURL:techindex.photoURL,
-                    sex:techindex.sex,
-                    name:techindex.name,
-                    id:techindex.dwid
-                };
-                //MIP.setData(tech)
-               sessionStorage.setItem('tech',JSON.stringify(tech))
-                MIP.viewer.page.back()
-            }
-
-        }
+import base from '../../common/utils/base'
+export default {
+  data () {
+    return {
+      technician: [],
+      technicianId: base.getRequest(location.href).technicianId
     }
-</script>
+  },
+  mounted () {
+    this.technician = JSON.parse(localStorage.getItem('technician')).technicianList
+  },
+  methods: {
+    getlist (id, index) {
+      let that = this
+      that.technicianId = id
+      let techindex = that.technician[index]
+      let tech = {
+        photoURL: techindex.photoURL,
+        sex: techindex.sex,
+        name: techindex.name,
+        id: techindex.dwid
+      }
+      // MIP.setData(tech)
+      sessionStorage.setItem('tech', JSON.stringify(tech))
+      MIP.viewer.page.back()
+    }
 
+  }
+}
+</script>
 
 <style scoped>
     .wrapper {
@@ -128,5 +138,3 @@
     }
 
 </style>
-
-

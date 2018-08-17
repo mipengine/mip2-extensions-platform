@@ -1,274 +1,332 @@
 <template>
-    <div class="wrapper">
-        <div id="position" v-if="positionpage">
-            <div class="fids">
-                <div class="position">{{city}}</div>
-                <div class="inputxt">
-                    <div class="inputButton" @click="searchcommunity()"><img class="icon-small" src="http://www.daoway.cn/images/serch.png">搜索您所在的小区</div>
+  <div class="wrapper">
+    <div
+      v-if="positionpage"
+      id="position">
+      <div class="fids">
+        <div class="position">{{ city }}</div>
+        <div class="inputxt">
+          <div
+            class="inputButton"
+            @click="searchcommunity()"><img
+              class="icon-small"
+              src="http://www.daoway.cn/images/serch.png">搜索您所在的小区</div>
+        </div>
+      </div>
+      <div class="box">
+        <div>
+          <div
+            v-if="useraddr.length >0"
+            class="usedadd">我的常用地址</div>
+          <div
+            v-if="useraddr.length >0"
+            class="noborder">
+            <div
+              v-for="i in useraddr"
+              :position="i"
+              class="listadd"
+              @click="tapback(i)">
+              <img
+                class="p-icon"
+                src="https://www.daoway.cn/h5/image/position.png">
+              <div class="addname">
+                <div class="addcur">{{ i.contactPerson }} {{ i.phone }}
                 </div>
+                <div class="lin">
+                  <div class="lin">{{ i.city }}{{ i.area }}{{ i.name }}{{ i.doorNum }}</div>
+                </div>
+              </div>
             </div>
-            <div class="box">
-                <div>
-                    <div class="usedadd" v-if="useraddr.length >0">我的常用地址</div>
-                    <div class="noborder" v-if="useraddr.length >0">
-                        <div class="listadd" v-bind:position="i" v-for="i in useraddr" @click="tapback(i)">
-                            <img class="p-icon" src="https://www.daoway.cn/h5/image/position.png">
-                            <div class="addname">
-                                <div class="addcur">{{i.contactPerson}} {{i.phone}}
-                                </div>
-                                <div class="lin">
-                                    <div class="lin">{{i.city}}{{i.area}}{{i.name}}{{i.doorNum}}</div>
-                                </div>
-                            </div>
-                        </div>
-                         <div @click="taptoggle"  v-if="tapshow" class="bottomarrow">展开全部地址 ∨</div>
-                         <div @click="taptoggle" v-else class="bottomarrow" >收起部分地址 ∧</div>
-                    </div>
-                </div>
-                <div class="usedadd" style="margin-top:0">附近小区</div>
-                <div v-for="p in community" v-bind:position="p" class="listadd" @click="tapback(p)">
-                    <img class="p-icon" src="https://www.daoway.cn/h5/image/position.png">
-                    <div class="addname">
-                        <div class="addcur">{{p.name}}
-                        </div>
-                        <div class="lin">{{p.addr}}</div>
-                    </div>
-                </div>
+            <div
+              v-if="tapshow"
+              class="bottomarrow"
+              @click="taptoggle">展开全部地址 ∨</div>
+            <div
+              v-else
+              class="bottomarrow"
+              @click="taptoggle" >收起部分地址 ∧</div>
+          </div>
+        </div>
+        <div
+          class="usedadd"
+          style="margin-top:0">附近小区</div>
+        <div
+          v-for="p in community"
+          :position="p"
+          class="listadd"
+          @click="tapback(p)">
+          <img
+            class="p-icon"
+            src="https://www.daoway.cn/h5/image/position.png">
+          <div class="addname">
+            <div class="addcur">{{ p.name }}
             </div>
+            <div class="lin">{{ p.addr }}</div>
+          </div>
+        </div>
+      </div>
 
-        </div>
-        <div v-if="communitypage" id="community">
-            <div class="fids">
-                <div class="selectCity">
-                    <div class="c-position" @click="tocity()">{{city}}</div><i>▼</i>
-                </div>
-                <div class="c-inputxt">
-                    <img class="c-icon-small" src="http://www.daoway.cn/images/serch.png" >
-                    <input class="com-input" placeholder="搜索您所在的小区" v-model="searchval" type="text"
-                           @input="getlist"/>
-                </div>
-                <div class="clear">取消</div>
-            </div>
-            <div class="listbox">
-                <div class="list" v-bind:position="c" v-for="c in cityList"  @click="tapback(c)">
-                    <div class="listLeft">
-                        <div class="listadd">{{c.name}}</div>
-                        <div class="liststreet">{{c.addr?c.addr:""}}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div v-if="citypage" id="city">
-            <div class="scroll-div-right" id="all">
-                <div id="cityLocation" class="pos">定位</div>
-                <div class="position-city">北京</div>
-                <div id="cityHot" class="pos">热门</div>
-                <div class="positon-item">
-                    <div class="item" v-for="h in hot" @click="tocommunity(h.name)">{{h.name}}</div>
-                </div>
-                <div class="citydiv" v-for="i in cityLists" >
-                    <div class="pos" v-bind:id="i.title">{{i.title}}</div>
-                    <div class="city">
-                        <div v-for="v in i.value" @click="tocommunity(v.name)">{{v.name}}</div>
-                    </div>
-                </div>
-            </div>
-            <div class="right">
-                <mip-fixed type="right">
-                    <div><a href="#all">*</a></div>
-                    <div v-for="m in cityLists"><a :href="'#'+ m.title">{{m.title}}</a></div>
-                </mip-fixed>
-            </div>
-        </div>
     </div>
+    <div
+      v-if="communitypage"
+      id="community">
+      <div class="fids">
+        <div class="selectCity">
+          <div
+            class="c-position"
+            @click="tocity()">{{ city }}</div><i>▼</i>
+        </div>
+        <div class="c-inputxt">
+          <img
+            class="c-icon-small"
+            src="http://www.daoway.cn/images/serch.png" >
+          <input
+            v-model="searchval"
+            class="com-input"
+            placeholder="搜索您所在的小区"
+            type="text"
+            @input="getlist">
+        </div>
+        <div class="clear">取消</div>
+      </div>
+      <div class="listbox">
+        <div
+          v-for="c in cityList"
+          :position="c"
+          class="list"
+          @click="tapback(c)">
+          <div class="listLeft">
+            <div class="listadd">{{ c.name }}</div>
+            <div class="liststreet">{{ c.addr?c.addr:"" }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      v-if="citypage"
+      id="city">
+      <div
+        id="all"
+        class="scroll-div-right">
+        <div
+          id="cityLocation"
+          class="pos">定位</div>
+        <div class="position-city">北京</div>
+        <div
+          id="cityHot"
+          class="pos">热门</div>
+        <div class="positon-item">
+          <div
+            v-for="h in hot"
+            class="item"
+            @click="tocommunity(h.name)">{{ h.name }}</div>
+        </div>
+        <div
+          v-for="i in cityLists"
+          class="citydiv" >
+          <div
+            :id="i.title"
+            class="pos">{{ i.title }}</div>
+          <div class="city">
+            <div
+              v-for="v in i.value"
+              @click="tocommunity(v.name)">{{ v.name }}</div>
+          </div>
+        </div>
+      </div>
+      <div class="right">
+        <mip-fixed type="right">
+          <div><a href="#all">*</a></div>
+          <div v-for="m in cityLists"><a :href="'#'+ m.title">{{ m.title }}</a></div>
+        </mip-fixed>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-    import base from '../../common/utils/base'
-    export default {
-        data(){
-            return {
-                channel:'baidu',
-                zoom: 3,
-                city:'',
-                warn: {
-                    // 弹窗
-                    show: false,
-                    texts: ''
-                },
-                community:[],
-                useraddr:[],
-                useraddr2:[],
-                useraddr3:[],
-                cityList: {},
-                searchval:'',
-                cityLists: [],
-                ak:true,
-                positionpage:true,
-                communitypage:false,
-                citypage:false,
-                tapshow:false,
-                taphide:false,
-            }
-        },
-        mounted () {
-            let userId = localStorage.getItem('userId'),token = localStorage.getItem('token');
-            if(userId && token){
-                this.userAddress(userId)
-            }
-            this.handler()
-        },
-        methods: {
-            handler () {
-                let that = this;
-                let url ='/daoway/rest/user/city';
-                fetch(url, {
-                    method: 'get'
-                }).then(function (res) {
-                    if (res && res.status == "200") {
-                        return res.json();
-                    }
-                }).then(function (text) {
-                    if(text.status == 'ok'){
-                        let data = text.data;
-                        let tempLot = data.lot;
-                        let tempLat = data.lat;
-                        that.city = data.city.replace(/市$/g, "") || "北京";
-                        that.getCommunity(tempLot, tempLat)
-                    }else {
-                        this.warn.show = true;
-                        this.warn.texts = text.msg;
-                    }
-                }).catch(function (error) {
-                    console.log(error)
-                });
-
-            },
-            getCommunity(lot,lat){
-                var that = this;
-                let url ="/daoway/rest/community/autoPositionMerge?lot=" + lot + "&lat=" + lat;
-                fetch(url, {
-                    method: 'get',
-                }).then(function (res) {
-                    if (res && res.status == "200") {
-                        return res.json();
-                    }
-                }).then(function (text) {
-                    let data = text.data;
-                    that.community = data.communities;
-                }).catch(function (error) {
-                    console.log(error)
-                });
-            },
-            userAddress(userId){
-                var that = this;
-                let url ="/daoway/rest/user/" + userId + "/getUserAddress" + "?channel=" + that.channel
-                fetch(url, {
-                    method: 'get',
-                    credentials: "include",
-                }).then(function (res) {
-                    if (res && res.status == "200") {
-                        return res.json();
-                    }
-                }).then(function (text) {
-                    if(text.status == 'ok'){
-                        that.useraddr2 = text.data;
-                        if(text.data.length > 2){
-                            that.tapshow = true;
-                            that.useraddr = text.data.slice(0,2);
-                        }
-                        that.useraddr3 = text.data.slice(0,2);
-                    }else {
-                        that.warn.show = true;
-                        that.warn.texts = text.msg;
-                    }
-
-                }).catch(function (error) {
-                    console.log(error)
-                });
-            },
-            taptoggle(){
-                if(this.tapshow){
-                    this.tapshow = false;
-                    this.useraddr = this.useraddr2 ;
-                }else {
-                    this.tapshow = true;
-                    this.useraddr = this.useraddr3;
-                }
-            },
-            tapback(i){
-                base.position(i);
-                MIP.setData({"#position":i})
-                MIP.viewer.page.back();
-            },
-            searchcommunity: function () {
-                this.positionpage = false;
-                this.communitypage = true;
-            },
-            getlist(){//community
-                var that = this;
-                var url = "/daoway/rest/community/searchMerge?manualCity=" + encodeURIComponent(this.city) + "&search=" + this.searchval + "&channel=" + that.channel;
-                fetch(url, {
-                    method: 'get',
-                }).then(function (res) {
-                    if (res && res.status == "200") {
-                        return res.json();
-                    }
-                }).then(function (text) {
-                    if(text.status == 'ok'){
-                        that.cityList = text.data;
-                    }else {
-                        this.warn.show = true;
-                        this.warn.texts = text.msg;
-                    }
-
-                }).catch(function (error) {
-                    console.log(error)
-                });
-            },
-            tocity(){
-                this.positionpage = false;
-                this.communitypage = false;
-                this.citypage = true;
-                this.citylist();
-            },
-            citylist(){
-                var that = this;
-                let url = "/daoway/rest/community/city_list?channel=" + that.channel;
-                fetch(url, {
-                    method: 'get',
-                }).then(function (res) {
-                    if (res && res.status == "200") {
-                        return res.json();
-                    }
-                }).then(function (text) {
-                    let datas = text.data;
-                    that.hot = datas.hot;
-                    let items =  ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-                    let ary =[];
-                    for(let i=0; i<items.length; i++){
-                        let item = items[i];
-                        let data = datas[item];
-                        if(data.length > 0){
-                            ary.push({
-                                'title':item.toUpperCase(),
-                                'value':data
-                            })
-                        }
-                    }
-                    that.cityLists = ary;
-                }).catch(function (error) {
-                    console.log(error)
-                });
-            },
-            tocommunity(city){
-                this.city = city;
-                this.positionpage = false;
-                this.communitypage = true;
-                this.citypage = false;
-            }
-        }
+import base from '../../common/utils/base'
+export default {
+  data () {
+    return {
+      channel: 'baidu',
+      zoom: 3,
+      city: '',
+      warn: {
+        // 弹窗
+        show: false,
+        texts: ''
+      },
+      community: [],
+      useraddr: [],
+      useraddr2: [],
+      useraddr3: [],
+      cityList: {},
+      searchval: '',
+      cityLists: [],
+      ak: true,
+      positionpage: true,
+      communitypage: false,
+      citypage: false,
+      tapshow: false,
+      taphide: false
     }
+  },
+  mounted () {
+    let userId = localStorage.getItem('userId'); let token = localStorage.getItem('token')
+    if (userId && token) {
+      this.userAddress(userId)
+    }
+    this.handler()
+  },
+  methods: {
+    handler () {
+      let that = this
+      let url = '/daoway/rest/user/city'
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        if (res && res.status == '200') {
+          return res.json()
+        }
+      }).then(function (text) {
+        if (text.status == 'ok') {
+          let data = text.data
+          let tempLot = data.lot
+          let tempLat = data.lat
+          that.city = data.city.replace(/市$/g, '') || '北京'
+          that.getCommunity(tempLot, tempLat)
+        } else {
+          this.warn.show = true
+          this.warn.texts = text.msg
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    getCommunity (lot, lat) {
+      let that = this
+      let url = '/daoway/rest/community/autoPositionMerge?lot=' + lot + '&lat=' + lat
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        if (res && res.status == '200') {
+          return res.json()
+        }
+      }).then(function (text) {
+        let data = text.data
+        that.community = data.communities
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    userAddress (userId) {
+      let that = this
+      let url = '/daoway/rest/user/' + userId + '/getUserAddress' + '?channel=' + that.channel
+      fetch(url, {
+        method: 'get',
+        credentials: 'include'
+      }).then(function (res) {
+        if (res && res.status == '200') {
+          return res.json()
+        }
+      }).then(function (text) {
+        if (text.status == 'ok') {
+          that.useraddr2 = text.data
+          if (text.data.length > 2) {
+            that.tapshow = true
+            that.useraddr = text.data.slice(0, 2)
+          }
+          that.useraddr3 = text.data.slice(0, 2)
+        } else {
+          that.warn.show = true
+          that.warn.texts = text.msg
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    taptoggle () {
+      if (this.tapshow) {
+        this.tapshow = false
+        this.useraddr = this.useraddr2
+      } else {
+        this.tapshow = true
+        this.useraddr = this.useraddr3
+      }
+    },
+    tapback (i) {
+      base.position(i)
+      MIP.setData({'#position': i})
+      MIP.viewer.page.back()
+    },
+    searchcommunity: function () {
+      this.positionpage = false
+      this.communitypage = true
+    },
+    getlist () { // community
+      let that = this
+      let url = '/daoway/rest/community/searchMerge?manualCity=' + encodeURIComponent(this.city) + '&search=' + this.searchval + '&channel=' + that.channel
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        if (res && res.status == '200') {
+          return res.json()
+        }
+      }).then(function (text) {
+        if (text.status == 'ok') {
+          that.cityList = text.data
+        } else {
+          this.warn.show = true
+          this.warn.texts = text.msg
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    tocity () {
+      this.positionpage = false
+      this.communitypage = false
+      this.citypage = true
+      this.citylist()
+    },
+    citylist () {
+      let that = this
+      let url = '/daoway/rest/community/city_list?channel=' + that.channel
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        if (res && res.status == '200') {
+          return res.json()
+        }
+      }).then(function (text) {
+        let datas = text.data
+        that.hot = datas.hot
+        let items = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+        let ary = []
+        for (let i = 0; i < items.length; i++) {
+          let item = items[i]
+          let data = datas[item]
+          if (data.length > 0) {
+            ary.push({
+              'title': item.toUpperCase(),
+              'value': data
+            })
+          }
+        }
+        that.cityLists = ary
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    tocommunity (city) {
+      this.city = city
+      this.positionpage = false
+      this.communitypage = true
+      this.citypage = false
+    }
+  }
+}
 </script>
 <style scoped>
     * {
@@ -287,7 +345,6 @@
     .position{display: inline-block; width: 80px}
     .fids{background: #fff; padding: 10px 3%}
     .inputxt{width: 76%; display: inline-block}
-
 
     .fids .inputButton {
         width:94%;
@@ -535,4 +592,3 @@
     }
 
 </style>
-

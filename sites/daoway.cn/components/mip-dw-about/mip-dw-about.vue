@@ -1,18 +1,21 @@
 <template>
   <div class="wrapper">
     <div class="logodiv">
-      <img class="logo" src="/common/images/logo.png" style="width:55px; height:55px">
+      <img
+        class="logo"
+        src="/common/images/logo.png"
+        style="width:55px; height:55px">
     </div>
     <div class="list">官方微信号
       <div class="rightv">到位</div>
     </div>
     <div class="list">商务合作
-      <div class="rightv rig"><a href="tel:010-64522010"></a>010-64522010</div>
-      <div class="navigator-arrow"></div>
+      <div class="rightv rig"><a href="tel:010-64522010"/>010-64522010</div>
+      <div class="navigator-arrow"/>
     </div>
     <div class="list last">客服电话
-      <div class="rightv rig"><a href="tel:4000908608"></a>4000908608</div>
-      <div class="navigator-arrow"></div>
+      <div class="rightv rig"><a href="tel:4000908608"/>4000908608</div>
+      <div class="navigator-arrow"/>
     </div>
     <mip-fixed type="bottom">
       <div class="daoway">

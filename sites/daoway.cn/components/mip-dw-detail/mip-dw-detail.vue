@@ -1,355 +1,426 @@
 <template>
-    <div class="wrapper">
-        <div class="detail-banner">
-            <img :src="sericePrice.picUrl"/>
-            <ul>
-                <li><span class="d-h">{{sericePrice.name}}</span>
-                    <div class="d-add">
-                        <img @touchend="jian(counter)" src="/common/images/jian.jpg">
-                        <i class="d-number">{{counter}}</i>
-                        <img @touchend="add(counter)" src="/common/images/jia.jpg">
-                    </div>
-                </li>
-                <li><span class="d-h d-h2">{{sericePrice.price}}<i>{{sericePrice.priceUnit}}</i></span>
-                    <div class="d-add">已售{{sericePrice.salesNum}}单</div>
-                </li>
-                <li class="d-maojian"><span class="b-bz">促销</span>
-                    <div class="d-maojian-r">
-                        <div class="d-add d-add2" v-if="promotion.first_reduce"><span class="mj">首单</span>
-                            <span>新客立减{{promotion.first_reduce}}元</span>
-                        </div>
-                        <div v-if="promotion.total_reduce" class="d-add d-add2"><span class="mj">满减</span>
-                            <span v-for="j in promotion.total_reduce">满{{j.total}}减{{j.reduce}}元</span>
-                        </div>
-                    </div>
-                </li>
-                <li v-if="service.guarantee" class="d-baozhang"><span class="b-bz">保障</span>
-                    <div class="d-add d-add2">
-                        <span v-for="g in service.guarantee.items"><img :src="g.iconUrl">{{g.label}}</span>
-                    </div>
-                </li>
-                <li></li>
-            </ul>
-        </div>
-        <div class="d-hh" v-if="similarItems>0" v-bind:id="priceId" on="tap:my-lightbox2.toggle" id="btn-open" role="button" tabindex="0"><!--@click="thidpage(priceId)"-->
-            <div class="d-hh-l"><i>已选</i>{{sericePrice.name}}</div>
-            <div class="d-hh-r">类似项目<img class="d-more" src="/common/images/go_06.png"></div>
-        </div>
-        <div class="d-hh">
-            <div class="d-hh-l d-timet">服务时间</div>
-            <div class="d-hh-r">最近可约<i class="d-time" v-text="service.nextime"></i>
+  <div class="wrapper">
+    <div class="detail-banner">
+      <img :src="sericePrice.picUrl">
+      <ul>
+        <li><span class="d-h">{{ sericePrice.name }}</span>
+          <div class="d-add">
+            <img
+              src="/common/images/jian.jpg"
+              @touchend="jian(counter)">
+            <i class="d-number">{{ counter }}</i>
+            <img
+              src="/common/images/jia.jpg"
+              @touchend="add(counter)">
+          </div>
+        </li>
+        <li><span class="d-h d-h2">{{ sericePrice.price }}<i>{{ sericePrice.priceUnit }}</i></span>
+          <div class="d-add">已售{{ sericePrice.salesNum }}单</div>
+        </li>
+        <li class="d-maojian"><span class="b-bz">促销</span>
+          <div class="d-maojian-r">
+            <div
+              v-if="promotion.first_reduce"
+              class="d-add d-add2"><span class="mj">首单</span>
+              <span>新客立减{{ promotion.first_reduce }}元</span>
             </div>
-        </div>
-        <div class="d-text">
-            <p v-text="sericePrice.description"></p>
-        </div>
-        <div class="d-hh">
-            <div class="d-hh-l">此服务由<span class="d-home" v-html="service.title"></span>提供</div>
-            <div class="d-hh-r"><i class="lv">接单率{{sericePrice.orderTakingRate}}</i> <i class="lv">好评率{{sericePrice.positiveCommentRate}}</i>
+            <div
+              v-if="promotion.total_reduce"
+              class="d-add d-add2"><span class="mj">满减</span>
+              <span v-for="j in promotion.total_reduce">满{{ j.total }}减{{ j.reduce }}元</span>
             </div>
+          </div>
+        </li>
+        <li
+          v-if="service.guarantee"
+          class="d-baozhang"><span class="b-bz">保障</span>
+          <div class="d-add d-add2">
+            <span v-for="g in service.guarantee.items"><img :src="g.iconUrl">{{ g.label }}</span>
+          </div>
+        </li>
+        <li/>
+      </ul>
+    </div>
+    <div
+      v-if="similarItems>0"
+      id="btn-open"
+      :id="priceId"
+      class="d-hh"
+      on="tap:my-lightbox2.toggle"
+      role="button"
+      tabindex="0"><!--@click="thidpage(priceId)"-->
+      <div class="d-hh-l"><i>已选</i>{{ sericePrice.name }}</div>
+      <div class="d-hh-r">类似项目<img
+        class="d-more"
+        src="/common/images/go_06.png"></div>
+    </div>
+    <div class="d-hh">
+      <div class="d-hh-l d-timet">服务时间</div>
+      <div class="d-hh-r">最近可约<i
+        class="d-time"
+        v-text="service.nextime"/>
+      </div>
+    </div>
+    <div class="d-text">
+      <p v-text="sericePrice.description"/>
+    </div>
+    <div class="d-hh">
+      <div class="d-hh-l">此服务由<span
+        class="d-home"
+        v-html="service.title"/>提供</div>
+      <div class="d-hh-r"><i class="lv">接单率{{ sericePrice.orderTakingRate }}</i> <i class="lv">好评率{{ sericePrice.positiveCommentRate }}</i>
+      </div>
+    </div>
+    <div
+      v-if="lastComment"
+      class="d-hh d-hhline"
+      @click="tocomments()">
+      <div class="d-hh-l d-timet">用户评论</div>
+      <div class="d-hh-r"><i class="lv">{{ lastComment.commentCount }}条评论</i><img
+        class="d-more"
+        src="/common/images/go_06.png">
+      </div>
+    </div>
+    <div
+      v-if="lastComment"
+      class="d-comment">
+      <div class="d-comment-l">
+        <img
+          :src="lastComment.iconUrl?lastComment.iconUrl:'/common/images/iconimg.png'"
+          class="d-icon">
+      </div>
+      <div class="d-comment-r">
+        <div>{{ lastComment.nick }}</div>
+        <div>
+          <span class="d-star">
+            <img
+              v-for="(i,index) in [1, 2, 3, 4, 5]"
+              :src="lastComment.star<index ? '/common/images/star.png/' : '/common/images/red_star.png'">{{ index }}
+          </span>
+          <span
+            class="d-c-t"
+            v-html="lastComment.time"/>
         </div>
-        <div class="d-hh d-hhline" v-if="lastComment" @click="tocomments()">
-            <div class="d-hh-l d-timet">用户评论</div>
-            <div class="d-hh-r"><i class="lv">{{lastComment.commentCount}}条评论</i><img class="d-more" src="/common/images/go_06.png">
-            </div>
-        </div>
-        <div class="d-comment" v-if="lastComment">
-            <div class="d-comment-l">
-                <img class="d-icon" :src="lastComment.iconUrl?lastComment.iconUrl:'/common/images/iconimg.png'">
-            </div>
-            <div class="d-comment-r">
-                <div>{{lastComment.nick}}</div>
-                <div>
-                    <span class="d-star">
-                    <img v-for="(i,index) in [1, 2, 3, 4, 5]"
-                         :src="lastComment.star<index ? '/common/images/star.png/' : '/common/images/red_star.png'">{{index}}
-                </span>
-                    <span class="d-c-t" v-html="lastComment.time"></span>
-                </div>
-                <div v-html="lastComment.comment"></div>
-            </div>
-        </div>
-        <div class="d-hh d-hhline" @click="toxuzhi()">
-            <div class="d-hh-l d-timet">订购须知</div>
-            <div class="d-hh-r"><i class="lv">查看取消、退款、赔付规则</i><img class="d-more" src="/common/images/go_06.png"></div>
-        </div>
-        <div class="d-text d-xuzhi">
-            <p v-text="service.orderingNotice"></p>
-        </div>
-        <div class="d-img-box">
-            <p v-if="images2.length >0 && !scroll">↑滑动查看图文详情</p>
-            <img v-for="img in images" :src="img.img">
-        </div>
+        <div v-html="lastComment.comment"/>
+      </div>
+    </div>
+    <div
+      class="d-hh d-hhline"
+      @click="toxuzhi()">
+      <div class="d-hh-l d-timet">订购须知</div>
+      <div class="d-hh-r"><i class="lv">查看取消、退款、赔付规则</i><img
+        class="d-more"
+        src="/common/images/go_06.png"></div>
+    </div>
+    <div class="d-text d-xuzhi">
+      <p v-text="service.orderingNotice"/>
+    </div>
+    <div class="d-img-box">
+      <p v-if="images2.length >0 && !scroll">↑滑动查看图文详情</p>
+      <img
+        v-for="img in images"
+        :src="img.img">
+    </div>
 
-        <mip-fixed type="bottom">
-                <div class="footer" >
-                    <div class="telimg telg"  @touchend="toindex()">
-                        <img src="/common/images/icon2.png" style="width:17px; height:auto">
-                        <div class="lianxi">首页</div>
-                    </div>
-                    <div class="telimg telg">
-                        <a :href="'tel:' + service.phone">
-                            <img src="/common/images/tel.jpg" style="width:15px; height:auto">
-                            <div class="lianxi">联系商家</div>
-                        </a>
-                    </div>
-                    <!--<div class="telimg share">
+    <mip-fixed type="bottom">
+      <div class="footer" >
+        <div
+          class="telimg telg"
+          @touchend="toindex()">
+          <img
+            src="/common/images/icon2.png"
+            style="width:17px; height:auto">
+          <div class="lianxi">首页</div>
+        </div>
+        <div class="telimg telg">
+          <a :href="'tel:' + service.phone">
+            <img
+              src="/common/images/tel.jpg"
+              style="width:15px; height:auto">
+            <div class="lianxi">联系商家</div>
+          </a>
+        </div>
+        <!--<div class="telimg share">
                         <div class='btnshare'>
                             <img src="/common/images/share.jpg" style="width:16px; height:auto">
                             <div class="lianxi">分享</div>
                         </div>
                     </div>-->
-                    <div class="btngo" @click="reservation()">立即购买</div>
-                </div>
+        <div
+          class="btngo"
+          @click="reservation()">立即购买</div>
+      </div>
 
-        </mip-fixed>
-        <div v-show="warn.show" class="layer">
-            <div class="layer-content zoomIn">
-                <p class="layer-text" v-text="warn.texts"></p>
-                <p class="layer-sure active-layer" @click="closeLayer">知道了</p>
+    </mip-fixed>
+    <div
+      v-show="warn.show"
+      class="layer">
+      <div class="layer-content zoomIn">
+        <p
+          class="layer-text"
+          v-text="warn.texts"/>
+        <p
+          class="layer-sure active-layer"
+          @click="closeLayer">知道了</p>
+      </div>
+    </div>
+
+    <!--弹出层-->
+    <mip-lightbox
+      id="my-lightbox2"
+      layout="nodisplay"
+      class="mip-hidden"
+      content-scroll>
+      <div class="lightbox">
+        <div class="headtit">
+          <div class="hh">选择服务项目</div>
+          <div class="smalltit">{{ service.title }}{{ pops[0].catName }}</div>
+          <img
+            on="tap:my-lightbox2.toggle"
+            class="close"
+            src="/common/images/close2.jpg">
+        </div>
+        <div class="commodity-list">
+          <div
+            v-for="(p,index) in pops"
+            :class="{activity:index == activity}"
+            :id="p.id"
+            class="comlist"
+            @click="tap(index)">{{ pops[index].selected }}
+            <div class="listconter">{{ p.name }}<i
+              v-if="totalPromotions"
+              class="poptxt">满{{ p.totalPromotions[0].total }}减{{ p.totalPromotions[0].reduce }}</i>
             </div>
+            <div class="listprice">{{ p.price }}
+              <div class="unit2">{{ p.priceUnit }}</div>
+            </div>
+          </div>
         </div>
 
-        <!--弹出层-->
-        <mip-lightbox id="my-lightbox2" layout="nodisplay" class="mip-hidden" content-scroll>
-            <div class="lightbox">
-                <div class="headtit">
-                    <div class="hh">选择服务项目</div>
-                    <div class="smalltit">{{service.title}}{{pops[0].catName}}</div>
-                    <img on="tap:my-lightbox2.toggle" class="close" src="/common/images/close2.jpg">
-                </div>
-                <div class="commodity-list">
-                    <div class="comlist" :class="{activity:index == activity}" v-for="(p,index) in pops" v-bind:id="p.id" @click="tap(index)">{{pops[index].selected}}
-                        <div class="listconter">{{p.name}}<i class='poptxt' v-if="totalPromotions">满{{p.totalPromotions[0].total}}减{{p.totalPromotions[0].reduce}}</i>
-                        </div>
-                        <div class="listprice">{{p.price}}
-                            <div class="unit2">{{p.priceUnit}}</div>
-                        </div>
-                    </div>
-                </div>
+        <span
+          on="tap:my-lightbox2.toggle"
+          class="lightbox-close"
+          @touchend="confirm()">确定选择</span>
+      </div>
+    </mip-lightbox>
 
-                <span on="tap:my-lightbox2.toggle" @touchend="confirm()" class="lightbox-close">确定选择</span>
-            </div>
-        </mip-lightbox>
-
-    </div>
+  </div>
 </template>
 <script>
-    import base from '../../common/utils/base'
-    import login from '../../common/utils/login'
-    export default {
-        data() {
-            return {
-                id:base.getRequest(location.href).detailid,
-                channel:'baidu',
-                sericePrice: {},
-                service: {},
-                lastComment: {},
-                promotion: {},
-                images: [],
-                images2:[],
-                loading: false,
-                counter: 0,
-                minBuyNum: 1,
-                warn: {
-                    // 弹窗
-                    show: false,
-                    texts: ''
-                },
-                minbuyprice: 0,//最低起购金额
-                totoprice: 0,
-                price: 0,
-                priceId: '',
-                serviceId: '',
-                dwid: '',
-                priceType: '',
-                similarItems: {},
-                pops: [],
-                showpops: false,
-                activity:0,
-                similarPricesId:'',
-                apptime :null,
-                appointTime:'',
-                limitNum:1,
-                redirect_uri:'',
-                client_id:'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
-                ClientSecret:'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
-                code: base.getRequest(location.href).code,
-                id2:'',
-                toservation:'',
-                scroll:false,
-            }
-        },
-        mounted () {
-            this.detailstr();
-            window.addEventListener('scroll', this.moreimg)
-        },
-        methods: {
-            detailstr(){
-                let that = this;
-                let url = "/daoway/rest/service/full/" + that.id + "?channel=" + that.channel;
-                fetch(url, {
-                    method: 'get',
-                }).then(function (res) {
-                    if (res && res.status == "200") {
-                        return res.json();
-                    }
-                }).then(function (text) {
-                    let data = text.data;
-                    that.service = data.service;
-                    let sericePrice = data.sericePrice;
-                    that.sericePrice = sericePrice;
-                    let lastComment = data.service.lastComment;
-                    if(lastComment){
-                        lastComment.time = base.timeformat(lastComment.createtime, "yyyy-MM-dd");
-                        lastComment.commentCount = data.service.commentCount;
-                    }
-                    that.appointTime = data.service.nextAppointTime;
-                    that.service.nextime = base.timeformat(data.service.nextAppointTime, "appDate HH:mm");
-                    that.lastComment = lastComment ? lastComment : '';
-                    that.promotion = data.promotion;
-                    that.images2 = data.imgs;
-                    that.counter = sericePrice.minBuyNum;
-                    that.minBuyNum = sericePrice.minBuyNum;
-                    that.service.minBuyPrice = data.service.minBuyPrice;
-                    that.price = sericePrice.price;
-                    that.priceId = sericePrice.id;
-                    that.serviceId = sericePrice.serviceId;
-                    that.priceType = sericePrice.priceType;
-                    that.similarItems = data.similarItems;
-                    that.limitNum = data.sericePrice.limitNum;
-                    that.thidpage(that.priceId)
-                }).catch(function (error) {
-                    console.error('Error:', error)
-                });
-            },
-            add(counter){
-                counter += 1;
-                if(this.limitNum &&　this.limitNum > counter){
-                    this.warn.show = true;
-                    this.warn.texts = '该项目每单限购'+this.limitNum+'份';
-                }else {
-                    this.counter = counter;
-                }
-
-            },
-            jian(counter){
-                var that = this;
-                if (counter <= that.minBuyNum || counter == 0) {
-                    this.warn.show = true;
-                    this.warn.texts = "不能再减了";
-                } else {
-                    counter -= 1;
-                    that.counter = counter;
-                }
-            },
-            moreimg(){
-                if(document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight ){
-                    this.images = this.images2;
-                    this.scroll = true;
-                }
-            },
-            closeLayer () {
-                this.warn.show = false
-            },
-            close(){
-                this.showpops = false
-            },
-            toindex(){
-                MIP.viewer.open(base.htmlhref.index, { isMipLink: true })
-            },
-            toxuzhi(){
-                MIP.viewer.open(base.htmlhref.xuzhi, { isMipLink: true })
-            },
-            tocomments(){
-                let serviceId = this.serviceId;
-                let priceId = this.priceId;
-                MIP.viewer.open(base.htmlhref.comments+"?serviceId="+serviceId +"&priceId="+priceId, { isMipLink: true })
-            },
-            tap(index){
-                this.activity = index;
-                this.similarPricesId = this.pops[index].id;
-            },
-            thidpage: function (priceId) {//选择服务项目
-                var that = this;
-                var position =  base.getposition();
-                var url = "/daoway/rest/servicePrice/similarPricesByPriceId?priceId=" + priceId + "&city=" + encodeURIComponent(position.city) + '&lot=' + position.lot + '&lat=' + position.lat + "&channel=" + that.channel;
-                fetch(url, {
-                    method: 'get',
-                }).then(function (res) {
-                    if (res && res.status == "200") {
-                        return res.json();
-                    }
-                }).then(function (text) {
-                    if(text.status == "ok"){
-                        that.pops = text.data;
-                    }else {
-                        that.warn.show = true;
-                        that.warn.texts = text.msg;
-                    }
-                }).catch(function (error) {
-                    console.log(error)
-                });
-            },
-            confirm: function () {//确定选择
-                var that = this;
-                that.showpops = false;
-                var similarPricesId = that.similarPricesId;
-                var priceId = that.priceId;
-                 if (similarPricesId != priceId) {
-                     that.id = similarPricesId;
-                     that.detailstr();
-                }
-            },
-            reservation(){
-                var that = this;
-                var quantity = that.counter;// 购买数量
-                var minBuyPrice = that.minBuyPrice;
-                if (quantity <= 0) {
-                    quantity = that.minBuyNum;
-                }
-                var price = that.price;
-                var totalPrices = price * quantity;
-                sessionStorage.setItem('apptime','');
-                let userId = localStorage.getItem('userId');
-                let token = localStorage.getItem('token');
-
-                /*跳转带出去的参数*/
-                let priceId = that.priceId;
-                let priceMap = {};
-                priceMap.id = priceId;
-                priceMap.quantity = quantity;
-                if (minBuyPrice > totalPrices) {
-                    this.warn.show = true;
-                    this.warn.texts = '该店铺需满' + minBuyPrice + '元起购，还差' + (minBuyPrice - totalPrices) + '元即可下单哦~';
-                } else {
-                    if(userId && token){
-                        let param = {
-                            serviceId: that.serviceId,
-                            priceId: that.priceId,
-                            quantity: quantity,
-                            appointTime: that.appointTime,
-                            priceType: that.priceType
-                        };
-                        param =JSON.stringify(param);
-                        MIP.viewer.open(base.htmlhref.reservation+"?param="+encodeURIComponent(param), { isMipLink: true })
-                    }else {
-                        let baseparam = base.setUrlParam({
-                            serviceId: that.serviceId,
-                            priceId: that.priceId,
-                            quantity: quantity,
-                            appointTime: that.appointTime,
-                            priceType: that.priceType
-                        });
-                        let redirect_uri = 'http://test.daoway.cn/mip/components/mip-dw-reservation/example/mip-dw-reservation.html?'+baseparam;
-
-                        let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id='+that.client_id+'&redirect_uri='+ encodeURIComponent(redirect_uri) +'&scope=snsapi_userinfo&state=STATE';
-                        MIP.viewer.open(url, { isMipLink: true })
-                    }
-                }
-            }
-        }
+import base from '../../common/utils/base'
+import login from '../../common/utils/login'
+export default {
+  data () {
+    return {
+      id: base.getRequest(location.href).detailid,
+      channel: 'baidu',
+      sericePrice: {},
+      service: {},
+      lastComment: {},
+      promotion: {},
+      images: [],
+      images2: [],
+      loading: false,
+      counter: 0,
+      minBuyNum: 1,
+      warn: {
+        // 弹窗
+        show: false,
+        texts: ''
+      },
+      minbuyprice: 0, // 最低起购金额
+      totoprice: 0,
+      price: 0,
+      priceId: '',
+      serviceId: '',
+      dwid: '',
+      priceType: '',
+      similarItems: {},
+      pops: [],
+      showpops: false,
+      activity: 0,
+      similarPricesId: '',
+      apptime: null,
+      appointTime: '',
+      limitNum: 1,
+      redirect_uri: '',
+      client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
+      ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
+      code: base.getRequest(location.href).code,
+      id2: '',
+      toservation: '',
+      scroll: false
     }
+  },
+  mounted () {
+    this.detailstr()
+    window.addEventListener('scroll', this.moreimg)
+  },
+  methods: {
+    detailstr () {
+      let that = this
+      let url = '/daoway/rest/service/full/' + that.id + '?channel=' + that.channel
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        if (res && res.status == '200') {
+          return res.json()
+        }
+      }).then(function (text) {
+        let data = text.data
+        that.service = data.service
+        let sericePrice = data.sericePrice
+        that.sericePrice = sericePrice
+        let lastComment = data.service.lastComment
+        if (lastComment) {
+          lastComment.time = base.timeformat(lastComment.createtime, 'yyyy-MM-dd')
+          lastComment.commentCount = data.service.commentCount
+        }
+        that.appointTime = data.service.nextAppointTime
+        that.service.nextime = base.timeformat(data.service.nextAppointTime, 'appDate HH:mm')
+        that.lastComment = lastComment || ''
+        that.promotion = data.promotion
+        that.images2 = data.imgs
+        that.counter = sericePrice.minBuyNum
+        that.minBuyNum = sericePrice.minBuyNum
+        that.service.minBuyPrice = data.service.minBuyPrice
+        that.price = sericePrice.price
+        that.priceId = sericePrice.id
+        that.serviceId = sericePrice.serviceId
+        that.priceType = sericePrice.priceType
+        that.similarItems = data.similarItems
+        that.limitNum = data.sericePrice.limitNum
+        that.thidpage(that.priceId)
+      }).catch(function (error) {
+        console.error('Error:', error)
+      })
+    },
+    add (counter) {
+      counter += 1
+      if (this.limitNum &&　this.limitNum > counter) {
+        this.warn.show = true
+        this.warn.texts = '该项目每单限购' + this.limitNum + '份'
+      } else {
+        this.counter = counter
+      }
+    },
+    jian (counter) {
+      let that = this
+      if (counter <= that.minBuyNum || counter == 0) {
+        this.warn.show = true
+        this.warn.texts = '不能再减了'
+      } else {
+        counter -= 1
+        that.counter = counter
+      }
+    },
+    moreimg () {
+      if (document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight) {
+        this.images = this.images2
+        this.scroll = true
+      }
+    },
+    closeLayer () {
+      this.warn.show = false
+    },
+    close () {
+      this.showpops = false
+    },
+    toindex () {
+      MIP.viewer.open(base.htmlhref.index, { isMipLink: true })
+    },
+    toxuzhi () {
+      MIP.viewer.open(base.htmlhref.xuzhi, { isMipLink: true })
+    },
+    tocomments () {
+      let serviceId = this.serviceId
+      let priceId = this.priceId
+      MIP.viewer.open(base.htmlhref.comments + '?serviceId=' + serviceId + '&priceId=' + priceId, { isMipLink: true })
+    },
+    tap (index) {
+      this.activity = index
+      this.similarPricesId = this.pops[index].id
+    },
+    thidpage: function (priceId) { // 选择服务项目
+      let that = this
+      let position = base.getposition()
+      let url = '/daoway/rest/servicePrice/similarPricesByPriceId?priceId=' + priceId + '&city=' + encodeURIComponent(position.city) + '&lot=' + position.lot + '&lat=' + position.lat + '&channel=' + that.channel
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        if (res && res.status == '200') {
+          return res.json()
+        }
+      }).then(function (text) {
+        if (text.status == 'ok') {
+          that.pops = text.data
+        } else {
+          that.warn.show = true
+          that.warn.texts = text.msg
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    confirm: function () { // 确定选择
+      let that = this
+      that.showpops = false
+      let similarPricesId = that.similarPricesId
+      let priceId = that.priceId
+      if (similarPricesId != priceId) {
+        that.id = similarPricesId
+        that.detailstr()
+      }
+    },
+    reservation () {
+      let that = this
+      let quantity = that.counter// 购买数量
+      let minBuyPrice = that.minBuyPrice
+      if (quantity <= 0) {
+        quantity = that.minBuyNum
+      }
+      let price = that.price
+      let totalPrices = price * quantity
+      sessionStorage.setItem('apptime', '')
+      let userId = localStorage.getItem('userId')
+      let token = localStorage.getItem('token')
+
+      /* 跳转带出去的参数 */
+      let priceId = that.priceId
+      let priceMap = {}
+      priceMap.id = priceId
+      priceMap.quantity = quantity
+      if (minBuyPrice > totalPrices) {
+        this.warn.show = true
+        this.warn.texts = '该店铺需满' + minBuyPrice + '元起购，还差' + (minBuyPrice - totalPrices) + '元即可下单哦~'
+      } else {
+        if (userId && token) {
+          let param = {
+            serviceId: that.serviceId,
+            priceId: that.priceId,
+            quantity: quantity,
+            appointTime: that.appointTime,
+            priceType: that.priceType
+          }
+          param = JSON.stringify(param)
+          MIP.viewer.open(base.htmlhref.reservation + '?param=' + encodeURIComponent(param), { isMipLink: true })
+        } else {
+          let baseparam = base.setUrlParam({
+            serviceId: that.serviceId,
+            priceId: that.priceId,
+            quantity: quantity,
+            appointTime: that.appointTime,
+            priceType: that.priceType
+          })
+          let redirect_uri = 'http://test.daoway.cn/mip/components/mip-dw-reservation/example/mip-dw-reservation.html?' + baseparam
+
+          let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + encodeURIComponent(redirect_uri) + '&scope=snsapi_userinfo&state=STATE'
+          MIP.viewer.open(url, { isMipLink: true })
+        }
+      }
+    }
+  }
+}
 </script>
 <style scoped>
     * {
@@ -620,7 +691,6 @@
         width: 98%;
     }
 
-
     .commodity_screen {
         width: 100%;
         height: 100%;
@@ -737,9 +807,4 @@
         display: inline-block;
     }
 
-
-
-
 </style>
-
-

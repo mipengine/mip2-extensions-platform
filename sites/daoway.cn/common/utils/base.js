@@ -1,11 +1,11 @@
 
 // const lxnhttp = 'https://www.lanxiniu.com/BdMipDev/'
- //const lxnhttp = 'http://127.0.0.1:8111/example/';
+// const lxnhttp = 'http://127.0.0.1:8111/example/';
 
-//const lxnhttp = '/components/';
-const lxnhttp = 'http://t.daoway.cn/example/';
+// const lxnhttp = '/components/';
+const lxnhttp = 'http://t.daoway.cn/example/'
 
-//const lxnhttp = 'http://test.daoway.cn/baiduapp/components/';//测试urL
+// const lxnhttp = 'http://test.daoway.cn/baiduapp/components/';//测试urL
 
 const tranObjUrlToCache = urls => {
   let result = {}
@@ -15,9 +15,9 @@ const tranObjUrlToCache = urls => {
   return result
 }
 export default ({
-  //url: '//www.lanxiniu.com',
+  // url: '//www.lanxiniu.com',
   // 线上
-  /*htmlhref: tranObjUrlToCache({
+  /* htmlhref: tranObjUrlToCache({
     order: lxnhttp + 'order',
     payorder: lxnhttp + 'payorder',
     mapout: lxnhttp + 'mapout',
@@ -28,39 +28,38 @@ export default ({
     costdetail: lxnhttp + 'costdetail',
     costdes: lxnhttp + 'costdes',
     userguide: lxnhttp + 'userguide'
-  }),*/
+  }), */
 
   // 测试
 
-       htmlhref: tranObjUrlToCache({
-       index: lxnhttp + 'mip-dw-index.html',
-       serviceclass: lxnhttp + 'mip-dw-serviceclass.html',
-       order: lxnhttp + 'mip-dw-order.html',
-       my: lxnhttp + 'mip-dw-my.html',
-       detail: lxnhttp + 'mip-dw-detail.html',
-       orderdetail: lxnhttp + 'mip-dw-orderdetail.html',
-       comments: lxnhttp + 'mip-dw-comments.html',
-       reservation: lxnhttp + 'mip-dw-reservation.html',
-       time: lxnhttp + 'mip-dw-time.html',
-       xuzhi: lxnhttp + 'mip-dw-xuzhi.html',
-       technician: lxnhttp + 'example/mip-dw-technician.html',
-       position: lxnhttp + 'mip-dw-position.html',
-       vouchers: lxnhttp + 'mip-dw-vouchers.html',
-       about: lxnhttp + 'mip-dw-about.html',
-       login: lxnhttp + 'mip-dw-login.html',
+  htmlhref: tranObjUrlToCache({
+    index: lxnhttp + 'mip-dw-index.html',
+    serviceclass: lxnhttp + 'mip-dw-serviceclass.html',
+    order: lxnhttp + 'mip-dw-order.html',
+    my: lxnhttp + 'mip-dw-my.html',
+    detail: lxnhttp + 'mip-dw-detail.html',
+    orderdetail: lxnhttp + 'mip-dw-orderdetail.html',
+    comments: lxnhttp + 'mip-dw-comments.html',
+    reservation: lxnhttp + 'mip-dw-reservation.html',
+    time: lxnhttp + 'mip-dw-time.html',
+    xuzhi: lxnhttp + 'mip-dw-xuzhi.html',
+    technician: lxnhttp + 'example/mip-dw-technician.html',
+    position: lxnhttp + 'mip-dw-position.html',
+    vouchers: lxnhttp + 'mip-dw-vouchers.html',
+    about: lxnhttp + 'mip-dw-about.html',
+    login: lxnhttp + 'mip-dw-login.html'
 
-
-       //community:lxnhttp + 'mip-dw-community/example/mip-dw-community.html',
-       //city: lxnhttp + 'city.html',
-       //orderlist: lxnhttp + 'myorder.html',
-       //listdetail: lxnhttp + 'listdetail.html',
-       //costdetail: lxnhttp + 'costdetail.html',
-       //costdes: lxnhttp + 'costdes.html',
-       //userguide: lxnhttp + 'userguide.html'
-     }),
-   channel:'baidu',
-   userId:'4112a2d5a7264360aeb3936a48ace9a6',//localStorage.getItem('userId'),
-   token: '6929484f51c71559b374ca8080ea2df3',//document.cookie,
+    // community:lxnhttp + 'mip-dw-community/example/mip-dw-community.html',
+    // city: lxnhttp + 'city.html',
+    // orderlist: lxnhttp + 'myorder.html',
+    // listdetail: lxnhttp + 'listdetail.html',
+    // costdetail: lxnhttp + 'costdetail.html',
+    // costdes: lxnhttp + 'costdes.html',
+    // userguide: lxnhttp + 'userguide.html'
+  }),
+  channel: 'baidu',
+  userId: '4112a2d5a7264360aeb3936a48ace9a6', // localStorage.getItem('userId'),
+  token: '6929484f51c71559b374ca8080ea2df3', // document.cookie,
   setHtmlRem: function () {
     let b = document
     let a = {}
@@ -113,11 +112,11 @@ export default ({
     localStorage.setItem('position', JSON.stringify(data))
   },
   getposition: function () {
-    let data =  JSON.parse(localStorage.getItem('position'));
+    let data = JSON.parse(localStorage.getItem('position'))
     return data
   },
-  apptime:function(apptime){
-     this.apptime = apptime;
+  apptime: function (apptime) {
+    this.apptime = apptime
   },
   setSession: function (datas) {
     sessionStorage.setItem('dwdata', JSON.stringify(datas))
@@ -128,60 +127,60 @@ export default ({
     return JSON.parse(data)
   },
   timeformat: function (time, format) {
-    var t = new Date(time);
-    var tf = function (i) {
+    let t = new Date(time)
+    let tf = function (i) {
       return (i < 10 ? '0' : '') + i
-    };
-    var dayStr = ['周日','周一','周二','周三','周四','周五','周六'];
+    }
+    let dayStr = ['周日', '周一', '周二', '周三', '周四', '周五', '周六']
     return format.replace(/appDate|day|yyyy|MM|dd|HH|mm|ss/g, function (a) {
       switch (a) {
         case 'yyyy':
-          return tf(t.getFullYear());
-          break;
+          return tf(t.getFullYear())
+          break
         case 'MM':
-          return tf(t.getMonth() + 1);
-          break;
+          return tf(t.getMonth() + 1)
+          break
         case 'mm':
-          return tf(t.getMinutes());
-          break;
+          return tf(t.getMinutes())
+          break
         case 'dd':
-          return tf(t.getDate());
-          break;
+          return tf(t.getDate())
+          break
         case 'HH':
-          return tf(t.getHours());
-          break;
+          return tf(t.getHours())
+          break
         case 'ss':
-          return tf(t.getSeconds());
-          break;
+          return tf(t.getSeconds())
+          break
         case 'day':
-          var today = new Date();
-          if (today.getMonth() + 1 == t.getMonth() + 1){
-            if (today.getDate() == t.getDate()){
-              return "今天";
-            } else if (today.getDate()+1 == t.getDate()){
-              return "明天";
+          var today = new Date()
+          if (today.getMonth() + 1 == t.getMonth() + 1) {
+            if (today.getDate() == t.getDate()) {
+              return '今天'
+            } else if (today.getDate() + 1 == t.getDate()) {
+              return '明天'
             } else {
-              return dayStr[t.getDay()];
+              return dayStr[t.getDay()]
             }
           } else {
-            return dayStr[t.getDay()];
+            return dayStr[t.getDay()]
           }
-          break;
+          break
         case 'appDate':
-          var today = new Date();
-          if (today.getMonth() + 1 == t.getMonth() + 1){
-            if (today.getDate() == t.getDate()){
-              return "今天";
-            } else if (today.getDate()+1 == t.getDate()){
-              return "明天";
+          var today = new Date()
+          if (today.getMonth() + 1 == t.getMonth() + 1) {
+            if (today.getDate() == t.getDate()) {
+              return '今天'
+            } else if (today.getDate() + 1 == t.getDate()) {
+              return '明天'
             } else {
-              return tf(t.getMonth() + 1)+"-"+tf(t.getDate());
+              return tf(t.getMonth() + 1) + '-' + tf(t.getDate())
             }
           } else {
-            return tf(t.getMonth() + 1)+"-"+tf(t.getDate());
+            return tf(t.getMonth() + 1) + '-' + tf(t.getDate())
           }
       }
-    });
+    })
   },
   getbaiduLogMsg: function () {
     let keys = 'mip-login-xzh:sessionId://test.daoway.com/Baidu/back'
@@ -196,17 +195,17 @@ export default ({
     }
   },
   // 使用MIP2合并数据用于本地存储
- /* mipExtendData: function (oldVal, newVal) {
+  /* mipExtendData: function (oldVal, newVal) {
     let data = MIP.util.fn.extend({}, oldVal, newVal)
     return data
-  },*/
+  }, */
   // 获取url中"?"符后的字串
   getRequest: function (url) {
-    url = url || window.location.href;
-    var obj = {}, reg = /([^?=&#]+)=([^?=&#]+)/g;
+    url = url || window.location.href
+    let obj = {}; let reg = /([^?=&#]+)=([^?=&#]+)/g
     url.replace(reg, function () {
-      obj[arguments[1]] = arguments[2];
-    });
-    return obj;
+      obj[arguments[1]] = arguments[2]
+    })
+    return obj
   }
 })
