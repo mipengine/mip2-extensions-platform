@@ -36,7 +36,7 @@
       </div>
       <div
         class="help"
-        @click="handleUpdateYcq">
+        @click="handleCustom">
         <!-- <mip&#45;img src="https://mip.putibaby.com/i/help_me.png"/> -->
       </div>
     </div>
@@ -385,6 +385,10 @@ export default {
       console.log('handleUpdateYcq')
       if (!this.checkLogin_('update_ycq')) { return }
       window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq'), {})
+    },
+    handleCustom () {
+      console.log('handleCustom')
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/custom'), {})
     },
     handleOrderList () {
       console.log('handleOrderList')

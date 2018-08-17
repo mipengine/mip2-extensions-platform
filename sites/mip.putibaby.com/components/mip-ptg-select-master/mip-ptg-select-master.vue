@@ -141,134 +141,135 @@
           <table
             id="citybar"
             class="citybar"
-            data-city="">
+            data-city=""
+            @click="setCity">
 
             <tbody>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">北京</td>
+                >北京</td>
                 <td
                   class="citytd"
-                  @click="setCity">天津</td>
+                >天津</td>
                 <td
                   class="citytd"
-                  @click="setCity">哈尔滨</td>
+                >哈尔滨</td>
                 <td
                   class="citytd"
-                  @click="setCity">武汉</td>
+                >武汉</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">上海</td>
+                >上海</td>
                 <td
                   class="citytd"
-                  @click="setCity">长春</td>
+                >长春</td>
                 <td
                   class="citytd"
-                  @click="setCity">济南</td>
+                >济南</td>
                 <td
                   class="citytd"
-                  @click="setCity">长沙</td>
+                >长沙</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">广州</td>
+                >广州</td>
                 <td
                   class="citytd"
-                  @click="setCity">杭州</td>
+                >杭州</td>
                 <td
                   class="citytd"
-                  @click="setCity">洛阳</td>
+                >洛阳</td>
                 <td
                   class="citytd"
-                  @click="setCity">南阳</td>
+                >南阳</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">深圳</td>
+                >深圳</td>
                 <td
                   class="citytd"
-                  @click="setCity">沈阳</td>
+                >沈阳</td>
                 <td
                   class="citytd"
-                  @click="setCity">石家庄</td>
+                >石家庄</td>
                 <td
                   class="citytd"
-                  @click="setCity">西安</td>
+                >西安</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">湘潭</td>
+                >湘潭</td>
                 <td
                   class="citytd"
-                  @click="setCity">徐州</td>
+                >徐州</td>
                 <td
                   class="citytd"
-                  @click="setCity">成都</td>
+                >成都</td>
                 <td
                   class="citytd"
-                  @click="setCity">南京</td>
+                >南京</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">黄石</td>
+                >黄石</td>
                 <td
                   class="citytd"
-                  @click="setCity">郑州</td>
+                >郑州</td>
                 <td
                   class="citytd"
-                  @click="setCity">青岛</td>
+                >青岛</td>
                 <td
                   class="citytd"
-                  @click="setCity">大连</td>
+                >大连</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">常州</td>
+                >常州</td>
                 <td
                   class="citytd"
-                  @click="setCity">唐山</td>
+                >唐山</td>
                 <td
                   class="citytd"
-                  @click="setCity">保定</td>
+                >保定</td>
                 <td
                   class="citytd"
-                  @click="setCity">秦皇岛</td>
+                >秦皇岛</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">呼和浩特</td>
+                >呼和浩特</td>
                 <td
                   class="citytd"
-                  @click="setCity">乌鲁木齐</td>
+                >乌鲁木齐</td>
                 <td
                   class="citytd"
-                  @click="setCity">合肥</td>
+                >合肥</td>
                 <td
                   class="citytd"
-                  @click="setCity">南昌</td>
+                >南昌</td>
               </tr>
               <tr>
                 <td
                   class="citytd"
-                  @click="setCity">福州</td>
+                >福州</td>
                 <td
                   class="citytd"
-                  @click="setCity">厦门</td>
+                >厦门</td>
                 <td
                   class="citytd"
-                  @click="setCity">香港</td>
+                >香港</td>
                 <td
                   class="citytd"
-                  @click="setCity">南宁</td>
+                >南宁</td>
               </tr>
             </tbody>
           </table>
@@ -1074,13 +1075,20 @@
           class="queding"
           on="tap:right-sidebar.close tap:selectmaster.dook">确定</span>
       </mip-sidebar>
-      <div
+      <mip-fixed
         v-if="state.isGif"
-        class="gif">
-        <mip-img
-          v-if="state.isGif"
-          src="https://mip.putibaby.com/i/jiazai.gif" />
-      </div>
+        still
+        type="top"
+        top="250px">
+        <div
+          class="gif">
+          <mip-img
+            layout="fixed"
+            width="110"
+            height="110"
+            src="https://mip.putibaby.com/i/jiazai.gif"/>
+        </div>
+      </mip-fixed>
       <div
         v-if="list.length > 0"
         id="cardList"
@@ -1170,7 +1178,7 @@
       type="right"
       bottom="50px"
       class="rec_a">
-      <a @click="handleUpdateYcq">
+      <a @click="handleCustom">
         <slot name="bwtj"/>
       </a>
     </mip-fixed>
@@ -1760,7 +1768,7 @@ API.wrapRet_ = function (api, opts, fn) {
     .then(checkStatus)
     .then(parseJSON)
     .then(ret => {
-      console.log(ret)
+      // console.log(ret)
       if (ret.success) fn(true, ret.data)
       else fn(false, ret.error)
     })
@@ -1782,6 +1790,15 @@ API.checkUnionAgain = function (opt, fn) {
   API.wrapRet_(
     'https://mip.putibaby.com/api/check_union_again', {
       'opt': opt
+    },
+    fn)
+}
+
+API.reportVisit = function (zw, city, fn) {
+  API.wrapRet_(
+    'https://mip.putibaby.com/api/ajax_report_visit', {
+      'zw_id': zw,
+      'city': city
     },
     fn)
 }
@@ -1830,7 +1847,9 @@ export default {
   },
   data () {
     console.log(this)
-
+    var pdata = JSON.parse(this.dataJsonstr)
+    var city = pdata.city || '北京'
+    console.log(city)
     return {
       isLogin: false,
       isUnion: false,
@@ -1842,13 +1861,14 @@ export default {
         isGif: true
       },
       filter: {
+        city: city,
         pn: 0,
         kw: ''
       },
       filter2: {
         shlxRow: '全天',
         ycq: '',
-        city: '',
+        city: city,
         jiguan: '',
         priceFromSel: 0,
         priceToSel: 50000,
@@ -1886,7 +1906,28 @@ export default {
   },
   mounted () {
     window.MIP.viewer.fixedElement.init()
+
     console.log('This is pty order list component !')
+    // 所有的图片（要是网络太好，自己加图片吧）
+    const imgs = [
+      'https://mip.putibaby.com/i/jiazai.gif'
+
+    ]
+    let len = imgs.length
+
+    /**
+     * 遍历imgs数组，将所有图片加载出来
+     * 可以通过控制台查看网络请求，会发现所有图片均已加载
+     */
+    for (let i = 0; i < len; i++) {
+      let imgObj = new Image() // 创建图片对象
+      imgObj.src = imgs[i]
+
+      imgObj.addEventListener('load', function () { // 这里没有考虑error，实际上要考虑
+        console.log('imgs' + i + '加载完毕')
+      }, false)
+    }
+
     var self = this
     this.$element.customElement.addEventAction('echo', function (event, str) {
       console.log(event)
@@ -1959,16 +2000,6 @@ export default {
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
       }
     })
-
-    var radiobtn = document.querySelectorAll('.radio_btn')
-
-    for (var j = 0; j < radiobtn.length; j++) {
-      radiobtn[j].addEventListener('touchend', function () {
-        removeClass(radiobtn, 'radio_check')
-        addClass(this, 'radio_check')
-        self.filter.shlxRow = this.innerHTML
-      })
-    }
   },
   methods: {
 
@@ -1976,7 +2007,35 @@ export default {
       var self = this
       console.log('should loading')
       console.log(this.dataJson)
-      API.getSelectMaster({}, function (isOk, res) {
+
+      function getParameterByName (name, url) {
+        if (!url) url = window.location.href
+        name = name.replace(/[[\]]/g, '\\$&')
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+        var results = regex.exec(url)
+        if (!results) return null
+        if (!results[2]) return ''
+        return decodeURIComponent(results[2].replace(/\+/g, ' '))
+      }
+      var qcity = getParameterByName('city') || ''
+      qcity = qcity.replace('市', '')
+      var cities = ['北京', '天津', '哈尔滨', '武汉', '上海', '长春', '济南', '长沙', '广州', '杭州', '洛阳', '南阳', '深圳', '沈阳', '石家庄', '西安', '湘潭', '徐州', '成都', '南京', '黄石', '郑州', '青岛', '大连', '常州', '唐山', '保定', '秦皇岛', '襄阳', '太原', '昆明', '兰州', '呼和浩特', '乌鲁木齐', '合肥', '南昌', '福州', '厦门', '南宁']
+      if (cities.lastIndexOf(qcity) >= 0) {
+        this.filter.city = qcity
+        console.log(qcity)
+      }
+
+      var city = this.filter.city || ''
+      API.reportVisit(1, city, function (isOk, res) {
+        if (isOk) {
+          console.log(res)
+        } else {
+          console.log(res)
+        }
+      })
+
+      this.filter.city = this.filter.city || '北京'
+      API.getSelectMaster(self.filter, function (isOk, res) {
         if (isOk) {
           console.log(res)
           self.list = res.list
@@ -2047,6 +2106,10 @@ export default {
       }
       window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq '), {})
     },
+    handleCustom () {
+      console.log('handleCustom')
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/custom'), {})
+    },
     handleOrderList () {
       console.log('handleOrderList')
       if (!this.checkLogin_('order_list')) { return }
@@ -2058,26 +2121,28 @@ export default {
       // document.body.scrollTop = 0
       this.state.loadMessage = ''
       this.list = []
-      this.$set(this, 'list', [])
+      // this.$set(this, 'list', [])
       var self = this
       this.state.isGif = true
-      this.$set(this.state, 'isGif', true)
+      // this.$set(this.state, 'isGif', true)
       this.filter.pn = 0
-      API.getSelectMaster(this.filter, function (isOk, res) {
-        if (isOk) {
-          console.log(res)
-          self.state.isGif = false
-          self.list = res.list
-          if (res.list.length < 10) {
-            self.state.loadMessage = '没有更多数据了!'
+      setTimeout(function () {
+        API.getSelectMaster(self.filter, function (isOk, res) {
+          if (isOk) {
+          // console.log(res)
+            self.state.isGif = false
+            self.list = res.list
+            if (res.list.length < 10) {
+              self.state.loadMessage = '没有更多数据了!'
+            } else {
+              self.state.loadMessage = '点击加载数据'
+            }
           } else {
-            self.state.loadMessage = '点击加载数据'
+            console.log(res)
+            self.state.loadMessage = '加载数据出错'
           }
-        } else {
-          console.log(res)
-          self.state.loadMessage = '加载数据出错'
-        }
-      })
+        })
+      }, 50)
     },
     load_more () {
       console.log('should set data')
@@ -2185,7 +2250,9 @@ export default {
           self.$set(self.filter, 'sort_by', 'age_asc')
         }
       }
-      self.load_data()
+      setTimeout(function () {
+        self.load_data()
+      }, 5)
     }
 
   }

@@ -55,7 +55,7 @@
   </div>
 </template>
 <script>
-// import {fetch} from '@/common/js/fetch'
+import request from '@/common/js/fetch'
 import apiUrl from '@/common/js/config.api'
 let regName = /^[\u4E00-\u9FA5\uf900-\ufa2d·0-9A-z]{1,20}$/
 let reg = /^[1]\d{10}$/
@@ -107,12 +107,8 @@ export default {
           'imgCode': '',
           'code': ''
         }})
-      fetch(apiUrl.imgCode).then(data => {
-        return data.json()
-      }).then(res => {
-        this.form.img = res.data
-      }).catch(error => {
-        console.log('错误' + error)
+      request(apiUrl.imgCode).then(res => {
+        if (res.code === 200) this.form.img = res.data
       })
     },
     // 定时器
@@ -198,14 +194,10 @@ export default {
         })
       } else {
         if (this.form.imgCode.length === 4) {
-          fetch(apiUrl.sendCode, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: `authcode=${this.form.imgCode}&sessionkey=${this.form.img.sessionkey}&mobile=${this.form.phone}`
-          }).then(data => {
-            return data.json()
+          request(apiUrl.sendCode, 'post', {
+            authcode: this.form.imgCode,
+            sessionkey: this.form.img.sessionkey,
+            mobile: this.form.phone
           }).then(res => {
             if (res.code === 200) {
               this.time = 60

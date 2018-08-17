@@ -37,9 +37,10 @@
     </div>
     <div class="actions">
       <button
+        :disabled="enabled"
         class="btn-normal"
         type="submit"
-        @click="submitTap">提交需求</button>
+        @click="submitTap">{{ tip }}</button>
     </div>
   </div>
 
@@ -80,54 +81,72 @@ export default {
       destination: '美国',
       day: 0,
       name: '',
-      phone: ''
+      phone: '',
+      enabled: false,
+      tip: '提交需求'
     }
   },
   watch: {
     info (val) {
-      this.name = val.userInfo.userinfo.nickname
+      // this.name = val.userInfo.userinfo.nickname
     }
   },
   mounted () {
     this.destination = this.des
     this.day = this.days
     this.phone = this.getPhone()
+    this.name = this.getName()
+    this.$on('login', (ev) => {
+      this.enabled = true
+      this.tip = '正在提交数据，请稍后...'
+
+      let params = {}
+      params['dest'] = this.destination
+      params['realname'] = this.name
+      params['mobile'] = this.phone
+      params['days'] = this.day
+      params['fid'] = 'baidu_mip'
+      params['trip_id'] = this.tripid
+
+      let headers = {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+      let _data = []
+      for (let k in params) {
+        _data.push(k + '=' + params[k])
+      }
+      fetch('https://m.6renyou.com/we_service/save_order', {
+        method: 'POST',
+        body: _data.join('&'),
+        headers: headers
+      }).then(res => res.json()).then(res => {
+        this.savePhone()
+        if (parseInt(res.status) === 1) {
+          this.baiduCB(this.name, this.phone, this.info)
+          MIP.viewer.open(this.host + '/order/result')
+        } else {
+          toast.show(res.message, options)
+          this.enabled = false
+          this.tip = '提交需求'
+        }
+      }).catch(err => {
+        toast.show('下单失败' + err.message, options)
+        this.enabled = false
+        this.tip = '提交需求'
+      })
+    })
   },
   methods: {
     submitTap: function () {
       let re = /^1\d{10}$/
-      if (this.name !== '' && this.phone !== '') {
+      if (this.name !== '' && this.phone !== '' && this.name !== null && this.phone !== null) {
         if (re.test(this.phone)) {
-          let params = {}
-          params['dest'] = this.destination
-          params['realname'] = this.name
-          params['mobile'] = this.phone
-          params['days'] = this.day
-          params['fid'] = 'baidu_mip'
-          params['trip_id'] = this.tripid
-          let headers = {
-            'Content-Type': 'application/x-www-form-urlencoded'
+          if (this.info != null && this.info.userInfo && this.info.userInfo.userinfo) {
+            this.$emit('login')
+            return
           }
-          let _data = []
-          for (let k in params) {
-            _data.push(k + '=' + params[k])
-          }
-          fetch('https://m.6renyou.com/we_service/save_order', {
-            method: 'POST',
-            body: _data.join('&'),
-            headers: headers
-          }).then(res => res.json()).then(res => {
-            console.log('下单返回信息', res)
-            this.savePhone()
-            if (parseInt(res.status) === 1) {
-              this.baiduCB(this.name, this.phone, this.info)
-              MIP.viewer.open(this.host + '/order/result')
-            } else {
-              toast.show(res.message, options)
-            }
-          }).catch(err => {
-            toast.show('下单失败' + err.message, options)
-          })
+          this.savePhone()
+          this.$emit('bridge')
         } else {
           toast.show('电话号码输入有误', options)
         }
@@ -139,25 +158,39 @@ export default {
       let CustomStorage = MIP.util.customStorage
       let storage = new CustomStorage(0)
       storage.set('phone', this.phone)
+      storage.set('name', this.name)
     },
     getPhone () {
       let CustomStorage = MIP.util.customStorage
       let storage = new CustomStorage(0)
       return storage.get('phone')
     },
+    getName () {
+      let CustomStorage = MIP.util.customStorage
+      let storage = new CustomStorage(0)
+      return storage.get('name')
+    },
     baiduCB (name, phone, info) {
+      if (!info || !info.userInfo || !info.userInfo.userinfo) return
+      let openid = info.userInfo.userinfo.openid
+      let accessToken = info.userInfo['access_token']
       let data = {
         name,
         phone,
-        info: this.info,
+        openid,
+        accessToken,
         dest: this.destination,
         days: this.day
       }
+      let _data = []
+      for (let k in data) {
+        _data.push(k + '=' + data[k])
+      }
       fetch(this.host + '/order/callback/baidu', {
         method: 'POST',
-        body: JSON.stringify(data),
+        body: _data.join('&'),
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/x-www-form-urlencoded'
         }
       }).then(resp => resp.json()).then(resp => {
         console.log(resp)

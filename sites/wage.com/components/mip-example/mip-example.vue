@@ -4,18 +4,21 @@
       v-show="resultShow"
       class="pt55">
       <mip-fixed 
-        type="top" 
+        still
+        type = "top"
         class="tag-nav-top">
-        <div class="tag-nav">
+        <div 
+          v-show="resultShow"
+          class="tag-nav">
           <div class="flex-item">
             <span
               :class="{active:active}"
-              @click="selectTag(1)">计算税后工资</span>
+              @click="selectTag(1,active)">计算税后工资</span>
             <span :class="{active_select:active}"/>
           </div>
           <div class="flex-item"><span
             :class="{active:!active}"
-            @click="selectTag(2)">推算税前工资</span><span :class="{active_select:!active}"/></div>
+            @click="selectTag(2,!active)">推算税前工资</span><span :class="{active_select:!active}"/></div>
         </div>
       </mip-fixed>
       <!--计算税前工资-->
@@ -61,8 +64,7 @@
     </div>
     <mip-result
       v-show="!resultShow"
-      :resultdata="resultData"
-      @resetcalculate="reSet"/>
+      :resultdata="resultData"/>
     <div
       id="tips"
       :class="getPositionValue"
@@ -79,6 +81,7 @@
 .container{
   height: 50px;
   top:88px;
+	z-index: 1000;
 }
 .wrapper {
   position: relative;
@@ -102,7 +105,7 @@
   width: 10em;
   font-family: PingFang-SC-Medium;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 400;
   color: #333;
 }
 
@@ -149,7 +152,7 @@ input::placeholder {
   margin: 20px auto;
   font-size: 17px;
   color: #fff;
-  font-weight: 500;
+  font-weight: 400;
   text-align: center;
   border-radius: 45px;
   background: -webkit-linear-gradient(left, #FF731F, #FFA53A);
@@ -160,6 +163,7 @@ input::placeholder {
   /* Firefox 3.6 - 15 */
   background: linear-gradient(to right, #FF731F, #FFA53A);
   /* 标准的语法 */
+	-webkit-tap-highlight-color: transparent; 
 }
 
 .tips {
@@ -220,6 +224,7 @@ li {
   font-size: 17px;
   font-family: PingFang-SC-Medium;
   font-weight: 400;
+	-webkit-tap-highlight-color: transparent; 
 }
 
 .active_select {
@@ -318,11 +323,9 @@ export default {
 				}
 			},
 			selectValue: 1,
-			resultShow: false,
+			resultShow: true,
 			resultData: {
-				tag: 1,
-				realIncome: 1000.56,
-				wage: 1000.78
+				realIncome: 5000,
 			},
 			small: false,
 			isClick:0,
@@ -334,9 +337,9 @@ export default {
 	},
 	methods: {
 		// 切换税前/税后工资
-		selectTag: function (index) {
+		selectTag: function (index,flag) {
 			this.isClick++;
-			this.active = !this.active;
+			!flag?this.active = !this.active:'';
 			this.tag = index;
 			if (index == 1) {
 				this.title = '税前工资';
@@ -534,10 +537,10 @@ export default {
 			if ($data.tag == 1) {
 				// 计算个人缴纳社保
 				this.resultData = this.getTax($data.wage, sociall + accumulation, $data.threshold);
-				this.resultData.tag = 1;
+				this.resultData.tag = $data.tag;
 			} else {
 				this.resultData = this.after2wage($data.wage, sociall + accumulation, $data.threshold);
-				this.resultData.tag = 2;
+				this.resultData.tag = $data.tag;
 			}
 			this.resultData.threshold = $data.threshold.toFixed(2);
 			this.resultData.sociAll = sociall.toFixed(2);
@@ -588,8 +591,17 @@ export default {
 		after2wage: function (taxwage, insure, threshold) {
 			let hold = threshold;
 			let wage = taxwage;
+			let zero = 0;
 			// 第一段
-			if (wage < hold) { return wage; }
+			if (wage < hold) { 
+				return {
+					realIncome: (wage + insure).toFixed(2),
+					tax: zero.toFixed(2),
+					taxableIncome: zero.toFixed(2),
+					taxR:0,
+					taxQ:0,
+				}; 
+			}
 			// 第二段
 			wage = (taxwage - 3500 * 0.03) / (1 - 0.03);
 			if (wage > hold && wage <= hold + 1500) {

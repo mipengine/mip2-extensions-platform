@@ -219,7 +219,7 @@
         <div class="text-container">
           <h3>办理须知</h3>
           <p>① 本服务能办理粤牌私人
-            <stronger>小型汽车</stronger>
+            <stronger>小车</stronger>
             ，在全国产生的大部分交通违法，针对扣分业务，只能办理本人本车，个人驾驶证累计记分不能超过
             <span>12分（含）</span>。
           </p>
@@ -772,7 +772,7 @@ export default {
             margin-left: 0.4rem;
             margin-top: 0.2rem;
             p {
-              font-size: 0.36em;
+              font-size: 0.36rem;
               font-family: PingFang-SC-Regular;
               color: rgba(0, 0, 0, 1);
             }

@@ -17,7 +17,7 @@ export default {
         }, 200)
       }
     }
-  },
+},
   mounted () {
     const that = this
     const isAndroid = MIP.util.platform.isAndroid()
@@ -27,7 +27,7 @@ export default {
       MIP.viewport.on('resize', function () {
         that.screenWidth = MIP.viewport.getWidth()
       })
-    }
+    }  
   },
   methods: {
     remChange: function (vw) {

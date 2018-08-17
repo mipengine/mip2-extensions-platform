@@ -569,6 +569,7 @@ export default {
     toPay (theOrder, orderId, orderType) {
       let self = this
       let orderName = self.busType(theOrder.orderType, theOrder.remark)
+      let apitoken = Storage.get('apitoken')
       MIP.setData({
         payConfig: {
           fee: theOrder.amount,
@@ -576,7 +577,8 @@ export default {
           postData: {
             orderId: orderId,
             orderType: orderType,
-            orderName: orderName
+            orderName: orderName,
+            apitoken: apitoken
           }
         }
       })
@@ -605,7 +607,7 @@ export default {
             return true
           } else {
             Dialog.open({
-              message: '暂不支持点击',
+              message: '暂时只能查看违章缴罚订单详情, <br>敬请期待!',
               showCancelButton: false
             })
           }

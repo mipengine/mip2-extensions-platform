@@ -1042,7 +1042,14 @@ API.checkUnionAgain = function (opt, fn) {
     },
     fn)
 }
-
+API.reportVisit = function (zw, city, fn) {
+  API.wrapRet_(
+    'https://mip.putibaby.com/api/ajax_report_visit', {
+      'zw_id': zw,
+      'city': city
+    },
+    fn)
+}
 export default {
 
   props: {
@@ -1068,6 +1075,33 @@ export default {
   },
   computed: {
 
+  },
+  beforeMount () {
+    function getParameterByName (name, url) {
+      if (!url) url = window.location.href
+      name = name.replace(/[[\]]/g, '\\$&')
+      var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+      var results = regex.exec(url)
+      if (!results) return null
+      if (!results[2]) return ''
+      return decodeURIComponent(results[2].replace(/\+/g, ' '))
+    }
+    var qcity = getParameterByName('city') || ''
+    qcity = qcity.replace('市', '')
+    var cities = ['北京', '天津', '哈尔滨', '武汉', '上海', '长春', '济南', '长沙', '广州', '杭州', '洛阳', '南阳', '深圳', '沈阳', '石家庄', '西安', '湘潭', '徐州', '成都', '南京', '黄石', '郑州', '青岛', '大连', '常州', '唐山', '保定', '秦皇岛', '襄阳', '太原', '昆明', '兰州', '呼和浩特', '乌鲁木齐', '合肥', '南昌', '福州', '厦门', '南宁']
+    if (cities.lastIndexOf(qcity) >= 0) {
+      this.city = qcity
+      console.log(qcity)
+    }
+
+    var city = this.city || ''
+    API.reportVisit(3, city, function (isOk, res) {
+      if (isOk) {
+        console.log(res)
+      } else {
+        console.log(res)
+      }
+    })
   },
   mounted () {
     console.log('This is master card component !')
@@ -1139,7 +1173,21 @@ export default {
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
       } else if (origin && !event.userInfo.isUnion) {
         console.log('go to submit_ph')
-        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/' + origin), {})
+        if (origin === 'update_time') {
+          console.log('submit_ph to update_time')
+          var to = 'https://mip.putibaby.com/update_time_mip?mcode=' + self.data.codeid
+          window.MIP.viewer.open(MIP.util.makeCacheUrl(
+            'https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
+
+          window.MIP.viewer.open(MIP.util.makeCacheUrl(), {})
+        } else {
+          console.log('submit_ph to' + origin)
+          var to2 = 'https://mip.putibaby.com/' + origin
+          window.MIP.viewer.open(MIP.util.makeCacheUrl(
+            'https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to2)), {})
+        }
+      } else {
+        console.log('no op while logindone')
       }
 
       API.getMasterInfo(self.data.info.id, function (isOk, data) {

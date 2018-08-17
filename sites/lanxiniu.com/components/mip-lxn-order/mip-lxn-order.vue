@@ -21,9 +21,9 @@
         </li>
       </ul>
     </div>
-    <div class="banner-content">
+    <!-- <div class="banner-content">
       <mip-img src="https://www.lanxiniu.com/Public/baidumip/banners.png"/>
-    </div>
+    </div> -->
     <div class="tab">
       <div class="tab-div">
         <ul class="lxn-tab-title">
@@ -242,6 +242,10 @@ export default {
     userlogin: {
       type: Object,
       default: function () { return {} }
+    },
+    mipClickToken: {
+      type: String,
+      default: function () { return '' }
     }
   },
   data () {
@@ -445,6 +449,10 @@ export default {
   },
   watch: {
     globaldata (val, oldval) {
+      console.log('查看之前的城市:' + oldval.ordercity + '=============现在的城市:' + val.ordercity)
+      if (val.ordercity !== oldval.ordercity) {
+        this.getCurrentCityCarTypes(val.ordercity)
+      }
       this.calPrice()
     }
   },
@@ -605,7 +613,6 @@ export default {
               this.floorAndTime.move.data = item.stairsFee
             }
           })
-
           this.RestoreData()
         })
     },
@@ -779,9 +786,11 @@ export default {
         remark: 'lxntest'
       }
       console.log(JSON.stringify(data, null, 2))
+      console.log(this.mipClickToken)
       let updata = {
         from_detail: 'baidu',
         fr: 'xiongzhanghao',
+        click_token: this.mipClickToken,
         token: sessionid,
         couponsId: 0, // 所用的优惠券id(默认0)
         OrderNum: '', // 订单号(空为新建订单)这里默认新建订单
@@ -840,6 +849,8 @@ export default {
     },
     // 切换车型数据
     changeTabData (index, isRestoreData) {
+      console.log('查看当前数据:' + index)
+      console.log('查看当前数据:' + isRestoreData)
       let move = this.floorAndTime.move
       let data = this.carTypes[index]
       //   更新当前楼层价格数据
@@ -983,6 +994,17 @@ export default {
     },
 
     RestoreData () {
+      let promas = base.getRequest()
+      if (promas.hasOwnProperty('cardnum')) {
+        //   有从卡片进入的标志
+        this.homePageInto()
+      } else {
+        //  无从卡片进入的标志
+        this.reduction()
+      }
+    },
+    // 还原数据-----级别与homePageInto相同
+    reduction () {
       let floorAndTime = this.floorAndTime
       let data = base.getSession()
       console.log(data)
@@ -1005,7 +1027,16 @@ export default {
             carTypeItem.index = 2
             break
         }
-
+        if (this.hide && carTypeItem.index === 2) {
+          carTypeItem.index = 0
+          let obj = {
+            carType: 3
+          }
+          console.log(JSON.stringify(obj, null, 2))
+          let datas = base.mipExtendData(this.globaldata, obj)
+          base.mipSetGlobalData(obj)
+          base.setSession(datas)
+        }
         this.changeTab(carTypeItem, true)
 
         let str1 = ',楼层费'
@@ -1036,6 +1067,40 @@ export default {
           this.calPrice()
         }, 300)
       }
+    },
+
+    // 从卡片进入页面根据url参数进行车型选择
+    homePageInto () {
+      console.log('========从卡片进入页面根据url参数进行车型选择==============')
+      let promas = base.getRequest()
+      //   if (promas.hasOwnProperty('cardnum')) {
+      let index = promas.cardnum
+      //   let carTypeItem = {
+      //     index: index
+      //   }
+
+      //   sessionStorage.setItem('bdcardfrom', index)
+
+      //   this.changeTab(carTypeItem, true)
+      let data = ''
+      if (this.carTypes.length < 3) {
+        data = this.carTypes[0]
+      } else {
+        data = this.carTypes[index]
+      }
+      let obj = {
+        carType: data.type
+      }
+      console.log(JSON.stringify(obj, null, 2))
+      let datas = base.mipExtendData(this.globaldata, obj)
+      base.mipSetGlobalData(obj)
+      base.setSession(datas)
+
+      this.reduction()
+      // setTimeout(() => {
+      //   this.calPrice()
+      // }, 200)
+    //   }
     },
 
     // 点击波纹效果
@@ -1258,10 +1323,10 @@ export default {
 }
 
 .head-ul li:nth-child(1)::after {
-  width: 2rem;
-  height: 0.08rem;
+  width: 1.2rem;
+  height: 0.06rem;
   background: #39a1e8;
-  bottom: 0;
+  bottom: .01rem;
   left: 50%;
   transform: translateX(-50%);
 }
@@ -1280,7 +1345,7 @@ export default {
 
 .tab {
   padding: 0 0.2rem;
-  margin-top: 0.2rem;
+  margin-top: 0.3rem;
 }
 .tab-div {
   background: #ffffff;
