@@ -27,7 +27,9 @@
             <div
               v-if="promotion.total_reduce"
               class="d-add d-add2"><span class="mj">满减</span>
-              <span v-for="j in promotion.total_reduce">满{{ j.total }}减{{ j.reduce }}元</span>
+              <span
+                v-for="j in promotion.total_reduce"
+                :key="j">满{{ j.total }}减{{ j.reduce }}元</span>
             </div>
           </div>
         </li>
@@ -35,7 +37,9 @@
           v-if="service.guarantee"
           class="d-baozhang"><span class="b-bz">保障</span>
           <div class="d-add d-add2">
-            <span v-for="g in service.guarantee.items"><img :src="g.iconUrl">{{ g.label }}</span>
+            <span
+              v-for="g in service.guarantee.items"
+              :key="g"><img :src="g.iconUrl">{{ g.label }}</span>
           </div>
         </li>
         <li/>
@@ -43,7 +47,6 @@
     </div>
     <div
       v-if="similarItems>0"
-      id="btn-open"
       :id="priceId"
       class="d-hh"
       on="tap:my-lightbox2.toggle"
@@ -95,6 +98,7 @@
           <span class="d-star">
             <img
               v-for="(i,index) in [1, 2, 3, 4, 5]"
+              :key="i"
               :src="lastComment.star<index ? '/common/images/star.png/' : '/common/images/red_star.png'">{{ index }}
           </span>
           <span
@@ -116,9 +120,10 @@
       <p v-text="service.orderingNotice"/>
     </div>
     <div class="d-img-box">
-      <p v-if="images2.length >0 && !scroll">↑滑动查看图文详情</p>
+      <p v-if="images2.length >0 && !scroll" >↑滑动查看图文详情</p>
       <img
         v-for="img in images"
+        :key="img"
         :src="img.img">
     </div>
 
@@ -183,7 +188,8 @@
         <div class="commodity-list">
           <div
             v-for="(p,index) in pops"
-            :class="{activity:index == activity}"
+            :key="p"
+            :class="{activity:index === activity}"
             :id="p.id"
             class="comlist"
             @click="tap(index)">{{ pops[index].selected }}
@@ -208,7 +214,6 @@
 </template>
 <script>
 import base from '../../common/utils/base'
-import login from '../../common/utils/login'
 export default {
   data () {
     return {
@@ -263,7 +268,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
@@ -297,7 +302,7 @@ export default {
     },
     add (counter) {
       counter += 1
-      if (this.limitNum &&　this.limitNum > counter) {
+      if (this.limitNum && this.limitNum > counter) {
         this.warn.show = true
         this.warn.texts = '该项目每单限购' + this.limitNum + '份'
       } else {
@@ -306,7 +311,7 @@ export default {
     },
     jian (counter) {
       let that = this
-      if (counter <= that.minBuyNum || counter == 0) {
+      if (counter <= that.minBuyNum || counter === 0) {
         this.warn.show = true
         this.warn.texts = '不能再减了'
       } else {
@@ -348,11 +353,11 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
-        if (text.status == 'ok') {
+        if (text.status === 'ok') {
           that.pops = text.data
         } else {
           that.warn.show = true
@@ -367,7 +372,7 @@ export default {
       that.showpops = false
       let similarPricesId = that.similarPricesId
       let priceId = that.priceId
-      if (similarPricesId != priceId) {
+      if (similarPricesId !== priceId) {
         that.id = similarPricesId
         that.detailstr()
       }
@@ -412,9 +417,9 @@ export default {
             appointTime: that.appointTime,
             priceType: that.priceType
           })
-          let redirect_uri = 'http://test.daoway.cn/mip/components/mip-dw-reservation/example/mip-dw-reservation.html?' + baseparam
+          let redirectUri = 'http://test.daoway.cn/mip/components/mip-dw-reservation/example/mip-dw-reservation.html?' + baseparam
 
-          let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + encodeURIComponent(redirect_uri) + '&scope=snsapi_userinfo&state=STATE'
+          let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirectUri=' + encodeURIComponent(redirectUri) + '&scope=snsapi_userinfo&state=STATE'
           MIP.viewer.open(url, { isMipLink: true })
         }
       }

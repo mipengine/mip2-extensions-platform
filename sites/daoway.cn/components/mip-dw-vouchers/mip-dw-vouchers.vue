@@ -3,6 +3,7 @@
     <div class="div">
       <div
         v-for="c in coupone"
+        :key="c"
         :info="c"
         class="list"
         @click="back(c)">
@@ -26,6 +27,7 @@
         style="width:343px; height:12px">
       <div
         v-for="u in unableCoupone"
+        :key="u"
         class="list gray">
         <img
           class="vimg"
@@ -100,7 +102,7 @@ export default {
       fetch(url, {
         method: 'get', credentials: 'include'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {

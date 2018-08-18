@@ -136,28 +136,28 @@ export default ({
       switch (a) {
         case 'yyyy':
           return tf(t.getFullYear())
-          break
+
         case 'MM':
           return tf(t.getMonth() + 1)
-          break
+
         case 'mm':
           return tf(t.getMinutes())
-          break
+
         case 'dd':
           return tf(t.getDate())
-          break
+
         case 'HH':
           return tf(t.getHours())
-          break
+
         case 'ss':
           return tf(t.getSeconds())
-          break
+
         case 'day':
-          var today = new Date()
-          if (today.getMonth() + 1 == t.getMonth() + 1) {
-            if (today.getDate() == t.getDate()) {
+          let today = new Date()
+          if (today.getMonth() + 1 === t.getMonth() + 1) {
+            if (today.getDate() === t.getDate()) {
               return '今天'
-            } else if (today.getDate() + 1 == t.getDate()) {
+            } else if (today.getDate() + 1 === t.getDate()) {
               return '明天'
             } else {
               return dayStr[t.getDay()]
@@ -165,13 +165,12 @@ export default ({
           } else {
             return dayStr[t.getDay()]
           }
-          break
         case 'appDate':
-          var today = new Date()
-          if (today.getMonth() + 1 == t.getMonth() + 1) {
-            if (today.getDate() == t.getDate()) {
+          let today1 = new Date()
+          if (today1.getMonth() + 1 === t.getMonth() + 1) {
+            if (today1.getDate() === t.getDate()) {
               return '今天'
-            } else if (today.getDate() + 1 == t.getDate()) {
+            } else if (today1.getDate() + 1 === t.getDate()) {
               return '明天'
             } else {
               return tf(t.getMonth() + 1) + '-' + tf(t.getDate())

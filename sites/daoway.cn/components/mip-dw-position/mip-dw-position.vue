@@ -23,6 +23,7 @@
             class="noborder">
             <div
               v-for="i in useraddr"
+              :key="i"
               :position="i"
               class="listadd"
               @click="tapback(i)">
@@ -52,6 +53,7 @@
           style="margin-top:0">附近小区</div>
         <div
           v-for="p in community"
+          :key="p"
           :position="p"
           class="listadd"
           @click="tapback(p)">
@@ -92,6 +94,7 @@
       <div class="listbox">
         <div
           v-for="c in cityList"
+          :key="c"
           :position="c"
           class="list"
           @click="tapback(c)">
@@ -118,11 +121,13 @@
         <div class="positon-item">
           <div
             v-for="h in hot"
+            :key="h"
             class="item"
             @click="tocommunity(h.name)">{{ h.name }}</div>
         </div>
         <div
           v-for="i in cityLists"
+          :key="i"
           class="citydiv" >
           <div
             :id="i.title"
@@ -130,6 +135,7 @@
           <div class="city">
             <div
               v-for="v in i.value"
+              :key="v"
               @click="tocommunity(v.name)">{{ v.name }}</div>
           </div>
         </div>
@@ -137,7 +143,9 @@
       <div class="right">
         <mip-fixed type="right">
           <div><a href="#all">*</a></div>
-          <div v-for="m in cityLists"><a :href="'#'+ m.title">{{ m.title }}</a></div>
+          <div
+            v-for="m in cityLists"
+            :key="m"><a :href="'#'+ m.title">{{ m.title }}</a></div>
         </mip-fixed>
       </div>
     </div>
@@ -186,11 +194,11 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
-        if (text.status == 'ok') {
+        if (text.status === 'ok') {
           let data = text.data
           let tempLot = data.lot
           let tempLat = data.lat
@@ -210,7 +218,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
@@ -227,11 +235,11 @@ export default {
         method: 'get',
         credentials: 'include'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
-        if (text.status == 'ok') {
+        if (text.status === 'ok') {
           that.useraddr2 = text.data
           if (text.data.length > 2) {
             that.tapshow = true
@@ -270,11 +278,11 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
-        if (text.status == 'ok') {
+        if (text.status === 'ok') {
           that.cityList = text.data
         } else {
           this.warn.show = true
@@ -296,7 +304,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {

@@ -6,6 +6,7 @@
       type="top">
       <div
         v-for="(h,index) in commentTab"
+        :key="h.id"
         :class="{atv:index == indx }"
         :id="h.id"
         class="item"
@@ -17,6 +18,7 @@
       <div class="class">
         <div
           v-for="com in commentTab[index]['comment']"
+          :key="com"
           class="list">
           <img
             :src="com.iconUrl"
@@ -28,6 +30,7 @@
             <div class="star">
               <img
                 v-for="(i,index) in [1, 2, 3, 4, 5]"
+                :key="i"
                 :src="com.star< index ? '/common/images/star.png' : '/common/images/red_star.png'">
               <div
                 class="data"
@@ -42,6 +45,7 @@
               <div>
                 <img
                   v-for="i in com.imgThumbPath"
+                  :key="i"
                   :src="i"
                   class="tapimg">
               </div>
@@ -145,13 +149,13 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
         let data = text.data
         // console.log(data)
-        if (that.filter == 'all') {
+        if (that.filter === 'all') {
           for (let c = 0; c < 5; c++) {
             let ct = that.commentTab[c]
             let id = ct.id
@@ -201,7 +205,7 @@ export default {
       that.filter = tager.id
       that.index = index
       that.indx = index
-      if (tager.count == 0) {
+      if (tager.count === 0) {
         that.nocomments = true
         that.loding = false
       }
@@ -210,11 +214,11 @@ export default {
     morelist () {
       let that = this
       if (document.body.scrollTop || document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight) {
-        if (that.sw == true) {
+        if (that.sw === true) {
           that.sw = false
           let comm = that.commentTab[that.index]
           let start = that.commentTab[that.index].comment.length
-          if (start == comm.count) {
+          if (start === comm.count) {
             that.loding = false
             that.over = true
             that.nocomments = false

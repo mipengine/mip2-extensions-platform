@@ -52,6 +52,7 @@
       <div class="goumai">
         <div
           v-for="p in prices"
+          :key="p"
           v-bind="p.id"
           class="gimg">
           <img
@@ -244,18 +245,18 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
-        if (text.status == 'ok') {
+        if (text.status === 'ok') {
           let data = text.data
           let pricesItem = data.prices
           let priceIds = that.param.priceId || that.priceId
           let prices = []
           if (pricesItem) {
             for (let i = 0; i < pricesItem.length; i++) {
-              if (priceIds == pricesItem[i].id) {
+              if (priceIds === pricesItem[i].id) {
                 prices.push(pricesItem[i])
               }
             }
@@ -297,12 +298,12 @@ export default {
         method: 'get',
         credentials: 'include'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
-        if (text.status == 'ok') {
-          if (text.data[0] &&　text.data[0].bill > 0) {
+        if (text.status === 'ok') {
+          if (text.data[0] && text.data[0].bill > 0) {
             that.coupone = text.data[0]
             that.alltotalPrices = parseFloat((that.totalPrice + that.realyFixFee - that.coupone.bill).toFixed(2))
           }
@@ -349,7 +350,7 @@ export default {
       if (that.coupone) {
         couponebill = that.coupone.bill || 0
       }
-      if (counter <= that.minBuyNum || counter == 0) {
+      if (counter <= that.minBuyNum || counter === 0) {
         this.warn.show = true
         this.warn.texts = '不能再减了'
       } else {
@@ -399,11 +400,11 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
-        if (text.status == 'ok') {
+        if (text.status === 'ok') {
           let data = text.data
           if (data.technicianList) {
             that.selectedTechnical = data.technicianList[0]
@@ -452,11 +453,11 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
-        if (text.status == 'ok') {
+        if (text.status === 'ok') {
           let resultData = text.data
           let prices = resultData.prices
           for (let i = 0; i < prices.length; i++) {
@@ -507,7 +508,7 @@ export default {
       let that = this
       let token = localStorage.getItem('token')
       document.cookie = 'token=' + token + ';path=/'
-      let tobaiduorder = ''
+      // let tobaiduorder = ''
       let addr = that.addr
       let doorNum = that.doorNum
       let contactPerson = that.contactPerson
@@ -574,11 +575,11 @@ export default {
           },
           body: anydata
         }).then(function (res) {
-          if (res && res.status == '200') {
+          if (res && res.status === '200') {
             return res.json()
           }
         }).then(function (text) {
-          if (text.status == 'ok') {
+          if (text.status === 'ok') {
             let tobaiduorder = text.data.orderId
             let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent('http://test.daoway.cn/mip/components/mip-dw-orderdetail/example/mip-dw-orderdetail.html?orderId=' + tobaiduorder)
             MIP.setData({'payConfig': {

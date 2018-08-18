@@ -5,6 +5,7 @@
       <mip-fixed type="top">
         <div
           v-for="(o,index) in orderitems"
+          :key="o"
           :class="{acty:o.id == filter?'acty':none}"
           class="list"
           @click="changeTab(index)">
@@ -19,6 +20,7 @@
       <div class="orderbox" >
         <div
           v-for="i in orderitems[index]['items']"
+          :key="i"
           class="orderitem">
           <div class="ordertit">
             <img
@@ -29,6 +31,7 @@
           <div>
             <div
               v-for="m in i.items"
+              :key="m"
               class="ordername"
               @click="toorderdetail(i.orderId)">
               <img
@@ -211,7 +214,7 @@ export default {
       let filter = orderitem.id
       if (that.loading === filter) return
       that.loading = filter
-      if (filter != 'ALL') {
+      if (filter !== 'ALL') {
         status = '&status=' + filter
       }
       let start = orderitem.items.length
@@ -221,23 +224,23 @@ export default {
         method: 'get',
         credentials: 'include'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
         let len = text.data.length
-        if (len == 0) {
-          if (start == 0) {
+        if (len === 0) {
+          if (start === 0) {
             orderitem.loading = 'noList'
             // 没有评论
-            that.index = index,
-            that.filter = filter,
+            that.index = index
+            that.filter = filter
             that.noList = true
             that.noMoreList = false
           } else {
             orderitem.loading = 'noMoreList'
-            that.index = index,
-            that.filter = filter,
+            that.index = index
+            that.filter = filter
             that.noList = false
             that.noMoreList = true
           }
@@ -323,8 +326,8 @@ export default {
                                         title: item.service.title,
                                         imgurl: item.servImgUrl
                                     }
-                                };
-                                break; */
+                                }; */
+              break
             case '7':
             case '4':
             case '3':
@@ -403,14 +406,14 @@ export default {
       let items = tager.items
       let start = items.length
       let filter = tager.id
-      if (loading == 'noList') {
+      if (loading === 'noList') {
         // 没有评论
         that.filter = filter
         that.noList = true
         that.noMoreList = false
         that.index = index
       } else {
-        if (start == 0) {
+        if (start === 0) {
           that.noList = false
           that.noMoreList = false
           that.getOrderList(index)
@@ -427,18 +430,18 @@ export default {
     toaction: function (param) {
       let that = this
       let payparam = param.param
-      let text = param.text
-      if (param.text == '再次购买') {
+      // let text = param.text
+      if (param.text === '再次购买') {
         MIP.viewer.open(base.htmlhref.reservation + '?orderId=' + param.param.orderId, { isMipLink: true })
-      } else if (param.text == '确认订单') {
+      } else if (param.text === '确认订单') {
         that.warn.show = true
         that.warn.texts = '确认订单完成？'
         that.param = param
-      } else if (param.text == '取消订单') {
+      } else if (param.text === '取消订单') {
         that.warn.show = true
         that.warn.texts = '确定取消订单？'
         that.param = param
-      } else if (param.text == '立即支付') {
+      } else if (param.text === '立即支付') {
         let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent('http://test.daoway.cn/mip/components/mip-dw-orderdetail/example/mip-dw-orderdetail.html?orderId=' + payparam.orderid)
         MIP.setData({'payConfig': {
           'fee': (payparam.totalPrice + payparam.fixFee - payparam.coupon).toFixed(2),
@@ -464,9 +467,9 @@ export default {
     closeLayer () {
       let orderId = this.param.param
       let action = ''
-      if (this.param.text == '取消订单') {
+      if (this.param.text === '取消订单') {
         action = 'buyer_cancel'
-      } else if (this.param.text == '确认订单') {
+      } else if (this.param.text === '确认订单') {
         action = 'buyer_confirm'
       }
       this.closesure(orderId, action)
@@ -479,16 +482,16 @@ export default {
         credentials: 'include',
         headers: {'content-type': 'application/x-www-form-urlencoded'}
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
-        if (text.status == 'ok') {
-          if (action == 'buyer_cancel') {
+        if (text.status === 'ok') {
+          if (action === 'buyer_cancel') {
             that.sure = false
             that.warn.show = true
             that.warn.texts = '订单已取消'
-          } else if (action == 'buyer_confirm') {
+          } else if (action === 'buyer_confirm') {
             that.sure = false
             that.warn.show = true
             that.warn.texts = '订单已完成'
@@ -521,9 +524,9 @@ export default {
       let tager = orderitems[that.index]
       if (document.body.scrollTop || document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight) {
         that.loading = tager.loading
-        if (that.loading != 'noList') {
-          if (that.loading != 'noMoreList') {
-            if (that.sw == true) {
+        if (that.loading !== 'noList') {
+          if (that.loading !== 'noMoreList') {
+            if (that.sw === true) {
               that.sw = false
               setTimeout(() => {
                 that.loding = true

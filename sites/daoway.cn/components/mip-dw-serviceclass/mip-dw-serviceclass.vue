@@ -10,6 +10,7 @@
               <div data-scroller>
                 <div
                   v-for="(f,index) in filterAry"
+                  :key="f"
                   :class="{activity:tag == f.name}"
                   data-item
                   class="sc-list"
@@ -25,6 +26,7 @@
     <div class="sc-box">
       <div
         v-for="i in item"
+        :key="i"
         :id="i.id"
         class="sc-box-list"
         @click="todetail(i.id)">
@@ -80,7 +82,7 @@ export default {
     }
   },
   mounted () {
-    let that = this
+    // let that = this
     let category = this.category
     let tag = this.tag
     this.nav()
@@ -95,7 +97,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
@@ -118,7 +120,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
@@ -127,13 +129,13 @@ export default {
         for (let i = 0; i < datas.length; i++) {
           let data = datas[i]
           let promotion = data.promotion
-          let total_reduce = promotion.total_reduce
-          let first_reduce = promotion.first_reduce
+          let totalReduce = promotion.total_reduce
+          let firstReduce = promotion.first_reduce
           let positiveCommentRate
-          if (data.salesNum == 0) {
+          if (data.salesNum === 0) {
             positiveCommentRate = '暂无评价'
           } else {
-            if (data.positiveCommentRate && data.positiveCommentRate != '--') {
+            if (data.positiveCommentRate && data.positiveCommentRate !== '--') {
               positiveCommentRate = '好评' + data.positiveCommentRate
             } else {
               positiveCommentRate = '暂无评价'
@@ -150,8 +152,8 @@ export default {
             price_unit: data.price_unit,
             salesNum: data.salesNum,
             serviceTitle: data.serviceTitle,
-            total_reduce: total_reduce ? total_reduce[0] : null,
-            first_reduce: first_reduce || null
+            totalReduce: totalReduce ? totalReduce[0] : null,
+            firstReduce: firstReduce || null
           }
 
           ary.push(obj)
@@ -167,7 +169,7 @@ export default {
       that.ary = []
       let category = that.category
       that.tag = that.filterAry[index].name
-      if (that.tag == '全部') {
+      if (that.tag === '全部') {
         that.tags = ''
       } else {
         that.tags = '&tag=' + encodeURIComponent(that.tag)
@@ -179,7 +181,7 @@ export default {
       let category = that.category
       let index = that.ary.length
       if (document.body.scrollTop || document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight) {
-        if (that.sw == true) {
+        if (that.sw === true) {
           that.sw = false
           setTimeout(() => {
             that.loding = true

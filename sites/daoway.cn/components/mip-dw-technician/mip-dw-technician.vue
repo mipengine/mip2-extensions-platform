@@ -2,6 +2,7 @@
   <div class="wrapper">
     <div
       v-for="(t,index) in technician"
+      :key="t"
       :id="t.technicianId"
       class="weui-cell">
       <div class="weui-cell__hd">
@@ -14,6 +15,7 @@
         <div class="star">
           <img
             v-for="(i,index) in [1, 2, 3, 4, 5]"
+            :key="i"
             :src="t.level < index ? '/common/images/star.png/' : '/common/images/red_star.png'">
           <div style="display:inline-block; margin-left: 10px;">已接{{ t.orderAmount }}单</div>
         </div>

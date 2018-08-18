@@ -58,6 +58,7 @@
       </div>
       <div
         v-for="i in orderhtml.items"
+        :key="i"
         class="xiangmu"
         style="line-height: 90px;height: 90px;">
         <div class="xtit">{{ i.name }}</div>
@@ -132,7 +133,7 @@
         <div>{{ orderhtml.note||"" }}</div>
       </div>
     </div>
-    <!-- <div class="od-daigou" v-if="userPhone &&　userPhone !=　orderhtml.userPhone">该订单由您的好友{{orderhtml.userPhone}}为您订购</div>-->
+    <!--<divclass="od-daigou"v-if="userPhone&&userPhone!=orderhtml.userPhone">该订单由您的好友{{orderhtml.userPhone}}为您订购</div>-->
     <div class="last"/>
     <div class="footer">
       <mip-fixed
@@ -206,15 +207,15 @@ export default {
         method: 'get',
         credentials: 'include'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
-        if (text.status == 'ok') {
+        if (text.status === 'ok') {
           let data = text.data
           that.friendId = data.sellerId
           data.formatTime = base.timeformat(data.appointTime, 'yyyy-MM-dd(day) HH:mm')
-          let paid = data.paid
+          // let paid = data.paid
           let statusId = data.statusId
           switch (statusId) {
             case '9': // 待付款
@@ -445,7 +446,7 @@ export default {
                 break
             }
           }
-          that.orderhtml = data,
+          that.orderhtml = data
           that.bill = (data.totalPrice + data.fixFee - data.couponBill).toFixed(2)
         } else {
           that.warn.show = true
@@ -459,10 +460,10 @@ export default {
       let that = this
       let action = status.action
       let orderId = that.orderhtml.orderId
-      if (action == 'buyAgain') {
+      if (action === 'buyAgain') {
         MIP.viewer.open(base.htmlhref.reservation + '?orderId=' + orderId, { isMipLink: true })
         // 再次购买
-      } else if (action == 'pay') {
+      } else if (action === 'pay') {
         let totalPrice = that.orderhtml.totalPrice
         let couponBill = that.orderhtml.couponBill
         let couponId = that.orderhtml.couponId
@@ -484,12 +485,12 @@ export default {
           }
         }})
         that.$emit('actionpay')
-      } else if (action == 'cancelBtn') {
+      } else if (action === 'cancelBtn') {
         that.warn.show = true
         that.warn.texts = '确认取消该订单吗'
         that.action = 'buyer_cancel'
         // 取消订单
-      } else if (action == 'confirmBtn') {
+      } else if (action === 'confirmBtn') {
         // console.log(action)
         that.warn.show = true
         that.warn.texts = '确认完成订单？'
@@ -514,16 +515,16 @@ export default {
         credentials: 'include',
         headers: {'content-type': 'application/x-www-form-urlencoded'}
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
-        if (text.status == 'ok') {
-          if (action == 'buyer_cancel') {
+        if (text.status === 'ok') {
+          if (action === 'buyer_cancel') {
             that.sure = false
             that.warn.show = true
             that.warn.texts = '订单已取消'
-          } else if (action == 'buyer_confirm') {
+          } else if (action === 'buyer_confirm') {
             that.sure = false
             that.warn.show = true
             that.warn.texts = '订单已完成'

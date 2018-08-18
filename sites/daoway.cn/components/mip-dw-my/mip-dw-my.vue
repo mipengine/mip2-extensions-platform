@@ -150,12 +150,12 @@ export default {
           'cookie': 'token=' + this.token
         }
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
         console.log(text)
-        if (text.status == 'ok') {
+        if (text.status === 'ok') {
           let data = text.data
           let userInfo = {}
           if (data.iconUrl) {
@@ -164,16 +164,16 @@ export default {
           userInfo.nick = data.nick
           userInfo.couponCount = data.couponCount
           let level = data.level
-          if (level == '100') { // 青铜会员
+          if (level === '100') { // 青铜会员
             userInfo.levelIcon = '/common/images/q.png'
             userInfo.levelhtml = '青铜会员'
-          } else if (level == '200') { // 白银会员
+          } else if (level === '200') { // 白银会员
             userInfo.levelhtml = '白银会员'
             userInfo.levelIcon = '/common/images/b.png'
-          } else if (level == '300') { // 黄金会员
+          } else if (level === '300') { // 黄金会员
             userInfo.levelhtml = '黄金会员'
             userInfo.levelIcon = '/common/images/h.png'
-          } else if (level == '400') { // 钻石会员
+          } else if (level === '400') { // 钻石会员
             userInfo.levelhtml = '钻石会员'
             userInfo.levelIcon = '/common/imagesz.png'
           } else {

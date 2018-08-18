@@ -5,6 +5,7 @@
         <div class="data">
           <div
             v-for="(t,index) in timeary"
+            :key="t"
             :class="{atv:inds == index}"
             class="item"
             @touchend="getime(index)">{{ t.week }}
@@ -18,6 +19,7 @@
     <div class="t-box">
       <div
         v-for="(m,index) in timeary[tab].times"
+        :key="m"
         :class="{man:m.busy,activity:dis == index }"
         class="time"
         @touchend="getli(index)">{{ m.time }}</div>
@@ -91,7 +93,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {

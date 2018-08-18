@@ -22,6 +22,7 @@
       <ul class="swiper-slide">
         <li
           v-for="t in fenleiary"
+          :key="t"
           :id="t.id"
           @click="toserviceclass(t.id)"><img :src="t.iconUrl2"><i>{{ t.name }}</i></li>
       </ul>
@@ -32,19 +33,23 @@
         <ul>
           <li
             v-for="e in ext"
+            :key="e"
             :id="e.id"
             @click="toserviceclass(e.id,e.name)"><img :src="e.iconUrl2"><i>{{ e.name }}</i></li>
         </ul>
       </div>
     </div>
     <div class="box">
-      <div v-for="k in list" >
+      <div
+        v-for="k in list"
+        :key="k">
         <div
           :categoryId="k.categoryId"
           class="h2">{{ k.categoryName }}<span @click="toserviceclass(k.categoryId)" >更多<img src="https://www.daoway.cn/h5/image/go_06.png"></span></div>
         <ul class="item-name" >
           <li
             v-for="t in k.items"
+            :key="t"
             :id="t.id"
             class="detailItem"
             @click="toservicedetail(t.id)">
@@ -121,11 +126,11 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
-        if (text.status == 'ok') {
+        if (text.status === 'ok') {
           let data = text.data
           let tempLot = data.lot
           let tempLat = data.lat
@@ -145,11 +150,11 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
-        if (text.status == 'ok') {
+        if (text.status === 'ok') {
           that.position = text.data[0]
           that.callBack()
           that.position = base.position(that.position)
@@ -182,7 +187,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
@@ -218,7 +223,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
@@ -240,7 +245,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status == '200') {
+        if (res && res.status === '200') {
           return res.json()
         }
       }).then(function (text) {
