@@ -2,7 +2,9 @@
   <div class="wrapper">
 
     <div class="order-nav">
-      <mip-fixed type="top">
+      <mip-fixed
+        type="top"
+        class="fixtop">
         <div
           v-for="(o,index) in orderitems"
           :key="o"
@@ -89,17 +91,17 @@
         <a
           data-type="mip"
           data-title="首页"
-          href="/components/mip-dw-index/example/mip-dw-index"
+          href="http://t.daoway.cn/example/mip-dw-index"
           @click="toindex"><img src="/common/images/home2.png">首页</a>
         <a
           class="regclolr"
           data-type="mip"
           data-title="订单"
-          href="/components/mip-dw-order/example/mip-dw-order"><img src="/common/images/order.png">订单</a>
+          href="http://t.daoway.cn/example/mip-dw-order"><img src="/common/images/order.png">订单</a>
         <a
           data-type="mip"
           data-title="我的"
-          href="/components/mip-dw-my/example/mip-dw-my"><img src="/common/images/my2.png">我的</a>
+          href="http://t.daoway.cn/example/mip-dw-my"><img src="/common/images/my2.png">我的</a>
       </div>
     </mip-fixed>
     <div
@@ -219,12 +221,11 @@ export default {
       }
       let start = orderitem.items.length
       let url = '/daoway/rest/orders/bought_by/' + that.userId + '?channel=' + that.channel + '&start=' + start + '&size=30' + status
-
       fetch(url, {
         method: 'get',
         credentials: 'include'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -482,7 +483,7 @@ export default {
         credentials: 'include',
         headers: {'content-type': 'application/x-www-form-urlencoded'}
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -496,7 +497,6 @@ export default {
             that.warn.show = true
             that.warn.texts = '订单已完成'
           }
-
           setTimeout(() => {
             that.warn.show = false
             MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
@@ -558,6 +558,9 @@ export default {
 
     li, ol {
         list-style: none
+    }
+    .fixtop{
+      background: ;
     }
     .theclose{width: 80%; margin: 0 auto}
     .layer p.active-layer{
@@ -645,6 +648,8 @@ export default {
     .list img {
         display: block;
         margin: 0 auto 5px;
+        width: 20px;
+        height: auto;
     }
 
     .number {

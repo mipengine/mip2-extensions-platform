@@ -245,7 +245,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -298,7 +298,7 @@ export default {
         method: 'get',
         credentials: 'include'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -400,7 +400,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -453,7 +453,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -506,8 +506,7 @@ export default {
     },
     tobuy () {
       let that = this
-      let token = localStorage.getItem('token')
-      document.cookie = 'token=' + token + ';path=/'
+      // let token = localStorage.getItem('token')
       // let tobaiduorder = ''
       let addr = that.addr
       let doorNum = that.doorNum
@@ -575,7 +574,7 @@ export default {
           },
           body: anydata
         }).then(function (res) {
-          if (res && res.status === '200') {
+          if (res && res.status === 200) {
             return res.json()
           }
         }).then(function (text) {

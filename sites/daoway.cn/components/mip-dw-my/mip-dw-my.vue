@@ -71,7 +71,7 @@
         <a
           data-type="mip"
           data-title="首页"
-          href="/components/mip-dw-index/example/mip-dw-index"
+          href="http://t.daoway.cn/example/mip-dw-index"
           @click="toindex"><img src="/common/images/home2.png">首页</a>
         <a
           data-type="mip"
@@ -124,12 +124,15 @@ export default {
   },
   mounted () {
     this.userId = localStorage.getItem('userId')
-    if (this.code || this.userId) {
-      login.codelogin(this.code)
-      let token = localStorage.getItem('token')
-      document.cookie = 'token=' + token
-      this.token = token
+    this.token = localStorage.getItem('token')
+    if (this.userId && this.token) {
       this.getmyhtml()
+    } else {
+      if (this.code) {
+        login.codelogin(this.code)
+      } else {
+        this.goLoginPage()
+      }
     }
   },
   methods: {
@@ -150,11 +153,10 @@ export default {
           'cookie': 'token=' + this.token
         }
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
-        console.log(text)
         if (text.status === 'ok') {
           let data = text.data
           let userInfo = {}
@@ -167,7 +169,7 @@ export default {
           if (level === '100') { // 青铜会员
             userInfo.levelIcon = '/common/images/q.png'
             userInfo.levelhtml = '青铜会员'
-          } else if (level === '200') { // 白银会员
+          } else if (level === 200) { // 白银会员
             userInfo.levelhtml = '白银会员'
             userInfo.levelIcon = '/common/images/b.png'
           } else if (level === '300') { // 黄金会员
@@ -190,7 +192,6 @@ export default {
     },
     loginOut: function () {
       let that = this
-      base.userId = null
       that.userId = null
       that.userInfo.iconUrl = 'http://www.daoway.cn/images/myicon.png'
       that.userInfo.couponCount = 0

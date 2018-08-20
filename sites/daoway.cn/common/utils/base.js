@@ -3,7 +3,7 @@
 // const lxnhttp = 'http://127.0.0.1:8111/example/';
 
 // const lxnhttp = '/components/';
-const lxnhttp = 'http://t.daoway.cn/example/'
+const lxnhttp = 'http://test.daoway.cn/example/'
 
 // const lxnhttp = 'http://test.daoway.cn/baiduapp/components/';//测试urL
 

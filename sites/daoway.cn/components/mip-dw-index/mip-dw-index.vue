@@ -69,16 +69,16 @@
           class="regclolr"
           data-type="mip"
           data-title="首页"
-          href="/components/mip-dw-index/example/mip-dw-index"
+          href="http://t.daoway.cn/example/mip-dw-index"
           @click="toindex"><img src="/common/images/home.png">首页</a>
         <a
           data-type="mip"
           data-title="订单"
-          href="/components/mip-dw-order/example/mip-dw-order"><img src="/common/images/order2.png">订单</a>
+          href="../mip-dw-order"><img src="/common/images/order2.png">订单</a>
         <a
           data-type="mip"
           data-title="我的"
-          href="/components/mip-dw-my/example/mip-dw-my"><img src="/common/images/my2.png">我的</a>
+          href="../mip-dw-my"><img src="/common/images/my2.png">我的</a>
       </div>
     </mip-fixed>
   </div>
@@ -126,7 +126,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -138,6 +138,7 @@ export default {
           that.getCommunity(tempLat, tempLot)
         } else {
           this.warn.show = true
+
           this.warn.texts = text.msg
         }
       }).catch(function (error) {
@@ -150,7 +151,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -187,7 +188,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -223,7 +224,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -245,7 +246,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
