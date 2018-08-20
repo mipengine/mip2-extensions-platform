@@ -6,11 +6,11 @@
       class="fr">
       <div class="customer">
         <a href="http://dbt.zoosnet.net/LR/Chatpre.aspx?id=DBT35838153&lng=cn">
-          <div class="customer-icon-1"></div>
+          <div class="customer-icon-1"/>
           <div class="customer-txt">在线</div>
         </a>
         <a href="tel:4006028082">
-          <div class="customer-icon-2"></div>
+          <div class="customer-icon-2"/>
           <div class="customer-txt">电话</div>
         </a>
       </div>
