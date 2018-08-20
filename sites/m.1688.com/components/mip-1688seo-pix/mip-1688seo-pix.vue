@@ -23,7 +23,7 @@ export default {
     let element = this.$element
     let img = new Image()
     img.style.display = 'none'
-    let canonical = this.canonical || ''
+    let canonical = encodeURIComponent(this.canonical) || ''
     let title = this.title || ''
     let url =
       'https://log.mmstat.com/m.gif?spm-cnt=a262wv.11860230&aplus&canonical=' +
