@@ -126,7 +126,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -150,7 +150,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -187,7 +187,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -223,7 +223,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -245,7 +245,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {

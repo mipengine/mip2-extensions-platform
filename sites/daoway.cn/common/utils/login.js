@@ -8,7 +8,7 @@ export default {
       headers: {'content-type': 'application/x-www-form-urlencoded'},
       body: 'code=' + code
     }).then(function (res) {
-      if (res && res.status === '200') {
+      if (res && res.status === 200) {
         return res.json()
       }
     }).then(function (text) {
