@@ -9,6 +9,7 @@
       id="callmask"
       class="callMask"
       type="top"
+      still
       @click="hideMask">
       <div
         id="askPrice"
@@ -73,6 +74,7 @@
       id="callmaskSimilar"
       type="top"
       class="callMask"
+      still
       @click="hideMask">
       <div
         id="similarToast"
@@ -137,8 +139,7 @@ import { clickPoint } from '../../common/utils/stastic.js'
 import {
   getLocalStorage,
   getCarId,
-  setLocalStorage,
-  getQuery
+  setLocalStorage
 } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
 export default {
@@ -196,17 +197,16 @@ export default {
       // event.userInfo;
       // 后端交互会话标识
       // event.sessionId;
-      if (event.userInfo && getQuery().state) {
-        this.bottomPrice()
+      if (event.userInfo && window.location.href.indexOf('code=') > 0 && window.location.href.indexOf('state=') > 0) {
+        console.log('授权成功')
       }
-      console.log('授权成功')
     })
     // 自定义exit事件
     this.$on('clientLogout', event => {
       console.log('登出了')
     })
-
-    if (getQuery().state) {
+    if (window.location.href.indexOf('code=') > 0 && window.location.href.indexOf('state=') > 0) {
+      this.bottomPrice()
       this.showAskToast = false
       this.showSimilarToast = true
     }

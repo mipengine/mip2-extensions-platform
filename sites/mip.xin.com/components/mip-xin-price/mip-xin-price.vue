@@ -362,18 +362,19 @@ export default {
 }
 
 .car-title {
-  width: 6.7rem;
+  /**width: 6.7rem;**/
   margin-left: 0.4rem;
   line-height: 0.3rem;
-  padding-top: 0.68rem;
+  padding-top: 0.3rem;
   min-height: 0.36rem;
+  padding-right: 0.2rem;
 }
 
 .car-desc {
   font-size: 0.36rem;
   font-weight: bold;
   color: #3a4144;
-  line-height: 0.6rem;
+  line-height: 0.5rem;
 }
 
 .price-info {
@@ -404,7 +405,7 @@ export default {
   font-size: 0.6rem;
   color: #f85d00;
   font-weight: bold;
-  margin-top: 0.26rem;
+  /**margin-top: 0.26rem;**/
   margin-bottom: -0.15rem;
   min-height: 0.6rem;
   /* background-color: #f85d00 */
@@ -500,7 +501,7 @@ export default {
   /* height: 1rem; */
   padding-left: 0.4rem;
   padding-right: 0.4rem;
-  padding-bottom: 0.3rem;
+  padding-bottom: 0.2rem;
 }
 
 .car-fanice-see {
