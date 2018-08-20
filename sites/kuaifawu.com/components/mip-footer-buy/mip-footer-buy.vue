@@ -11,8 +11,8 @@
           data-type="mip"
           @click="removeSku">购买服务</a>
         <a
-          href="tel:01089172605"
-          class="left">免费电话咨询</a>
+          href="tel:4006028082"
+          class="left">点击咨询</a>
       </div>
     </mip-fixed>
     <!-- 底部固定栏 -->
