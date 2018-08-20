@@ -5,7 +5,7 @@ mip-xzw-remlayout 星座屋mip rem布局功能组件
 ----|----
 类型|
 支持布局|responsive
-所需脚本|https://c.mipcdn.com/static/v2/mip-xzw-remlayout/mip-xzw-remlayout.js
+所需脚本|https://c.mipcdn.com/static/v1/mip-xzw-remlayout/mip-xzw-remlayout.js
 
 ## 说明
 
