@@ -11,7 +11,8 @@
   </div>
   <div
     v-else-if="name == 'date'"
-    class="item dateinput">
+    class="item dateinput"
+  >
     <input
       :value="dateVal"
       name="date"
@@ -25,7 +26,8 @@
   </div>
   <div
     v-else-if="name == 'time'"
-    class="item timeinput">
+    class="item timeinput"
+  >
     <input
       :value="timeString"
       name="time"
@@ -39,7 +41,8 @@
   </div>
   <div
     v-else-if="name == 'place'"
-    class="item placeinput">
+    class="item placeinput"
+  >
     <input
       :value="placeVal"
       name="place"
@@ -245,6 +248,7 @@ export default {
         let href2 = a2[0].getAttribute('url')
         let input2 = jz.querySelectorAll('input')
         if (!_this.returnQuery(input2)) {
+          _this.tip()
           return false
         }
         let url = href2 + '?' + _this.returnQuery(input2)
@@ -257,6 +261,7 @@ export default {
         input = pt.querySelectorAll('input')
       }
       if (!_this.returnQuery(input)) {
+        _this.tip()
         return false
       }
       let url = href + '?' + _this.returnQuery(input)
@@ -296,6 +301,17 @@ export default {
         }
       }
       return q === true ? querys : ''
+    },
+    tip: function () {
+      let body = document.querySelectorAll('body')
+      let tip = document.getElementById('tip')
+      if (!tip) {
+        body[0].insertAdjacentHTML('afterbegin', '<div id="tip" class="tip"><span>请输入完整的信息</span></div>')
+      } else {
+        setInterval(function () {
+          tip.remove()
+        }, 3000)
+      }
     }
   }
 }
