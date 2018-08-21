@@ -182,12 +182,12 @@ export default {
             this.hideloading()
             if (response.data.length !== 0) {
               this.nodata = false
-              this.orderList = response.data.filter(element => {
+              this.orderList = response.data.map(element => {
                 if (element.driverInfo.phone) {
                   element.driverInfo.phone = 'tel:' + element.driverInfo.phone
                 }
                 element.isdefault = false
-                return element.OrderStatus.Desc !== '待评价'
+                return element
               })
             }
           })
@@ -259,15 +259,16 @@ export default {
       console.log('支付订单')
       //   let sessionid = base.getbaiduLogMsg()
       let sessionid = this.userlogin.sessionId
+      let price = item.noPay
       let urlsParam = base.setUrlParam({
         orderNum: item.OrderNum,
         sessionId: sessionid,
-        total_fee: item.needPay
+        total_fee: price
       })
       let obj = {
         sessionId: sessionid,
         redirectUrl: 'https://www.lanxiniu.com/Pay/success?' + urlsParam,
-        fee: item.needPay + '元',
+        fee: price + '元',
         postData: {
           orderNum: item.OrderNum,
           token: sessionid
