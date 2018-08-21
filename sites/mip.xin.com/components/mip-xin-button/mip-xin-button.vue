@@ -231,7 +231,7 @@ export default {
           },
           () => {
             MIP.viewer.open(this.imUrl, {
-              isMipLink: true
+              isMipLink: false
             })
           },
           {
@@ -263,7 +263,7 @@ export default {
           },
           () => {
             MIP.viewer.open(this.imUrl, {
-              isMipLink: true
+              isMipLink: false
             })
           },
           {
@@ -279,7 +279,7 @@ export default {
           },
           () => {
             MIP.viewer.open(this.imUrl, {
-              isMipLink: true
+              isMipLink: false
             })
           },
           {

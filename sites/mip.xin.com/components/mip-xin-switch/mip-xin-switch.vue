@@ -172,7 +172,7 @@
   width: 0.32rem;
   height: 0.36rem;
   margin-right: 0.02rem;
-  background-image: url(http://c2.xinstatic.com/f3/20180724/1559/5b56dc55c013b568308.png);
+  background-image: url(//c2.xinstatic.com/f3/20180724/1559/5b56dc55c013b568308.png);
   background-size: 0.32rem 0.36rem;
   vertical-align: middle;
 }
@@ -193,7 +193,7 @@
   content: "";
   width: 0.18rem;
   height: 0.36rem;
-  background-image: url(http://c2.xinstatic.com/f3/20180724/1559/5b56dc55ef97d217077.png);
+  background-image: url(//c2.xinstatic.com/f3/20180724/1559/5b56dc55ef97d217077.png);
   background-size: 0.18rem 0.36rem;
 }
 .flawDesc:after {
@@ -204,7 +204,7 @@
   content: "";
   width: 0.1rem;
   height: 0.36rem;
-  background-image: url(http://c2.xinstatic.com/f3/20180724/1559/5b56dc562c408234190.png);
+  background-image: url(//c2.xinstatic.com/f3/20180724/1559/5b56dc562c408234190.png);
   background-size: 0.1rem 0.36rem;
 }
 </style>
