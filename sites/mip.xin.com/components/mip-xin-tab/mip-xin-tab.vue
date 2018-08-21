@@ -30,7 +30,7 @@
         class="imgWrap featureImg">
         <img
           class="featureImg"
-          src="http://c2.xinstatic.com/f3/20180316/1413/5aab60a7dc4ba209895.png">
+          src="//c2.xinstatic.com/f3/20180316/1413/5aab60a7dc4ba209895.png">
         <div><span
           v-for="(item,index) in flawsOuterArr"
           :class="[flawsOuterIndex == index ? 'anchorNumActive' :'']"
@@ -44,7 +44,7 @@
         class="imgWrap trimImg">
         <img
           class="trimImg"
-          src="http://c2.xinstatic.com/f3/20180316/1213/5aab4458a77bf330025.png">
+          src="//c2.xinstatic.com/f3/20180316/1213/5aab4458a77bf330025.png">
         <div><span
           v-for="(item,index) in flawsInnerArr"
           :class="[flawsInnerIndex == index ? 'anchorNumActive' :'']"
@@ -57,7 +57,7 @@
         class="imgWrap frameImg">
         <img
           class="frameImg"
-          src="http://c2.xinstatic.com/f3/20180316/1414/5aab60a818c28832566.png">
+          src="//c2.xinstatic.com/f3/20180316/1414/5aab60a818c28832566.png">
         <div><span
           v-for="(item,index) in flawsFrameArr"
           :class="[flawsFrameIndex == index ? 'anchorNumActive' :'']"
@@ -91,7 +91,7 @@
         class="imgWrap featureImg">
         <img
           class="featureImg"
-          src="http://c2.xinstatic.com/f3/20180316/1413/5aab60a7dc4ba209895.png">
+          src="//c2.xinstatic.com/f3/20180316/1413/5aab60a7dc4ba209895.png">
         <div><span
           v-for="(item,index) in paintOuterArr"
           :style="{top:item.location[1]*2/100 + 'rem',left:item.location[0]*2/100 + 'rem'}"
@@ -103,7 +103,7 @@
         class="imgWrap frameImg">
         <img
           class="frameImg"
-          src="http://c2.xinstatic.com/f3/20180316/1414/5aab60a818c28832566.png">
+          src="//c2.xinstatic.com/f3/20180316/1414/5aab60a818c28832566.png">
         <div><span
           v-for="(item,index) in paintFrameArr"
           :style="{top:item.location[1]*2/100 + 'rem',left:item.location[0]*2/100 + 'rem'}"
