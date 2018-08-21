@@ -101,8 +101,8 @@ export default {
           return res.json()
         }
       }).then(function (text) {
-        let data = text.data[0];
-        let filterAry = data.tagsInfo;
+        let data = text.data[0]
+        let filterAry = data.tagsInfo
         let filter = {
           name: '全部',
           url: '/common/images/all.png'
