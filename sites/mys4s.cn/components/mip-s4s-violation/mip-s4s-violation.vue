@@ -100,16 +100,18 @@
                   v-model="captchValue1"
                   :disabled="captchValue1 ? 'disabled' : false"
                   class="captch-input"
-                  type="text"
-                  maxlength="2"
+                  type="number"
+                  pattern="\d*"
+                  maxlength="1"
                   @keyup.delete="captchDelete(1,captchValue1)">
                 <input
                   ref="captchValue2"
                   v-model="captchValue2"
                   :disabled="captchValue2 ? 'disabled':false"
                   class="captch-input"
-                  type="text"
-                  maxlength="2"
+                  type="number"
+                  pattern="\d*"
+                  maxlength="1"
                   @keyup.delete="captchDelete(2,captchValue2)">
                 <input
                   ref="captchValue3"
@@ -117,8 +119,9 @@
                   :disabled="captchValue3 ? 'disabled':false"
 
                   class="captch-input"
-                  type="text"
-                  maxlength="2"
+                  type="number"
+                  pattern="\d*"
+                  maxlength="1"
                   @keyup.delete="captchDelete(3,captchValue3)">
                 <input
                   ref="captchValue4"
@@ -126,8 +129,9 @@
                   :disabled="captchValue4 ? 'disabled':false"
 
                   class="captch-input"
-                  type="text"
-                  maxlength="2"
+                  type="number"
+                  pattern="\d*"
+                  maxlength="1"
                   @keyup.delete="captchDelete(4,captchValue4)"
                 >
               </div>
@@ -371,7 +375,7 @@ export default {
         car_no: carNo ? carNo.toUpperCase() : '',
         vin: vin ? vin.toUpperCase() : '',
         engine: engine ? engine.toUpperCase() : '',
-        channel: 'xzapp',
+        channel: 'baidu',
         car_type: this.globalData.car_type
       }
 
@@ -381,8 +385,8 @@ export default {
       }
       // car_no车牌号，vin车架号，engion发动机，{car_no: 陕KC1166 vin: LSVNJ49J472028756 engine: 020297
       util
-        .fetchData('v3/violation/smapp/query', param)
-        // .fetchData('v3/violation/web/query', param)
+        // .fetchData('v3/violation/smapp/query', param)
+        .fetchData('v3/violation/web/query', param)
         .then(res => {
           // res.code = 90027
           if (res.code === 90027) {
