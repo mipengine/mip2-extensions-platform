@@ -15,6 +15,9 @@ export default {
       if (text.status === 'ok') {
         localStorage.setItem('userId', text.data.userId)
         localStorage.setItem('token', text.data.token)
+        if (text.data.token) {
+          document.cookie = 'token=' + text.data.token + ';path=/'
+        }
       } else {
         that.warn.show = true
         that.warn.texts = text.msg

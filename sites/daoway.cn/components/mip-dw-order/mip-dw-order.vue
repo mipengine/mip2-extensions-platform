@@ -2,7 +2,9 @@
   <div class="wrapper">
 
     <div class="order-nav">
-      <mip-fixed type="top">
+      <mip-fixed
+        type="top"
+        class="ordertop">
         <div
           v-for="(o,index) in orderitems"
           :key="o"
@@ -806,5 +808,9 @@ export default {
         position: relative;
         top:2px;
     }
+  .ordertop img{
+    width: 22px;
+    height:auto;
+  }
 
 </style>

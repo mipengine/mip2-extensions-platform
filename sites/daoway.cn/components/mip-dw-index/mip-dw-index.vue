@@ -263,9 +263,7 @@ export default {
       }
       MIP.viewer.open(base.htmlhref.serviceclass + '?category=' + id + '&tag=' + name, {isMipLink: true})
     },
-    toposition () { // 跳转到服务列表页
-      // console.log(11)
-      // MIP.setData({'banners':{'banner':[1,2,3]}})
+    toposition () {
       MIP.viewer.open(base.htmlhref.position, {isMipLink: true})
     }
   }

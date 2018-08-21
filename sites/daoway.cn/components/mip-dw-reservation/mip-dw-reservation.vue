@@ -506,9 +506,6 @@ export default {
     },
     tobuy () {
       let that = this
-      let token = localStorage.getItem('token')
-      document.cookie = 'token=' + token + ';path=/'
-      // let tobaiduorder = ''
       let addr = that.addr
       let doorNum = that.doorNum
       let contactPerson = that.contactPerson
