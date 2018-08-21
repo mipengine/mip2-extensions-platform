@@ -8,13 +8,16 @@ export default {
       headers: {'content-type': 'application/x-www-form-urlencoded'},
       body: 'code=' + code
     }).then(function (res) {
-      if (res && res.status === '200') {
+      if (res && res.status === 200) {
         return res.json()
       }
     }).then(function (text) {
       if (text.status === 'ok') {
         localStorage.setItem('userId', text.data.userId)
         localStorage.setItem('token', text.data.token)
+        if (text.data.token) {
+          document.cookie = 'token=' + text.data.token + ';path=/'
+        }
       } else {
         that.warn.show = true
         that.warn.texts = text.msg

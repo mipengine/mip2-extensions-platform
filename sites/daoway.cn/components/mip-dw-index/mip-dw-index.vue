@@ -126,7 +126,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -150,7 +150,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -187,7 +187,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -223,7 +223,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -245,7 +245,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -263,9 +263,7 @@ export default {
       }
       MIP.viewer.open(base.htmlhref.serviceclass + '?category=' + id + '&tag=' + name, {isMipLink: true})
     },
-    toposition () { // 跳转到服务列表页
-      // console.log(11)
-      // MIP.setData({'banners':{'banner':[1,2,3]}})
+    toposition () {
       MIP.viewer.open(base.htmlhref.position, {isMipLink: true})
     }
   }

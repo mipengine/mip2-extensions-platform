@@ -124,12 +124,15 @@ export default {
   },
   mounted () {
     this.userId = localStorage.getItem('userId')
-    if (this.code || this.userId) {
-      login.codelogin(this.code)
-      let token = localStorage.getItem('token')
-      document.cookie = 'token=' + token
-      this.token = token
+    this.token = localStorage.getItem('token')
+    if (this.userId && this.token) {
       this.getmyhtml()
+    } else {
+      if (this.code) {
+        login.codelogin(this.code)
+      } else {
+        this.goLoginPage()
+      }
     }
   },
   methods: {
@@ -150,11 +153,10 @@ export default {
           'cookie': 'token=' + this.token
         }
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
-        console.log(text)
         if (text.status === 'ok') {
           let data = text.data
           let userInfo = {}
@@ -181,8 +183,8 @@ export default {
           }
           that.userInfo = userInfo
         } else {
-          /* that.warn.show = true;
-                        that.warn.texts = text.msg; */
+          that.warn.show = true
+          that.warn.texts = text.msg
         }
       }).catch(function (error) {
         console.log(error)
@@ -190,7 +192,6 @@ export default {
     },
     loginOut: function () {
       let that = this
-      base.userId = null
       that.userId = null
       that.userInfo.iconUrl = 'http://www.daoway.cn/images/myicon.png'
       that.userInfo.couponCount = 0
@@ -201,7 +202,7 @@ export default {
       MIP.viewer.open(url)
     },
     goVouchersPage: function () {
-      let miniUserId = base.userId || null
+      let miniUserId = this.userId
       if (miniUserId) {
         MIP.viewer.open(base.htmlhref.vouchers, { isMipLink: true })
       } else {
