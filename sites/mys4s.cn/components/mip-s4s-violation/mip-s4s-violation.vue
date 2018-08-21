@@ -191,6 +191,8 @@ export default {
     captchValue1 (val) {
       if (val.length === 1) {
         this.$refs['captchValue2'].focus()
+      } else if (val.length > 1) {
+        this.captchValue1 = val.substring(0, 1)
       }
       // 备用逻辑  如果本格内容为两位以上，可以传递给下一格
       // else if (val.length === 2) {
@@ -206,6 +208,8 @@ export default {
     captchValue2 (val) {
       if (val.length === 1) {
         this.$refs['captchValue3'].focus()
+      } else if (val.length > 1) {
+        this.captchValue2 = val.substring(0, 1)
       }
       if (this.captchValue1 && this.captchValue4 && this.captchValue3) {
         this.captchReady()
@@ -214,6 +218,8 @@ export default {
     captchValue3 (val) {
       if (val.length === 1) {
         this.$refs['captchValue4'].focus()
+      } else if (val.length > 1) {
+        this.captchValue3 = val.substring(0, 1)
       }
       if (this.captchValue1 && this.captchValue2 && this.captchValue4) {
         this.captchReady()
@@ -226,6 +232,8 @@ export default {
         } else {
           this.$refs['captchValue4'].blur()
         }
+      } else if (val.length > 1) {
+        this.captchValue4 = val.substring(0, 1)
       }
     }
   },
