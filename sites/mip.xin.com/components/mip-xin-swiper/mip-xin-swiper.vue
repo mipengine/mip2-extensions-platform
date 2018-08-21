@@ -29,7 +29,7 @@
             :href="urlReport">
             <mip-img
               class="play"
-              src="http://c2.xinstatic.com/f3/20180323/1111/5ab470517f150445829.png"
+              src="//c2.xinstatic.com/f3/20180323/1111/5ab470517f150445829.png"
               @click="handlePlayVideo"/>
           </a>
         </div>
@@ -40,7 +40,7 @@
         <mip-img
           v-if="status == -1"
           class="play-sold"
-          src="http://c2.xinstatic.com/f3/20180731/1427/5b600155b5fc8949695.png"/>
+          src="//c2.xinstatic.com/f3/20180731/1427/5b600155b5fc8949695.png"/>
       </block>
     </mip-carousel>
     <mip-xin-position
@@ -61,6 +61,7 @@ import { clickPoint } from '../../common/utils/stastic.js'
 import { setLocalStorage, getLocalStorage } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
 const pidReport = '/pages/report'
+const agreement = 'https://mip.xin.com'
 export default {
   props: {
     carid: {
@@ -115,8 +116,9 @@ export default {
           if (that.big_image_info.is_video === 1) {
             that.big_image_info.img_six.unshift(that.big_image_info.img_six[0])
             let opurl = getLocalStorage('locationUrl')
-            this.urlReport = `/report_${this.carid}.html${opurl}`
+            this.urlReport = `${agreement}/report_${this.carid}.html${opurl}`
           }
+          console.log(res)
           setLocalStorage('carImgInfo', JSON.stringify(res))
         }
       })
@@ -139,7 +141,7 @@ export default {
           ? getLocalStorage('locationUrl') + '&'
           : '?'
         MIP.viewer.open(
-          `/car/big_image.html${opurl}currentIndex=${this.currentIndex}&carid=${
+          `${agreement}/car/big_image.html${opurl}currentIndex=${this.currentIndex}&carid=${
             this.carid
           }`,
           {
