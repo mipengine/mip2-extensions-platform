@@ -2,7 +2,9 @@
   <div class="wrapper">
 
     <div class="order-nav">
-      <mip-fixed type="top">
+      <mip-fixed
+        type="top"
+        class="ordertop">
         <div
           v-for="(o,index) in orderitems"
           :key="o"
@@ -224,7 +226,7 @@ export default {
         method: 'get',
         credentials: 'include'
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -482,7 +484,7 @@ export default {
         credentials: 'include',
         headers: {'content-type': 'application/x-www-form-urlencoded'}
       }).then(function (res) {
-        if (res && res.status === '200') {
+        if (res && res.status === 200) {
           return res.json()
         }
       }).then(function (text) {
@@ -806,5 +808,9 @@ export default {
         position: relative;
         top:2px;
     }
+  .ordertop img{
+    width: 22px;
+    height:auto;
+  }
 
 </style>
