@@ -383,7 +383,7 @@ export default {
         car_no: carNo ? carNo.toUpperCase() : '',
         vin: vin ? vin.toUpperCase() : '',
         engine: engine ? engine.toUpperCase() : '',
-        channel: 'xzapp',
+        channel: 'baidu',
         car_type: this.globalData.car_type
       }
 
