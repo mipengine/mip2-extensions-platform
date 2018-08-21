@@ -59,7 +59,7 @@
     class="boy fl"
   >
     <dt class="head"><mip-img :src="xzsrc"/></dt>
-    <dd class="name">{{ xzname }}</dd>
+    <dd class="name">男：{{ xzname }}</dd>
     <input
       :value="xzid"
       name="boy"
@@ -71,7 +71,7 @@
     class="girl fl"
   >
     <dt class="head"><mip-img :src="xzsrc2"/></dt>
-    <dd class="name">{{ xzname2 }}</dd>
+    <dd class="name">女：{{ xzname2 }}</dd>
     <input
       :value="xzid2"
       name="girl"
@@ -82,7 +82,7 @@
     v-else-if="name == 'sxpairboy'"
     class="item boy fl">
     <dt class="head"><mip-img :src="sxsrc"/></dt>
-    <dd class="name">{{ sxname }}</dd>
+    <dd class="name">男：{{ sxname }}</dd>
     <input
       :value="sxid"
       name="boy"
@@ -93,7 +93,7 @@
     v-else-if="name == 'sxpairgril'"
     class="item girl fr">
     <dt class="head"><mip-img :src="sxsrc2"/></dt>
-    <dd class="name">{{ sxname2 }}</dd>
+    <dd class="name">女：{{ sxname2 }}</dd>
     <input
       :value="sxid2"
       name="girl"
@@ -138,11 +138,8 @@
   </div>
 </template>
 
-<style scoped>
-.wrapper {
-  margin: 0 auto;
-  text-align: center;
-}
+<style>
+.xzpair .pairbox .name{font-size: 0.44rem;width: auto;}
 </style>
 
 <script>
