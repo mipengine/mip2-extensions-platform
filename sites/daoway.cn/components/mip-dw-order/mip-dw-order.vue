@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-
     <div class="order-nav">
       <mip-fixed
         type="top"
@@ -91,17 +90,17 @@
         <a
           data-type="mip"
           data-title="首页"
-          href="/components/mip-dw-index/example/mip-dw-index"
-          @click="toindex"><img src="/common/images/home2.png">首页</a>
+          href="http://test.daoway.cn/mip/t/index.html"
+          @click="toindex"><img src="http://www.daoway.cn/mip/common/images/home2.png">首页</a>
         <a
           class="regclolr"
           data-type="mip"
           data-title="订单"
-          href="/components/mip-dw-order/example/mip-dw-order"><img src="/common/images/order.png">订单</a>
+          href="http://test.daoway.cn/mip/t/order.html"><img src="http://www.daoway.cn/mip/common/images/order.png">订单</a>
         <a
           data-type="mip"
           data-title="我的"
-          href="/components/mip-dw-my/example/mip-dw-my"><img src="/common/images/my2.png">我的</a>
+          href="http://test.daoway.cn/mip/t/my.html"><img src="http://www.daoway.cn/mip/common/images/my2.png">我的</a>
       </div>
     </mip-fixed>
     <div
@@ -128,6 +127,7 @@
 <script>
 import base from '../../common/utils/base'
 import login from '../../common/utils/login'
+import '../../common/utils/base.less'
 export default {
   props: {
     payConfig: {
@@ -155,36 +155,36 @@ export default {
         {
           id: 'ALL',
           name: '全部',
-          image: '/common/images/dingdanye_03.png',
+          image: 'http://www.daoway.cn/mip/common/images/dingdanye_03.png',
           count: 0,
           items: []
         }, {
           id: 'PENDING_PAY',
           name: '待付款',
-          image: '/common/images/dingdanye_12.png',
+          image: 'http://www.daoway.cn/mip/common/images/dingdanye_12.png',
           count: 0,
           items: []
         }, {
           id: 'ONGOING2',
           name: '进行中',
-          image: '/common/images/dingdanye_07.png',
+          image: 'http://www.daoway.cn/mip/common/images/dingdanye_07.png',
           count: 0,
           items: []
         }, {
           id: 'COMPLETED',
           name: '已完成',
-          image: '/common/images/dingdanye_05.png',
+          image: 'http://www.daoway.cn/mip/common/images/dingdanye_05.png',
           count: 0,
           items: []
         }, {
           id: 'PENDING_COMMENT',
           name: '待评价',
-          image: '/common/images/dingdanye_09.png',
+          image: 'http://www.daoway.cn/mip/common/images/dingdanye_09.png',
           count: 0,
           items: []
         }
       ],
-      redirect_uri: 'http://test.daoway.cn/mip/components/mip-dw-order/example/mip-dw-order.html',
+      redirect_uri: 'http://test.daoway.cn/mip/t/order.html',
       client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
       ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
       code: base.getRequest(location.href).code,
@@ -226,9 +226,7 @@ export default {
         method: 'get',
         credentials: 'include'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let len = text.data.length
         if (len === 0) {
@@ -444,7 +442,7 @@ export default {
         that.warn.texts = '确定取消订单？'
         that.param = param
       } else if (param.text === '立即支付') {
-        let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent('http://test.daoway.cn/mip/components/mip-dw-orderdetail/example/mip-dw-orderdetail.html?orderId=' + payparam.orderid)
+        let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent('http://test.daoway.cn/mip/t/orderdetail.html?orderId=' + payparam.orderid)
         MIP.setData({'payConfig': {
           'fee': (payparam.totalPrice + payparam.fixFee - payparam.coupon).toFixed(2),
           'sessionId': that.token,
@@ -484,9 +482,7 @@ export default {
         credentials: 'include',
         headers: {'content-type': 'application/x-www-form-urlencoded'}
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
           if (action === 'buyer_cancel') {
@@ -807,6 +803,10 @@ export default {
         margin-right: 5px;
         position: relative;
         top:2px;
+    }
+    .ordertop{
+      background: #fff;
+      padding-top: 15px;
     }
   .ordertop img{
     width: 22px;
