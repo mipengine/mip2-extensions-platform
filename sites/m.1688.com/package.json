@@ -1,6 +1,6 @@
 {
   "name": "m.1688.com",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A MIP project",
   "scripts": {
     "dev": "mip2 dev",
