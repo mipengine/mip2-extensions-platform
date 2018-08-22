@@ -4,10 +4,10 @@
     type="bottom">
     <div
       class="bot_bar"
-      data-stats-baidu-obj="%7B%22type%22%3A%22load%22%2C%22data%22%3A%5B%22_trackPageview%22%2C%22%2Fzongheng%2FfirstInview%22%5D%7D">
+      data-stats-baidu-obj="%7B%22type%22%3A%22load%22%2C%22data%22%3A%5B%22_setCustomVar%22%2C1%2C%22botbarinview%22%2C%221%22%2C2%5D%7D">
       <div
         class="close_btn"
-        data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackPageview%22%2C%22%2Fzongheng%2Fclose%22%5D%7D"
+        data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22botbar%22%2C%22close%22%5D%7D"
         @click="_close">
         <mip-img
           :src="closeImgUrl"
@@ -28,7 +28,7 @@
       <div class="link_btn">打开</div>
       <div
         class="whole_link_btn"
-        data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackPageview%22%2C%22%2Fzongheng%2Fdownload%22%5D%7D"
+        data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22botbar%22%2C%22download%22%5D%7D"
         @click="_jumpDownload" />
     </div>
   </mip-fixed>
