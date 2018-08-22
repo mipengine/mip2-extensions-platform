@@ -20,7 +20,6 @@
       :status = "status"
       :carid="carid"
       :city-message="cityMessage"
-      style="width:7.5rem;height:5rem"
       @handleBigImg="handleBig"/>
     <mip-xin-price
       :carid="carid"
@@ -87,10 +86,10 @@ import {
   setLocalStorage,
   getLocalStorage,
   getQuery,
-  removeLocalStorage
+  removeLocalStorage,
+  getDomain
 } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
-const agreement = 'https://mip.xin.com'
 export default {
   props: {
     query: {
@@ -163,7 +162,7 @@ export default {
           that.showCarMessage = true
           // 需要存储json字符串
           setLocalStorage('currentCity', JSON.stringify(res))
-          this.url = `${agreement}/report_${this.carid}.html`
+          this.url = `${getDomain()}/report_${this.carid}.html`
         } else {
           console.log('接口返回错误')
         }
@@ -296,7 +295,7 @@ export default {
       let opurl = getLocalStorage('locationUrl')
         ? getLocalStorage('locationUrl') + '&'
         : '?'
-      this.urlReport = `${agreement}/report_${this.carid}.html${opurl}`
+      this.urlReport = `${getDomain()}/report_${this.carid}.html${opurl}`
     },
     /**
      * 隐藏底部button

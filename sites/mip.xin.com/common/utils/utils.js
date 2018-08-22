@@ -55,7 +55,19 @@ export const getQuery = function () {
   let query = MIP.getData('query')
   return query
 }
-
+// 获取域名
+export const getDomain = function () {
+  let agreement = 'https://'
+  let host
+  if (window.location.href.indexOf('baidu.com') > -1 || window.location.href.indexOf('mip.xin.com') > -1) {
+    host = 'mip.xin.com'
+  } else {
+    host = window.location.host
+  }
+  agreement = window.location.href.indexOf('https:') > -1 ? 'https://' : 'http://'
+  return agreement + host
+}
+// 获取协议
 export const getAgreement = function () {
   let agreement = 'https:'
   agreement = window.location.href.indexOf('https:') ? 'https:' : 'http:'
