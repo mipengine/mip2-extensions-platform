@@ -98,8 +98,10 @@
 </style>
 <script>
 import base from '../../common/utils/base'
+import { requestFun } from '../../common/utils/reqUtils'
 import { viewPoint } from '../../common/utils/stastic.js'
 import {
+  getQuery,
   getLocalStorage
 } from '../../common/utils/utils.js'
 let pid = '/pages/bigimage'
@@ -126,17 +128,20 @@ export default {
     viewPoint('', null, {
       pid: pid
     })
-    this.carInfo = JSON.parse(getLocalStorage('carImgInfo'))
-    if (this.carInfo.is_video === 1) {
-      // 大图模式下删除第一个
-      this.carInfo.img_six.shift()
-      this.imageitems = this.carInfo.img_six
-    } else {
-      this.imageitems = this.carInfo.img_six
-    }
-    this.price = this.carInfo.price
-    // let query = getQuery()
-    // this.currentIndex = query.currentIndex;
+    requestFun('/ajax/car/big_image', {
+      method: 'POST',
+      param: { carid: getQuery().carid, cityid: JSON.parse(getLocalStorage('currentCity')).cityid }
+    })
+      .then(res => {
+        if (res.img_six) {
+          this.carInfo = res
+          this.imageitems = this.carInfo.img_six
+          this.price = this.carInfo.price
+        }
+      })
+      .catch(err => {
+        console.log(err)
+      })
   },
   methods: {
     returnCardetail (e) {
