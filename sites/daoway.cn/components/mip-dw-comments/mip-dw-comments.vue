@@ -31,7 +31,7 @@
               <img
                 v-for="(i,index) in [1, 2, 3, 4, 5]"
                 :key="i"
-                :src="com.star< index ? '/common/images/star.png' : '/common/images/red_star.png'">
+                :src="com.star< index ? 'http://www.daoway.cn/mip/common/images/star.png' : 'http://www.daoway.cn/mip/common/images/red_star.png'">
               <div
                 class="data"
                 v-html="com.createtime"/>
@@ -65,14 +65,14 @@
             <div class="reptit">商家回复:</div>{{ com.replyComment }}</div>
           </div>
           <img
-            src="/common/images/maijia_03.png"
+            src="http://www.daoway.cn/mip/common/images/maijia_03.png"
             class="chengjiao" >
         </div>
         <div
           v-if="nocomments"
           class="list2">
           <img
-            src="/common/images/pingjia.png"
+            src="http://www.daoway.cn/mip/common/images/pingjia.png"
             style="width:100px; height:100px; display:block; margin:0 auto;" >
           <div class="jianyi">您的评价是最好的建议</div>
         </div>
@@ -149,9 +149,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let data = text.data
         // console.log(data)
@@ -188,7 +186,7 @@ export default {
           comment.replyComment = comment.replyComment || ''
           comment.area = comment.area || ''
           if (!comment.iconUrl) {
-            comment.iconUrl = '/common/images/iconimg.png'
+            comment.iconUrl = 'http://www.daoway.cn/mip/common/images/iconimg.png'
           };
           that.commentTab[index].comment.push(comment)
         }

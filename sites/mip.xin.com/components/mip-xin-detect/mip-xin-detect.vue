@@ -69,10 +69,9 @@
 <script>
 import { requestFun } from '../../common/utils/reqUtils'
 import { clickPoint } from '../../common/utils/stastic.js'
-import { getLocalStorage } from '../../common/utils/utils.js'
+import { getLocalStorage, getDomain } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
 const imageTitle = '//c5.xinstatic.com' // 图片地址需要拼接
-const agreement = 'https://mip.xin.com'
 export default {
   // props: ['carid'],
   props: {
@@ -118,7 +117,7 @@ export default {
         let opurl = getLocalStorage('locationUrl')
           ? getLocalStorage('locationUrl') + '&'
           : '?'
-        this.urlReport = `${agreement}/report_${this.carid}.html${opurl}index=`
+        this.urlReport = `${getDomain()}/report_${this.carid}.html${opurl}index=`
       })
       .catch(err => {
         console.log(err)
@@ -243,8 +242,8 @@ export default {
   color: #848484;
 }
 .car-test-desc {
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
+  margin-left: 0.4rem;
+  margin-right: 0.4rem;
   font-size: 0.28rem;
   font-family: PingFangSC-Regular;
   color: rgba(88, 88, 88, 1);

@@ -4,7 +4,7 @@
       <div
         class="car-set-bottom"
         @click="openParams">
-        <a class="lookParams" >{{ params }}</a>
+        <span class="lookParams" >{{ params }}</span>
         <span class="paramsArrow"/>
       </div>
     </a>
@@ -13,9 +13,8 @@
 
 <script>
 import { clickPoint } from '../../common/utils/stastic.js'
-import { getCarId, getLocalStorage } from '../../common/utils/utils.js'
+import { getCarId, getLocalStorage, getDomain } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
-const agreement = 'https://mip.xin.com'
 export default {
   props: {
     params: {
@@ -41,7 +40,7 @@ export default {
     let imUrl = getLocalStorage('locationUrl')
       ? `&imUrl=${this.imUrl}`
       : `?imUrl=${this.imUrl}`
-    this.options = this.imUrl ? `${agreement}${this.url}${imUrl}` : `${agreement}${this.url}`
+    this.options = this.imUrl ? `${getDomain()}${this.url}${imUrl}` : `${getDomain()}${this.url}`
     this.carid = getCarId()
   },
   methods: {

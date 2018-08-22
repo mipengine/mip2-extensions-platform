@@ -65,6 +65,7 @@
 </template>
 <script>
 import base from '../../common/utils/base'
+import '../../common/utils/base.less'
 export default {
   data () {
     return {
@@ -83,6 +84,7 @@ export default {
   },
   mounted () {
     // let that = this
+    document.title = this.tag
     let category = this.category
     let tag = this.tag
     this.nav()
@@ -97,15 +99,13 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let data = text.data[0]
         let filterAry = data.tagsInfo
         let filter = {
           name: '全部',
-          url: '/common/images/all.png'
+          url: 'http://www.daoway.cn/mip/common/images/all.png'
         }
         filterAry.unshift(filter)
         that.filterAry = filterAry
@@ -120,9 +120,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let datas = text.data.items
         let ary = that.ary
@@ -191,7 +189,7 @@ export default {
       }
     },
     todetail (id) {
-      MIP.viewer.open('http://t.daoway.cn/components/mip-dw-detail/example/mip-dw-detail.html?detailid=' + id, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, { isMipLink: true })
     }
   }
 }

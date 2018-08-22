@@ -66,24 +66,6 @@
       class="exit"
       @click="loginOut">退出登录</div>
 
-    <mip-fixed type="bottom">
-      <div class="bottomnav">
-        <a
-          data-type="mip"
-          data-title="首页"
-          href="/components/mip-dw-index/example/mip-dw-index"
-          @click="toindex"><img src="/common/images/home2.png">首页</a>
-        <a
-          data-type="mip"
-          data-title="订单"
-          href="/components/mip-dw-order/example/mip-dw-order"><img src="/common/images/order2.png">订单</a>
-        <a
-          class="regclolr"
-          data-type="mip"
-          data-title="我的"
-          href="/components/mip-dw-my/example/mip-dw-my"><img src="/common/images/my.png">我的</a>
-      </div>
-    </mip-fixed>
     <!--提示-->
     <div
       v-show="warn.show"
@@ -94,20 +76,21 @@
           v-text="warn.texts"/>
         <p
           class="layer-sure active-layer"
-          @touchend="closeLayer">知道了</p>
+          @click="closeLayer">知道了</p>
       </div>
     </div>
   </div>
 </template>
 <script>
 import base from '../../common/utils/base'
-import login from '../../common/utils/login'
+/* import login from '../../common/utils/login' */
+import '../../common/utils/base.less'
 
 export default {
   data () {
     return {
       phoneNumber: '400-0908-608',
-      iconUrl: '/common/images/myicon.png',
+      iconUrl: 'http://www.daoway.cn/mip/common/images/myicon.png',
       couponCount: 0,
       userInfo: {},
       warn: {
@@ -115,7 +98,7 @@ export default {
         show: false,
         texts: ''
       },
-      redirect_uri: 'http://test.daoway.cn/mip/components/mip-dw-my/example/mip-dw-my.html',
+      redirect_uri: 'http://test.daoway.cn/mip/t/my.html',
       client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
       ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
       code: base.getRequest(location.href).code,
@@ -123,16 +106,15 @@ export default {
     }
   },
   mounted () {
-    this.userId = localStorage.getItem('userId')
-    this.token = localStorage.getItem('token')
-    if (this.userId && this.token) {
-      this.getmyhtml()
+    let userId = localStorage.getItem('userId')
+    let token = localStorage.getItem('token')
+    if (!userId && !token) {
+      MIP.viewer.open(base.htmlhref.index, { isMipLink: true })
     } else {
-      if (this.code) {
-        login.codelogin(this.code)
-      } else {
-        this.goLoginPage()
-      }
+      this.userId = userId
+      this.token = token
+      document.cookie = 'token=' + token + ';path=/'
+      this.getmyhtml()
     }
   },
   methods: {
@@ -153,10 +135,9 @@ export default {
           'cookie': 'token=' + this.token
         }
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
+        console.log(text)
         if (text.status === 'ok') {
           let data = text.data
           let userInfo = {}
@@ -167,19 +148,19 @@ export default {
           userInfo.couponCount = data.couponCount
           let level = data.level
           if (level === '100') { // 青铜会员
-            userInfo.levelIcon = '/common/images/q.png'
+            userInfo.levelIcon = 'http://www.daoway.cn/mip/common/images/q.png'
             userInfo.levelhtml = '青铜会员'
           } else if (level === '200') { // 白银会员
             userInfo.levelhtml = '白银会员'
-            userInfo.levelIcon = '/common/images/b.png'
+            userInfo.levelIcon = 'http://www.daoway.cn/mip/common/images/b.png'
           } else if (level === '300') { // 黄金会员
             userInfo.levelhtml = '黄金会员'
-            userInfo.levelIcon = '/common/images/h.png'
+            userInfo.levelIcon = 'http://www.daoway.cn/mip/common/images/h.png'
           } else if (level === '400') { // 钻石会员
             userInfo.levelhtml = '钻石会员'
-            userInfo.levelIcon = '/common/imagesz.png'
+            userInfo.levelIcon = 'http://www.daoway.cn/mip/common/imagesz.png'
           } else {
-            userInfo.levelIcon = '/common/images/p.png'
+            userInfo.levelIcon = 'http://www.daoway.cn/mip/common/images/p.png'
           }
           that.userInfo = userInfo
         } else {
@@ -236,26 +217,7 @@ export default {
     .layer-text{
         text-align: center;
     }
-    .bottomnav{
-        width: 100%;
-        background: #fff;
-        border-top: 1px solid #ededed;
-    }
-    .bottomnav a{
-        line-height: 23px;
-        display: inline-block;
-        width: 32%;
-        text-align: center;
-        font-size: 12px;
-        margin-top: 5px;
-    }
-    .bottomnav a img{
-        width: 25px;
-        height: auto;
-        display: block;
-        text-align: center;
-        margin: 0 auto;
-    }
+
     .mybg {
         width: 700px;
         height: 134px;

@@ -150,7 +150,7 @@
 
 <script>
 import base from '../../common/utils/base'
-import login from '../../common/utils/login'
+import '../../common/utils/base.less'
 export default {
   props: {
     payConfig: {
@@ -193,15 +193,21 @@ export default {
       orderInfo: {},
       code: base.getRequest(location.href).code,
       userId: localStorage.getItem('userId') || base.userId,
-      channel: 'baidu'
+      channel: 'baidu',
+      oauthCode: '',
+      tradeType: ''
     }
   },
   mounted () {
     // this.setdatas();
     let that = this
+    /* let baseparam = location.href.split('?');
     if (this.code && !this.userId) {
-      login.codelogin(this.code)
-    }
+      baseparam = baseparam[0]+'?'+ encodeURIComponent(baseparam[1]);
+      console.log(baseparam)
+      login.codelogin(this.code,baseparam)
+    } */
+
     that.position = base.getposition()
     if (that.orderId) {
       that.buyAgain(that.orderId)
@@ -232,6 +238,14 @@ export default {
         that.setPostion()
       }
     })
+    if (MIP.util.platform.isWechatApp()) { // 在微信里
+      let wxcode = window.localStorage.getItem('wxcode')
+      that.oauthCode = wxcode
+      that.tradeType = 'JSAPI'
+    } else {
+      that.oauthCode = ''
+      that.tradeType = 'MWEB'
+    }
   },
   methods: {
     gethtml () {
@@ -245,9 +259,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
           let data = text.data
@@ -256,7 +268,7 @@ export default {
           let prices = []
           if (pricesItem) {
             for (let i = 0; i < pricesItem.length; i++) {
-              if (priceIds === pricesItem[i].id) {
+              if (priceIds === Number(pricesItem[i].id)) {
                 prices.push(pricesItem[i])
               }
             }
@@ -298,9 +310,7 @@ export default {
         method: 'get',
         credentials: 'include'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
           if (text.data[0] && text.data[0].bill > 0) {
@@ -400,9 +410,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
           let data = text.data
@@ -453,9 +461,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
           let resultData = text.data
@@ -572,13 +578,12 @@ export default {
           },
           body: anydata
         }).then(function (res) {
-          if (res && res.status === 200) {
-            return res.json()
-          }
+          return res.json()
         }).then(function (text) {
           if (text.status === 'ok') {
             let tobaiduorder = text.data.orderId
-            let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent('http://test.daoway.cn/mip/components/mip-dw-orderdetail/example/mip-dw-orderdetail.html?orderId=' + tobaiduorder)
+            console.log(text.data)
+            let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent('http://test.daoway.cn/mip/t/orderdetail.html?orderId=' + tobaiduorder)
             MIP.setData({'payConfig': {
               'fee': that.alltotalPrices,
               'sessionId': token,
@@ -591,9 +596,12 @@ export default {
                 wallet: 0,
                 couponId: that.coupone ? that.coupone.id : '',
                 'appendOrderId': '',
-                'returnUrl': redirectUrl
+                'returnUrl': redirectUrl,
+                'oauthCode': that.oauthCode,
+                'tradeType': that.tradeType
               }
             }})
+            console.log(that.alltotalPrices, token, redirectUrl, tobaiduorder, that.userId, that.coupone ? that.coupone.id : '')
             that.$emit('actionpay')
           } else {
             that.warn.show = true
