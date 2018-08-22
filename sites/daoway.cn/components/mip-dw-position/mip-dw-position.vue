@@ -286,7 +286,7 @@ export default {
       })
     },
     tocity () {
-      this.positionpage = false
+      this.positionpage = false;
       this.communitypage = false
       this.citypage = true
       this.citylist()
