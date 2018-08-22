@@ -1,12 +1,13 @@
 
 <template>
   <div class="wrapper">
+    {{ imgurl }}
     <mip-fixed
       :class="{fiscroll:scroll}"
       type="top"
       class="indexed">
       <img
-        :src="scroll?'/common/images/position.png':'http://www.daoway.cn/images/position1.png'"
+        :src="scroll?'http://www.daoway.cn/mip/common/images/position.png':'http://www.daoway.cn/images/position1.png'"
         class="i-p-img">
       <span
         class="spn"
@@ -69,16 +70,16 @@
           class="regclolr"
           data-type="mip"
           data-title="首页"
-          href="/components/mip-dw-index/example/mip-dw-index"
-          @click="toindex"><img src="/common/images/home.png">首页</a>
+          href="http://test.daoway.cn/mip/t/index.html"
+          @click="toindex"><img src="http://www.daoway.cn/mip/common/images/home.png">首页</a>
         <a
           data-type="mip"
           data-title="订单"
-          href="/components/mip-dw-order/example/mip-dw-order"><img src="/common/images/order2.png">订单</a>
+          href="http://test.daoway.cn/mip/t/order.html"><img src="http://www.daoway.cn/mip/common/images/order2.png">订单</a>
         <a
           data-type="mip"
           data-title="我的"
-          href="/components/mip-dw-my/example/mip-dw-my"><img src="/common/images/my2.png">我的</a>
+          href="http://test.daoway.cn/mip/t/my.html"><img src="http://www.daoway.cn/mip/common/images/my2.png">我的</a>
       </div>
     </mip-fixed>
   </div>
@@ -86,6 +87,8 @@
 <script>
 
 import base from '../../common/utils/base.js'
+import login from '../../common/utils/login'
+import '../../common/utils/base.less'
 export default {
   data () {
     return {
@@ -101,10 +104,23 @@ export default {
         show: false,
         texts: ''
       },
-      scroll: false
+      scroll: false,
+      client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
+      ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
+      code: base.getRequest(location.href).code,
+      redirectUri: 'http://test.daoway.cn/mip/t/index.html'
     }
   },
   mounted () {
+    let userId = localStorage.getItem('userId')
+    let token = localStorage.getItem('token')
+    if (!userId || !token) {
+      if (this.code) {
+        login.codelogin(this.code, this.redirectUri)
+      } else {
+        this.tologin()
+      }
+    }
     let that = this
     window.addEventListener('scroll', that.handleScroll)
     let position = localStorage.getItem('position')
@@ -120,15 +136,18 @@ export default {
     })
   },
   methods: {
+    tologin () {
+      let that = this
+      let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + that.redirectUri + '&scope=snsapi_userinfo&state=STATE'
+      MIP.viewer.open(url, { isMipLink: true })
+    },
     handler () {
       let that = this
       let url = '/daoway/rest/user/city'
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
           let data = text.data
@@ -150,9 +169,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
           that.position = text.data[0]
@@ -187,9 +204,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let ary = []
         for (let i = 0; i < text.data.length; i++) {
@@ -223,9 +238,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let data = text.data
         let filterArr = []
@@ -245,9 +258,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         that.list = text.data
       }).catch(function (error) {
