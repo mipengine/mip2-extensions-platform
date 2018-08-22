@@ -278,8 +278,8 @@ export default {
         if (text.status === 'ok') {
           that.cityList = text.data
         } else {
-          this.warn.show = true;
-          this.warn.texts = text.msg;
+          that.warn.show = true
+          that.warn.texts = text.msg
         }
       }).catch(function (error) {
         console.log(error)

@@ -64,24 +64,6 @@
         </ul>
       </div>
     </div>
-    <mip-fixed type="bottom">
-      <div class="bottomnav">
-        <a
-          class="regclolr"
-          data-type="mip"
-          data-title="首页"
-          href="http://test.daoway.cn/mip/t/index.html"
-          @click="toindex"><img src="http://www.daoway.cn/mip/common/images/home.png">首页</a>
-        <a
-          data-type="mip"
-          data-title="订单"
-          href="http://test.daoway.cn/mip/t/order.html"><img src="http://www.daoway.cn/mip/common/images/order2.png">订单</a>
-        <a
-          data-type="mip"
-          data-title="我的"
-          href="http://test.daoway.cn/mip/t/my.html"><img src="http://www.daoway.cn/mip/common/images/my2.png">我的</a>
-      </div>
-    </mip-fixed>
   </div>
 </template>
 <script>
@@ -108,20 +90,22 @@ export default {
       client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
       ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
       code: base.getRequest(location.href).code,
-      redirectUri: 'http://test.daoway.cn/mip/t/index.html'
+      redirectUri: base.lxnhttp.index
     }
   },
   mounted () {
-    let userId = localStorage.getItem('userId')
-    let token = localStorage.getItem('token')
+    let that = this
+    let userId = 'a2d5a7264360aeb3936a48ace9a6' // localStorage.getItem('userId');
+    let token = '44fecc60f9397f3d4d116b425183990d'// localStorage.getItem('token');
     if (!userId || !token) {
       if (this.code) {
         login.codelogin(this.code, this.redirectUri)
       } else {
         this.tologin()
       }
+    } else {
+      document.cookie = 'token=' + token + ';path=/'
     }
-    let that = this
     window.addEventListener('scroll', that.handleScroll)
     let position = localStorage.getItem('position')
     if (position) {
@@ -310,26 +294,7 @@ export default {
     .banner img{
         height: 160px;
     }
-    .bottomnav{
-        width: 100%;
-        background: #fff;
-        border-top: 1px solid #ededed;
-    }
-    .bottomnav a{
-        line-height: 23px;
-        display: inline-block;
-        width: 32%;
-        text-align: center;
-        font-size: 12px;
-        margin-top: 5px;
-    }
-    .bottomnav a img{
-        width: 25px;
-        height: auto;
-        display: block;
-        text-align: center;
-        margin: 0 auto;
-    }
+
     .indexed{
         height: 40px;
     }
