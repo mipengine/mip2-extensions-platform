@@ -26,7 +26,7 @@
             class="percent">一成购</div>
           <span class="instalment">首付{{ item.show_price }}万 月供{{ item.monthly_price }}元</span>
         </div>
-        <div class="line"/>
+        <!-- <div class="line"/>-->
         <!-- <div class="guarantee">
           <mip-img class="identification" src="//c2.xinstatic.com/f3/20180719/1834/5b506920e7e27787238.png"></mip-img>
           <div class="refund">30天包退 一年保修</div>
@@ -154,14 +154,15 @@ export default {
 
 .content-right {
   margin-left: 0.27rem;
-  width: 4.37rem;
+  /**width: 4.37rem;*/
   margin-top: 0.25rem;
   /* overflow: hidden; */
 }
 
 .content-right .carname {
   font-size: 0.28rem;
-  width: 4.08rem;
+  /**width: 4.08rem;**/
+  margin-right: 0.2rem;
   height: 0.75rem;
   line-height: 1.2;
   color: #1b1b1b;
