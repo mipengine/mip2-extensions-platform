@@ -242,8 +242,8 @@ export default {
   color: #848484;
 }
 .car-test-desc {
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
+  margin-left: 0.4rem;
+  margin-right: 0.4rem;
   font-size: 0.28rem;
   font-family: PingFangSC-Regular;
   color: rgba(88, 88, 88, 1);
