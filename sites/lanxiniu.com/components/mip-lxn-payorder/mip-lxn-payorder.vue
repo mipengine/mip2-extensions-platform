@@ -275,7 +275,7 @@ export default {
     payOrders () {
       let lxndata = base.getSession()
       let orderNum = lxndata.order.OrderNum
-      let price = lxndata.order.billTotal
+      let price = lxndata.order.needPay
       //   let sessionid = base.getbaiduLogMsg()
       let sessionid = this.userlogin.sessionId
       console.log('token:' + sessionid + '======' + 'orderNum:' + orderNum)

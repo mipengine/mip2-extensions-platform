@@ -279,7 +279,6 @@ input::placeholder {
 li {
   list-style: none;
 }
-
 .mt20 {
   margin-top: 20px;
 }
