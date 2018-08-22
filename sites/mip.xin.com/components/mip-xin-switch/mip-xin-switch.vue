@@ -274,8 +274,17 @@ export default {
         carid: this.carid
       }
     }).then(res => {
-      this.flaws = res.flaws
-      this.paint = res.paint
+      let flaws = {
+        outer: [],
+        inner: [],
+        frame: []
+      }
+      let paint = {
+        outer: [],
+        frame: []
+      }
+      this.flaws = res.flaws || flaws
+      this.paint = res.paint || paint
       this.outerImgArr = this.getImgArr(res.flaws.outer)
       this.innerImgArr = this.getImgArr(res.flaws.inner)
       this.frameImgArr = this.getImgArr(res.flaws.frame)

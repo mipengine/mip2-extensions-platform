@@ -58,10 +58,9 @@
 import base from '../../common/utils/base'
 import { requestFun } from '../../common/utils/reqUtils'
 import { clickPoint } from '../../common/utils/stastic.js'
-import { setLocalStorage, getLocalStorage } from '../../common/utils/utils.js'
+import { getLocalStorage, getDomain } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
 const pidReport = '/pages/report'
-const agreement = 'https://mip.xin.com'
 export default {
   props: {
     carid: {
@@ -116,10 +115,9 @@ export default {
           if (that.big_image_info.is_video === 1) {
             that.big_image_info.img_six.unshift(that.big_image_info.img_six[0])
             let opurl = getLocalStorage('locationUrl')
-            this.urlReport = `${agreement}/report_${this.carid}.html${opurl}`
+            this.urlReport = `${getDomain()}/report_${this.carid}.html${opurl}`
           }
-          console.log(res)
-          setLocalStorage('carImgInfo', JSON.stringify(res))
+          // setLocalStorage('carImgInfo', JSON.stringify(res))
         }
       })
       .catch(err => {
@@ -141,7 +139,7 @@ export default {
           ? getLocalStorage('locationUrl') + '&'
           : '?'
         MIP.viewer.open(
-          `${agreement}/car/big_image.html${opurl}currentIndex=${this.currentIndex}&carid=${
+          `${getDomain()}/car/big_image.html${opurl}currentIndex=${this.currentIndex}&carid=${
             this.carid
           }`,
           {
