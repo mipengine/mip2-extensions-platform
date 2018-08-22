@@ -98,7 +98,9 @@
             </div>
           </div>
         </div>
-        <div class="drive-info-list drive-list-bottom">
+        <div
+          :class="{'drive-list-bottom' : needCcid.length > 0}"
+          class="drive-info-list">
           <div class="driveList drive-width">
             <!-- <div>
                         <span class="driveKey">上架时间</span >
@@ -141,7 +143,9 @@
           </div>
         </div>
       </div>
-      <div class="car-set">
+      <div
+        v-if="needCcid.length > 0"
+        class="car-set">
         <div
           v-for="(item, index) in needCcid"
           v-if="index < 4"

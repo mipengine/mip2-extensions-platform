@@ -21,7 +21,6 @@
         <span class="carname">{{ item.carname }}</span>
         <span class="carbday">{{ item.regist_date }}年/{{ item.mileage }}公里</span>
         <span class="carprice">{{ item.panel_price }}万</span>
-
         <div class="pricedetail">
           <div
             class="percent">一成购</div>
@@ -40,9 +39,8 @@
 import { clickPoint } from '../../common/utils/stastic.js'
 import base from '../../common/utils/base'
 import { requestFun } from '../../common/utils/reqUtils'
-import { getCarId, getLocalStorage } from '../../common/utils/utils.js'
+import { getCarId, getLocalStorage, getDomain } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
-const agreement = 'https://mip.xin.com'
 export default {
   props: {
     // fromSimilar: {
@@ -86,7 +84,7 @@ export default {
   },
   methods: {
     gotoDetail (url, index) {
-      let urlSimilar = `${agreement}${url}`
+      let urlSimilar = `${getDomain()}${url}`
       if (this.similarCar) {
         clickPoint(
           'recommendation',
