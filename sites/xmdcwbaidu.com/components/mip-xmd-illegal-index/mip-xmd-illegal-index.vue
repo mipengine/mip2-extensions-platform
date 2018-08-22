@@ -388,6 +388,7 @@
         }
       }
       .ldf-inline-field-other {
+        min-width: 1rem;
         padding-right: 6px;
       }
       .mint-cell-wrapper {
