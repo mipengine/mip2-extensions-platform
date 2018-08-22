@@ -83,26 +83,7 @@
           class="zhexie">~暂时只有这些了~</div>
       </div>
     </div>
-    <mip-fixed
-      class="mipfd"
-      type="bottom">
-      <div class="bottomnav">
-        <a
-          data-type="mip"
-          data-title="首页"
-          href="http://test.daoway.cn/mip/t/index.html"
-          @click="toindex"><img src="http://www.daoway.cn/mip/common/images/home2.png">首页</a>
-        <a
-          class="regclolr"
-          data-type="mip"
-          data-title="订单"
-          href="http://test.daoway.cn/mip/t/order.html"><img src="http://www.daoway.cn/mip/common/images/order.png">订单</a>
-        <a
-          data-type="mip"
-          data-title="我的"
-          href="http://test.daoway.cn/mip/t/my.html"><img src="http://www.daoway.cn/mip/common/images/my2.png">我的</a>
-      </div>
-    </mip-fixed>
+
     <div
       v-show="warn.show"
       class="layer">
@@ -126,7 +107,6 @@
 </template>
 <script>
 import base from '../../common/utils/base'
-import login from '../../common/utils/login'
 import '../../common/utils/base.less'
 export default {
   props: {
@@ -200,11 +180,7 @@ export default {
       this.getOrderList(0)
       window.addEventListener('scroll', this.morelist)
     } else {
-      if (this.code) {
-        login.codelogin(this.code)
-      } else {
-        this.goLoginPage()
-      }
+      MIP.viewer.open(base.htmlhref.index, { isMipLink: true })
     }
   },
   methods: {
@@ -456,6 +432,8 @@ export default {
             couponId: payparam.couponId || '',
             'appendOrderId': '',
             'returnUrl': redirectUrl
+            /* 'oauthCode':'',
+            'tradeType': "MWEB" */
           }
         }})
         that.$emit('actionpay')
@@ -591,27 +569,6 @@ export default {
     }
     .noorder{
         padding-top: 40%;
-    }
-
-    .bottomnav{
-        width: 100%;
-        background: #fff;
-        border-top: 1px solid #ededed;
-    }
-    .bottomnav a{
-        line-height: 23px;
-        display: inline-block;
-        width: 32%;
-        text-align: center;
-        font-size: 12px;
-        margin-top: 5px;
-    }
-    .bottomnav a img{
-        width: 25px;
-        height: auto;
-        display: block;
-        text-align: center;
-        margin: 0 auto;
     }
 
     .mipfd{

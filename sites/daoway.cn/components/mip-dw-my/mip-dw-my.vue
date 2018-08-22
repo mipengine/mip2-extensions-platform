@@ -66,24 +66,6 @@
       class="exit"
       @click="loginOut">退出登录</div>
 
-    <mip-fixed type="bottom">
-      <div class="bottomnav">
-        <a
-          data-type="mip"
-          data-title="首页"
-          href="http://test.daoway.cn/mip/t/index.html"
-          @click="toindex"><img src="http://www.daoway.cn/mip/common/images/home2.png">首页</a>
-        <a
-          data-type="mip"
-          data-title="订单"
-          href="http://test.daoway.cn/mip/t/order.html"><img src="http://www.daoway.cn/mip/common/images/order2.png">订单</a>
-        <a
-          class="regclolr"
-          data-type="mip"
-          data-title="我的"
-          href="http://test.daoway.cn/mip/t/my.html"><img src="http://www.daoway.cn/mip/common/images/my.png">我的</a>
-      </div>
-    </mip-fixed>
     <!--提示-->
     <div
       v-show="warn.show"
@@ -94,14 +76,14 @@
           v-text="warn.texts"/>
         <p
           class="layer-sure active-layer"
-          @touchend="closeLayer">知道了</p>
+          @click="closeLayer">知道了</p>
       </div>
     </div>
   </div>
 </template>
 <script>
 import base from '../../common/utils/base'
-import login from '../../common/utils/login'
+/* import login from '../../common/utils/login' */
 import '../../common/utils/base.less'
 
 export default {
@@ -124,17 +106,15 @@ export default {
     }
   },
   mounted () {
-    this.userId = localStorage.getItem('userId')
-    this.token = localStorage.getItem('token')
-    console.log(this.userId, this.token)
-    if (this.userId && this.token) {
-      this.getmyhtml()
+    let userId = localStorage.getItem('userId')
+    let token = localStorage.getItem('token')
+    if (!userId && !token) {
+      MIP.viewer.open(base.htmlhref.index, { isMipLink: true })
     } else {
-      if (this.code) {
-        login.codelogin(this.code)
-      } else {
-        this.goLoginPage()
-      }
+      this.userId = userId
+      this.token = token
+      document.cookie = 'token=' + token + ';path=/'
+      this.getmyhtml()
     }
   },
   methods: {
@@ -237,26 +217,7 @@ export default {
     .layer-text{
         text-align: center;
     }
-    .bottomnav{
-        width: 100%;
-        background: #fff;
-        border-top: 1px solid #ededed;
-    }
-    .bottomnav a{
-        line-height: 23px;
-        display: inline-block;
-        width: 32%;
-        text-align: center;
-        font-size: 12px;
-        margin-top: 5px;
-    }
-    .bottomnav a img{
-        width: 25px;
-        height: auto;
-        display: block;
-        text-align: center;
-        margin: 0 auto;
-    }
+
     .mybg {
         width: 700px;
         height: 134px;
