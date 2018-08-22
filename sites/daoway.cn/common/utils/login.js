@@ -8,9 +8,7 @@ export default {
       headers: {'content-type': 'application/x-www-form-urlencoded'},
       body: 'code=' + code
     }).then(function (res) {
-      if (res && res.status === 200) {
-        return res.json()
-      }
+      return res.json()
     }).then(function (text) {
       if (text.status === 'ok') {
         localStorage.setItem('userId', text.data.userId)

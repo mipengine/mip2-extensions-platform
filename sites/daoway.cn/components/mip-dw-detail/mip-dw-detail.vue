@@ -6,11 +6,11 @@
         <li><span class="d-h">{{ sericePrice.name }}</span>
           <div class="d-add">
             <img
-              src="/common/images/jian.jpg"
+              src="http://www.daoway.cn/mip/common/images/jian.jpg"
               @touchend="jian(counter)">
             <i class="d-number">{{ counter }}</i>
             <img
-              src="/common/images/jia.jpg"
+              src="http://www.daoway.cn/mip/common/images/jia.jpg"
               @touchend="add(counter)">
           </div>
         </li>
@@ -55,7 +55,7 @@
       <div class="d-hh-l"><i>已选</i>{{ sericePrice.name }}</div>
       <div class="d-hh-r">类似项目<img
         class="d-more"
-        src="/common/images/go_06.png"></div>
+        src="http://www.daoway.cn/mip/common/images/go_06.png"></div>
     </div>
     <div class="d-hh">
       <div class="d-hh-l d-timet">服务时间</div>
@@ -81,7 +81,7 @@
       <div class="d-hh-l d-timet">用户评论</div>
       <div class="d-hh-r"><i class="lv">{{ lastComment.commentCount }}条评论</i><img
         class="d-more"
-        src="/common/images/go_06.png">
+        src="http://www.daoway.cn/mip/common/images/go_06.png">
       </div>
     </div>
     <div
@@ -89,7 +89,7 @@
       class="d-comment">
       <div class="d-comment-l">
         <img
-          :src="lastComment.iconUrl?lastComment.iconUrl:'/common/images/iconimg.png'"
+          :src="lastComment.iconUrl?lastComment.iconUrl:'http://www.daoway.cn/mip/common/images/iconimg.png'"
           class="d-icon">
       </div>
       <div class="d-comment-r">
@@ -99,7 +99,7 @@
             <img
               v-for="(i,index) in [1, 2, 3, 4, 5]"
               :key="i"
-              :src="lastComment.star<index ? '/common/images/star.png/' : '/common/images/red_star.png'">{{ index }}
+              :src="lastComment.star<index ? 'http://www.daoway.cn/mip/common/images/star.png/' : 'http://www.daoway.cn/mip/common/images/red_star.png'">{{ index }}
           </span>
           <span
             class="d-c-t"
@@ -114,7 +114,7 @@
       <div class="d-hh-l d-timet">订购须知</div>
       <div class="d-hh-r"><i class="lv">查看取消、退款、赔付规则</i><img
         class="d-more"
-        src="/common/images/go_06.png"></div>
+        src="http://www.daoway.cn/mip/common/images/go_06.png"></div>
     </div>
     <div class="d-text d-xuzhi">
       <p v-text="service.orderingNotice"/>
@@ -133,21 +133,21 @@
           class="telimg telg"
           @touchend="toindex()">
           <img
-            src="/common/images/icon2.png"
+            src="http://www.daoway.cn/mip/common/images/icon2.png"
             style="width:17px; height:auto">
           <div class="lianxi">首页</div>
         </div>
         <div class="telimg telg">
           <a :href="'tel:' + service.phone">
             <img
-              src="/common/images/tel.jpg"
+              src="http://www.daoway.cn/mip/common/images/tel.jpg"
               style="width:15px; height:auto">
             <div class="lianxi">联系商家</div>
           </a>
         </div>
         <!--<div class="telimg share">
                         <div class='btnshare'>
-                            <img src="/common/images/share.jpg" style="width:16px; height:auto">
+                            <img src="http://www.daoway.cn/mip/common/images/share.jpg" style="width:16px; height:auto">
                             <div class="lianxi">分享</div>
                         </div>
                     </div>-->
@@ -179,11 +179,11 @@
       <div class="lightbox">
         <div class="headtit">
           <div class="hh">选择服务项目</div>
-          <div class="smalltit">{{ service.title }}{{ pops[0].catName }}</div>
+          <div class="smalltit">{{ service.title }}{{ pops[0]?pops[0].catName:'' }}</div>
           <img
             on="tap:my-lightbox2.toggle"
             class="close"
-            src="/common/images/close2.jpg">
+            src="http://www.daoway.cn/mip/common/images/close2.jpg">
         </div>
         <div class="commodity-list">
           <div
@@ -214,6 +214,7 @@
 </template>
 <script>
 import base from '../../common/utils/base'
+import '../../common/utils/base.less'
 export default {
   data () {
     return {
@@ -268,9 +269,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let data = text.data
         that.service = data.service
@@ -353,9 +352,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
           that.pops = text.data
@@ -389,7 +386,6 @@ export default {
       sessionStorage.setItem('apptime', '')
       let userId = localStorage.getItem('userId')
       let token = localStorage.getItem('token')
-
       /* 跳转带出去的参数 */
       let priceId = that.priceId
       let priceMap = {}
@@ -410,16 +406,15 @@ export default {
           param = JSON.stringify(param)
           MIP.viewer.open(base.htmlhref.reservation + '?param=' + encodeURIComponent(param), { isMipLink: true })
         } else {
-          let baseparam = base.setUrlParam({
+          /* let baseparam = JSON.stringify({
             serviceId: that.serviceId,
             priceId: that.priceId,
             quantity: quantity,
             appointTime: that.appointTime,
             priceType: that.priceType
-          })
-          let redirectUri = 'http://test.daoway.cn/mip/components/mip-dw-reservation/example/mip-dw-reservation.html?' + baseparam
-
-          let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirectUri=' + encodeURIComponent(redirectUri) + '&scope=snsapi_userinfo&state=STATE'
+          }); */
+          let redirectUri = 'http://test.daoway.cn/mip/t/index.html'
+          let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + redirectUri + '&scope=snsapi_userinfo&state=STATE'
           MIP.viewer.open(url, { isMipLink: true })
         }
       }
