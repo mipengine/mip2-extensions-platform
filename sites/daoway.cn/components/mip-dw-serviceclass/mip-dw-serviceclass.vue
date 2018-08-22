@@ -84,6 +84,7 @@ export default {
   },
   mounted () {
     // let that = this
+    document.title = this.tag
     let category = this.category
     let tag = this.tag
     this.nav()

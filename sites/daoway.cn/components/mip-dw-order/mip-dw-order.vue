@@ -456,6 +456,8 @@ export default {
             couponId: payparam.couponId || '',
             'appendOrderId': '',
             'returnUrl': redirectUrl
+            /* 'oauthCode':'',
+            'tradeType': "MWEB" */
           }
         }})
         that.$emit('actionpay')
