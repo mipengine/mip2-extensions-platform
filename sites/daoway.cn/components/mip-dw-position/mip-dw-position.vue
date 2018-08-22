@@ -278,15 +278,15 @@ export default {
         if (text.status === 'ok') {
           that.cityList = text.data
         } else {
-          this.warn.show = true
-          this.warn.texts = text.msg
+          this.warn.show = true;
+          this.warn.texts = text.msg;
         }
       }).catch(function (error) {
         console.log(error)
       })
     },
     tocity () {
-      this.positionpage = false;
+      this.positionpage = false
       this.communitypage = false
       this.citypage = true
       this.citylist()
