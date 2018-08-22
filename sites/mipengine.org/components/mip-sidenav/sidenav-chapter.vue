@@ -56,13 +56,16 @@
 
       >div {
         border-left: 2px solid transparent;
-        padding-left: 20px;
+        padding-left: 30px;
         margin-left: -12px;
+        position: relative;
         &::before {
           content: '·';
           color: #000;
           display: inline-block;
           padding-right: 5px;
+          position: absolute;
+          left: 20px;
         }
       }
     }
@@ -74,6 +77,7 @@
       margin-bottom: 16px;
       &>.chapter-title {
         >div {
+          padding-left: 20px;
           &::before {
             display: none;
           }
@@ -109,8 +113,11 @@
       padding-left: 10px;
       &>.chapter-title {
         >div {
-          padding-left: 30px;
+          padding-left: 40px;
           margin-left: -22px;
+          &::before {
+            left: 30px;
+          }
         }
       }
     }
@@ -121,8 +128,11 @@
       padding-left: 10px;
       &>.chapter-title {
         >div {
-          padding-left: 40px;
+          padding-left: 50px;
           margin-left: -32px;
+          &::before {
+            left: 40px;
+          }
         }
       }
     }
