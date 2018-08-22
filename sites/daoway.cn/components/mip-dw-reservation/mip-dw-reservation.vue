@@ -571,7 +571,6 @@ export default {
         }).then(function (text) {
           if (text.status === 'ok') {
             let tobaiduorder = text.data.orderId
-            console.log(text.data)
             let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent('http://test.daoway.cn/mip/t/orderdetail.html?orderId=' + tobaiduorder)
             MIP.setData({'payConfig': {
               'fee': that.alltotalPrices,
