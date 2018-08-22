@@ -176,7 +176,8 @@ import {
   setLocalStorage,
   getLocalStorage,
   getCarId,
-  getCityId
+  getCityId,
+  getAgreement
 } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
 export default {
@@ -280,7 +281,7 @@ export default {
   methods: {
     openConfig (url) {
       MIP.viewer.open(url + getLocalStorage('locationUrl'), {
-        isMipLink: true
+        isMipLink: false
       })
     },
     openParmas () {
@@ -310,7 +311,7 @@ export default {
           JSON.parse(this.cityMessage).ename
         }`,
         {
-          isMipLink: true
+          isMipLink: false
         }
       )
       clickPoint(
@@ -344,8 +345,8 @@ export default {
       if (getLocalStorage('locationUrl')) {
         url = '&' + getLocalStorage('locationUrl').split('?')[1]
       }
-      MIP.viewer.open(this.beyondUrl + `${url}`, {
-        isMipLink: true
+      MIP.viewer.open(getAgreement() + this.beyondUrl + `${url}`, {
+        isMipLink: false
       })
     }
   }

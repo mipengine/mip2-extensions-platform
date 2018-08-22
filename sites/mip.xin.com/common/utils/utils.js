@@ -11,7 +11,7 @@ export const setLocalStorage = function (key, value) {
 export const getLocalStorage = function (key) {
   let value = ''
   if (key) {
-    value = storage.get(key) === null ? '' : storage.get(key)
+    value = storage.get(key) == null ? '' : storage.get(key)
   }
   return value
 }
@@ -54,4 +54,10 @@ export const serialize = (params) => {
 export const getQuery = function () {
   let query = MIP.getData('query')
   return query
+}
+
+export const getAgreement = function () {
+  let agreement = 'https:'
+  agreement = window.location.href.indexOf('https:') ? 'https:' : 'http:'
+  return agreement
 }
