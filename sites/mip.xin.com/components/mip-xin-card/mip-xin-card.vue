@@ -7,21 +7,20 @@
       class="carcontent"
       @click="gotoDetail(item.detail_url,index)">
       <div class="content-left">
-        <!-- <mip-img class="icon" src="http://c2.xinstatic.com/f3/20180712/1811/5b4729493be86404190.png"></mip-img> -->
-        <!-- <mip-img class="icon fire" src="http://c2.xinstatic.com/f3/20180416/1840/5ad47da2a9951360644.png"></mip-img> -->
+        <!-- <mip-img class="icon" src="//c2.xinstatic.com/f3/20180712/1811/5b4729493be86404190.png"></mip-img> -->
+        <!-- <mip-img class="icon fire" src="//c2.xinstatic.com/f3/20180416/1840/5ad47da2a9951360644.png"></mip-img> -->
         <mip-img
           :src="item.pic"
           class="carpic"/>
         <mip-img
           v-if="item.is_video == 1"
           class="play"
-          src="http://c2.xinstatic.com/f3/20180323/1111/5ab470517f150445829.png"/>
+          src="//c2.xinstatic.com/f3/20180323/1111/5ab470517f150445829.png"/>
       </div>
       <div class="content-right">
         <span class="carname">{{ item.carname }}</span>
         <span class="carbday">{{ item.regist_date }}年/{{ item.mileage }}公里</span>
         <span class="carprice">{{ item.panel_price }}万</span>
-
         <div class="pricedetail">
           <div
             class="percent">一成购</div>
@@ -29,7 +28,7 @@
         </div>
         <div class="line"/>
         <!-- <div class="guarantee">
-          <mip-img class="identification" src="http://c2.xinstatic.com/f3/20180719/1834/5b506920e7e27787238.png"></mip-img>
+          <mip-img class="identification" src="//c2.xinstatic.com/f3/20180719/1834/5b506920e7e27787238.png"></mip-img>
           <div class="refund">30天包退 一年保修</div>
         </div> -->
       </div>
@@ -40,7 +39,7 @@
 import { clickPoint } from '../../common/utils/stastic.js'
 import base from '../../common/utils/base'
 import { requestFun } from '../../common/utils/reqUtils'
-import { getCarId, getLocalStorage } from '../../common/utils/utils.js'
+import { getCarId, getLocalStorage, getDomain } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
 export default {
   props: {
@@ -85,6 +84,7 @@ export default {
   },
   methods: {
     gotoDetail (url, index) {
+      let urlSimilar = `${getDomain()}${url}`
       if (this.similarCar) {
         clickPoint(
           'recommendation',
@@ -93,7 +93,7 @@ export default {
             rank: index + 1
           },
           () => {
-            MIP.viewer.open(url + getLocalStorage('locationUrl'), {
+            MIP.viewer.open(urlSimilar + getLocalStorage('locationUrl'), {
               isMipLink: true
             })
           },
@@ -102,7 +102,7 @@ export default {
           }
         )
       } else {
-        MIP.viewer.open(url + getLocalStorage('locationUrl'), {
+        MIP.viewer.open(urlSimilar + getLocalStorage('locationUrl'), {
           isMipLink: true
         })
       }
@@ -114,9 +114,8 @@ export default {
 .carcontent {
   display: flex;
   /* height: 2.9rem; */
-  height: 2.1rem;
-  padding: 0.24rem 0.3rem 0 0.3rem;
-  overflow: hidden;
+  height: 2.4rem;
+  /**padding: 0.24rem 0.3rem 0 0.3rem;*/
 }
 .carcontent-bottom {
   border-bottom: 0.01rem solid #eee;
@@ -124,6 +123,8 @@ export default {
 .content-left {
   margin-top: 0.06rem;
   position: relative;
+  margin-left: 0.3rem;
+  margin-top: 0.3rem;
 }
 
 .content-left .carpic {
@@ -154,6 +155,7 @@ export default {
 .content-right {
   margin-left: 0.27rem;
   width: 4.37rem;
+  margin-top: 0.25rem;
   /* overflow: hidden; */
 }
 
