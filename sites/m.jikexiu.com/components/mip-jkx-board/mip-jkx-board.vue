@@ -107,7 +107,7 @@ export default{
   }
   .tips{
       padding: 10px;
-      margin-bottom: 50px;
+      // margin-bottom: 50px;
       p{
         padding: 10px;
         line-height: 25px;
