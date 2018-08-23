@@ -21,8 +21,8 @@
       display: flex;
       overflow: hidden;
       width: 100%;
-      position: fixed;
-      bottom: 0px;
+      /* position: fixed;
+      bottom: 0px; */
       height: 50px;
       background-color: #fff;
       padding: 0 4%;
