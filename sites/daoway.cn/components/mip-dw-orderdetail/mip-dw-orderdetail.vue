@@ -164,11 +164,11 @@
           <p
             v-if="sure"
             class="layer-sure active-layer"
-            @touchend="close">取消</p>
+            @click="close">取消</p>
           <p
             v-if="sure"
             class="layer-sure active-layer"
-            @touchend="closeLayer">确定</p>
+            @click="closeLayer">确定</p>
         </div>
       </div>
     </div>
@@ -193,11 +193,25 @@ export default {
       sure: true,
       channel: 'baidu',
       userId: localStorage.getItem('userId'),
-      token: localStorage.getItem('token')
+      token: localStorage.getItem('token'),
+      oauthCode: '',
+      tradeType: '',
+      returnurl: base.htmlhref.orderdetail
     }
   },
   mounted () {
     this.getState()
+    let that = this
+    if (MIP.util.platform.isWechatApp()) { // 在微信里
+      let wxcode = base.getRequest(location.href).code
+      if (wxcode) {
+        that.oauthCode = wxcode
+        that.tradeType = 'JSAPI'
+      }
+    } else {
+      that.oauthCode = ''
+      that.tradeType = 'MWEB'
+    }
   },
   methods: {
     getState () {
@@ -466,7 +480,7 @@ export default {
         let couponBill = that.orderhtml.couponBill
         let couponId = that.orderhtml.couponId
         let fixFee = that.orderhtml.fixFee
-        let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent('http://test.daoway.cn/mip/t/orderdetail.html?orderId=' + orderId)
+        let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + orderId)
         MIP.setData({'payConfig': {
           'fee': (totalPrice + fixFee - couponBill).toFixed(2),
           'sessionId': that.token,
@@ -479,9 +493,9 @@ export default {
             wallet: 0,
             couponId: couponId || '',
             'appendOrderId': '',
-            'returnUrl': redirectUrl
-            /* 'oauthCode':'',
-            'tradeType': "MWEB" */
+            'returnUrl': redirectUrl,
+            'oauthCode': that.oauthCode,
+            'tradeType': that.tradeType
           }
         }})
         that.$emit('actionpay')
