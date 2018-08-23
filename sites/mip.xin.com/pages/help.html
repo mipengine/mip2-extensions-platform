@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html mip>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+    <title>
+        <MIP page>
+    </title>
+    <link rel="canonical" href="https://www.xin.com/">
+    <link rel="shortcut icon" href="//m.xin.com/favicon.ico">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+</head>
+
+<body>
+    <mip-data>
+        <script type="application/json">
+            {
+                "info": {},
+                "config": {
+                    appid: '1578861028762702',
+                    clientId: 'BO22CQpZg73mpUhpAI2BfjpMhfUaCgfg',
+                    id: 'info',
+                    autologin: false,
+                    endpoint: '//mip.xin.com/auth_end',
+                    isGlobal: false,
+                    redirectUri: 'https://mip.xin.com<%-request.url%>'
+                }
+            }
+        </script>
+    </mip-data>
+
+    <div>
+        登录组件
+        <mip-test-login m-bind:info="info" m-bind:config="config" id="example"></mip-test-login>
+    </div>
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="https://c.mipcdn.com/extensions/platform/v2/mip.xin.com/mip-test-login/mip-test-login.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-inservice-login/mip-inservice-login.js"></script>
+
+</body>
+
+</html>

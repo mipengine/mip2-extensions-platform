@@ -390,22 +390,26 @@ export default {
     openDriveFile () {
       this.detail = true
       this.height = 480
-      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveFile.png'
+      this.src =
+        'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveFile.png'
     },
     openDriverFile () {
       this.detail = true
       this.height = 480
-      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driverFile.png'
+      this.src =
+        'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driverFile.png'
     },
     openDriveFileNumber () {
       this.detail = true
       this.height = 240
-      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveFileNumber.png'
+      this.src =
+        'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveFileNumber.png'
     },
     openDriveBarCode () {
       this.detail = true
       this.height = 240
-      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveBarCode.png'
+      this.src =
+        'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveBarCode.png'
     },
     testCode () {
       util
@@ -591,7 +595,7 @@ export default {
           context.drawImage(imgSrc, 0, 0, targetWidth, targetHeight)
           let data = canvas.toDataURL('image/jpeg').split(',')[1]
           // 获取base64图片大小，返回MB数字
-          let size = parseInt(data.length - (data.length / 8) * 2)
+          let size = parseInt(data.length - data.length / 8 * 2)
           console.log(size)
           if (size) {
             const isLt2M = size / 1024 / 1024 < 2
@@ -649,9 +653,10 @@ export default {
     },
     uploadBase64 (data, name) {
       let self = this
-      util.fetchData('/v3/violation/image/upload', {
-        imageString: data
-      })
+      util
+        .fetchData('v3/violation/image/upload', {
+          imageString: data
+        })
         .then(data => {
           if (data.code === 0) {
             util.toast('上传成功')
@@ -793,7 +798,7 @@ export default {
           jsz_drive_url: this.JSZDriveUrl || '', // 驾驶证正面
           jsz_travel_url: this.JSZTravelUrl || '', // 驾驶证反面
           vin: this.illegal.vin || '',
-          engion: this.illegal.engion || '',
+          engion: this.illegal.engine || this.illegal.engion || '',
           drive_bar_code: this.drive_bar_code || '',
           drive_file_number: this.drive_file_number || ''
         }
@@ -816,7 +821,9 @@ export default {
                 postData: {
                   order_id: res.data + ''
                 },
-                redirectUrl: 'https://mys4s.cn/static/vio/xz/success.html?orderId=' + res.data
+                redirectUrl:
+                  'https://mys4s.cn/static/vio/xz/success.html?orderId=' +
+                  res.data
               }
             })
             this.$emit('canpay', {})
@@ -870,15 +877,15 @@ export default {
   font-size: 0.12rem;
   color: #4b4b4b;
   display: flex;
-  align-items:center;
+  align-items: center;
 }
 
 .s4s-tips-right {
-  flex:1;
+  flex: 1;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   padding-left: 0.15rem;
-  line-height: .2rem;
+  line-height: 0.2rem;
 }
 
 .s4s-pay-body {
@@ -893,13 +900,13 @@ export default {
 
 .s4s-sum {
   margin: 0.2rem 0.1rem 0 0.1rem;
-  -webkit-box-flex:1;
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
-  -ms-box-flex:1;
-  align-items:center;
+  -webkit-box-flex: 1;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  flex: 1;
+  -webkit-flex: 1;
+  -ms-box-flex: 1;
+  align-items: center;
   text-align: left;
   font-size: 0.13rem;
   color: #4b4b4b;
@@ -920,10 +927,10 @@ export default {
 .s4s-group {
   position: relative;
   line-height: 0.15rem;
-  border-bottom: 0.01rem #EAEAEA solid;
+  border-bottom: 0.01rem #eaeaea solid;
   color: #666;
   overflow: hidden;
-  align-items:center;
+  align-items: center;
   display: flex;
   padding: 0.15rem 0;
   box-sizing: content-box;
@@ -931,8 +938,8 @@ export default {
 .s4s-group-tit {
   font-size: 0.15rem;
   width: 1rem;
-  line-height: .25rem;
-  padding-top:.025rem;
+  line-height: 0.25rem;
+  padding-top: 0.025rem;
 }
 .s4s-group-txt {
   font-size: 0.15rem;
@@ -943,7 +950,7 @@ export default {
   border: none;
   font-size: 0.15rem;
   text-align: left;
-  line-height: .25rem;
+  line-height: 0.25rem;
   flex: 1;
 }
 select {
@@ -960,7 +967,7 @@ select {
 }
 
 .s4s-title {
-  font-size: .2rem;
+  font-size: 0.2rem;
   /* padding: .15rem; */
   padding-top: 0.25rem;
   font-weight: bold;
@@ -974,19 +981,19 @@ select {
 }
 .agree-container mip-img {
   vertical-align: bottom;
-  margin-right: .12rem;
+  margin-right: 0.12rem;
 }
 
 .group-upload {
-  align-items:end;
+  align-items: end;
   height: auto;
 }
 .group-upload-margin {
-  margin: 0.025rem 0.1rem  0.025rem 0;
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
+  margin: 0.025rem 0.1rem 0.025rem 0;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  flex: 1;
+  -webkit-flex: 1;
 }
 .code-btn,
 .code-btn-disable {
@@ -997,11 +1004,11 @@ select {
   font-size: 0.14rem;
   border: 0.01rem solid #ff7b00;
   padding: 0.05rem 0.075rem;
-  line-height: .20rem;
+  line-height: 0.2rem;
   position: absolute;
   right: 0;
-  top:50%;
-  margin-top:-.15rem
+  top: 50%;
+  margin-top: -0.15rem;
 }
 .code-btn-disable {
   opacity: 0.5;
@@ -1014,14 +1021,14 @@ select {
 }
 
 .pay-contaienr-first {
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  flex: 1;
+  -webkit-flex: 1;
   font-size: 0.16rem;
   display: flex;
-  flex-direction:column;
-  justify-content:center;
+  flex-direction: column;
+  justify-content: center;
   padding: 0 0.1rem;
 }
 
@@ -1042,7 +1049,7 @@ select {
 
 .pay-contaienr-last {
   width: 1.2rem;
-  background-image: linear-gradient(40deg,  #ff7c00 0%, #fe5a00 100%);
+  background-image: linear-gradient(40deg, #ff7c00 0%, #fe5a00 100%);
   text-align: center;
   line-height: 0.5rem;
   font-size: 0.18rem;
@@ -1054,22 +1061,26 @@ select {
   color: #999;
   background: #e6e6e6 !important;
 }
-input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
   color: #ccc;
 }
-input:-moz-placeholder, textarea:-moz-placeholder {
-  color:#ccc;
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+  color: #ccc;
 }
-input::-moz-placeholder, textarea::-moz-placeholder {
-  color:#ccc;
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: #ccc;
 }
-input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-  color:#ccc;
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: #ccc;
 }
 .s4s-help {
   border-radius: 50%;
-  border: .02rem solid #FE7000;
-  color: #FE7000;
+  border: 0.02rem solid #fe7000;
+  color: #fe7000;
   font-size: 0.13rem;
   height: 0.2rem;
   min-width: 0.2rem;
@@ -1089,6 +1100,6 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   left: 50%;
   -webkit-transform: translateY(-50%) translateX(-50%);
   transform: translateY(-50%) translateX(-50%);
-  width: calc( 100% - .3rem );
+  width: calc(100% - 0.3rem);
 }
 </style>

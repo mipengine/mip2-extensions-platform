@@ -25,7 +25,6 @@
     </ul>
     <div class="check_more">
       <div
-
         @click="goOrder('order.html?categoryId=12-')">
         &lt;&lt;查看更多型号和故障&gt;&gt;
       </div>

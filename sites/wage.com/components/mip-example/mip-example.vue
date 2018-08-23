@@ -4,9 +4,12 @@
       v-show="resultShow"
       class="pt55">
       <mip-fixed 
-        type="top" 
+        still
+        type = "top"
         class="tag-nav-top">
-        <div class="tag-nav">
+        <div 
+          v-show="resultShow"
+          class="tag-nav">
           <div class="flex-item">
             <span
               :class="{active:active}"
