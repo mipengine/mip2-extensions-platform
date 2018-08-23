@@ -552,8 +552,8 @@ export default {
 }
 
 .open-car-allmessagebox {
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
+  margin-left: 0.35rem;
+  /**margin-right: 0.4rem;*/
   margin-bottom: 0.2rem;
 }
 
