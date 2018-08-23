@@ -7,7 +7,10 @@
 export default {
 
   props: {
-    siteId: String
+    siteId: {
+      type: [String, Number],
+      required: true
+    }
   },
 
   // 提前渲染
