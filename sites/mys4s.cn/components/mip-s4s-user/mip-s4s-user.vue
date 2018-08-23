@@ -65,7 +65,7 @@
               <span class="s4s-cell-tit">支付金额：</span>
               <span
                 class="s4s-cell-txt"
-                style="color: #FE7000;font-weight:bold;">￥{{ ((item&&item.TotalPrice || 0) / 100).toFixed(2) }}</span>
+                style="color: #FE7000;font-weight:bold;">￥{{ ((item&&item.TotalPrice || 0) / 100).toFixed(2) }} {{ item.Urge?"(加急)":"" }}</span>
             </div>
             <div class="s4s-cell-bd">
               <span class="s4s-cell-tit">创建时间：</span>
@@ -143,15 +143,14 @@ export default {
     }
   },
   mounted () {
-    // this.getOrder(-1)
-    // this.getOrderStatic()
     this.$on('enter', () => {
-      this.getOrder(-1)
+      this.selTab(this.selIndex)
+      // this.getOrder(-1)
       this.getOrderStatic()
     })
 
     this.$on('customError', event => {
-      window.localStorage.clear()
+      // window.localStorage.clear()
       util.toast('登陆失败')
       // this.$emit('loginAgain')
       // this.$refs.index.click()
@@ -290,9 +289,11 @@ export default {
       })
     },
     bindPay (item) {
-      if (!window.localStorage.getItem(
-        'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
-      )) {
+      if (
+        !window.localStorage.getItem(
+          'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
+        )
+      ) {
         util.toast('未授权百度账号')
         return
       }
@@ -304,7 +305,9 @@ export default {
           ),
           postData: {
             order_id: item.id + ''
-          }
+          },
+          redirectUrl:
+            'https://mys4s.cn/static/vio/xz/success.html?orderId=' + item.id
         }
       })
       this.$emit('canpay', {})
@@ -320,17 +323,17 @@ export default {
   color: #999;
   height: 50px;
   line-height: 45px;
-  display:-webkit-box;
+  display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
   -webkit-box-pack: center;
   -ms-flex-pack: center;
-  -webkit-justify-content:center;
-  justify-content:center;
-  -moz-box-pack:center;
-  -webkit-box-pack:center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -moz-box-pack: center;
+  -webkit-box-pack: center;
 }
 .s4s-tab-cur {
   border-bottom: 0.03rem #fe7000 solid;
@@ -345,29 +348,29 @@ export default {
 }
 .s4s-tab-item {
   padding: 0 0.1rem;
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
-  -ms-box-flex:1;
-  display:-webkit-box;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  flex: 1;
+  -webkit-flex: 1;
+  -ms-box-flex: 1;
+  display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  align-items:center;
-  -moz-box-align:center;
-  -webkit-box-align:center;
-  -webkit-justify-content:center;
-  justify-content:center;
-  -moz-box-pack:center;
-  -webkit-box-pack:center;
+  align-items: center;
+  -moz-box-align: center;
+  -webkit-box-align: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -moz-box-pack: center;
+  -webkit-box-pack: center;
   position: relative;
-  font-size:.15rem;
+  font-size: 0.15rem;
 }
 .s4s-tab-num {
   background: #fe5a00;
-  background-image:linear-gradient(40deg,  #ff7c00 0%, #fe5a00 100%);
+  background-image: linear-gradient(40deg, #ff7c00 0%, #fe5a00 100%);
   /* min-width: .185rem;
   width:auto;
   padding:0 .0485rem; */
@@ -375,24 +378,24 @@ export default {
   border-radius: 2rem;
   text-align: center;
   color: #fff;
-  -webkit-box-pack:center;
-  -moz-box-align:center;
-  -webkit-box-align:center;
-  -webkit-justify-content:center;
-  justify-content:center;
-  -moz-box-pack:center;
+  -webkit-box-pack: center;
+  -moz-box-align: center;
+  -webkit-box-align: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -moz-box-pack: center;
   box-sizing: content-box;
   -moz-box-sizing: content-box;
   -webkit-box-sizing: content-box;
-  font-size: .12rem;
-  line-height: .18rem;
+  font-size: 0.12rem;
+  line-height: 0.18rem;
   position: absolute;
   right: 0;
-  top: .03rem;
-  padding: .01rem .07rem;
+  top: 0.03rem;
+  padding: 0.01rem 0.07rem;
   letter-spacing: 1px;
   font-weight: 100;
-  min-width: .1rem;
+  min-width: 0.1rem;
 }
 @media screen and (min-width: 590px) {
   .s4s-tab-item {
@@ -411,7 +414,7 @@ export default {
   margin-bottom: 0.1rem;
   border-radius: 0.04rem;
   font-size: 0.15rem;
-  padding: .2rem .15rem;
+  padding: 0.2rem 0.15rem;
   position: relative;
 }
 .s4s-cell:last-child {
@@ -419,7 +422,7 @@ export default {
 }
 .s4s-cell-hd {
   display: -ms-flexbox;
-  display:-webkit-box;
+  display: -webkit-box;
   display: -moz-box;
   display: -webkit-flex;
   display: flex;
@@ -427,27 +430,27 @@ export default {
   padding-bottom: 0.15rem;
   -webkit-box-align: center;
   -ms-flex-align: center;
-  -moz-box-align:center;
-  -webkit-box-align:center;
+  -moz-box-align: center;
+  -webkit-box-align: center;
 }
 .s4s-cell-hd p {
   color: #999;
   font-size: 0.14rem;
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  flex: 1;
+  -webkit-flex: 1;
 }
 .s4s-cell-hd span {
   font-size: 0.13rem;
   color: #fe7000;
 }
 .s4s-cell-hd-time {
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
-  -ms-box-flex:1;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  flex: 1;
+  -webkit-flex: 1;
+  -ms-box-flex: 1;
   color: #333;
 }
 .s4s-cell-bd {
@@ -455,11 +458,11 @@ export default {
 }
 .s4s-cell-tit {
   color: #666;
-  margin-right: .1rem;
+  margin-right: 0.1rem;
 }
 .s4s-cell-txt {
   color: #333;
-  font-size: .15rem;
+  font-size: 0.15rem;
 }
 /* .s4s-cell-bd:last-child {
   padding-bottom: 0.1rem;
@@ -468,7 +471,7 @@ export default {
   border-top: 0.01rem rgba(0, 0, 0, 0.1) solid;
   margin-top: 0.2rem;
   padding-top: 0.15rem;
-  display:-webkit-box;
+  display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
@@ -491,13 +494,13 @@ export default {
 }
 .show-cancel {
   display: none;
-  top:0;
-  right: .1rem;
+  top: 0;
+  right: 0.1rem;
 }
 .show-complete {
   display: none;
-  top:0;
-  right: .1rem;
+  top: 0;
+  right: 0.1rem;
 }
 .s4s-cell-hd-image .show-cancel {
   display: inherit;
@@ -531,14 +534,14 @@ export default {
 }
 .s4s-confirm-btn {
   height: 0.45rem;
-  display:-webkit-box;
+  display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
   -ms-flex-align: center;
-  -moz-box-align:center;
-  -webkit-box-align:center;
+  -moz-box-align: center;
+  -webkit-box-align: center;
   border-top: 0.01rem rgba(0, 0, 0, 0.1) solid;
   font-size: 0.15rem;
   font-weight: bold;
@@ -547,20 +550,20 @@ export default {
 .s4s-confirm-btn span {
   line-height: 0.45rem;
   border-right: 0.01rem rgba(0, 0, 0, 0.1) solid;
-  display:-webkit-box;
+  display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  -ms-box-flex:1;
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
+  -ms-box-flex: 1;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  flex: 1;
+  -webkit-flex: 1;
   -ms-flex-pack: center;
-  -webkit-justify-content:center;
-  justify-content:center;
-  -moz-box-pack:center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -moz-box-pack: center;
 }
 .s4s-confirm-btn span:last-child {
   border-right: 0;

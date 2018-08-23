@@ -240,6 +240,7 @@ export default {
     },
     // 确认搬出信息
     moveoutSure () {
+      let that = this
       let inputs = this.$element.querySelectorAll('input:focus')
       Array.prototype.slice.call(inputs).forEach(ele => {
         ele.blur()
@@ -285,19 +286,47 @@ export default {
         console.log(JSON.stringify(moveout, null, 2))
         console.log(JSON.stringify(movein, null, 2))
         if (moveout.lat !== '' && movein.lat !== '') {
+        //   let pointOut = new BMap.Point(moveout.lng, moveout.lat)
+        //   let pointIn = new BMap.Point(movein.lng, movein.lat)
+        //   let kilometer =
+        //       this.maps.getDistance(pointOut, pointIn).toFixed(2) / 1000
+        //   console.log('查看距离:' + kilometer)
+        //   let obj = { kilometer: kilometer }
+        //   let datass = base.mipExtendData(datas, obj)
+        //   base.mipSetGlobalData(obj)
+        //   base.setSession(datass)
+
+        //   setTimeout(() => {
+        //     this.goOrder()
+        //   }, 100)
+
           let pointOut = new BMap.Point(moveout.lng, moveout.lat)
           let pointIn = new BMap.Point(movein.lng, movein.lat)
-          let kilometer =
-              this.maps.getDistance(pointOut, pointIn).toFixed(2) / 1000
-          console.log('查看距离:' + kilometer)
-          let obj = { kilometer: kilometer }
-          let datass = base.mipExtendData(datas, obj)
-          base.mipSetGlobalData(obj)
-          base.setSession(datass)
+          let kilometer = ''
+          let city = this.globaldata.ordercity
 
-          setTimeout(() => {
-            this.goOrder()
-          }, 100)
+          let transit = new BMap.DrivingRoute(city, {
+            onSearchComplete: function (drivingRouteResult) {
+              let numPlans = drivingRouteResult.getNumPlans()
+
+              if (numPlans) {
+                let firstPlanDistanceM = drivingRouteResult.getPlan(0).getDistance(false)
+                kilometer = Math.max(1, Math.ceil(firstPlanDistanceM / 1000))
+
+                console.log('查看距离:' + kilometer)
+                let obj = { kilometer: kilometer }
+
+                console.log(JSON.stringify(obj, null, 2))
+                let datass = base.mipExtendData(datas, obj)
+                console.log(JSON.stringify(datass))
+                base.mipSetGlobalData(obj)
+                base.setSession(datass)
+                setTimeout(() => {
+                  that.goOrder()
+                }, 100)
+              }
+            }})
+          transit.search(pointOut, pointIn)
         } else {
           console.log('没计算距离')
           this.goOrder()

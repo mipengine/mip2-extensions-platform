@@ -61,7 +61,7 @@
           </div>
           <div
             class="details-item-right2"
-            v-text="order.violationCode"/>
+            v-text="order.sequences"/>
         </div>
         <div class="details-item">
           <div class="details-item-left2">
