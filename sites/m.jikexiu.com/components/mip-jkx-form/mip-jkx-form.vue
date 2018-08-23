@@ -3,6 +3,7 @@
     <div class="name flex">
       <p class="left">姓名</p>
       <input
+        v-mtfocus
         v-model="form.name"
         :class="{right1:wrong1}"
         type="text"
@@ -13,17 +14,21 @@
     <div class="phone flex">
       <p class="left">手机号码</p>
       <input
+        v-mtfocus
         v-model="form.phone"
         :class="{right1:wrong2}"
         type="number"
         pattern="[0-9]*"
         class="right"
         placeholder="请填写您的手机号码"
+        @focus = "foucs"
+        @blur = "blur"
         @input="inputCode">
     </div>
     <div class="sendCode flex">
       <p class="left">图形验证码</p>
       <input
+        v-mtfocus
         v-model="form.imgCode"
         :class="{right1:wrong3}"
         type="number"
@@ -39,6 +44,7 @@
     <div class="code flex">
       <p class="left">短信验证码</p>
       <input
+        v-mtfocus
         v-model="form.code"
         :class="{right1:wrong4}"
         type="number"
@@ -60,6 +66,18 @@ import apiUrl from '@/common/js/config.api'
 let regName = /^[\u4E00-\u9FA5\uf900-\ufa2d·0-9A-z]{1,20}$/
 let reg = /^[1]\d{10}$/
 export default {
+  directives: {
+    'mtfocus' (el, binding, vnode) {
+      el.onfocus = function () {
+        document.getElementById('bot').style.display = 'none'
+        document.getElementById('protect-fix').style.display = 'block'
+      }
+      el.onblur = function () {
+        document.getElementById('bot').style.display = 'block'
+        document.getElementById('protect-fix').style.display = 'none'
+      }
+    }
+  },
   props: {
     isForm: {
       default () {
@@ -82,7 +100,9 @@ export default {
         },
         codeSessionkey: ''
       },
-      isTap: false
+      isTap: false,
+      timeOut: ''
+
     }
   },
   watch: {
@@ -193,46 +213,48 @@ export default {
           }
         })
       } else {
-        if (this.form.imgCode.length === 4) {
-          request(apiUrl.sendCode, 'post', {
-            authcode: this.form.imgCode,
-            sessionkey: this.form.img.sessionkey,
-            mobile: this.form.phone
-          }).then(res => {
-            if (res.code === 200) {
-              this.time = 60
-              this.timer()
-              this.lastsendtime = res.data.lastsendtime
-              this.form.codeSessionkey = res.data.sessionkey
-              MIP.setData({
-                orderData: {
-                  'codeSessionkey': this.form.codeSessionkey
-                }
-              })
-              localStorage.setItem('sessionkey', JSON.stringify(res.data.sessionkey))
-            } else {
-              MIP.setData({
-                alertMsg: {
-                  'errorTitle': res.msg,
-                  'isError': true
-                },
-                orderData: {
-                  'imgCode': ''
-                }
-              })
-              this.form.imgCode = ''
-              this.refreshImg()
-            }
-          }).catch(error => {
-            console.log('错误' + error)
-          })
-        } else {
-          MIP.setData({
-            alertMsg: {
-              'errorTitle': '请输入4位图形验证码',
-              'isError': true
-            }
-          })
+        if (!this.isTap) {
+          if (this.form.imgCode.length === 4) {
+            request(apiUrl.sendCode, 'post', {
+              authcode: this.form.imgCode,
+              sessionkey: this.form.img.sessionkey,
+              mobile: this.form.phone
+            }).then(res => {
+              if (res.code === 200) {
+                this.time = 60
+                this.timer()
+                this.lastsendtime = res.data.lastsendtime
+                this.form.codeSessionkey = res.data.sessionkey
+                MIP.setData({
+                  orderData: {
+                    'codeSessionkey': this.form.codeSessionkey
+                  }
+                })
+                localStorage.setItem('sessionkey', JSON.stringify(res.data.sessionkey))
+              } else {
+                MIP.setData({
+                  alertMsg: {
+                    'errorTitle': res.msg,
+                    'isError': true
+                  },
+                  orderData: {
+                    'imgCode': ''
+                  }
+                })
+                this.form.imgCode = ''
+                this.refreshImg()
+              }
+            }).catch(error => {
+              console.log('错误' + error)
+            })
+          } else {
+            MIP.setData({
+              alertMsg: {
+                'errorTitle': '请输入4位图形验证码',
+                'isError': true
+              }
+            })
+          }
         }
       }
     },
@@ -247,6 +269,20 @@ export default {
           'codeSessionkey': this.form.codeSessionkey
         }})
     }
+    // focus () {
+    //   if (this.timeOut) {
+    //     clearTimeout(this.timeOut)
+    //     this.timeOut = ''
+    //   }
+    //   document.getElementById('bot').style.opacity = 0
+    //   document.getElementById('protect-fix').style.display = 'block'
+    // },
+    // blur () {
+    //   this.timeOut = setTimeout(() => {
+    //     document.getElementById('bot').style.opacity = 1
+    //     document.getElementById('protect-fix').style.display = 'none'
+    //   }, 300)
+    // }
   }
 }
 </script>
