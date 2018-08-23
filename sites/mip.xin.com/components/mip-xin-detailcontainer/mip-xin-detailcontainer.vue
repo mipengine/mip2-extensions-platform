@@ -245,11 +245,7 @@ export default {
         {
           carid: this.carid
         },
-        () => {
-          MIP.viewer.open(this.urlReport, {
-            isMipLink: true
-          })
-        },
+        null,
         {
           pid: pid
         }
