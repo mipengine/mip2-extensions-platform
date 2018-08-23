@@ -3,8 +3,8 @@
 // const lxnhttp = 'http://127.0.0.1:8111/example/';
 
 // const lxnhttp = '/components/';
-const lxnhttp = 'http://www.daoway.cn/mip/'
-const component = 'html/'
+const lxnhttp = 'http://www.daoway.cn/mip/t/'
+const component = ''
 
 // const lxnhttp = 'http://test.daoway.cn/baiduapp/components/';//测试urL
 
@@ -124,11 +124,11 @@ export default ({
             return dayStr[t.getDay()]
           }
         case 'appDate':
-          let today1 = new Date()
-          if (today1.getMonth() + 1 === t.getMonth() + 1) {
-            if (today1.getDate() === t.getDate()) {
+          let todays = new Date()
+          if (todays.getMonth() + 1 === t.getMonth() + 1) {
+            if (todays.getDate() === t.getDate()) {
               return '今天'
-            } else if (today1.getDate() + 1 === t.getDate()) {
+            } else if (todays.getDate() + 1 === t.getDate()) {
               return '明天'
             } else {
               return tf(t.getMonth() + 1) + '-' + tf(t.getDate())

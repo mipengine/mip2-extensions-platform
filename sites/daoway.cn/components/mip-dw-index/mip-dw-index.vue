@@ -11,7 +11,7 @@
         class="i-p-img">
       <span
         class="spn"
-        @touchend="toposition">{{ position.name ? position.name : position.addr }}∨</span>
+        @touchend="toposition">{{ position.name ? position.name : position.addr }}<img src="http://www.daoway.cn/mip/common/images/down1.png"></span>
         <!--<input class="search" :class="{searchscroll:scroll}" @click="search" type="text" name="search" placeholder="快速搜索商家、服务">-->
     </mip-fixed>
     <div class="banner">
@@ -43,7 +43,8 @@
     <div class="box">
       <div
         v-for="k in list"
-        :key="k">
+        :key="k"
+        class="boxlist">
         <div
           :categoryId="k.categoryId"
           class="h2">{{ k.categoryName }}<span @click="toserviceclass(k.categoryId)" >更多<img src="https://www.daoway.cn/h5/image/go_06.png"></span></div>
@@ -69,7 +70,6 @@
 <script>
 
 import base from '../../common/utils/base.js'
-import login from '../../common/utils/login'
 import '../../common/utils/base.less'
 export default {
   data () {
@@ -90,16 +90,16 @@ export default {
       client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
       ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
       code: base.getRequest(location.href).code,
-      redirectUri: base.lxnhttp.index
+      redirectUri: base.htmlhref.index
     }
   },
   mounted () {
     let that = this
-    let userId = 'a2d5a7264360aeb3936a48ace9a6' // localStorage.getItem('userId');
-    let token = '44fecc60f9397f3d4d116b425183990d'// localStorage.getItem('token');
+    let userId = localStorage.getItem('userId')
+    let token = localStorage.getItem('token')
     if (!userId || !token) {
       if (this.code) {
-        login.codelogin(this.code, this.redirectUri)
+        that.codelogin(this.code, this.redirectUri)
       } else {
         this.tologin()
       }
@@ -120,6 +120,30 @@ export default {
     })
   },
   methods: {
+    codelogin: function (code, redirectUri) {
+      let that = this
+      let url = '/daoway/rest/users/login_mip'
+      fetch(url, {
+        method: 'POST',
+        headers: {'content-type': 'application/x-www-form-urlencoded'}, // "code="+code,
+        body: 'code=' + code + '&redirectUri=' + redirectUri
+      }).then(function (res) {
+        return res.json()
+      }).then(function (text) {
+        if (text.status === 'ok') {
+          window.localStorage.setItem('userId', text.data.userId)
+          window.localStorage.setItem('token', text.data.token)
+          if (text.data.token) {
+            document.cookie = 'token=' + text.data.token + ';path=/'
+          }
+        } else {
+          that.tologin()
+          console.log('失败')
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
     tologin () {
       let that = this
       let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + that.redirectUri + '&scope=snsapi_userinfo&state=STATE'
@@ -313,10 +337,14 @@ export default {
         background: #fb461c;
     }
     .i-p-img {
-        width: 14px;
+        width: 10px;
         height: auto;
         margin-top: 8px;
         margin-left: 10px;
+    }
+
+    .boxlist{
+        border-bottom: 10px solid #f5f5f5;
     }
 
     .servicePro [role=list] {
@@ -377,6 +405,10 @@ export default {
         white-space: nowrap;
         color: #fff;
     }
+    .spn img{
+        width: 8px;
+        height: auto;
+    }
 
     .price {
         color: #fb461c
@@ -404,6 +436,9 @@ export default {
     .project, .box {
         border-top: 10px solid #f5f5f5;
         width: 100%;
+    }
+    .project{
+        background: #fff;
     }
     .box{
         margin-bottom: 50px;
@@ -446,8 +481,8 @@ export default {
 
     .down {
         width: 100%;
-        margin-top: 10px;
-        height: 80px
+        margin-top: 15px;
+        height: 72px
     }
 
     .down ul li {
@@ -465,7 +500,7 @@ export default {
     .down ul li i {
         display: block;
         position: relative;
-        top: 15px
+        top: 8px
     }
 
     .down ul li:last-child {
@@ -526,9 +561,10 @@ export default {
     }
 
     .home img {
-        width: 12px;
+        width: 16px;
         height: auto;
-        margin-right: 2px
+        margin-right: 2px;
+        vertical-align: middle;
     }
     .i-unit{
         font-size: 10px;

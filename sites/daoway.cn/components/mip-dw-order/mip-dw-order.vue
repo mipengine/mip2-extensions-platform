@@ -108,6 +108,7 @@
 <script>
 import base from '../../common/utils/base'
 import '../../common/utils/base.less'
+
 export default {
   props: {
     payConfig: {
@@ -167,23 +168,50 @@ export default {
       redirect_uri: 'http://test.daoway.cn/mip/t/order.html',
       client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
       ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
-      code: base.getRequest(location.href).code,
+      // code: base.getRequest(location.href).code,
       userId: localStorage.getItem('userId'),
       token: localStorage.getItem('token'),
       sw: true,
       loding: false,
-      channel: 'baidu'
+      channel: 'baidu',
+      oauthCode: '',
+      tradeType: '',
+      returnurl: base.htmlhref.orderdetail
     }
   },
   mounted () {
+    let that = this
     if (this.token && this.userId) {
       this.getOrderList(0)
       window.addEventListener('scroll', this.morelist)
+      if (MIP.util.platform.isWechatApp()) { // 在微信里
+        let wxcode = base.getRequest(location.href).code
+        if (wxcode) {
+          that.oauthCode = wxcode
+          that.tradeType = 'JSAPI'
+        } else {
+          that.wxpay(base.htmlhref.order)
+        }
+      } else {
+        that.oauthCode = ''
+        that.tradeType = 'MWEB'
+      }
     } else {
-      MIP.viewer.open(base.htmlhref.index, { isMipLink: true })
+      that.tologin()
     }
   },
   methods: {
+    wxpay (url) {
+      let appid = 'wx0290cc2004b61c97'
+      let loginUrl = encodeURIComponent(url)
+      let scope = 'snsapi_base'
+      MIP.viewer.open('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + loginUrl + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect', {isMipLink: false})
+    },
+    tologin () {
+      let that = this
+      let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + base.htmlhref.index + '&scope=snsapi_userinfo&state=STATE'
+      MIP.viewer.open(url, { isMipLink: true })
+    },
     getOrderList (index) {
       let that = this
       let orderitems = that.orderitems
@@ -197,7 +225,6 @@ export default {
       }
       let start = orderitem.items.length
       let url = '/daoway/rest/orders/bought_by/' + that.userId + '?channel=' + that.channel + '&start=' + start + '&size=30' + status
-
       fetch(url, {
         method: 'get',
         credentials: 'include'
@@ -222,7 +249,6 @@ export default {
           }
           return
         }
-
         for (let i = 0; i < len; i++) {
           let item = text.data[i]
           let statusId = item.statusId
@@ -379,26 +405,28 @@ export default {
       let orderitems = that.orderitems
       let tager = orderitems[index]
       let loading = tager.loading
-      let items = tager.items
+      let items = tager
       let start = items.length
       let filter = tager.id
       if (loading === 'noList') {
-        // 没有评论
         that.filter = filter
         that.noList = true
         that.noMoreList = false
         that.index = index
+        that.loding = false
       } else {
         if (start === 0) {
           that.noList = false
           that.noMoreList = false
           that.getOrderList(index)
+          that.loding = false
         } else {
           // 从原有记录里加载
           that.filter = filter
           that.noList = false
           that.noMoreList = false
           that.index = index
+          that.loding = false
         }
       }
     },
@@ -418,7 +446,7 @@ export default {
         that.warn.texts = '确定取消订单？'
         that.param = param
       } else if (param.text === '立即支付') {
-        let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent('http://test.daoway.cn/mip/t/orderdetail.html?orderId=' + payparam.orderid)
+        let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + payparam.orderid)
         MIP.setData({'payConfig': {
           'fee': (payparam.totalPrice + payparam.fixFee - payparam.coupon).toFixed(2),
           'sessionId': that.token,
@@ -431,9 +459,9 @@ export default {
             wallet: 0,
             couponId: payparam.couponId || '',
             'appendOrderId': '',
-            'returnUrl': redirectUrl
-            /* 'oauthCode':'',
-            'tradeType': "MWEB" */
+            'returnUrl': redirectUrl,
+            'oauthCode': that.oauthCode,
+            'tradeType': that.tradeType
           }
         }})
         that.$emit('actionpay')
@@ -447,10 +475,11 @@ export default {
       let action = ''
       if (this.param.text === '取消订单') {
         action = 'buyer_cancel'
+        this.closesure(orderId, action)
       } else if (this.param.text === '确认订单') {
         action = 'buyer_confirm'
+        this.closesure(orderId, action)
       }
-      this.closesure(orderId, action)
     },
     closesure (orderId, action) {
       let that = this
@@ -472,7 +501,6 @@ export default {
             that.warn.show = true
             that.warn.texts = '订单已完成'
           }
-
           setTimeout(() => {
             that.warn.show = false
             MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
@@ -486,13 +514,17 @@ export default {
       })
     },
     toorderdetail (id) {
-      MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + id, { isMipLink: true })
+      if (MIP.util.platform.isWechatApp()) { // 在微信里
+        this.wxpay(base.htmlhref.orderdetail + '?orderId=' + id)
+      } else {
+        MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + id, { isMipLink: true })
+      }
     },
-    goLoginPage: function () {
-      let that = this
-      let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + that.redirect_uri + '&scope=snsapi_userinfo&state=STATE'
+    /* goLoginPage: function () {
+      let that = this;
+      let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + that.redirect_uri + '&scope=snsapi_userinfo&state=STATE';
       MIP.viewer.open(url)
-    },
+    }, */
     morelist () {
       let that = this
       let index = that.index
