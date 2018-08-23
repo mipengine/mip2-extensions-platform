@@ -193,7 +193,9 @@ export default {
       orderInfo: {},
       code: base.getRequest(location.href).code,
       userId: localStorage.getItem('userId') || base.userId,
-      channel: 'baidu'
+      channel: 'baidu',
+      oauthCode: '',
+      tradeType: ''
     }
   },
   mounted () {
@@ -205,6 +207,7 @@ export default {
       console.log(baseparam)
       login.codelogin(this.code,baseparam)
     } */
+
     that.position = base.getposition()
     if (that.orderId) {
       that.buyAgain(that.orderId)
@@ -235,6 +238,14 @@ export default {
         that.setPostion()
       }
     })
+    if (MIP.util.platform.isWechatApp()) { // 在微信里
+      let wxcode = window.localStorage.getItem('wxcode')
+      that.oauthCode = wxcode
+      that.tradeType = 'JSAPI'
+    } else {
+      that.oauthCode = ''
+      that.tradeType = 'MWEB'
+    }
   },
   methods: {
     gethtml () {
@@ -571,7 +582,7 @@ export default {
         }).then(function (text) {
           if (text.status === 'ok') {
             let tobaiduorder = text.data.orderId
-            console.log(tobaiduorder)
+            console.log(text.data)
             let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent('http://test.daoway.cn/mip/t/orderdetail.html?orderId=' + tobaiduorder)
             MIP.setData({'payConfig': {
               'fee': that.alltotalPrices,
@@ -585,7 +596,9 @@ export default {
                 wallet: 0,
                 couponId: that.coupone ? that.coupone.id : '',
                 'appendOrderId': '',
-                'returnUrl': redirectUrl
+                'returnUrl': redirectUrl,
+                'oauthCode': that.oauthCode,
+                'tradeType': that.tradeType
               }
             }})
             console.log(that.alltotalPrices, token, redirectUrl, tobaiduorder, that.userId, that.coupone ? that.coupone.id : '')
