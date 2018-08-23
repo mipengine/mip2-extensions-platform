@@ -261,8 +261,21 @@ export default {
   mounted () {
     this.detailstr()
     window.addEventListener('scroll', this.moreimg)
+    if (MIP.util.platform.isWechatApp()) {
+      if (base.getRequest(window.location.href).code) {
+        window.localStorage.setItem('wxcode', base.getRequest(window.location.href).code)
+      } else {
+        this.weixinpay()
+      }
+    }
   },
   methods: {
+    weixinpay () {
+      let appid = 'wx0290cc2004b61c97'
+      let loginUrl = encodeURIComponent(base.htmlhref.detail + '?detailid=' + encodeURIComponent(this.id))
+      let scope = 'snsapi_base'
+      MIP.viewer.open('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + loginUrl + '&response_type=code&scope=' + scope, { isMipLink: true })
+    },
     detailstr () {
       let that = this
       let url = '/daoway/rest/service/full/' + that.id + '?channel=' + that.channel
@@ -413,9 +426,9 @@ export default {
             appointTime: that.appointTime,
             priceType: that.priceType
           }); */
-          let redirectUri = 'http://test.daoway.cn/mip/t/index.html'
-          let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + redirectUri + '&scope=snsapi_userinfo&state=STATE'
-          MIP.viewer.open(url, { isMipLink: true })
+          /* let redirectUri = 'http://test.daoway.cn/mip/t/index.html';
+          let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + redirectUri+ '&scope=snsapi_userinfo&state=STATE'; */
+          MIP.viewer.open(base.htmlhref.index, { isMipLink: true })
         }
       }
     }
