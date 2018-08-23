@@ -324,6 +324,7 @@ export default {
       if (!this.telCorrect) {
         this.remain = true
         this.reminMessage = '请输入正确的手机号'
+        return
       }
       this.bottomPrice()
     },
