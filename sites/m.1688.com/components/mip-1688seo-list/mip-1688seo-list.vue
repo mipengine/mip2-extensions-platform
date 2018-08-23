@@ -1,5 +1,8 @@
 <template>
   <div class="search-list">
+    <div class="title_warp aaa">
+      共<span>{{ totalCount }}</span>件<h1>{{ keyword }}</h1>相关产品
+    </div>
     <div class="list_column">
       <div
         v-for="offer in list"
@@ -20,10 +23,10 @@
             <div class="item-info_title">
               <span v-html="offer.subject">{{ offer.subject }}</span>
             </div>
-          </div>
-          <div class="item-info_count">
-            <div class="count_price">
-              <i>￥</i>{{ offer.price }}
+            <div class="item-info_count">
+              <div class="count_price">
+                <i>￥</i>{{ offer.price }}
+              </div>
             </div>
           </div>
         </a>
@@ -39,13 +42,13 @@
           <div
             id="nextBtn"
             class="btn on"
-            @click="next">下一页<span>共{{ totalPage }}</span>页</div>
+            @click="next">下一页</div>
+          <span>共{{ totalPage }}</span>页
         </a>
       </div>
     </nav>
   </div>
 </template>
-
 <style scoped lang="less">
 </style>
 <script>
@@ -63,6 +66,14 @@ export default {
     canonicalUrl: {
       type: String,
       required: true
+    },
+    keyword: {
+      type: String,
+      required: true
+    },
+    totalCount: {
+      type: Number,
+      required: true
     }
   },
   data () {
@@ -71,7 +82,7 @@ export default {
   mounted () {},
   methods: {
     next () {
-      let pageIndex = this.pageIndex + 1
+      let pageIndex = 2
       let _href = this.canonicalUrl || ''
       if (_href.indexOf('?') !== -1) {
         window.location.href = _href + '&beginPage=' + pageIndex

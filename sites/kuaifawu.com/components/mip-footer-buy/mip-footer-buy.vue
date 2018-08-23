@@ -7,13 +7,12 @@
       class="fb">
       <div class="fix-bottom">
         <a
-          href="tel:01089172605"
-          class="left">点击咨询</a>
-        <a
           class="right"
           data-type="mip"
           @click="removeSku">购买服务</a>
-          <!-- <div class="right" on="tap:log.login"> xxxx </div> -->
+        <a
+          href="tel:4006028082"
+          class="left">免费电话咨询</a>
       </div>
     </mip-fixed>
     <!-- 底部固定栏 -->
@@ -42,13 +41,13 @@
 }
 
 .fix-bottom .left {
-  width: 30%;
+  width: 70%;
   background-color: #007bc7;
   color: #fff;
 }
 
 .fix-bottom a.right {
-  width: 70%;
+  width: 30%;
   background-color: #e85555;
   color: #fff
 }
