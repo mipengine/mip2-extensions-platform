@@ -21,8 +21,6 @@
       display: flex;
       overflow: hidden;
       width: 100%;
-      /* position: fixed;
-      bottom: 0px; */
       height: 50px;
       background-color: #fff;
       padding: 0 4%;
@@ -101,7 +99,6 @@ export default {
   },
   methods: {
     goOrder (href) {
-      console.log(this.info)
       // 如果已经登录，自己处理跳转
       if (this.info.isLogin) {
         window.MIP.viewer.open('./' + href, {isMipLink: true})
