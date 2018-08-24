@@ -284,7 +284,7 @@ export default {
   created () {},
   methods: {
     openConfig (url) {
-      MIP.viewer.open(url + getLocalStorage('locationUrl'), {
+      MIP.viewer.open(url + decodeURIComponent(getLocalStorage('locationUrl')), {
         isMipLink: false
       })
     },
@@ -306,7 +306,7 @@ export default {
     },
     openFance () {
       let opurl = getLocalStorage('locationUrl')
-        ? getLocalStorage('locationUrl') + '&'
+        ? decodeURIComponent(getLocalStorage('locationUrl')) + '&'
         : '?'
       MIP.viewer.open(
         `${
@@ -347,7 +347,7 @@ export default {
     beyondCompare () {
       let url = ''
       if (getLocalStorage('locationUrl')) {
-        url = '&' + getLocalStorage('locationUrl').split('?')[1]
+        url = '&' + decodeURIComponent(getLocalStorage('locationUrl')).split('?')[1]
       }
       MIP.viewer.open(getAgreement() + this.beyondUrl + `${url}`, {
         isMipLink: false

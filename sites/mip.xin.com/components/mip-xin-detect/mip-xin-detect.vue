@@ -115,9 +115,10 @@ export default {
           }
         }
         let opurl = getLocalStorage('locationUrl')
-          ? getLocalStorage('locationUrl') + '&'
-          : '?'
-        this.urlReport = `${getDomain()}/report_${this.carid}.html${opurl}index=`
+          ? getLocalStorage('locationUrl') + encodeURIComponent('&')
+          : encodeURIComponent('?')
+        let index = encodeURIComponent('index=')
+        this.urlReport = `${getDomain()}/report_${this.carid}.html${opurl}${index}`
       })
       .catch(err => {
         console.log(err)
