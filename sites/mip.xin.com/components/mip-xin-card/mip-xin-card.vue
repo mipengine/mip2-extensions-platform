@@ -23,6 +23,7 @@
         <span class="carprice">{{ item.panel_price }}万</span>
         <div class="pricedetail">
           <div
+            v-if="item.is_ycg_car == 1"
             class="percent">一成购</div>
           <span class="instalment">首付{{ item.show_price }}万 月供{{ item.monthly_price }}元</span>
         </div>
