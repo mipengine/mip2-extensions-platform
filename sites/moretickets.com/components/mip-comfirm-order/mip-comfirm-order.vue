@@ -1596,7 +1596,7 @@ export default {
       if (this.delivery === 'express' && (!this.address.clientName || !this.address.cellphone)) {
         me.toast('请完善收货人信息')
         return
-      } else if (this.delivery !== 'express' && (!this.ownerInfo.userName || !/\d{10}/.test(this.ownerInfo.telphone))) {
+      } else if (this.delivery !== 'express' && (!this.ownerInfo.userName || !/1\d{10}/.test(this.ownerInfo.telphone))) {
         me.toast('请完善取票人信息')
         return
       }

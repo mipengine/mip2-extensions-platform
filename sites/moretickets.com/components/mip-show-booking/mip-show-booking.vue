@@ -696,7 +696,8 @@ export default {
         { text: '二个月', value: 60, display: false },
         { text: '三个月', value: 90, display: false }
       ],
-      selectedValue: 365
+      selectedValue: 365,
+      retryOrder:false
     }
   },
   computed: {
@@ -769,10 +770,15 @@ export default {
         event.userInfo.tsessionid
       ) {
         sessionStorageUtil.set('mtl_session', event.userInfo.tsessionid)
-        _self.saveUserSelect(false)
+        if(_self.retryOrder){
+          _self.confirmCallback()
+        }else{
+          _self.saveUserSelect(false)
+        }
+        
       } else {
         _self.saveUserSelect(false)
-        sessionStorageUtil.set('login_back_url', _self.nextUrl)
+        sessionStorageUtil.set('login_back_url', MIP.viewer.page.currentPageId)
         _self.loginUrl && MIP.viewer.open(_self.loginUrl)
       }
     })
@@ -780,7 +786,10 @@ export default {
     this.$on('baiduLoginError', event => {
       // 百度登录后
       _self.saveUserSelect(false)
+      //过期后 百度尝试重新登录下单
+      _self.retryOrder = true
       this.$emit('showlogin', {})
+      
       // sessionStorageUtil.set("login_back_url", _self.nextUrl);
       // _self.loginUrl && MIP.viewer.open(_self.loginUrl);
     })
