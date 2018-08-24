@@ -191,29 +191,30 @@ export default {
       coupone: '',
       orderId: base.getRequest(location.href).orderId,
       orderInfo: {},
-      code: base.getRequest(location.href).code,
-      userId: localStorage.getItem('userId') || base.userId,
+      // code: base.getRequest(location.href).code,
+      userId: localStorage.getItem('userId'),
       channel: 'baidu',
       oauthCode: '',
-      tradeType: ''
+      tradeType: '',
+      returnurl: base.htmlhref.orderdetail
     }
   },
   mounted () {
-    // this.setdatas();
     let that = this
-    /* let baseparam = location.href.split('?');
-    if (this.code && !this.userId) {
-      baseparam = baseparam[0]+'?'+ encodeURIComponent(baseparam[1]);
-      console.log(baseparam)
-      login.codelogin(this.code,baseparam)
-    } */
-
     that.position = base.getposition()
     if (that.orderId) {
       that.buyAgain(that.orderId)
     } else {
       that.gethtml()
       that.setPostion()
+    }
+    if (MIP.util.platform.isWechatApp()) { // 在微信里
+      let wxcode = base.getRequest(location.href).code
+      that.oauthCode = wxcode
+      that.tradeType = 'JSAPI'
+    } else {
+      that.oauthCode = ''
+      that.tradeType = 'MWEB'
     }
     window.addEventListener('show-page', () => {
       let technician = JSON.parse(sessionStorage.getItem('tech'))
@@ -238,14 +239,6 @@ export default {
         that.setPostion()
       }
     })
-    if (MIP.util.platform.isWechatApp()) { // 在微信里
-      let wxcode = window.localStorage.getItem('wxcode')
-      that.oauthCode = wxcode
-      that.tradeType = 'JSAPI'
-    } else {
-      that.oauthCode = ''
-      that.tradeType = 'MWEB'
-    }
   },
   methods: {
     gethtml () {
@@ -372,10 +365,10 @@ export default {
     setPostion: function () {
       let that = this
       let position = that.position
-      if (that.position.addr) {
-        that.addr = that.position.addr + that.position.name
-      } else {
+      if (that.position.name) {
         that.addr = that.position.city + that.position.area + that.position.name
+      } else {
+        that.addr = that.position.addr
       }
       if (position.communityId || position.id) {
         if (position.doorNum) {
@@ -582,8 +575,8 @@ export default {
         }).then(function (text) {
           if (text.status === 'ok') {
             let tobaiduorder = text.data.orderId
-            console.log(text.data)
-            let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent('http://test.daoway.cn/mip/t/orderdetail.html?orderId=' + tobaiduorder)
+            let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + tobaiduorder)
+            console.log(redirectUrl)
             MIP.setData({'payConfig': {
               'fee': that.alltotalPrices,
               'sessionId': token,
@@ -601,7 +594,6 @@ export default {
                 'tradeType': that.tradeType
               }
             }})
-            console.log(that.alltotalPrices, token, redirectUrl, tobaiduorder, that.userId, that.coupone ? that.coupone.id : '')
             that.$emit('actionpay')
           } else {
             that.warn.show = true
@@ -748,12 +740,11 @@ export default {
     }
 
     .gtitname {
-        margin-bottom: 36px;
+        margin-bottom:20px;
     }
 
     .gtit {
         margin-left: 16px;
-        margin-top: 10px;
     }
 
     .gtit, .gadd {
@@ -787,7 +778,8 @@ export default {
         display: inline-block;
         margin-left: 40px;
         vertical-align: middle;
-        padding: 8px 0;
+        padding: 6px 0;
+      font-size: 13px;
     }
 
     .project {
