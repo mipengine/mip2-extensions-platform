@@ -1,7 +1,6 @@
 
 <template>
   <div class="wrapper">
-    {{ imgurl }}
     <mip-fixed
       :class="{fiscroll:scroll}"
       type="top"
@@ -11,7 +10,7 @@
         class="i-p-img">
       <span
         class="spn"
-        @touchend="toposition">{{ position.name ? position.name : position.addr }}<img src="http://www.daoway.cn/mip/common/images/down1.png"></span>
+        @click="toposition">{{ position.name ? position.name : position.addr }}<img src="http://www.daoway.cn/mip/common/images/down1.png"></span>
         <!--<input class="search" :class="{searchscroll:scroll}" @click="search" type="text" name="search" placeholder="快速搜索商家、服务">-->
     </mip-fixed>
     <div class="banner">
@@ -65,6 +64,24 @@
         </ul>
       </div>
     </div>
+    <mip-fixed type="bottom">
+      <div class="bottomnav">
+        <a
+          class="regclolr"
+          data-type="mip"
+          data-title="首页"
+          @click="toindex"
+        ><img src="http://www.daoway.cn/mip/common/images/home.png">首页</a>
+        <a
+          data-type="mip"
+          data-title="订单"
+          @click="toorder"><img src="http://www.daoway.cn/mip/common/images/order2.png">订单</a>
+        <a
+          data-type="mip"
+          data-title="我的"
+          @click="tomy"><img src="http://www.daoway.cn/mip/common/images/my2.png">我的</a>
+      </div>
+    </mip-fixed>
   </div>
 </template>
 <script>
@@ -77,7 +94,7 @@ export default {
       channel: 'baidu',
       zoom: 3,
       city: '',
-      position: '',
+      position: base.getposition() || '',
       banners: [],
       fenleiary: [],
       list: [],
@@ -95,6 +112,13 @@ export default {
   },
   mounted () {
     let that = this
+    let position = localStorage.getItem('position')
+    if (position) {
+      that.position = base.getposition()
+      that.callBack()
+    } else {
+      that.handler()
+    }
     let userId = localStorage.getItem('userId')
     let token = localStorage.getItem('token')
     if (!userId || !token) {
@@ -103,25 +127,15 @@ export default {
       } else {
         this.tologin()
       }
-    } else {
-      document.cookie = 'token=' + token + ';path=/'
     }
     window.addEventListener('scroll', that.handleScroll)
-    let position = localStorage.getItem('position')
-    if (position) {
-      that.position = base.getposition()
-      that.callBack()
-    } else {
-      this.handler()
-    }
     window.addEventListener('show-page', (e) => {
-      that.position = base.getposition()
+      this.position = base.getposition()
       that.callBack()
     })
   },
   methods: {
     codelogin: function (code, redirectUri) {
-      let that = this
       let url = '/daoway/rest/users/login_mip'
       fetch(url, {
         method: 'POST',
@@ -137,7 +151,6 @@ export default {
             document.cookie = 'token=' + text.data.token + ';path=/'
           }
         } else {
-          that.tologin()
           console.log('失败')
         }
       }).catch(function (error) {
@@ -274,16 +287,25 @@ export default {
       })
     },
     toservicedetail (id) { // 跳转到服务列表页
-      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, {isMipLink: true})
+      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, {isMipLink: false})
     },
     toserviceclass (id, name) {
       if (!name) {
         name = '全部'
       }
-      MIP.viewer.open(base.htmlhref.serviceclass + '?category=' + id + '&tag=' + name, {isMipLink: true})
+      MIP.viewer.open(base.htmlhref.serviceclass + '?category=' + id + '&tag=' + name, {isMipLink: false})
     },
     toposition () {
       MIP.viewer.open(base.htmlhref.position, {isMipLink: true})
+    },
+    toindex () {
+      MIP.viewer.open(base.htmlhref.index, {isMipLink: false})
+    },
+    toorder () {
+      MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
+    },
+    tomy () {
+      MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
     }
   }
 
@@ -321,6 +343,7 @@ export default {
 
     .indexed{
         height: 40px;
+        line-height: 40px;
     }
     .fiscroll{
         background: #fff;
@@ -339,7 +362,7 @@ export default {
     .i-p-img {
         width: 10px;
         height: auto;
-        margin-top: 8px;
+        vertical-align: middle;
         margin-left: 10px;
     }
 
@@ -403,11 +426,13 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        vertical-align: middle;
         color: #fff;
     }
     .spn img{
-        width: 8px;
+        width: 10px;
         height: auto;
+        margin-left: 4px;
     }
 
     .price {

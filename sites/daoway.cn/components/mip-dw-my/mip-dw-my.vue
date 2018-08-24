@@ -79,6 +79,24 @@
           @click="closeLayer">知道了</p>
       </div>
     </div>
+    <mip-fixed type="bottom">
+      <div class="bottomnav">
+        <a
+          data-type="mip"
+          data-title="首页"
+          @click="toindex"
+        ><img src="http://www.daoway.cn/mip/common/images/home2.png">首页</a>
+        <a
+          data-type="mip"
+          data-title="订单"
+          @click="toorder"><img src="http://www.daoway.cn/mip/common/images/order2.png">订单</a>
+        <a
+          class="regclolr"
+          data-type="mip"
+          data-title="我的"
+          @click="tomy"><img src="http://www.daoway.cn/mip/common/images/my.png">我的</a>
+      </div>
+    </mip-fixed>
   </div>
 </template>
 <script>
@@ -129,16 +147,16 @@ export default {
       }).then(function (res) {
         return res.json()
       }).then(function (text) {
-        console.log(text)
         if (text.status === 'ok') {
+          console.log(text)
           window.localStorage.setItem('userId', text.data.userId)
           window.localStorage.setItem('token', text.data.token)
           that.userId = text.data.userId
           that.token = text.data.token
-          that.getmyhtml()
           if (text.data.token) {
             document.cookie = 'token=' + text.data.token + ';path=/'
           }
+          that.getmyhtml()
         } else {
           console.log('失败')
         }
@@ -155,7 +173,6 @@ export default {
     getmyhtml () {
       let that = this
       let url = '/daoway/rest/user/' + that.userId + '?isowner=1'
-      console.log(url)
       fetch(url, {
         method: 'get',
         credentials: 'include',
@@ -165,7 +182,6 @@ export default {
       }).then(function (res) {
         return res.json()
       }).then(function (text) {
-        console.log(text)
         if (text.status === 'ok') {
           let data = text.data
           let userInfo = {}
@@ -222,6 +238,15 @@ export default {
     },
     toabout () {
       MIP.viewer.open(base.htmlhref.about, { isMipLink: true })
+    },
+    toindex () {
+      MIP.viewer.open(base.htmlhref.index, {isMipLink: false})
+    },
+    toorder () {
+      MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
+    },
+    tomy () {
+      MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
     }
   }
 }

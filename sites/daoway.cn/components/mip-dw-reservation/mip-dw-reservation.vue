@@ -365,10 +365,10 @@ export default {
     setPostion: function () {
       let that = this
       let position = that.position
-      if (that.position.addr) {
-        that.addr = that.position.addr + that.position.name
-      } else {
+      if (that.position.name) {
         that.addr = that.position.city + that.position.area + that.position.name
+      } else {
+        that.addr = that.position.addr
       }
       if (position.communityId || position.id) {
         if (position.doorNum) {
@@ -576,6 +576,7 @@ export default {
           if (text.status === 'ok') {
             let tobaiduorder = text.data.orderId
             let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + tobaiduorder)
+            console.log(redirectUrl)
             MIP.setData({'payConfig': {
               'fee': that.alltotalPrices,
               'sessionId': token,

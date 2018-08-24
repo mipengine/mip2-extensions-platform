@@ -119,7 +119,7 @@
         src="http://www.daoway.cn/mip/common/images/go_06.png"></div>
     </div>
     <div class="d-text d-xuzhi">
-      <p v-text="service.orderingNotice"/>
+      <p v-html="service.orderingNotice"/>
     </div>
     <div class="d-img-box">
       <p v-if="images2.length >0 && !scroll" >↑滑动查看图文详情</p>
@@ -261,7 +261,11 @@ export default {
       wxcode: base.getRequest(window.location.href).code
     }
   },
+  created () {
+    window.addEventListener('scroll', this.moreimg)
+  },
   mounted () {
+    window.addEventListener('scroll', this.moreimg)
     this.detailstr()
   },
   methods: {
@@ -321,10 +325,12 @@ export default {
       }
     },
     moreimg () {
-      console.log(document.documentElement.scrollTop, window.innerHeight, document.documentElement.offsetHeight)
-      if (document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight) {
+      if (document.body.scrollTop || document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight + 20) {
+        console.log(document.body.scrollTop || document.documentElement.scrollTop, window.innerHeight, document.body.offsetHeight)
         this.images = this.images2
-        this.scroll = true
+        setTimeout(() => {
+          this.scroll = true
+        }, 1500)
       }
     },
     closeLayer () {
@@ -334,15 +340,15 @@ export default {
       this.showpops = false
     },
     toindex () {
-      MIP.viewer.open(base.htmlhref.index, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.index, { isMipLink: false })
     },
     toxuzhi () {
-      MIP.viewer.open(base.htmlhref.xuzhi, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.xuzhi, { isMipLink: false })
     },
     tocomments () {
       let serviceId = this.serviceId
       let priceId = this.priceId
-      MIP.viewer.open(base.htmlhref.comments + '?serviceId=' + serviceId + '&priceId=' + priceId, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.comments + '?serviceId=' + serviceId + '&priceId=' + priceId, { isMipLink: false })
     },
     tap (index) {
       this.activity = index
@@ -413,7 +419,7 @@ export default {
             let scope = 'snsapi_base'
             MIP.viewer.open('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + loginUrl + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect', { isMipLink: true })
           } else {
-            MIP.viewer.open(base.htmlhref.reservation + '?param=' + encodeURIComponent(param), { isMipLink: true })
+            MIP.viewer.open(base.htmlhref.reservation + '?param=' + encodeURIComponent(param), { isMipLink: false })
           }
         } else {
           /* let baseparam = JSON.stringify({
@@ -425,7 +431,7 @@ export default {
           }); */
           /* let redirectUri = 'http://test.daoway.cn/mip/t/index.html';
           let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + redirectUri+ '&scope=snsapi_userinfo&state=STATE'; */
-          MIP.viewer.open(base.htmlhref.index, { isMipLink: true })
+          MIP.viewer.open(base.htmlhref.index, { isMipLink: false })
         }
       }
     }
@@ -456,8 +462,8 @@ export default {
     .lightbox{
         background: #fff;
         position: relative;
-        top:40%;
-        height: 60%;
+        top:35%;
+        height: 65%;
         width: 100%;
     }
 
@@ -593,6 +599,7 @@ export default {
 
     .d-text p {
         line-height: 25px;
+        white-space:pre-wrap
     }
 
     .lv {
@@ -663,7 +670,7 @@ export default {
     }
 
     .footer {
-        height: 45px;
+        height: 48px;
         width: 100%;
         z-index: 100;
         background: #fff;
@@ -737,7 +744,8 @@ export default {
         right: 3%;
         top: 10px;
         padding: 0;
-        width:14px; height:auto;
+        width:16px;
+        height:auto;
     }
 
     .smalltit {
@@ -749,7 +757,7 @@ export default {
         width: 94%;
         margin: 15px auto 0;
         overflow-y: scroll;
-        height: 65%;
+        height: 64%;
         border-bottom: 1px solid #f5f5f5;
     }
 

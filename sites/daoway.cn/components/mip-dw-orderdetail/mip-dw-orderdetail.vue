@@ -545,7 +545,6 @@ export default {
             that.warn.show = false
           }, 600)
           MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + that.orderId, {isMipLink: false})
-          // that.getState();
         } else {
           that.warn.show = true
           that.warn.texts = text.msg
@@ -576,6 +575,8 @@ export default {
     .call img{
         width: 18px;
         height: auto;
+      display: block;
+      margin: 0 auto;
     }
     .mipfds{
       width: 100%;

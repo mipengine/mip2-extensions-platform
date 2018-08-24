@@ -3,8 +3,8 @@
 // const lxnhttp = 'http://127.0.0.1:8111/example/';
 
 // const lxnhttp = '/components/';
-const lxnhttp = 'http://www.daoway.cn/mip/t/'
-const component = ''
+const lxnhttp = 'http://www.daoway.cn/mip/'
+const component = 'html/'
 
 // const lxnhttp = 'http://test.daoway.cn/baiduapp/components/';//测试urL
 
@@ -34,7 +34,7 @@ export default ({
   // 测试
 
   htmlhref: tranObjUrlToCache({
-    index: lxnhttp + component + 'index.html',
+    index: lxnhttp + 'index.html',
     serviceclass: lxnhttp + component + 'serviceclass.html',
     order: lxnhttp + component + 'order.html',
     my: lxnhttp + component + 'my.html',
@@ -138,10 +138,6 @@ export default ({
           }
       }
     })
-  },
-  getbaiduLogMsg: function () {
-    let keys = 'mip-login-xzh:sessionId://test.daoway.com/Baidu/back'
-    return localStorage.getItem(keys)
   },
   // 使用MIP2同步数据
   mipSetGlobalData: function (newVal) {

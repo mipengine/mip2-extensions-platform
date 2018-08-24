@@ -103,6 +103,26 @@
         </div>
       </div>
     </div>
+    <mip-fixed
+      class="mipfd"
+      type="bottom">
+      <div class="bottomnav">
+        <a
+          data-type="mip"
+          data-title="首页"
+          @click="toindex"
+        ><img src="http://www.daoway.cn/mip/common/images/home2.png">首页</a>
+        <a
+          class="regclolr"
+          data-type="mip"
+          data-title="订单"
+          @click="toorder"><img src="http://www.daoway.cn/mip/common/images/order.png">订单</a>
+        <a
+          data-type="mip"
+          data-title="我的"
+          @click="tomy"><img src="http://www.daoway.cn/mip/common/images/my2.png">我的</a>
+      </div>
+    </mip-fixed>
   </div>
 </template>
 <script>
@@ -405,7 +425,7 @@ export default {
       let orderitems = that.orderitems
       let tager = orderitems[index]
       let loading = tager.loading
-      let items = tager
+      let items = tager.items
       let start = items.length
       let filter = tager.id
       if (loading === 'noList') {
@@ -517,7 +537,7 @@ export default {
       if (MIP.util.platform.isWechatApp()) { // 在微信里
         this.wxpay(base.htmlhref.orderdetail + '?orderId=' + id)
       } else {
-        MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + id, { isMipLink: true })
+        MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + id, { isMipLink: false })
       }
     },
     /* goLoginPage: function () {
@@ -548,6 +568,15 @@ export default {
           }
         }
       }
+    },
+    toindex () {
+      MIP.viewer.open(base.htmlhref.index, {isMipLink: false})
+    },
+    toorder () {
+      MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
+    },
+    tomy () {
+      MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
     }
   }
 
@@ -605,7 +634,6 @@ export default {
 
     .mipfd{
         width: 100%;
-        height: 70px;
         background: #fff;
         padding-top: 10px;
     }

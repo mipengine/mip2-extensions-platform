@@ -156,6 +156,9 @@ export default {
             firstReduce: firstReduce || null
           }
           ary.push(obj)
+          if (ary.length === 0) {
+            this.loding = false
+          }
         }
         that.item = ary
         that.sw = true
@@ -184,13 +187,13 @@ export default {
           that.sw = false
           setTimeout(() => {
             that.loding = true
-          }, 100)
+          }, 500)
           that.getServicelist(index, category, that.tags)
         }
       }
     },
     todetail (id) {
-      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, { isMipLink: false })
     }
   }
 }
@@ -212,6 +215,7 @@ export default {
 
     .loding{
         text-align: center;
+        height: 30px;
     }
     .sc-nav {
         width: 100%;
