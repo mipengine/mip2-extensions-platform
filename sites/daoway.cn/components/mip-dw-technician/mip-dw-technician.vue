@@ -6,7 +6,7 @@
       :id="t.technicianId"
       class="weui-cell">
       <div class="weui-cell__hd">
-        <img :src="t.photoURL ? t.photoURL : '/common/images/iconimg.png'">
+        <img :src="t.photoURL ? t.photoURL : 'http://www.daoway.cn/mip/common/images/iconimg.png'">
       </div>
       <div class="weui-cell__cd">
         <i v-html="t.name"/>
@@ -16,7 +16,7 @@
           <img
             v-for="(i,index) in [1, 2, 3, 4, 5]"
             :key="i"
-            :src="t.level < index ? '/common/images/star.png/' : '/common/images/red_star.png'">
+            :src="t.level < index ? 'http://www.daoway.cn/mip/common/images/star.png/' : 'http://www.daoway.cn/mip/common/images/red_star.png'">
           <div style="display:inline-block; margin-left: 10px;">已接{{ t.orderAmount }}单</div>
         </div>
         <div>{{ t.description }}</div>
@@ -38,6 +38,7 @@
 
 <script>
 import base from '../../common/utils/base'
+import '../../common/utils/base.less'
 export default {
   data () {
     return {
