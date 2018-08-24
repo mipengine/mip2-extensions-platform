@@ -19,10 +19,10 @@ let url = 'https://m.hulian.top/help/' + params[1].replace('type=', '') + '/m/' 
 let height = MIP.viewport.getHeight('mip-iframe')
 export default {
   computed: {
-    greeting(){
+    greeting () {
       return url
     },
-    height(){
+    height () {
       return height
     }
   }
