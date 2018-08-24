@@ -34,7 +34,7 @@ export default ({
   // 测试
 
   htmlhref: tranObjUrlToCache({
-    index: lxnhttp + component + 'index.html',
+    index: lxnhttp + 'index.html',
     serviceclass: lxnhttp + component + 'serviceclass.html',
     order: lxnhttp + component + 'order.html',
     my: lxnhttp + component + 'my.html',
@@ -124,11 +124,11 @@ export default ({
             return dayStr[t.getDay()]
           }
         case 'appDate':
-          let today1 = new Date()
-          if (today1.getMonth() + 1 === t.getMonth() + 1) {
-            if (today1.getDate() === t.getDate()) {
+          let todays = new Date()
+          if (todays.getMonth() + 1 === t.getMonth() + 1) {
+            if (todays.getDate() === t.getDate()) {
               return '今天'
-            } else if (today1.getDate() + 1 === t.getDate()) {
+            } else if (todays.getDate() + 1 === t.getDate()) {
               return '明天'
             } else {
               return tf(t.getMonth() + 1) + '-' + tf(t.getDate())
@@ -138,10 +138,6 @@ export default ({
           }
       }
     })
-  },
-  getbaiduLogMsg: function () {
-    let keys = 'mip-login-xzh:sessionId://test.daoway.com/Baidu/back'
-    return localStorage.getItem(keys)
   },
   // 使用MIP2同步数据
   mipSetGlobalData: function (newVal) {

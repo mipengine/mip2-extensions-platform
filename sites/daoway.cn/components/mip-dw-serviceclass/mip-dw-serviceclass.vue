@@ -42,13 +42,13 @@
               class="sc-r-text"
               v-html="i.description"/>
             <li class="sc-r-price">{{ i.price }}<i>{{ i.price_unit }}</i>
-              <span v-if="i.first_reduce">首单立减{{ i.first_reduce }}</span>
-              <span v-if="i.total_reduce">满{{ i.total_reduce.total }}减{{ i.total_reduce.reduce }}</span>
+              <span v-if="i.firstReduce">首单立减{{ i.firstReduce }}</span>
+              <span v-if="i.totalReduce">满{{ i.totalReduce.total }}减{{ i.totalReduce.reduce }}</span>
             </li>
             <li class="sc-r-home"><img
               class="sc-home"
               src="https://www.daoway.cn/h5/image/home1.png" >{{ i.serviceTitle }}
-              <div class="sc-home-yishou"><span v-if="i.salesNum >0">已售 {{ i.salesNum }}</span><span>好评 {{ i.positiveCommentRate }}</span></div>
+              <div class="sc-home-yishou"><span v-if="i.salesNum >0">已售{{ i.salesNum }}</span><span>{{ i.positiveCommentRate }}</span></div>
             </li>
             <li class="scbl-right-fixd scbl-aciy">
               <span>最快上门</span>
@@ -82,8 +82,10 @@ export default {
       channel: 'baidu'
     }
   },
+  created () {
+    window.addEventListener('scroll', this.morelist)
+  },
   mounted () {
-    // let that = this
     document.title = this.tag
     let category = this.category
     let tag = this.tag
@@ -153,8 +155,10 @@ export default {
             totalReduce: totalReduce ? totalReduce[0] : null,
             firstReduce: firstReduce || null
           }
-
           ary.push(obj)
+          if (ary.length === 0) {
+            this.loding = false
+          }
         }
         that.item = ary
         that.sw = true
@@ -183,13 +187,13 @@ export default {
           that.sw = false
           setTimeout(() => {
             that.loding = true
-          }, 100)
+          }, 500)
           that.getServicelist(index, category, that.tags)
         }
       }
     },
     todetail (id) {
-      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, { isMipLink: false })
     }
   }
 }
@@ -211,6 +215,7 @@ export default {
 
     .loding{
         text-align: center;
+        height: 30px;
     }
     .sc-nav {
         width: 100%;
@@ -290,7 +295,6 @@ export default {
         position: absolute;
         right: 1%;
         top: 0;
-        width: 50px;
         height: 28px;
         line-height: 14px;
         border: 1px solid #ccc;
@@ -328,10 +332,10 @@ export default {
     }
 
     .sc-home {
-        width: 12px;
-        height: 12px;
+        width: 16px;
+        height: auto;
         position: relative;
-        top: 2px;
+        top: 4px;
         margin-right: 2px
     }
 
@@ -345,6 +349,7 @@ export default {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        color: #898989;
     }
 
     .sc-r-price {

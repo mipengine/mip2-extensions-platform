@@ -136,12 +136,12 @@ export default {
       if (this.status === 1) {
         // this.isHideMask = true
         let opurl = getLocalStorage('locationUrl')
-          ? getLocalStorage('locationUrl') + '&'
-          : '?'
+          ? getLocalStorage('locationUrl') + encodeURIComponent('&')
+          : encodeURIComponent('?')
+        let currentIndex = encodeURIComponent(`currentIndex=${this.currentIndex}`)
+        let carid = encodeURIComponent(`&carid=${this.carid}`)
         MIP.viewer.open(
-          `${getDomain()}/car/big_image.html${opurl}currentIndex=${this.currentIndex}&carid=${
-            this.carid
-          }`,
+          `${getDomain()}/car/big_image.html${opurl}${currentIndex}${carid}`,
           {
             isMipLink: true
           }
