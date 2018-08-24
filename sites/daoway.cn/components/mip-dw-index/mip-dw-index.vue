@@ -119,8 +119,8 @@ export default {
     } else {
       that.handler()
     }
-    let userId = localStorage.getItem('userId')
-    let token = localStorage.getItem('token')
+    let userId = localStorage.getItem('mipUserId')
+    let token = localStorage.getItem('mipToken')
     if (!userId || !token) {
       if (this.code) {
         that.codelogin(this.code, this.redirectUri)
@@ -145,12 +145,13 @@ export default {
         return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
-          window.localStorage.setItem('userId', text.data.userId)
-          window.localStorage.setItem('token', text.data.token)
+          window.localStorage.setItem('mipUserId', text.data.userId)
+          window.localStorage.setItem('mipToken', text.data.token)
           if (text.data.token) {
-            document.cookie = 'token=' + text.data.token + ';path=/'
+            document.cookie = 'token=' + text.data.token + ';path=/daoway'
           }
         } else {
+          this.tologin()
           console.log('失败')
         }
       }).catch(function (error) {
@@ -368,6 +369,7 @@ export default {
 
     .boxlist{
         border-bottom: 10px solid #f5f5f5;
+        padding-bottom: 8px;
     }
 
     .servicePro [role=list] {
@@ -470,7 +472,7 @@ export default {
     }
 
     .service-item {
-        width: 98%;
+        width: 100%;
         padding: 10px 1%;
         height: 190px;
         background: #fff;
@@ -487,7 +489,8 @@ export default {
     .service-item ul li i {
         display: block;
         margin-top: 1px;
-        color: #000
+        color: #000;
+        font-size: 13px;
     }
 
     .service-item ul li img {
@@ -511,7 +514,7 @@ export default {
     }
 
     .down ul li {
-        width: 19%;
+        width: 20%;
         display: inline-block;
         text-align: center;
         border-right: 1px solid #f5f5f5
@@ -525,7 +528,8 @@ export default {
     .down ul li i {
         display: block;
         position: relative;
-        top: 8px
+        top: 8px;
+        font-size: 13px;
     }
 
     .down ul li:last-child {
@@ -538,14 +542,14 @@ export default {
     }
 
     .item-name {
-        padding-left: 3%;
+        padding-left: 2%;
     }
 
     .item-name li {
         display: inline-block;
-        width: 31%;
+        width: 31.5%;
         margin-top: 3px;
-        margin-left: 1%;
+        margin-left: 1.5%;
     }
 
     .item-name li:nth-child(1) {

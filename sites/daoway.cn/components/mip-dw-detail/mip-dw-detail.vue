@@ -114,7 +114,7 @@
       class="d-hh d-hhline"
       @click="toxuzhi()">
       <div class="d-hh-l d-timet">订购须知</div>
-      <div class="d-hh-r"><i class="lv">查看取消、退款、赔付规则</i><img
+      <div class="d-hh-r"><i class="lv">取消、退款、赔付规则</i><img
         class="d-more"
         src="http://www.daoway.cn/mip/common/images/go_06.png"></div>
     </div>
@@ -257,8 +257,7 @@ export default {
       code: base.getRequest(location.href).code,
       id2: '',
       toservation: '',
-      scroll: false,
-      wxcode: base.getRequest(window.location.href).code
+      scroll: false
     }
   },
   created () {
@@ -330,7 +329,7 @@ export default {
         this.images = this.images2
         setTimeout(() => {
           this.scroll = true
-        }, 1500)
+        }, 500)
       }
     },
     closeLayer () {
@@ -380,7 +379,8 @@ export default {
       let priceId = that.priceId
       if (similarPricesId !== priceId) {
         that.id = similarPricesId
-        that.detailstr()
+        MIP.viewer.open(base.htmlhref.detail + '?detailid=' + similarPricesId, {isMipLink: false})
+        // that.detailstr()
       }
     },
     reservation () {
@@ -393,8 +393,8 @@ export default {
       let price = that.price
       let totalPrices = price * quantity
       sessionStorage.setItem('apptime', '')
-      let userId = localStorage.getItem('userId')
-      let token = localStorage.getItem('token')
+      let userId = localStorage.getItem('mipUserId')
+      let token = localStorage.getItem('mipToken')
       /* 跳转带出去的参数 */
       let priceId = that.priceId
       let priceMap = {}
@@ -415,7 +415,7 @@ export default {
           param = JSON.stringify(param)
           if (MIP.util.platform.isWechatApp()) {
             let appid = 'wx0290cc2004b61c97'
-            let loginUrl = encodeURIComponent('http://www.daoway.cn/mip/t/reservation.html' + '?param=' + encodeURIComponent(param))
+            let loginUrl = encodeURIComponent(base.htmlhref.reservation + '?param=' + encodeURIComponent(param))
             let scope = 'snsapi_base'
             MIP.viewer.open('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + loginUrl + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect', { isMipLink: true })
           } else {

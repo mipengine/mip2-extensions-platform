@@ -185,12 +185,12 @@ export default {
           items: []
         }
       ],
-      redirect_uri: 'http://test.daoway.cn/mip/t/order.html',
+      redirect_uri: base.htmlhref.order,
       client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
       ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
       // code: base.getRequest(location.href).code,
-      userId: localStorage.getItem('userId'),
-      token: localStorage.getItem('token'),
+      userId: localStorage.getItem('mipUserId'),
+      token: localStorage.getItem('mipToken'),
       sw: true,
       loding: false,
       channel: 'baidu',
@@ -466,7 +466,8 @@ export default {
         that.warn.texts = '确定取消订单？'
         that.param = param
       } else if (param.text === '立即支付') {
-        let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + payparam.orderid)
+        // let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + payparam.orderid)
+        let redirectUrl = that.returnurl + '?orderId=' + payparam.orderid
         MIP.setData({'payConfig': {
           'fee': (payparam.totalPrice + payparam.fixFee - payparam.coupon).toFixed(2),
           'sessionId': that.token,
