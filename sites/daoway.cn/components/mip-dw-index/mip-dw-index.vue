@@ -1,7 +1,6 @@
 
 <template>
   <div class="wrapper">
-    {{ imgurl }}
     <mip-fixed
       :class="{fiscroll:scroll}"
       type="top"
@@ -11,7 +10,7 @@
         class="i-p-img">
       <span
         class="spn"
-        @touchend="toposition">{{ position.name ? position.name : position.addr }}∨</span>
+        @click="toposition">{{ position.name ? position.name : position.addr }}<img src="http://www.daoway.cn/mip/common/images/down1.png"></span>
         <!--<input class="search" :class="{searchscroll:scroll}" @click="search" type="text" name="search" placeholder="快速搜索商家、服务">-->
     </mip-fixed>
     <div class="banner">
@@ -43,7 +42,8 @@
     <div class="box">
       <div
         v-for="k in list"
-        :key="k">
+        :key="k"
+        class="boxlist">
         <div
           :categoryId="k.categoryId"
           class="h2">{{ k.categoryName }}<span @click="toserviceclass(k.categoryId)" >更多<img src="https://www.daoway.cn/h5/image/go_06.png"></span></div>
@@ -70,16 +70,16 @@
           class="regclolr"
           data-type="mip"
           data-title="首页"
-          href="http://test.daoway.cn/mip/t/index.html"
-          @click="toindex"><img src="http://www.daoway.cn/mip/common/images/home.png">首页</a>
+          @click="toindex"
+        ><img src="http://www.daoway.cn/mip/common/images/home.png">首页</a>
         <a
           data-type="mip"
           data-title="订单"
-          href="http://test.daoway.cn/mip/t/order.html"><img src="http://www.daoway.cn/mip/common/images/order2.png">订单</a>
+          @click="toorder"><img src="http://www.daoway.cn/mip/common/images/order2.png">订单</a>
         <a
           data-type="mip"
           data-title="我的"
-          href="http://test.daoway.cn/mip/t/my.html"><img src="http://www.daoway.cn/mip/common/images/my2.png">我的</a>
+          @click="tomy"><img src="http://www.daoway.cn/mip/common/images/my2.png">我的</a>
       </div>
     </mip-fixed>
   </div>
@@ -87,7 +87,6 @@
 <script>
 
 import base from '../../common/utils/base.js'
-import login from '../../common/utils/login'
 import '../../common/utils/base.less'
 export default {
   data () {
@@ -95,7 +94,7 @@ export default {
       channel: 'baidu',
       zoom: 3,
       city: '',
-      position: '',
+      position: base.getposition() || '',
       banners: [],
       fenleiary: [],
       list: [],
@@ -108,34 +107,56 @@ export default {
       client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
       ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
       code: base.getRequest(location.href).code,
-      redirectUri: 'http://test.daoway.cn/mip/t/index.html'
+      redirectUri: base.htmlhref.index
     }
   },
   mounted () {
-    let userId = localStorage.getItem('userId')
-    let token = localStorage.getItem('token')
-    if (!userId || !token) {
-      if (this.code) {
-        login.codelogin(this.code, this.redirectUri)
-      } else {
-        this.tologin()
-      }
-    }
     let that = this
-    window.addEventListener('scroll', that.handleScroll)
     let position = localStorage.getItem('position')
     if (position) {
       that.position = base.getposition()
       that.callBack()
     } else {
-      this.handler()
+      that.handler()
     }
+    let userId = localStorage.getItem('userId')
+    let token = localStorage.getItem('token')
+    if (!userId || !token) {
+      if (this.code) {
+        that.codelogin(this.code, this.redirectUri)
+      } else {
+        this.tologin()
+      }
+    }
+    window.addEventListener('scroll', that.handleScroll)
     window.addEventListener('show-page', (e) => {
-      that.position = base.getposition()
+      this.position = base.getposition()
       that.callBack()
     })
   },
   methods: {
+    codelogin: function (code, redirectUri) {
+      let url = '/daoway/rest/users/login_mip'
+      fetch(url, {
+        method: 'POST',
+        headers: {'content-type': 'application/x-www-form-urlencoded'}, // "code="+code,
+        body: 'code=' + code + '&redirectUri=' + redirectUri
+      }).then(function (res) {
+        return res.json()
+      }).then(function (text) {
+        if (text.status === 'ok') {
+          window.localStorage.setItem('userId', text.data.userId)
+          window.localStorage.setItem('token', text.data.token)
+          if (text.data.token) {
+            document.cookie = 'token=' + text.data.token + ';path=/'
+          }
+        } else {
+          console.log('失败')
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
     tologin () {
       let that = this
       let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + that.redirectUri + '&scope=snsapi_userinfo&state=STATE'
@@ -266,16 +287,25 @@ export default {
       })
     },
     toservicedetail (id) { // 跳转到服务列表页
-      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, {isMipLink: true})
+      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, {isMipLink: false})
     },
     toserviceclass (id, name) {
       if (!name) {
         name = '全部'
       }
-      MIP.viewer.open(base.htmlhref.serviceclass + '?category=' + id + '&tag=' + name, {isMipLink: true})
+      MIP.viewer.open(base.htmlhref.serviceclass + '?category=' + id + '&tag=' + name, {isMipLink: false})
     },
     toposition () {
       MIP.viewer.open(base.htmlhref.position, {isMipLink: true})
+    },
+    toindex () {
+      MIP.viewer.open(base.htmlhref.index, {isMipLink: false})
+    },
+    toorder () {
+      MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
+    },
+    tomy () {
+      MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
     }
   }
 
@@ -310,28 +340,10 @@ export default {
     .banner img{
         height: 160px;
     }
-    .bottomnav{
-        width: 100%;
-        background: #fff;
-        border-top: 1px solid #ededed;
-    }
-    .bottomnav a{
-        line-height: 23px;
-        display: inline-block;
-        width: 32%;
-        text-align: center;
-        font-size: 12px;
-        margin-top: 5px;
-    }
-    .bottomnav a img{
-        width: 25px;
-        height: auto;
-        display: block;
-        text-align: center;
-        margin: 0 auto;
-    }
+
     .indexed{
         height: 40px;
+        line-height: 40px;
     }
     .fiscroll{
         background: #fff;
@@ -348,10 +360,14 @@ export default {
         background: #fb461c;
     }
     .i-p-img {
-        width: 14px;
+        width: 10px;
         height: auto;
-        margin-top: 8px;
+        vertical-align: middle;
         margin-left: 10px;
+    }
+
+    .boxlist{
+        border-bottom: 10px solid #f5f5f5;
     }
 
     .servicePro [role=list] {
@@ -410,7 +426,13 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        vertical-align: middle;
         color: #fff;
+    }
+    .spn img{
+        width: 10px;
+        height: auto;
+        margin-left: 4px;
     }
 
     .price {
@@ -439,6 +461,9 @@ export default {
     .project, .box {
         border-top: 10px solid #f5f5f5;
         width: 100%;
+    }
+    .project{
+        background: #fff;
     }
     .box{
         margin-bottom: 50px;
@@ -481,8 +506,8 @@ export default {
 
     .down {
         width: 100%;
-        margin-top: 10px;
-        height: 80px
+        margin-top: 15px;
+        height: 72px
     }
 
     .down ul li {
@@ -500,7 +525,7 @@ export default {
     .down ul li i {
         display: block;
         position: relative;
-        top: 15px
+        top: 8px
     }
 
     .down ul li:last-child {
@@ -561,9 +586,10 @@ export default {
     }
 
     .home img {
-        width: 12px;
+        width: 16px;
         height: auto;
-        margin-right: 2px
+        margin-right: 2px;
+        vertical-align: middle;
     }
     .i-unit{
         font-size: 10px;

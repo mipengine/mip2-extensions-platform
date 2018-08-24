@@ -209,7 +209,8 @@ export default {
       // }
       // 如果是从百度跳转过来的需要去掉后面的参数，使用h5 api无刷新跳转
       if (window.location.href.indexOf('code=') > 0 && window.location.href.indexOf('state=') > 0) {
-        let href = window.location.href.split('?')[0]
+        let Deurl = decodeURIComponent(window.location.href)
+        let href = Deurl.split('?')[0]
         window.history.pushState(null, '车辆详情', href)
         // window.location.href = window.location.href.split('?')[0]
         // console.log(window.location.href)
@@ -245,11 +246,7 @@ export default {
         {
           carid: this.carid
         },
-        () => {
-          MIP.viewer.open(this.urlReport, {
-            isMipLink: true
-          })
-        },
+        null,
         {
           pid: pid
         }
@@ -264,6 +261,7 @@ export default {
     //   }
     // },
     storageHandle () {
+      let url = ''
       if (this.query && this.query.optoken) {
         setLocalStorage('optoken', this.query.optoken)
       }
@@ -281,20 +279,23 @@ export default {
         removeLocalStorage('channel')
       } else if (this.query && this.query.optoken && this.query.channel) {
         // 存储跳转url
-        setLocalStorage(
-          'locationUrl',
-          `?optoken=${this.query.optoken}&channel=${this.query.channel}`
-        )
+        url = `?optoken=${this.query.optoken}&channel=${this.query.channel}`
+        url = encodeURIComponent(url)
+        setLocalStorage('locationUrl', url)
       } else if (this.query && this.query.optoken && !this.query.channel) {
-        setLocalStorage('locationUrl', `?optoken=${this.query.optoken}`)
+        url = `?optoken=${this.query.optoken}`
+        url = encodeURIComponent(url)
+        setLocalStorage('locationUrl', url)
       } else if (this.query && !this.query.optoken && this.query.channel) {
-        setLocalStorage('locationUrl', `?channel=${this.query.channel}`)
+        url = `?optoken=${this.query.channel}`
+        url = encodeURIComponent(url)
+        setLocalStorage('locationUrl', url)
       } else if (this.query && !this.query.optoken && !this.query.channel) {
         removeLocalStorage('locationUrl')
       }
       let opurl = getLocalStorage('locationUrl')
-        ? getLocalStorage('locationUrl') + '&'
-        : '?'
+        ? getLocalStorage('locationUrl') + encodeURIComponent('&')
+        : encodeURIComponent('?')
       this.urlReport = `${getDomain()}/report_${this.carid}.html${opurl}`
     },
     /**

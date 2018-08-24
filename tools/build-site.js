@@ -7,7 +7,7 @@ const path = require('path')
 const async = require('async')
 const fs = require('fs-extra')
 const glob = require('glob')
-const builder = require('../node_modules/mip2/lib/build')
+const execa = require('execa')
 const rootDir = path.join(__dirname, '..')
 
 // 编译，结束后生成预览站点
@@ -23,22 +23,20 @@ function buildComponents () {
     return
   }
 
-  const build = async function (proj) {
+  const build = function (proj, done) {
     let src = path.join(rootDir, 'sites', proj)
     let dist = path.join(rootDir, 'dist', proj)
     let publicPath = '/' + proj
 
-    try {
-      await builder({
-        dir: src,
-        output: dist,
-        asset: publicPath,
-        clean: true
+    let options = ['build', '--dir', src, '--output', dist, '--asset', publicPath, '--clean']
+    execa('mip2', options)
+      .then(res => {
+        done()
       })
-    } catch (e) {
-      console.log(e)
-      process.exit(1)
-    }
+      .catch(err => {
+        console.log(err)
+        process.exit(1)
+      })
   }
 
   console.log('Building... Please wait')

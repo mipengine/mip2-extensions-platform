@@ -15,9 +15,11 @@
           </div>
         </li>
         <li><span class="d-h d-h2">{{ sericePrice.price }}<i>{{ sericePrice.priceUnit }}</i></span>
-          <div class="d-add">已售{{ sericePrice.salesNum }}单</div>
+          <div class="d-add dgray">已售{{ sericePrice.salesNum }}单</div>
         </li>
-        <li class="d-maojian"><span class="b-bz">促销</span>
+        <li
+          v-if="promotion.first_reduce || promotion.total_reduce"
+          class="d-maojian"><span class="b-bz">促销</span>
           <div class="d-maojian-r">
             <div
               v-if="promotion.first_reduce"
@@ -117,7 +119,7 @@
         src="http://www.daoway.cn/mip/common/images/go_06.png"></div>
     </div>
     <div class="d-text d-xuzhi">
-      <p v-text="service.orderingNotice"/>
+      <p v-html="service.orderingNotice"/>
     </div>
     <div class="d-img-box">
       <p v-if="images2.length >0 && !scroll" >↑滑动查看图文详情</p>
@@ -255,12 +257,16 @@ export default {
       code: base.getRequest(location.href).code,
       id2: '',
       toservation: '',
-      scroll: false
+      scroll: false,
+      wxcode: base.getRequest(window.location.href).code
     }
   },
-  mounted () {
-    this.detailstr()
+  created () {
     window.addEventListener('scroll', this.moreimg)
+  },
+  mounted () {
+    window.addEventListener('scroll', this.moreimg)
+    this.detailstr()
   },
   methods: {
     detailstr () {
@@ -319,9 +325,12 @@ export default {
       }
     },
     moreimg () {
-      if (document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight) {
+      if (document.body.scrollTop || document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight + 20) {
+        console.log(document.body.scrollTop || document.documentElement.scrollTop, window.innerHeight, document.body.offsetHeight)
         this.images = this.images2
-        this.scroll = true
+        setTimeout(() => {
+          this.scroll = true
+        }, 1500)
       }
     },
     closeLayer () {
@@ -331,15 +340,15 @@ export default {
       this.showpops = false
     },
     toindex () {
-      MIP.viewer.open(base.htmlhref.index, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.index, { isMipLink: false })
     },
     toxuzhi () {
-      MIP.viewer.open(base.htmlhref.xuzhi, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.xuzhi, { isMipLink: false })
     },
     tocomments () {
       let serviceId = this.serviceId
       let priceId = this.priceId
-      MIP.viewer.open(base.htmlhref.comments + '?serviceId=' + serviceId + '&priceId=' + priceId, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.comments + '?serviceId=' + serviceId + '&priceId=' + priceId, { isMipLink: false })
     },
     tap (index) {
       this.activity = index
@@ -404,7 +413,14 @@ export default {
             priceType: that.priceType
           }
           param = JSON.stringify(param)
-          MIP.viewer.open(base.htmlhref.reservation + '?param=' + encodeURIComponent(param), { isMipLink: true })
+          if (MIP.util.platform.isWechatApp()) {
+            let appid = 'wx0290cc2004b61c97'
+            let loginUrl = encodeURIComponent('http://www.daoway.cn/mip/t/reservation.html' + '?param=' + encodeURIComponent(param))
+            let scope = 'snsapi_base'
+            MIP.viewer.open('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + loginUrl + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect', { isMipLink: true })
+          } else {
+            MIP.viewer.open(base.htmlhref.reservation + '?param=' + encodeURIComponent(param), { isMipLink: false })
+          }
         } else {
           /* let baseparam = JSON.stringify({
             serviceId: that.serviceId,
@@ -413,9 +429,9 @@ export default {
             appointTime: that.appointTime,
             priceType: that.priceType
           }); */
-          let redirectUri = 'http://test.daoway.cn/mip/t/index.html'
-          let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + redirectUri + '&scope=snsapi_userinfo&state=STATE'
-          MIP.viewer.open(url, { isMipLink: true })
+          /* let redirectUri = 'http://test.daoway.cn/mip/t/index.html';
+          let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + redirectUri+ '&scope=snsapi_userinfo&state=STATE'; */
+          MIP.viewer.open(base.htmlhref.index, { isMipLink: false })
         }
       }
     }
@@ -446,8 +462,8 @@ export default {
     .lightbox{
         background: #fff;
         position: relative;
-        top:40%;
-        height: 60%;
+        top:35%;
+        height: 65%;
         width: 100%;
     }
 
@@ -499,7 +515,8 @@ export default {
     }
 
     .d-add2 span {
-        margin-left: 5px
+        margin-left: 5px;
+        font-size: 12px;
     }
 
     .d-add2 span.mj {
@@ -515,7 +532,7 @@ export default {
 
     .d-add2 {
         float: inherit;
-        width: 90%;
+        width: 88%;
         display: inline-block;
         vertical-align: top;
         margin-left: 2%
@@ -581,7 +598,8 @@ export default {
     }
 
     .d-text p {
-        line-height: 25px
+        line-height: 25px;
+        white-space:pre-wrap
     }
 
     .lv {
@@ -652,7 +670,7 @@ export default {
     }
 
     .footer {
-        height: 45px;
+        height: 48px;
         width: 100%;
         z-index: 100;
         background: #fff;
@@ -726,7 +744,8 @@ export default {
         right: 3%;
         top: 10px;
         padding: 0;
-        width:14px; height:auto;
+        width:16px;
+        height:auto;
     }
 
     .smalltit {
@@ -738,7 +757,7 @@ export default {
         width: 94%;
         margin: 15px auto 0;
         overflow-y: scroll;
-        height: 65%;
+        height: 64%;
         border-bottom: 1px solid #f5f5f5;
     }
 
@@ -767,6 +786,9 @@ export default {
     .listconter {
         width: 76%;
         font-size: 14px;
+    }
+    .dgray{
+        color: #898989;
     }
 
     .listprice {

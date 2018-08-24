@@ -62,28 +62,10 @@
           src="https://www.daoway.cn/h5/image/go_06.png"></div>
       </div>
     </div>
-    <div
+    <!-- <div
       class="exit"
-      @click="loginOut">退出登录</div>
+      @click="loginOut">退出登录</div>-->
 
-    <mip-fixed type="bottom">
-      <div class="bottomnav">
-        <a
-          data-type="mip"
-          data-title="首页"
-          href="http://test.daoway.cn/mip/t/index.html"
-          @click="toindex"><img src="http://www.daoway.cn/mip/common/images/home2.png">首页</a>
-        <a
-          data-type="mip"
-          data-title="订单"
-          href="http://test.daoway.cn/mip/t/order.html"><img src="http://www.daoway.cn/mip/common/images/order2.png">订单</a>
-        <a
-          class="regclolr"
-          data-type="mip"
-          data-title="我的"
-          href="http://test.daoway.cn/mip/t/my.html"><img src="http://www.daoway.cn/mip/common/images/my.png">我的</a>
-      </div>
-    </mip-fixed>
     <!--提示-->
     <div
       v-show="warn.show"
@@ -94,14 +76,32 @@
           v-text="warn.texts"/>
         <p
           class="layer-sure active-layer"
-          @touchend="closeLayer">知道了</p>
+          @click="closeLayer">知道了</p>
       </div>
     </div>
+    <mip-fixed type="bottom">
+      <div class="bottomnav">
+        <a
+          data-type="mip"
+          data-title="首页"
+          @click="toindex"
+        ><img src="http://www.daoway.cn/mip/common/images/home2.png">首页</a>
+        <a
+          data-type="mip"
+          data-title="订单"
+          @click="toorder"><img src="http://www.daoway.cn/mip/common/images/order2.png">订单</a>
+        <a
+          class="regclolr"
+          data-type="mip"
+          data-title="我的"
+          @click="tomy"><img src="http://www.daoway.cn/mip/common/images/my.png">我的</a>
+      </div>
+    </mip-fixed>
   </div>
 </template>
 <script>
 import base from '../../common/utils/base'
-import login from '../../common/utils/login'
+/* import login from '../../common/utils/login' */
 import '../../common/utils/base.less'
 
 export default {
@@ -116,7 +116,7 @@ export default {
         show: false,
         texts: ''
       },
-      redirect_uri: 'http://test.daoway.cn/mip/t/my.html',
+      redirect_uri: base.htmlhref.my,
       client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
       ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
       code: base.getRequest(location.href).code,
@@ -124,20 +124,46 @@ export default {
     }
   },
   mounted () {
-    this.userId = localStorage.getItem('userId')
-    this.token = localStorage.getItem('token')
-    console.log(this.userId, this.token)
-    if (this.userId && this.token) {
+    let userId = localStorage.getItem('userId')
+    let token = localStorage.getItem('token')
+    if (userId && token) {
+      this.userId = userId
+      this.token = token
       this.getmyhtml()
     } else {
       if (this.code) {
-        login.codelogin(this.code)
-      } else {
-        this.goLoginPage()
+        this.codelogin(this.code, this.redirect_uri)
       }
     }
   },
   methods: {
+    codelogin: function (code, redirectUri) {
+      let that = this
+      let url = '/daoway/rest/users/login_mip'
+      fetch(url, {
+        method: 'POST',
+        headers: {'content-type': 'application/x-www-form-urlencoded'}, // "code="+code,
+        body: 'code=' + code + '&redirectUri=' + redirectUri
+      }).then(function (res) {
+        return res.json()
+      }).then(function (text) {
+        if (text.status === 'ok') {
+          console.log(text)
+          window.localStorage.setItem('userId', text.data.userId)
+          window.localStorage.setItem('token', text.data.token)
+          that.userId = text.data.userId
+          that.token = text.data.token
+          if (text.data.token) {
+            document.cookie = 'token=' + text.data.token + ';path=/'
+          }
+          that.getmyhtml()
+        } else {
+          console.log('失败')
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
     showloading () {
       this.loading = true
     },
@@ -151,13 +177,11 @@ export default {
         method: 'get',
         credentials: 'include',
         headers: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'cookie': 'token=' + this.token
+          'content-type': 'application/x-www-form-urlencoded'
         }
       }).then(function (res) {
         return res.json()
       }).then(function (text) {
-        console.log(text)
         if (text.status === 'ok') {
           let data = text.data
           let userInfo = {}
@@ -191,12 +215,14 @@ export default {
         console.log(error)
       })
     },
-    loginOut: function () {
+    /* loginOut: function () {
       let that = this
       that.userId = null
       that.userInfo.iconUrl = 'http://www.daoway.cn/images/myicon.png'
-      that.userInfo.couponCount = 0
-    },
+      that.userInfo.couponCount = 0;
+        window.localStorage.removeItem('userId');
+        window.localStorage.removeItem('token');
+    }, */
     goLoginPage: function () {
       let that = this
       let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + that.redirect_uri + '&scope=snsapi_userinfo&state=STATE'
@@ -212,6 +238,15 @@ export default {
     },
     toabout () {
       MIP.viewer.open(base.htmlhref.about, { isMipLink: true })
+    },
+    toindex () {
+      MIP.viewer.open(base.htmlhref.index, {isMipLink: false})
+    },
+    toorder () {
+      MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
+    },
+    tomy () {
+      MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
     }
   }
 }
@@ -237,26 +272,7 @@ export default {
     .layer-text{
         text-align: center;
     }
-    .bottomnav{
-        width: 100%;
-        background: #fff;
-        border-top: 1px solid #ededed;
-    }
-    .bottomnav a{
-        line-height: 23px;
-        display: inline-block;
-        width: 32%;
-        text-align: center;
-        font-size: 12px;
-        margin-top: 5px;
-    }
-    .bottomnav a img{
-        width: 25px;
-        height: auto;
-        display: block;
-        text-align: center;
-        margin: 0 auto;
-    }
+
     .mybg {
         width: 700px;
         height: 134px;
