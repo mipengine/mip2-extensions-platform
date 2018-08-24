@@ -192,8 +192,8 @@ export default {
       action: '',
       sure: true,
       channel: 'baidu',
-      userId: localStorage.getItem('userId'),
-      token: localStorage.getItem('token'),
+      userId: localStorage.getItem('mipUserId'),
+      token: localStorage.getItem('mipToken'),
       oauthCode: '',
       tradeType: '',
       returnurl: base.htmlhref.orderdetail
@@ -480,7 +480,8 @@ export default {
         let couponBill = that.orderhtml.couponBill
         let couponId = that.orderhtml.couponId
         let fixFee = that.orderhtml.fixFee
-        let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + orderId)
+        // let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + orderId)
+        let redirectUrl = that.returnurl + '?orderId=' + orderId
         MIP.setData({'payConfig': {
           'fee': (totalPrice + fixFee - couponBill).toFixed(2),
           'sessionId': that.token,
@@ -545,6 +546,7 @@ export default {
             that.warn.show = false
           }, 600)
           MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + that.orderId, {isMipLink: false})
+          // that.getState();
         } else {
           that.warn.show = true
           that.warn.texts = text.msg
@@ -576,7 +578,7 @@ export default {
         width: 18px;
         height: auto;
       display: block;
-      margin: 0 auto;
+      margin: 0 a;
     }
     .mipfds{
       width: 100%;
