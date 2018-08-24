@@ -74,7 +74,7 @@ export default {
       noquan: false,
       coupone: [],
       unableCoupone: [],
-      userId: localStorage.getItem('userId'),
+      userId: localStorage.getItem('mipUserId'),
       channel: 'baidu'
     }
   },
