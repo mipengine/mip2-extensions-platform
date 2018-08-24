@@ -337,7 +337,7 @@ export default {
     }
   },
   mounted () {
-    this.certUrl = config.mHost + `/car/iws/${getLocalStorage('locationUrl')}`
+    this.certUrl = config.mHost + `/car/iws/${decodeURIComponent(getLocalStorage('locationUrl'))}`
   },
   methods: {
     // init () {
@@ -442,7 +442,7 @@ export default {
             },
             () => {
               MIP.viewer.open(
-                config.mHost + `/car/iws/${getLocalStorage('locationUrl')}`,
+                config.mHost + `/car/iws/${decodeURIComponent(getLocalStorage('locationUrl'))}`,
                 {
                   isMipLink: false
                 }
@@ -463,7 +463,7 @@ export default {
             () => {
               MIP.viewer.open(
                 config.mHost +
-                  `/service/refund_flow/${getLocalStorage('locationUrl')}`,
+                  `/service/refund_flow/${decodeURIComponent(getLocalStorage('locationUrl'))}`,
                 {
                   isMipLink: false
                 }
@@ -484,7 +484,7 @@ export default {
             () => {
               MIP.viewer.open(
                 config.mHost +
-                  `/car/iws/${getLocalStorage('locationUrl')}#getzhibao`,
+                  `/car/iws/${decodeURIComponent(getLocalStorage('locationUrl'))}#getzhibao`,
                 {
                   isMipLink: false
                 }
@@ -505,9 +505,7 @@ export default {
             () => {
               MIP.viewer.open(
                 config.mHost +
-                  `/service/refund_flow/${getLocalStorage(
-                    'locationUrl'
-                  )}#getzhibao`,
+                  `/service/refund_flow/${decodeURIComponent(getLocalStorage('locationUrl'))}#getzhibao`,
                 {
                   isMipLink: false
                 }

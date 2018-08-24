@@ -23,7 +23,6 @@
         <div class="www">daoway.com</div>
       </div>
     </mip-fixed>
-
   </div>
 </template>
 <style scoped>
