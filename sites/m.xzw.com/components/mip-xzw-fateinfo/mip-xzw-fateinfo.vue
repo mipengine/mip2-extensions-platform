@@ -53,18 +53,18 @@
         </dl>
       </div>
     </div>
-    <mip-fixed
-      type="bottom"
+    <div
       class="changeDay">
       <span
         v-for="(tab,i) in tabs"
         :class="{curr:selected==i}"
         :key="i"
         @click="tabChange(i)">{{ tab }}</span>
-    </mip-fixed>
+    </div>
   </div>
 </template>
 <style scoped>
+.changeDay{position: fixed}
 .changeDay span.curr{color:#7f7ff3;background:#f4f4fe;}
 </style>
 

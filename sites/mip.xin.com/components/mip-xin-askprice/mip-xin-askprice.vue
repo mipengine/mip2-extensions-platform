@@ -9,6 +9,7 @@
       id="callmask"
       class="callMask"
       type="top"
+      still
       @click="hideMask">
       <div
         id="askPrice"
@@ -30,7 +31,7 @@
           </mip-form>
           <!-- <mip-img
             class="close"
-            src="http://s4.xinstatic.com/m/img/smallprogram/close.png"
+            src="//s4.xinstatic.com/m/img/smallprogram/close.png"
             @click="clearTel" /> -->
         </div>
         <div
@@ -45,11 +46,11 @@
             <mip-img
               v-if="baAuth"
               class="auth-icon "
-              src="http://c2.xinstatic.com/f3/20180803/1517/5b64017eea4a3722229.png"/>
+              src="//c2.xinstatic.com/f3/20180803/1517/5b64017eea4a3722229.png"/>
             <mip-img
               v-if="!baAuth"
               class="auth-icon "
-              src="http://c2.xinstatic.com/f3/20180803/1517/5b6401764c164734049.png"/>
+              src="//c2.xinstatic.com/f3/20180803/1517/5b6401764c164734049.png"/>
             <label
               for="bdAuth"
               class="auth-font">登陆百度账号，第一时间了解订单状态</label>
@@ -73,6 +74,7 @@
       id="callmaskSimilar"
       type="top"
       class="callMask"
+      still
       @click="hideMask">
       <div
         id="similarToast"
@@ -80,7 +82,7 @@
         <div class="ask-price-success">
           <mip-img
             class="askprice-success-boximg"
-            src="http://c2.xinstatic.com/f3/20180717/1102/5b4d5c379c451177647.png"/>
+            src="//c2.xinstatic.com/f3/20180717/1102/5b4d5c379c451177647.png"/>
           <span class="askprice-success-font">询价成功</span>
         </div>
       </div>
@@ -137,8 +139,7 @@ import { clickPoint } from '../../common/utils/stastic.js'
 import {
   getLocalStorage,
   getCarId,
-  setLocalStorage,
-  getQuery
+  setLocalStorage
 } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
 export default {
@@ -196,17 +197,16 @@ export default {
       // event.userInfo;
       // 后端交互会话标识
       // event.sessionId;
-      if (event.userInfo && getQuery().state) {
-        this.bottomPrice()
+      if (event.userInfo && window.location.href.indexOf('code=') > 0 && window.location.href.indexOf('state=') > 0) {
+        console.log('授权成功')
       }
-      console.log('授权成功')
     })
     // 自定义exit事件
     this.$on('clientLogout', event => {
       console.log('登出了')
     })
-
-    if (getQuery().state) {
+    if (window.location.href.indexOf('code=') > 0 && window.location.href.indexOf('state=') > 0) {
+      this.bottomPrice()
       this.showAskToast = false
       this.showSimilarToast = true
     }
@@ -324,6 +324,7 @@ export default {
       if (!this.telCorrect) {
         this.remain = true
         this.reminMessage = '请输入正确的手机号'
+        return
       }
       this.bottomPrice()
     },
