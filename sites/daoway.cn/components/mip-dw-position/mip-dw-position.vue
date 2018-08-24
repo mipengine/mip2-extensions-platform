@@ -89,7 +89,9 @@
             type="text"
             @input="getlist">
         </div>
-        <div class="clear">取消</div>
+        <div
+          class="clear"
+          @click="clear">取消</div>
       </div>
       <div class="listbox">
         <div
@@ -178,11 +180,14 @@ export default {
       communitypage: false,
       citypage: false,
       tapshow: false,
-      taphide: false
+      taphide: false,
+      userId: '',
+      token: ''
     }
   },
   mounted () {
-    let userId = localStorage.getItem('userId'); let token = localStorage.getItem('token')
+    let userId = localStorage.getItem('mipUserId')
+    let token = localStorage.getItem('mipToken')
     if (userId && token) {
       this.userAddress(userId)
     }
@@ -266,6 +271,10 @@ export default {
     searchcommunity: function () {
       this.positionpage = false
       this.communitypage = true
+    },
+    clear () {
+      this.searchval = ''
+      this.cityList = []
     },
     getlist () { // community
       let that = this
