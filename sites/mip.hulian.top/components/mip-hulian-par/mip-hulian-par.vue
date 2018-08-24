@@ -5,8 +5,7 @@
       :height="height"
       allowfullscreen
       width="100%"
-      allowtransparency="true">
-    </mip-iframe>
+      allowtransparency="true"/>
   </div>
 </template>
 
