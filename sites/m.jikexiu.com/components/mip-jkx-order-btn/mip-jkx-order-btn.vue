@@ -1,5 +1,6 @@
 <template>
   <div class="wrapper">
+    <!-- 类名不能包含fixed -->
     <div class="fix_btn jj_fixBtn"><span>
       <a
         id="float_tel"
