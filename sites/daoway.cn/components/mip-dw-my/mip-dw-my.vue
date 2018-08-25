@@ -14,7 +14,7 @@
         </div>
       </div>
       <div
-        v-if="!userId"
+        v-else
         class="txt2"
         @click="goLoginPage">请登录</div>
     </div>
@@ -120,12 +120,16 @@ export default {
       client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
       ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
       code: base.getRequest(location.href).code,
-      userId: ''
+      userId: '',
+      token: ''
     }
   },
   mounted () {
-    let userId = localStorage.getItem('userId')
-    let token = localStorage.getItem('token')
+    let userId = localStorage.getItem('mipUserId')
+    let token = localStorage.getItem('mipToken')
+    if (token) {
+      document.cookie = 'token=' + token + ';path=/daoway'
+    }
     if (userId && token) {
       this.userId = userId
       this.token = token
@@ -148,16 +152,16 @@ export default {
         return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
-          console.log(text)
-          window.localStorage.setItem('userId', text.data.userId)
-          window.localStorage.setItem('token', text.data.token)
+          window.localStorage.setItem('mipUserId', text.data.userId)
+          window.localStorage.setItem('mipToken', text.data.token)
           that.userId = text.data.userId
           that.token = text.data.token
           if (text.data.token) {
-            document.cookie = 'token=' + text.data.token + ';path=/'
+            document.cookie = 'token=' + text.data.token + ';path=/daoway'
           }
           that.getmyhtml()
         } else {
+          that.goLoginPage()
           console.log('失败')
         }
       }).catch(function (error) {
@@ -274,7 +278,7 @@ export default {
     }
 
     .mybg {
-        width: 700px;
+        width: 100%;
         height: 134px;
         position: relative;
         padding: 35px 15px;

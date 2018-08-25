@@ -192,11 +192,12 @@ export default {
       orderId: base.getRequest(location.href).orderId,
       orderInfo: {},
       // code: base.getRequest(location.href).code,
-      userId: localStorage.getItem('userId'),
+      userId: localStorage.getItem('mipUserId'),
       channel: 'baidu',
       oauthCode: '',
       tradeType: '',
-      returnurl: base.htmlhref.orderdetail
+      returnurl: base.htmlhref.orderdetail,
+      useradd: {}
     }
   },
   mounted () {
@@ -216,8 +217,10 @@ export default {
       that.oauthCode = ''
       that.tradeType = 'MWEB'
     }
+
     window.addEventListener('show-page', () => {
       let technician = JSON.parse(sessionStorage.getItem('tech'))
+      let useradd = JSON.parse(sessionStorage.getItem('useradd'))
       that.selectedTechnical = technician
       if (that.canChooseTechnician) {
         if (technician) {
@@ -233,10 +236,17 @@ export default {
       if (apptime) {
         that.formatTime = base.timeformat(apptime, 'MM月dd日(day) HH:mm')
       }
-      that.position = base.getposition()
-      if (that.position) {
-        that.gethtml()
-        that.setPostion()
+      if (useradd) {
+        that.phone = useradd.phone
+        that.contactPerson = useradd.contactPerson
+        that.addr = useradd.addr
+        that.doorNum = useradd.doorNum
+      } else {
+        that.position = base.getposition()
+        if (that.position) {
+          that.gethtml()
+          that.setPostion()
+        }
       }
     })
   },
@@ -299,6 +309,7 @@ export default {
     getCoupone () {
       let that = this
       let url = '/daoway/rest/coupon/user/' + that.userId + '?serviceId=' + that.serviceId + '&bill=' + that.totalPrice + '&ignoreMinBill=false&priceIds=' + (that.param.priceIds || that.priceId) + '&channel=' + that.channel
+      console.log(url)
       fetch(url, {
         method: 'get',
         credentials: 'include'
@@ -311,6 +322,7 @@ export default {
             that.alltotalPrices = parseFloat((that.totalPrice + that.realyFixFee - that.coupone.bill).toFixed(2))
           }
         } else {
+          console.log(text.msg)
           that.warn.show = true
           that.warn.texts = text.msg
         }
@@ -321,7 +333,7 @@ export default {
     closeLayer () {
       this.warn.show = false
     },
-    setFixFee: function (data) {
+    setFixFee (data) {
       let that = this
       let realyFixFee = 0
       if (data.noFixFeePrice && that.totalPrices < data.noFixFeePrice) {
@@ -362,7 +374,7 @@ export default {
         that.alltotalPrices = Number((counter * price).toFixed(2) + that.realyFixFee - couponebill)
       }
     },
-    setPostion: function () {
+    setPostion () {
       let that = this
       let position = that.position
       if (that.position.name) {
@@ -399,7 +411,6 @@ export default {
       if (that.doorNum) {
         url += '&house=' + encodeURIComponent(that.doorNum)
       }
-      console.log(url)
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -420,15 +431,26 @@ export default {
         console.log(error)
       })
     },
+    sessuseradd () {
+      let that = this
+      let useradd = {}
+      useradd.addr = that.addr
+      useradd.doorNum = that.doorNum
+      useradd.contactPerson = that.contactPerson
+      useradd.phone = that.phone
+      useradd.id = that.position.id || that.position.communityId
+      sessionStorage.setItem('useradd', JSON.stringify(useradd))
+    },
     totechnical (id) {
+      this.sessuseradd()
       MIP.viewer.open(base.htmlhref.technician + '?technicianId=' + id, { isMipLink: true })
     },
     toposition () {
-      MIP.viewer.open(base.htmlhref.position + '?reservation=true', { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.position + '?reservation=true', { isMipLink: false })
     },
-
     tovouchers () {
       let that = this
+      that.sessuseradd()
       let serviceId = that.serviceId
       let requestUrl = {
         serviceId: serviceId,
@@ -441,6 +463,7 @@ export default {
     },
     totime () {
       let that = this
+      that.sessuseradd()
       let parm = {
         serviceId: that.param.serviceId || that.serviceId,
         priceId: that.param.priceId
@@ -503,6 +526,83 @@ export default {
         console.log(error)
       })
     },
+    /* userAddress() {
+      var that = this;
+      var data = that.data;
+      var userAddressId = position.userAddressId;
+      var url;
+      var opData = {
+        userId: data.miniUserId,
+        name: data.contactPerson,
+        phone: data.phone,
+        doorNum: data.doorNum,
+        isConfirm: 0,
+        communityId: data.communityId
+      };
+
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        return res.json()
+      }).then(function (text) {
+        if (text.status === 'ok') {
+          let data = text.data
+          if (data.technicianList) {
+            that.selectedTechnical = data.technicianList[0]
+            localStorage.setItem('technician', JSON.stringify(data))
+          }
+        } else {
+          localStorage.setItem('technician', null)
+          that.warn.show = true
+          that.warn.texts = text.msg
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+
+      if (userAddressId) {
+        url = app.baseUrl + "/user/" + data.miniUserId + "/modifyUserAddress";
+        opData.id = userAddressId;
+      } else {
+        url = app.baseUrl + "/user/" + data.miniUserId + "/addUserAddress";
+      }
+      wx.request({
+        url: url,
+        method: 'POST',
+        data: opData,
+        header: {
+          'content-type': 'application/x-www-form-urlencoded',
+          'cookie': data.token
+        },
+        success: function (res) {
+          var result = res.data;
+          if (result.status != undefined && result.status == 'ok') {
+            app.position.contactPerson = data.contactPerson;
+            app.position.doorNum = data.doorNum;
+            app.position.phone = data.phone;
+            if (!userAddressId) {
+              app.userAddressId = result.data;
+            }
+            wx.setStorage({
+              key: "position",
+              data: app.position
+            });
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: result.msg,
+              showCancel: false,
+              confirmColor: "#2979ff",
+              success: function (res) {
+              }
+            })
+          }
+        },
+        fail: function () {
+          console.log("失败");
+        }
+      })
+    }, */
     tobuy () {
       let that = this
       let addr = that.addr
@@ -539,7 +639,7 @@ export default {
           items.quantity = that.quantity
           ary.push(items)
         }
-        let token = localStorage.getItem('token')
+        let token = localStorage.getItem('mipToken')
         let anydata = {
           'userId': that.userId,
           'serviceId': that.serviceId,
@@ -575,7 +675,8 @@ export default {
         }).then(function (text) {
           if (text.status === 'ok') {
             let tobaiduorder = text.data.orderId
-            let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + tobaiduorder)
+            // let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + tobaiduorder)
+            let redirectUrl = that.returnurl + '?orderId=' + tobaiduorder
             console.log(redirectUrl)
             MIP.setData({'payConfig': {
               'fee': that.alltotalPrices,
@@ -655,13 +756,16 @@ export default {
     }
 
     .re-form input {
-        width: 88%;
+        width: 86%;
         margin-left: 3%;
         display: inline-block;
         height: 40px;
         line-height: 40px;
         border-bottom: 1px solid #ececec;
-        font-size: 14px
+        font-size: 14px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .re-form li:last-child input {
@@ -682,7 +786,7 @@ export default {
     .re-form2 span {
         display: inline-block;
         width: 30%;
-        color: #898989
+        color: #212121
     }
 
     .re-form2 div {
