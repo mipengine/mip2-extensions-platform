@@ -91,9 +91,9 @@
         </div>
       </div>
     </div>
-    <mip-xin-button
+    <!-- <mip-xin-button
       v-if="carid"
-      :source="4"/>
+      :source="4"/> -->
     <div class="boxTop"/>
     <div class="reportTitle lastTitle">
       <span class="title">瑕疵及修复</span>
@@ -487,7 +487,8 @@ export default {
   line-height: 0.6rem;
 }
 .borderBottom {
-  padding-bottom: 0.88rem;
+  /**padding-bottom: 0.88rem;*/
+  padding-bottom:0.44rem;
 }
 ::-webkit-scrollbar {
   width: 0;
