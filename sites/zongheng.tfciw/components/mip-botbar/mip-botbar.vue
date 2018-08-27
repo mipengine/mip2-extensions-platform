@@ -112,7 +112,7 @@ export default {
     }
     // 这个时候不管是不是第一次，我们的书单都已经准备好，可以使用了。
     // 判断该书是否被关闭，并且是当天被关闭，就不显示广告，不满足其一，就显示。
-    if (this.bookList[this.book].isClosed && this.bookList[this.book].day === new Date().getDate() && (new Date().getTime() - this.bookList[this.book].time) < 10800000 ) {
+    if (this.bookList[this.book].isClosed && this.bookList[this.book].day === new Date().getDate() && (new Date().getTime() - this.bookList[this.book].time) < 10800000) {
       this.show = false
     }
     if (MIP.util.platform.isIOS()) {
