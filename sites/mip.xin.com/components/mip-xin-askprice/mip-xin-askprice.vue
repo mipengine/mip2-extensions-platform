@@ -562,6 +562,8 @@ export default {
   display: flex;
   flex-direction: column;
   margin-right: 0.2rem;
+  float: left;
+  width: 4rem;
 }
 
 .righttop-scroll {
@@ -649,6 +651,8 @@ export default {
   font-family: PingFangSC-Medium;
   color: rgba(248, 93, 0, 1);
   line-height: 0.3rem;
+  white-space: nowrap;
+
 }
 
 .similar-recommend-monthprice-scroll {
@@ -656,5 +660,11 @@ export default {
   font-family: PingFangSC-Regular;
   color: rgba(248, 93, 0, 1);
   margin-left: 0.08rem;
+  white-space: nowrap;
+  margin-bottom: -0.03rem;
+}
+.image-scroll {
+  width:2.56rem;
+  float:left;
 }
 </style>
