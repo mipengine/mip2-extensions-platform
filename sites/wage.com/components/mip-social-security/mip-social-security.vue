@@ -4,29 +4,60 @@
       <label for="">
         <slot/>
       </label>
-      <div :class="{open:isOpen}" class="onOff" @click="closeOrShow">
-        <span :class="{active:isOpen}" class="onOff_off" />
+      <div 
+	    :class="{open:isOpen}" 
+		class="onOff" 
+		@click="closeOrShow">
+        <span 
+		  :class="{active:isOpen}" 
+		  class="onOff_off" />
       </div>
     </div>
     <div v-show="isOnClick">
-      <div v-show="isOpen" :scrollshow="scrollshow" :class="{'ip-disable':isAfter}" class="arrow" @click="openScrollSelect()">
+      <div 
+	    v-show="isOpen" 
+		:scrollshow="scrollshow" 
+		:class="{'ip-disable':isAfter}" 
+		class="arrow" 
+		@click="openScrollSelect()">
         <label for="">缴纳标准</label>
-        <input :value="selectValue" :class="{'c-disable':cok}" type="text" class="ip-disable">
+        <input 
+		  :value="selectValue" 
+		  :class="{'c-disable':cok}" 
+		  type="text" class="ip-disable">
       </div>
     </div>
 
     <div v-show="isOpen" class="wage">
       <label for="">缴纳基数</label>
-      <input :class="{'ip-disable':ok}" :value="getBase" type="number" placeholder="0-1000,000 最多两位小数" @input="inputBaseMoney">
+      <input 
+	    :class="{'ip-disable':ok}" 
+		:value="getBase" 
+		type="number" 
+		placeholder="0-1000,000 最多两位小数" 
+		@input="inputBaseMoney">
     </div>
     <!-- <span>{{tag}}</span> -->
     <!--  <div v-show="isshow"> -->
     <div v-show="isOpen && isshow" class="wage wage2 arrow arrow2">
       <label for="">缴纳比例</label>
-      <input type="number" placeholder="请输入5-12" class="w96p" @input="inputProportion" @blur="getProportion">
+      <input 
+	    type="number" 
+		placeholder="请输入5-12" 
+		class="w96p" 
+		@input="inputProportion" 
+		@blur="getProportion">
     </div>
-    <mip-fixed v-show="scrollshow" type="bottom" class="container z1001">
-      <mip-scroll-select :scrollshow="scrollshow" :values="showValues" :tag="getTag" class="container z1001" @showselect="showSelect"
+    <mip-fixed 
+	  v-show="scrollshow" 
+	  type="bottom" 
+	  class="container z1001">
+      <mip-scroll-select 
+	    :scrollshow="scrollshow" 
+		:values="showValues" 
+		:tag="getTag" 
+		class="container z1001" 
+		@showselect="showSelect"
         @colsescrollselect="colseScrollSelect" />
     </mip-fixed>
 

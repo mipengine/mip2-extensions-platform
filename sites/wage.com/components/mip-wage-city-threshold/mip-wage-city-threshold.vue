@@ -4,22 +4,50 @@
       <label>
         <slot/>
       </label>
-      <input type="number" placeholder="0-10000,000 最多两位小数" @input="numberAmount">
+      <input 
+	  type="number" 
+	  placeholder="0-10000,000 最多两位小数" 
+	  @input="numberAmount">
     </div>
-    <div class="arrow" @click="openAddressSelect()">
+    <div 
+	  class="arrow" 
+	  @click="openAddressSelect()">
       <label>缴纳城市</label>
-      <input :value="provinceName" type="text" placeholder="" class="ip-disable w98p">
+      <input 
+	   :value="provinceName" 
+	    type="text" placeholder="" 
+	    class="ip-disable w98p">
     </div>
-    <div class="arrow" @click="openScrollSelect()">
+    <div 
+	  class="arrow" 
+	  @click="openScrollSelect()">
       <label>起征点</label>
-      <input id="threshold" :value="threshold" type="text" class="ip-disable w98p">
+      <input 
+	    id="threshold" 
+		:value="threshold" 
+		type="text" 
+		class="ip-disable w98p">
     </div>
-    <mip-fixed v-show="scrollshow" type="bottom" class="container z1000">
-      <mip-scroll-select :scrollshow="scrollshow" :values="values" class="container" @showselect="showselect" @colsescrollselect="colseScrollSelect"
+    <mip-fixed 
+	  v-show="scrollshow" 
+	  type="bottom" 
+	  class="container z1000">
+      <mip-scroll-select :
+	    scrollshow="scrollshow" 
+		:values="values" class="container" 
+		@showselect="showselect" 
+		@colsescrollselect="colseScrollSelect"
       />
     </mip-fixed>
-    <mip-fixed v-show="showaddress" type="bottom" class="container z1000">
-      <mip-address-select :showaddress="showaddress" class="container" @getcitydata="getcitydata" @closecityselect="closeCitySelect"
+    <mip-fixed
+	  v-show="showaddress" 
+	  type="bottom" 
+	  class="container z1000">
+      <mip-address-select 
+	    :showaddress="showaddress" 
+		class="container" 
+		@getcitydata="getcitydata" 
+		@closecityselect="closeCitySelect"
       />
     </mip-fixed>
   </div>
