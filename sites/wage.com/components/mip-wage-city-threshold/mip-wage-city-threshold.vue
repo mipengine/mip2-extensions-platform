@@ -5,18 +5,17 @@
         <slot/>
       </label>
       <input 
-	  type="number" 
-	  placeholder="0-10000,000 最多两位小数" 
-	  @input="numberAmount">
+	    type="number" 
+		placeholder="0-10000,000 最多两位小数" 
+		@input="numberAmount">
     </div>
-    <div 
-	  class="arrow" 
-	  @click="openAddressSelect()">
+    <div class="arrow" @click="openAddressSelect()">
       <label>缴纳城市</label>
       <input 
-	   :value="provinceName" 
-	    type="text" placeholder="" 
-	    class="ip-disable w98p">
+	    :value="provinceName" 
+		type="text" 
+		placeholder="" 
+		class="ip-disable w98p">
     </div>
     <div 
 	  class="arrow" 
@@ -32,14 +31,15 @@
 	  v-show="scrollshow" 
 	  type="bottom" 
 	  class="container z1000">
-      <mip-scroll-select :
-	    scrollshow="scrollshow" 
-		:values="values" class="container" 
+      <mip-scroll-select 
+	    :scrollshow="scrollshow" 
+		:values="values" 
+		class="container" 
 		@showselect="showselect" 
 		@colsescrollselect="colseScrollSelect"
       />
     </mip-fixed>
-    <mip-fixed
+    <mip-fixed 
 	  v-show="showaddress" 
 	  type="bottom" 
 	  class="container z1000">

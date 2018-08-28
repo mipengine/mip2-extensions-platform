@@ -18,17 +18,19 @@
 	    v-show="isOpen" 
 		:scrollshow="scrollshow" 
 		:class="{'ip-disable':isAfter}" 
-		class="arrow" 
-		@click="openScrollSelect()">
+		class="arrow" @click="openScrollSelect()">
         <label for="">缴纳标准</label>
         <input 
 		  :value="selectValue" 
 		  :class="{'c-disable':cok}" 
-		  type="text" class="ip-disable">
+		  type="text" 
+		  class="ip-disable">
       </div>
     </div>
 
-    <div v-show="isOpen" class="wage">
+    <div 
+	  v-show="isOpen" 
+	  class="wage">
       <label for="">缴纳基数</label>
       <input 
 	    :class="{'ip-disable':ok}" 
