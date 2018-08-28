@@ -1,14 +1,9 @@
-UTF-8
-# This file is for unifying the coding style for different editors and IDEs
-# editorconfig.org
 root = true
+
 [*]
-end_of_line = lf
 charset = utf-8
-trim_trailing_whitespace = true
+indent_style = tab //使用制表符
+indent_size = 4 //4个空格为一个缩进
+end_of_line = lf
 insert_final_newline = true
-[*.{js,styl,html,json,vue}]
-indent_size = 2
-indent_style = space
-[*.md]
-trim_trailing_whitespace = false
+trim_trailing_whitespace = true
