@@ -72,15 +72,14 @@ export default {
 	mounted: function () {
 		this.provinceName = this.provinceName + ' ' + this.cityName;
 	},
-
 	methods: {
 		numberAmount (e) {
-		let result = Number(this.moneyFilter(e.target.value));
-        e.target.value = result;
-        MIP.setData({
-          'wage': result
-        });
-        this.$emit('getinputwage', result);
+			let result = Number(this.moneyFilter(e.target.value));
+			e.target.value = result;
+			MIP.setData({
+				'wage': result
+			});
+			this.$emit('getinputwage', result);
 		},
 		moneyFilter(str) {
 			//过滤掉非法字符(也会过滤掉',')
