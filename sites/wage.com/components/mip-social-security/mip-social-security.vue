@@ -297,10 +297,10 @@ export default {
 			} else {
 				num = items.join('');
 			}
-			var result = "",
-				dec = "";
+			var result = '',
+				dec = '';
 			num = num.replace(/。/g, '.'); //兼容中文输入法
-			var list = num.split(".");
+			var list = num.split('.');
 			if (list[0] > 10000000) {
 				//double的有效位数是10,小数位分了两位,故整数位限制为8位
 				result = list[0].substring(0, 7);
@@ -313,10 +313,10 @@ export default {
 					dec = list[1].substring(0, 2);
 				} else {
 					dec = list[1];
-					}
+				}
 				if (dec.length > 0) {
-            //加上小数
-					result < 10000000 ? result = result + '.' + dec : result = result
+					//加上小数
+					result < 10000000 ? result = result + '.' + dec : '';
 				}
 			}
 			return result;
