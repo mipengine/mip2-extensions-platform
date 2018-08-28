@@ -116,7 +116,7 @@
                 </button>
               </div>
               <div class="captcha-key-list">
-                <div class="captcha-key">
+                <div class="captcha-key  captcha-key-disable">
                   {{ '' }}
                 </div>
                 <button
@@ -851,8 +851,12 @@ export default {
   user-select: none;
 }
 
+.captcha-key.captcha-key-disable:active {
+  background: none!important;
+}
+
 .captcha-key:active {
-    background-color: #ebebeb;
+  background-color: #ebebeb;
 }
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
   color: #6F6F6F;
