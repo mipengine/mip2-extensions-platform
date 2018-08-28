@@ -9,7 +9,7 @@
         @click="back(c)">
         <img
           class="vimg"
-          src="/common/images/vouchersbg1.jpg"
+          src="http://www.daoway.cn/mip/common/images/vouchersbg1.jpg"
           style="width:344px; height:86px">
         <div class="tit">{{ c.categoryName }}</div>
         <div class="vname">{{ c.name }}</div>
@@ -23,7 +23,7 @@
       <img
         v-if="unableCoupone.length > 0"
         class="fenge"
-        src="/common/images/fengexian.jpg"
+        src="http://www.daoway.cn/mip/common/images/fengexian.jpg"
         style="width:343px; height:12px">
       <div
         v-for="u in unableCoupone"
@@ -31,7 +31,7 @@
         class="list gray">
         <img
           class="vimg"
-          src="/common/images/vouchersbg2.jpg"
+          src="http://www.daoway.cn/mip/common/images/vouchersbg2.jpg"
           style="width:344px; height:86px">
         <div class="tit">{{ u.categoryName }}</div>
         <div class="vname">{{ u.name }}</div>
@@ -53,7 +53,7 @@
       v-if="noquan"
       class="noquan">
       <img
-        src="/common/images/coupon.png"
+        src="http://www.daoway.cn/mip/common/images/coupon.png"
         style="width:200px; height:200px">
       <div class="classname">暂无可用代金券</div>
     </div>
@@ -61,6 +61,7 @@
 </template>
 <script>
 import base from '../../common/utils/base'
+import '../../common/utils/base.less'
 export default {
   data () {
     return {
@@ -73,7 +74,7 @@ export default {
       noquan: false,
       coupone: [],
       unableCoupone: [],
-      userId: localStorage.getItem('userId'),
+      userId: localStorage.getItem('mipUserId'),
       channel: 'baidu'
     }
   },
@@ -102,12 +103,9 @@ export default {
       fetch(url, {
         method: 'get', credentials: 'include'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let datas = text.data
-        console.log(datas)
         if (datas.length > 0) {
           let coupone = []
           let unableCoupone = []

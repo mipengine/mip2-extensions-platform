@@ -3,7 +3,7 @@
     <div class="logodiv">
       <img
         class="logo"
-        src="/common/images/logo.png"
+        src="http://www.daoway.cn/mip/common/images/logo.png"
         style="width:55px; height:55px">
     </div>
     <div class="list">官方微信号
@@ -23,7 +23,6 @@
         <div class="www">daoway.com</div>
       </div>
     </mip-fixed>
-
   </div>
 </template>
 <style scoped>

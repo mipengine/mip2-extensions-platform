@@ -42,13 +42,13 @@
               class="sc-r-text"
               v-html="i.description"/>
             <li class="sc-r-price">{{ i.price }}<i>{{ i.price_unit }}</i>
-              <span v-if="i.first_reduce">首单立减{{ i.first_reduce }}</span>
-              <span v-if="i.total_reduce">满{{ i.total_reduce.total }}减{{ i.total_reduce.reduce }}</span>
+              <span v-if="i.firstReduce">首单立减{{ i.firstReduce }}</span>
+              <span v-if="i.totalReduce">满{{ i.totalReduce.total }}减{{ i.totalReduce.reduce }}</span>
             </li>
             <li class="sc-r-home"><img
               class="sc-home"
               src="https://www.daoway.cn/h5/image/home1.png" >{{ i.serviceTitle }}
-              <div class="sc-home-yishou"><span v-if="i.salesNum >0">已售 {{ i.salesNum }}</span><span>好评 {{ i.positiveCommentRate }}</span></div>
+              <div class="sc-home-yishou"><span v-if="i.salesNum >0">已售{{ i.salesNum }}</span><span>{{ i.positiveCommentRate }}</span></div>
             </li>
             <li class="scbl-right-fixd scbl-aciy">
               <span>最快上门</span>
@@ -65,6 +65,7 @@
 </template>
 <script>
 import base from '../../common/utils/base'
+import '../../common/utils/base.less'
 export default {
   data () {
     return {
@@ -81,8 +82,11 @@ export default {
       channel: 'baidu'
     }
   },
+  created () {
+    window.addEventListener('scroll', this.morelist)
+  },
   mounted () {
-    // let that = this
+    document.title = this.tag
     let category = this.category
     let tag = this.tag
     this.nav()
@@ -97,15 +101,13 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let data = text.data[0]
         let filterAry = data.tagsInfo
         let filter = {
           name: '全部',
-          url: '/common/images/all.png'
+          url: 'http://www.daoway.cn/mip/common/images/all.png'
         }
         filterAry.unshift(filter)
         that.filterAry = filterAry
@@ -120,9 +122,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let datas = text.data.items
         let ary = that.ary
@@ -155,8 +155,10 @@ export default {
             totalReduce: totalReduce ? totalReduce[0] : null,
             firstReduce: firstReduce || null
           }
-
           ary.push(obj)
+          if (ary.length === 0) {
+            this.loding = false
+          }
         }
         that.item = ary
         that.sw = true
@@ -185,13 +187,13 @@ export default {
           that.sw = false
           setTimeout(() => {
             that.loding = true
-          }, 100)
+          }, 500)
           that.getServicelist(index, category, that.tags)
         }
       }
     },
     todetail (id) {
-      MIP.viewer.open('http://t.daoway.cn/components/mip-dw-detail/example/mip-dw-detail.html?detailid=' + id, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, { isMipLink: false })
     }
   }
 }
@@ -213,6 +215,7 @@ export default {
 
     .loding{
         text-align: center;
+        height: 30px;
     }
     .sc-nav {
         width: 100%;
@@ -226,6 +229,7 @@ export default {
         text-align: center;
         padding: 10px 0;
         font-size: 14px;
+        min-width: 46px;
     }
     .activity{
         border-bottom: 2px solid red;
@@ -276,7 +280,7 @@ export default {
     }
 
     .scbl-right {
-        width: 66%
+        width: 68%
     }
 
     .scbl-right ul {
@@ -292,9 +296,8 @@ export default {
         position: absolute;
         right: 1%;
         top: 0;
-        width: 50px;
         height: 28px;
-        line-height: 14px;
+        line-height: 13px;
         border: 1px solid #ccc;
         border-radius: 4px;
         overflow: hidden
@@ -330,16 +333,21 @@ export default {
     }
 
     .sc-home {
-        width: 12px;
-        height: 12px;
+        width: 16px;
+        height: auto;
         position: relative;
-        top: 2px;
+        top: 4px;
         margin-right: 2px
     }
 
     .sc-r-tit {
         font-size: 15px;
-        font-weight: bold
+        font-weight: bold;
+        width: 80%;
+        height: 30px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .sc-r-text {
@@ -347,6 +355,7 @@ export default {
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        color: #898989;
     }
 
     .sc-r-price {
@@ -360,7 +369,7 @@ export default {
     .sc-r-price span{
         border: 1px solid red;
         font-size: 10px;
-        padding: 1px 2px;
+        padding: 0 2px;
         border-radius: 2px;
 
     }

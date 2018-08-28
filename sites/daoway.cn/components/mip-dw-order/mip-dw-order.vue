@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-
     <div class="order-nav">
       <mip-fixed
         type="top"
@@ -84,26 +83,7 @@
           class="zhexie">~暂时只有这些了~</div>
       </div>
     </div>
-    <mip-fixed
-      class="mipfd"
-      type="bottom">
-      <div class="bottomnav">
-        <a
-          data-type="mip"
-          data-title="首页"
-          href="/components/mip-dw-index/example/mip-dw-index"
-          @click="toindex"><img src="/common/images/home2.png">首页</a>
-        <a
-          class="regclolr"
-          data-type="mip"
-          data-title="订单"
-          href="/components/mip-dw-order/example/mip-dw-order"><img src="/common/images/order.png">订单</a>
-        <a
-          data-type="mip"
-          data-title="我的"
-          href="/components/mip-dw-my/example/mip-dw-my"><img src="/common/images/my2.png">我的</a>
-      </div>
-    </mip-fixed>
+
     <div
       v-show="warn.show"
       class="layer">
@@ -123,11 +103,32 @@
         </div>
       </div>
     </div>
+    <mip-fixed
+      class="mipfd"
+      type="bottom">
+      <div class="bottomnav">
+        <a
+          data-type="mip"
+          data-title="首页"
+          @click="toindex"
+        ><img src="http://www.daoway.cn/mip/common/images/home2.png">首页</a>
+        <a
+          class="regclolr"
+          data-type="mip"
+          data-title="订单"
+          @click="toorder"><img src="http://www.daoway.cn/mip/common/images/order.png">订单</a>
+        <a
+          data-type="mip"
+          data-title="我的"
+          @click="tomy"><img src="http://www.daoway.cn/mip/common/images/my2.png">我的</a>
+      </div>
+    </mip-fixed>
   </div>
 </template>
 <script>
 import base from '../../common/utils/base'
-import login from '../../common/utils/login'
+import '../../common/utils/base.less'
+
 export default {
   props: {
     payConfig: {
@@ -155,59 +156,82 @@ export default {
         {
           id: 'ALL',
           name: '全部',
-          image: '/common/images/dingdanye_03.png',
+          image: 'http://www.daoway.cn/mip/common/images/dingdanye_03.png',
           count: 0,
           items: []
         }, {
           id: 'PENDING_PAY',
           name: '待付款',
-          image: '/common/images/dingdanye_12.png',
+          image: 'http://www.daoway.cn/mip/common/images/dingdanye_12.png',
           count: 0,
           items: []
         }, {
           id: 'ONGOING2',
           name: '进行中',
-          image: '/common/images/dingdanye_07.png',
+          image: 'http://www.daoway.cn/mip/common/images/dingdanye_07.png',
           count: 0,
           items: []
         }, {
           id: 'COMPLETED',
           name: '已完成',
-          image: '/common/images/dingdanye_05.png',
+          image: 'http://www.daoway.cn/mip/common/images/dingdanye_05.png',
           count: 0,
           items: []
         }, {
           id: 'PENDING_COMMENT',
           name: '待评价',
-          image: '/common/images/dingdanye_09.png',
+          image: 'http://www.daoway.cn/mip/common/images/dingdanye_09.png',
           count: 0,
           items: []
         }
       ],
-      redirect_uri: 'http://test.daoway.cn/mip/components/mip-dw-order/example/mip-dw-order.html',
+      redirect_uri: base.htmlhref.order,
       client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
       ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
-      code: base.getRequest(location.href).code,
-      userId: localStorage.getItem('userId'),
-      token: localStorage.getItem('token'),
+      // code: base.getRequest(location.href).code,
+      userId: localStorage.getItem('mipUserId'),
+      token: localStorage.getItem('mipToken'),
       sw: true,
       loding: false,
-      channel: 'baidu'
+      channel: 'baidu',
+      oauthCode: '',
+      tradeType: '',
+      returnurl: base.htmlhref.orderdetail
     }
   },
   mounted () {
+    let that = this
     if (this.token && this.userId) {
       this.getOrderList(0)
       window.addEventListener('scroll', this.morelist)
-    } else {
-      if (this.code) {
-        login.codelogin(this.code)
+      if (MIP.util.platform.isWechatApp()) { // 在微信里
+        let wxcode = base.getRequest(location.href).code
+        if (wxcode) {
+          that.oauthCode = wxcode
+          that.tradeType = 'JSAPI'
+        } else {
+          that.wxpay(base.htmlhref.order)
+        }
       } else {
-        this.goLoginPage()
+        that.oauthCode = ''
+        that.tradeType = 'MWEB'
       }
+    } else {
+      that.tologin()
     }
   },
   methods: {
+    wxpay (url) {
+      let appid = 'wx0290cc2004b61c97'
+      let loginUrl = encodeURIComponent(url)
+      let scope = 'snsapi_base'
+      MIP.viewer.open('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + loginUrl + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect', {isMipLink: false})
+    },
+    tologin () {
+      let that = this
+      let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + base.htmlhref.index + '&scope=snsapi_userinfo&state=STATE'
+      MIP.viewer.open(url, { isMipLink: true })
+    },
     getOrderList (index) {
       let that = this
       let orderitems = that.orderitems
@@ -221,14 +245,11 @@ export default {
       }
       let start = orderitem.items.length
       let url = '/daoway/rest/orders/bought_by/' + that.userId + '?channel=' + that.channel + '&start=' + start + '&size=30' + status
-
       fetch(url, {
         method: 'get',
         credentials: 'include'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let len = text.data.length
         if (len === 0) {
@@ -248,7 +269,6 @@ export default {
           }
           return
         }
-
         for (let i = 0; i < len; i++) {
           let item = text.data[i]
           let statusId = item.statusId
@@ -409,22 +429,24 @@ export default {
       let start = items.length
       let filter = tager.id
       if (loading === 'noList') {
-        // 没有评论
         that.filter = filter
         that.noList = true
         that.noMoreList = false
         that.index = index
+        that.loding = false
       } else {
         if (start === 0) {
           that.noList = false
           that.noMoreList = false
           that.getOrderList(index)
+          that.loding = false
         } else {
           // 从原有记录里加载
           that.filter = filter
           that.noList = false
           that.noMoreList = false
           that.index = index
+          that.loding = false
         }
       }
     },
@@ -444,7 +466,8 @@ export default {
         that.warn.texts = '确定取消订单？'
         that.param = param
       } else if (param.text === '立即支付') {
-        let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent('http://test.daoway.cn/mip/components/mip-dw-orderdetail/example/mip-dw-orderdetail.html?orderId=' + payparam.orderid)
+        // let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + payparam.orderid)
+        let redirectUrl = that.returnurl + '?orderId=' + payparam.orderid
         MIP.setData({'payConfig': {
           'fee': (payparam.totalPrice + payparam.fixFee - payparam.coupon).toFixed(2),
           'sessionId': that.token,
@@ -457,7 +480,9 @@ export default {
             wallet: 0,
             couponId: payparam.couponId || '',
             'appendOrderId': '',
-            'returnUrl': redirectUrl
+            'returnUrl': redirectUrl,
+            'oauthCode': that.oauthCode,
+            'tradeType': that.tradeType
           }
         }})
         that.$emit('actionpay')
@@ -471,10 +496,11 @@ export default {
       let action = ''
       if (this.param.text === '取消订单') {
         action = 'buyer_cancel'
+        this.closesure(orderId, action)
       } else if (this.param.text === '确认订单') {
         action = 'buyer_confirm'
+        this.closesure(orderId, action)
       }
-      this.closesure(orderId, action)
     },
     closesure (orderId, action) {
       let that = this
@@ -484,9 +510,7 @@ export default {
         credentials: 'include',
         headers: {'content-type': 'application/x-www-form-urlencoded'}
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
           if (action === 'buyer_cancel') {
@@ -498,7 +522,6 @@ export default {
             that.warn.show = true
             that.warn.texts = '订单已完成'
           }
-
           setTimeout(() => {
             that.warn.show = false
             MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
@@ -512,13 +535,17 @@ export default {
       })
     },
     toorderdetail (id) {
-      MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + id, { isMipLink: true })
+      if (MIP.util.platform.isWechatApp()) { // 在微信里
+        this.wxpay(base.htmlhref.orderdetail + '?orderId=' + id)
+      } else {
+        MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + id, { isMipLink: false })
+      }
     },
-    goLoginPage: function () {
-      let that = this
-      let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + that.redirect_uri + '&scope=snsapi_userinfo&state=STATE'
+    /* goLoginPage: function () {
+      let that = this;
+      let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + that.redirect_uri + '&scope=snsapi_userinfo&state=STATE';
       MIP.viewer.open(url)
-    },
+    }, */
     morelist () {
       let that = this
       let index = that.index
@@ -542,6 +569,15 @@ export default {
           }
         }
       }
+    },
+    toindex () {
+      MIP.viewer.open(base.htmlhref.index, {isMipLink: false})
+    },
+    toorder () {
+      MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
+    },
+    tomy () {
+      MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
     }
   }
 
@@ -597,30 +633,8 @@ export default {
         padding-top: 40%;
     }
 
-    .bottomnav{
-        width: 100%;
-        background: #fff;
-        border-top: 1px solid #ededed;
-    }
-    .bottomnav a{
-        line-height: 23px;
-        display: inline-block;
-        width: 32%;
-        text-align: center;
-        font-size: 12px;
-        margin-top: 5px;
-    }
-    .bottomnav a img{
-        width: 25px;
-        height: auto;
-        display: block;
-        text-align: center;
-        margin: 0 auto;
-    }
-
     .mipfd{
         width: 100%;
-        height: 70px;
         background: #fff;
         padding-top: 10px;
     }
@@ -807,6 +821,10 @@ export default {
         margin-right: 5px;
         position: relative;
         top:2px;
+    }
+    .ordertop{
+      background: #fff;
+      padding-top: 15px;
     }
   .ordertop img{
     width: 22px;

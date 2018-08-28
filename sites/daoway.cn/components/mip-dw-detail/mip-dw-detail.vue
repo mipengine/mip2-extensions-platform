@@ -6,18 +6,20 @@
         <li><span class="d-h">{{ sericePrice.name }}</span>
           <div class="d-add">
             <img
-              src="/common/images/jian.jpg"
+              src="http://www.daoway.cn/mip/common/images/jian.jpg"
               @touchend="jian(counter)">
             <i class="d-number">{{ counter }}</i>
             <img
-              src="/common/images/jia.jpg"
+              src="http://www.daoway.cn/mip/common/images/jia.jpg"
               @touchend="add(counter)">
           </div>
         </li>
         <li><span class="d-h d-h2">{{ sericePrice.price }}<i>{{ sericePrice.priceUnit }}</i></span>
-          <div class="d-add">已售{{ sericePrice.salesNum }}单</div>
+          <div class="d-add dgray">已售{{ sericePrice.salesNum }}单</div>
         </li>
-        <li class="d-maojian"><span class="b-bz">促销</span>
+        <li
+          v-if="promotion.first_reduce || promotion.total_reduce"
+          class="d-maojian"><span class="b-bz">促销</span>
           <div class="d-maojian-r">
             <div
               v-if="promotion.first_reduce"
@@ -55,7 +57,7 @@
       <div class="d-hh-l"><i>已选</i>{{ sericePrice.name }}</div>
       <div class="d-hh-r">类似项目<img
         class="d-more"
-        src="/common/images/go_06.png"></div>
+        src="http://www.daoway.cn/mip/common/images/go_06.png"></div>
     </div>
     <div class="d-hh">
       <div class="d-hh-l d-timet">服务时间</div>
@@ -81,7 +83,7 @@
       <div class="d-hh-l d-timet">用户评论</div>
       <div class="d-hh-r"><i class="lv">{{ lastComment.commentCount }}条评论</i><img
         class="d-more"
-        src="/common/images/go_06.png">
+        src="http://www.daoway.cn/mip/common/images/go_06.png">
       </div>
     </div>
     <div
@@ -89,7 +91,7 @@
       class="d-comment">
       <div class="d-comment-l">
         <img
-          :src="lastComment.iconUrl?lastComment.iconUrl:'/common/images/iconimg.png'"
+          :src="lastComment.iconUrl?lastComment.iconUrl:'http://www.daoway.cn/mip/common/images/iconimg.png'"
           class="d-icon">
       </div>
       <div class="d-comment-r">
@@ -99,7 +101,7 @@
             <img
               v-for="(i,index) in [1, 2, 3, 4, 5]"
               :key="i"
-              :src="lastComment.star<index ? '/common/images/star.png/' : '/common/images/red_star.png'">{{ index }}
+              :src="lastComment.star<index ? 'http://www.daoway.cn/mip/common/images/star.png/' : 'http://www.daoway.cn/mip/common/images/red_star.png'">{{ index }}
           </span>
           <span
             class="d-c-t"
@@ -112,12 +114,12 @@
       class="d-hh d-hhline"
       @click="toxuzhi()">
       <div class="d-hh-l d-timet">订购须知</div>
-      <div class="d-hh-r"><i class="lv">查看取消、退款、赔付规则</i><img
+      <div class="d-hh-r"><i class="lv">取消、退款、赔付规则</i><img
         class="d-more"
-        src="/common/images/go_06.png"></div>
+        src="http://www.daoway.cn/mip/common/images/go_06.png"></div>
     </div>
     <div class="d-text d-xuzhi">
-      <p v-text="service.orderingNotice"/>
+      <p v-html="service.orderingNotice"/>
     </div>
     <div class="d-img-box">
       <p v-if="images2.length >0 && !scroll" >↑滑动查看图文详情</p>
@@ -133,21 +135,21 @@
           class="telimg telg"
           @touchend="toindex()">
           <img
-            src="/common/images/icon2.png"
+            src="http://www.daoway.cn/mip/common/images/icon2.png"
             style="width:17px; height:auto">
           <div class="lianxi">首页</div>
         </div>
         <div class="telimg telg">
           <a :href="'tel:' + service.phone">
             <img
-              src="/common/images/tel.jpg"
+              src="http://www.daoway.cn/mip/common/images/tel.jpg"
               style="width:15px; height:auto">
             <div class="lianxi">联系商家</div>
           </a>
         </div>
         <!--<div class="telimg share">
                         <div class='btnshare'>
-                            <img src="/common/images/share.jpg" style="width:16px; height:auto">
+                            <img src="http://www.daoway.cn/mip/common/images/share.jpg" style="width:16px; height:auto">
                             <div class="lianxi">分享</div>
                         </div>
                     </div>-->
@@ -179,11 +181,11 @@
       <div class="lightbox">
         <div class="headtit">
           <div class="hh">选择服务项目</div>
-          <div class="smalltit">{{ service.title }}{{ pops[0].catName }}</div>
+          <div class="smalltit">{{ service.title }}{{ pops[0]?pops[0].catName:'' }}</div>
           <img
             on="tap:my-lightbox2.toggle"
             class="close"
-            src="/common/images/close2.jpg">
+            src="http://www.daoway.cn/mip/common/images/close2.jpg">
         </div>
         <div class="commodity-list">
           <div
@@ -214,6 +216,7 @@
 </template>
 <script>
 import base from '../../common/utils/base'
+import '../../common/utils/base.less'
 export default {
   data () {
     return {
@@ -257,9 +260,12 @@ export default {
       scroll: false
     }
   },
-  mounted () {
-    this.detailstr()
+  created () {
     window.addEventListener('scroll', this.moreimg)
+  },
+  mounted () {
+    window.addEventListener('scroll', this.moreimg)
+    this.detailstr()
   },
   methods: {
     detailstr () {
@@ -268,9 +274,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let data = text.data
         that.service = data.service
@@ -320,9 +324,12 @@ export default {
       }
     },
     moreimg () {
-      if (document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight) {
+      if (document.body.scrollTop || document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight + 20) {
+        console.log(document.body.scrollTop || document.documentElement.scrollTop, window.innerHeight, document.body.offsetHeight)
         this.images = this.images2
-        this.scroll = true
+        setTimeout(() => {
+          this.scroll = true
+        }, 500)
       }
     },
     closeLayer () {
@@ -332,15 +339,15 @@ export default {
       this.showpops = false
     },
     toindex () {
-      MIP.viewer.open(base.htmlhref.index, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.index, { isMipLink: false })
     },
     toxuzhi () {
-      MIP.viewer.open(base.htmlhref.xuzhi, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.xuzhi, { isMipLink: false })
     },
     tocomments () {
       let serviceId = this.serviceId
       let priceId = this.priceId
-      MIP.viewer.open(base.htmlhref.comments + '?serviceId=' + serviceId + '&priceId=' + priceId, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.comments + '?serviceId=' + serviceId + '&priceId=' + priceId, { isMipLink: false })
     },
     tap (index) {
       this.activity = index
@@ -353,9 +360,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
           that.pops = text.data
@@ -374,7 +379,8 @@ export default {
       let priceId = that.priceId
       if (similarPricesId !== priceId) {
         that.id = similarPricesId
-        that.detailstr()
+        MIP.viewer.open(base.htmlhref.detail + '?detailid=' + similarPricesId, {isMipLink: false})
+        // that.detailstr()
       }
     },
     reservation () {
@@ -387,9 +393,8 @@ export default {
       let price = that.price
       let totalPrices = price * quantity
       sessionStorage.setItem('apptime', '')
-      let userId = localStorage.getItem('userId')
-      let token = localStorage.getItem('token')
-
+      let userId = localStorage.getItem('mipUserId')
+      let token = localStorage.getItem('mipToken')
       /* 跳转带出去的参数 */
       let priceId = that.priceId
       let priceMap = {}
@@ -408,19 +413,25 @@ export default {
             priceType: that.priceType
           }
           param = JSON.stringify(param)
-          MIP.viewer.open(base.htmlhref.reservation + '?param=' + encodeURIComponent(param), { isMipLink: true })
+          if (MIP.util.platform.isWechatApp()) {
+            let appid = 'wx0290cc2004b61c97'
+            let loginUrl = encodeURIComponent(base.htmlhref.reservation + '?param=' + encodeURIComponent(param))
+            let scope = 'snsapi_base'
+            MIP.viewer.open('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + loginUrl + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect', { isMipLink: true })
+          } else {
+            MIP.viewer.open(base.htmlhref.reservation + '?param=' + encodeURIComponent(param), { isMipLink: false })
+          }
         } else {
-          let baseparam = base.setUrlParam({
+          /* let baseparam = JSON.stringify({
             serviceId: that.serviceId,
             priceId: that.priceId,
             quantity: quantity,
             appointTime: that.appointTime,
             priceType: that.priceType
-          })
-          let redirectUri = 'http://test.daoway.cn/mip/components/mip-dw-reservation/example/mip-dw-reservation.html?' + baseparam
-
-          let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirectUri=' + encodeURIComponent(redirectUri) + '&scope=snsapi_userinfo&state=STATE'
-          MIP.viewer.open(url, { isMipLink: true })
+          }); */
+          /* let redirectUri = 'http://test.daoway.cn/mip/t/index.html';
+          let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + redirectUri+ '&scope=snsapi_userinfo&state=STATE'; */
+          MIP.viewer.open(base.htmlhref.index, { isMipLink: false })
         }
       }
     }
@@ -451,8 +462,8 @@ export default {
     .lightbox{
         background: #fff;
         position: relative;
-        top:40%;
-        height: 60%;
+        top:35%;
+        height: 65%;
         width: 100%;
     }
 
@@ -504,7 +515,8 @@ export default {
     }
 
     .d-add2 span {
-        margin-left: 5px
+        margin-left: 5px;
+        font-size: 12px;
     }
 
     .d-add2 span.mj {
@@ -520,7 +532,7 @@ export default {
 
     .d-add2 {
         float: inherit;
-        width: 90%;
+        width: 88%;
         display: inline-block;
         vertical-align: top;
         margin-left: 2%
@@ -586,7 +598,8 @@ export default {
     }
 
     .d-text p {
-        line-height: 25px
+        line-height: 25px;
+        white-space:pre-wrap
     }
 
     .lv {
@@ -657,7 +670,7 @@ export default {
     }
 
     .footer {
-        height: 45px;
+        height: 48px;
         width: 100%;
         z-index: 100;
         background: #fff;
@@ -731,7 +744,8 @@ export default {
         right: 3%;
         top: 10px;
         padding: 0;
-        width:14px; height:auto;
+        width:16px;
+        height:auto;
     }
 
     .smalltit {
@@ -743,7 +757,7 @@ export default {
         width: 94%;
         margin: 15px auto 0;
         overflow-y: scroll;
-        height: 65%;
+        height: 64%;
         border-bottom: 1px solid #f5f5f5;
     }
 
@@ -772,6 +786,9 @@ export default {
     .listconter {
         width: 76%;
         font-size: 14px;
+    }
+    .dgray{
+        color: #898989;
     }
 
     .listprice {

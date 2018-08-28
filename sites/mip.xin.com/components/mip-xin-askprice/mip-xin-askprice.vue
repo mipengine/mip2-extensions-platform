@@ -31,7 +31,7 @@
           </mip-form>
           <!-- <mip-img
             class="close"
-            src="http://s4.xinstatic.com/m/img/smallprogram/close.png"
+            src="//s4.xinstatic.com/m/img/smallprogram/close.png"
             @click="clearTel" /> -->
         </div>
         <div
@@ -46,11 +46,11 @@
             <mip-img
               v-if="baAuth"
               class="auth-icon "
-              src="http://c2.xinstatic.com/f3/20180803/1517/5b64017eea4a3722229.png"/>
+              src="//c2.xinstatic.com/f3/20180803/1517/5b64017eea4a3722229.png"/>
             <mip-img
               v-if="!baAuth"
               class="auth-icon "
-              src="http://c2.xinstatic.com/f3/20180803/1517/5b6401764c164734049.png"/>
+              src="//c2.xinstatic.com/f3/20180803/1517/5b6401764c164734049.png"/>
             <label
               for="bdAuth"
               class="auth-font">登陆百度账号，第一时间了解订单状态</label>
@@ -82,7 +82,7 @@
         <div class="ask-price-success">
           <mip-img
             class="askprice-success-boximg"
-            src="http://c2.xinstatic.com/f3/20180717/1102/5b4d5c379c451177647.png"/>
+            src="//c2.xinstatic.com/f3/20180717/1102/5b4d5c379c451177647.png"/>
           <span class="askprice-success-font">询价成功</span>
         </div>
       </div>
@@ -324,6 +324,7 @@ export default {
       if (!this.telCorrect) {
         this.remain = true
         this.reminMessage = '请输入正确的手机号'
+        return
       }
       this.bottomPrice()
     },
@@ -561,6 +562,8 @@ export default {
   display: flex;
   flex-direction: column;
   margin-right: 0.2rem;
+  float: left;
+  width: 4rem;
 }
 
 .righttop-scroll {
@@ -648,6 +651,8 @@ export default {
   font-family: PingFangSC-Medium;
   color: rgba(248, 93, 0, 1);
   line-height: 0.3rem;
+  white-space: nowrap;
+
 }
 
 .similar-recommend-monthprice-scroll {
@@ -655,5 +660,11 @@ export default {
   font-family: PingFangSC-Regular;
   color: rgba(248, 93, 0, 1);
   margin-left: 0.08rem;
+  white-space: nowrap;
+  margin-bottom: -0.03rem;
+}
+.image-scroll {
+  width:2.56rem;
+  float:left;
 }
 </style>
