@@ -78,62 +78,57 @@
       <mip-fixed type="top">
         <div
           v-show="showCaptcha"
-          class="captch"
+          class="captcha"
         >
           <div
             class="s4s-mask"
           />
-          <div class="captch-container">
-            <div class="captch-title">请输入验证码</div>
+          <div class="captcha-container">
+            <div class="captcha-title">请输入验证码</div>
             <mip-img
               :src="captchUrl"
               width="272"
               height="90"
               @click="getCaptcha"/>
             <p
-              class="captch-change"
+              class="captcha-change"
               @click="getCaptcha">看不清？换一张</p>
-            <div class="captch-input-container">
-              <div class="captch-input-list">
-                <input
-                  ref="captchValue1"
-                  v-model="captchValue1"
-                  :disabled="captchValue1 ? 'disabled' : false"
-                  class="captch-input"
-                  type="number"
-                  pattern="\d*"
-                  maxlength="1"
-                  @keyup.delete="captchDelete(1,captchValue1)">
-                <input
-                  ref="captchValue2"
-                  v-model="captchValue2"
-                  :disabled="captchValue2 ? 'disabled':false"
-                  class="captch-input"
-                  type="number"
-                  pattern="\d*"
-                  maxlength="1"
-                  @keyup.delete="captchDelete(2,captchValue2)">
-                <input
-                  ref="captchValue3"
-                  v-model="captchValue3"
-                  :disabled="captchValue3 ? 'disabled':false"
-
-                  class="captch-input"
-                  type="number"
-                  pattern="\d*"
-                  maxlength="1"
-                  @keyup.delete="captchDelete(3,captchValue3)">
-                <input
-                  ref="captchValue4"
-                  v-model="captchValue4"
-                  :disabled="captchValue4 ? 'disabled':false"
-
-                  class="captch-input"
-                  type="number"
-                  pattern="\d*"
-                  maxlength="1"
-                  @keyup.delete="captchDelete(4,captchValue4)"
-                >
+            <div
+              class="captcha-input-container">
+              <div
+                v-for="item in captchValue"
+                :key="item"
+                class="captcha-input" >
+                {{ item||'' }}
+              </div>
+            </div>
+            <div class="captcha-keyboard">
+              <div
+                v-for="item in captchKeyArray"
+                :key="item"
+                class="captcha-key-list" >
+                <button
+                  v-for="ele in item"
+                  :key="ele"
+                  class="captcha-key"
+                  @click="onInputCaptcha(ele)">
+                  {{ ele }}
+                </button>
+              </div>
+              <div class="captcha-key-list">
+                <div class="captcha-key">
+                  {{ '' }}
+                </div>
+                <button
+                  class="captcha-key"
+                  @click="onInputCaptcha(0)">
+                  0
+                </button>
+                <button
+                  class="captcha-key"
+                  @click="onInputCaptcha('←')">
+                  ←
+                </button>
               </div>
             </div>
             <!-- <div
@@ -178,64 +173,14 @@ export default {
       car_type: '',
       system: {},
       needCaptcha: false,
-      captchValue1: '',
-      captchValue2: '',
-      captchValue3: '',
-      captchValue4: '',
       captchKey: '',
       showCaptcha: false,
+      captchValue: ['', '', '', ''],
+      captchKeyArray: [[1, 2, 3], [4, 5, 6], [7, 8, 9]],
       captchUrl: ''
     }
   },
   watch: {
-    captchValue1 (val) {
-      if (val.length === 1) {
-        this.$refs['captchValue2'].focus()
-      } else if (val.length > 1) {
-        this.captchValue1 = val.substring(0, 1)
-      }
-      // 备用逻辑  如果本格内容为两位以上，可以传递给下一格
-      // else if (val.length === 2) {
-      //   this.captchValue1 = val.substring(0, 1)
-      //   this.captchValue2 = ''
-      //   this.captchValue2 = val.substring(1, 2)
-      // }
-      if (this.captchValue4 && this.captchValue2 && this.captchValue3) {
-        this.captchReady()
-      }
-      // 当前逻辑 输入后不可修改，只能从最后一位进行删除，满足四位进行查询
-    },
-    captchValue2 (val) {
-      if (val.length === 1) {
-        this.$refs['captchValue3'].focus()
-      } else if (val.length > 1) {
-        this.captchValue2 = val.substring(0, 1)
-      }
-      if (this.captchValue1 && this.captchValue4 && this.captchValue3) {
-        this.captchReady()
-      }
-    },
-    captchValue3 (val) {
-      if (val.length === 1) {
-        this.$refs['captchValue4'].focus()
-      } else if (val.length > 1) {
-        this.captchValue3 = val.substring(0, 1)
-      }
-      if (this.captchValue1 && this.captchValue2 && this.captchValue4) {
-        this.captchReady()
-      }
-    },
-    captchValue4 (val) {
-      if (val.length === 1) {
-        if (this.captchValue1 && this.captchValue2 && this.captchValue3) {
-          this.captchReady()
-        } else {
-          this.$refs['captchValue4'].blur()
-        }
-      } else if (val.length > 1) {
-        this.captchValue4 = val.substring(0, 1)
-      }
-    }
   },
   prerenderAllowed () {
     return true
@@ -348,16 +293,41 @@ export default {
         if (res.code === 0) {
           that.captchKey = res.data.key
           that.captchUrl = res.data.image
-          that.captchValue1 = ''
-          that.captchValue2 = ''
-          that.captchValue3 = ''
-          that.captchValue4 = ''
-          setTimeout(() => { that.$refs.captchValue1.focus() }, 0)
+          that.captchValue = ['', '', '', '']
+        } else {
+          util.toast(res.msg)
         }
       })
     },
     closeCaptch () {
       this.showCaptcha = false
+    },
+    onInputCaptcha (value) {
+      let arr = [...this.captchValue]
+      let index = 3
+      if (value === '←') {
+        let array = [...this.captchValue].join('')
+        arr = array.substring(0, array.length - 1).split('')
+        arr.length = 4
+      } else {
+        if (this.captchValue[3]) {
+          return
+        }
+        if (!this.captchValue[0]) {
+          index = 0
+        } else if (!this.captchValue[1]) {
+          index = 1
+        } else if (!this.captchValue[2]) {
+          index = 2
+        } else if (!this.captchValue[3]) {
+          index = 3
+        }
+        arr[index] = value + ''
+      }
+      this.captchValue = arr
+      if (arr[3]) {
+        this.captchReady()
+      }
     },
     getQueryString (name) {
       let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
@@ -388,11 +358,10 @@ export default {
 
       if (this.needCaptcha) {
         param.key = this.captchKey
-        param.value = [this.captchValue1, this.captchValue2, this.captchValue3, this.captchValue4].join('')
+        param.value = this.captchValue.join('')
       }
       // car_no车牌号，vin车架号，engion发动机，{car_no: 陕KC1166 vin: LSVNJ49J472028756 engine: 020297
       util
-        // .fetchData('v3/violation/smapp/query', param)
         .fetchData('v3/violation/web/query', param)
         .then(res => {
           // res.code = 90027
@@ -792,44 +761,49 @@ export default {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-.captch{
+.captcha{
   position: relative;
 }
-.captch-container {
+.captcha-container {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translateY(-50%) translateX(-50%);
   background-color: #fff;
-  padding:.21rem  .15rem .25rem;
+  padding:.15rem;
   border-radius: .05rem;
+  padding-bottom: 0;
 }
-.captch-title{
+.captcha-title{
   color:#333333;
   font-size: .18rem;
   font-weight: bold;
-  margin-bottom: .16rem;
   text-align: center;
+  margin-bottom: .1rem;
 }
-.captch-input:focus ,.captch-input {
+.captcha-input:focus ,.captcha-input,.captcha-key {
   outline: none;
 }
-.captch-input-container {
+.captcha-input-container {
   width: 100%;
   margin: .2rem 0;
-}
-.captch-input-list {
   display: flex;
   align-items: center;
   justify-content: space-around;
 }
-.captch-change {
+.captcha-input-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.captcha-change {
   color:#6F6F6F;
   font-size: .12rem;
   margin-bottom: .125rem;
   text-align: center;
 }
-.captch-input {
+.captcha-input {
+  height: .4rem;
   line-height: .4rem;
   font-size: .22rem;
   color:#333;
@@ -840,10 +814,10 @@ export default {
   max-width: .4rem;
   text-align: center;
 }
-.captch-input:last-child {
+.captcha-input:last-child {
   margin-right:0;
 }
-.captch-btn {
+.captcha-btn {
   width: 100%;
   text-align: center;
   line-height: .5rem;
@@ -851,6 +825,34 @@ export default {
   background-image: linear-gradient(40deg, #FF7C00 0%, #FE5A00 100%);
   border-radius: .05rem;
   color:#fff;
+}
+.captcha-keyboard {
+  /* display: flex; */
+  /* justify-content: space-around; */
+  /* flex-wrap: wrap; */
+  margin-top:.25rem;
+}
+.captcha-key-list {
+  display: flex;
+  justify-content: space-around;
+  margin:.1rem;
+}
+.captcha-key {
+  border:none;
+  text-align: center;
+  color:#24252D;
+  font-size: .24rem;
+  width: .8rem;
+  height: .4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  user-select: none;
+}
+
+.captcha-key:active {
+    background-color: #ebebeb;
 }
 input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
   color: #6F6F6F;
