@@ -9,9 +9,11 @@
         class="preButton button"
         @click="showAsk">我要优惠</button>
       <!-- 电话组件，非百城拨打普通400电话  百城拨打天津400电话池-->
-      <button
+      <a
+        :href="'tel:' + telPhone"
+        target="_top"
         class="callButton button"
-        @click="call">电话客服</button>
+        @click="call">电话客服</a>
       <!-- 非百城 普通IM  百城 专家IM-->
       <button
         class="chatButton button"
@@ -24,23 +26,27 @@
         @click="gotoIm">在线客服</button>
     </mip-fixed>
     <div v-if="source==3">
+      <!--<a
+      id="telPhoneButton"
+      ref="telPhone"
+      :href="'tel:' + telPhone"
+      class="trigger-button"/> -->
       <a
-        id="telPhoneButton"
-        ref="telPhone"
-        :href="'tel:' + telPhone"
-        class="trigger-button"/>
-      <button
         id="bigImgCall"
+        :href="'tel:' + telPhone"
+        target="_top"
         class=" askCall bigImgCall "
-        @click="call">电话咨询</button>
+        @click="call">电话咨询</a>
     </div>
     <mip-fixed
       v-if="source == 4"
       type="bottom"
       class=" buttonWrap reportButton">
-      <button
+      <a
+        :href="'tel:' + telPhone"
+        target="_top"
         class="askCall button"
-        @click="call">电话客服</button>
+        @click="call">电话客服</a>
     </mip-fixed>
   </div>
 </template>
@@ -101,6 +107,7 @@ h1 {
   border-radius: 0.04rem;
   width: 2.6rem;
   height: 0.7rem;
+  padding: 0.15rem 0.4rem;
 }
 .reportButton {
   z-index: 9;
@@ -154,6 +161,7 @@ export default {
     base.setMediaBase()
   },
   mounted () {
+    this.call()
     this.isDirect = getLocalStorage('isDirect')
     this.imUrl = this.imUrl
     // 不要删，此处是用于监听轮播图滚动的。。。。
@@ -173,9 +181,10 @@ export default {
         }
       }).then(res => {
         this.telPhone = res.tel
-        this.$nextTick(() => {
-          window.location.href = 'tel:' + this.telPhone
-        })
+        // this.$nextTick(() => {
+        //   this.$refs.telPhone.click()
+        //   // window.location.href = 'tel:' + this.telPhone
+        // })
         if (this.source === '1') {
         // 详情页埋点
           clickPoint(

@@ -229,6 +229,7 @@ export default {
         text-align: center;
         padding: 10px 0;
         font-size: 14px;
+        min-width: 46px;
     }
     .activity{
         border-bottom: 2px solid red;
@@ -279,7 +280,7 @@ export default {
     }
 
     .scbl-right {
-        width: 66%
+        width: 68%
     }
 
     .scbl-right ul {
@@ -296,7 +297,7 @@ export default {
         right: 1%;
         top: 0;
         height: 28px;
-        line-height: 14px;
+        line-height: 13px;
         border: 1px solid #ccc;
         border-radius: 4px;
         overflow: hidden
@@ -341,7 +342,12 @@ export default {
 
     .sc-r-tit {
         font-size: 15px;
-        font-weight: bold
+        font-weight: bold;
+        width: 80%;
+        height: 30px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .sc-r-text {
@@ -363,7 +369,7 @@ export default {
     .sc-r-price span{
         border: 1px solid red;
         font-size: 10px;
-        padding: 1px 2px;
+        padding: 0 2px;
         border-radius: 2px;
 
     }

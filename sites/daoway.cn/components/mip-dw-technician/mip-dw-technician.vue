@@ -60,7 +60,6 @@ export default {
         name: techindex.name,
         id: techindex.dwid
       }
-      // MIP.setData(tech)
       sessionStorage.setItem('tech', JSON.stringify(tech))
       MIP.viewer.page.back()
     }
