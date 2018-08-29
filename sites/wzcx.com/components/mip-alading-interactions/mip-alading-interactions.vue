@@ -67,7 +67,7 @@
             @click="inputAgain">点击重新输入</div>
         </div>
         <div
-          v-if="isFixBottomTip == true"
+          v-if="isFixBottomTip === true"
           class="fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
       </div>
 
@@ -358,11 +358,11 @@
         </div>
 
         <div
-          v-if="isFixBottomTip == false"
+          v-if="isFixBottomTip === false"
           id="fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
 
         <div
-          v-if="isFixBottomTip == true"
+          v-if="isFixBottomTip === true"
           class="fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
 
       </div>
