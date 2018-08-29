@@ -8,7 +8,7 @@
             v-model="addr"
             type="text"
             placeholder="请填写您的住址"
-            @touchend="toposition"><img
+            @click="toposition"><img
               class="re-more"
               src="https://www.daoway.cn/h5/image/go_06.png"></li>
           <li><img src="https://www.daoway.cn/images/icon3.jpg"><input
@@ -88,7 +88,7 @@
               src="https://www.daoway.cn/h5/image/go_06.png"></div>
           <div
             v-else
-            class="guize guize1">暂无适用代金券</div>
+            class="guize guize1 novouchers">暂无适用代金券</div>
         </div>
         <div
           class="quan"
@@ -203,6 +203,15 @@ export default {
   mounted () {
     let that = this
     that.position = base.getposition()
+    if (that.position.contactPerson) {
+      that.contactPerson = that.position.contactPerson
+    } else {
+      let nick = localStorage.getItem('nick')
+      that.contactPerson = nick
+    }
+    if (that.position.phone) {
+      that.phone = that.position.phone
+    }
     if (that.orderId) {
       that.buyAgain(that.orderId)
     } else {
@@ -217,10 +226,21 @@ export default {
       that.oauthCode = ''
       that.tradeType = 'MWEB'
     }
-
     window.addEventListener('show-page', () => {
       let technician = JSON.parse(sessionStorage.getItem('tech'))
       let useradd = JSON.parse(sessionStorage.getItem('useradd'))
+      if (useradd) {
+        that.phone = useradd.phone
+        that.contactPerson = useradd.contactPerson
+        that.addr = useradd.addr
+        that.doorNum = useradd.doorNum
+      } else {
+        that.position = base.getposition()
+        if (that.position) {
+          that.gethtml()
+          that.setPostion()
+        }
+      }
       that.selectedTechnical = technician
       if (that.canChooseTechnician) {
         if (technician) {
@@ -235,18 +255,6 @@ export default {
       let apptime = Number(sessionStorage.getItem('apptime'))
       if (apptime) {
         that.formatTime = base.timeformat(apptime, 'MM月dd日(day) HH:mm')
-      }
-      if (useradd) {
-        that.phone = useradd.phone
-        that.contactPerson = useradd.contactPerson
-        that.addr = useradd.addr
-        that.doorNum = useradd.doorNum
-      } else {
-        that.position = base.getposition()
-        if (that.position) {
-          that.gethtml()
-          that.setPostion()
-        }
       }
     })
   },
@@ -309,7 +317,6 @@ export default {
     getCoupone () {
       let that = this
       let url = '/daoway/rest/coupon/user/' + that.userId + '?serviceId=' + that.serviceId + '&bill=' + that.totalPrice + '&ignoreMinBill=false&priceIds=' + (that.param.priceIds || that.priceId) + '&channel=' + that.channel
-      console.log(url)
       fetch(url, {
         method: 'get',
         credentials: 'include'
@@ -322,7 +329,6 @@ export default {
             that.alltotalPrices = parseFloat((that.totalPrice + that.realyFixFee - that.coupone.bill).toFixed(2))
           }
         } else {
-          console.log(text.msg)
           that.warn.show = true
           that.warn.texts = text.msg
         }
@@ -481,6 +487,7 @@ export default {
       }).then(function (text) {
         if (text.status === 'ok') {
           let resultData = text.data
+          console.log(resultData)
           let prices = resultData.prices
           for (let i = 0; i < prices.length; i++) {
             prices[i].quantity = prices[i].minBuyNum || 1
@@ -526,83 +533,44 @@ export default {
         console.log(error)
       })
     },
-    /* userAddress() {
-      var that = this;
-      var data = that.data;
-      var userAddressId = position.userAddressId;
-      var url;
-      var opData = {
-        userId: data.miniUserId,
-        name: data.contactPerson,
-        phone: data.phone,
-        doorNum: data.doorNum,
-        isConfirm: 0,
-        communityId: data.communityId
-      };
-
+    userAddress () {
+      let that = this
+      let useradd = sessionStorage.getItem('useradd')
+      let userAddressId = ''
+      let opData = 'userId=' + that.userId + '&name=' + that.contactPerson + '&phone=' + that.phone + '&doorNum=' + that.doorNum + '&isConfirm=0' + '&communityId=' + that.position.id || that.position.communityId + '&id=' + userAddressId
+      let url
+      if (userAddressId) {
+        url = '/daoway/rest/user/' + that.userId + '/modifyUserAddress'
+      } else {
+        url = '/daoway/rest/user/' + that.userId + '/addUserAddress'
+      }
       fetch(url, {
-        method: 'get'
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        body: opData
       }).then(function (res) {
         return res.json()
       }).then(function (text) {
+        console.log(text)
         if (text.status === 'ok') {
-          let data = text.data
-          if (data.technicianList) {
-            that.selectedTechnical = data.technicianList[0]
-            localStorage.setItem('technician', JSON.stringify(data))
+          that.position.contactPerson = useradd.contactPerson
+          that.position.doorNum = useradd.doorNum
+          that.position.phone = useradd.phone
+          if (!userAddressId) {
+            base.userAddressId = text.data
           }
+          localStorage.setItem({'position': JSON.stringify(that.position)})
         } else {
-          localStorage.setItem('technician', null)
           that.warn.show = true
           that.warn.texts = text.msg
         }
       }).catch(function (error) {
         console.log(error)
       })
-
-      if (userAddressId) {
-        url = app.baseUrl + "/user/" + data.miniUserId + "/modifyUserAddress";
-        opData.id = userAddressId;
-      } else {
-        url = app.baseUrl + "/user/" + data.miniUserId + "/addUserAddress";
-      }
-      wx.request({
-        url: url,
-        method: 'POST',
-        data: opData,
-        header: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'cookie': data.token
-        },
-        success: function (res) {
-          var result = res.data;
-          if (result.status != undefined && result.status == 'ok') {
-            app.position.contactPerson = data.contactPerson;
-            app.position.doorNum = data.doorNum;
-            app.position.phone = data.phone;
-            if (!userAddressId) {
-              app.userAddressId = result.data;
-            }
-            wx.setStorage({
-              key: "position",
-              data: app.position
-            });
-          } else {
-            wx.showModal({
-              title: '提示',
-              content: result.msg,
-              showCancel: false,
-              confirmColor: "#2979ff",
-              success: function (res) {
-              }
-            })
-          }
-        },
-        fail: function () {
-          console.log("失败");
-        }
-      })
-    }, */
+    },
     tobuy () {
       let that = this
       let addr = that.addr
@@ -674,10 +642,10 @@ export default {
           return res.json()
         }).then(function (text) {
           if (text.status === 'ok') {
+            that.userAddress()
             let tobaiduorder = text.data.orderId
             // let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + tobaiduorder)
             let redirectUrl = that.returnurl + '?orderId=' + tobaiduorder
-            console.log(redirectUrl)
             MIP.setData({'payConfig': {
               'fee': that.alltotalPrices,
               'sessionId': token,
@@ -697,6 +665,7 @@ export default {
             }})
             that.$emit('actionpay')
           } else {
+            console.log(text.msg)
             that.warn.show = true
             that.warn.texts = text.msg
           }
@@ -732,11 +701,12 @@ export default {
         background: #fff;
     }
     .re-form {
-        margin-left: 3%
+        margin-left: 3%;
     }
 
     .re-form li {
-        line-height: 42px;
+        line-height: 43px;
+        font-size: 14px;
     }
 
     .re-form li img {
@@ -753,6 +723,9 @@ export default {
     .re-input {
         background: #fff;
         font-size: 0
+    }
+    .quan div.novouchers{
+      color: #ccc;
     }
 
     .re-form input {
@@ -848,7 +821,7 @@ export default {
     }
 
     .gtit {
-        margin-left: 16px;
+        margin-left: 6px;
     }
 
     .gtit, .gadd {
@@ -880,7 +853,7 @@ export default {
     .note {
         width: 80%;
         display: inline-block;
-        margin-left: 40px;
+        margin-left: 29px;
         vertical-align: middle;
         padding: 6px 0;
       font-size: 13px;
@@ -893,10 +866,9 @@ export default {
     }
 
     .project-tit {
-        height: 30px;
-        line-height: 30px;
+        height: 36px;
+        line-height: 26px;
         width: 100%;
-        color: #4c4c4c;
     }
 
     .project-tit div {
@@ -931,6 +903,7 @@ export default {
         line-height: 50px;
         padding: 0 3%;
         font-size: 14px;
+      border-top: 1px solid #e5e5e5;
     }
 
     .btn2 {
