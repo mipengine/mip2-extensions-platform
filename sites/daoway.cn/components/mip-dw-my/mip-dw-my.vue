@@ -1,6 +1,10 @@
 <template>
   <div class="wrapper">
-    <div class="mybg" >
+    <mip-inservice-login
+      id="log"
+      :config="config"
+      on="login:example.customLogin logout:example.customLogout"/>
+    <div class="mybg">
       <img
         :src="userInfo.iconUrl?userInfo.iconUrl:'http://www.daoway.cn/images/myicon.png'"
         class="myicon">
@@ -9,14 +13,15 @@
         class="txt">
         <div class="username">{{ userInfo.nick }}
           <img
+            v-if="userInfo"
             :src="userInfo.levelIcon"
             class="starimg">
         </div>
       </div>
       <div
-        v-else
+        v-if="!userId"
         class="txt2"
-        @click="goLoginPage">请登录</div>
+        on="tap:log.login">请点击登录</div><!--@click="goLoginPage"-->
     </div>
     <div
       v-if="userInfo.couponCount"
@@ -62,9 +67,10 @@
           src="https://www.daoway.cn/h5/image/go_06.png"></div>
       </div>
     </div>
-    <!-- <div
+    <div
       class="exit"
-      @click="loginOut">退出登录</div>-->
+      on="tap:log.logout"
+      @click="exit">退出登录</div><!-- @click="loginOut"-->
 
     <!--提示-->
     <div
@@ -83,7 +89,7 @@
       <div class="bottomnav">
         <a
           data-type="mip"
-          data-title="首页"
+          data-title="到位上门服务"
           @click="toindex"
         ><img src="http://www.daoway.cn/mip/common/images/home2.png">首页</a>
         <a
@@ -97,14 +103,24 @@
           @click="tomy"><img src="http://www.daoway.cn/mip/common/images/my.png">我的</a>
       </div>
     </mip-fixed>
+
   </div>
 </template>
 <script>
 import base from '../../common/utils/base'
-/* import login from '../../common/utils/login' */
 import '../../common/utils/base.less'
 
 export default {
+  props: {
+    info: {
+      type: Object,
+      required: true
+    },
+    config: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
       phoneNumber: '400-0908-608',
@@ -119,7 +135,6 @@ export default {
       redirect_uri: base.htmlhref.my,
       client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
       ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
-      code: base.getRequest(location.href).code,
       userId: '',
       token: ''
     }
@@ -127,46 +142,31 @@ export default {
   mounted () {
     let userId = localStorage.getItem('mipUserId')
     let token = localStorage.getItem('mipToken')
-    if (token) {
-      document.cookie = 'token=' + token + ';path=/daoway'
-    }
     if (userId && token) {
       this.userId = userId
       this.token = token
       this.getmyhtml()
     } else {
-      if (this.code) {
-        this.codelogin(this.code, this.redirect_uri)
-      }
+      this.$element.customElement.addEventAction('customLogin', event => {
+        this.info = event.userInfo
+        this.userId = event.userInfo.userId
+        this.token = event.userInfo.token
+        this.getmyhtml()
+        localStorage.setItem('mipUserId', event.userInfo.userId)
+        localStorage.setItem('mipToken', event.userInfo.token)
+        localStorage.setItem('nick', event.userInfo.nick)
+      })
     }
   },
   methods: {
-    codelogin: function (code, redirectUri) {
-      let that = this
-      let url = '/daoway/rest/users/login_mip'
-      fetch(url, {
-        method: 'POST',
-        headers: {'content-type': 'application/x-www-form-urlencoded'}, // "code="+code,
-        body: 'code=' + code + '&redirectUri=' + redirectUri
-      }).then(function (res) {
-        return res.json()
-      }).then(function (text) {
-        if (text.status === 'ok') {
-          window.localStorage.setItem('mipUserId', text.data.userId)
-          window.localStorage.setItem('mipToken', text.data.token)
-          that.userId = text.data.userId
-          that.token = text.data.token
-          if (text.data.token) {
-            document.cookie = 'token=' + text.data.token + ';path=/daoway'
-          }
-          that.getmyhtml()
-        } else {
-          that.goLoginPage()
-          console.log('失败')
-        }
-      }).catch(function (error) {
-        console.log(error)
-      })
+    exit () {
+      this.userId = ''
+      this.token = ''
+      this.userInfo.couponCount = false
+      localStorage.removeItem('mipUserId')
+      localStorage.removeItem('mipToken')
+      localStorage.removeItem('nick')
+      MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
     },
     showloading () {
       this.loading = true
@@ -219,23 +219,10 @@ export default {
         console.log(error)
       })
     },
-    /* loginOut: function () {
-      let that = this
-      that.userId = null
-      that.userInfo.iconUrl = 'http://www.daoway.cn/images/myicon.png'
-      that.userInfo.couponCount = 0;
-        window.localStorage.removeItem('userId');
-        window.localStorage.removeItem('token');
-    }, */
-    goLoginPage: function () {
-      let that = this
-      let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + that.redirect_uri + '&scope=snsapi_userinfo&state=STATE'
-      MIP.viewer.open(url)
-    },
     goVouchersPage: function () {
       let miniUserId = this.userId
       if (miniUserId) {
-        MIP.viewer.open(base.htmlhref.vouchers, { isMipLink: true })
+        MIP.viewer.open(base.htmlhref.vouchers + '?from=my', { isMipLink: true })
       } else {
         this.userId = ''
       }
@@ -273,6 +260,29 @@ export default {
         color:#f64e4e ;
     }
 
+    .bottomnav{
+        width: 100%;
+        background: #fff;
+        border-top: 1px solid #ededed;
+    }
+    .bottomnav a{
+        line-height: 23px;
+        display: inline-block;
+        width: 32%;
+        text-align: center;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+    .bottomnav a img{
+        width: 25px;
+        height: auto;
+        display: block;
+        text-align: center;
+        margin: 0 auto;
+    }
+    .regclolr{
+        color: red;
+    }
     .layer-text{
         text-align: center;
     }
