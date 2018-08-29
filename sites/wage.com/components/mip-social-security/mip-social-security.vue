@@ -49,7 +49,7 @@
         placeholder="请输入5-12"
         class="w96p"
         @input="inputProportion"
-        >
+      >
     </div>
     <mip-fixed
       v-show="scrollshow"
@@ -300,39 +300,6 @@ export default {
 			if (list[0] > max) {
 				//double的有效位数是10,小数位分了两位,故整数位限制为8位
 				(list[0]/max) >= 10&&(list[0]/max) <=20?result = list[0].substring(0, 8):result = list[0].substring(0, 7);
-			} else {
-				result = list[0];
-			}
-			if (list.length > 1) {
-				//小数限制为两位
-				if (list[1].length > 2) {
-					dec = list[1].substring(0, 2);
-				} else {
-					dec = list[1];
-				}
-				if (dec.length > 0) {
-					//加上小数
-					result < 10000000 ? result = result + '.' + dec : '';
-				}
-			}
-			return result;
-		},
-		moneyFilter(str) {
-			//过滤掉非法字符(也会过滤掉',')
-			var items = str.match(/\d+|\.|。/g);
-			var num;
-			if (items == null) {
-				return '';
-			} else {
-				num = items.join('');
-			}
-			var result = '',
-				dec = '';
-			num = num.replace(/。/g, '.'); //兼容中文输入法
-			var list = num.split('.');
-			if (list[0] > 10000000) {
-				//double的有效位数是10,小数位分了两位,故整数位限制为8位
-				result = list[0].substring(0, 7);
 			} else {
 				result = list[0];
 			}
