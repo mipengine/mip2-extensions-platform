@@ -82,6 +82,7 @@ export default {
 				});
 				this.$emit('getinputwage', result);
 			}
+
 		},
 		moneyFilter(str) {
 			//过滤掉非法字符(也会过滤掉',')
@@ -100,6 +101,7 @@ export default {
 			if (list[0] > max) {
 				//double的有效位数是10,小数位分了两位,故整数位限制为8位
 				(list[0]/max) >= 10&&(list[0]/max) <=20?result = list[0].substring(0, 8):result = list[0].substring(0, 7);
+
 			} else {
 				result = list[0];
 			}

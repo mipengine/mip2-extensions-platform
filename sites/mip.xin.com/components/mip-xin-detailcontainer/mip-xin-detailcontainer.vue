@@ -146,7 +146,7 @@ export default {
     if (getQuery().ename) {
       Object.assign(param, { ename: getQuery().ename })
     }
-    if (window.location.href.indexOf('code=') > 0 && window.location.href.indexOf('state=') > 0) {
+    if (window.location.href.indexOf('code') > 0 && window.location.href.indexOf('state') > 0) {
       this.showToast = true
     }
     requestFun('/ajax/city/get_location', {
@@ -208,7 +208,7 @@ export default {
       //   }
       // }
       // 如果是从百度跳转过来的需要去掉后面的参数，使用h5 api无刷新跳转
-      if (window.location.href.indexOf('code=') > 0 && window.location.href.indexOf('state=') > 0) {
+      if (window.location.href.indexOf('code') > 0 && window.location.href.indexOf('state') > 0) {
         // 百度过来的url需要decode
         let Deurl = decodeURIComponent(window.location.href)
         let href = Deurl.split('?')[0]
