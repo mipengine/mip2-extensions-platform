@@ -72,27 +72,47 @@ export default {
 	mounted: function () {
 		this.provinceName = this.provinceName + ' ' + this.cityName;
 	},
-
 	methods: {
 		numberAmount (e) {
-			let sNum = e.target.value.toString();
-			if (sNum > 10000000) {
-				sNum = sNum.slice(0, 7);
+			let result = Number(this.moneyFilter(e.target.value));
+			e.target.value = result;
+			MIP.setData({
+				'wage': result
+			});
+			this.$emit('getinputwage', result);
+		},
+		moneyFilter(str) {
+			//过滤掉非法字符(也会过滤掉',')
+			var items = str.match(/\d+|\.|。/g);
+			var num;
+			if (items == null) {
+				return '';
+			} else {
+				num = items.join('');
 			}
-			this.amount = sNum.replace(/[^\d.]/g, '');// 清除“数字”和“.”以外的字符
-			this.amount = this.amount.replace(/\.{2,}/g, '.');// 只保留第一个. 清除多余的
-			this.amount = this.amount.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.');
-			this.amount = this.amount.replace(/^(-)*(\d+)\.(\d\d).*$/, '$1$2.$3');// 只能输入两个小数
-			if (this.amount > 10000000) {
-				return false;
+			var result = '',
+				dec = '';
+			num = num.replace(/。/g, '.'); //兼容中文输入法
+			var list = num.split('.');
+			if (list[0] > 10000000) {
+				//double的有效位数是10,小数位分了两位,故整数位限制为8位
+				result = list[0].substring(0, 7);
+			} else {
+				result = list[0];
 			}
-			// 以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
-			if (this.amount.indexOf('.') < 0 && this.amount !== '') {
-				this.amount = parseFloat(sNum);
+			if (list.length > 1) {
+				//小数限制为两位
+				if (list[1].length > 2) {
+					dec = list[1].substring(0, 2);
+				} else {
+					dec = list[1];
+				}
+				if (dec.length > 0) {
+					//加上小数
+					result < 10000000 ? result = result + '.' + dec : '';
+				}
 			}
-			e.target.value = this.amount;
-			MIP.setData({ 'wage': this.amount });
-			this.$emit('getinputwage', this.amount);
+			return result;
 		},
 		inputWageBefore: function (e) {
 			MIP.setData({ 'wage': e.target.value });
@@ -279,7 +299,6 @@ input::placeholder {
 li {
   list-style: none;
 }
-
 .mt20 {
   margin-top: 20px;
 }

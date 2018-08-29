@@ -4,9 +4,12 @@
       v-show="resultShow"
       class="pt55">
       <mip-fixed 
-        type="top" 
+        still
+        type = "top"
         class="tag-nav-top">
-        <div class="tag-nav">
+        <div 
+          v-show="resultShow"
+          class="tag-nav">
           <div class="flex-item">
             <span
               :class="{active:active}"
@@ -423,8 +426,8 @@ export default {
 						return false;
 					}
 				}
-				if (this.security.accumulationSelect.proportion == 0 || this.security.accumulationSelect.proportion == '') {
-					this.showTipShow('请输入公积金比例');
+				if (this.security.accumulationSelect.proportion < 5 || this.security.accumulationSelect.proportion == '' || this.security.accumulationSelect.proportion >12) {
+					this.showTipShow('请输入5-12的公积金比例');
 					return false;
 				}
 			}

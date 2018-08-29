@@ -447,7 +447,7 @@ export default {
         .replace(/....(?!$)/g, '$& ')
     }
   },
-  mounted () { },
+  mounted () {},
   methods: {
     // 罚单
     openTicket () {
@@ -471,7 +471,10 @@ export default {
           util.toast('请输入当事人姓名')
           return
         }
-
+        if (this.price < 40) {
+          util.toast('请输入正确的罚款金额，一般大于40元')
+          return
+        }
         if (this.nickCarNo2) {
           this.nickCarNo = this.nickCarNo.toUpperCase()
         }
@@ -592,7 +595,7 @@ export default {
       this.searchAgain = true
       // let self = this
       let param = {
-        access_token: '3b2P0oarLbtrU/IkydUON5pfdQhGW4fWzFgFqOZZDi8=',
+        // access_token: '3b2P0oarLbtrU/IkydUON5pfdQhGW4fWzFgFqOZZDi8=',
         document: this.orderNumber.replace(/\s/g, '')
       }
       util
@@ -789,7 +792,7 @@ export default {
           //   formData.append('image', blob, item.name)
           let data = canvas.toDataURL('image/jpeg').split(',')[1]
           // 获取base64图片大小，返回MB数字
-          let size = parseInt(data.length - (data.length / 8) * 2)
+          let size = parseInt(data.length - data.length / 8 * 2)
           console.log(size)
           if (size) {
             const isLt2M = size / 1024 / 1024 < 2
@@ -798,9 +801,10 @@ export default {
               return
             }
             util.toast('正在上传')
-            util.fetchData('v3/violation/image/upload', {
-              imageString: data
-            })
+            util
+              .fetchData('v3/violation/image/upload', {
+                imageString: data
+              })
               .then(data => {
                 if (data.code === 0) {
                   util.toast('上传成功')
@@ -827,10 +831,10 @@ export default {
   color: #333;
 }
 .s4s-pay-body {
-  margin-top: .15rem;
+  margin-top: 0.15rem;
   background: #fff;
-  padding: .2rem .15rem 0 .15rem;
-  border-radius: .04rem;
+  padding: 0.2rem 0.15rem 0 0.15rem;
+  border-radius: 0.04rem;
 }
 .s4s-group img {
   width: 0.2rem;
@@ -839,20 +843,20 @@ export default {
 
 .s4s-order-container {
   background-color: #fff;
-  padding: .25rem .15rem;
+  padding: 0.25rem 0.15rem;
 }
 .s4s-order-title {
   color: #4b4b4b;
-  font-size: .2rem;
+  font-size: 0.2rem;
   font-weight: bold;
   display: flex;
   align-items: center;
 }
 
 .s4s-order-input {
-  border: .01rem solid #eeeeee;
-  border-radius: .04rem;
-  margin-top: .15rem;
+  border: 0.01rem solid #eeeeee;
+  border-radius: 0.04rem;
+  margin-top: 0.15rem;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -866,13 +870,13 @@ export default {
   -webkit-box-flex: 5;
   -ms-flex: 5;
   flex: 5;
-  padding: .06rem .1rem;
-  font-size: .2rem;
-  color:#4F7EFF;
+  padding: 0.06rem 0.1rem;
+  font-size: 0.2rem;
+  color: #4f7eff;
   font-weight: 400;
 }
 .group-upload {
-  align-items:end;
+  align-items: end;
   height: auto;
 }
 .s4s-order-input span {
@@ -882,7 +886,7 @@ export default {
   flex: 2;
   background: #3388ff;
   margin: 0;
-  line-height: .5rem;
+  line-height: 0.5rem;
   text-align: center;
   background-image: linear-gradient(40deg, #ff7c00 0%, #fe5a00 100%);
 }
@@ -892,29 +896,29 @@ export default {
   display: -moz-box;
   display: -webkit-flex;
   display: flex;
-  align-items:center;
-  -moz-box-align:center;
-  -webkit-box-align:center;
-  -webkit-justify-content:space-around;
-  justify-content:space-around;
-  -webkit-box-pack:space-around;
-  -moz-box-pack:space-around;
+  align-items: center;
+  -moz-box-align: center;
+  -webkit-box-align: center;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+  -webkit-box-pack: space-around;
+  -moz-box-pack: space-around;
   margin: 0.2rem 0;
   text-align: center;
 }
 .s4s-order-img-container mip-img + mip-img {
-  margin-right: -.22rem;
-  margin-left: .16rem;
+  margin-right: -0.22rem;
+  margin-left: 0.16rem;
   /* margin-top: .12rem; */
 }
 .flex-center {
-  margin-bottom: .1rem;
+  margin-bottom: 0.1rem;
 }
 .s4s-order-content {
-  font-size: .12rem;
-  padding: 0 .1rem;
+  font-size: 0.12rem;
+  padding: 0 0.1rem;
   color: #999;
-  line-height: .21rem;
+  line-height: 0.21rem;
 }
 .s4s-order-content span {
   text-decoration: underline;
@@ -929,7 +933,7 @@ export default {
 }
 
 .s4s-title {
-  font-size: .2rem;
+  font-size: 0.2rem;
   /* padding: .15rem; */
   padding-top: 0.25rem;
   font-weight: bold;
@@ -937,31 +941,31 @@ export default {
 .s4s-help-tip {
   float: none;
   display: inline-block;
-  margin: 0 .1rem;
+  margin: 0 0.1rem;
   margin-top: 1px;
 }
 .s4s-order-text {
   color: #fe7000;
-  font-size: .12rem;
-  margin-top: .15rem;
+  font-size: 0.12rem;
+  margin-top: 0.15rem;
 }
 .flex-center {
-  display:-webkit-box;
+  display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  align-items:center;
-  -moz-box-align:center;
-  -webkit-box-align:center;
-  -webkit-justify-content:center;
-  justify-content:center;
-  -moz-box-pack:center;
-  -webkit-box-pack:center;
-  -moz-box-pack:center;
+  align-items: center;
+  -moz-box-align: center;
+  -webkit-box-align: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -moz-box-pack: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
 }
 .s4s-order-tip-text {
-  font-size: .13rem;
+  font-size: 0.13rem;
   color: #666;
 }
 .image-container {
@@ -969,24 +973,28 @@ export default {
   width: 100%;
   overflow: hidden;
 }
-input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
   color: #ccc;
 }
-input:-moz-placeholder, textarea:-moz-placeholder {
-  color:#ccc;
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+  color: #ccc;
 }
-input::-moz-placeholder, textarea::-moz-placeholder {
-  color:#ccc;
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: #ccc;
 }
-input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-  color:#ccc;
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: #ccc;
 }
 .provice {
-  background-image: linear-gradient(40deg,  0%#ff7c00, #fe5a00 100%);
+  background-image: linear-gradient(40deg, #ff7c00 0%, #fe5a00 100%);
   border-radius: 0.04rem;
   color: #fff;
   /* width: 0.45rem; */
-  min-width: .5rem;
+  min-width: 0.5rem;
   height: 0.25rem;
   margin-right: 0.1rem;
   padding: 0.01rem 0.09rem;
@@ -1011,7 +1019,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   transition: transform 0.3s ease-out;
   -webkit-transition: -webkit-transform 0.3s ease-out;
 }
-.s4s-provice-tit,.s4s-provice-tit-hide {
+.s4s-provice-tit,
+.s4s-provice-tit-hide {
   float: left;
   width: 9%;
   padding: 0.05rem;
@@ -1022,9 +1031,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   text-align: center;
   font-size: 0.14rem;
 }
-.s4s-provice-tit-hide{
+.s4s-provice-tit-hide {
   width: 33.899999999%;
-  background: #BBC3C7;
+  background: #bbc3c7;
   color: #fff;
 }
 @media screen and (min-width: 500px) {
@@ -1033,7 +1042,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     margin-left: 1.09999999%;
     margin-top: 1.09999999%;
   }
-  .s4s-provice-tit-hide{
+  .s4s-provice-tit-hide {
     width: 98%;
     margin-left: 1.09999999%;
     margin-top: 1.09999999%;
@@ -1044,29 +1053,33 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color: #fff;
 }
 .s4s-input-size {
-  color:#999;
-  font-size:.14rem;
-  font-weight:normal;
+  color: #999;
+  font-size: 0.14rem;
+  font-weight: normal;
   vertical-align: middle;
-  margin-left:.1rem;
+  margin-left: 0.1rem;
 }
 .btn-border {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
 }
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-  font-weight: normal!important;
+::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  font-weight: normal !important;
 }
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-  font-weight: normal!important;
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  font-weight: normal !important;
 }
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-  font-weight: normal!important;
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  font-weight: normal !important;
 }
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  font-weight: normal!important;
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  font-weight: normal !important;
 }
 input {
-  color:#333;
+  color: #333;
 }
 </style>
