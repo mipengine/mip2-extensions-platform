@@ -352,7 +352,7 @@ export default {
     }
     .position{display: inline-block; width: 80px}
     .fids{background: #fff; padding: 10px 3%}
-    .inputxt{width: 76%; display: inline-block}
+    .inputxt{width: 70%; display: inline-block}
 
     .fids .inputButton {
         width:94%;
@@ -517,7 +517,7 @@ export default {
         height: 30px;
         line-height: 30px;
         border-radius: 16px;
-        width: 70%;
+        width: 65%;
     }
     .c-inputxt input{
         width: 66%;

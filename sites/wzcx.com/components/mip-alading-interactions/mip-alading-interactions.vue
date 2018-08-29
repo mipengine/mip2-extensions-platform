@@ -22,48 +22,53 @@
           </footer>
         </div>
       </div>
-      <!-- 没有输入信息就跳到结果页--其实不太可能 -->
-      <div
-        v-if="noInfo"
-        id="newerror">
-        <mip-img
-          id="tu"
-          width="84"
-          height="84"
-          src="../static/img/tu.png" />
-        <h1 class="weihuzhong">您所输入的信息有误，无法<br>查询到违章信息，请重新输入正确信息</h1>
+      <div>
+        <!-- 没有输入信息就跳到结果页--其实不太可能 -->
         <div
-          id="inputagain"
-          @click="inputAgain">点击重新输入</div>
-      </div>
-      <!-- 驾驶证输入错误的信息 -->
-      <div
-        v-if="wrongInfo_license"
-        id="newerror">
-        <mip-img
-          id="tu"
-          width="84"
-          height="84"
-          src="../static/img/tu.png" />
-        <h1 class="weihuzhong">您所输入的信息有误，无法<br>查询到违章信息，请重新输入正确信息</h1>
+          v-if="noInfo"
+          id="newerror">
+          <mip-img
+            id="tu"
+            width="84"
+            height="84"
+            src="../static/img/tu.png" />
+          <h1 class="weihuzhong">您所输入的信息有误，无法<br>查询到违章信息，请重新输入正确信息</h1>
+          <div
+            id="inputagain"
+            @click="inputAgain">点击重新输入</div>
+        </div>
+        <!-- 驾驶证输入错误的信息 -->
         <div
-          id="inputagain"
-          @click="inputAgain">点击重新输入</div>
-      </div>
-      <!-- 车辆输入了错误的信息 -->
-      <div
-        v-if="wrongInfo"
-        id="newerror2">
-        <mip-img
-          id="tu"
-          width="84"
-          height="84"
-          src="../static/img/tu.png" />
-        <h1 class="weihuzhong">暂无法查询违章信息，可能原因如下：</h1>
-        <h1 class="weihuzhong2">1.你的车辆是以下其中一种状态：转出，被盗抢，注销，达到报废标准<br>2.你所输入的车辆查询信息有误</h1>
+          v-if="wrongInfo_license"
+          id="newerror">
+          <mip-img
+            id="tu"
+            width="84"
+            height="84"
+            src="../static/img/tu.png" />
+          <h1 class="weihuzhong">您所输入的信息有误，无法<br>查询到违章信息，请重新输入正确信息</h1>
+          <div
+            id="inputagain"
+            @click="inputAgain">点击重新输入</div>
+        </div>
+        <!-- 车辆输入了错误的信息 -->
         <div
-          id="inputagain"
-          @click="inputAgain">点击重新输入</div>
+          v-if="wrongInfo"
+          id="newerror2">
+          <mip-img
+            id="tu"
+            width="84"
+            height="84"
+            src="../static/img/tu.png" />
+          <h1 class="weihuzhong">暂无法查询违章信息，可能原因如下：</h1>
+          <h1 class="weihuzhong2">1.你的车辆是以下其中一种状态：转出，被盗抢，注销，达到报废标准<br>2.你所输入的车辆查询信息有误</h1>
+          <div
+            id="inputagain"
+            @click="inputAgain">点击重新输入</div>
+        </div>
+        <div
+          v-if="isFixBottomTip === true"
+          class="fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
       </div>
 
       <!-- 输入正确且有返回的情况 -->
@@ -127,7 +132,7 @@
                   状态
                 </div>
                 <div id="id_staus_right">
-                  {{ status_license }}
+                  <span id="id_staus_right_span">{{ status_license }}</span>
                 </div>
               </div>
             </div>
@@ -211,6 +216,7 @@
             <div
               class="chufajuedingshu"
               @click="cxwzcl">查询车辆违章</div>
+
           </div>
         </div>
         <!-- card 车辆 -->
@@ -351,10 +357,16 @@
           </div>
         </div>
 
+        <div
+          v-if="isFixBottomTip === false"
+          id="fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
+
+        <div
+          v-if="isFixBottomTip === true"
+          class="fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
+
       </div>
     </div>
-    <div
-      id="fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
   </div>
 </template>
 
@@ -486,11 +498,11 @@
     font-size: 42px !important;
   }
 }
-.root-box{
+.root-box {
   display: flex;
   flex-direction: column;
   overflow: auto;
-  background: rgba(245,245,245,1);
+  background: rgba(245, 245, 245, 1);
 }
 
 body {
@@ -499,18 +511,18 @@ body {
 }
 
 #fix_bottom {
-    width: 100%;
-    text-align: center;
-    font-size: 0.55rem;
-    font-family: PingFang-SC-Medium;
-    color: rgba(153, 153, 153, 1);
-    border-box: content-box;
-    box-sizing: border-box;
-    margin: 0.5rem auto;
+  width: 100%;
+  text-align: center;
+  font-size: 0.55rem;
+  font-family: PingFang-SC-Medium;
+  color: rgba(153, 153, 153, 1);
+  border-box: content-box;
+  box-sizing: border-box;
+  margin: 0.5rem auto;
 }
 
 .container {
-  flex-grow: 2;
+  /* flex-grow: 2; */
   width: 92%;
   margin: 0 auto;
   /* overflow: scroll; */
@@ -693,9 +705,24 @@ body {
   color: rgba(255, 255, 255, 1);
   float: left;
 }
-
 #id_staus_right {
   float: left;
+  margin-left: 0.725rem;
+}
+#id_staus_right_span {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  height: 0.9rem;
+  background: rgba(29, 112, 47, 1);
+  border-radius: 0.9rem;
+  padding: 0 0.75rem;
+  font-family: PingFang-SC-Medium;
+  color: rgba(96, 182, 109, 1);
+  font-size: 0.5rem;
+}
+/* #id_staus_right {
+  float:left;
   display: inline-block;
   padding: 0 0.75rem;
   line-height: 0.9rem;
@@ -707,7 +734,7 @@ body {
   font-family: PingFang-SC-Medium;
   color: rgba(96, 182, 109, 1);
   font-size: 0.5rem;
-}
+} */
 
 #staus_right {
   float: left;
@@ -1042,7 +1069,7 @@ body {
 
 #newerror {
   /* display: none; */
-  height: 22rem;
+  /* height: 22rem; */
   margin-top: 5rem;
   width: 100%;
   text-align: center;
@@ -1259,6 +1286,7 @@ export default {
       isCard: false,
       hasLicenseIllegal: false,
       hasCardIllegal: false,
+      isFixBottomTip: false,
       isShowDeleteBox: false, // 控制弹框
       id_card: '',
       weizhangcishu: '',
@@ -1285,7 +1313,7 @@ export default {
   mounted () {
     base.resetRem()
     console.log('document', document)
-    base.setContainerH('.root-box')
+    // base.setContainerH('.root-box')
     // let wrapper = document.querySelector('.ald-wrapper')
     // let scroll = new BScroll(wrapper, {})
 
@@ -1304,6 +1332,7 @@ export default {
       console.log('没有输入信息就跳转到这个页面')
       let that = this
       that.noInfo = true
+      that.isFixBottomTip = true
     }
     if (this.getUrlParam('license_no')) {
       let that = this
@@ -1342,14 +1371,21 @@ export default {
             if (res.result_set.length > 0) {
               that.hasLicenseIllegal = true
               that.results_license = res.result_set
+              that.isFixBottomTip = false
             }
             if (res.result_set.length === 0) {
               that.hasLicenseIllegal = false
+              that.isFixBottomTip = true
+              let containerH = base.getContainerH('.root-box')
+              if (containerH < 600) {
+                that.isFixBottomTip = false
+              }
             }
           }
 
           if (res.errcode === -200) {
             that.wrongInfo_license = true
+            that.isFixBottomTip = true
           }
         })
     }
@@ -1387,10 +1423,19 @@ export default {
             if (res.result_set.length > 0) {
               that.hasCardIllegal = true
               that.results = res.result_set
+              that.isFixBottomTip = false
+            }
+            if (res.result_set.length === 0) {
+              that.isFixBottomTip = true
+              let containerH = base.getContainerH('.root-box')
+              if (containerH < 600) {
+                that.isFixBottomTip = false
+              }
             }
           }
           if (res.errcode === -200) {
             that.wrongInfo = true
+            that.isFixBottomTip = true
           }
         })
     }
@@ -1430,10 +1475,9 @@ export default {
       }
     },
     ckwddd () {
-      MIP.viewer.open(
-        base.outAldhttp + 'mip-my-order.html',
-        { isMipLink: true }
-      )
+      MIP.viewer.open(base.outAldhttp + 'mip-my-order.html', {
+        isMipLink: true
+      })
     },
     ljblwz () {
       let that = this
@@ -1443,8 +1487,7 @@ export default {
         //     baseUrl +
         //     "yzcw-web-admin/login/xmd/xmd_baidu_xzh/site_illegal_payment/auth";
         MIP.viewer.open(
-          base.outAldhttp +
-            'mip-xmd-illegal-index.html?selected=decision',
+          base.outAldhttp + 'mip-xmd-illegal-index.html?selected=decision',
           { isMipLink: true }
         )
       }
@@ -1453,7 +1496,8 @@ export default {
         plateNo = plateNo.substr(0, 1) === '粤' ? plateNo : '粤' + plateNo
         plateNo = encodeURIComponent(plateNo)
         MIP.viewer.open(
-          base.outAldhttp + 'mip-xmd-illegal-msg.html?' +
+          base.outAldhttp +
+            'mip-xmd-illegal-msg.html?' +
             'PLATENUMBER=' +
             plateNo +
             '&FDJH=' +
@@ -1466,15 +1510,13 @@ export default {
     },
     cxwzcl () {
       MIP.viewer.open(
-        base.outAldhttp +
-          'mip-xmd-illegal-index.html?selected=illegal',
+        base.outAldhttp + 'mip-xmd-illegal-index.html?selected=illegal',
         { isMipLink: true }
       )
     },
     wycfjds () {
       MIP.viewer.open(
-        base.outAldhttp +
-          'mip-xmd-illegal-index.html?selected=decision',
+        base.outAldhttp + 'mip-xmd-illegal-index.html?selected=decision',
         { isMipLink: true }
       )
     },
