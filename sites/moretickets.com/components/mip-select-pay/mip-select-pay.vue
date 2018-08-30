@@ -258,7 +258,7 @@ export default {
 
               }
             } else {
-              sessionStorageUtil.set('login_back_url', MIP.viewer.page.currentPageId)
+              sessionStorageUtil.set('login_back_url', window.location.href)
               self.loginUrl && MIP.viewer.open(self.loginUrl)
             }
           })
@@ -303,7 +303,7 @@ export default {
     },
     wxAuth (isForceAuth) {
       let urlHost = 'mqa666.moretickets.com'
-      let callback = MIP.viewer.page.currentPageId
+      let callback = window.location.href
       let appid = ''
       if (urlHost.indexOf('moretickets.com') > -1 && urlHost.indexOf('qa') < 0 && urlHost.indexOf('dev') < 0) {
         appid = 'wx53b25b22e471f008'

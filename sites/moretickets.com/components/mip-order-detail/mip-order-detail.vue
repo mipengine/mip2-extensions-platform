@@ -2257,7 +2257,7 @@ export default {
               }
             }
           } else {
-            sessionStorageUtil.set('login_back_url', MIP.viewer.page.currentPageId)
+            sessionStorageUtil.set('login_back_url', window.location.href)
             me.loginUrl && MIP.viewer.open(me.loginUrl)
           }
         }).catch(function (err) {

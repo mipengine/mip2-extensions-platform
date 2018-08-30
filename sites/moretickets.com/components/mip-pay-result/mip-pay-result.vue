@@ -154,7 +154,7 @@ export default {
               self.display = true
             }
           } else if (data.statusCode === 1005) {
-            MIP.viewer.page.currentPageId && sessionStorageUtil.set('login_back_url', MIP.viewer.page.currentPageId + '?transactionOID=' + searchValueByKey('transactionOID'))
+            window.location.href && sessionStorageUtil.set('login_back_url', window.location.href)
             self.loginUrl && MIP.viewer.open(self.loginUrl)
           }
         })

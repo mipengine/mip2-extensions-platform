@@ -504,7 +504,7 @@ export default {
           } else if (res.statusCode === 1005) {
             sessionStorageUtil.set(
               'login_back_url',
-              MIP.viewer.page.currentPageId
+              window.location.href
             )
             me.loginUrl && MIP.viewer.open(me.loginUrl)
           }
@@ -576,7 +576,7 @@ export default {
             } else if (res.statusCode === 1005) {
               sessionStorageUtil.set(
                 'login_back_url',
-                MIP.viewer.page.currentPageId
+                window.location.href
               )
               me.loginUrl && MIP.viewer.open(me.loginUrl)
             } else {

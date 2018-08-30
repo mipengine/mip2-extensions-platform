@@ -777,7 +777,7 @@ export default {
         }
       } else {
         _self.saveUserSelect(false)
-        sessionStorageUtil.set('login_back_url', MIP.viewer.page.currentPageId)
+        sessionStorageUtil.set('login_back_url', window.location.href)
         _self.loginUrl && MIP.viewer.open(_self.loginUrl)
       }
     })
