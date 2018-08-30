@@ -43,11 +43,11 @@
             <div class="check-name">
               <span v-html="formatSession(s).sessionStr"/>
               <div
-                v-if="s.supportVr"
+                v-if="false && s.supportVr"
                 :class="formatSession(s).tagClass"
                 class="tag tag-vr">VR选座</div>
               <div
-                v-if="s.supportSeatPicking && !s.supportVr"
+                v-if="false && s.supportSeatPicking && !s.supportVr"
                 :class="formatSession(s).tagClass"
                 class="tag tag-seat">可选座</div>
               <div
@@ -639,7 +639,7 @@
 import { httpGet } from '@/common/httpUtil'
 import * as sessionStorageUtil from '@/common/sessionStorageUtil'
 import * as adapterStorageUtil from '@/common/adapterStorageUtil'
-import { templateCompile } from '@/common/urlUtil'
+import { searchValueByKey, templateCompile } from '@/common/urlUtil'
 
 export default {
   props: {
@@ -697,7 +697,7 @@ export default {
         { text: '三个月', value: 90, display: false }
       ],
       selectedValue: 365,
-      retryOrder:false
+      retryOrder: false
     }
   },
   computed: {
@@ -751,8 +751,8 @@ export default {
     sessionStorageUtil.syncSessionData()
     let _self = this
     this.prefixUrl && sessionStorageUtil.set('prefix', this.prefixUrl)
-    if (MIP.hash.get('id')) {
-      _self.fetchShow(MIP.hash.get('id'))
+    if (searchValueByKey('id')) {
+      _self.fetchShow(searchValueByKey('id'))
     }
     _self.limitation = adapterStorageUtil.get('buy_num_limit') || 0
     // 自定义login事件
@@ -770,12 +770,11 @@ export default {
         event.userInfo.tsessionid
       ) {
         sessionStorageUtil.set('mtl_session', event.userInfo.tsessionid)
-        if(_self.retryOrder){
+        if (_self.retryOrder) {
           _self.confirmCallback()
-        }else{
+        } else {
           _self.saveUserSelect(false)
         }
-        
       } else {
         _self.saveUserSelect(false)
         sessionStorageUtil.set('login_back_url', MIP.viewer.page.currentPageId)
@@ -786,18 +785,18 @@ export default {
     this.$on('baiduLoginError', event => {
       // 百度登录后
       _self.saveUserSelect(false)
-      //过期后 百度尝试重新登录下单
+      // 过期后 百度尝试重新登录下单
       _self.retryOrder = true
       this.$emit('showlogin', {})
-      
+
       // sessionStorageUtil.set("login_back_url", _self.nextUrl);
       // _self.loginUrl && MIP.viewer.open(_self.loginUrl);
     })
 
     // 在页面切换，也就是 <iframe> 展现/隐藏时，会在页面中触发切换事件
     window.addEventListener('show-page', () => {
-      if (MIP.hash.get('id')) {
-        _self.fetchShow(MIP.hash.get('id'))
+      if (searchValueByKey('id')) {
+        _self.fetchShow(searchValueByKey('id'))
       }
     })
   },

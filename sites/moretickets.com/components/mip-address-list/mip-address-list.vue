@@ -443,7 +443,7 @@
 <script>
 import { httpGet, httpPost } from '@/common/httpUtil'
 import * as sessionStorageUtil from '@/common/sessionStorageUtil.js'
-import { templateCompile } from '@/common/urlUtil'
+import { searchValueByKey, templateCompile } from '@/common/urlUtil'
 export default {
   props: {
     prefixUrl: {
@@ -492,7 +492,7 @@ export default {
   mounted () {
     sessionStorageUtil.syncSessionData()
     this.loadAddress()
-    this.addressOID = MIP.hash.get('addressOID')
+    this.addressOID = searchValueByKey('addressOID')
   },
   methods: {
     loadAddress () {

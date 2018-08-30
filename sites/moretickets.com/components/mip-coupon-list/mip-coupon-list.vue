@@ -407,7 +407,7 @@
 import { httpGet, httpPost } from '@/common/httpUtil'
 import * as sessionStorageUtil from '@/common/sessionStorageUtil.js'
 import * as adapterStorageUtil from '@/common/adapterStorageUtil'
-import { templateCompile } from '@/common/urlUtil'
+import { searchValueByKey, templateCompile } from '@/common/urlUtil'
 export default {
   props: {
     prefixUrl: {
@@ -443,7 +443,7 @@ export default {
   mounted () {
     sessionStorageUtil.syncSessionData()
     this.loadCoupon()
-    this.couponOID = MIP.hash.get('couponOID')
+    this.couponOID = searchValueByKey('couponOID')
   },
   methods: {
     getCoupon () {
