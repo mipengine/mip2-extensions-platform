@@ -1,5 +1,10 @@
 <template>
   <div class="wrapper">
+    <mip-inservice-login
+      v-if="!userId"
+      id="log"
+      :config="config"
+      on="login:example.customLogin"/>
     <div class="order-nav">
       <mip-fixed
         type="top"
@@ -59,12 +64,12 @@
                 v-if="i.button1"
                 :param="i.button1.param"
                 class="red"
-                @click="toaction(i.button1)">{{ i.button1.text }}</button>
+                @click="toaction(i.button1,i.totalQuantity)">{{ i.button1.text }}</button>
               <button
                 v-if="i.button2"
                 :param="i.button2.param"
                 class="red"
-                @click="toaction(i.button2)">{{ i.button2.text }}</button>
+                @click="toaction(i.button2,i.totalQuantity)">{{ i.button2.text }}</button>
             </div>
           </div>
         </div>
@@ -74,7 +79,7 @@
         <div
           v-if="noList"
           class="noorder">
-          <img src="https://www.daoway.cn/h5/image/dingdanye_03.png">
+          <img src="http://www.daoway.cn/images/noorder.png">
           <div class="classname">还没有订单哦~</div>
           <div class="classname">快去挑选心怡的服务吧~</div>
         </div>
@@ -109,7 +114,7 @@
       <div class="bottomnav">
         <a
           data-type="mip"
-          data-title="首页"
+          data-title="到位上门服务"
           @click="toindex"
         ><img src="http://www.daoway.cn/mip/common/images/home2.png">首页</a>
         <a
@@ -127,6 +132,7 @@
 </template>
 <script>
 import base from '../../common/utils/base'
+/* import login from '../../common/utils/login' */
 import '../../common/utils/base.less'
 
 export default {
@@ -134,6 +140,20 @@ export default {
     payConfig: {
       type: Object,
       default: function () { return {} }
+    },
+    info: {
+      type: Object,
+      required: true,
+      default () {
+        return {}
+      }
+    },
+    config: {
+      type: Object,
+      required: true,
+      default () {
+        return {}
+      }
     }
   },
   data () {
@@ -185,12 +205,11 @@ export default {
           items: []
         }
       ],
-      redirect_uri: 'http://test.daoway.cn/mip/t/order.html',
+      redirect_uri: base.htmlhref.order,
       client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
       ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
-      // code: base.getRequest(location.href).code,
-      userId: localStorage.getItem('userId'),
-      token: localStorage.getItem('token'),
+      userId: localStorage.getItem('mipUserId'),
+      token: localStorage.getItem('mipToken'),
       sw: true,
       loding: false,
       channel: 'baidu',
@@ -217,7 +236,16 @@ export default {
         that.tradeType = 'MWEB'
       }
     } else {
-      that.tologin()
+      that.$element.customElement.addEventAction('customLogin', event => {
+        console.log(event)
+        that.info = event.userInfo
+        that.userId = event.userInfo.userId
+        that.token = event.userInfo.token
+        localStorage.setItem('mipUserId', event.userInfo.userId)
+        localStorage.setItem('mipToken', event.userInfo.token)
+        localStorage.setItem('nick', event.userInfo.nick)
+        that.getOrderList(0)
+      })
     }
   },
   methods: {
@@ -227,11 +255,11 @@ export default {
       let scope = 'snsapi_base'
       MIP.viewer.open('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + loginUrl + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect', {isMipLink: false})
     },
-    tologin () {
-      let that = this
-      let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + base.htmlhref.index + '&scope=snsapi_userinfo&state=STATE'
+    /* tologin () {
+      let that = this;
+      let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + base.htmlhref.order + '&scope=snsapi_userinfo&state=STATE';
       MIP.viewer.open(url, { isMipLink: true })
-    },
+    }, */
     getOrderList (index) {
       let that = this
       let orderitems = that.orderitems
@@ -451,12 +479,18 @@ export default {
       }
     },
     // 完成订单
-    toaction: function (param) {
+    toaction: function (param, quantity) {
       let that = this
       let payparam = param.param
-      // let text = param.text
       if (param.text === '再次购买') {
-        MIP.viewer.open(base.htmlhref.reservation + '?orderId=' + param.param.orderId, { isMipLink: true })
+        if (MIP.util.platform.isWechatApp()) {
+          let appid = 'wx0290cc2004b61c97'
+          let loginUrl = encodeURIComponent(base.htmlhref.reservation + '?orderId=' + encodeURIComponent(param.param.orderId)) + '&serviceId=' + param.param.serviceId + '&quantity=' + quantity
+          let scope = 'snsapi_base'
+          MIP.viewer.open('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + loginUrl + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect', { isMipLink: true })
+        } else {
+          MIP.viewer.open(base.htmlhref.reservation + '?orderId=' + param.param.orderId + '&serviceId=' + param.param.serviceId + '&quantity=' + quantity, { isMipLink: true })
+        }
       } else if (param.text === '确认订单') {
         that.warn.show = true
         that.warn.texts = '确认订单完成？'
@@ -466,7 +500,8 @@ export default {
         that.warn.texts = '确定取消订单？'
         that.param = param
       } else if (param.text === '立即支付') {
-        let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + payparam.orderid)
+        // let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + payparam.orderid)
+        let redirectUrl = that.returnurl + '?orderId=' + payparam.orderid
         MIP.setData({'payConfig': {
           'fee': (payparam.totalPrice + payparam.fixFee - payparam.coupon).toFixed(2),
           'sessionId': that.token,
@@ -565,6 +600,7 @@ export default {
             // 暂时只有这些了
             that.noList = false
             that.noMoreList = true
+            that.loding = false
           }
         }
       }
@@ -596,7 +632,7 @@ export default {
     li, ol {
         list-style: none
     }
-    .theclose{width: 80%; margin: 0 auto}
+    .theclose{width: 90%; margin: 0 auto}
     .layer p.active-layer{
         width: 50%;
         float: left;
@@ -625,17 +661,16 @@ export default {
         margin-bottom: 50px;
     }
     .noorder img{
-        width: 100px;
+        width: 200px;
         height: auto
     }
     .noorder{
-        padding-top: 40%;
+        padding-top: 24%;
     }
 
     .mipfd{
         width: 100%;
         background: #fff;
-        padding-top: 10px;
     }
     .order-nav img{
         width: 20px;
@@ -678,6 +713,29 @@ export default {
         background: #fff;
     }
 
+    .bottomnav{
+      width: 100%;
+      background: #fff;
+      border-top: 1px solid #ededed;
+    }
+    .bottomnav a{
+      line-height: 23px;
+      display: inline-block;
+      width: 32%;
+      text-align: center;
+      font-size: 12px;
+      margin-top: 5px;
+    }
+    .bottomnav a img{
+      width: 25px;
+      height: auto;
+      display: block;
+      text-align: center;
+      margin: 0 auto;
+    }
+    .regclolr{
+      color: red;
+    }
     .orderitem {
         margin-top: 10px;
         background: #fff;
@@ -811,7 +869,9 @@ export default {
     .noorder div {
         font-size: 14px;
         color: #8f8f8f;
-        line-height: 30px
+        line-height: 26px;
+        position: relative;
+        bottom: 46px;
     }
 
     .order-home{
@@ -824,6 +884,8 @@ export default {
     .ordertop{
       background: #fff;
       padding-top: 15px;
+      margin-top: 44px;
+      border-top: 1px solid #f5f5f5;
     }
   .ordertop img{
     width: 22px;

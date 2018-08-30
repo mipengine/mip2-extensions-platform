@@ -60,6 +60,9 @@
       <p
         v-if="loding"
         class="loding">加载中...</p>
+      <p
+        v-if="nomore"
+        class="loding">没有更多了</p>
     </div>
   </div>
 </template>
@@ -79,14 +82,14 @@ export default {
       sw: true,
       ary: [],
       loding: false,
-      channel: 'baidu'
+      channel: 'baidu',
+      nomore: false
     }
   },
   created () {
     window.addEventListener('scroll', this.morelist)
   },
   mounted () {
-    document.title = this.tag
     let category = this.category
     let tag = this.tag
     this.nav()
@@ -156,9 +159,6 @@ export default {
             firstReduce: firstReduce || null
           }
           ary.push(obj)
-          if (ary.length === 0) {
-            this.loding = false
-          }
         }
         that.item = ary
         that.sw = true
@@ -168,7 +168,6 @@ export default {
     },
     tapnav (index) {
       let that = this
-      that.ary = []
       let category = that.category
       that.tag = that.filterAry[index].name
       if (that.tag === '全部') {
@@ -176,6 +175,8 @@ export default {
       } else {
         that.tags = '&tag=' + encodeURIComponent(that.tag)
       }
+      that.ary = []
+      window.scrollTo(0, 0)
       that.getServicelist(0, category, that.tags)
     },
     morelist () {
@@ -183,17 +184,19 @@ export default {
       let category = that.category
       let index = that.ary.length
       if (document.body.scrollTop || document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight) {
-        if (that.sw === true) {
+        if (that.sw === true || index < 5) {
           that.sw = false
           setTimeout(() => {
             that.loding = true
           }, 500)
           that.getServicelist(index, category, that.tags)
+        } else {
+          that.loding = false
         }
       }
     },
     todetail (id) {
-      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, { isMipLink: false })
+      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, { isMipLink: true })
     }
   }
 }
@@ -222,6 +225,8 @@ export default {
         height: 80px;
         padding: 5px 0;
         background: #fff;
+        margin-top: 44px;
+        border-top: 1px solid #f5f5f5;
     }
 
     .sc-list {
@@ -229,6 +234,7 @@ export default {
         text-align: center;
         padding: 10px 0;
         font-size: 14px;
+        min-width: 46px;
     }
     .activity{
         border-bottom: 2px solid red;
@@ -240,7 +246,8 @@ export default {
     }
 
     .sc-list i {
-        display: block
+        display: block;
+        color: #303030;
     }
 
     .sc-nav mip-scrollbox[data-type="row"] [data-inner] {
@@ -279,7 +286,7 @@ export default {
     }
 
     .scbl-right {
-        width: 66%
+        width: 68%
     }
 
     .scbl-right ul {
@@ -296,7 +303,7 @@ export default {
         right: 1%;
         top: 0;
         height: 28px;
-        line-height: 14px;
+        line-height: 13px;
         border: 1px solid #ccc;
         border-radius: 4px;
         overflow: hidden
@@ -328,7 +335,7 @@ export default {
     }
 
     .scbl-right ul li.scbl-aciy {
-        border: 1px solid red;
+        border: 0.5px solid red;
     }
 
     .sc-home {
@@ -341,7 +348,13 @@ export default {
 
     .sc-r-tit {
         font-size: 15px;
-        font-weight: bold
+        font-weight: bold;
+        width: 78%;
+        height: 30px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: #4c4c4c;
     }
 
     .sc-r-text {
@@ -363,7 +376,7 @@ export default {
     .sc-r-price span{
         border: 1px solid red;
         font-size: 10px;
-        padding: 1px 2px;
+        padding: 0 2px;
         border-radius: 2px;
 
     }

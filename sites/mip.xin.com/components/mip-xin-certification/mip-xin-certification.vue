@@ -9,10 +9,12 @@
         <!-- <a
           ref="telPhone"
           :href="'tel:' + telPhone"/> -->
-        <button
+        <a
           v-if="status == 1"
+          :href="'tel:' + telPhone"
+          target="_top"
           class="car-ask"
-          @click="askPrice">服务咨询</button>
+          @click="askPrice">服务咨询</a>
       </div>
       <!-- <div class='car-set u-certified'> -->
       <div class="car-set-content">
@@ -338,6 +340,7 @@ export default {
   },
   mounted () {
     this.certUrl = config.mHost + `/car/iws/${decodeURIComponent(getLocalStorage('locationUrl'))}`
+    this.askPrice()
   },
   methods: {
     // init () {
@@ -409,10 +412,10 @@ export default {
         .then(res => {
           // this.tel(res.tel);
           that.telPhone = res.tel
-          this.$nextTick(() => {
-            // this.$refs.telPhone.click()
-            window.location.href = 'tel:' + that.telPhone
-          })
+          // this.$nextTick(() => {
+          //   // this.$refs.telPhone.click()
+          //   window.location.href = 'tel:' + that.telPhone
+          // })
           clickPoint(
             'tel_consulting_detail',
             {

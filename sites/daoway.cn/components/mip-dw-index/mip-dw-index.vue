@@ -10,7 +10,7 @@
         class="i-p-img">
       <span
         class="spn"
-        @click="toposition">{{ position.name ? position.name : position.addr }}<img src="http://www.daoway.cn/mip/common/images/down1.png"></span>
+        @click="toposition">{{ position.name ? position.name :position.addr }}<img src="http://www.daoway.cn/mip/common/images/down1.png"></span>
         <!--<input class="search" :class="{searchscroll:scroll}" @click="search" type="text" name="search" placeholder="快速搜索商家、服务">-->
     </mip-fixed>
     <div class="banner">
@@ -63,13 +63,14 @@
           </li>
         </ul>
       </div>
+      <div class="lastimg"><img src="http://www.daoway.cn/images/bottom.png"></div>
     </div>
     <mip-fixed type="bottom">
       <div class="bottomnav">
         <a
           class="regclolr"
           data-type="mip"
-          data-title="首页"
+          data-title="到位上门服务"
           @click="toindex"
         ><img src="http://www.daoway.cn/mip/common/images/home.png">首页</a>
         <a
@@ -94,7 +95,7 @@ export default {
       channel: 'baidu',
       zoom: 3,
       city: '',
-      position: base.getposition() || '',
+      position: '',
       banners: [],
       fenleiary: [],
       list: [],
@@ -119,15 +120,6 @@ export default {
     } else {
       that.handler()
     }
-    let userId = localStorage.getItem('userId')
-    let token = localStorage.getItem('token')
-    if (!userId || !token) {
-      if (this.code) {
-        that.codelogin(this.code, this.redirectUri)
-      } else {
-        this.tologin()
-      }
-    }
     window.addEventListener('scroll', that.handleScroll)
     window.addEventListener('show-page', (e) => {
       this.position = base.getposition()
@@ -135,33 +127,6 @@ export default {
     })
   },
   methods: {
-    codelogin: function (code, redirectUri) {
-      let url = '/daoway/rest/users/login_mip'
-      fetch(url, {
-        method: 'POST',
-        headers: {'content-type': 'application/x-www-form-urlencoded'}, // "code="+code,
-        body: 'code=' + code + '&redirectUri=' + redirectUri
-      }).then(function (res) {
-        return res.json()
-      }).then(function (text) {
-        if (text.status === 'ok') {
-          window.localStorage.setItem('userId', text.data.userId)
-          window.localStorage.setItem('token', text.data.token)
-          if (text.data.token) {
-            document.cookie = 'token=' + text.data.token + ';path=/'
-          }
-        } else {
-          console.log('失败')
-        }
-      }).catch(function (error) {
-        console.log(error)
-      })
-    },
-    tologin () {
-      let that = this
-      let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + that.redirectUri + '&scope=snsapi_userinfo&state=STATE'
-      MIP.viewer.open(url, { isMipLink: true })
-    },
     handler () {
       let that = this
       let url = '/daoway/rest/user/city'
@@ -176,9 +141,6 @@ export default {
           let tempLat = data.lat
           that.city = data.city.replace(/市$/g, '') || '北京'
           that.getCommunity(tempLat, tempLot)
-        } else {
-          this.warn.show = true
-          this.warn.texts = text.msg
         }
       }).catch(function (error) {
         console.log(error)
@@ -195,7 +157,7 @@ export default {
         if (text.status === 'ok') {
           that.position = text.data[0]
           that.callBack()
-          that.position = base.position(that.position)
+          base.position(text.data[0])
         } else {
           that.warn.show = true
           that.warn.texts = text.msg
@@ -327,8 +289,44 @@ export default {
         list-style: none
     }
 
+    .mip-shell-header .mip-shell-header-logo-title .mip-shell-header-logo{
+        width: 28px;
+        height: auto;
+        margin-top: 7px;
+    }
     body {
         background: #f5f5f5;
+    }
+    .lastimg{
+        width: 100%;
+        text-align: center;
+        background: #f5f5f5;
+
+    }
+    .lastimg img{
+        width: 250px;
+        height: auto;
+        margin: 5px auto;
+    }
+    .bottomnav{
+        width: 100%;
+        background: #fff;
+        border-top: 1px solid #ededed;
+    }
+    .bottomnav a{
+        line-height: 23px;
+        display: inline-block;
+        width: 32%;
+        text-align: center;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+    .bottomnav a img{
+        width: 25px;
+        height: auto;
+        display: block;
+        text-align: center;
+        margin: 0 auto;
     }
     .regclolr{
         color:#f64e4e ;
@@ -344,9 +342,11 @@ export default {
     .indexed{
         height: 40px;
         line-height: 40px;
+        margin-top: 44px;
     }
     .fiscroll{
         background: #fff;
+        border-top: 1px solid #f5f5f5;
     }
     .fiscroll .spn{
         color: #898989;
@@ -368,6 +368,7 @@ export default {
 
     .boxlist{
         border-bottom: 10px solid #f5f5f5;
+        padding-bottom: 8px;
     }
 
     .servicePro [role=list] {
@@ -470,7 +471,7 @@ export default {
     }
 
     .service-item {
-        width: 98%;
+        width: 100%;
         padding: 10px 1%;
         height: 190px;
         background: #fff;
@@ -487,7 +488,8 @@ export default {
     .service-item ul li i {
         display: block;
         margin-top: 1px;
-        color: #000
+        color: #303030;
+        font-size: 13px;
     }
 
     .service-item ul li img {
@@ -511,7 +513,7 @@ export default {
     }
 
     .down ul li {
-        width: 19%;
+        width: 20%;
         display: inline-block;
         text-align: center;
         border-right: 1px solid #f5f5f5
@@ -525,7 +527,9 @@ export default {
     .down ul li i {
         display: block;
         position: relative;
-        top: 8px
+        top: 8px;
+        font-size: 13px;
+        color: #303030;
     }
 
     .down ul li:last-child {
@@ -538,14 +542,14 @@ export default {
     }
 
     .item-name {
-        padding-left: 3%;
+        padding-left: 2%;
     }
 
     .item-name li {
         display: inline-block;
-        width: 31%;
+        width: 31.5%;
         margin-top: 3px;
-        margin-left: 1%;
+        margin-left: 1.5%;
     }
 
     .item-name li:nth-child(1) {
@@ -559,7 +563,8 @@ export default {
         height: 20px;
         width: 100%;
         overflow: hidden;
-        margin-top: 2px
+        margin-top: 2px;
+        color: #303030;
     }
 
     .name {
@@ -590,6 +595,7 @@ export default {
         height: auto;
         margin-right: 2px;
         vertical-align: middle;
+        margin-bottom: 4px;
     }
     .i-unit{
         font-size: 10px;
