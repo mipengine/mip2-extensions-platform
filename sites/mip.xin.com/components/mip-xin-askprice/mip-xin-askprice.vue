@@ -114,8 +114,10 @@
                     <span class="carbday-scroll">{{ item.regist_date }}年 / {{ item.mileage }}公里</span>
                   </div>
                   <div class="pricedetail-scroll">
-                    <span class="similar-recommend-price-scroll">{{ item.panel_price }}万元</span>
-                    <span class="similar-recommend-monthprice-scroll">首付{{ item.show_price }}万</span>
+                    <div style="display:flex;align-items: baseline;">
+                      <span class="similar-recommend-price-scroll">{{ item.panel_price }}万</span>
+                      <span class="similar-recommend-monthprice-scroll">首付{{ item.show_price }}万</span>
+                    </div>
                     <div
                       v-if="item.isAsk && item.enquiry_status == 1"
                       class="pricedetail-div-scroll"
@@ -197,7 +199,7 @@ export default {
       // event.userInfo;
       // 后端交互会话标识
       // event.sessionId;
-      if (event.userInfo && window.location.href.indexOf('code=') > 0 && window.location.href.indexOf('state=') > 0) {
+      if (event.userInfo && window.location.href.indexOf('code') > 0 && window.location.href.indexOf('state') > 0) {
         console.log('授权成功')
       }
     })
@@ -205,7 +207,7 @@ export default {
     this.$on('clientLogout', event => {
       console.log('登出了')
     })
-    if (window.location.href.indexOf('code=') > 0 && window.location.href.indexOf('state=') > 0) {
+    if (window.location.href.indexOf('code') > 0 && window.location.href.indexOf('state') > 0) {
       this.bottomPrice()
       this.showAskToast = false
       this.showSimilarToast = true
@@ -324,6 +326,7 @@ export default {
       if (!this.telCorrect) {
         this.remain = true
         this.reminMessage = '请输入正确的手机号'
+        return
       }
       this.bottomPrice()
     },
@@ -531,7 +534,7 @@ export default {
   display: flex;
   flex-direction: column;
   background: rgba(255, 255, 255, 1);
-  padding-bottom: 0.3rem;
+  margin-bottom: 0.3rem;
 }
 
 .carcontent-scroll {
@@ -561,6 +564,8 @@ export default {
   display: flex;
   flex-direction: column;
   margin-right: 0.2rem;
+  float: left;
+  width: 4rem;
 }
 
 .righttop-scroll {
@@ -580,8 +585,7 @@ export default {
 }
 
 .priceint-scroll {
-  width: 3.9rem;
-  padding-right: 0.47rem;
+  width: 2.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -618,16 +622,19 @@ export default {
 
 .pricedetail-div-scroll {
   border-radius: 0.03rem;
-  border: 0.01rem solid rgba(255, 90, 55, 1);
+  border: 1px solid rgba(255, 90, 55, 1);
   font-size: 0.24rem;
   font-family: PingFangSC-Regular;
   color: rgba(255, 90, 55, 1);
-  width: 1.22rem;
-  height: 0.46rem;
+  /**width: 1.22rem;
+  height: 0.46rem;*/
   text-align: center;
   line-height: 0.46rem;
-  margin-left: 0.2rem;
-  margin-right: 0.2rem;
+  padding-left: 0.15rem;
+  padding-right: 0.15rem;
+  white-space:nowrap;
+  margin-bottom:0.01rem;
+  padding-top: 0.01rem;
 }
 .asked-price-scroll {
   border-radius: 0.03rem;
@@ -648,6 +655,8 @@ export default {
   font-family: PingFangSC-Medium;
   color: rgba(248, 93, 0, 1);
   line-height: 0.3rem;
+  white-space: nowrap;
+
 }
 
 .similar-recommend-monthprice-scroll {
@@ -655,5 +664,10 @@ export default {
   font-family: PingFangSC-Regular;
   color: rgba(248, 93, 0, 1);
   margin-left: 0.08rem;
+  white-space: nowrap;
+}
+.image-scroll {
+  width:2.56rem;
+  float:left;
 }
 </style>

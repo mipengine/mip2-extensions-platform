@@ -78,7 +78,7 @@
         </div>
         <div
           v-if="loding"
-          class="zhexie">加载中...</div>
+          class="zhexie loding">加载中...</div>
         <div
           v-if="over"
           class="zhexie">~暂时只有这些了~</div>
@@ -190,6 +190,9 @@ export default {
           };
           that.commentTab[index].comment.push(comment)
         }
+        if (data.comments === 0) {
+          that.loding = false
+        }
         that.sw = true
       }).catch(function (error) {
         console.error('Error:', error)
@@ -221,9 +224,11 @@ export default {
             that.over = true
             that.nocomments = false
           } else {
-            that.loding = true
+            setTimeout(() => {
+              that.loding = true
+            }, 500)
+            that.commentlist(that.serviceId, that.priceId, that.index, start)
           }
-          that.commentlist(that.serviceId, that.priceId, that.index, start)
         }
       }
     }
@@ -239,12 +244,15 @@ export default {
 .mipnav[type=top]{
   height: 42px;
   border-bottom: 1px solid #e5e5e5;
+  border-top: 1px solid #f5f5f5;
   padding: 10px 0;
   background: #fff;
+  margin-top: 44px;
 }
 .cm-box{
   margin-top: 60px;
 }
+
 .item {
   width: 16%;
   margin: 0 2%;
