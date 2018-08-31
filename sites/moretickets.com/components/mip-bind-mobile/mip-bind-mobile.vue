@@ -339,9 +339,9 @@ export default {
             if (jsonData.result.data && jsonData.result.data.tsessionid) {
               sessionStorageUtil.set('mtl_session', jsonData.result.data.tsessionid)
             }
-            let loginBackUrl = sessionStorageUtil.get('loginBackUrl')
+            let loginBackUrl = sessionStorageUtil.get('login_back_url')
             if (loginBackUrl) {
-              sessionStorageUtil.remove('loginBackUrl')
+              sessionStorageUtil.remove('login_back_url')
               setTimeout(() => {
                 MIP.viewer.open(loginBackUrl, {replace: true})
               }, 10)
