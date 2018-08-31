@@ -1,4 +1,4 @@
-# `mip-comfirm-order`
+# `mip-confirm-order`
 
 标题|内容
 ----|----

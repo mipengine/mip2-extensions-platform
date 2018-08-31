@@ -2123,7 +2123,7 @@ a.btn-pay{
 <script>
 import { httpGet, httpPut } from '@/common/httpUtil'
 import * as sessionStorageUtil from '@/common/sessionStorageUtil.js'
-import { templateCompile } from '@/common/urlUtil'
+import { searchValueByKey, templateCompile } from '@/common/urlUtil'
 // const ORDER_STATUS_PAID = 4
 const ORDER_STATUS_UNPAID = 1
 const ORDER_STATUS_CANCELED = 2
@@ -2208,7 +2208,7 @@ export default {
     sessionStorageUtil.syncSessionData()
     console.log('呈现详情')
     this.prefixUrl && sessionStorageUtil.set('prefix', this.prefixUrl)
-    this.loadOrder(MIP.hash.get('orderOID'))
+    this.loadOrder(searchValueByKey('orderOID'))
   },
   methods: {
     clickRules () {
@@ -2257,7 +2257,8 @@ export default {
               }
             }
           } else {
-            this.loginUrl && MIP.viewer.open(this.loginUrl)
+            sessionStorageUtil.set('login_back_url', window.location.href)
+            me.loginUrl && MIP.viewer.open(me.loginUrl)
           }
         }).catch(function (err) {
           console.log(err)
@@ -2331,7 +2332,7 @@ export default {
       return this.getCode === ORDER_STATUS_COMPENSATING
     },
     saveOrder () {
-      this.payUrl && MIP.viewer.open(`${this.payUrl}#transactionOID=${this.payTransaction.transactionOID}`)
+      this.payUrl && MIP.viewer.open(`${this.payUrl}?transactionOID=${this.payTransaction.transactionOID}`)
     },
     cancelOrder () {
       let me = this
@@ -2340,7 +2341,7 @@ export default {
       httpPut(fetchUrl)
         .then(function (data) {
           if (data.statusCode === 200) {
-            me.loadOrder(MIP.hash.get('orderOID'))
+            me.loadOrder(searchValueByKey('orderOID'))
           }
         }).catch(function (err) {
           console.log(err)
@@ -2353,7 +2354,7 @@ export default {
       httpPut(fetchUrl)
         .then(function (data) {
           if (data.statusCode === 200) {
-            me.loadOrder(MIP.hash.get('orderOID'))
+            me.loadOrder(searchValueByKey('orderOID'))
           }
         }).catch(function (err) {
           console.log(err)

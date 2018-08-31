@@ -407,7 +407,7 @@
 import { httpGet, httpPost } from '@/common/httpUtil'
 import * as sessionStorageUtil from '@/common/sessionStorageUtil.js'
 import * as adapterStorageUtil from '@/common/adapterStorageUtil'
-import { templateCompile } from '@/common/urlUtil'
+import { searchValueByKey, templateCompile } from '@/common/urlUtil'
 export default {
   props: {
     prefixUrl: {
@@ -443,7 +443,7 @@ export default {
   mounted () {
     sessionStorageUtil.syncSessionData()
     this.loadCoupon()
-    this.couponOID = MIP.hash.get('couponOID')
+    this.couponOID = searchValueByKey('couponOID')
   },
   methods: {
     getCoupon () {
@@ -479,7 +479,7 @@ export default {
           } else if (res.statusCode === 1005) {
             sessionStorageUtil.set(
               'login_back_url',
-              MIP.viewer.page.currentPageId
+              window.location.href
             )
             me.loginUrl && MIP.viewer.open(me.loginUrl)
           }
@@ -519,7 +519,7 @@ export default {
             } else if (res.statusCode === 1005) {
               sessionStorageUtil.set(
                 'login_back_url',
-                MIP.viewer.page.currentPageId
+                window.location.href
               )
               me.loginUrl && MIP.viewer.open(me.loginUrl)
             } else {
