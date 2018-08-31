@@ -146,7 +146,7 @@ export default {
     if (getQuery().ename) {
       Object.assign(param, { ename: getQuery().ename })
     }
-    if (window.location.href.indexOf('code=') > 0 && window.location.href.indexOf('state=') > 0) {
+    if (window.location.href.indexOf('code') > 0 && window.location.href.indexOf('state') > 0) {
       this.showToast = true
     }
     requestFun('/ajax/city/get_location', {
@@ -208,7 +208,8 @@ export default {
       //   }
       // }
       // 如果是从百度跳转过来的需要去掉后面的参数，使用h5 api无刷新跳转
-      if (window.location.href.indexOf('code=') > 0 && window.location.href.indexOf('state=') > 0) {
+      if (window.location.href.indexOf('code') > 0 && window.location.href.indexOf('state') > 0) {
+        // 百度过来的url需要decode
         let Deurl = decodeURIComponent(window.location.href)
         let href = Deurl.split('?')[0]
         window.history.pushState(null, '车辆详情', href)
@@ -278,7 +279,7 @@ export default {
       if (!this.query.channel && getLocalStorage('channel')) {
         removeLocalStorage('channel')
       } else if (this.query && this.query.optoken && this.query.channel) {
-        // 存储跳转url
+        // 存储跳转url 需要存储编码的url
         url = `?optoken=${this.query.optoken}&channel=${this.query.channel}`
         url = encodeURIComponent(url)
         setLocalStorage('locationUrl', url)

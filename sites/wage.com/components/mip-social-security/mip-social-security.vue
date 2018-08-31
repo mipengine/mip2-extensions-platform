@@ -49,7 +49,7 @@
         placeholder="请输入5-12"
         class="w96p"
         @input="inputProportion"
-        @blur="getProportion">
+      >
     </div>
     <mip-fixed
       v-show="scrollshow"
@@ -263,41 +263,59 @@ export default {
 		},
 		// 公积金比例
 		inputProportion: function (e) {
-			let sNum = e.target.value.toString(); // 先转换成字符串类型
-			if (sNum > 12) {
-				sNum = '12';
-			} else if (sNum < 5 && sNum > 1) {
-				sNum = '5';
+			if(e.target.value){
+				let sNum = e.target.value.toString(); // 先转换成字符串类型
+				if (sNum.indexOf('.') > 0) {
+					let index = sNum.indexOf('.');
+					sNum = sNum.slice(0, index);
+				}
+				e.target.value = sNum;
+				this.$emit('getproportion', e.target.value);
+
 			}
-			if (sNum.indexOf('.') > 0) {
-				let index = sNum.indexOf('.');
-				sNum = sNum.slice(0, index);
-			}
-			e.target.value = sNum;
-			this.$emit('getproportion', e.target.value);
-		},
-		getProportion: function (e) {
-			if (e.target.value < 5) {
-				e.target.value = '5';
-			}
-			this.$emit('getproportion', e.target.value);
+
 		},
 		inputBaseMoney: function (e) {
-			let sNum = e.target.value.toString(); // 先转换成字符串类型
-			if (sNum > 10000000) {
-				sNum = sNum.slice(0, 7);
+			if(e.target.value){
+				this.baseMoney = Number(this.moneyFilter(e.target.value));
+				e.target.value = this.baseMoney;
+				this.fromBase = this.baseMoney;
+				this.sendBaseMoney();
 			}
-			this.baseMoney = sNum.replace(/[^\d.]/g, ''); // 清除“数字”和“.”以外的字符
-			this.baseMoney = this.baseMoney.replace(/\.{2,}/g, '.'); // 只保留第一个. 清除多余的
-			this.baseMoney = this.baseMoney.replace('.', '$#$').replace(/\./g, '').replace('$#$', '.');
-			this.baseMoney = this.baseMoney.replace(/^(-)*(\d+)\.(\d\d).*$/, '$1$2.$3'); // 只能输入两个小数
-			// 以上已经过滤，此处控制的是如果没有小数点，首位不能为类似于 01、02的金额
-			if (this.baseMoney.indexOf('.') < 0 && this.baseMoney != '') {
-				this.baseMoney = parseFloat(sNum);
+		},
+		moneyFilter(str) {
+			//过滤掉非法字符(也会过滤掉',')
+			var items = str.match(/\d+|\.|。/g);
+			var num;
+			if (items == null) {
+				return '';
+			} else {
+				num = items.join('');
 			}
-			e.target.value = this.baseMoney;
-			this.fromBase = this.baseMoney;
-			this.sendBaseMoney();
+			var result = '',
+				dec = '';
+			num = num.replace(/。/g, '.'); //兼容中文输入法
+			var list = num.split('.');
+			const max = 10000000;
+			if (list[0] > max) {
+				//double的有效位数是10,小数位分了两位,故整数位限制为8位
+				(list[0]/max) >= 10&&(list[0]/max) <=20?result = list[0].substring(0, 8):result = list[0].substring(0, 7);
+			} else {
+				result = list[0];
+			}
+			if (list.length > 1) {
+				//小数限制为两位
+				if (list[1].length > 2) {
+					dec = list[1].substring(0, 2);
+				} else {
+					dec = list[1];
+				}
+				if (dec.length > 0) {
+					//加上小数
+					result < 10000000 ? result = result + '.' + dec : '';
+				}
+			}
+			return result;
 		},
 		sendBaseMoney: function () {
 			let baseMoneys = {};

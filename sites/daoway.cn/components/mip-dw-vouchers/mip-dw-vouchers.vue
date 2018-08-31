@@ -43,11 +43,11 @@
         </div>
       </div>
     </div>
-    <mip-fixed
+    <!--<mip-fixed
       type="bottom"
       @touchend="back">
       <button class="btn3">不使用代金券</button>
-    </mip-fixed>
+    </mip-fixed>-->
 
     <div
       v-if="noquan"
@@ -74,12 +74,18 @@ export default {
       noquan: false,
       coupone: [],
       unableCoupone: [],
-      userId: localStorage.getItem('userId'),
-      channel: 'baidu'
+      userId: localStorage.getItem('mipUserId'),
+      channel: 'baidu',
+      from: base.getRequest(location.href).from || '',
+      useradd: ''
     }
   },
 
   mounted () {
+    let useradd = sessionStorage.getItem('useradd')
+    if (useradd) {
+      this.useradd = useradd
+    }
     if (base.getRequest(location.href).requestUrl) {
       this.requestUrl = JSON.parse(decodeURIComponent(base.getRequest(location.href).requestUrl))
     } else {
@@ -106,6 +112,7 @@ export default {
         return res.json()
       }).then(function (text) {
         let datas = text.data
+        console.log(datas)
         if (datas.length > 0) {
           let coupone = []
           let unableCoupone = []
@@ -129,11 +136,13 @@ export default {
       })
     },
     back (c) {
-      // MIP.setData(c);
-      sessionStorage.setItem('coupone', JSON.stringify(c))
-      MIP.viewer.page.back()
+      if (this.from === 'my') {
+      } else {
+        sessionStorage.setItem('coupone', JSON.stringify(c))
+        sessionStorage.setItem('useradd', this.useradd)
+        MIP.viewer.page.back()
+      }
     }
-
   }
 }
 </script>
@@ -142,8 +151,10 @@ export default {
     margin: 0 auto;
   }
   .div {
-    width: 94%;
-    margin: 0 3% 55px;
+    width: 100%;
+    margin: 0 0 55px;
+    padding: 0 3%;
+    border-top: 1px solid #f5f5f5;
   }
 
   .list {
