@@ -153,7 +153,8 @@
         <a
           class="customer-service"
           href="tel://400-636-2266"
-          style="text-align:center;">客服
+          style="text-align:center;">
+          <div class="icon"/>
         </a>
         <!-- <div class="favourate" v-bind:class="{active: content.favoured}">
                 <div class="icon" v-bind:class="{animate: content.favoured_animate,static: !content.favoured_animate}" ng-click="content.toggleFavourate()"></div>
@@ -1117,7 +1118,7 @@
 
 <script>
 import { httpGet } from '@/common/httpUtil'
-import { templateCompile } from '@/common/urlUtil'
+import { searchValueByKey, templateCompile } from '@/common/urlUtil'
 import * as sessionStorageUtil from '@/common/sessionStorageUtil'
 import * as adapterStorageUtil from '@/common/adapterStorageUtil'
 export default {
@@ -1197,7 +1198,7 @@ export default {
     let _self = this
     sessionStorageUtil.syncSessionData()
     _self.prefixUrl && sessionStorageUtil.set('prefix', _self.prefixUrl)
-    _self.fetchShow(MIP.hash.get('id'))
+    _self.fetchShow(searchValueByKey('id'))
   },
   methods: {
     fetchShow (id) {
@@ -1216,7 +1217,7 @@ export default {
         })
     },
     bookingLink (id) {
-      return `${this.nextUrl}#id=${id}`
+      return `${this.nextUrl}?id=${id}`
     },
     tips () {
       return ['演出详情仅供参考，具体信息以主办方公布信息及现场为准，请准时到场以免错过演出。',
