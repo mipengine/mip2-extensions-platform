@@ -10,7 +10,7 @@ function getURL (path) {
 }
 
 function getBaiduSession () {
-  return sessionStorageUtil.get('mtl_session') || '5b7693b1e4b082adb3e754a2'// || getSession()
+  return adapterStorageUtil.get('mtl_session') || '5b7693b1e4b082adb3e754a2'
 }
 function httpReq (method, url, params, data, authFlag) {
   console.log('开始请求:' + url)
