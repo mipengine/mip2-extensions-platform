@@ -127,6 +127,7 @@ export default {
         }
       })
       Storage.set('apitoken', event.userInfo.apitoken)
+      self.initData()
     })
     // 自定义exit事件
     this.$element.customElement.addEventAction('exit', event => {
