@@ -38,7 +38,7 @@
             <mip-img
               layout="container"
               class="selected-img"
-              src="~@/static/icon/address_selected.png"
+              src="/static/icon/address_selected.png"
               width="40px"
               height="40px"
             />
