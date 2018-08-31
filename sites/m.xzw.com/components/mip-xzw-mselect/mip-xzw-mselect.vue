@@ -59,7 +59,7 @@
     class="boy fl"
   >
     <dt class="head"><mip-img :src="xzsrc"/></dt>
-    <dd class="name">男：{{ xzname }}</dd>
+    <dd class="xz name">男：{{ xzname }}</dd>
     <input
       :value="xzid"
       name="boy"
@@ -71,7 +71,7 @@
     class="girl fl"
   >
     <dt class="head"><mip-img :src="xzsrc2"/></dt>
-    <dd class="name">女：{{ xzname2 }}</dd>
+    <dd class="xz name">女：{{ xzname2 }}</dd>
     <input
       :value="xzid2"
       name="girl"
@@ -138,8 +138,8 @@
   </div>
 </template>
 
-<style>
-.xzpair .pairbox .name{font-size: 0.44rem;width: auto;}
+<style scoped>
+.xz.name{font-size: 0.44rem;width: auto;}
 </style>
 
 <script>

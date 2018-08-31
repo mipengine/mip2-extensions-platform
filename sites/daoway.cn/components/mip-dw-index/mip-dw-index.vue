@@ -1,7 +1,6 @@
 
 <template>
   <div class="wrapper">
-    {{ imgurl }}
     <mip-fixed
       :class="{fiscroll:scroll}"
       type="top"
@@ -11,7 +10,7 @@
         class="i-p-img">
       <span
         class="spn"
-        @touchend="toposition">{{ position.name ? position.name : position.addr }}∨</span>
+        @click="toposition">{{ position.name ? position.name :position.addr }}<img src="http://www.daoway.cn/mip/common/images/down1.png"></span>
         <!--<input class="search" :class="{searchscroll:scroll}" @click="search" type="text" name="search" placeholder="快速搜索商家、服务">-->
     </mip-fixed>
     <div class="banner">
@@ -43,7 +42,8 @@
     <div class="box">
       <div
         v-for="k in list"
-        :key="k">
+        :key="k"
+        class="boxlist">
         <div
           :categoryId="k.categoryId"
           class="h2">{{ k.categoryName }}<span @click="toserviceclass(k.categoryId)" >更多<img src="https://www.daoway.cn/h5/image/go_06.png"></span></div>
@@ -63,23 +63,24 @@
           </li>
         </ul>
       </div>
+      <div class="lastimg"><img src="http://www.daoway.cn/images/bottom.png"></div>
     </div>
     <mip-fixed type="bottom">
       <div class="bottomnav">
         <a
           class="regclolr"
           data-type="mip"
-          data-title="首页"
-          href="http://test.daoway.cn/mip/t/index.html"
-          @click="toindex"><img src="http://www.daoway.cn/mip/common/images/home.png">首页</a>
+          data-title="到位上门服务"
+          @click="toindex"
+        ><img src="http://www.daoway.cn/mip/common/images/home.png">首页</a>
         <a
           data-type="mip"
           data-title="订单"
-          href="http://test.daoway.cn/mip/t/order.html"><img src="http://www.daoway.cn/mip/common/images/order2.png">订单</a>
+          @click="toorder"><img src="http://www.daoway.cn/mip/common/images/order2.png">订单</a>
         <a
           data-type="mip"
           data-title="我的"
-          href="http://test.daoway.cn/mip/t/my.html"><img src="http://www.daoway.cn/mip/common/images/my2.png">我的</a>
+          @click="tomy"><img src="http://www.daoway.cn/mip/common/images/my2.png">我的</a>
       </div>
     </mip-fixed>
   </div>
@@ -87,7 +88,6 @@
 <script>
 
 import base from '../../common/utils/base.js'
-import login from '../../common/utils/login'
 import '../../common/utils/base.less'
 export default {
   data () {
@@ -108,39 +108,25 @@ export default {
       client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
       ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
       code: base.getRequest(location.href).code,
-      redirectUri: 'http://test.daoway.cn/mip/t/index.html'
+      redirectUri: base.htmlhref.index
     }
   },
   mounted () {
-    let userId = localStorage.getItem('userId')
-    let token = localStorage.getItem('token')
-    if (!userId || !token) {
-      if (this.code) {
-        login.codelogin(this.code, this.redirectUri)
-      } else {
-        this.tologin()
-      }
-    }
     let that = this
-    window.addEventListener('scroll', that.handleScroll)
     let position = localStorage.getItem('position')
     if (position) {
       that.position = base.getposition()
       that.callBack()
     } else {
-      this.handler()
+      that.handler()
     }
+    window.addEventListener('scroll', that.handleScroll)
     window.addEventListener('show-page', (e) => {
-      that.position = base.getposition()
+      this.position = base.getposition()
       that.callBack()
     })
   },
   methods: {
-    tologin () {
-      let that = this
-      let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + that.redirectUri + '&scope=snsapi_userinfo&state=STATE'
-      MIP.viewer.open(url, { isMipLink: true })
-    },
     handler () {
       let that = this
       let url = '/daoway/rest/user/city'
@@ -155,9 +141,6 @@ export default {
           let tempLat = data.lat
           that.city = data.city.replace(/市$/g, '') || '北京'
           that.getCommunity(tempLat, tempLot)
-        } else {
-          this.warn.show = true
-          this.warn.texts = text.msg
         }
       }).catch(function (error) {
         console.log(error)
@@ -174,7 +157,7 @@ export default {
         if (text.status === 'ok') {
           that.position = text.data[0]
           that.callBack()
-          that.position = base.position(that.position)
+          base.position(text.data[0])
         } else {
           that.warn.show = true
           that.warn.texts = text.msg
@@ -266,16 +249,25 @@ export default {
       })
     },
     toservicedetail (id) { // 跳转到服务列表页
-      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, {isMipLink: true})
+      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, {isMipLink: false})
     },
     toserviceclass (id, name) {
       if (!name) {
         name = '全部'
       }
-      MIP.viewer.open(base.htmlhref.serviceclass + '?category=' + id + '&tag=' + name, {isMipLink: true})
+      MIP.viewer.open(base.htmlhref.serviceclass + '?category=' + id + '&tag=' + name, {isMipLink: false})
     },
     toposition () {
       MIP.viewer.open(base.htmlhref.position, {isMipLink: true})
+    },
+    toindex () {
+      MIP.viewer.open(base.htmlhref.index, {isMipLink: false})
+    },
+    toorder () {
+      MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
+    },
+    tomy () {
+      MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
     }
   }
 
@@ -297,18 +289,24 @@ export default {
         list-style: none
     }
 
+    .mip-shell-header .mip-shell-header-logo-title .mip-shell-header-logo{
+        width: 28px;
+        height: auto;
+        margin-top: 7px;
+    }
     body {
         background: #f5f5f5;
     }
-    .regclolr{
-        color:#f64e4e ;
-    }
-    .banner{
+    .lastimg{
         width: 100%;
-        height: 160px;
+        text-align: center;
+        background: #f5f5f5;
+
     }
-    .banner img{
-        height: 160px;
+    .lastimg img{
+        width: 250px;
+        height: auto;
+        margin: 5px auto;
     }
     .bottomnav{
         width: 100%;
@@ -330,11 +328,25 @@ export default {
         text-align: center;
         margin: 0 auto;
     }
+    .regclolr{
+        color:#f64e4e ;
+    }
+    .banner{
+        width: 100%;
+        height: 160px;
+    }
+    .banner img{
+        height: 160px;
+    }
+
     .indexed{
         height: 40px;
+        line-height: 40px;
+        margin-top: 44px;
     }
     .fiscroll{
         background: #fff;
+        border-top: 1px solid #f5f5f5;
     }
     .fiscroll .spn{
         color: #898989;
@@ -348,10 +360,15 @@ export default {
         background: #fb461c;
     }
     .i-p-img {
-        width: 14px;
+        width: 10px;
         height: auto;
-        margin-top: 8px;
+        vertical-align: middle;
         margin-left: 10px;
+    }
+
+    .boxlist{
+        border-bottom: 10px solid #f5f5f5;
+        padding-bottom: 8px;
     }
 
     .servicePro [role=list] {
@@ -410,7 +427,13 @@ export default {
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
+        vertical-align: middle;
         color: #fff;
+    }
+    .spn img{
+        width: 10px;
+        height: auto;
+        margin-left: 4px;
     }
 
     .price {
@@ -440,12 +463,15 @@ export default {
         border-top: 10px solid #f5f5f5;
         width: 100%;
     }
+    .project{
+        background: #fff;
+    }
     .box{
         margin-bottom: 50px;
     }
 
     .service-item {
-        width: 98%;
+        width: 100%;
         padding: 10px 1%;
         height: 190px;
         background: #fff;
@@ -462,7 +488,8 @@ export default {
     .service-item ul li i {
         display: block;
         margin-top: 1px;
-        color: #000
+        color: #303030;
+        font-size: 13px;
     }
 
     .service-item ul li img {
@@ -481,12 +508,12 @@ export default {
 
     .down {
         width: 100%;
-        margin-top: 10px;
-        height: 80px
+        margin-top: 15px;
+        height: 72px
     }
 
     .down ul li {
-        width: 19%;
+        width: 20%;
         display: inline-block;
         text-align: center;
         border-right: 1px solid #f5f5f5
@@ -500,7 +527,9 @@ export default {
     .down ul li i {
         display: block;
         position: relative;
-        top: 15px
+        top: 8px;
+        font-size: 13px;
+        color: #303030;
     }
 
     .down ul li:last-child {
@@ -513,14 +542,14 @@ export default {
     }
 
     .item-name {
-        padding-left: 3%;
+        padding-left: 2%;
     }
 
     .item-name li {
         display: inline-block;
-        width: 31%;
+        width: 31.5%;
         margin-top: 3px;
-        margin-left: 1%;
+        margin-left: 1.5%;
     }
 
     .item-name li:nth-child(1) {
@@ -534,7 +563,8 @@ export default {
         height: 20px;
         width: 100%;
         overflow: hidden;
-        margin-top: 2px
+        margin-top: 2px;
+        color: #303030;
     }
 
     .name {
@@ -561,9 +591,11 @@ export default {
     }
 
     .home img {
-        width: 12px;
+        width: 16px;
         height: auto;
-        margin-right: 2px
+        margin-right: 2px;
+        vertical-align: middle;
+        margin-bottom: 4px;
     }
     .i-unit{
         font-size: 10px;

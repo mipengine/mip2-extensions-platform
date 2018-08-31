@@ -4,7 +4,7 @@
       <div
         class="car-set-bottom"
         @click="openParams">
-        <a class="lookParams" >{{ params }}</a>
+        <span class="lookParams" >{{ params }}</span>
         <span class="paramsArrow"/>
       </div>
     </a>
@@ -38,8 +38,8 @@ export default {
   },
   mounted () {
     let imUrl = getLocalStorage('locationUrl')
-      ? `&imUrl=${this.imUrl}`
-      : `?imUrl=${this.imUrl}`
+      ? encodeURIComponent(`&imUrl=${this.imUrl}`)
+      : encodeURIComponent(`?imUrl=${this.imUrl}`)
     this.options = this.imUrl ? `${getDomain()}${this.url}${imUrl}` : `${getDomain()}${this.url}`
     this.carid = getCarId()
   },

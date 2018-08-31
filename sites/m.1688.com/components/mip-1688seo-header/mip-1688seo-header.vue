@@ -22,8 +22,8 @@
       <div class="bar_back"/>
       <div class="bar_search">
         <a
-          class="bar_search-btn"
-          href="//m.1688.com/search.html?fromMode=qingqu">
+          :href="fromUrl"
+          class="bar_search-btn">
           <i class="icon search bar_search-icon_search"><mip-img
             class="img_block"
             width="17"
@@ -41,7 +41,6 @@
 <style scoped lang="less">
 </style>
 <script>
-
 import './mip-1688seo-header.less'
 import appJump from './jump/index'
 
@@ -50,12 +49,18 @@ export default {
     keyword: {
       type: String,
       required: true
+    },
+    from: {
+      type: String,
+      default: 'qingqu'
     }
   },
   data () {
+    return {
+      fromUrl: '//m.1688.com/search.html?fromMode=' + this.from
+    }
   },
-  mounted () {
-  },
+  mounted () {},
   methods: {
     clearInput () {
       this.keyword = '请输入关键词'

@@ -1,6 +1,10 @@
 <template>
   <div class="wrapper">
-    <div class="mybg" >
+    <mip-inservice-login
+      id="log"
+      :config="config"
+      on="login:example.customLogin logout:example.customLogout"/>
+    <div class="mybg">
       <img
         :src="userInfo.iconUrl?userInfo.iconUrl:'http://www.daoway.cn/images/myicon.png'"
         class="myicon">
@@ -9,6 +13,7 @@
         class="txt">
         <div class="username">{{ userInfo.nick }}
           <img
+            v-if="userInfo"
             :src="userInfo.levelIcon"
             class="starimg">
         </div>
@@ -16,7 +21,7 @@
       <div
         v-if="!userId"
         class="txt2"
-        @click="goLoginPage">请登录</div>
+        on="tap:log.login">请点击登录</div><!--@click="goLoginPage"-->
     </div>
     <div
       v-if="userInfo.couponCount"
@@ -64,26 +69,9 @@
     </div>
     <div
       class="exit"
-      @click="loginOut">退出登录</div>
+      on="tap:log.logout"
+      @click="exit">退出登录</div><!-- @click="loginOut"-->
 
-    <mip-fixed type="bottom">
-      <div class="bottomnav">
-        <a
-          data-type="mip"
-          data-title="首页"
-          href="http://test.daoway.cn/mip/t/index.html"
-          @click="toindex"><img src="http://www.daoway.cn/mip/common/images/home2.png">首页</a>
-        <a
-          data-type="mip"
-          data-title="订单"
-          href="http://test.daoway.cn/mip/t/order.html"><img src="http://www.daoway.cn/mip/common/images/order2.png">订单</a>
-        <a
-          class="regclolr"
-          data-type="mip"
-          data-title="我的"
-          href="http://test.daoway.cn/mip/t/my.html"><img src="http://www.daoway.cn/mip/common/images/my.png">我的</a>
-      </div>
-    </mip-fixed>
     <!--提示-->
     <div
       v-show="warn.show"
@@ -94,17 +82,45 @@
           v-text="warn.texts"/>
         <p
           class="layer-sure active-layer"
-          @touchend="closeLayer">知道了</p>
+          @click="closeLayer">知道了</p>
       </div>
     </div>
+    <mip-fixed type="bottom">
+      <div class="bottomnav">
+        <a
+          data-type="mip"
+          data-title="到位上门服务"
+          @click="toindex"
+        ><img src="http://www.daoway.cn/mip/common/images/home2.png">首页</a>
+        <a
+          data-type="mip"
+          data-title="订单"
+          @click="toorder"><img src="http://www.daoway.cn/mip/common/images/order2.png">订单</a>
+        <a
+          class="regclolr"
+          data-type="mip"
+          data-title="我的"
+          @click="tomy"><img src="http://www.daoway.cn/mip/common/images/my.png">我的</a>
+      </div>
+    </mip-fixed>
+
   </div>
 </template>
 <script>
 import base from '../../common/utils/base'
-import login from '../../common/utils/login'
 import '../../common/utils/base.less'
 
 export default {
+  props: {
+    info: {
+      type: Object,
+      required: true
+    },
+    config: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
       phoneNumber: '400-0908-608',
@@ -116,28 +132,42 @@ export default {
         show: false,
         texts: ''
       },
-      redirect_uri: 'http://test.daoway.cn/mip/t/my.html',
+      redirect_uri: base.htmlhref.my,
       client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
       ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
-      code: base.getRequest(location.href).code,
-      userId: ''
+      userId: '',
+      token: ''
     }
   },
   mounted () {
-    this.userId = localStorage.getItem('userId')
-    this.token = localStorage.getItem('token')
-    console.log(this.userId, this.token)
-    if (this.userId && this.token) {
+    let userId = localStorage.getItem('mipUserId')
+    let token = localStorage.getItem('mipToken')
+    if (userId && token) {
+      this.userId = userId
+      this.token = token
       this.getmyhtml()
     } else {
-      if (this.code) {
-        login.codelogin(this.code)
-      } else {
-        this.goLoginPage()
-      }
+      this.$element.customElement.addEventAction('customLogin', event => {
+        this.info = event.userInfo
+        this.userId = event.userInfo.userId
+        this.token = event.userInfo.token
+        this.getmyhtml()
+        localStorage.setItem('mipUserId', event.userInfo.userId)
+        localStorage.setItem('mipToken', event.userInfo.token)
+        localStorage.setItem('nick', event.userInfo.nick)
+      })
     }
   },
   methods: {
+    exit () {
+      this.userId = ''
+      this.token = ''
+      this.userInfo.couponCount = false
+      localStorage.removeItem('mipUserId')
+      localStorage.removeItem('mipToken')
+      localStorage.removeItem('nick')
+      MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
+    },
     showloading () {
       this.loading = true
     },
@@ -151,13 +181,11 @@ export default {
         method: 'get',
         credentials: 'include',
         headers: {
-          'content-type': 'application/x-www-form-urlencoded',
-          'cookie': 'token=' + this.token
+          'content-type': 'application/x-www-form-urlencoded'
         }
       }).then(function (res) {
         return res.json()
       }).then(function (text) {
-        console.log(text)
         if (text.status === 'ok') {
           let data = text.data
           let userInfo = {}
@@ -191,27 +219,25 @@ export default {
         console.log(error)
       })
     },
-    loginOut: function () {
-      let that = this
-      that.userId = null
-      that.userInfo.iconUrl = 'http://www.daoway.cn/images/myicon.png'
-      that.userInfo.couponCount = 0
-    },
-    goLoginPage: function () {
-      let that = this
-      let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + that.redirect_uri + '&scope=snsapi_userinfo&state=STATE'
-      MIP.viewer.open(url)
-    },
     goVouchersPage: function () {
       let miniUserId = this.userId
       if (miniUserId) {
-        MIP.viewer.open(base.htmlhref.vouchers, { isMipLink: true })
+        MIP.viewer.open(base.htmlhref.vouchers + '?from=my', { isMipLink: true })
       } else {
         this.userId = ''
       }
     },
     toabout () {
       MIP.viewer.open(base.htmlhref.about, { isMipLink: true })
+    },
+    toindex () {
+      MIP.viewer.open(base.htmlhref.index, {isMipLink: false})
+    },
+    toorder () {
+      MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
+    },
+    tomy () {
+      MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
     }
   }
 }
@@ -234,9 +260,6 @@ export default {
         color:#f64e4e ;
     }
 
-    .layer-text{
-        text-align: center;
-    }
     .bottomnav{
         width: 100%;
         background: #fff;
@@ -257,8 +280,15 @@ export default {
         text-align: center;
         margin: 0 auto;
     }
+    .regclolr{
+        color: red;
+    }
+    .layer-text{
+        text-align: center;
+    }
+
     .mybg {
-        width: 700px;
+        width: 100%;
         height: 134px;
         position: relative;
         padding: 35px 15px;

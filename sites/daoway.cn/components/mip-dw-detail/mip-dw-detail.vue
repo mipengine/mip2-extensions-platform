@@ -1,5 +1,9 @@
 <template>
   <div class="wrapper">
+    <mip-inservice-login
+      id="log"
+      :config="config"
+      on="login:example.customLogin"/>
     <div class="detail-banner">
       <img :src="sericePrice.picUrl">
       <ul>
@@ -15,9 +19,11 @@
           </div>
         </li>
         <li><span class="d-h d-h2">{{ sericePrice.price }}<i>{{ sericePrice.priceUnit }}</i></span>
-          <div class="d-add">已售{{ sericePrice.salesNum }}单</div>
+          <div class="d-add dgray">已售{{ sericePrice.salesNum }}单</div>
         </li>
-        <li class="d-maojian"><span class="b-bz">促销</span>
+        <li
+          v-if="promotion.first_reduce || promotion.total_reduce"
+          class="d-maojian"><span class="b-bz">促销</span>
           <div class="d-maojian-r">
             <div
               v-if="promotion.first_reduce"
@@ -112,12 +118,12 @@
       class="d-hh d-hhline"
       @click="toxuzhi()">
       <div class="d-hh-l d-timet">订购须知</div>
-      <div class="d-hh-r"><i class="lv">查看取消、退款、赔付规则</i><img
+      <div class="d-hh-r"><i class="lv">取消、退款、赔付规则</i><img
         class="d-more"
         src="http://www.daoway.cn/mip/common/images/go_06.png"></div>
     </div>
     <div class="d-text d-xuzhi">
-      <p v-text="service.orderingNotice"/>
+      <p v-html="service.orderingNotice"/>
     </div>
     <div class="d-img-box">
       <p v-if="images2.length >0 && !scroll" >↑滑动查看图文详情</p>
@@ -152,7 +158,13 @@
                         </div>
                     </div>-->
         <div
+          v-if="userId"
           class="btngo"
+          @click="reservation()">立即购买</div>
+        <div
+          v-else
+          class="btngo"
+          on="tap:log.login"
           @click="reservation()">立即购买</div>
       </div>
 
@@ -216,6 +228,16 @@
 import base from '../../common/utils/base'
 import '../../common/utils/base.less'
 export default {
+  props: {
+    info: {
+      type: Object,
+      required: true
+    },
+    config: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
       id: base.getRequest(location.href).detailid,
@@ -255,12 +277,18 @@ export default {
       code: base.getRequest(location.href).code,
       id2: '',
       toservation: '',
-      scroll: false
+      scroll: false,
+      userId: '',
+      token: ''
     }
   },
   mounted () {
-    this.detailstr()
     window.addEventListener('scroll', this.moreimg)
+    this.userId = localStorage.getItem('mipUserId')
+    this.token = localStorage.getItem('mipToken')
+    sessionStorage.removeItem('tech')
+    localStorage.removeItem('technician')
+    this.detailstr()
   },
   methods: {
     detailstr () {
@@ -319,9 +347,12 @@ export default {
       }
     },
     moreimg () {
-      if (document.documentElement.scrollTop + window.innerHeight >= document.documentElement.offsetHeight) {
+      if (document.body.scrollTop || document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight + 20) {
+        console.log(document.body.scrollTop || document.documentElement.scrollTop, window.innerHeight, document.body.offsetHeight)
         this.images = this.images2
-        this.scroll = true
+        setTimeout(() => {
+          this.scroll = true
+        }, 500)
       }
     },
     closeLayer () {
@@ -331,15 +362,15 @@ export default {
       this.showpops = false
     },
     toindex () {
-      MIP.viewer.open(base.htmlhref.index, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.index, { isMipLink: false })
     },
     toxuzhi () {
-      MIP.viewer.open(base.htmlhref.xuzhi, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.xuzhi, { isMipLink: false })
     },
     tocomments () {
       let serviceId = this.serviceId
       let priceId = this.priceId
-      MIP.viewer.open(base.htmlhref.comments + '?serviceId=' + serviceId + '&priceId=' + priceId, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.comments + '?serviceId=' + serviceId + '&priceId=' + priceId, { isMipLink: false })
     },
     tap (index) {
       this.activity = index
@@ -371,7 +402,8 @@ export default {
       let priceId = that.priceId
       if (similarPricesId !== priceId) {
         that.id = similarPricesId
-        that.detailstr()
+        MIP.viewer.open(base.htmlhref.detail + '?detailid=' + similarPricesId, {isMipLink: false})
+        // that.detailstr()
       }
     },
     reservation () {
@@ -384,8 +416,6 @@ export default {
       let price = that.price
       let totalPrices = price * quantity
       sessionStorage.setItem('apptime', '')
-      let userId = localStorage.getItem('userId')
-      let token = localStorage.getItem('token')
       /* 跳转带出去的参数 */
       let priceId = that.priceId
       let priceMap = {}
@@ -395,27 +425,30 @@ export default {
         this.warn.show = true
         this.warn.texts = '该店铺需满' + minBuyPrice + '元起购，还差' + (minBuyPrice - totalPrices) + '元即可下单哦~'
       } else {
-        if (userId && token) {
-          let param = {
-            serviceId: that.serviceId,
-            priceId: that.priceId,
-            quantity: quantity,
-            appointTime: that.appointTime,
-            priceType: that.priceType
+        let param = {
+          serviceId: that.serviceId,
+          priceId: that.priceId,
+          quantity: quantity,
+          appointTime: that.appointTime,
+          priceType: that.priceType
+        }
+        param = JSON.stringify(param)
+        if (that.userId && that.token) {
+          if (MIP.util.platform.isWechatApp()) {
+            let appid = 'wx0290cc2004b61c97'
+            let loginUrl = encodeURIComponent(base.htmlhref.reservation + '?param=' + encodeURIComponent(param))
+            let scope = 'snsapi_base'
+            MIP.viewer.open('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + loginUrl + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect', { isMipLink: true })
+          } else {
+            MIP.viewer.open(base.htmlhref.reservation + '?param=' + encodeURIComponent(param), { isMipLink: false })
           }
-          param = JSON.stringify(param)
-          MIP.viewer.open(base.htmlhref.reservation + '?param=' + encodeURIComponent(param), { isMipLink: true })
         } else {
-          /* let baseparam = JSON.stringify({
-            serviceId: that.serviceId,
-            priceId: that.priceId,
-            quantity: quantity,
-            appointTime: that.appointTime,
-            priceType: that.priceType
-          }); */
-          let redirectUri = 'http://test.daoway.cn/mip/t/index.html'
-          let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + redirectUri + '&scope=snsapi_userinfo&state=STATE'
-          MIP.viewer.open(url, { isMipLink: true })
+          that.$on('customLogin', event => {
+            localStorage.setItem('mipUserId', event.userInfo.userId)
+            localStorage.setItem('mipToken', event.userInfo.token)
+            localStorage.setItem('nick', event.userInfo.nick)
+            MIP.viewer.open(base.htmlhref.reservation + '?param=' + encodeURIComponent(param), { isMipLink: false })
+          })
         }
       }
     }
@@ -446,8 +479,8 @@ export default {
     .lightbox{
         background: #fff;
         position: relative;
-        top:40%;
-        height: 60%;
+        top:35%;
+        height: 65%;
         width: 100%;
     }
 
@@ -499,7 +532,8 @@ export default {
     }
 
     .d-add2 span {
-        margin-left: 5px
+        margin-left: 5px;
+        font-size: 12px;
     }
 
     .d-add2 span.mj {
@@ -515,7 +549,7 @@ export default {
 
     .d-add2 {
         float: inherit;
-        width: 90%;
+        width: 88%;
         display: inline-block;
         vertical-align: top;
         margin-left: 2%
@@ -581,7 +615,8 @@ export default {
     }
 
     .d-text p {
-        line-height: 25px
+        line-height: 25px;
+        white-space:pre-wrap
     }
 
     .lv {
@@ -652,7 +687,7 @@ export default {
     }
 
     .footer {
-        height: 45px;
+        height: 48px;
         width: 100%;
         z-index: 100;
         background: #fff;
@@ -726,7 +761,8 @@ export default {
         right: 3%;
         top: 10px;
         padding: 0;
-        width:14px; height:auto;
+        width:16px;
+        height:auto;
     }
 
     .smalltit {
@@ -738,7 +774,7 @@ export default {
         width: 94%;
         margin: 15px auto 0;
         overflow-y: scroll;
-        height: 65%;
+        height: 64%;
         border-bottom: 1px solid #f5f5f5;
     }
 
@@ -767,6 +803,9 @@ export default {
     .listconter {
         width: 76%;
         font-size: 14px;
+    }
+    .dgray{
+        color: #898989;
     }
 
     .listprice {

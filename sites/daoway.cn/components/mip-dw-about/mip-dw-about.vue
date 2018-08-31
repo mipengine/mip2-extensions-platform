@@ -20,10 +20,9 @@
     <mip-fixed type="bottom">
       <div class="daoway">
         <div class="linjia">北京邻家科技有限公司</div>
-        <div class="www">www.daoway.com</div>
+        <div class="www">daoway.com</div>
       </div>
     </mip-fixed>
-
   </div>
 </template>
 <style scoped>

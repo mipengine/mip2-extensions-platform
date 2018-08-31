@@ -7,7 +7,7 @@
         :key="index">
         <div class="box-list-tit">
           <div class="tip-title">
-            <span>
+            <span class="tip-title-value">
               {{ paramItem.pcname }}
             </span>
             <div
@@ -70,6 +70,9 @@
   justify-content: space-between;
   /* overflow: hidden; */
   width: 100%;
+}
+.tip-title-value{
+  font-weight:600
 }
 .box-list-bot {
   height: 1rem;
