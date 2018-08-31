@@ -769,7 +769,7 @@ export default {
         event.userInfo.bindMobile &&
         event.userInfo.tsessionid
       ) {
-        sessionStorageUtil.set('mtl_session', event.userInfo.tsessionid)
+        adapterStorageUtil.set('mtl_session', event.userInfo.tsessionid)
         if (_self.retryOrder) {
           _self.confirmCallback()
         } else {
