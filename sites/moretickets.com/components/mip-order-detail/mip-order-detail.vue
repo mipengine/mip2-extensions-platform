@@ -634,7 +634,7 @@
         </ul>
       </div>
     </div>
-     <!-- 退款及赔付规则  -->
+    <!-- 退款及赔付规则  -->
     <mip-lightbox
       id="compensate-lightbox"
       layout="nodisplay"
