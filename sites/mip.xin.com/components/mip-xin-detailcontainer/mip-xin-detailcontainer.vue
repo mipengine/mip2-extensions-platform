@@ -20,7 +20,6 @@
       :status = "status"
       :carid="carid"
       :city-message="cityMessage"
-      style="width:7.5rem;height:5rem"
       @handleBigImg="handleBig"/>
     <mip-xin-price
       :carid="carid"
@@ -47,12 +46,14 @@
         :is-detail="1"
         :carid="carid" >
         <div slot="bottomTitle">
-          <div
-            class="car-set-bottom"
-            @click="openParams">
-            <a class="lookParams" >免费查看详细检测报告</a>
-            <span class="paramsArrow"/>
-          </div>
+          <a :href="urlReport">
+            <div
+              class="car-set-bottom"
+              @click="openParams">
+              <span class="lookParams" >免费查看详细检测报告</span>
+              <span class="paramsArrow"/>
+            </div>
+          </a>
         </div>
       </mip-xin-switch>
       <!-- <mip-xin-config :url="url" :carid="carid" params="查看详细检测报告"></mip-xin-config> -->
@@ -85,7 +86,8 @@ import {
   setLocalStorage,
   getLocalStorage,
   getQuery,
-  removeLocalStorage
+  removeLocalStorage,
+  getDomain
 } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
 export default {
@@ -114,7 +116,7 @@ export default {
       docs: {}, // 车辆档案
       needCcid: [], // 车辆配置
       showCarMessgae: false, // 是否显示”展开全部车辆信息“按钮”
-      similarTitle: '相似推荐',
+      similarTitle: '为您推荐相似车辆',
       carid: this.query.carId,
       // carid: "71896519",
       cityMessage: {}, // 城市信息
@@ -126,11 +128,11 @@ export default {
       showToast: false, // 是否显示询价弹层
       showSimilarmodule: true, // 是否显示相似推荐title
       isShowButton: true, // 是否显示底部按钮，默认显示，显示大图时，不显示，大图隐藏时显示
-      status: 1 // 车辆是否已售 1未售，-1已售
+      status: 1, // 车辆是否已售 1未售，-1已售
+      urlReport: ''
     }
   },
   mounted () {
-    console.log('this.info', this.info)
     if (typeof this.info === 'string') {
       this.info = JSON.parse(this.info)
     }
@@ -144,8 +146,7 @@ export default {
     if (getQuery().ename) {
       Object.assign(param, { ename: getQuery().ename })
     }
-    console.log(getQuery().state)
-    if (getQuery().state) {
+    if (window.location.href.indexOf('code') > 0 && window.location.href.indexOf('state') > 0) {
       this.showToast = true
     }
     requestFun('/ajax/city/get_location', {
@@ -161,7 +162,7 @@ export default {
           that.showCarMessage = true
           // 需要存储json字符串
           setLocalStorage('currentCity', JSON.stringify(res))
-          this.url = `/report_${this.carid}.html`
+          this.url = `${getDomain()}/report_${this.carid}.html`
         } else {
           console.log('接口返回错误')
         }
@@ -184,36 +185,36 @@ export default {
     // // 显示询底价弹框
     showConsulting () {
       this.showToast = true
-      // window.document
-      //   .querySelector("#body")
-      //   .setAttribute("style", "overflow:hidden,height:100%");
     },
     close () {
       this.showToast = false
       this.isShowButton = true
       // 相似推荐跳转后页面会出现在iframe里，导致无法关闭弹框，所以需要移除dom
-      if (window.document.querySelector('#callmaskSimilar')) {
-        let target1 = window.document.querySelector('#callmaskSimilar')
-        let parent1 = window.document.querySelector('#callmaskSimilar')
-        if (parent1.nodeName === 'BODY') {
-          parent1.removeChild(target1)
-        }
-        window.document
-          .querySelector('#callmaskSimilar')
-          .setAttribute('v-if', 'false')
-      }
-      if (window.document.querySelector('#callmask')) {
-        let target2 = window.document.querySelector('#callmask')
-        let parent2 = window.document.querySelector('#callmask').parentElement
-        if (parent2.nodeName === 'BODY') {
-          parent2.removeChild(target2)
-        }
-      }
+      // if (window.document.querySelector('#callmaskSimilar')) {
+      //   let target1 = window.document.querySelector('#callmaskSimilar')
+      //   let parent1 = window.document.querySelector('#callmaskSimilar')
+      //   if (parent1.nodeName === 'BODY') {
+      //     parent1.removeChild(target1)
+      //   }
+      //   window.document
+      //     .querySelector('#callmaskSimilar')
+      //     .setAttribute('v-if', 'false')
+      // }
+      // if (window.document.querySelector('#callmask')) {
+      //   let target2 = window.document.querySelector('#callmask')
+      //   let parent2 = window.document.querySelector('#callmask').parentElement
+      //   if (parent2.nodeName === 'BODY') {
+      //     parent2.removeChild(target2)
+      //   }
+      // }
       // 如果是从百度跳转过来的需要去掉后面的参数，使用h5 api无刷新跳转
-      if (getQuery().state) {
-        // let href = window.location.href.split("?")[0];
-        // window.history.pushState(null, "车辆详情", href);
-        window.location.href = window.location.href.split('?')[0]
+      if (window.location.href.indexOf('code') > 0 && window.location.href.indexOf('state') > 0) {
+        // 百度过来的url需要decode
+        let Deurl = decodeURIComponent(window.location.href)
+        let href = Deurl.split('?')[0]
+        window.history.pushState(null, '车辆详情', href)
+        // window.location.href = window.location.href.split('?')[0]
+        // console.log(window.location.href)
       }
     },
     // showSimilar(e) {
@@ -240,21 +241,13 @@ export default {
       this.showCarMessgae = true
     },
     openParams () {
-      let opurl = getLocalStorage('locationUrl')
-        ? getLocalStorage('locationUrl') + '&'
-        : '?'
-      let options = `/report_${this.carid}.html${opurl}`
       let ev = 'examine_report_detail'
       clickPoint(
         ev,
         {
           carid: this.carid
         },
-        () => {
-          MIP.viewer.open(options, {
-            isMipLink: true
-          })
-        },
+        null,
         {
           pid: pid
         }
@@ -263,14 +256,13 @@ export default {
     handleBig (e) {
       this.isShowButton = !e.detail[0]
     },
-    getAuthMessage () {
-      if (this.query.state && getLocalStorage('carList')) {
-        console.log('successState', this.query.state)
-        console.log('显示')
-        this.showToast = true
-      }
-    },
+    // getAuthMessage () {
+    //   if (this.query.state && getLocalStorage('carList')) {
+    //     this.showToast = true
+    //   }
+    // },
     storageHandle () {
+      let url = ''
       if (this.query && this.query.optoken) {
         setLocalStorage('optoken', this.query.optoken)
       }
@@ -287,18 +279,25 @@ export default {
       if (!this.query.channel && getLocalStorage('channel')) {
         removeLocalStorage('channel')
       } else if (this.query && this.query.optoken && this.query.channel) {
-        // 存储跳转url
-        setLocalStorage(
-          'locationUrl',
-          `?optoken=${this.query.optoken}&channel=${this.query.channel}`
-        )
+        // 存储跳转url 需要存储编码的url
+        url = `?optoken=${this.query.optoken}&channel=${this.query.channel}`
+        url = encodeURIComponent(url)
+        setLocalStorage('locationUrl', url)
       } else if (this.query && this.query.optoken && !this.query.channel) {
-        setLocalStorage('locationUrl', `?optoken=${this.query.optoken}`)
+        url = `?optoken=${this.query.optoken}`
+        url = encodeURIComponent(url)
+        setLocalStorage('locationUrl', url)
       } else if (this.query && !this.query.optoken && this.query.channel) {
-        setLocalStorage('locationUrl', `?channel=${this.query.channel}`)
+        url = `?optoken=${this.query.channel}`
+        url = encodeURIComponent(url)
+        setLocalStorage('locationUrl', url)
       } else if (this.query && !this.query.optoken && !this.query.channel) {
         removeLocalStorage('locationUrl')
       }
+      let opurl = getLocalStorage('locationUrl')
+        ? getLocalStorage('locationUrl') + encodeURIComponent('&')
+        : encodeURIComponent('?')
+      this.urlReport = `${getDomain()}/report_${this.carid}.html${opurl}`
     },
     /**
      * 隐藏底部button

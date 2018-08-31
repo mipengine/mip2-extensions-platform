@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>MIP page</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+<style scoped>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    i {
+        font-style: normal
+    }
+
+    li, ol {
+        list-style: none
+    }
+
+    body {
+        background: #f5f5f5;
+    }
+    .regclolr{
+        color:#f64e4e ;
+    }
+    .banner{
+        width: 100%;
+        height: 160px;
+    }
+    .banner img{
+        height: 160px;
+    }
+    .bottomnav{
+        width: 100%;
+        background: #fff;
+        border-top: 1px solid #ededed;
+    }
+    .bottomnav a{
+        line-height: 23px;
+        display: inline-block;
+        width: 32%;
+        text-align: center;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+    .bottomnav a img{
+        width: 25px;
+        height: auto;
+        display: block;
+        text-align: center;
+        margin: 0 auto;
+    }
+    .indexed{
+        height: 40px;
+    }
+    .fiscroll{
+        background: #fff;
+    }
+    .fiscroll .spn{
+        color: #898989;
+    }
+
+    .swiper-slide img{
+        height: 155px;
+        width: auto;
+    }
+    .swiper-pagination-bullets .swiper-pagination-bullet-active{
+        background: #fb461c;
+    }
+    .i-p-img {
+        width: 14px;
+        height: auto;
+        margin-top: 8px;
+        margin-left: 10px;
+    }
+
+    .servicePro [role=list] {
+        display: -webkit-flex;
+        display: flex;
+        width: 98%;
+        padding: 0 1%;
+        flex-direction: row;
+        background: #fff;
+    }
+
+    .servicePro [role=listitem] {
+        width: 20%;
+        padding: 0 0 10px
+    }
+
+    .servicePro [role=listitem] > li {
+        width: 100%
+    }
+
+    .servicePro1 [role=list] {
+        display: inline-block;
+        padding: 10px 0;
+    }
+
+    .servicePro [role=listitem] {
+        display: inline-block;
+    }
+
+    .servicePro [role=listitem] li > p {
+        text-align: center
+    }
+
+    .search {
+        border-radius: 20px;
+        padding: 10px 10px;
+        width: 50%;
+        position: absolute;
+        right: 4%;
+        top: 6px;
+        border: none;
+        outline: none;
+        color: #fff;
+        background: rgba(255,255,255,0.4);
+    }
+    .searchscroll{
+        background: rgba(0,0,0,0.2);
+    }
+    input::-webkit-input-placeholder {
+        color: #fff;
+    }
+
+    .spn {
+        display: inline-block;
+        max-width: 42%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        color: #fff;
+    }
+
+    .price {
+        color: #fb461c
+    }
+    .iconimg{
+        position: relative;
+        bottom: 20px;
+    }
+
+    .h2 {
+        border-left: 3px solid #fb461c;
+        margin: 10px 3%;
+        height: 20px;
+        line-height: 20px;
+        padding: 0 2%;
+        background: #fff;
+        width: 94%
+    }
+
+    .h2 span {
+        float: right;
+        color: #898989
+    }
+
+    .project, .box {
+        border-top: 10px solid #f5f5f5;
+        width: 100%;
+    }
+    .box{
+        margin-bottom: 50px;
+    }
+
+    .service-item {
+        width: 98%;
+        padding: 10px 1%;
+        height: 190px;
+        background: #fff;
+        overflow: hidden
+    }
+
+    .service-item ul li {
+        width: 20%;
+        float: left;
+        text-align: center;
+        height: 90px
+    }
+
+    .service-item ul li i {
+        display: block;
+        margin-top: 1px;
+        color: #000
+    }
+
+    .service-item ul li img {
+        width: 46px;
+        height: 46px;
+        margin: 0 auto
+    }
+
+    .service-item:last-child {
+        border-bottom: 1px solid #e5e5e5
+    }
+
+    .service-item ul li i {
+        margin-top: 0;
+    }
+
+    .down {
+        width: 100%;
+        margin-top: 10px;
+        height: 80px
+    }
+
+    .down ul li {
+        width: 19%;
+        display: inline-block;
+        text-align: center;
+        border-right: 1px solid #f5f5f5
+    }
+
+    .down ul li img {
+        width: 27px;
+        height: 27px
+    }
+
+    .down ul li i {
+        display: block;
+        position: relative;
+        top: 15px
+    }
+
+    .down ul li:last-child {
+        border: none
+    }
+
+    .h2 span img {
+        width: 7px;
+        height: auto
+    }
+
+    .item-name {
+        padding-left: 3%;
+    }
+
+    .item-name li {
+        display: inline-block;
+        width: 31%;
+        margin-top: 3px;
+        margin-left: 1%;
+    }
+
+    .item-name li:nth-child(1) {
+        margin-left: 0
+    }
+
+    .item-name li i {
+        display: block;
+        text-align: left;
+        line-height: 20px;
+        height: 20px;
+        width: 100%;
+        overflow: hidden;
+        margin-top: 2px
+    }
+
+    .name {
+        margin-top: 2px
+    }
+
+    .price {
+        color: #e94840;
+    }
+
+    .price strong {
+        font-size: 16px;
+        font-weight: normal
+    }
+
+    .home {
+        color: #b1b1b1;
+        margin-top: 3px;
+        font-size: 12px;
+    }
+
+    .liimg {
+        border-radius: 4px
+    }
+
+    .home img {
+        width: 12px;
+        height: auto;
+        margin-right: 2px
+    }
+    .i-unit{
+        font-size: 10px;
+    }
+
+</style>
+  </head>
+  <body>
+    <div>
+    <mip-data>
+    <script type="application/json">
+        {
+            "payConfig": {
+                "subject": "到位订单支付",
+                "fee": 0,
+                "sessionId": "",
+                "redirectUrl": "",
+                "endpoint": {
+                    "alipay":"http://test.daoway.cn/daoway/rest/pay/ali_mip_prepay",
+                    /*"weixin":"https://test.daoway.cn/daoway/rest/pay/wx_mip_prepay"*/
+                },
+                "postData": {
+
+                }
+            }
+        }
+    </script>
+</mip-data>
+<mip-inservice-pay m-bind:pay-config="payConfig" id="payDialog"></mip-inservice-pay>
+      <mip-dw-index></mip-dw-index>
+          <mip-fixed type="bottom">
+      <div class="bottomnav">
+        <a
+          class="regclolr"
+          data-type="mip"
+          data-title="首页"
+          href="http://test.daoway.cn/mip/t/index.html"
+          @click="toindex"><img src="http://www.daoway.cn/mip/common/images/home.png">首页</a>
+        <a
+          data-type="mip"
+          data-title="订单"
+          href="http://test.daoway.cn/mip/t/order.html"><img src="http://www.daoway.cn/mip/common/images/order2.png">订单</a>
+        <a
+          data-type="mip"
+          data-title="我的"
+          href="http://test.daoway.cn/mip/t/my.html"><img src="http://www.daoway.cn/mip/common/images/my2.png">我的</a>
+      </div>
+    </mip-fixed>
+    </div>
+    <!--<mip-shell>
+      <script type="application/json">
+        {
+          "routes": [{
+            "pattern": "*",
+            "meta": {
+              "header": {
+                "show": true,
+                "title": "到位上门服务",
+                "logo": "https://www.daoway.cn/h5/image/logo.png"
+              },
+              "view": {
+                "isIndex": true
+              }
+            }
+          }]
+        }
+      </script>
+    </mip-shell>-->
+    <script src="https://bos.nj.bpc.baidu.com/assets/mip/projects/mip.js"></script>
+    <script src="/mip-dw-index/mip-dw-index.js"></script>
+  </body>
+</html>

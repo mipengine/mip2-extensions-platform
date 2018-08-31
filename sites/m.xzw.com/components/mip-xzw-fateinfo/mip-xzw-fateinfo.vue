@@ -65,6 +65,7 @@
   </div>
 </template>
 <style scoped>
+.changeDay{z-index: 999 !important;}
 .changeDay span.curr{color:#7f7ff3;background:#f4f4fe;}
 </style>
 

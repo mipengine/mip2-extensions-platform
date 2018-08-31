@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=no">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
     <title>
         <%-title%>
     </title>
@@ -29,32 +29,31 @@
 </style>
 
 <body class="mack" data-carid="<%-query.carId%>" data-ajaxtoken="<%-ajaxToken%>" data-optoken="<%-query.optoken%>">
-    <mip-shell>
+    <mip-shell-inservice mip-shell>
         <script type="application/json">
-                {
-                    "routes": [{
-                        "pattern": "*",
-                        "meta": {
-                            "header": {
-                                "show": true,
-                                "xiongzhang": true,
-                                "title": "优信二手车",
-                                "logo": "http://c2.xinstatic.com/f3/20180727/1951/5b5b072fb1a77543583.png",
-                                "buttonGroup": [{
-                                    "name": "search",
-                                    "text": "search",
-                                    "link": "https://somesite.com/mip/anotherMIPPage.html"
-                                }]
-                            },
-                            "view": {
-                                "isIndex": false
+               
+                {   
+                    "isId": "1578861028762702",
+                    "routes": [
+                        {
+                            "pattern": "*",
+                            "meta": {
+                                "header": {
+                                    "show": true,
+                                    "xiongzhang": true,
+                                    "title": "优信二手车"
+                                },
+                                "view": {
+                                    "isIndex": false
+                                }
                             }
-    
                         }
-                    }]
+    
+                    ]
                 }
+            
             </script>
-    </mip-shell>
+    </mip-shell-inservice>
     <mip-data>
         <script type="application/json">
             {
@@ -67,12 +66,12 @@
         <mip-xin-image m-bind:query="query" m-bind:token="ajaxToken"></mip-xin-image>
     </div>
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
-    <script src="https://c.mipcdn.com/static/v1/mip-lightbox/mip-lightbox.js"></script>
-    <script src="https://c.mipcdn.com/static/v2/mip-toast/mip-toast.js"></script>
-    <script src="https://c.mipcdn.com/static/v1/mip-fixed/mip-fixed.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip.xin.com/mip-toast/mip-toast.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-fixed/mip-fixed.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-shell-inservice/mip-shell-inservice.js"></script>
 
-    <script src="/mip-xin-image/mip-xin-image.js"></script>
-    <script src="/mip-xin-button/mip-xin-button.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-image/mip-xin-image.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-button/mip-xin-button.js"></script>
 
 </body>
 

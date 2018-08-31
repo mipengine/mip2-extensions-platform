@@ -1,17 +1,19 @@
 <template>
   <div>
-    <div
-      class="car-set-bottom"
-      @click="openParams">
-      <a class="lookParams" >{{ params }}</a>
-      <span class="paramsArrow"/>
-    </div>
+    <a :href="options">
+      <div
+        class="car-set-bottom"
+        @click="openParams">
+        <span class="lookParams" >{{ params }}</span>
+        <span class="paramsArrow"/>
+      </div>
+    </a>
   </div>
 </template>
 
 <script>
 import { clickPoint } from '../../common/utils/stastic.js'
-import { getCarId, getLocalStorage } from '../../common/utils/utils.js'
+import { getCarId, getLocalStorage, getDomain } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
 export default {
   props: {
@@ -30,28 +32,25 @@ export default {
   },
   data () {
     return {
-      carid: ''
+      carid: '',
+      options: ''
     }
   },
   mounted () {
+    let imUrl = getLocalStorage('locationUrl')
+      ? encodeURIComponent(`&imUrl=${this.imUrl}`)
+      : encodeURIComponent(`?imUrl=${this.imUrl}`)
+    this.options = this.imUrl ? `${getDomain()}${this.url}${imUrl}` : `${getDomain()}${this.url}`
     this.carid = getCarId()
   },
   methods: {
     openParams () {
-      let imUrl = getLocalStorage('locationUrl')
-        ? `&imUrl=${this.imUrl}`
-        : `?imUrl=${this.imUrl}`
-      let options = this.imUrl ? `${this.url}${imUrl}` : `${this.url}`
       clickPoint(
         'collocation_more',
         {
           carid: this.carid
         },
-        () => {
-          MIP.viewer.open(options, {
-            isMipLink: true
-          })
-        },
+        null,
         {
           pid: pid
         }

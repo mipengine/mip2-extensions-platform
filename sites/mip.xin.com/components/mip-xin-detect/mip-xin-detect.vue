@@ -12,8 +12,8 @@
       <div class="car-bottom"/>
       <div class="testerContent">
         <mip-img
-          class="testerIcon"
-          src="http://c2.xinstatic.com/f3/20180321/1450/5ab200c91cd19349288.png" />
+          :src="user_pic"
+          class="testerIcon" />
         <div class="testerRight">
           <div>
             <span class="testerName">{{ testMessage.fullname }}</span>
@@ -31,32 +31,35 @@
       <div
         v-for="(item, index) in carRepairList"
         :key="index"
-        class="car-test-content"
-        @click="openTester(index + 1)">
-        <div class="testList">
-          <div>
-            <span class="testListLeft">{{ item.cat_name }}</span>
-          </div>
-          <div class="testListRight">
-            <div
-              v-if="item.flaw_all_num > 0"
-              class="testFlaw">
-              <span class="test-list-value" >{{ item.flaw_all_num }}项</span>
-              <mip-img
-                class="testFlawimg"
-                src="http://c2.xinstatic.com/f3/20180416/1840/5ad47da23e611535388.png"/>
+        class="car-test-content">
+        <a :href="urlReport + (index + 1)">
+          <div
+            class="testList"
+            @click="openTester(index + 1)">
+            <div>
+              <span class="testListLeft">{{ item.cat_name }}</span>
             </div>
-            <div
-              v-if="item.all_num - item.flaw_all_num > 0"
-              class="testNormal">
-              <span class="test-list-value" >{{ item.all_num - item.flaw_all_num }}项</span>
-              <mip-img
-                class="testNormalimg"
-                src="http://c2.xinstatic.com/f3/20180416/1840/5ad47da23e2e4430972.png"/>
+            <div class="testListRight">
+              <div
+                v-if="item.flaw_all_num > 0"
+                class="testFlaw">
+                <span class="test-list-value" >{{ item.flaw_all_num }}项</span>
+                <mip-img
+                  class="testFlawimg"
+                  src="//c2.xinstatic.com/f3/20180416/1840/5ad47da23e611535388.png"/>
+              </div>
+              <div
+                v-if="item.all_num - item.flaw_all_num > 0"
+                class="testNormal">
+                <span class="test-list-value" >{{ item.all_num - item.flaw_all_num }}项</span>
+                <mip-img
+                  class="testNormalimg"
+                  src="//c2.xinstatic.com/f3/20180416/1840/5ad47da23e2e4430972.png"/>
+              </div>
+              <div class="testArrow"/>
             </div>
-            <div class="testArrow"/>
           </div>
-        </div>
+        </a>
         <!-- <div class="car-bottom"/> -->
       </div>
     </div>
@@ -66,8 +69,9 @@
 <script>
 import { requestFun } from '../../common/utils/reqUtils'
 import { clickPoint } from '../../common/utils/stastic.js'
-import { getLocalStorage } from '../../common/utils/utils.js'
+import { getLocalStorage, getDomain } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
+const imageTitle = '//c5.xinstatic.com' // 图片地址需要拼接
 export default {
   // props: ['carid'],
   props: {
@@ -83,7 +87,9 @@ export default {
       carRepairName: '', // 检测员姓名
       carRepairImg: '', // 检测员头像
       testMessage: {},
-      haveReport: false
+      haveReport: false,
+      user_pic: '//c2.xinstatic.com/f3/20180321/1450/5ab200c91cd19349288.png', // 默认头像地址
+      urlReport: '' // 跳转链接
     }
   },
   mounted () {
@@ -104,7 +110,15 @@ export default {
         }
         if (res.master_info) {
           this.testMessage = res.master_info
+          if (res.master_info.user_pic) {
+            this.user_pic = imageTitle + res.master_info.user_pic
+          }
         }
+        let opurl = getLocalStorage('locationUrl')
+          ? getLocalStorage('locationUrl') + encodeURIComponent('&')
+          : encodeURIComponent('?')
+        let index = encodeURIComponent('index=')
+        this.urlReport = `${getDomain()}/report_${this.carid}.html${opurl}${index}`
       })
       .catch(err => {
         console.log(err)
@@ -112,28 +126,26 @@ export default {
   },
   methods: {
     openTester (index) {
-      let opurl = getLocalStorage('locationUrl')
-        ? getLocalStorage('locationUrl') + '&'
-        : '?'
-
+      // let opurl = getLocalStorage('locationUrl')
+      //   ? getLocalStorage('locationUrl') + '&'
+      //   : '?'
       clickPoint(
         'examine_list_detail',
         {
           carid: this.carid,
           button: index
         },
-        () => {
-          MIP.viewer.open(
-            `/report_${this.carid}.html${opurl}index=${index}`,
-            {
-              isMipLink: true
-            }
-          )
-        },
+        null,
         {
           pid: pid
         }
       )
+      // MIP.viewer.open(
+      //   `/report_${this.carid}.html${opurl}index=${index}`,
+      //   {
+      //     isMipLink: true
+      //   }
+      // )
     }
   }
 }
@@ -157,7 +169,7 @@ export default {
   padding-left: 0.36rem;
 }
 .car-bottom {
-  height: 0.01rem;
+  height: 1px;
   width: 100%;
   background-color: #f1f1f1;
 }
@@ -193,11 +205,8 @@ export default {
   left:0.4rem;
   width: 0.74rem;
   height: 0.74rem;
-  border-radius: 50%;
-  resize-mode: contain;
   vertical-align: middle;
 }
-
 .testerRight {
   position: absolute;
   top:0.42rem;
@@ -234,8 +243,8 @@ export default {
   color: #848484;
 }
 .car-test-desc {
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
+  margin-left: 0.4rem;
+  margin-right: 0.4rem;
   font-size: 0.28rem;
   font-family: PingFangSC-Regular;
   color: rgba(88, 88, 88, 1);
