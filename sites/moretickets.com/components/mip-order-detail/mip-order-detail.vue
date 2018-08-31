@@ -211,7 +211,7 @@
                   </div>
                   <span
                     class="rules"
-                    @click="clickRules()"><i>!</i>退赔规则</span>
+                    on="tap:compensate-lightbox.toggle"><i>!</i>退赔规则</span>
                 </div>
                 <i class="blank_line"/>
                 <div
@@ -634,23 +634,27 @@
         </ul>
       </div>
     </div>
-
-    <!-- 退款及赔付规则  -->
-    <div v-show="showCompensate">
-      <div class="pop_filter_bg"/>
-      <div class="pop_box">
+     <!-- 退款及赔付规则  -->
+    <mip-lightbox
+      id="compensate-lightbox"
+      layout="nodisplay"
+      content-scroll
+      class="mip-hidden">
+      <div
+        class="lightbox"
+        on="tap:compensate-lightbox.toggle">
         <div
           id="userOrderAgreement"
-          style=" height: 230px;width: 100% ;border: none; margin: 0;overflow: scroll;color: #000; text-align: left;line-height:24px;padding: 15px;"
+          style="width: 100% ;border: none; margin: 0;overflow: scroll;color: #000; text-align: left;line-height:24px;padding: 15px;"
           v-html="compensateRules.agreementContent">
           加载协议中
         </div>
         <div
-          style="width: 150px;height: 30px;background: #F2593F;font-size: 12px; color: #FFF; text-align: center;line-height: 30px; margin: 0 auto;margin-top: 10px"
-          @click.stop="showCompensate=false">确定</div>
+          style="width: 150px;height: 30px;background-image: linear-gradient(287deg, #ff1d41, #ee0e87);font-size: 12px; color: #FFF; text-align: center;line-height: 30px; margin: 0 auto;margin-top: 10px"
+        >确定</div>
       </div>
-    </div>
-
+    </mip-lightbox>
+    <!-- 退款及赔付规则  -->
     <div
       v-if="loginloading"
       class="pop">
@@ -2209,11 +2213,12 @@ export default {
     console.log('呈现详情')
     this.prefixUrl && sessionStorageUtil.set('prefix', this.prefixUrl)
     this.loadOrder(searchValueByKey('orderOID'))
+    this.loadRule()
   },
   methods: {
-    clickRules () {
+    loadRule () {
       let me = this
-      me.showCompensate = true
+      // me.showCompensate = true
       me.refundUrl && httpGet(me.refundUrl)
         .then(function (data) {
           if (data.statusCode === 200) {
