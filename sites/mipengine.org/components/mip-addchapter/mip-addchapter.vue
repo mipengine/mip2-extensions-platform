@@ -37,7 +37,8 @@
         },
         props:['novelName'],
         mounted() {
-            // this.originUrl = MIP.util.getOriginalUrl(window.location.href);
+            // this.originUrl = MIP.util.getOriginalUrl(window.location.href) || this.originUrl;
+            console.log(this.originUrl);
             this.initData();
         },
         methods: {
@@ -66,7 +67,7 @@
                     return res.json();
                 }).then((data) => {
                     // 处理parse 后的data数据
-                    this.list = data.data.catalog.chapters;
+                    this.list = data.data.catalog.chapters || [];
                 }).catch(function(ex) {
                     // 捕获 parse的异常
                     console.log('parsing failed', ex)
