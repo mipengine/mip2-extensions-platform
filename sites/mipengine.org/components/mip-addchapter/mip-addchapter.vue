@@ -46,7 +46,7 @@
                 // let url = 'https://sp0.baidu.com/5LMDcjW6BwF3otqbppnN2DJv/novelsearch.pae.baidu.com/novel/api/mipinfo?originUrl='+this.originUrl;
                 let logid = MIP && MIP.hash && MIP.hash.get ? MIP.hash.get(key) : '';
                 let _from = MIP && MIP.standalone ? 'noshell': "";
-                let url = 'http://yq01-psdy-diaoyan1016.yq01.baidu.com:8848/novel/api/mipinfo?originUrl='+this.originUrl;
+                let url = 'https://yq01-psdy-diaoyan1016.yq01.baidu.com:8001/novel/api/mipinfo?originUrl='+this.originUrl;
                 if(this.novelName){
                     url += ("&novelName="+novelName);
                 }
