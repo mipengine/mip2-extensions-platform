@@ -90,7 +90,7 @@
 
 <script>
 import { httpGet } from '@/common/httpUtil'
-import { templateCompile } from '@/common/urlUtil'
+import { searchValueByKey, templateCompile } from '@/common/urlUtil'
 import * as sessionStorageUtil from '@/common/sessionStorageUtil.js'
 export default {
   props: {
@@ -132,7 +132,7 @@ export default {
   methods: {
     loadOrder () {
       let self = this
-      let transactionOID = MIP.hash.get('transactionOID')
+      let transactionOID = searchValueByKey('transactionOID')
       if (transactionOID) {
         let fetchUrl = templateCompile(self.payOrderUrl, {transactionOID})
         httpGet(fetchUrl).then(function (data) {
@@ -154,14 +154,14 @@ export default {
               self.display = true
             }
           } else if (data.statusCode === 1005) {
-            MIP.viewer.page.currentPageId && sessionStorageUtil.set('login_back_url', MIP.viewer.page.currentPageId + '#transactionOID=' + MIP.hash.get('transactionOID'))
+            window.location.href && sessionStorageUtil.set('login_back_url', window.location.href)
             self.loginUrl && MIP.viewer.open(self.loginUrl)
           }
         })
       }
     },
     queryOrder () {
-      this.nextUrl && MIP.viewer.open(`${this.nextUrl}#orderOID=${this.order.orderOID}`)
+      this.nextUrl && MIP.viewer.open(`${this.nextUrl}?orderOID=${this.order.orderOID}`)
     },
     returnIndex () {
       this.homeUrl && MIP.viewer.open(this.homeUrl)
