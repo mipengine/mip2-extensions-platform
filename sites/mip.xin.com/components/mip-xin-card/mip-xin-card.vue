@@ -113,7 +113,7 @@ export default {
 </script>
 <style scoped>
 .carcontent {
-  display: flex;
+  /**display: flex;**/
   /* height: 2.9rem; */
   height: 2.4rem;
   /**padding: 0.24rem 0.3rem 0 0.3rem;*/
@@ -126,6 +126,8 @@ export default {
   position: relative;
   margin-left: 0.3rem;
   margin-top: 0.3rem;
+  float: left;
+  width: 2.56rem;
 }
 
 .content-left .carpic {
@@ -158,6 +160,8 @@ export default {
   /**width: 4.37rem;*/
   margin-top: 0.25rem;
   /* overflow: hidden; */
+  float: left;
+    width: 4rem;
 }
 
 .content-right .carname {

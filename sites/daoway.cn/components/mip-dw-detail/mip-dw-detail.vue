@@ -1,5 +1,9 @@
 <template>
   <div class="wrapper">
+    <mip-inservice-login
+      id="log"
+      :config="config"
+      on="login:example.customLogin"/>
     <div class="detail-banner">
       <img :src="sericePrice.picUrl">
       <ul>
@@ -154,7 +158,13 @@
                         </div>
                     </div>-->
         <div
+          v-if="userId"
           class="btngo"
+          @click="reservation()">立即购买</div>
+        <div
+          v-else
+          class="btngo"
+          on="tap:log.login"
           @click="reservation()">立即购买</div>
       </div>
 
@@ -218,6 +228,16 @@
 import base from '../../common/utils/base'
 import '../../common/utils/base.less'
 export default {
+  props: {
+    info: {
+      type: Object,
+      required: true
+    },
+    config: {
+      type: Object,
+      required: true
+    }
+  },
   data () {
     return {
       id: base.getRequest(location.href).detailid,
@@ -257,14 +277,17 @@ export default {
       code: base.getRequest(location.href).code,
       id2: '',
       toservation: '',
-      scroll: false
+      scroll: false,
+      userId: '',
+      token: ''
     }
-  },
-  created () {
-    window.addEventListener('scroll', this.moreimg)
   },
   mounted () {
     window.addEventListener('scroll', this.moreimg)
+    this.userId = localStorage.getItem('mipUserId')
+    this.token = localStorage.getItem('mipToken')
+    sessionStorage.removeItem('tech')
+    localStorage.removeItem('technician')
     this.detailstr()
   },
   methods: {
@@ -393,8 +416,6 @@ export default {
       let price = that.price
       let totalPrices = price * quantity
       sessionStorage.setItem('apptime', '')
-      let userId = localStorage.getItem('mipUserId')
-      let token = localStorage.getItem('mipToken')
       /* 跳转带出去的参数 */
       let priceId = that.priceId
       let priceMap = {}
@@ -404,15 +425,15 @@ export default {
         this.warn.show = true
         this.warn.texts = '该店铺需满' + minBuyPrice + '元起购，还差' + (minBuyPrice - totalPrices) + '元即可下单哦~'
       } else {
-        if (userId && token) {
-          let param = {
-            serviceId: that.serviceId,
-            priceId: that.priceId,
-            quantity: quantity,
-            appointTime: that.appointTime,
-            priceType: that.priceType
-          }
-          param = JSON.stringify(param)
+        let param = {
+          serviceId: that.serviceId,
+          priceId: that.priceId,
+          quantity: quantity,
+          appointTime: that.appointTime,
+          priceType: that.priceType
+        }
+        param = JSON.stringify(param)
+        if (that.userId && that.token) {
           if (MIP.util.platform.isWechatApp()) {
             let appid = 'wx0290cc2004b61c97'
             let loginUrl = encodeURIComponent(base.htmlhref.reservation + '?param=' + encodeURIComponent(param))
@@ -422,16 +443,12 @@ export default {
             MIP.viewer.open(base.htmlhref.reservation + '?param=' + encodeURIComponent(param), { isMipLink: false })
           }
         } else {
-          /* let baseparam = JSON.stringify({
-            serviceId: that.serviceId,
-            priceId: that.priceId,
-            quantity: quantity,
-            appointTime: that.appointTime,
-            priceType: that.priceType
-          }); */
-          /* let redirectUri = 'http://test.daoway.cn/mip/t/index.html';
-          let url = 'https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=' + that.client_id + '&redirect_uri=' + redirectUri+ '&scope=snsapi_userinfo&state=STATE'; */
-          MIP.viewer.open(base.htmlhref.index, { isMipLink: false })
+          that.$on('customLogin', event => {
+            localStorage.setItem('mipUserId', event.userInfo.userId)
+            localStorage.setItem('mipToken', event.userInfo.token)
+            localStorage.setItem('nick', event.userInfo.nick)
+            MIP.viewer.open(base.htmlhref.reservation + '?param=' + encodeURIComponent(param), { isMipLink: false })
+          })
         }
       }
     }

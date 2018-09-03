@@ -9,6 +9,10 @@ function setContainerH (dom) {
   }
   document.querySelector(dom).style.height = containerH + 'px'
 }
+function getContainerH (dom) {
+  let containerH = window.innerHeight || document.documentElement.clientHeight
+  return containerH
+}
 function resetRem () {
   let b = document
   let a = {}
@@ -44,5 +48,6 @@ function resetRem () {
 export default {
   resetRem: resetRem,
   setContainerH: setContainerH,
-  outAldhttp: outAldhttp
+  outAldhttp: outAldhttp,
+  getContainerH: getContainerH
 }
