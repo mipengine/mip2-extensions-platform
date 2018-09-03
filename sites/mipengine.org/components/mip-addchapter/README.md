@@ -22,4 +22,5 @@
 </body>
 
 ###字段说明
-novel-name: 小说的名字
+novel-name: 小说的名字,非必须，
+origin-url: 网页原地址，非必须

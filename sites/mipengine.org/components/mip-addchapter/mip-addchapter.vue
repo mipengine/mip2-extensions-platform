@@ -43,7 +43,13 @@ export default {
   props: {
     'novelName': {
       default () {
-        return {}
+        return ''
+      },
+      type: String
+    },
+    'originUrl': {
+      default () {
+        return ''
       },
       type: String
     }
@@ -51,35 +57,22 @@ export default {
   data () {
     return {
       list: [],
-      originUrl: 'http%3a%2f%2fwww.xmkanshu.com%2fbook%2fmip%2fread%3fbkid%3d672340121%26crid%3d371%26fr%3dxs_aladin_free%26mip%3d1',
+      url: '',
       order: '倒序'
     }
   },
   mounted () {
-    // this.originUrl = MIP.util.getOriginalUrl(window.location.href) || this.originUrl
     this.order = storage.get('order') ? storage.get('order') : this.order
     this.initData()
   },
   methods: {
     initData () {
       // const url = 'https://sp0.baidu.com/5LMDcjW6BwF3otqbppnN2DJv/novelsearch.pae.baidu.com/novel/api/mipinfo?originUrl='+this.originUrl
-      // const logid = MIP && MIP.hash && MIP.hash.get ? MIP.hash.get(key) : ''
-      // const _from = MIP && MIP.standalone ? 'noshell': ""
-      const url = 'https://yq01-psdy-diaoyan1016.yq01.baidu.com:8001/novel/api/mipinfo?originUrl=' + this.originUrl
+      this.url = this.originUrl ? this.originUrl : MIP.util.getOriginalUrl(window.location.href)
+      let url = 'https://yq01-psdy-diaoyan1016.yq01.baidu.com:8001/novel/api/mipinfo?originUrl=' + this.url
       if (this.novelName) {
         url += ('&novelName=' + this.novelName)
       }
-      // 以下参数后端未接入
-      // if(bkid){
-      //     url += ("&bkid="+bkid);
-      // }
-      // if(logid){
-      //     url += ("&logid="+logid);
-      // }
-      // if(_from){
-      //     url += ("&from="+_from);
-      // }
-
       window.fetchJsonp(url, {
         jsonpCallback: 'callback'
       }).then(function (res) {
@@ -104,47 +97,47 @@ export default {
 }
 </script>
 <style scoped>
-    .chapter ul li{
-        list-style: none;
-    }
-    .chapter #header{
-        border-bottom: 1px solid #f1f1f1;
-        height: 44px;
-        line-height: 44px;
-        padding-left: 17px;
-        padding-right: 17px;
-    }
-    #header .left{
-        left: 17px;
-        text-align: left;
-        position: absolute;
-        top: 0;
-        z-index: 10;
-    }
-    .chapter h4{
-        margin: 0;
-        padding: 0 50px;
-        text-align: center;
-        font-size: 18px;
-    }
-    .chapter .container{
-        margin: .1rem 0;
-        padding: .1rem .17rem .15rem;
-        background-color: #fff;
-        width: auto;
-        word-break: break-word;
-        word-wrap: break-word;
-        border: 0 none;
-    }
-    .container .text-right{
-        float: right;
-        font-size: 16px;
-        font-weight: normal;
-    }
-    .catalog-list li {
-        border-bottom: 1px solid #f1f1f1;
-    }
-    .catalog-list li a{
-        width: 100%;
-    }
+  .chapter ul li{
+    list-style: none;
+  }
+  .chapter #header{
+    border-bottom: 1px solid #f1f1f1;
+    height: 44px;
+    line-height: 44px;
+    padding-left: 17px;
+    padding-right: 17px;
+  }
+  #header .left{
+    left: 17px;
+    text-align: left;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+  }
+  .chapter h4{
+    margin: 0;
+    padding: 0 50px;
+    text-align: center;
+    font-size: 18px;
+  }
+  .chapter .container{
+    margin: .1rem 0;
+    padding: .1rem .17rem .15rem;
+    background-color: #fff;
+    width: auto;
+    word-break: break-word;
+    word-wrap: break-word;
+    border: 0 none;
+  }
+  .container .text-right{
+    float: right;
+    font-size: 16px;
+    font-weight: normal;
+  }
+  .catalog-list li {
+    border-bottom: 1px solid #f1f1f1;
+  }
+  .catalog-list li a{
+    width: 100%;
+  }
 </style>
