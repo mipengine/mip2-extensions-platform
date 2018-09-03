@@ -1,19 +1,19 @@
 <template>
   <div class = "chapter">
     <header id = "header">
-      <div class="left">
-        <a href="xiaoshuo.html">
-          <i class="icon icon-left"/>
+      <div class = "left">
+        <a href = "xiaoshuo.html">
+          <i class = "icon icon-left"/>
         </a>
       </div>
       <h4 class = "line-clamp1"> {{ novelName }} </h4>
     </header>
-    <div class="container">
+    <div class = "container">
       <h2>目录
         <span
           class = "text-right"
           @click = "reverseChapter">
-          <i class="icon icon-order"/>{{ order }}
+          <i class = "icon icon-order"/>{{ order }}
         </span>
       </h2>
       <div class = "catalog-list">
@@ -22,7 +22,7 @@
             v-for = "item in list"
             :key = "item.id">
             <a
-              :href="item.contentUrl[0]">
+              :href = "item.contentUrl[0]">
               <p
                 v-clock
                 class = "line-clamp1 gap-top gap-bottom"> {{ item.name }}
@@ -36,10 +36,9 @@
 </template>
 
 <script>
-let util = MIP.util
-console.log(MIP.util)
-let CustomStorage = util.customStorage
-let storage = new CustomStorage(0)
+const util = MIP.util
+const CustomStorage = util.customStorage
+const storage = new CustomStorage(0)
 export default {
   props: {
     'novelName': {
@@ -63,10 +62,10 @@ export default {
   },
   methods: {
     initData () {
-      // let url = 'https://sp0.baidu.com/5LMDcjW6BwF3otqbppnN2DJv/novelsearch.pae.baidu.com/novel/api/mipinfo?originUrl='+this.originUrl
-      // let logid = MIP && MIP.hash && MIP.hash.get ? MIP.hash.get(key) : ''
-      // let _from = MIP && MIP.standalone ? 'noshell': ""
-      let url = 'https://yq01-psdy-diaoyan1016.yq01.baidu.com:8001/novel/api/mipinfo?originUrl=' + this.originUrl
+      // const url = 'https://sp0.baidu.com/5LMDcjW6BwF3otqbppnN2DJv/novelsearch.pae.baidu.com/novel/api/mipinfo?originUrl='+this.originUrl
+      // const logid = MIP && MIP.hash && MIP.hash.get ? MIP.hash.get(key) : ''
+      // const _from = MIP && MIP.standalone ? 'noshell': ""
+      const url = 'https://yq01-psdy-diaoyan1016.yq01.baidu.com:8001/novel/api/mipinfo?originUrl=' + this.originUrl
       if (this.novelName) {
         url += ('&novelName=' + this.novelName)
       }
@@ -90,9 +89,8 @@ export default {
         // 处理parse 后的data数据
         this.list = data.data.catalog.chapters || []
         if (this.order === '正序') this.list = this.list.reverse()
-      }).catch(function (ex) {
+      }).catch(function () {
         // 捕获 parse的异常
-        console.log('parsing failed', ex)
       })
     },
     reverseChapter () {
