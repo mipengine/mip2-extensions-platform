@@ -27,6 +27,10 @@
 </template>
 
 <script>
+    let util = MIP.util;
+    console.log(MIP.util);
+    let CustomStorage = util.customStorage;
+    let storage = new CustomStorage(0);
     export default {
         data(){
            return {
@@ -38,27 +42,28 @@
         props:['novelName'],
         mounted() {
             // this.originUrl = MIP.util.getOriginalUrl(window.location.href) || this.originUrl;
-            console.log(this.originUrl);
+            this.order = storage.get('order') ? storage.get('order') : this.order;
             this.initData();
         },
         methods: {
             initData() {
                 // let url = 'https://sp0.baidu.com/5LMDcjW6BwF3otqbppnN2DJv/novelsearch.pae.baidu.com/novel/api/mipinfo?originUrl='+this.originUrl;
                 let logid = MIP && MIP.hash && MIP.hash.get ? MIP.hash.get(key) : '';
-                let _from = MIP && MIP.standalone ? 'noshell': "";
+                // let _from = MIP && MIP.standalone ? 'noshell': "";
                 let url = 'https://yq01-psdy-diaoyan1016.yq01.baidu.com:8001/novel/api/mipinfo?originUrl='+this.originUrl;
                 if(this.novelName){
                     url += ("&novelName="+novelName);
                 }
+                // 以下参数后端未接入
                 // if(bkid){
                 //     url += ("&bkid="+bkid);
                 // }
-                if(logid){
-                    url += ("&logid="+logid);
-                }
-                if(_from){
-                    url += ("&from="+_from);
-                }
+                // if(logid){
+                //     url += ("&logid="+logid);
+                // }
+                // if(_from){
+                //     url += ("&from="+_from);
+                // }
 
                 fetchJsonp(url, {
                     jsonpCallback: 'callback'
@@ -68,6 +73,7 @@
                 }).then((data) => {
                     // 处理parse 后的data数据
                     this.list = data.data.catalog.chapters || [];
+                    if(this.order == "正序") this.list = this.list.reverse();
                 }).catch(function(ex) {
                     // 捕获 parse的异常
                     console.log('parsing failed', ex)
@@ -76,9 +82,9 @@
             reverseChapter(){
                 // 正序，倒序
                 if(this.list.length === 0) return;
+                this.order = (this.order === "倒序"? "正序":"倒序");
                 this.list = this.list.reverse();
-                this.order = (this.order === "倒序"? "正序":"倒序")
-
+                storage.set('order',this.order);
             }
         }
     }
