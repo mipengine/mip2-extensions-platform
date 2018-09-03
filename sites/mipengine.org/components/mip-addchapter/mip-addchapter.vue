@@ -51,8 +51,8 @@ export default {
   },
   data () {
     return {
-      originUrl: 'http%3a%2f%2fwww.xmkanshu.com%2fbook%2fmip%2fread%3fbkid%3d672340121%26crid%3d371%26fr%3dxs_aladin_free%26mip%3d1',
       list: [],
+      originUrl: 'http%3a%2f%2fwww.xmkanshu.com%2fbook%2fmip%2fread%3fbkid%3d672340121%26crid%3d371%26fr%3dxs_aladin_free%26mip%3d1',
       order: '倒序'
     }
   },
