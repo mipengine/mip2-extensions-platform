@@ -22,7 +22,9 @@
             v-for = "item in list"
             :key = "item.id">
             <a
-              :href = "item.contentUrl[0]">
+              :href = "item.contentUrl[0]"
+              data-type="mip"
+              data-title="item.name">
               <p
                 v-clock
                 class = "line-clamp1 gap-top gap-bottom"> {{ item.name }}
