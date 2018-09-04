@@ -54,6 +54,12 @@ export default {
         return ''
       },
       type: String
+    },
+    'bkid': {
+      default () {
+        return ''
+      },
+      type: String
     }
   },
   data () {
@@ -69,11 +75,17 @@ export default {
   },
   methods: {
     initData () {
-      // const url = 'https://sp0.baidu.com/5LMDcjW6BwF3otqbppnN2DJv/novelsearch.pae.baidu.com/novel/api/mipinfo?originUrl='+this.originUrl
       this.url = this.originUrl ? this.originUrl : MIP.util.getOriginalUrl(window.location.href)
-      let url = 'https://yq01-psdy-diaoyan1016.yq01.baidu.com:8001/novel/api/mipinfo?originUrl=' + this.url
+      let url = 'https://sp0.baidu.com/5LMDcjW6BwF3otqbppnN2DJv/novelsearch.pae.baidu.com/novel/api/mipinfo?originUrl=' + this.url
+      const logid = MIP && MIP.hash && MIP.hash.get ? MIP.hash.get('lid') : ''
       if (this.novelName) {
         url += ('&novelName=' + this.novelName)
+      }
+      if (logid) {
+        url += ('&logid=' + logid)
+      }
+      if (this.bkid) {
+        url += ('&bkid=' + this.bkid)
       }
       window.fetchJsonp(url, {
         jsonpCallback: 'callback'
