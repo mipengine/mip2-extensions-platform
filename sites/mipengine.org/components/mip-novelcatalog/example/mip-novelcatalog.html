@@ -14,9 +14,38 @@
       background: #f3f3f3;
       margin: 10px;
     }
+    
+    #header{
+      border-bottom: 1px solid #f1f1f1;
+      height: 44px;
+      line-height: 44px;
+      padding-left: 17px;
+      padding-right: 17px;
+    }
+    #header .left{
+      left: 17px;
+      text-align: left;
+      position: absolute;
+      top: 0;
+      z-index: 10;
+    }
+    h4{
+      margin: 0;
+      padding: 0 50px;
+      text-align: center;
+      font-size: 18px;
+    }
   </style>
 </head>
 <body>
+  <header id = "header">
+    <div class = "left">
+      <a href = "xiaoshuo.html">
+        <i class = "icon icon-left"></i>
+      </a>
+    </div>
+    <h4 class = "line-clamp1"> 小说标题 </h4>
+  </header>
   <mip-data>
     <script type="application/json">
       {

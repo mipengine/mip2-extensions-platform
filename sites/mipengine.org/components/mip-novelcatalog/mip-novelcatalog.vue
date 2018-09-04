@@ -1,13 +1,5 @@
 <template>
   <div class = "chapter">
-    <header id = "header">
-      <div class = "left">
-        <a href = "xiaoshuo.html">
-          <i class = "icon icon-left"/>
-        </a>
-      </div>
-      <h4 class = "line-clamp1"> {{ novelName }} </h4>
-    </header>
     <div class = "container">
       <h2>目录
         <span
@@ -113,26 +105,6 @@ export default {
 <style scoped>
   .chapter ul li{
     list-style: none;
-  }
-  .chapter #header{
-    border-bottom: 1px solid #f1f1f1;
-    height: 44px;
-    line-height: 44px;
-    padding-left: 17px;
-    padding-right: 17px;
-  }
-  #header .left{
-    left: 17px;
-    text-align: left;
-    position: absolute;
-    top: 0;
-    z-index: 10;
-  }
-  .chapter h4{
-    margin: 0;
-    padding: 0 50px;
-    text-align: center;
-    font-size: 18px;
   }
   .chapter .container{
     margin: .1rem 0;
