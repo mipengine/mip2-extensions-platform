@@ -3,15 +3,12 @@
 
 mip-addchapter 实现了一个异步获取小说目录的组件
 
-
-```markdown
 标题|内容
 ----|----
 类型|通用
 支持布局|responsive,fixed-height,fill,container,fixed
 所需脚本|https://c.mipcdn.com/static/v2/mip.js, /mip-addchapter/mip-addchapter.js
 所需样式|https://c.mipcdn.com/static/v2/mip.css, https://c.mipcdn.com/static/mag-design/2.0.2/mag-design.min.css
-```
 
 ## 示例
 ```html
