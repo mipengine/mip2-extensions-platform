@@ -11,7 +11,8 @@
   </div>
   <div
     v-else-if="name == 'date'"
-    class="item dateinput">
+    class="item dateinput"
+  >
     <input
       :value="dateVal"
       name="date"
@@ -25,7 +26,8 @@
   </div>
   <div
     v-else-if="name == 'time'"
-    class="item timeinput">
+    class="item timeinput"
+  >
     <input
       :value="timeString"
       name="time"
@@ -39,7 +41,8 @@
   </div>
   <div
     v-else-if="name == 'place'"
-    class="item placeinput">
+    class="item placeinput"
+  >
     <input
       :value="placeVal"
       name="place"
@@ -56,7 +59,7 @@
     class="boy fl"
   >
     <dt class="head"><mip-img :src="xzsrc"/></dt>
-    <dd class="name">{{ xzname }}</dd>
+    <dd class="xz name">男：{{ xzname }}</dd>
     <input
       :value="xzid"
       name="boy"
@@ -68,7 +71,7 @@
     class="girl fl"
   >
     <dt class="head"><mip-img :src="xzsrc2"/></dt>
-    <dd class="name">{{ xzname2 }}</dd>
+    <dd class="xz name">女：{{ xzname2 }}</dd>
     <input
       :value="xzid2"
       name="girl"
@@ -79,7 +82,7 @@
     v-else-if="name == 'sxpairboy'"
     class="item boy fl">
     <dt class="head"><mip-img :src="sxsrc"/></dt>
-    <dd class="name">{{ sxname }}</dd>
+    <dd class="name">男：{{ sxname }}</dd>
     <input
       :value="sxid"
       name="boy"
@@ -90,7 +93,7 @@
     v-else-if="name == 'sxpairgril'"
     class="item girl fr">
     <dt class="head"><mip-img :src="sxsrc2"/></dt>
-    <dd class="name">{{ sxname2 }}</dd>
+    <dd class="name">女：{{ sxname2 }}</dd>
     <input
       :value="sxid2"
       name="girl"
@@ -136,10 +139,7 @@
 </template>
 
 <style scoped>
-.wrapper {
-  margin: 0 auto;
-  text-align: center;
-}
+.xz.name{font-size: 0.44rem;width: auto;}
 </style>
 
 <script>
@@ -245,6 +245,7 @@ export default {
         let href2 = a2[0].getAttribute('url')
         let input2 = jz.querySelectorAll('input')
         if (!_this.returnQuery(input2)) {
+          _this.tip()
           return false
         }
         let url = href2 + '?' + _this.returnQuery(input2)
@@ -257,6 +258,7 @@ export default {
         input = pt.querySelectorAll('input')
       }
       if (!_this.returnQuery(input)) {
+        _this.tip()
         return false
       }
       let url = href + '?' + _this.returnQuery(input)
@@ -296,6 +298,17 @@ export default {
         }
       }
       return q === true ? querys : ''
+    },
+    tip: function () {
+      let body = document.querySelectorAll('body')
+      let tip = document.getElementById('tip')
+      if (!tip) {
+        body[0].insertAdjacentHTML('afterbegin', '<div id="tip" class="tip"><span>请输入完整的信息</span></div>')
+      } else {
+        setInterval(function () {
+          tip.remove()
+        }, 3000)
+      }
     }
   }
 }

@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
     <title>参数配置</title>
     <link rel="shortcut icon" href="//m.xin.com/favicon.ico">
     <link rel="canonical" href="对应的原页面地址">
@@ -25,32 +25,31 @@
 </head>
 
 <body data-carid="<%-query.carId%>" data-ajaxtoken="<%-ajaxToken%>" data-optoken="<%-query.optoken%>">
-    <mip-shell>
+    <mip-shell-inservice mip-shell>
         <script type="application/json">
-            {
-                "routes": [{
-                    "pattern": "*",
-                    "meta": {
-                        "header": {
-                            "show": true,
-                            "xiongzhang": true,
-                            "title": "优信二手车",
-                            "logo": "http://c2.xinstatic.com/f3/20180727/1951/5b5b072fb1a77543583.png",
-                            "buttonGroup": [{
-                                "name": "search",
-                                "text": "search",
-                                "link": "https://somesite.com/mip/anotherMIPPage.html"
-                            }]
-                        },
-                        "view": {
-                            "isIndex": false
+               
+                {   
+                    "isId": "1578861028762702",
+                    "routes": [
+                        {
+                            "pattern": "*",
+                            "meta": {
+                                "header": {
+                                    "show": true,
+                                    "xiongzhang": true,
+                                    "title": "优信二手车"
+                                },
+                                "view": {
+                                    "isIndex": false
+                                }
+                            }
                         }
-
-                    }
-                }]
-            }
-        </script>
-    </mip-shell>
+    
+                    ]
+                }
+            
+            </script>
+    </mip-shell-inservice>
     <mip-data>
         <script type="application/json">
             {
@@ -65,15 +64,17 @@
 
 
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
-    <script src="https://c.mipcdn.com/static/v1/mip-fixed/mip-fixed.js"></script>
-    <script src="/mip-xin-swiper/mip-xin-swiper.js"></script>
-    <script src="/mip-xin-card/mip-xin-card.js"></script>
-    <script src="/mip-xin-position/mip-xin-position.js"></script>
-    <script src="/mip-xin-params/mip-xin-params.js"></script>
-    <script src="/mip-xin-image/mip-xin-image.js"></script>
-    <script src="https://c.mipcdn.com/static/v1/mip-lightbox/mip-lightbox.js"></script>
-    <script src="/mip-xin-button/mip-xin-button.js"></script>
-    <script src="https://c.mipcdn.com/static/v1/mip-link/mip-link.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-fixed/mip-fixed.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-shell-inservice/mip-shell-inservice.js"></script>
+
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-swiper/mip-xin-swiper.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-card/mip-xin-card.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-position/mip-xin-position.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-params/mip-xin-params.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-image/mip-xin-image.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-lightbox/mip-lightbox.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-button/mip-xin-button.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-link/mip-link.js"></script>
 </body>
 
 </html>

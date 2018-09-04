@@ -50,18 +50,18 @@
             <span>{{ checkItem.cat_name }}</span>
             <img
               :class="[carTypeStatus[checkItem.cat_name]?'angleDir':'']"
-              src="http://c2.xinstatic.com/f3/20180416/1840/5ad47da2428ad535567.png">
+              src="//c2.xinstatic.com/f3/20180416/1840/5ad47da2428ad535567.png">
           </div>
           <div class="checkoutCountWrap">
             <div
               v-if="checkItem.flaw_all_num"
               class="checkCount">
               <span>{{ checkItem.flaw_all_num }}项</span>
-              <img src="http://c2.xinstatic.com/f3/20180416/1840/5ad47da23e611535388.png">
+              <img src="//c2.xinstatic.com/f3/20180416/1840/5ad47da23e611535388.png">
             </div>
             <div class="checkCount">
               <span>{{ checkItem.all_num }}项</span>
-              <img src="http://c2.xinstatic.com/f3/20180416/1840/5ad47da23e2e4430972.png">
+              <img src="//c2.xinstatic.com/f3/20180416/1840/5ad47da23e2e4430972.png">
             </div>
           </div>
         </div>
@@ -76,11 +76,11 @@
               <img
                 v-if="flawItem.flaw_num"
                 class="reportIcon"
-                src="http://c2.xinstatic.com/f3/20180416/1840/5ad47da23e611535388.png">
+                src="//c2.xinstatic.com/f3/20180416/1840/5ad47da23e611535388.png">
               <img
                 v-else
                 class="reportIcon"
-                src="http://c2.xinstatic.com/f3/20180416/1840/5ad47da23e2e4430972.png">
+                src="//c2.xinstatic.com/f3/20180416/1840/5ad47da23e2e4430972.png">
             </span>
           </div>
           <div
@@ -91,9 +91,9 @@
         </div>
       </div>
     </div>
-    <mip-xin-button
+    <!-- <mip-xin-button
       v-if="carid"
-      :source="4"/>
+      :source="4"/> -->
     <div class="boxTop"/>
     <div class="reportTitle lastTitle">
       <span class="title">瑕疵及修复</span>
@@ -172,10 +172,8 @@ export default {
           //  无分级视频时，使用完整视频
         // 视频数据延迟渲染
         setTimeout(() => {
-          console.log('视频加载over')
           this.videoUrl = video.video_url
           this.videoImg = res.report_complete_video.pic
-          console.log(video.video_url, res.report_complete_video.pic)
         }, 1000)
         // end
 
@@ -489,7 +487,8 @@ export default {
   line-height: 0.6rem;
 }
 .borderBottom {
-  padding-bottom: 0.88rem;
+  /**padding-bottom: 0.88rem;*/
+  padding-bottom:0.44rem;
 }
 ::-webkit-scrollbar {
   width: 0;

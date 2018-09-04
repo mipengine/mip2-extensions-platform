@@ -1,7 +1,8 @@
 import config from './config'
 import {
   getLocalStorage,
-  serialize
+  serialize,
+  getDomain
 } from './utils'
 
 // 获得api路径
@@ -44,6 +45,8 @@ export const requestFun = function (url = '', options = {}) {
       }
     }
     if (requestUrl.indexOf('/apis/') > -1) {
+      // 拼接链接适配百度
+      requestUrl = getDomain() + requestUrl
       params.credentials = 'include'
       // 请求相同域 带上cookie
     }

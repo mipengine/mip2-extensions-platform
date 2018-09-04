@@ -121,7 +121,7 @@ const BaseParams = () => {
     cid: systemCid, // 设备标识
     xdid: systemCid, // 新设备标识
     cityid: getCityID(), // 城市id
-    platform: 'applet', // 平台类型
+    platform: 'm', // 平台类型
     net: networkType,
     source: 'mip',
     channel: getChannel(),
@@ -133,7 +133,7 @@ const BaseParams = () => {
     mac: '',
     pageid: '',
     pid: '', // 映射表
-    url: '', // 页面url
+    url: window.location.href || '', // 页面url
     ref: '',
     location: (lon + lat) === '' ? '' : (lon + ',' + lat), // 地址位置
     keywordid: '',
@@ -191,7 +191,6 @@ const checkEvPl = (key, msg) => {
  * @return {[object]} 返回为object
  */
 const getEvPlValues = (NAME, evpl, values) => {
-  console.log(NAME, evpl, values)
   let params = {}
   let index = 0
   for (let key in values) {
