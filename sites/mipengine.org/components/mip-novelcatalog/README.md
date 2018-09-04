@@ -1,7 +1,7 @@
-# mip-addchapter 小说目录组件
+# mip-novelcatalog 小说目录组件
 
 
-mip-addchapter 实现了一个异步获取小说目录的组件
+mip-novelcatalog 实现了一个异步获取小说目录的组件
 
 标题|内容
 ----|----
@@ -14,19 +14,18 @@ mip-addchapter 实现了一个异步获取小说目录的组件
 ```html
 <body>
     <mip-data>
-        <script type="application/json">
-          {
-            "title": "神武天地",
-            "bkid": "",
-            "originUrl": ""
-          }
-        </script>
-    </mip-data>
-    <mip-addchapter 
-        m-bind:novel-name = "title"
-        m-bind:origin-url = "originUrl"
-        m-bind:bkid = "bkid">
-    </mip-addchapter>
+    <script type="application/json">
+      {
+        "title": "神武天地",
+        "bkid": "",
+        "originUrl": ""
+      }
+    </script>
+  </mip-data>
+  <mip-novelcatalog 
+    m-bind:novel-name = "title"
+    m-bind:origin-url = "originUrl"
+    m-bind:bkid = "bkid"></mip-novelcatalog>
 </body>
 ```
 
