@@ -1093,7 +1093,7 @@ export default {
       show_f: false,
       contract_is_offer_allday_ser: true,
       master: {
-
+        header: {small: ''}
       },
       order: {},
       contract_mama_name: '',
