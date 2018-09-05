@@ -1853,7 +1853,7 @@ export default {
     return {
       isLogin: false,
       isUnion: false,
-      list: null,
+      list: [],
       state: {
         isLoadingMore: false,
         loadMessage: '',
