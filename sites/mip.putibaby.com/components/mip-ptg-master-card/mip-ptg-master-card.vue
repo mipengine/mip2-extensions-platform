@@ -1249,10 +1249,19 @@ export default {
     },
     handleUpdateTime () {
       console.log('handleUpdateTime')
+      var self = this
+      var city = this.city || ''
+      API.reportVisit(5, city, function (isOk, res) {
+        if (isOk) {
+          console.log(res)
+        } else {
+          console.log(res)
+        }
 
-      if (!this.checkLogin_('update_time')) { return }
+        if (!self.checkLogin_('update_time')) { return }
 
-      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_time_mip?mcode=' + this.data.codeid), {})
+        window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_time_mip?mcode=' + self.data.codeid), {})
+      })
     },
     handleOrderList () {
       console.log('handleOrderList')
