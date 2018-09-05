@@ -280,7 +280,6 @@ export default {
 			if(e.target.value){
 				let match = e.target.value.match(/^\d{1,8}\.\d{0,2}|\d{1,8}/);
 				const max = 10000000;
-				console.log(match)
 				if (match[0] > max) {
 					//double的有效位数是10,小数位分了两位,故整数位限制为8位
 					(match[0]/max) >= 10&&(match[0]/max) <=20?match[0] = max:match[0] = match[0].substring(0, 7);
@@ -288,14 +287,14 @@ export default {
 				}
 				if(match){
 					e.target.value = match[0];
-					this.wage = match[0]
+					this.wage = match[0];
 				}
 			}else{
-					this.wage&&this.wage.length>1?e.target.value = this.wage:e.target.value = '';
+				this.wage&&this.wage.length>1?e.target.value = this.wage:e.target.value = '';
 			}
-				this.baseMoney = Number(e.target.value);
-				this.fromBase = this.baseMoney;
-				this.sendBaseMoney();
+			this.baseMoney = Number(e.target.value);
+			this.fromBase = this.baseMoney;
+			this.sendBaseMoney();
 			// if(e.target.value){
 			// 	this.baseMoney = Number(this.moneyFilter(e.target.value));
 			// 	e.target.value = this.baseMoney;
