@@ -1,7 +1,11 @@
 node_modules/
 dist/
 .idea/
+<<<<<<< HEAD
 npm-debug.log
+=======
+*.log
+>>>>>>> b72e51fd71c800b142cb8aa28e0e046f06f2d31e
 Thumbs.db
 .DS_Store
 *.swp
