@@ -128,6 +128,10 @@ const pid = '/pages/detail'
 const pidParams = '/pages/params'
 const pidReport = '/pages/report'
 export default {
+  // https://github.com/mipengine/mip2/issues/252  解决uc浏览器白屏问题
+  prerenderAllowed () {
+    return true
+  },
   // source 1 :车辆详情 2 :参数配置页 3 大图 4 检测报告页
   props: {
     isBaiCheng: {
