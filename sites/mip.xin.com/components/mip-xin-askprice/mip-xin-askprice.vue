@@ -59,7 +59,8 @@
             v-if="!info.isLogin && baAuth && telCorrect"
             :style="{'margin-top':authBottom}"
             class="enquiryBtn tel-submit"
-            on="tap:customlog.login">获取底价</button>
+            on="tap:customlog.login"
+            @click="handleLogin">获取底价</button>
           <button
             v-else
             :style="{'margin-top':authBottom}"
@@ -232,6 +233,21 @@ export default {
     }
   },
   methods: {
+    handleLogin () {
+      clickPoint(
+        'getbottomprice_vehicle_detail',
+        {
+          carid: getCarId(),
+          type: this.isDirect,
+          authorize: 1,
+          button: 2
+        },
+        null,
+        {
+          pid: pid
+        }
+      )
+    },
     authMessage () {
       this.baAuth = !this.baAuth
     },
@@ -301,6 +317,22 @@ export default {
             this.showAskToast = false
             this.showSimilarToast = true
           }
+          // 登陆授权之后埋点
+          let type = this.isDirect
+          let telNum = this.telValue || getLocalStorage('phoneNumber')
+          clickPoint(
+            'bottomprice_submit_vehicle_detail',
+            {
+              carid: getCarId(),
+              type: type,
+              tel_num: telNum,
+              button: 2
+            },
+            null,
+            {
+              pid: pid
+            }
+          )
         })
         .catch(err => {
           if (err.error_code === 412) {
@@ -308,18 +340,6 @@ export default {
             this.reminMessage = '30秒内不能重复提交'
           }
         })
-      clickPoint(
-        'bottomprice_submit_vehicle_details',
-        {
-          carid: getCarId(),
-          type: this.isDirect,
-          tel_num: this.telValue
-        },
-        null,
-        {
-          pid: pid
-        }
-      )
     },
     // 询底价
     queryClick () {
@@ -329,6 +349,37 @@ export default {
         return
       }
       this.bottomPrice()
+      if (this.info.isLogin) {
+        clickPoint(
+          'getbottomprice_vehicle_detail',
+          {
+            carid: getCarId(),
+            type: this.isDirect,
+            authorize: 0,
+            button: 2
+            // tel_num: this.telValue
+          },
+          null,
+          {
+            pid: pid
+          }
+        )
+      } else {
+        clickPoint(
+          'getbottomprice_vehicle_detail',
+          {
+            carid: getCarId(),
+            type: this.isDirect,
+            authorize: 2,
+            button: 2
+            // tel_num: this.telValue
+          },
+          null,
+          {
+            pid: pid
+          }
+        )
+      }
     },
     // 一键询价
     askPriceOne (index) {
