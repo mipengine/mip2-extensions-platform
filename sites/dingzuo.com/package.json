@@ -1,9 +1,6 @@
 {
-<<<<<<< HEAD
   "name": "ErpBooking",
-=======
   "name": "dingzuo.com",
->>>>>>> b72e51fd71c800b142cb8aa28e0e046f06f2d31e
   "version": "0.0.1",
   "description": "A MIP project",
   "scripts": {
@@ -14,11 +11,8 @@
     "fix": "npm run fix:js",
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
-<<<<<<< HEAD
   "author": "yourname",
-=======
   "author": "Gao1997 (2465135939@qq.com)",
->>>>>>> b72e51fd71c800b142cb8aa28e0e046f06f2d31e
   "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",
