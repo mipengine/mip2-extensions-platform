@@ -28,24 +28,34 @@ export default {
         kilometer: 0,
         moveInAddress: {
           localtion: {
+            name: '',
             address: '',
             city: '',
             province: '',
             lat: '',
             lng: '',
-            title: ''
+            title: '',
+            location: {
+              lat: '',
+              lng: ''
+            }
           },
           address: '',
           phone: ''
         },
         moveOutAddress: {
           localtion: {
+            name: '',
             address: '',
             city: '',
             province: '',
             lat: '',
             lng: '',
-            title: ''
+            title: '',
+            location: {
+              lat: '',
+              lng: ''
+            }
           },
           address: '',
           phone: ''

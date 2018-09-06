@@ -147,6 +147,7 @@ export default {
                   self.loadOrder()
                 } else {
                   clearInterval(self.resultInterval)
+                  self.nextUrl && MIP.viewer.open(`${self.nextUrl}?orderOID=${self.order.orderOID}`)
                 }
               }, 2000)
             } else {
