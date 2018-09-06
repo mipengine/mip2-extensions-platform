@@ -165,7 +165,7 @@ export default {
     base.setMediaBase()
   },
   mounted () {
-    this.call()
+    this.getCallNum()
     this.isDirect = getLocalStorage('isDirect')
     this.imUrl = this.imUrl
     // 不要删，此处是用于监听轮播图滚动的。。。。
@@ -175,7 +175,8 @@ export default {
     })
   },
   methods: {
-    call () {
+    // 首次进入加载电话
+    getCallNum () {
       // 详情页电话客服执行的方法
       requestFun('/ajax/common/get_tel_400', {
         method: 'POST',
@@ -185,54 +186,53 @@ export default {
         }
       }).then(res => {
         this.telPhone = res.tel
-        // this.$nextTick(() => {
-        //   this.$refs.telPhone.click()
-        //   // window.location.href = 'tel:' + this.telPhone
-        // })
-        if (this.source === '1') {
-        // 详情页埋点
-          clickPoint(
-            'tel_consulting_detail',
-            {
-              carid: getCarId(),
-              '400_num': res.tel,
-              type: this.carInfo.is_zg_car, // 0为非直购，1为直购
-              button: 2
-            },
-            null,
-            {
-              pid: pid
-            }
-          )
-        } else if (this.source === '3') {
-          // 大图埋点
-          clickPoint(
-            'tel_consulting_pic',
-            {
-              carid: getCarId(),
-              '400_num': res.tel,
-              type: this.isDirect // 0为非直购，1为直购
-            },
-            null,
-            {
-              pid: pid
-            }
-          )
-        } else if (this.source === '4') {
-          // 检测报告页
-          clickPoint(
-            'tel_consulting_examine',
-            {
-              carid: getCarId(),
-              '400_num': res.tel
-            },
-            null,
-            {
-              pid: pidReport
-            }
-          )
-        }
       })
+    },
+    call () {
+      this.getCallNum()
+      if (this.source === '1') {
+      // 详情页埋点
+        clickPoint(
+          'tel_consulting_detail',
+          {
+            carid: getCarId(),
+            '400_num': this.telPhone,
+            type: this.carInfo.is_zg_car, // 0为非直购，1为直购
+            button: 2
+          },
+          null,
+          {
+            pid: pid
+          }
+        )
+      } else if (this.source === '3') {
+        // 大图埋点
+        clickPoint(
+          'tel_consulting_pic',
+          {
+            carid: getCarId(),
+            '400_num': this.telPhone,
+            type: this.isDirect // 0为非直购，1为直购
+          },
+          null,
+          {
+            pid: pid
+          }
+        )
+      } else if (this.source === '4') {
+        // 检测报告页
+        clickPoint(
+          'tel_consulting_examine',
+          {
+            carid: getCarId(),
+            '400_num': this.telPhone
+          },
+          null,
+          {
+            pid: pidReport
+          }
+        )
+      }
     },
     showAsk () {
       if (this.isBaiCheng === '1') {
