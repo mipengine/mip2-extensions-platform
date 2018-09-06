@@ -162,8 +162,9 @@ export default {
       }
 
       if (re.test(this.phone)) {
-        if (this.info != null && this.info.userInfo && this.info.userInfo.userinfo) {
-          this.$emit('login')
+        if (this.info && this.info.userInfo && this.info.userInfo.userinfo) {
+        } else {
+          this.$emit('bridge')
           return
         }
         this.savePhone()
