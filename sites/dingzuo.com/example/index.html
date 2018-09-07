@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>盯座</title>
+    <link rel="canonical" href="http://127.0.0.1:8111/example/index.html">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <link rel="stylesheet" href="../static/iconfont.css">
+    <style mip-custom>
+     body{
+      background: #F0F0F8;
+     }
+    </style>
+  </head>
+  <body>
+    <mip-shell-inservice mip-shell>
+        <script type="application/json">
+          {
+            "routes": [
+              {
+                "pattern": "./index",
+                "meta": {
+                  "header": {
+                    "show": true,
+                    "title": "盯座",
+                    "borderColor": "#00C093",
+                    "color":"#FFFFFF",
+                    "logo":"../static/dingzuo.png",
+                    "backgroundColor":"#00C093",
+                    "buttonGroup":[
+                      {
+                        "name":"about",
+                        "text":"关于盯座",
+                        "link":"./abouts.html"
+                      },
+                      {
+                        "name":"cancel",
+                        "text":"我也要出现在这里"
+                      },
+                      {
+                        "name":"order",
+                        "text":"我的订单",
+                        "link":"./order.html"
+                      },
+                      {
+                        "name":"cancel",
+                        "text":"取消"
+                      }
+                    ]
+                  },
+                  "view":{
+                    "isIndex": true
+                  }
+                }
+              },
+              {
+                "pattern": "./order",
+                "meta": {
+                  "header": {
+                    "show": true,
+                    "title": "我的订单",
+                    "borderColor": "#000000",
+                    "color":"#FFFFFF",
+                    "backgroundColor":"#00C093",
+                    "buttonGroup":[
+                      {
+                        "name":"index",
+                        "text":"首页",
+                        "link":"./index.html"
+                      },
+                      {
+                        "name":"cancel",
+                        "text":"取消"
+                      }
+                    ]
+                  },
+                  "view":{
+                    "isIndex": false
+                  }
+                }
+              },
+              {
+                "pattern": "./reserve",
+                "meta": {
+                  "header": {
+                    "show": true,
+                    "title": "白家大院",
+                    "borderColor": "#000000",
+                    "color":"#FFFFFF",
+                    "backgroundColor":"#00C093",
+                    "buttonGroup":[
+                      {
+                        "name":"index",
+                        "text":"首页",
+                        "link":"./index.html"
+                      },
+                      {
+                        "name":"cancel",
+                        "text":"取消"
+                      }
+                    ]
+                  },
+                  "view":{
+                    "isIndex": false
+                  }
+                }
+              },
+              {
+                "pattern": "./orderdetails",
+                "meta": {
+                  "header": {
+                    "show": true,
+                    "title": "订单详情",
+                    "borderColor": "#000000",
+                    "color":"#FFFFFF",
+                    "backgroundColor":"#00C093",
+                    "buttonGroup":[
+                      {
+                        "name":"index",
+                        "text":"首页",
+                        "link":"./index.html"
+                      },
+                      {
+                        "name":"cancel",
+                        "text":"取消"
+                      }
+                    ]
+                  },
+                  "view":{
+                    "isIndex": false
+                  }
+                }
+              },
+              {
+                "pattern": "./complete",
+                "meta": {
+                  "header": {
+                    "show": true,
+                    "title": "白家大院",
+                    "borderColor": "#000000",
+                    "color":"#FFFFFF",
+                    "backgroundColor":"#00C093",
+                    "buttonGroup":[
+                      {
+                        "name":"index",
+                        "text":"首页",
+                        "link":"./index.html"
+                      },
+                      {
+                        "name":"cancel",
+                        "text":"取消"
+                      }
+                    ]
+                  },
+                  "view":{
+                    "isIndex": false
+                  }
+                }
+              },
+              {
+                "pattern": "./about",
+                "meta": {
+                  "header": {
+                    "show": true,
+                    "title": "关于盯座",
+                    "borderColor": "#000000",
+                    "color":"#FFFFFF",
+                    "backgroundColor":"#00C093",
+                    "buttonGroup":[
+                      {
+                        "name":"index",
+                        "text":"首页",
+                        "link":"./index.html"
+                      },
+                      {
+                        "name":"cancel",
+                        "text":"取消"
+                      }
+                    ]
+                  },
+                  "view":{
+                    "isIndex": false
+                  }
+                }
+              },
+              {
+                "pattern": "./details",
+                "meta": {
+                  "header": {
+                    "show": true,
+                    "title": "白家大院",
+                    "borderColor": "#000000",
+                    "color":"#FFFFFF",
+                    "backgroundColor":"#00C093",
+                    "buttonGroup":[
+                      {
+                        "name":"index",
+                        "text":"首页",
+                        "link":"./index.html"
+                      },
+                      {
+                        "name":"cancel",
+                        "text":"取消"
+                      }
+                    ]
+                  },
+                  "view":{
+                    "isIndex": false
+                  }
+                }
+              },
+              {
+                "pattern": "*",
+                "meta": {
+                  "header": {
+                    "show": true,
+                    "title": "盯座",
+                    "borderColor": "#00C093",
+                    "color":"#FFFFFF",
+                    "logo":"../static/dingzuo.png",
+                    "backgroundColor":"#00C093",
+                    "buttonGroup":[
+                      {
+                        "name":"about",
+                        "text":"关于盯座",
+                        "link":"./example/aboutus.html"
+                      },
+                      {
+                        "name":"cancel",
+                        "text":"我也要出现在这里"
+                      },
+                      {
+                        "name":"order",
+                        "text":"我的订单",
+                        "link":"./example/order.html"
+                      },
+                      {
+                        "name":"cancel",
+                        "text":"取消"
+                      }
+                    ]
+                  },
+                  "view":{
+                    "isIndex": true
+                  }
+                }
+              }
+            ],
+            "isId":"1605050555430747"
+          }
+        </script>
+    </mip-shell-inservice>
+    <mip-user-list></mip-user-list>
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-shell-inservice/mip-shell-inservice.js"></script>
+    <script src="https://c.mipcdn.com/extensions/platform/v2/mip.kebide.com/mip-user-list/mip-user-list.js"></script>
+  </body>
+</html>
