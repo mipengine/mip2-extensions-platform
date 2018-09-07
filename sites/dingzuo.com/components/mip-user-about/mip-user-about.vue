@@ -13,10 +13,10 @@ h3{
   font-size: 18px;
   font-weight: normal;
   text-align: center;
-  margin: 20px 0;
+  margin: 20px 0px;
 }
 p{
-  padding: 0 20px;
+  padding: 0px 20px;
   margin-bottom: 20px;
   color: #999999;
   font-size: 13px;
@@ -29,7 +29,5 @@ p{
 </style>
 
 <script>
-export default {
-  
-}
+
 </script>
