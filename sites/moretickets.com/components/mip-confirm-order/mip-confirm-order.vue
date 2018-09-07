@@ -104,6 +104,7 @@
               :class="{'no-content': !ownerInfo.idCardNum}"
               v-model="ownerInfo.idCardNum"
               class="manual-input"
+              maxlength="18"
               placeholder="该节目需要提供身份证号">
           </div>
         </div>
@@ -115,6 +116,7 @@
               v-model="ownerInfo.userName"
               :class="{'no-content': !ownerInfo.userName}"
               class="manual-input"
+              maxlength="18"
               placeholder="请输入取票人姓名">
           </div>
           <div class="justify-row content-row">
@@ -123,6 +125,7 @@
               v-model="ownerInfo.telphone"
               :class="{'no-content': !ownerInfo.telphone}"
               class="manual-input"
+              maxlength="11"
               placeholder="请输入取票人手机号">
           </div>
           <div
@@ -133,6 +136,7 @@
               v-model="ownerInfo.idCardNum"
               :class="{'no-content': !ownerInfo.idCardNum}"
               class="manual-input"
+              maxlength="18"
               placeholder="该节目需要提供身份证号">
           </div>
           <div class="ticket-pickup-tip">
@@ -162,6 +166,7 @@
               v-model="ownerInfo.userName"
               :class="{'no-content': !ownerInfo.userName}"
               class="manual-input"
+              maxlength="18"
               placeholder="请输入取票人姓名">
           </div>
           <div class="justify-row content-row">
@@ -170,6 +175,7 @@
               v-model="ownerInfo.telphone"
               :class="{'no-content': !ownerInfo.telphone}"
               class="manual-input"
+              maxlength="11"
               placeholder="请输入取票人手机号">
           </div>
           <div
@@ -180,6 +186,7 @@
               v-model="ownerInfo.idCardNum"
               :class="{'no-content': !ownerInfo.idCardNum}"
               class="manual-input"
+              maxlength="18"
               placeholder="该节目需要提供身份证号">
           </div>
           <div class="ticket-pickup-tip">
@@ -209,6 +216,7 @@
               v-model="ownerInfo.userName"
               :class="{'no-content': !ownerInfo.userName}"
               class="manual-input"
+              maxlength="18"
               placeholder="请输入取票人姓名">
           </div>
           <div class="justify-row content-row">
@@ -217,6 +225,7 @@
               v-model="ownerInfo.telphone"
               :class="{'no-content': !ownerInfo.telphone}"
               class="manual-input"
+              maxlength="11"
               placeholder="请输入取票人手机号">
           </div>
           <div
@@ -227,6 +236,7 @@
               v-model="ownerInfo.idCardNum"
               :class="{'no-content': !ownerInfo.idCardNum}"
               class="manual-input"
+              maxlength="18"
               placeholder="该节目需要提供身份证号">
           </div>
           <div class="ticket-pickup-tip">
@@ -1327,7 +1337,12 @@ export default {
   },
   computed: {
     getAmount () {
-      return parseInt(this.totalAmount || 0) + parseInt(this.delivery === 'express' && this.selectedExpress && this.selectedExpress.deliverFee > 0 ? this.selectedExpress.deliverFee : 0) - parseInt(this.discount || 0)
+      let deliverFee = this.delivery === 'express' && this.selectedExpress && this.selectedExpress.deliverFee > 0 ? this.selectedExpress.deliverFee : 0
+      if (parseInt(this.totalAmount || 0) + parseInt(deliverFee) - parseInt(this.discount || 0) > 0) {
+        return parseInt(this.totalAmount || 0) + parseInt(deliverFee) - parseInt(this.discount || 0)
+      } else {
+        return 0
+      }
     }
   },
   mounted () {
@@ -1402,7 +1417,7 @@ export default {
       httpGet(fetchUrl)
         .then(function (data) {
           if (data.statusCode === 1005) {
-            me.lastUrl && sessionStorageUtil.set('login_back_url', me.lastUrl)
+            me.lastUrl && sessionStorageUtil.set('login_back_url', `${me.lastUrl}?id=${showOID}`)
             me.loginUrl && MIP.viewer.open(me.loginUrl, {replace: true})
           } else if (data.statusCode === 200 && data.result && data.result.data) {
             me.orderToken = data.result.token
@@ -1576,6 +1591,9 @@ export default {
       let me = this
       if (!me.orderToken) {
         return
+      }
+      if (this.ownerInfo && this.ownerInfo.userName) {
+        this.ownerInfo.userName = this.ownerInfo.userName.replace(/(^\s*)|(\s*$)/g, '')
       }
       if (this.delivery === 'express' && (!this.address.clientName || !this.address.cellphone)) {
         me.toast('请完善收货人信息')

@@ -35,13 +35,7 @@
                 class="delete-btn"
                 ng-click="deleteAddr(a,$event)">删除</div>
             </div>
-            <mip-img
-              layout="container"
-              class="selected-img"
-              src="/static/icon/address_selected.png"
-              width="40px"
-              height="40px"
-            />
+            <div class="address_selected_icon selected-img"/>
           </div>
         </div>
       </div>
@@ -140,6 +134,15 @@
 @light-font: #aaa;
 @normal-border: 1px solid #e4e4e4;
 @medium-font: #95949d;
+.address_selected_icon{
+  width:40px;
+  height:40px;
+  background-image: url(~@/static/icon/address_selected.png);
+  background-repeat: no-repeat;
+  background-size: 40px 40px;
+  background-position: center center;
+  display: inline-block;
+}
 .box-orient(@orient) {
   -moz-box-orient: @orient;
   -webkit-box-orient: @orient;
