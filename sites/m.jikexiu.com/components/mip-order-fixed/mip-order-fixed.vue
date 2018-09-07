@@ -4,13 +4,6 @@
     id="bot"
     ref="bot">
     <div class="bot">
-      <div class="bot-left">
-        <div class="flex">
-          <span>金额：</span>
-          <span>{{ price }}</span>
-        </div>
-        <p>{{ fault }}{{ period }}</p>
-      </div>
       <div
         class="bot-right"
         @click.stop="save">
@@ -354,13 +347,15 @@ export default {
       }
     }
     .bot-right{
-      float: right;
-      height: 50px;
-      width: 40%;
-      line-height: 50px;
-      text-align: center;
-      color: #fff;
-      background-color: #fa5e24;
+      // float: right;
+    height: 50px;
+    width: 80%;
+    margin: 0 auto;
+    line-height: 50px;
+    text-align: center;
+    color: #fff;
+    border-radius: 10px;
+    background-color: #fa5e24;
     }
   }
 </style>
