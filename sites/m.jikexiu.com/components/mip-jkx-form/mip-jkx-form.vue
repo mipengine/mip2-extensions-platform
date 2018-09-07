@@ -3,7 +3,6 @@
     <div class="name flex">
       <p class="left">姓名</p>
       <input
-        v-mtfocus
         v-model="form.name"
         :class="{right1:wrong1}"
         type="text"
@@ -14,7 +13,6 @@
     <div class="phone flex">
       <p class="left">手机号码</p>
       <input
-        v-mtfocus
         v-model="form.phone"
         :class="{right1:wrong2}"
         type="number"
@@ -28,7 +26,6 @@
     <div class="sendCode flex">
       <p class="left">图形验证码</p>
       <input
-        v-mtfocus
         v-model="form.imgCode"
         :class="{right1:wrong3}"
         type="number"
@@ -44,7 +41,6 @@
     <div class="code flex">
       <p class="left">短信验证码</p>
       <input
-        v-mtfocus
         v-model="form.code"
         :class="{right1:wrong4}"
         type="number"
@@ -66,18 +62,6 @@ import apiUrl from '@/common/js/config.api'
 let regName = /^[\u4E00-\u9FA5\uf900-\ufa2d·0-9A-z]{1,20}$/
 let reg = /^[1]\d{10}$/
 export default {
-  directives: {
-    'mtfocus' (el, binding, vnode) {
-      el.onfocus = function () {
-        document.getElementById('bot').style.display = 'none'
-        document.getElementById('protect-fix').style.display = 'block'
-      }
-      el.onblur = function () {
-        document.getElementById('bot').style.display = 'block'
-        document.getElementById('protect-fix').style.display = 'none'
-      }
-    }
-  },
   props: {
     isForm: {
       default () {
