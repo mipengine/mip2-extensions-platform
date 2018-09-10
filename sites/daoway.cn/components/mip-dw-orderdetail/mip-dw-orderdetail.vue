@@ -59,7 +59,7 @@
         v-for="i in orderhtml.items"
         :key="i"
         class="xiangmu"
-        style="line-height: 90px;height: 90px;">
+        style="line-height: 60px;height: 60px;">
         <div class="xtit">{{ i.name }}</div>
         <div>x{{ i.quantity }}</div>
         <div class="price">{{ i.price }}元</div>
@@ -132,14 +132,14 @@
         <div>{{ orderhtml.note||"" }}</div>
       </div>
     </div>
-    <!--<divclass="od-daigou"v-if="userPhone&&userPhone!=orderhtml.userPhone">该订单由您的好友{{orderhtml.userPhone}}为您订购</div>-->
-    <div class="last"/>
     <div class="footer">
       <mip-fixed
         class="mipfds"
         type="bottom">
         <div class="call">
-          <img src="http://www.daoway.cn/call.png">联系商家
+          <a :href="'tel:' + sellerPhone">
+            <img src="http://www.daoway.cn/call.png">联系商家
+          </a>
         </div>
         <div class="rightbtn">
           <button
@@ -164,11 +164,11 @@
           <p
             v-if="sure"
             class="layer-sure active-layer"
-            @touchend="close">取消</p>
+            @click="close">取消</p>
           <p
             v-if="sure"
             class="layer-sure active-layer"
-            @touchend="closeLayer">确定</p>
+            @click="closeLayer">确定</p>
         </div>
       </div>
     </div>
@@ -192,12 +192,29 @@ export default {
       action: '',
       sure: true,
       channel: 'baidu',
-      userId: localStorage.getItem('userId'),
-      token: localStorage.getItem('token')
+      userId: localStorage.getItem('mipUserId'),
+      token: localStorage.getItem('mipToken'),
+      oauthCode: '',
+      tradeType: '',
+      returnurl: base.htmlhref.orderdetail,
+      sellerPhone: '',
+      quantity: '',
+      serviceId: ''
     }
   },
   mounted () {
     this.getState()
+    let that = this
+    if (MIP.util.platform.isWechatApp()) { // 在微信里
+      let wxcode = base.getRequest(location.href).code
+      if (wxcode) {
+        that.oauthCode = wxcode
+        that.tradeType = 'JSAPI'
+      }
+    } else {
+      that.oauthCode = ''
+      that.tradeType = 'MWEB'
+    }
   },
   methods: {
     getState () {
@@ -211,7 +228,10 @@ export default {
       }).then(function (text) {
         if (text.status === 'ok') {
           let data = text.data
+          that.quantity = data.items[0].quantity
+          that.serviceId = data.serviceId
           that.friendId = data.sellerId
+          that.sellerPhone = data.sellerPhone
           data.formatTime = base.timeformat(data.appointTime, 'yyyy-MM-dd(day) HH:mm')
           // let paid = data.paid
           let statusId = data.statusId
@@ -459,14 +479,21 @@ export default {
       let action = status.action
       let orderId = that.orderhtml.orderId
       if (action === 'buyAgain') {
-        MIP.viewer.open(base.htmlhref.reservation + '?orderId=' + orderId, { isMipLink: true })
-        // 再次购买
+        if (MIP.util.platform.isWechatApp()) {
+          let appid = 'wx0290cc2004b61c97'
+          let loginUrl = encodeURIComponent(base.htmlhref.reservation + '?orderId=' + encodeURIComponent(orderId) + '&serviceId=' + that.serviceId + '&quantity=' + that.quantity)
+          let scope = 'snsapi_base'
+          MIP.viewer.open('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + loginUrl + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect', { isMipLink: true })
+        } else {
+          MIP.viewer.open(base.htmlhref.reservation + '?orderId=' + encodeURIComponent(orderId) + '&serviceId=' + that.serviceId + '&quantity=' + that.quantity, { isMipLink: true })
+        }
       } else if (action === 'pay') {
         let totalPrice = that.orderhtml.totalPrice
         let couponBill = that.orderhtml.couponBill
         let couponId = that.orderhtml.couponId
         let fixFee = that.orderhtml.fixFee
-        let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent('http://test.daoway.cn/mip/t/orderdetail.html?orderId=' + orderId)
+        // let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + orderId)
+        let redirectUrl = that.returnurl + '?orderId=' + orderId
         MIP.setData({'payConfig': {
           'fee': (totalPrice + fixFee - couponBill).toFixed(2),
           'sessionId': that.token,
@@ -479,9 +506,9 @@ export default {
             wallet: 0,
             couponId: couponId || '',
             'appendOrderId': '',
-            'returnUrl': redirectUrl
-            /* 'oauthCode':'',
-            'tradeType': "MWEB" */
+            'returnUrl': redirectUrl,
+            'oauthCode': that.oauthCode,
+            'tradeType': that.tradeType
           }
         }})
         that.$emit('actionpay')
@@ -539,6 +566,9 @@ export default {
       }).catch(function (error) {
         console.log(error)
       })
+    },
+    toindex () {
+      MIP.viewer.open(base.htmlhref.index, { isMipLink: false })
     }
 
   }
@@ -562,15 +592,18 @@ export default {
     .call img{
         width: 18px;
         height: auto;
+      display: block;
+      margin: 0 a;
     }
     .mipfds{
       width: 100%;
       margin: 0 auto;
       background: #fff;
       padding: 5px 3%;
+      border-top: 1px solid #f5f5f5;
     }
 
-    .theclose{width: 80%; margin: 0 auto}
+    .theclose{width: 90%; margin: 0 auto}
     .layer p.active-layer{
         width: 50%;
         float: left;
@@ -589,7 +622,7 @@ export default {
         width: 99%;
         padding: 0 2%;
         background: #fff;
-        height: 110px;
+        height: 100px;
         margin-top: 10px;
     }
 
@@ -603,14 +636,15 @@ export default {
     }
 
     .icon {
-        width: 88%;
+        width: 92%;
         margin: 4px auto;
+        text-align: center;
     }
 
     .line {
         margin-left: 2px;
         margin-right: 2px;
-        width: 60px;
+        width: 58px;
         height: auto;
     }
     .od-icon1{
@@ -632,10 +666,10 @@ export default {
         color: #fcb3b0;
         display: inline-block;
         font-size: 12px;
-        margin-left: 9%;
+        margin-left: 8.5%;
         vertical-align: top;
         position: relative;
-        left: 6px;
+        left: 8px;
     }
 
     .act {
@@ -649,7 +683,7 @@ export default {
     }
 
     .buchajia {
-        width: 94%;
+        width: 100%;
         padding: 0 3%;
         border-bottom: 1px solid #e5e5e5;
         height: 50px;
@@ -667,8 +701,8 @@ export default {
         width: 97%;
         margin-left: 3%;
         border-bottom: 1px solid #e5e5e5;
-        line-height: 35px;
-        height: 35px;
+        line-height:40px;
+        height: 40px;
     }
 
     .xiangmu div {
@@ -680,7 +714,7 @@ export default {
     }
 
     .xtit2 {
-        width: 18%;
+        width: 19%;
     }
 
     .price {
@@ -713,11 +747,6 @@ export default {
 
     .user{
        height: 30px;
-    }
-
-    .last {
-        margin-bottom: 55px;
-        height: 10px;
     }
 
     .footer img {
@@ -780,4 +809,7 @@ export default {
         padding: 0 3%;
         color: #898989;
     }
+  .wrapper{
+    margin-bottom: 50px;
+  }
 </style>

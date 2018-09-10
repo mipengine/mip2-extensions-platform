@@ -55,7 +55,7 @@
     </div>
     <mip-fixed
       type="bottom"
-      class="changeDay maxWidth">
+      class="changeDay">
       <span
         v-for="(tab,i) in tabs"
         :class="{curr:selected==i}"
@@ -64,9 +64,6 @@
     </mip-fixed>
   </div>
 </template>
-<style scoped>
-</style>
-
 <script>
 export default {
   props: {

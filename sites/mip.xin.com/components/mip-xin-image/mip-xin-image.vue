@@ -22,7 +22,7 @@
           <mip-img
             :src="item.pic"
             style="height:5rem"/>
-          <span class="describe">{{ item.desc }}</span>
+          <span class="describe">{{ item.flaw_desc }}</span>
         </block>
       </mip-carousel>
     </div>

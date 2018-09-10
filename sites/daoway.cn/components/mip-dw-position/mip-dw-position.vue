@@ -89,7 +89,9 @@
             type="text"
             @input="getlist">
         </div>
-        <div class="clear">取消</div>
+        <div
+          class="clear"
+          @click="clear">取消</div>
       </div>
       <div class="listbox">
         <div
@@ -178,11 +180,14 @@ export default {
       communitypage: false,
       citypage: false,
       tapshow: false,
-      taphide: false
+      taphide: false,
+      userId: '',
+      token: ''
     }
   },
   mounted () {
-    let userId = localStorage.getItem('userId'); let token = localStorage.getItem('token')
+    let userId = localStorage.getItem('mipUserId')
+    let token = localStorage.getItem('mipToken')
     if (userId && token) {
       this.userAddress(userId)
     }
@@ -267,6 +272,10 @@ export default {
       this.positionpage = false
       this.communitypage = true
     },
+    clear () {
+      this.searchval = ''
+      this.cityList = []
+    },
     getlist () { // community
       let that = this
       let url = '/daoway/rest/community/searchMerge?manualCity=' + encodeURIComponent(this.city) + '&search=' + this.searchval + '&channel=' + that.channel
@@ -343,7 +352,7 @@ export default {
     }
     .position{display: inline-block; width: 80px}
     .fids{background: #fff; padding: 10px 3%}
-    .inputxt{width: 76%; display: inline-block}
+    .inputxt{width: 70%; display: inline-block}
 
     .fids .inputButton {
         width:94%;
@@ -508,7 +517,7 @@ export default {
         height: 30px;
         line-height: 30px;
         border-radius: 16px;
-        width: 70%;
+        width: 65%;
     }
     .c-inputxt input{
         width: 66%;

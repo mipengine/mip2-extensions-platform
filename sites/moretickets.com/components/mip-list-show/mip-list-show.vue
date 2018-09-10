@@ -415,6 +415,10 @@ export default {
       type: String,
       default: ''
     },
+    showSearchUrl: {
+      type: String,
+      default: ''
+    },
     positionUrl: {
       type: String,
       default: ''
@@ -427,7 +431,8 @@ export default {
   data () {
     return {
       items: [],
-      pagination: {length: 10, offset: 0, count: 0}
+      pagination: {length: 10, offset: 0, count: 0},
+      keyword: ''
     }
   },
   computed: {
@@ -449,6 +454,7 @@ export default {
       me.fetchShow(0, newValue)
     })
     MIP.watch('keyword', newValue => {
+      me.keyword = newValue
       me.fetchShow(0, '', newValue)
     })
   },
@@ -463,7 +469,8 @@ export default {
       let keywordQuery = keyword ? `&key_words=${encodeURIComponent(keyword)}` : ''
       let typeQuery = type ? `&type=${type}` : ''
       let size = _self.pagination ? _self.pagination.length : 10
-      let fetchUrl = templateCompile(_self.showListUrl, {siteOID, offset, size, typeQuery, locationCityOIDQuery, keywordQuery, siteCityOID})
+      let currentUrl = keywordQuery ? _self.showSearchUrl : _self.showListUrl
+      let fetchUrl = templateCompile(currentUrl, {siteOID, offset, size, typeQuery, locationCityOIDQuery, keywordQuery, siteCityOID})
       httpGet(fetchUrl)
         .then(function (data) {
           if (data && data.result && data.result.data) {
@@ -481,7 +488,7 @@ export default {
         })
     },
     contentLink (id) {
-      return `${this.nextUrl}#id=${id}`
+      return `${this.nextUrl}?id=${id}`
     },
     geoLocation (next) {
       let me = this
