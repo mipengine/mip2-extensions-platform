@@ -71,7 +71,7 @@ export const getOrderDetail = params => {
     resourcePath: '~/xuanke/order/getOrderDetail'
   }
   return Req(Base.commonUrl, formatParams(param))
-} 
+}
 
 // 获取折扣详情
 export const getSpecialDiscount = params => {
@@ -211,7 +211,7 @@ export const verifyBDLogin = () => {
 
 // 获取支付接口
 export const getPayUrl = params => {
-  return Req('//sale.chinaacc.com/xuanke/payment/mipToPay.shtm?',formatParams(params))
+  return Req('http://sale.chinaacc.com/xuanke/payment/mipToPay.shtm?', formatParams(params))
 }
 
 // 支付接口

@@ -1,70 +1,71 @@
 <template>
-  <div></div>
+  <div/>
 </template>
 
 <script>
-import { getCookie, setCookie } from "../../common/utils/cookie";
-import { getUrlParams } from "../../common/utils";
-import { Toast, Loading } from "../../common/utils/toast";
+import { getCookie, setCookie } from '../../common/utils/cookie'
+import { getUrlParams } from '../../common/utils'
+import { Toast } from '../../common/utils/toast'
+import fetchJsonp from 'fetch-jsonp'
 export default {
-  data() {
+  data () {
     return {
-      code: ""
-    };
+      code: ''
+    }
   },
-  created() {
-    const that = this;
-    let openId = getCookie("wxOpenId");
+  created () {
+    const that = this
+    let openId = getCookie('wxOpenId')
     if (
       MIP.util.platform.isWechatApp() &&
-      (openId == null || openId == undefined)
+      (openId == null || openId === undefined)
     ) {
-      //微信内
-      //cookie中没有openId，一个用户对应中华会计网校只有一个openId，所以只要有值，就无需再次认证
-      let params = getUrlParams();
-      //获取参数code
-      that.code = params.code;
+      // 微信内
+      // cookie中没有openId，一个用户对应中华会计网校只有一个openId，所以只要有值，就无需再次认证
+      let params = getUrlParams()
+      // 获取参数code
+      that.code = params.code
       if (that.code != null) {
-        //存在code，调起接口获取openId
+        // 存在code，调起接口获取openId
         let result = fetchJsonp(
-          "//m.chinaacc.com/m_member/baidu/wxOauth.shtm?code=" + that.code,
+          '//m.chinaacc.com/m_member/baidu/wxOauth.shtm?code=' + that.code,
           {
-            jsonpCallback: "jsonpCallback"
+            jsonpCallback: 'jsonpCallback'
           }
-        );
+        )
         result
-          .then(function(response) {
-            return response.json();
+          .then(function (response) {
+            return response.json()
           })
-          .then(function(json) {
-            let _json = JSON.parse(JSON.stringify(json));
-            //code -1获取失败；1获取成功返回openId，存入cookie
-            if (_json.code == 1) {
-              setCookie("wxOpenId", _json.openId);
+          .then(function (json) {
+            let _json = JSON.parse(JSON.stringify(json))
+            // code -1获取失败；1获取成功返回openId，存入cookie
+            if (_json.code + '' === '1') {
+              setCookie('wxOpenId', _json.openId)
             } else {
-              let $Toast = new Toast();
+              let $Toast = new Toast()
               $Toast.open({
-                message: "微信认证用户信息失败，请刷新页面重试"
-              });
+                message: '微信认证用户信息失败，请刷新页面重试'
+              })
             }
           })
-          ["catch"](function(ex) {
-            let $Toast = new Toast();
+          .catch(ex => {
+            let $Toast = new Toast()
             $Toast.open({
-              message: "微信认证用户信息失败，请刷新页面重试，failed:" + ex
-            });
-          });
+              message: '微信认证用户信息失败，请刷新页面重试，failed:' + ex
+            })
+          })
       }
       if (that.code == null) {
-        //不存在code，去认证页
-        let url = window.location.href;
+        // 不存在code，去认证页
+        let url = window.location.href
         MIP.viewer.open(
-          "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf6ab920c859515ee&redirect_uri=" +
+          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf6ab920c859515ee&redirect_uri=' +
             url +
-            "&res&res&response_type=code&scope=snsapi_base&state=123#wechat_redirect"
-        );
+            '&res&res&response_type=code&scope=snsapi_base&state=123#wechat_redirect'
+        )
       }
     }
   }
-};
+}
 </script>

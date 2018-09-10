@@ -1,5 +1,5 @@
 import conf from './config'
-import { getCookie } from "./cookie";
+import { getCookie } from './cookie'
 // 格式化jsonp参数
 export const formatParams = params => {
   let arr = []
@@ -34,9 +34,9 @@ export const stringifyArr = arr => {
 
 // 货币format
 export const currency = num => {
-  num = num.toString().replace(/\$|\,/g, '')
+  num = num.toString().replace(/\$|,/g, '')
   if (isNaN(num)) num = '0'
-  let sign = num == (num = Math.abs(num))
+  let sign = num + '' === (num = Math.abs(num)) + ''
   num = Math.floor(num * 100 + 0.50000000001)
   let cents = num % 100
   num = Math.floor(num / 100).toString()
@@ -109,12 +109,12 @@ export const inStrArray = (str, arr) => {
 
 // 检测是否登录
 export const checkLogin = (flag) => {
-      let cdeluid = getCookie("cdeluid");
-      let session = getCookie("sessionId");
-      if (cdeluid != undefined && session != undefined) {
-        flag = false;
-      } else {
-        flag = true;
-      }
+  let cdeluid = getCookie('cdeluid')
+  let session = getCookie('sessionId')
+  if (cdeluid !== undefined && session !== undefined) {
+    flag = false
+  } else {
+    flag = true
+  }
   return flag
 }
