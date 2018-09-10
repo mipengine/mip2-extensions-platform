@@ -14,9 +14,9 @@ mip-xzw-fateinfo 星座屋星座详情页面功能组件
 ## 示例
 
 示例说明
-<mip-xzw-fateinfo id="1" name="白羊座"></mip-xzw-fateinfo>
+<mip-xzw-fateinfo type="" position="" data=""></mip-xzw-fateinfo>
 必须在引用该控件的页面添加该标签
-必加属性id,name
+必加属性type position data
 ## 属性
 
 属性说明

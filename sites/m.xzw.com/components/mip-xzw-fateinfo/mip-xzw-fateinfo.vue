@@ -55,7 +55,7 @@
     </div>
     <mip-fixed
       type="bottom"
-      class="changeDay">
+      class="changeDay maxWidth">
       <span
         v-for="(tab,i) in tabs"
         :class="{curr:selected==i}"
@@ -65,8 +65,6 @@
   </div>
 </template>
 <style scoped>
-.changeDay{z-index: 999 !important;}
-.changeDay span.curr{color:#7f7ff3;background:#f4f4fe;}
 </style>
 
 <script>
@@ -100,19 +98,6 @@ export default {
     }).then(function (myJson) {
       _this.data = myJson.data
     })
-  },
-  mounted: function () {
-    const width = MIP.viewport.getWidth()
-    const $width = width > 640 ? 640 : width
-    const $fontSize = $width * 100 / 1080
-    const html = document.querySelectorAll('html')
-    html[0].style.fontSize = $fontSize + `px`
-    const $height = MIP.viewport.getHeight()
-    const _h = $height - 44
-    const fullpage = document.querySelectorAll('.fullpage')
-    fullpage[0].style.height = _h + `px`
-    const contain = document.querySelectorAll('.contain')
-    contain[0].style.height = _h + `px`
   },
   methods: {
     tabChange: function (i) {
