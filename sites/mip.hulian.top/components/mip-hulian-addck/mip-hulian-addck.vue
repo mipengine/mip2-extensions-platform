@@ -8,7 +8,7 @@ export default {
   },
   methods: {
     addck(params) {
-      var parameobj = JSON.parse(params);
+      let parameobj = JSON.parse(params);
       document.cookie = parameobj.type+'ck='+ params;
     }
   }
