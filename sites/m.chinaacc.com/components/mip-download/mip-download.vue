@@ -109,7 +109,6 @@
 
 <script>
 import { getUrlParams } from '../../common/utils'
-import fetchJsonp from 'fetch-jsonp'
 export default {
   data () {
     return {
@@ -143,7 +142,7 @@ export default {
       let url =
         '//m.chinaacc.com/m_member/baidu/download/getDownTypeList.shtm?courseEduId=' +
         that.courseEduId
-      let result = fetchJsonp(url, {
+      let result = window.fetchJsonp(url, {
         jsonpCallback: 'jsonpCallback'
       })
       result
@@ -178,7 +177,7 @@ export default {
         that.infoId +
         '&email=' +
         that.email
-      let result = fetchJsonp(url, {
+      let result = window.fetchJsonp(url, {
         jsonpCallback: 'jsonpCallback'
       })
       result

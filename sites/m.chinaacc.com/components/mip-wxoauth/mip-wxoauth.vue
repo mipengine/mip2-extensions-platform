@@ -6,7 +6,6 @@
 import { getCookie, setCookie } from '../../common/utils/cookie'
 import { getUrlParams } from '../../common/utils'
 import { Toast } from '../../common/utils/toast'
-import fetchJsonp from 'fetch-jsonp'
 export default {
   data () {
     return {
@@ -27,7 +26,7 @@ export default {
       that.code = params.code
       if (that.code != null) {
         // 存在code，调起接口获取openId
-        let result = fetchJsonp(
+        let result = window.fetchJsonp(
           '//m.chinaacc.com/m_member/baidu/wxOauth.shtm?code=' + that.code,
           {
             jsonpCallback: 'jsonpCallback'

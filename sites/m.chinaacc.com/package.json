@@ -11,9 +11,7 @@
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
   "author": "yanxingqiao",
-  "dependencies": {
-    "fetch-jsonp": "^1.1.3"
-  },
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",

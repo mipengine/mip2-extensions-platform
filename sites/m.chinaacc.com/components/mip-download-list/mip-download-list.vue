@@ -48,7 +48,6 @@
 </template>
 
 <script>
-import fetchJsonp from 'fetch-jsonp'
 export default {
   data () {
     return {
@@ -64,7 +63,7 @@ export default {
       let that = this
       let url =
         '//m.chinaacc.com/m_member/baidu/download/getCourseEduList.shtm'
-      let result = fetchJsonp(url, {
+      let result = window.fetchJsonp(url, {
         jsonpCallback: 'jsonpCallback'
       })
       result

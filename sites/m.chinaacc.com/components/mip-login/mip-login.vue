@@ -20,7 +20,6 @@
 <script>
 import { setCookie } from '../../common/utils/cookie'
 import { Toast } from '../../common/utils/toast'
-import fetchJsonp from 'fetch-jsonp'
 export default {
   data () {
     return {
@@ -60,7 +59,7 @@ export default {
       $Toast.open({ message: '退出登录' })
     })
 
-    let result = fetchJsonp(
+    let result = window.fetchJsonp(
       '//m.chinaacc.com/m_member/baidu/verifyBDLogin.shtm',
       {
         jsonpCallback: 'jsonpCallback'

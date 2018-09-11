@@ -211,7 +211,7 @@ export const verifyBDLogin = () => {
 
 // 获取支付接口
 export const getPayUrl = params => {
-  return Req('http://sale.chinaacc.com/xuanke/payment/mipToPay.shtm?', formatParams(params))
+  return Req('//sale.chinaacc.com/xuanke/payment/mipToPay.shtm?', formatParams(params))
 }
 
 // 支付接口

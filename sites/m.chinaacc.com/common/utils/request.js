@@ -1,7 +1,6 @@
-import fetchJsonp from 'fetch-jsonp'
 const jsonpAction = (url, params, callbackStr = 'jsonpCallBack') => {
   return new Promise((resolve, reject) => {
-    fetchJsonp(url + params, {
+    window.fetchJsonp(url + params, {
       jsonpCallback: callbackStr
     }).then(res => {
       return res.json()
