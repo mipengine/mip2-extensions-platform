@@ -8,7 +8,7 @@
             v-model="addr"
             type="text"
             placeholder="请填写您的住址"
-            @touchend="toposition"><img
+            @click="toposition"><img
               class="re-more"
               src="https://www.daoway.cn/h5/image/go_06.png"></li>
           <li><img src="https://www.daoway.cn/images/icon3.jpg"><input
@@ -88,7 +88,7 @@
               src="https://www.daoway.cn/h5/image/go_06.png"></div>
           <div
             v-else
-            class="guize guize1">暂无适用代金券</div>
+            class="guize guize1 novouchers">暂无适用代金券</div>
         </div>
         <div
           class="quan"
@@ -191,32 +191,56 @@ export default {
       coupone: '',
       orderId: base.getRequest(location.href).orderId,
       orderInfo: {},
-      code: base.getRequest(location.href).code,
-      userId: localStorage.getItem('userId') || base.userId,
+      // code: base.getRequest(location.href).code,
+      userId: localStorage.getItem('mipUserId'),
       channel: 'baidu',
       oauthCode: '',
-      tradeType: ''
+      tradeType: '',
+      returnurl: base.htmlhref.orderdetail,
+      useradd: {}
     }
   },
   mounted () {
-    // this.setdatas();
     let that = this
-    /* let baseparam = location.href.split('?');
-    if (this.code && !this.userId) {
-      baseparam = baseparam[0]+'?'+ encodeURIComponent(baseparam[1]);
-      console.log(baseparam)
-      login.codelogin(this.code,baseparam)
-    } */
-
     that.position = base.getposition()
+    if (that.position.contactPerson) {
+      that.contactPerson = that.position.contactPerson
+    } else {
+      let nick = localStorage.getItem('nick')
+      that.contactPerson = nick
+    }
+    if (that.position.phone) {
+      that.phone = that.position.phone
+    }
     if (that.orderId) {
       that.buyAgain(that.orderId)
     } else {
       that.gethtml()
       that.setPostion()
     }
+    if (MIP.util.platform.isWechatApp()) { // 在微信里
+      let wxcode = base.getRequest(location.href).code
+      that.oauthCode = wxcode
+      that.tradeType = 'JSAPI'
+    } else {
+      that.oauthCode = ''
+      that.tradeType = 'MWEB'
+    }
     window.addEventListener('show-page', () => {
       let technician = JSON.parse(sessionStorage.getItem('tech'))
+      let useradd = JSON.parse(sessionStorage.getItem('useradd'))
+      if (useradd) {
+        that.phone = useradd.phone
+        that.contactPerson = useradd.contactPerson
+        that.addr = useradd.addr
+        that.doorNum = useradd.doorNum
+      } else {
+        that.position = base.getposition()
+        if (that.position) {
+          that.gethtml()
+          that.setPostion()
+        }
+      }
       that.selectedTechnical = technician
       if (that.canChooseTechnician) {
         if (technician) {
@@ -232,20 +256,7 @@ export default {
       if (apptime) {
         that.formatTime = base.timeformat(apptime, 'MM月dd日(day) HH:mm')
       }
-      that.position = base.getposition()
-      if (that.position) {
-        that.gethtml()
-        that.setPostion()
-      }
     })
-    if (MIP.util.platform.isWechatApp()) { // 在微信里
-      let wxcode = window.localStorage.getItem('wxcode')
-      that.oauthCode = wxcode
-      that.tradeType = 'JSAPI'
-    } else {
-      that.oauthCode = ''
-      that.tradeType = 'MWEB'
-    }
   },
   methods: {
     gethtml () {
@@ -328,7 +339,7 @@ export default {
     closeLayer () {
       this.warn.show = false
     },
-    setFixFee: function (data) {
+    setFixFee (data) {
       let that = this
       let realyFixFee = 0
       if (data.noFixFeePrice && that.totalPrices < data.noFixFeePrice) {
@@ -369,13 +380,13 @@ export default {
         that.alltotalPrices = Number((counter * price).toFixed(2) + that.realyFixFee - couponebill)
       }
     },
-    setPostion: function () {
+    setPostion () {
       let that = this
       let position = that.position
-      if (that.position.addr) {
-        that.addr = that.position.addr + that.position.name
-      } else {
+      if (that.position.name) {
         that.addr = that.position.city + that.position.area + that.position.name
+      } else {
+        that.addr = that.position.addr
       }
       if (position.communityId || position.id) {
         if (position.doorNum) {
@@ -406,7 +417,6 @@ export default {
       if (that.doorNum) {
         url += '&house=' + encodeURIComponent(that.doorNum)
       }
-      console.log(url)
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -427,15 +437,26 @@ export default {
         console.log(error)
       })
     },
+    sessuseradd () {
+      let that = this
+      let useradd = {}
+      useradd.addr = that.addr
+      useradd.doorNum = that.doorNum
+      useradd.contactPerson = that.contactPerson
+      useradd.phone = that.phone
+      useradd.id = that.position.id || that.position.communityId
+      sessionStorage.setItem('useradd', JSON.stringify(useradd))
+    },
     totechnical (id) {
+      this.sessuseradd()
       MIP.viewer.open(base.htmlhref.technician + '?technicianId=' + id, { isMipLink: true })
     },
     toposition () {
-      MIP.viewer.open(base.htmlhref.position + '?reservation=true', { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.position + '?reservation=true', { isMipLink: false })
     },
-
     tovouchers () {
       let that = this
+      that.sessuseradd()
       let serviceId = that.serviceId
       let requestUrl = {
         serviceId: serviceId,
@@ -448,6 +469,7 @@ export default {
     },
     totime () {
       let that = this
+      that.sessuseradd()
       let parm = {
         serviceId: that.param.serviceId || that.serviceId,
         priceId: that.param.priceId
@@ -465,6 +487,7 @@ export default {
       }).then(function (text) {
         if (text.status === 'ok') {
           let resultData = text.data
+          console.log(resultData)
           let prices = resultData.prices
           for (let i = 0; i < prices.length; i++) {
             prices[i].quantity = prices[i].minBuyNum || 1
@@ -510,6 +533,44 @@ export default {
         console.log(error)
       })
     },
+    userAddress () {
+      let that = this
+      let useradd = sessionStorage.getItem('useradd')
+      let userAddressId = ''
+      let opData = 'userId=' + that.userId + '&name=' + that.contactPerson + '&phone=' + that.phone + '&doorNum=' + that.doorNum + '&isConfirm=0' + '&communityId=' + that.position.id || that.position.communityId + '&id=' + userAddressId
+      let url
+      if (userAddressId) {
+        url = '/daoway/rest/user/' + that.userId + '/modifyUserAddress'
+      } else {
+        url = '/daoway/rest/user/' + that.userId + '/addUserAddress'
+      }
+      fetch(url, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'content-type': 'application/x-www-form-urlencoded'
+        },
+        body: opData
+      }).then(function (res) {
+        return res.json()
+      }).then(function (text) {
+        console.log(text)
+        if (text.status === 'ok') {
+          that.position.contactPerson = useradd.contactPerson
+          that.position.doorNum = useradd.doorNum
+          that.position.phone = useradd.phone
+          if (!userAddressId) {
+            base.userAddressId = text.data
+          }
+          localStorage.setItem({'position': JSON.stringify(that.position)})
+        } else {
+          that.warn.show = true
+          that.warn.texts = text.msg
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
     tobuy () {
       let that = this
       let addr = that.addr
@@ -546,7 +607,7 @@ export default {
           items.quantity = that.quantity
           ary.push(items)
         }
-        let token = localStorage.getItem('token')
+        let token = localStorage.getItem('mipToken')
         let anydata = {
           'userId': that.userId,
           'serviceId': that.serviceId,
@@ -581,9 +642,10 @@ export default {
           return res.json()
         }).then(function (text) {
           if (text.status === 'ok') {
+            that.userAddress()
             let tobaiduorder = text.data.orderId
-            console.log(text.data)
-            let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent('http://test.daoway.cn/mip/t/orderdetail.html?orderId=' + tobaiduorder)
+            // let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + tobaiduorder)
+            let redirectUrl = that.returnurl + '?orderId=' + tobaiduorder
             MIP.setData({'payConfig': {
               'fee': that.alltotalPrices,
               'sessionId': token,
@@ -601,9 +663,9 @@ export default {
                 'tradeType': that.tradeType
               }
             }})
-            console.log(that.alltotalPrices, token, redirectUrl, tobaiduorder, that.userId, that.coupone ? that.coupone.id : '')
             that.$emit('actionpay')
           } else {
+            console.log(text.msg)
             that.warn.show = true
             that.warn.texts = text.msg
           }
@@ -639,11 +701,12 @@ export default {
         background: #fff;
     }
     .re-form {
-        margin-left: 3%
+        margin-left: 3%;
     }
 
     .re-form li {
-        line-height: 42px;
+        line-height: 43px;
+        font-size: 14px;
     }
 
     .re-form li img {
@@ -661,15 +724,21 @@ export default {
         background: #fff;
         font-size: 0
     }
+    .quan div.novouchers{
+      color: #ccc;
+    }
 
     .re-form input {
-        width: 88%;
+        width: 86%;
         margin-left: 3%;
         display: inline-block;
         height: 40px;
         line-height: 40px;
         border-bottom: 1px solid #ececec;
-        font-size: 14px
+        font-size: 14px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
     .re-form li:last-child input {
@@ -690,7 +759,7 @@ export default {
     .re-form2 span {
         display: inline-block;
         width: 30%;
-        color: #898989
+        color: #212121
     }
 
     .re-form2 div {
@@ -748,12 +817,11 @@ export default {
     }
 
     .gtitname {
-        margin-bottom: 36px;
+        margin-bottom:20px;
     }
 
     .gtit {
-        margin-left: 16px;
-        margin-top: 10px;
+        margin-left: 6px;
     }
 
     .gtit, .gadd {
@@ -785,9 +853,10 @@ export default {
     .note {
         width: 80%;
         display: inline-block;
-        margin-left: 40px;
+        margin-left: 29px;
         vertical-align: middle;
-        padding: 8px 0;
+        padding: 6px 0;
+      font-size: 13px;
     }
 
     .project {
@@ -797,10 +866,9 @@ export default {
     }
 
     .project-tit {
-        height: 30px;
-        line-height: 30px;
+        height: 36px;
+        line-height: 26px;
         width: 100%;
-        color: #4c4c4c;
     }
 
     .project-tit div {
@@ -835,6 +903,7 @@ export default {
         line-height: 50px;
         padding: 0 3%;
         font-size: 14px;
+      border-top: 1px solid #e5e5e5;
     }
 
     .btn2 {

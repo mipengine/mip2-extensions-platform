@@ -59,6 +59,7 @@ export default {
     }
     try {
       params.access_token = window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp')
+      params.source = 'xzapp'
     } catch (e) {
       throw (new Error(e))
     }

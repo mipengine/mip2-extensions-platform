@@ -23,6 +23,7 @@
         <span class="carprice">{{ item.panel_price }}万</span>
         <div class="pricedetail">
           <div
+            v-if="item.is_ycg_car == 1"
             class="percent">一成购</div>
           <span class="instalment">首付{{ item.show_price }}万 月供{{ item.monthly_price }}元</span>
         </div>
@@ -112,7 +113,7 @@ export default {
 </script>
 <style scoped>
 .carcontent {
-  display: flex;
+  /**display: flex;**/
   /* height: 2.9rem; */
   height: 2.4rem;
   /**padding: 0.24rem 0.3rem 0 0.3rem;*/
@@ -125,6 +126,8 @@ export default {
   position: relative;
   margin-left: 0.3rem;
   margin-top: 0.3rem;
+  float: left;
+  width: 2.56rem;
 }
 
 .content-left .carpic {
@@ -157,6 +160,8 @@ export default {
   /**width: 4.37rem;*/
   margin-top: 0.25rem;
   /* overflow: hidden; */
+  float: left;
+    width: 4rem;
 }
 
 .content-right .carname {

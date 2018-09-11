@@ -35,13 +35,7 @@
                 class="delete-btn"
                 ng-click="deleteAddr(a,$event)">删除</div>
             </div>
-            <mip-img
-              layout="container"
-              class="selected-img"
-              src="~@/static/icon/address_selected.png"
-              width="40px"
-              height="40px"
-            />
+            <div class="address_selected_icon selected-img"/>
           </div>
         </div>
       </div>
@@ -140,6 +134,15 @@
 @light-font: #aaa;
 @normal-border: 1px solid #e4e4e4;
 @medium-font: #95949d;
+.address_selected_icon{
+  width:40px;
+  height:40px;
+  background-image: url(~@/static/icon/address_selected.png);
+  background-repeat: no-repeat;
+  background-size: 40px 40px;
+  background-position: center center;
+  display: inline-block;
+}
 .box-orient(@orient) {
   -moz-box-orient: @orient;
   -webkit-box-orient: @orient;
@@ -443,7 +446,7 @@
 <script>
 import { httpGet, httpPost } from '@/common/httpUtil'
 import * as sessionStorageUtil from '@/common/sessionStorageUtil.js'
-import { templateCompile } from '@/common/urlUtil'
+import { searchValueByKey, templateCompile } from '@/common/urlUtil'
 export default {
   props: {
     prefixUrl: {
@@ -492,7 +495,7 @@ export default {
   mounted () {
     sessionStorageUtil.syncSessionData()
     this.loadAddress()
-    this.addressOID = MIP.hash.get('addressOID')
+    this.addressOID = searchValueByKey('addressOID')
   },
   methods: {
     loadAddress () {
@@ -504,7 +507,7 @@ export default {
           } else if (res.statusCode === 1005) {
             sessionStorageUtil.set(
               'login_back_url',
-              MIP.viewer.page.currentPageId
+              window.location.href
             )
             me.loginUrl && MIP.viewer.open(me.loginUrl)
           }
@@ -576,7 +579,7 @@ export default {
             } else if (res.statusCode === 1005) {
               sessionStorageUtil.set(
                 'login_back_url',
-                MIP.viewer.page.currentPageId
+                window.location.href
               )
               me.loginUrl && MIP.viewer.open(me.loginUrl)
             } else {

@@ -260,10 +260,11 @@ API.wrapRet_ = function (api, opts, fn) {
     })
 }
 
-API.payOrderWithBalance = function (orderId, type, amount, fn) {
+API.payOrderWithBalance = function (orderId, payId, type, amount, fn) {
   API.wrapRet_(
     'https://mip.putibaby.com/api/pay/pay_order_with_balance', {
       'order_id': orderId,
+      'pay_id': payId,
       'type': type,
       'amount': amount
 
@@ -458,6 +459,7 @@ export default {
       }
       API.payOrderWithBalance(
         this.data.order_id,
+        this.data.pay_id,
         this.data.type,
         this.balancePayAmount,
         function (isOk, res) {
@@ -466,7 +468,7 @@ export default {
             var xzUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment' +
                   '?id=1544608709261251&redirect=' + encodeURIComponent(donePage)
             // window.top.location.href = xzUrl
-            window.MIP.viewer.open(xzUrl, {isMipLink: false})
+            window.MIP.viewer.open(xzUrl, {isMipLink: false, replace: true})
           } else {
             console.error(res)
             window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {replace: true})

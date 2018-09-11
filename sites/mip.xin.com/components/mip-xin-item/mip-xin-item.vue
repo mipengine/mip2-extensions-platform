@@ -91,9 +91,9 @@
         </div>
       </div>
     </div>
-    <mip-xin-button
+    <!-- <mip-xin-button
       v-if="carid"
-      :source="4"/>
+      :source="4"/> -->
     <div class="boxTop"/>
     <div class="reportTitle lastTitle">
       <span class="title">瑕疵及修复</span>
@@ -112,6 +112,10 @@ import '../../common/css/base.css'
 import { requestFun } from '../../common/utils/reqUtils.js'
 let pid = '/pages/report'
 export default {
+  // https://github.com/mipengine/mip2/issues/252  解决uc浏览器白屏问题
+  prerenderAllowed () {
+    return true
+  },
   props: {
     query: {
       type: Object,
@@ -487,7 +491,8 @@ export default {
   line-height: 0.6rem;
 }
 .borderBottom {
-  padding-bottom: 0.88rem;
+  /**padding-bottom: 0.88rem;*/
+  padding-bottom:0.44rem;
 }
 ::-webkit-scrollbar {
   width: 0;

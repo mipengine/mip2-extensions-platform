@@ -57,9 +57,14 @@
                 <span class="normal btn">联系司机</span>
               </a>
               <span
-                v-show="item.OrderStatus.isNeedPay === 1"
+                v-show="item.OrderStatus.mipPayType === 1"
                 class="normal btn"
-                @click.stop="payOrder(item)">立即支付</span>
+                @click.stop="payOrder(item)">支付定金</span>
+
+              <span
+                v-show="item.OrderStatus.mipPayType === 2"
+                class="normal btn"
+                @click.stop="payOrder(item)">支付尾款</span>
             </div>
           </div>
 
@@ -182,13 +187,27 @@ export default {
             this.hideloading()
             if (response.data.length !== 0) {
               this.nodata = false
-              this.orderList = response.data.map(element => {
+              this.orderList = response.data.filter(element => {
                 if (element.driverInfo.phone) {
                   element.driverInfo.phone = 'tel:' + element.driverInfo.phone
                 }
                 element.isdefault = false
-                return element
+
+                // 增加 定金支付方式
+                element.OrderStatus.mipPayType = 0
+                // 支付定金
+                if (+element.frontMoney > 0 && +element.OrderFlag < 2000) {
+                  element.OrderStatus.mipPayType = 1
+                }
+                // 支付尾款
+                if (+element.OrderStatus.isNeedPay === 1 && +element.OrderFlag > 2000) {
+                  element.OrderStatus.mipPayType = 2
+                }
+                let num = 0
+                // return +element.OrderStatus.isNeedComment === 0
+                return num === 0
               })
+              console.log('查看处理数据:' + JSON.stringify(this.orderList, null, 2))
             }
           })
       }
@@ -258,20 +277,30 @@ export default {
     payOrder (item) {
       console.log('支付订单')
       //   let sessionid = base.getbaiduLogMsg()
+
+      let price = 0
+
+      if (item.OrderStatus.mipPayType === 1) {
+        price = item.frontMoney + '元'
+      } else {
+        price = item.noPay + '元'
+      }
+
       let sessionid = this.userlogin.sessionId
-      let price = item.noPay
       let urlsParam = base.setUrlParam({
         orderNum: item.OrderNum,
         sessionId: sessionid,
-        total_fee: price
+        total_fee: price,
+        ver: 2.0
       })
       let obj = {
         sessionId: sessionid,
         redirectUrl: 'https://www.lanxiniu.com/Pay/success?' + urlsParam,
-        fee: price + '元',
+        fee: price,
         postData: {
           orderNum: item.OrderNum,
-          token: sessionid
+          token: sessionid,
+          ver: 2.0
         }
       }
       MIP.setData({
