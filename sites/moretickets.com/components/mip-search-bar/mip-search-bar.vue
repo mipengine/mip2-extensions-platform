@@ -92,12 +92,25 @@
     .search-box-input {
       width: 100%;
       height: @searchHeight;
+      line-height: normal;
       border: none;
       color: #333;
       background: transparent;
       padding: 5px;
       padding-left: 3rem;
       font-size: 1.2rem;
+      &::-webkit-placeholder{
+        line-height: @searchHeight;
+      }
+      &::-moz-placeholder{
+        line-height: @searchHeight;
+      }
+      &::-o-placeholder{
+        line-height: @searchHeight;
+      }
+      &::placeholder{
+        line-height: @searchHeight;
+      }
     }
     .search-placeholder {
       letter-spacing: 1px;
