@@ -1,16 +1,16 @@
 <script>
-  export default {
-    mounted() {
-      let vm = this
-      this.$on('addck', function (event, params) {
-        vm.addck(params)
-      })
-    },
-    methods: {
-      addck(params) {
-        var parameobj = JSON.parse(params);
-        document.cookie = parameobj.type+'ck='+ params;
-      }
+export default {
+  mounted() {
+    let vm = this
+    this.$on('addck', function (event, params) {
+      vm.addck(params)
+    })
+  },
+  methods: {
+    addck(params) {
+      var parameobj = JSON.parse(params);
+      document.cookie = parameobj.type+'ck='+ params;
     }
   }
+}
 </script>
