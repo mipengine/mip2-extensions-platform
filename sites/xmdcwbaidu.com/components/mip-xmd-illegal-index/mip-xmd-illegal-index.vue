@@ -372,12 +372,12 @@
         .mint-field-core {
           width: initial;
           /*flex-grow: 2;*/
-          max-width: 3rem;
+          max-width: 2.6rem;
         }
         justify-content: space-between;
         .mint-field-other {
-          width: 1.4rem;
-          height: 0.5rem;
+          width: 70px;
+          height: 25px;
         }
       }
     }
