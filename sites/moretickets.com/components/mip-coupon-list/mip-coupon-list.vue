@@ -163,9 +163,11 @@
     background-image: url(~@/static/icon/noselect.png);
     background-size: 20px 20px;
     background-position: center center;
+    background-repeat:  no-repeat;
   }
   .for-select.selected {
     background-image: url(~@/static/icon/select.png);
+    background-repeat:  no-repeat;
   }
   .for-use {
     width: 5rem;
@@ -326,9 +328,11 @@
     background-image: url(~@/static/icon/noselect.png);
     background-size: 20px 20px;
     background-position: center center;
+    background-repeat: no-repeat;
   }
   .for-select.selected {
     background-image: url(~@/static/icon/select.png);
+    background-repeat: no-repeat;
   }
 }
 .coupon-page {
