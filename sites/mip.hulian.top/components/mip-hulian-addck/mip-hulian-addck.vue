@@ -1,7 +1,7 @@
 <script>
 export default {
-  mounted() {
-    let vm = this
+  mounted () {
+  let vm = this
     this.$on('addck', function (event, params) {
       vm.addck(params)
     })
