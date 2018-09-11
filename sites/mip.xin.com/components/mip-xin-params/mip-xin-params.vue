@@ -158,6 +158,10 @@ import { requestFun } from '../../common/utils/reqUtils'
 import { viewPoint } from '../../common/utils/stastic.js'
 let pid = '/pages/params'
 export default {
+  // https://github.com/mipengine/mip2/issues/252  解决uc浏览器白屏问题
+  prerenderAllowed () {
+    return true
+  },
   props: {
     query: {
       type: Object,

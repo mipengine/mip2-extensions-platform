@@ -769,12 +769,14 @@ export default {
         event.userInfo.bindMobile &&
         event.userInfo.tsessionid
       ) {
-        sessionStorageUtil.set('mtl_session', event.userInfo.tsessionid)
-        if (_self.retryOrder) {
-          _self.confirmCallback()
-        } else {
-          _self.saveUserSelect(false)
-        }
+        adapterStorageUtil.set('mtl_session', event.userInfo.tsessionid)
+        _self.fetchShow(searchValueByKey('id'), function () {
+          if (_self.retryOrder) {
+            _self.confirmCallback()
+          } else {
+            _self.saveUserSelect(false)
+          }
+        })
       } else {
         _self.saveUserSelect(false)
         sessionStorageUtil.set('login_back_url', window.location.href)
@@ -894,6 +896,7 @@ export default {
         if (loginInfo.isLogin || this.baiduIsLogin) {
           this.nextUrl && MIP.viewer.open(this.nextUrl)
         } else {
+          this.retryOrder = true
           this.$emit('showlogin', {})
         }
       }
