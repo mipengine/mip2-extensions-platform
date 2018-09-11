@@ -2,20 +2,13 @@
   <div
     class="vbox flex-column"
     style="background-color:#f2f2f2;">
-    <!-- <div class="header_title header_title_bg" ng-show="!hidetitle" >
-      <div class="pull-left">
-          <div @click="back()" class="icon-back"> </div>
-      </div>
-      <div class="title">选择城市</div>
-  </div> -->
     <div
       ref="selectCity"
       class="selectCity"
       style="background-color:#f2f2f2;padding:0 15px;padding-right: 40px;position:relative;">
 
       <div
-        id="type1"
-        ref="type1"
+        data-key="定位"
         class="city-type-title">定位城市</div>
       <div
         :class="{'active':site.siteCityOID===locationCity.locationCityOID}"
@@ -27,13 +20,12 @@
         class="fail-location"
         @click="getLocation()">无法获取，点击刷新<div style="display:inline-block;width:12px;"><mip-img
           layout="container"
-          src="~@/static/icon/refresh_site.png"
+          src="/static/icon/refresh_site.png"
           alt=""
           width="12"
           height="12"/></div></div>
       <div
-        id="type2"
-        ref="type2"
+        data-key="历史"
         class="city-type-title">最近访问的城市</div>
       <div class="city-wrap">
         <div
@@ -45,8 +37,7 @@
       </div>
 
       <div
-        id="type3"
-        ref="type3"
+        data-key="热门"
         class="city-type-title">热门城市</div>
       <div class="city-wrap" >
         <div
@@ -60,7 +51,7 @@
         v-for="(type,index) in cities.allCities"
         :key="index">
         <div
-          :id="type.title"
+          :data-key="type.title"
           class="city-type-title">{{ type.title }}</div>
         <div class="all-city-wrap">
           <div
@@ -73,25 +64,33 @@
       </div>
 
     </div>
-    <div class="sitebar-city">
-      <ul>
-        <li><a
-          href="javascript:void(0);"
-          @click="scrollByType('type1')">定位</a></li>
-        <li><a
-          href="javascript:void(0);"
-          @click="scrollByType('type2')">历史</a></li>
-        <li><a
-          href="javascript:void(0);"
-          @click="scrollByType('type3')">热门</a></li>
-        <li
-          v-for="(ct,index) in cities.allCities"
-          :key="index"
-          :ref="ct.title"><a
+    <mip-fixed
+      type="right"
+      class="mip-city-selection-sidebar-wrapper"
+      mipdata-fixedidx="Fixed5"
+      style="top: 0;
+    right: 10px;
+    bottom: 0;
+    margin: 96px 0;">
+      <div class="sitebar-city">
+        <ul>
+          <li><a
             href="javascript:void(0);"
-            @click="scrollByType(ct.title)">{{ ct.title }}</a></li>
-      </ul>
-    </div>
+            @click="scrollByType('定位')">定位</a></li>
+          <li><a
+            href="javascript:void(0);"
+            @click="scrollByType('历史')">历史</a></li>
+          <li><a
+            href="javascript:void(0);"
+            @click="scrollByType('热门')">热门</a></li>
+          <li
+            v-for="(ct,index) in cities.allCities"
+            :key="index"><a
+              href="javascript:void(0);"
+              @click="scrollByType(ct.title)">{{ ct.title }}</a></li>
+        </ul>
+      </div>
+    </mip-fixed>
   </div>
 </template>
 
@@ -181,9 +180,6 @@ ul li{
     border-bottom:0.5px solid #e4e4e4;
 }
 .sitebar-city{
-    position:absolute;
-    top:94px;
-    right:6px;
     color: #108ee9;
     font-size:12px;
     line-height:18px;
@@ -321,14 +317,9 @@ export default {
       this.selectedCity(city, notHistoryCityClick)
     },
     scrollByType (siteEle) {
-      console.log(this.$refs[siteEle])
-      let offsetTop = this.$refs[siteEle][0].offsetTop
-      console.log(offsetTop)
-      // this.$refs["selectCity"].scrollTop = offsetTop;
-      document.body.scrollTop = offsetTop
+      let target = document.querySelector('[data-key="' + siteEle + '"]')
+      let offsetTop = target.offsetTop - 15
       MIP.util.rect.setScrollTop(offsetTop)
-      // var positionTop = $('#'+siteEle).position().top;
-      // $('.selectCity').scrollTop(positionTop);
     }
   }
 }
