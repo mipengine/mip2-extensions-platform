@@ -136,6 +136,7 @@ export default {
           postHisId: postHisId,
           cityId: cityId
         }
+        
         updatePostInfo(setting).then(res => {
           $Loading.close()
           if (res != null) {

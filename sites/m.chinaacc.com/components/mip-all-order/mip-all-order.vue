@@ -55,22 +55,26 @@
       </div>
       <div class="total">已选{{ productNum }}件商品&#12288;合计：￥<em>{{ saleOrder.payMoney }}</em></div>
       <div class="btn">
-        <a
+        <!-- <a
           v-if="saleOrder.payStatus != 1 && saleOrder.payStatus != -2 && saleOrder.isDel == 1"
-          href="javascript:void(0)"
           class="del"
-          onclick="delOrder(saleOrder.orderId)">删除订单</a>
+          @click="delOrder(saleOrder.orderId)">删除订单</a> -->
         <a
           v-if="saleOrder.payStatus == 0"
-          href="javascript:void(0)"
           class="pay"
-          onclick="goToPay(saleOrder.orderId,saleOrder.payStyle)">付款</a>
+          @click="gotoPay(saleOrder.orderId)">付款</a>
       </div>
+
     </div>
   </div>
 </template>
 <script>
-import { getAllOrderData } from '../../common/api'
+import { gotoUrl } from '../../common/utils'
+import { getCookie } from '../../common/utils/cookie'
+import {
+  getAllOrderData,
+  updateOrder
+} from '../../common/api'
 export default {
   data () {
     return {
@@ -101,7 +105,29 @@ export default {
           that.resultList = allOrderData.resultList
         }
       })
-    }
+    },
+    gotoPay (orderId) {
+      let orderBookList = getCookie('order_book_list')
+      if (orderBookList != null) {
+        orderBookList = orderBookList.replace(/"/g, '')
+      }
+      let setting = {
+        orderId: orderId + '',
+        prules: '0',
+        pvip: '1',
+        buy_book_list: orderBookList,
+        voucherIds: '',
+        yqm: '0'
+      }
+      updateOrder(setting).then(res => {
+        if (res.code + '' === '1') {
+          gotoUrl('/payment/confirmOrder.html')
+        }
+      })
+    }/* ,
+    delOrder (orderId) {
+
+    } */
   }
 }
 </script>
