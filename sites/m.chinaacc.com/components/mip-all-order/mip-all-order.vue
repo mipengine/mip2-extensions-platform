@@ -64,7 +64,6 @@
           class="pay"
           @click="gotoPay(saleOrder.orderId)">付款</a>
       </div>
-
     </div>
   </div>
 </template>
