@@ -22,14 +22,14 @@
         class="list-type-nav">
         <div class="type-nav-container">
           <div class="type-nav">
-            <div class="type-name">“{{ keyword }}”相关的演出</div>
+            <div class="type-name">“<span style="color:#ff1d41;">{{ keyword }}</span>”相关的演出</div>
           </div>
           <div
             class="type-nav"
             @click="resetKeyword">
             <div
               class="type-name"
-              style="color:rgb(241, 14, 112);">清空搜索</div>
+              style="color:rgb(168, 166, 167);">清空搜索</div>
           </div>
         </div>
       </div>

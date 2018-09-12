@@ -164,6 +164,9 @@ export default {
     MIP.watch('initCityName', newVal => {
       me.city = {cityName: newVal}
     })
+    MIP.watch('keyword', newValue => {
+      me.keyword = newValue
+    })
   },
   methods: {
     searchKey () {
