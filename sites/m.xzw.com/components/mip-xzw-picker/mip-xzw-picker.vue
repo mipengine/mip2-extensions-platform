@@ -73,6 +73,7 @@ export default {
       _this.picker[i] = new MobileSelect({
         trigger: '#' + config.id,
         title: '',
+        type: config.type,
         wheels: _wheels,
         position: _position,
         triggerDisplayData: false,
@@ -103,27 +104,25 @@ export default {
       let url = object.getAttribute('url')
       let query = ''
       let and = '&'
-      let input = document.querySelectorAll('input')
-      if (input.length > 0) {
-        for (let i = 0; i < input.length; i++) {
-          if (input[i].value) {
-            if (i === input.length - 1) { and = '' }
-            query += input[i].name + '=' + input[i].value + and
+      let validate = true
+      for (let i = 0; i < _this.config.length; i++) {
+        if (i >= start && i < end) {
+          if (_this.config[i].value) {
+            if (i === _this.config.length - 1) { and = '' }
+            const _value = _this.config[i].value
+            query += _this.config[i].name + '=' + _value + and
+          } else {
+            validate = false
           }
         }
       }
-      for (let i = 0; i < _this.config.length; i++) {
-        if (i >= start && i < end && _this.config[i].value) {
-          if (i === input.length - 1) { and = '' }
-          const _value = _this.config[i].value
-          query += _this.config[i].name + '=' + _value + and
-        }
-      }
-      if (!query) {
+      query = validate === true ? query : ''
+      if (query === '') {
         _this.tip()
         return false
+      } else {
+        object.setAttribute('href', url + '?' + query)
       }
-      object.setAttribute('href', url + '?' + query)
     },
     tip: function () {
       let body = document.querySelectorAll('body')
