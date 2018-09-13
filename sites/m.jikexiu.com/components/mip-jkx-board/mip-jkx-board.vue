@@ -109,7 +109,7 @@ export default{
       padding: 10px;
       // margin-bottom: 50px;
       p{
-        padding: 10px 10px 50px;
+        padding: 10px 10px 30px;
         line-height: 25px;
         color: #666;
         background: #f5ebc2;
