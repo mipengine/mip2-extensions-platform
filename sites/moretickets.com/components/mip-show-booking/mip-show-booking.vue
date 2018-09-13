@@ -208,11 +208,16 @@
         </div>
       </div>
     </div>
-    <div
+    <!-- <div
       v-show="pageData.toastmsg"
       class="toast-msg">
       {{ pageData.toastmsg }}
-    </div>
+    </div> -->
+    <mip-st-toast v-show="toastmsg">
+      <div class="toast-container">
+        {{ toastmsg }}
+      </div>
+    </mip-st-toast>
   </div>
 </template>
 
@@ -455,6 +460,13 @@
   top: 50%;
   transform: translateX(-50%) translateY(-50%);
   z-index: 1000;
+}
+.toast-container{
+  font-size: 14px;
+  height: auto;
+  line-height: 28px;
+  padding: 10px 16px;
+  white-space: normal;
 }
 .book-show-footer {
   background-color: #fff;

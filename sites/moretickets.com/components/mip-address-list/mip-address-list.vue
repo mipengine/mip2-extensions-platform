@@ -40,8 +40,7 @@
         </div>
       </div>
       <mip-fixed
-        type="bottom"
-        still>
+        type="bottom">
         <div class="footer">
           <div class="pre-btn-icon"/>
           <div
@@ -119,11 +118,16 @@
           @click="saveAddress()">保存</div>
       </div>
     </div>
-    <div
+    <!-- <div
       v-if="toastmsg"
       class="toast-msg">
       {{ toastmsg }}
-    </div>
+    </div> -->
+    <mip-st-toast v-show="toastmsg">
+      <div class="toast-container">
+        {{ toastmsg }}
+      </div>
+    </mip-st-toast>
   </div>
 </template>
 
@@ -233,6 +237,13 @@
   transform: translateX(-50%) translateY(-50%);
   z-index: 1000;
 }
+.toast-container{
+  font-size: 14px;
+  height: auto;
+  line-height: 28px;
+  padding: 10px 16px;
+  white-space: normal;
+}
 .default-mark {
   background: #ff1d41;
   color: #fff;
@@ -270,77 +281,77 @@
       height: 100%;
     }
   }
-  .footer {
-    height: 5rem;
-    min-height: 5rem;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .box-align(center);
-    .box-pack(center);
-    .pre-btn-icon {
-      width: 2.2rem;
-      height: 2.2rem;
-      border-radius: 2rem;
-      border: 2px solid @main-color;
-      position: relative;
-      margin-right: 2rem;
-      &:before {
-        content: "";
-        position: absolute;
-        height: 2px;
-        background: @main-color;
-        left: 25%;
-        top: 50%;
-        width: 50%;
-        transform: translateY(-50%);
-      }
-      &:after {
-        content: "";
-        position: absolute;
-        width: 2px;
-        background: @main-color;
-        left: 50%;
-        top: 25%;
-        height: 50%;
-        transform: translateX(-50%);
-      }
+}
+.footer {
+  height: 5rem;
+  min-height: 5rem;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .box-align(center);
+  .box-pack(center);
+  .pre-btn-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 2rem;
+    border: 2px solid @main-color;
+    position: relative;
+    margin-right: 2rem;
+    &:before {
+      content: "";
+      position: absolute;
+      height: 2px;
+      background: @main-color;
+      left: 25%;
+      top: 50%;
+      width: 50%;
+      transform: translateY(-50%);
     }
-    .btn-text {
-      color: @main-color;
-      line-height: 5rem;
-      font-size: 1.6rem;
+    &:after {
+      content: "";
+      position: absolute;
+      width: 2px;
+      background: @main-color;
+      left: 50%;
+      top: 25%;
+      height: 50%;
+      transform: translateX(-50%);
     }
   }
-  .address-list {
-    margin-top: 1rem;
-    background-color: #fff;
-    .address-item {
-      padding: 0.5rem 1rem;
-      border-bottom: 1px solid #eee;
-      line-height: 3rem;
-      position: relative;
-      overflow: hidden;
-      &:last-child {
-        border-bottom: none;
-      }
-      .user-cellphone {
-        padding: 0 0.5rem;
-      }
-      &.selected {
-        .selected-img {
-          display: block;
-        }
-      }
+  .btn-text {
+    color: @main-color;
+    line-height: 5rem;
+    font-size: 1.6rem;
+  }
+}
+.address-list {
+  margin-top: 1rem;
+  background-color: #fff;
+  .address-item {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #eee;
+    line-height: 3rem;
+    position: relative;
+    overflow: hidden;
+    &:last-child {
+      border-bottom: none;
+    }
+    .user-cellphone {
+      padding: 0 0.5rem;
+    }
+    &.selected {
       .selected-img {
-        display: none;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 1rem;
-        width: 3.5rem;
+        display: block;
       }
+    }
+    .selected-img {
+      display: none;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 1rem;
+      width: 3.5rem;
     }
   }
 }

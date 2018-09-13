@@ -99,17 +99,17 @@
       padding: 5px;
       padding-left: 3rem;
       font-size: 1.2rem;
-      &::-webkit-placeholder{
-        line-height: @searchHeight;
+      &::-webkit-input-placeholder{
+        line-height: 15px;
       }
       &::-moz-placeholder{
-        line-height: @searchHeight;
+        line-height: 15px;
       }
       &::-o-placeholder{
-        line-height: @searchHeight;
+        line-height: 15px;
       }
       &::placeholder{
-        line-height: @searchHeight;
+        line-height: 15px;
       }
     }
     .search-placeholder {
