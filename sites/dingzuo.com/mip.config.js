@@ -28,13 +28,5 @@ module.exports = {
   build:{
     asset:"http://mip.kebide.com",
     clean:true
-    /**
-     * server 启动自动打开页面，false 为关闭
-     * 如:
-     * autoopen: '/example/index.html'
-     *
-     * @type {string|boolean}
-     */
-    autoopen: false
   }
 }

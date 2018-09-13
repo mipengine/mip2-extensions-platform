@@ -1,8 +1,18 @@
 <template>
   <div class="mip-complete">
-    <h2>预定成功</h2>
-    <p>座位号（<span>包间12</span>）</p>
-    <div class="detail">到店就餐情报手机号即可<a href="./orderdetails.html">订单详情</a></div>
+    <div class="top">
+      <mip-img
+              class="mesimg"
+              width="79"
+              height="72"
+              :src="success"
+              ></mip-img>
+      <div class="mestext">
+        <h2>预约成功</h2>
+        <p>大厅</p>
+      </div>
+    </div>
+    <div class="detail">到店就餐请报手机号即可<a href="./orderdetails.html">订单详情</a></div>
     <mip-fixed class="pay" @click="toJump">完成</mip-fixed>
   </div>
 </template>
@@ -11,20 +21,46 @@
 .mip-complete{
   color: #666666;
 }
-h2{
+.top{
+  height: 140px;
+  padding-top: 40px;
   text-align: center;
-  margin-top: 50px;
-  color: #FD8F14;
-  
 }
-.mip-complete>p{
-  text-align: center;
-  margin-top: 20px;
-  margin-bottom: 30px;
-  font-size: 16px;
+.mip-complete::before{
+content: "";
+position: absolute;
+background:  #E0E0EB;
+width: 200%;
+height: 1px;
+-webkit-transform-origin: 0 0;
+-moz-transform-origin: 0 0;
+-ms-transform-origin: 0 0;
+-o-transform-origin: 0 0;
+transform-origin: 0 0;
+-webkit-transform: scale(0.5, 0.5);
+-ms-transform: scale(0.5, 0.5);
+-o-transform: scale(0.5, 0.5);
+transform: scale(0.5, 0.5);
 }
-.mip-complete>p span{
+.top .mesimg{
+  display: inline-block;
+}
+.top .mestext{
+  height: 72px;
+  display: inline-block;
+  text-align: left;
+  vertical-align: top;
+  margin-left: 20px;
+}
+.top .mestext h2{
+  font-size: 26px;
+  font-weight: normal;
   color: #00C093;
+  margin-top: 10px;
+}
+.top .mestext p{
+  font-size: 16px;
+  margin-top: 10px;
 }
 .detail{
   padding-top: 10px;
@@ -52,7 +88,13 @@ h2{
 </style>
 
 <script>
+import success from "@/static/success.png"
 export default {
+  data(){
+    return{
+      success:success
+    }
+  },
   methods:{
     toJump(){
         MIP.viewer.open("./index.html");

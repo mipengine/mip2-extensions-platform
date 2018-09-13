@@ -7,9 +7,6 @@
     <link rel="canonical" href="http://127.0.0.1:8111/example/reserve.html">
     <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
     <style mip-custom>
-     body{
-       background: #F0F0F8;
-     }
     </style>
   </head>
   <body>
@@ -30,59 +27,13 @@
                 "header": {
                   "show": true,
                   "title": "盯座",
-                  "borderColor": "#00C093",
-                  "color":"#FFFFFF",
-                  "logo":"../static/dingzuo.png",
-                  "backgroundColor":"#00C093",
-                  "buttonGroup":[
-                    {
-                      "name":"about",
-                      "text":"关于盯座",
-                      "link":"./abouts.html"
-                    },
-                    {
-                      "name":"cancel",
-                      "text":"我也要出现在这里"
-                    },
-                    {
-                      "name":"order",
-                      "text":"我的订单",
-                      "link":"./order.html"
-                    },
-                    {
-                      "name":"cancel",
-                      "text":"取消"
-                    }
-                  ]
+                  "borderColor": "#FFFFFF",
+                  "color":"#333333",
+                  "backgroundColor":"#FFFFFF",
+                  "logo":"../static/dingzuo.png"
                 },
                 "view":{
                   "isIndex": true
-                }
-              }
-            },
-            {
-              "pattern": "./order",
-              "meta": {
-                "header": {
-                  "show": true,
-                  "title": "我的订单",
-                  "borderColor": "#000000",
-                  "color":"#FFFFFF",
-                  "backgroundColor":"#00C093",
-                  "buttonGroup":[
-                    {
-                      "name":"index",
-                      "text":"首页",
-                      "link":"./index.html"
-                    },
-                    {
-                      "name":"cancel",
-                      "text":"取消"
-                    }
-                  ]
-                },
-                "view":{
-                  "isIndex": false
                 }
               }
             },
@@ -92,9 +43,9 @@
                 "header": {
                   "show": true,
                   "title": "白家大院",
-                  "borderColor": "#000000",
-                  "color":"#FFFFFF",
-                  "backgroundColor":"#00C093",
+                  "borderColor": "#FFFFFF",
+                  "color":"#333333",
+                  "backgroundColor":"#FFFFFF",
                   "buttonGroup":[
                     {
                       "name":"index",
@@ -118,9 +69,35 @@
                 "header": {
                   "show": true,
                   "title": "订单详情",
-                  "borderColor": "#000000",
-                  "color":"#FFFFFF",
-                  "backgroundColor":"#00C093",
+                  "borderColor": "#FFFFFF",
+                  "color":"#333333",
+                  "backgroundColor":"#FFFFFF",
+                  "buttonGroup":[
+                    {
+                      "name":"index",
+                      "text":"首页",
+                      "link":"./index.html"
+                    },
+                    {
+                      "name":"cancel",
+                      "text":"取消"
+                    }
+                  ]
+                },
+                "view":{
+                  "isIndex": false
+                }
+              }
+            },
+            {
+              "pattern": "./order",
+              "meta": {
+                "header": {
+                  "show": true,
+                  "title": "我的订单",
+                  "borderColor": "#FFFFFF",
+                  "color":"#333333",
+                  "backgroundColor":"#FFFFFF",
                   "buttonGroup":[
                     {
                       "name":"index",
@@ -144,9 +121,9 @@
                 "header": {
                   "show": true,
                   "title": "白家大院",
-                  "borderColor": "#000000",
-                  "color":"#FFFFFF",
-                  "backgroundColor":"#00C093",
+                  "borderColor": "#FFFFFF",
+                  "color":"#333333",
+                  "backgroundColor":"#FFFFFF",
                   "buttonGroup":[
                     {
                       "name":"index",
@@ -170,9 +147,9 @@
                 "header": {
                   "show": true,
                   "title": "关于盯座",
-                  "borderColor": "#000000",
-                  "color":"#FFFFFF",
-                  "backgroundColor":"#00C093",
+                  "borderColor": "#FFFFFF",
+                  "color":"#333333",
+                  "backgroundColor":"#FFFFFF",
                   "buttonGroup":[
                     {
                       "name":"index",
@@ -196,9 +173,61 @@
                 "header": {
                   "show": true,
                   "title": "白家大院",
-                  "borderColor": "#000000",
-                  "color":"#FFFFFF",
-                  "backgroundColor":"#00C093",
+                  "borderColor": "#FFFFFF",
+                  "color":"#333333",
+                  "backgroundColor":"#FFFFFF",
+                  "buttonGroup":[
+                    {
+                      "name":"index",
+                      "text":"首页",
+                      "link":"./index.html"
+                    },
+                    {
+                      "name":"cancel",
+                      "text":"取消"
+                    }
+                  ]
+                },
+                "view":{
+                  "isIndex": false
+                }
+              }
+            },
+            {
+              "pattern": "./search",
+              "meta": {
+                "header": {
+                  "show": true,
+                  "title": "盯座",
+                  "borderColor": "#FFFFFF",
+                  "color":"#333333",
+                  "backgroundColor":"#FFFFFF",
+                  "buttonGroup":[
+                    {
+                      "name":"index",
+                      "text":"首页",
+                      "link":"./index.html"
+                    },
+                    {
+                      "name":"cancel",
+                      "text":"取消"
+                    }
+                  ]
+                },
+                "view":{
+                  "isIndex": false
+                }
+              }
+            },
+            {
+              "pattern": "./cancelreason",
+              "meta": {
+                "header": {
+                  "show": true,
+                  "title": "取消原因",
+                  "borderColor": "#FFFFFF",
+                  "color":"#333333",
+                  "backgroundColor":"#FFFFFF",
                   "buttonGroup":[
                     {
                       "name":"index",
@@ -222,30 +251,10 @@
                 "header": {
                   "show": true,
                   "title": "盯座",
-                  "borderColor": "#00C093",
-                  "color":"#FFFFFF",
-                  "logo":"../static/dingzuo.png",
-                  "backgroundColor":"#00C093",
-                  "buttonGroup":[
-                    {
-                      "name":"about",
-                      "text":"关于盯座",
-                      "link":"./example/aboutus.html"
-                    },
-                    {
-                      "name":"cancel",
-                      "text":"我也要出现在这里"
-                    },
-                    {
-                      "name":"order",
-                      "text":"我的订单",
-                      "link":"./example/order.html"
-                    },
-                    {
-                      "name":"cancel",
-                      "text":"取消"
-                    }
-                  ]
+                  "borderColor": "#FFFFFF",
+                  "color":"#333333",
+                  "backgroundColor":"#FFFFFF",
+                  "logo":"../static/dingzuo.png"
                 },
                 "view":{
                   "isIndex": true
@@ -260,6 +269,7 @@
     <mip-user-reserve id="example" m-bind:mip-click-token="mipClickToken"></mip-user-reserve>
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
     <script src="https://c.mipcdn.com/static/v2/mip-shell-inservice/mip-shell-inservice.js"></script>
-    <script src="https://c.mipcdn.com/extensions/platform/v2/mip.kebide.com/mip-user-reserve/mip-user-reserve.js"></script>
+    <script src="/mip-user-reserve/mip-user-reserve.js"></script>
+    <!-- <script src="https://c.mipcdn.com/extensions/platform/v2/dingzuo.com/mip-user-reserve/mip-user-reserve.js"></script> -->
   </body>
 </html>

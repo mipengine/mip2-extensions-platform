@@ -5,30 +5,58 @@
       <span>{{orderDate}}日</span>
       <span>{{orderWeek}}</span>
       <span>{{orderTime}}</span>
-      <span>{{orderNum}}</span>
+      <mip-img
+        class="editimg"
+        width="22"
+        height="22"
+        :src="editimg"
+        @click="toReturn"
+        ></mip-img>
+        <span>{{orderNum}}</span>
     </div>
     <div class="usermes">
       <div class="name-sex">
-        <div class="name" :class="isIncompleteN?'':'incomplete'">
-          <span>姓名</span>
-          <div class="inpout"><input type="text" v-model="name" placeholder="请输入姓名"/></div>
-        </div>
         <div class="sex">
-          <p :class='isSex?"sexselect":""' @click="isSex=true"><em><i></i></em>男</p>
-          <p :class='isSex?"":"sexselect"' @click="isSex=false"><em><i></i></em>女</p>
+          <span :class='isSex?"select":""' @click="isSex=true">男</span><span :class='isSex?"":"select"' @click="isSex=false">女</span>
+        </div>
+        <div class="name" :class="isIncompleteN?'':'incomplete'">
+          <span>
+            <mip-img
+              class="mesimg"
+              width="22"
+              height="22"
+              :src="username"
+              ></mip-img>
+          </span>
+          <div class="inpout"><input type="text" v-model="name" placeholder="请输入姓名"/></div>
         </div>
       </div>
       <div class="phone" :class="isIncompleteP?'':'incomplete'">
-        <span>电话</span>
+        <span>
+          <mip-img
+              class="mesimg"
+              width="22"
+              height="22"
+              :src="userphone"
+              ></mip-img>
+        </span>
         <div class="inpout"><input type="text" @keyup="isNum()" v-model="phone" placeholder="请输入手机号"/></div>
       </div>
       <div class="remarks">
-        <p>备注</p>
+        <span>
+          <mip-img
+              class="mesimg"
+              width="22"
+              height="22"
+              :src="userremark"
+              ></mip-img>
+        </span>
         <div class="inpout">
           <input type="text" placeholder="请输入内容" v-model="remark"/>
         </div>
       </div>
     </div>
+    <ul class="label"><li v-for="label in labels" @click="selectRemark">{{label}}</li></ul>
     <!-- <div class="deposit">每单需预付<span>¥300.00</span>订金，提前60分钟取消可退
       <a>
         <mip-img
@@ -41,7 +69,7 @@
     <mip-fixed :class="isEject?'eject':'ejectno'" type="top" left="0">
       请完善信息，再预定
     </mip-fixed>
-    <mip-fixed class="pay" @click="toJump">马上预定</mip-fixed>
+    <mip-fixed class="pay" @click="toJump">有座，马上预定</mip-fixed>
     </div>
 </template>
 
@@ -54,6 +82,23 @@ input{
   background: #FFFFFF;
   height: 46px;
   color: #333333;
+  border-bottom: 10px solid #F0F0F8;
+}
+.datemes::before{
+content: "";
+position: absolute;
+background:  #E0E0EB;
+width: 200%;
+height: 1px;
+-webkit-transform-origin: 0 0;
+-moz-transform-origin: 0 0;
+-ms-transform-origin: 0 0;
+-o-transform-origin: 0 0;
+transform-origin: 0 0;
+-webkit-transform: scale(0.5, 0.5);
+-ms-transform: scale(0.5, 0.5);
+-o-transform: scale(0.5, 0.5);
+transform: scale(0.5, 0.5);
 }
 .datemes span{
   height: 46px;
@@ -69,10 +114,15 @@ input{
   font-size: 16px;
   font-weight: bold;
 }
-.datemes span:last-child{
+.datemes span:nth-of-type(5){
   float: right;
-  margin-right: 15px;
+  margin-right: 40px;
   font-size: 16px;
+}
+.datemes .editimg{
+  float: right;
+  margin-top: 12px;
+  margin-right: 15px;
 }
 .usermes{
   margin-top: 10px;
@@ -99,20 +149,23 @@ input{
 }
 .usermes .name-sex{
   width: 100%;
-  height: 42px;
+  height: 41px;
   line-height: 40px;
+  border-bottom: 1px solid #F0F0F8;
 }
 .usermes .name-sex .name{
-  width: 52%;
+  margin-right: 100px;
   height: 41px;
-  border-bottom: 1px solid #F0F0F8;
-  float: left;
 }
 .usermes span{
   float: left;
   height: 41px;
   line-height: 40px;
   display: block;
+}
+.usermes span .mesimg{
+  margin-top: 10px;
+  margin-left: 5px;
 }
 .usermes .name-sex .name .inpout{
   margin-left: 40px;
@@ -124,32 +177,27 @@ input{
   border: none;
 }
 .usermes .name-sex .sex{
-  width: 40%;
+  width: 81px;
   float: right;
+  height: 24px;
+  border: 1px solid #DCDCDC;
+  margin-top: 8px;
+  font-size: 13px;
+  color: #666666;
 }
-.usermes .name-sex .sex p{
-  width: 50%;
-  float: left;
-}
-.usermes .name-sex .sex p em{
+.usermes .name-sex .sex span{
+  width: 40px;
+  text-align: center;
   display: inline-block;
-  height: 16px;
-  width: 16px;
-  border-radius: 8px;
-  border: 1px solid #999999;
-  margin-right: 5px;
-  vertical-align: middle;
+  height: 24px;
+  line-height: 24px;
 }
-.usermes .name-sex .sex p em i{
-  display: inline-block;
-  height: 10px;
-  width: 10px;
-  border-radius: 5px;
-  background: #FD8F14;
-  margin-left: 3px;
-  margin-top: -26px;
-  vertical-align: middle;
-  visibility: hidden;
+.usermes .name-sex .sex .select{
+  color: #FFFFFF;
+  background: #00C093;
+}
+.usermes .name-sex .sex span:first-child{
+  border-right: 1px solid #DCDCDC;
 }
 .usermes .name-sex .sex .sexselect em{
   border-color: #FD8F14;
@@ -166,11 +214,33 @@ input{
   margin-left: 40px;
 }
 .usermes .remarks{
-  height: 68px;
+  height: 42px;
+  box-sizing: border-box;
+  border-bottom: 1px solid #F0F0F8;
 }
-.usermes .remarks p{
-  height: 26px;
-  line-height: 26px;
+.usermes .remarks .inpout{
+   margin-left: 40px;
+}
+.label{
+  padding: 0 15px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.label li{
+  list-style: none;
+  float: left;
+  margin-top: 10px;
+  height: 30px;
+  line-height: 30px;
+  padding: 0 10px;
+  background: #F0F0F8;
+  margin-right: 8px;
+  border-radius: 2px;
+  color: #333333;
+}
+.label .select{
+  color: #FFFFFF;
+  background: #00C093;
 }
 .deposit{
     height: 20px;
@@ -196,16 +266,18 @@ input{
 }
 .pay{
   height: 48px;
-  width: 100%;
-  left: 0;
+  width: 90%;
+  left: 5%;
   bottom: 0;
   line-height: 48px;
   text-align: center;
-  border-top: 1px solid #BEBEBE;
   background: #FFFFFF;
   font-size: 16px;
-  color: #00C093;
+  background: #00C093;
+  color: #FFFFFF;
+  bottom: 10px;
   display: block !important;
+  border-radius: 4px;
 }
 /* 弹出层 */
 .eject{
@@ -228,10 +300,15 @@ input{
 
 <script>
 import img1 from "@/static/white.png"
+import editimg from "@/static/edit.png"
+import username from "@/static/username.png"
+import userphone from "@/static/userphone.png"
+import userremark from "@/static/userremark.png"
 export default {
   data(){
     return{
       isSex: true,
+      labels:["儿童椅","靠窗","有老人","尽量安静","无烟","过生日"],
       name:"",
       phone:"",
       remark:"",
@@ -243,7 +320,11 @@ export default {
       isIncompleteN:true,
       isIncompleteP:true,
       isEject:false,
-      url1:img1
+      url1:img1,
+      editimg:editimg,
+      username:username,
+      userphone:userphone,
+      userremark:userremark
     }
   },
   props:{
@@ -346,6 +427,22 @@ export default {
         let phone2 = this.phone.substring(0,11);
         this.phone = phone2;
       }
+    },
+    selectRemark(e){
+      let el = e.target;
+      if(el.className===""){
+        el.className="select";
+        this.remark+=el.innerHTML+",";
+      }else{
+        el.className="";
+        if(this.remark.indexOf(el.innerHTML)!=-1){
+          let text = el.innerHTML;
+          this.remark = this.remark.replace(text,"");
+        }
+      }
+    },
+    toReturn(){
+      MIP.viewer.open("./details.html");
     }
   },
   mounted(){
@@ -360,7 +457,7 @@ export default {
     }else if(this.orderDate == date.getDate() + 1){
       this.orderMonth = "明";
     }else{
-      this.orderMonth = date.getMonth() + 1 + "月";
+      this.orderMonth = sessionStorage.getItem("orderMonth")+"月";
     }
   }
 }

@@ -2,12 +2,12 @@
       <div class="mip-details">
         <div class="dateout">
             <ul class="date" ref="date">
-                <li @click="choiceDate" v-for="date in dates"><p>{{date.date}}</p><span>{{date.week}}</span></li>
+                <li @click="choiceDate" v-for="date in dates"><p>{{date.date}}</p><span>{{date.week}}</span><span style="display:none">{{date.month+1}}</span></li>
             </ul>
         </div>
         <div class="timeout">
             <ul class="time">
-                <li @click="choiceTime" class="timeselect">11:30</li>
+                <li @click="choiceTime" class="timeselect">11:00</li>
                 <li @click="choiceTime" v-for="time in times">{{time}}</li>
             </ul>
         </div>
@@ -19,8 +19,8 @@
             </div>
             <div class="hall" v-if="isKeman">
                 <mip-img
-                 width="94"
-                 height="94"
+                 width="112px"
+                 height="64px"
                  :src="url1"></mip-img>
                 <div class="details">
                     <p class="mes">领地被占光！</p>
@@ -29,18 +29,18 @@
             </div>
             <div class="hall" v-else-if="isKongzhuo">
                 <mip-img
-                 width="94"
-                 height="94"
+                 width="90px"
+                 height="72px"
                  :src="url2"></mip-img>
                 <div class="details">
                     <p class="surplus">大厅/<span>{{dtNum}}</span>包间/<span>{{bjNum}}</span></p>
-                    <p class="remark">缴获战场，快速准备</p>
+                    <p class="remark">有座哦</p>
                 </div>
             </div>
             <div class="hall" v-else>
                 <mip-img
-                 width="94"
-                 height="94"
+                 width="100px"
+                 height="80px"
                  :src="url3"></mip-img>
                 <div class="details">
                     <p class="choice">选择开战人数</p>
@@ -53,7 +53,7 @@
                  height="16"
                  :src="url4"></mip-img></a></div> -->
         <div class="supporter">【客必得】提供技术支持</div>
-        <mip-fixed class="pay" v-if="isKongzhuo" @click="toJump">有座，马上预定</mip-fixed>
+        <mip-fixed class="pay" :class='isKongzhuo?"payselect":""'><a :href='isKongzhuo?"./reserve.html":""' mip-link :data-title="hotelname">有座，马上预定</a></mip-fixed>
       </div>
 </template>
 <style scoped>
@@ -66,8 +66,25 @@ overflow-x: auto;
 .mip-details .dateout{
 width: 100%;
 height: 60px;
-border-bottom: 2px solid #F0F0F8;
+border-bottom: 1px solid #F0F0F8;
 background: #FFFFFF;
+position: relative;
+}
+.mip-details .dateout::before{
+content: "";
+position: absolute;
+background:  #E0E0EB;
+width: 200%;
+height: 1px;
+-webkit-transform-origin: 0 0;
+-moz-transform-origin: 0 0;
+-ms-transform-origin: 0 0;
+-o-transform-origin: 0 0;
+transform-origin: 0 0;
+-webkit-transform: scale(0.5, 0.5);
+-ms-transform: scale(0.5, 0.5);
+-o-transform: scale(0.5, 0.5);
+transform: scale(0.5, 0.5);
 }
 /* 隐藏滚动条 */
 .mip-details .dateout .date::-webkit-scrollbar{
@@ -92,13 +109,13 @@ height: 21px;
 }
 /* 日期选中 */
 .mip-details .date .dateselect{
-border-bottom: 2px solid #FD8F14;
+border-bottom: 1px solid #00C093;
 }
 .mip-details .date .dateselect p{
-color: #FD8F14;
+color: #00C093;
 }
 .mip-details .date .dateselect span{
-color: #FD8F14;
+color: #00C093;
 }
 .mip-details .date li p{
 color: #333333;
@@ -113,11 +130,13 @@ text-align: center;
 }
 .mip-details .timeout{
 width: 100%;
-height: 38px;
+height: 72px;
 background: #FFFFFF;
+border-bottom: 1px solid #F0F0F8;
 }
 .mip-details .time{
 height: 38px;
+padding-top: 17px;
 white-space: nowrap;
 overflow-x: auto;
 overflow-y: hidden;
@@ -138,17 +157,16 @@ margin-top: 7px;
 border-radius: 2px;
 }
 .mip-details .time .timeselect{
-background: #FD8F14;
+background: #00C093;
 color: #FFFFFF;
 }
 .mip-details .rooms{
 background: #FFFFFF;
-margin-top: 10px;
 }
 .mip-details .rooms .peopleout{
 width: 100%;
 height: 60px;
-border-bottom: 2px solid #F0F0F8;
+border-bottom: 10px solid #F0F0F8;
 }
 .mip-details .rooms .peopleout .people::-webkit-scrollbar{
 width: 0;
@@ -237,19 +255,29 @@ padding-left: 10px;
 color: #999999;
 font-size: 13px;
 margin-top: 10px;
+text-align: center;
 }
 .pay{
 height: 48px;
-width: 100%;
-left: 0;
-bottom: 0;
+width: 90%;
+left: 5%;
+bottom: 10px;
 line-height: 48px;
-text-align: center;
-border-top: 1px solid #BEBEBE;
-background: #FFFFFF;
+background: #F0F0F8;
 font-size: 16px;
-color: #00C093;
+border-radius: 4px;
 display: block !important;
+}
+.payselect{
+background: #00C093;
+}
+.pay a{
+display: block;
+width: 100%;
+height: 48px;
+text-align: center;
+color: #FFFFFF;
+background: none;
 }
 </style>
 
@@ -262,7 +290,7 @@ export default{
     data(){
         return{
             dates:[],
-            times:["12:00","12:30","13:00","13:30","14:00","14:30"],
+            times:["11:30","12:00","12:30","13:00","13:30","14:00","14:30","16:30","17:00","17:30","18:00","18:30","19:00","19:30","20:00","20:30","21:00","21:30","22:00"],
             peoples:["2","3","4","5","6","7","8","9","10"],
             isKeman:false,
             isKongzhuo:false,
@@ -271,7 +299,8 @@ export default{
             url3:img3,
             url4:img4,
             dtNum:0,
-            bjNum:0
+            bjNum:0,
+            hotelname:""
         }
     },
     methods:{
@@ -291,8 +320,10 @@ export default{
                 orderDate = this.dates[0].date;
             }
             let orderWeek = el.children[1].innerHTML;
+            let orderMonth = el.children[2].innerHTML;
             sessionStorage.setItem('orderDate',orderDate);
             sessionStorage.setItem('orderWeek',orderWeek);
+            sessionStorage.setItem('orderMonth',orderMonth);
         },
         // 选择时间
         choiceTime(e){
@@ -334,11 +365,16 @@ export default{
                 return response.json();
             }).then(function(myJson){
                 let hotelMes = myJson.Data;
-                if(hotelMes[0].num != 0||hotelMes[1].num != 0){
-                    that.isKeman = false;
-                    that.isKongzhuo = true;
-                    that.dtNum = hotelMes[0].num;
-                    that.bjNum = hotelMes[1].num;
+                if(hotelMes.length != 0){
+                    if(hotelMes[0].num != 0||hotelMes[1].num != 0){
+                        that.isKeman = false;
+                        that.isKongzhuo = true;
+                        that.dtNum = hotelMes[0].num;
+                        that.bjNum = hotelMes[1].num;
+                    }else{
+                        that.isKeman = true;
+                        that.isKongzhuo = false;
+                    }
                 }else{
                     that.isKeman = true;
                     that.isKongzhuo = false;
@@ -346,10 +382,6 @@ export default{
             }).catch(function(err){
                 console.log(err);
             });
-        },
-        // 页面跳转
-        toJump(){
-            MIP.viewer.open("./reserve.html");
         }
     },
     created(){
@@ -357,9 +389,17 @@ export default{
         let date = new Date();
         let month = date.getMonth();
         let today = date.getDate();
-        for(let i = 0;;i ++){
+        let newDate = today;
+        for(let i = 0;i<30;i ++){
             let dateObj = {};
-            date.setDate(today);
+            date.setDate(newDate);
+            let newMonth = date.getMonth();
+            if(month != newMonth){
+                month = newMonth;
+                newDate = 1;
+            }
+            dateObj.date = newDate;
+            dateObj.month = month;
             let week = date.getDay();
             switch(week){
                 case 1 : dateObj.week="周一";break;
@@ -370,13 +410,8 @@ export default{
                 case 6 : dateObj.week="周六";break;
                 default:dateObj.week="周日";break
             }
-            dateObj.date = today;
             this.dates.push(dateObj);
-            let newMonth = date.getMonth();
-            today ++;
-            if(newMonth !== month){
-                break;
-            }
+            newDate ++;
         }
         this.dates.pop();
     },
@@ -387,9 +422,11 @@ export default{
         this.$refs.date.children[1].children[0].innerHTML = "明";
         sessionStorage.setItem('orderDate',this.dates[0].date);
         sessionStorage.setItem('orderWeek',this.dates[0].week);
+        sessionStorage.setItem('orderMonth',this.dates[0].month);
         sessionStorage.setItem('orderTime','11:30');
-        // let url = window.location.href;
-        let nowUrl = "http://mip.kebide.com/details.html?code=561b93000767539cb73b2fa8e677d7c9&state=STATE";
+        this.hotelname = sessionStorage.getItem("hotelName");
+        let nowUrl = window.location.href;
+        // let nowUrl = "http://mip.shengyan.com.cn/details.html?code=561b93000767539cb73b2fa8e677d7c9&state=STATE";
         let codeStr = nowUrl.split("?")[1].split("=")[1];
         let url = "http://booking.shengyan.com.cn/api/User/GetPageAccessToken?mipCode="+codeStr;
         fetch(url,{
