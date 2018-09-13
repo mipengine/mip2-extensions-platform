@@ -209,7 +209,6 @@ export default {
           return
         }
       }
-
       // 保存
       $Loading.open()
       let setting = {
