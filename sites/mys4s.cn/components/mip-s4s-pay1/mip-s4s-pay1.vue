@@ -1120,4 +1120,3 @@ textarea:-ms-input-placeholder {
   width: calc(100% - 0.3rem);
 }
 </style>
-
