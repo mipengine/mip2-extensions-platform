@@ -2,20 +2,28 @@
   <div>
     <mip-fixed
       type="bottom">
-      <button
-        v-if="userInfo && userInfo.isBuy"
-        class="pay-btn"
-        on="tap:user.login"
-        @click="signUp">
-        去学习
-      </button>
-      <button
-        v-else
-        class="pay-btn"
-        on="tap:user.login"
-        @click="signUp">
-        立即报名
-      </button>
+      <div class="bottom-btn-content">
+        <span
+          class="consult"
+          on="tap:consult.consult">
+          <span class="consult-img" />
+          <span class="consult-text">在线咨询</span>
+        </span>
+        <button
+          v-if="userInfo && userInfo.isBuy"
+          class="pay-btn"
+          on="tap:user.login"
+          @click="signUp">
+          去学习
+        </button>
+        <button
+          v-else
+          class="pay-btn"
+          on="tap:user.login"
+          @click="signUp">
+          立即报名
+        </button>
+      </div>
     </mip-fixed>
     <div
       v-show="showErrorMessage"
@@ -159,15 +167,15 @@ export default {
   font-size: 1rem;
 }
 .pay-btn {
-    flex-grow: 1;
-    display: inline-block;
-    line-height: 5rem;
-    height: 5rem;
-    color: #fff;
-    text-align: center;
-    background: linear-gradient(to right, #FF8F53, #FF5E59);  
-    font-size: 1.6rem;
-    border: none;
-    border-radius: .2rem;
+  flex-grow: 1;
+  display: inline-block;
+  line-height: 5rem;
+  height: 5rem;
+  color: #fff;
+  text-align: center;
+  background: linear-gradient(to right#FF8F53,#FF5E59);
+  font-size: 1.6rem;
+  border: none;
+  border-radius: .2rem;
 }
 </style>
