@@ -71,7 +71,7 @@ export default {
             success:()=>{
             },
             fail:(res)=>{
-              //location.href = "https://ada.baidu.com/imlp/xzh?xzhId=1536919189936218"
+              location.href = "https://ada.baidu.com/imlp/xzh?xzhId=1536919189936218"
             },
             context: context
           })
@@ -104,8 +104,7 @@ export default {
                     onlyWiseIM: true
                   },
                   fail:(res)=>{
-                    _this.errorMessage = 'IM唤起失败'
-                    _this.showErrorMessage = true
+                    location.href = "https://ada.baidu.com/imlp/xzh?xzhId=1536919189936218"
                   },
                   context: context
                 })
