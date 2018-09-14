@@ -5,16 +5,16 @@
 </template>
 
 <script>
-/* import xzh from 'xzh-sdk'
+import xzh from 'xzh-sdk'
 
-let context = null */
+let context = null
 export default {
   created () {
     this.init()
   },
   methods: {
     init () {
-      /* if (!context) {
+      if (!context) {
         let url = window.location.href
         context = Promise.resolve()
           .then(() => {
@@ -43,10 +43,10 @@ export default {
             console.log(err)
           })
       }
-      return context */
+      return context
     },
     callIM () {
-      /* const that = this
+      const that = this
       try {
         let { result: context } = await that.init()
         // console.log(xzh);
@@ -58,7 +58,7 @@ export default {
         })
       } catch (err) {
         console.log(err)
-      } */
+      }
     }
   }
 }
