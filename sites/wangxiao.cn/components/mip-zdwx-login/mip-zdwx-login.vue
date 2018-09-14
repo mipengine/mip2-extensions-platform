@@ -2,28 +2,20 @@
   <div>
     <mip-fixed
       type="bottom">
-      <div class="bottom-btn-content">
-        <span
-          class="consult"
-          on="tap:consult.consult">
-          <span class="consult-img" />
-          <span class="consult-text">在线咨询</span>
-        </span>
-        <button
-          v-if="userInfo && userInfo.isBuy"
-          class="pay-btn"
-          on="tap:user.login"
-          @click="signUp">
-          去学习
-        </button>
-        <button
-          v-else
-          class="pay-btn"
-          on="tap:user.login"
-          @click="signUp">
-          立即报名
-        </button>
-      </div>
+      <button
+        v-if="userInfo && userInfo.isBuy"
+        class="pay-btn"
+        on="tap:user.login"
+        @click="signUp">
+        去学习
+      </button>
+      <button
+        v-else
+        class="pay-btn"
+        on="tap:user.login"
+        @click="signUp">
+        立即报名
+      </button>
     </mip-fixed>
     <div
       v-show="showErrorMessage"
