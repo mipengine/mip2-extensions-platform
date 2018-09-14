@@ -1,7 +1,7 @@
 <template>
   <div>
     <mip-img
-      src="http://m.chinaacc.com/static/images/download-banner.png"
+      src="http://m.chinaacc.com/mip/static/images/download-banner.png"
       layout="responsive"
       width="750"
       height="270"

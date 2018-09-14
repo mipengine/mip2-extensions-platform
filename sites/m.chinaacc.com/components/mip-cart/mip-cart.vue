@@ -243,7 +243,7 @@
       class="protocols">
       <i
         class="closeXY"
-        @click="protocol=false"><img src="http://m.chinaacc.com/static/images/protocols-close.png"></i>
+        @click="protocol=false"><img src="http://m.chinaacc.com/mip/static/images/protocols-close.png"></i>
       <h1>温馨提示</h1>
       <div class="xyContainer">
         <div
