@@ -10,6 +10,7 @@ function getClass (dom, string) {
 // 构造器
 function MobileSelect (config) {
   this.mobileSelect = ''
+  this.type = config.type
   this.wheelsData = config.wheels
   this.jsonType = false
   this.cascadeJsonData = []
@@ -353,8 +354,13 @@ MobileSelect.prototype = {
     // console.log(_this.displayJson)
     _this.reRenderWheels()
     _this.fixRowStyle()
-    if (index === 1 && ('childs' in resultNode) && (resultNode.childs.length <= posIndexArr[index + 1] + 1)) {
+    // 是否重置位置
+    if (_this.type === 'place') {
       _this.setCurDistance(_this.resetPosition(index, posIndexArr, resultNode))
+    } else {
+      if (index === 1 && ('childs' in resultNode) && (resultNode.childs.length <= posIndexArr[index + 1] + 1)) {
+        _this.setCurDistance(_this.resetPosition(index, posIndexArr, resultNode))
+      }
     }
   },
 
@@ -382,7 +388,11 @@ MobileSelect.prototype = {
       }
     } else {
       for (let i = index + 1; i < tempPosArr.length; i++) {
-        tempPosArr[i] = resultNode.childs.length - 1
+        if (_this.type === 'place') {
+          tempPosArr[i] = 0
+        } else {
+          tempPosArr[i] = resultNode.childs.length - 1
+        }
       }
     }
     return tempPosArr

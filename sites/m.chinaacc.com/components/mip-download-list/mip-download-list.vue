@@ -21,7 +21,7 @@
             v-for="(download, indexId) in downloadList"
             :key="indexId">
             <a
-              :href="'//m.chinaacc.com/mip/download/downList.shtml?courseEduId='+ download.courseEduId"
+              :href="'http://m.chinaacc.com/mip/download/downList.shtml?courseEduId='+ download.courseEduId"
               data-type="mip">
               <strong>{{ indexId+1 }}、{{ download.courseEduName }}</strong>
               <div class="dow-tag">
