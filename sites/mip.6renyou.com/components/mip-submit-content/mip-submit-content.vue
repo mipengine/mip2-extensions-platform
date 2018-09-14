@@ -37,9 +37,10 @@
     </div>
     <div class="actions">
       <button
+        :disabled="enabled"
         class="btn-normal"
         type="submit"
-        @click="submitTap">提交需求</button>
+        @click="submitTap">{{ tip }}</button>
     </div>
   </div>
 
@@ -80,70 +81,113 @@ export default {
       destination: '美国',
       day: 0,
       name: '',
-      phone: ''
+      phone: '',
+      enabled: false,
+      tip: '提交需求'
     }
   },
   watch: {
     info (val) {
-      this.name = val.userInfo.userinfo.nickname
     }
   },
   mounted () {
     this.destination = this.des
     this.day = this.days
     this.phone = this.getPhone()
+    this.name = this.getName()
+    this.$on('login', (ev) => {
+      this.submitOrder()
+    })
   },
   methods: {
+    submitOrder () {
+      if (this.name === null || this.name.trim() === '') return
+      if (this.phone === null || this.phone.trim() === '') return
+
+      this.enabled = true
+      this.tip = '正在提交数据，请稍后...'
+
+      let params = {}
+      params['dest'] = this.destination
+      params['realname'] = this.name
+      params['mobile'] = this.phone
+      params['days'] = this.day
+      params['fid'] = 'baidu_mip'
+      params['trip_id'] = this.tripid
+
+      let headers = {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+      let _data = []
+      for (let k in params) {
+        _data.push(k + '=' + params[k])
+      }
+      fetch('https://m.6renyou.com/we_service/save_order', {
+        method: 'POST',
+        body: _data.join('&'),
+        headers: headers
+      }).then(res => res.json()).then(res => {
+        this.savePhone()
+        if (parseInt(res.status) === 1) {
+          this.baiduCB(this.name, this.phone, this.info)
+          MIP.viewer.open(this.host + '/order/result')
+        } else {
+          if (res.message === '您的需求已经提交') {
+            toast.show('您上一个订单派送中，请稍后再提交', options)
+            this.enabled = false
+            this.tip = '提交需求'
+            return
+          }
+          toast.show(res.message, options)
+          this.enabled = false
+          this.tip = '提交需求'
+        }
+      }).catch(err => {
+        toast.show('下单失败' + err.message, options)
+        this.enabled = false
+        this.tip = '提交需求'
+      })
+    },
     submitTap: function () {
       let re = /^1\d{10}$/
-      if (this.name !== '' && this.phone !== '') {
-        if (re.test(this.phone)) {
-          let params = {}
-          params['dest'] = this.destination
-          params['realname'] = this.name
-          params['mobile'] = this.phone
-          params['days'] = this.day
-          params['fid'] = 'baidu_mip'
-          params['trip_id'] = this.tripid
-          let headers = {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          }
-          let _data = []
-          for (let k in params) {
-            _data.push(k + '=' + params[k])
-          }
-          fetch('https://m.6renyou.com/we_service/save_order', {
-            method: 'POST',
-            body: _data.join('&'),
-            headers: headers
-          }).then(res => res.json()).then(res => {
-            console.log('下单返回信息', res)
-            this.savePhone()
-            if (parseInt(res.status) === 1) {
-              this.baiduCB(this.name, this.phone, this.info)
-              MIP.viewer.open(this.host + '/order/result')
-            } else {
-              toast.show(res.message, options)
-            }
-          }).catch(err => {
-            toast.show('下单失败' + err.message, options)
-          })
+
+      if (this.name === null || this.name.trim() === '') {
+        toast.show('请输入姓名', options)
+        return
+      }
+
+      if (this.phone === null || this.phone.trim() === '') {
+        toast.show('请输入电话', options)
+        return
+      }
+
+      if (re.test(this.phone)) {
+        if (this.info && this.info.userInfo && this.info.userInfo.userinfo) {
         } else {
-          toast.show('电话号码输入有误', options)
+          this.$emit('bridge')
+          return
         }
+        this.savePhone()
+        this.submitOrder()
       } else {
-        toast.show('请输入姓名和电话', options)
+        toast.show('电话号码输入有误', options)
       }
     },
     savePhone () {
       let CustomStorage = MIP.util.customStorage
       let storage = new CustomStorage(0)
       storage.set('phone', this.phone)
+      storage.set('name', this.name)
     },
     getPhone () {
       let CustomStorage = MIP.util.customStorage
       let storage = new CustomStorage(0)
       return storage.get('phone')
+    },
+    getName () {
+      let CustomStorage = MIP.util.customStorage
+      let storage = new CustomStorage(0)
+      return storage.get('name')
     },
     baiduCB (name, phone, info) {
       if (!info || !info.userInfo || !info.userInfo.userinfo) return

@@ -1,29 +1,16 @@
 <template>
   <div class="wrapper">
-    <div class="head">
+
+    <div class="banner-content">
       <div
         on="tap:sidebar.open"
-        class="head-logo actives">
-        <span class="img user_img"/>
+        class="head actives">
+        <mip-img
+          class="user"
+          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEgAAABICAMAAABiM0N1AAABPlBMVEUAAAAAAAABAQEBAQEAAAAAAAAAAAAAAAAAAAAFBQX///8AAAAAAAACAgIDAwP9/f38/Pz+/v78/PzPz8/////8/Pzi4uLd3d339/f29vb4+Pj39/f5+fn09PTy8vLp6enZ2dnx8fHs7Ozy8vLZ2dmtra18fHxVVVVYWFjKysqOjo65ublRUVH9/f309PT9/f37+/v8/Pzv7+/7+/vq6ur6+vrm5ubx8fG9vb3z8/OdnZ2wsLDd3d3n5+fOzs7o6OhCQkJ6enqVlZXOzs7///+Dg4O+vr79/f329vbBwcH5+fns7Oza2trT09OkpKSYmJiEhITm5ubg4ODPz8/KysrFxcWtra2VlZWMjIyIiIiFhYXz8/Pj4+O5ubm1tbWoqKiampqPj4/u7u7p6emenp6SkpKOjo7U1NTHx8eurq7baybBAAAARHRSTlMAAgUJDRMQGhcj+iceHSHv7eviee7VoJOShNvZ0c2ui4h5aWdiVz03KiYaFAnX1M3Hxr20tKidlXBXU0pEQT84MiwkGkdtYfEAAAOzSURBVFjDvdjnWuJAFAZg1xSSQABBQey9997riStWkKbY25b7v4FlZiDA5Awk/NjvLz7vc76TSQy0NcgPRwR/6AJpr0krWBk53U6sL0Y6DaMzsrie2D4lmBeKKYfdXcClq/uQWe6Z2eF5QDM/PItTOJPoBGE6E24oWmq0AxqmY5QWbOZML0PTLE9zElJrnx8HH2q/QT3CSKMGuIoxKhFK5Mx1g+t0z1EJd1bBQ1aphPbC5xHPhLUjzgh4zAiRHANJe4ZXyNiTyEj8+cGv+9PZ683f3KXgFNDzxBVbQpk3iyX/iEpLpJyLBWWKViXv6WZrYtAMVuwqZVVz/4GWm2GQPVACnDm/t2pzA1gSZCQbkmaw50bSqs8d+lSZkRjEBhoGJAUOegEsw2wkBsld4MyjxeUWhbpkCrGBDgBJmofuAc0BHYkNtAlIPl1Cm3IFktBmcM5DbyDoJjGoXToBNLcc9Ax4TkrdWLMxQJPjoLQAGiPdKDQIaC7e65xXEGSwDEnyAOC5K9Y43+ciaIAsiaxI7QNBrh5sp3AJovSpUjuDIiDK5Q1jis/nIEykAikhEOfyz0v+OUMYYUIKg2TFAHF+sjSCDEVuDF1c5wuVJaXev5KfTaEQOkr2l8Ul/4FXs6EINs6N5czDFbpsG+pDnFsLS+oau/w2hBzIVwvPQxo5kGVIUpy3SAZn8KfboFI5kGOORX9bwjjLjdkn+9hxa1jifDmgYwLRm1br5T56aQCl+FPeq8lS+TGibXCfveEG/l9pQ7OfR8ou9xk5iq6XtKtQiC7J1wN1KTaCslCXHh9dURtb0hD6tMbDne4htqI21m0qxD2GUiKmkOFutCnSjEK0W5y/RZ5+Z3PJ5Fk1yWQue33neE2Kl5oRyB4pDC0lXBnIHinaGhStDsTWrZj9rTj9psJWXTPSRLiFYhPVgewtmePeX4/HTXtD9kiyFoh6XlBAk52vtaoWjHlzYkGNFuNe2GXVF1zx4qwEfarczr/60yvn02Me5tF9iixxDi1HpajbL35R4tBiPMSk4HjY1XUfDzKHQrg00e/iHE5wjlNStYAeDTcZJ6oHNJVzEMnUJ+MhMROKT+om5zglVi+gHw314EzP0JEeYLU4BxuKUP6dWC+v9MZ2/IRxjINLjDKDun9yK762EAkZRiiysBbfmvTrQZMxTgevRyiNWLrfjk4UjTBILZxiUxGrhJkBGrOEEIVMgzNiSpJLmKqUo6pySREwYopaBKMcJQhClR//9ce61n8+/Ac8P2VI1isKDQAAAABJRU5ErkJggg=="/>
       </div>
-      <ul class="head-ul">
-        <li>普通搬家<span/></li>
-        <li
-          class="actives"
-          @touchend="rishiMove">
-          <span>
-            日式搬家
-            <img
-              src="https://www.lanxiniu.com/Public/baidumip/upline.png"
-              class="upline">
-          </span>
-
-        </li>
-      </ul>
+      <mip-img src="https://www.lanxiniu.com/Public/baidumip/newbanners.png"/>
     </div>
-    <!-- <div class="banner-content">
-      <mip-img src="https://www.lanxiniu.com/Public/baidumip/banners.png"/>
-    </div> -->
     <div class="tab">
       <div class="tab-div">
         <ul class="lxn-tab-title">
@@ -90,7 +77,7 @@
 
                       class="actives inputfix">
                       <input
-                        v-model="globaldata.moveOutAddress.localtion.title"
+                        v-model="globaldata.moveOutAddress.localtion.name"
                         :readonly="isRead"
                         type="text"
                         placeholder="您要从哪里搬出"
@@ -121,7 +108,7 @@
                       class=" actives inputfix"
                       data-type="mip">
                       <input
-                        v-model="globaldata.moveInAddress.localtion.title"
+                        v-model="globaldata.moveInAddress.localtion.name"
                         :readonly="isRead"
                         type="text"
                         placeholder="想要搬到哪里去"
@@ -162,7 +149,7 @@
                   </div>
                 </div>
               </div>
-              <div class="address-div ">
+              <div class="address-div">
                 <span class="img beizhu"/>
                 <input
                   v-model="floorAndTime.remark"
@@ -188,19 +175,32 @@
             资费说明</span></a>
 
       </div>
-      <!-- <p
-        on="tap:user.login"
-        class="sure-order btn"
-        @touchend="sureOrder">
-        确认下单
-      </p> -->
+
       <p
         id="sureorer"
         data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22order%22%2C%22click%22%5D%7D"
         class="sure-order btn"
         @touchend="sureOrder">
-        确认下单
+        下一步
       </p>
+      <a
+        href="tel:4006785966"
+        class="a-kefu">
+        <div class="kefu">
+          <div>
+            <mip-img
+              class="safe-img"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAaCAMAAACEqFxyAAAAXVBMVEUAAABxx2Byx2F60G5yx19xx2Bxx2BzyGFxx19xx190y2N6zGJxx2Byx19xx19yx2ByyGBxxl9xx19xx19xx19yx19xx2ByyGByyGBzyGF0yGJxx19xx2B1x2Fxxl9lF8odAAAAHnRSTlMA+V4J9bLIPuTNGRDq27mpVvPfvqObkG1kQCmphTJ7g0ZaAAAAo0lEQVQoz6XRyRKEIAxF0ScRFXGetbvz/5/ZA5SAsuu7Sp3KKsHZa1AHrpUzMydLGWA+JWxqBP1kX5+yYq9EtbNAz5F6cKzkL04XFeF0x3HnNAc2n9vBqmCPJ+jsVMe1hh6NWjbHyAhwyilqM4zkKdeQdpLlymcSHUcSoOKuFSG2LvCpvarEN8pCzci+VwWqYSPp9EFwicpg0SGItqYoGkEwvQFFDy2GLQ/oOAAAAABJRU5ErkJggg==" />
+          </div>
+          <div>客服全程监管,客服热线 </div>
+          <div>
+            <span>
+              4006785966
+            </span>
+          </div>
+        </div>
+      </a>
+
     </div>
 
     <div
@@ -449,6 +449,10 @@ export default {
   },
   watch: {
     globaldata (val, oldval) {
+      console.log('查看之前的城市:' + oldval.ordercity + '=============现在的城市:' + val.ordercity)
+      if (val.ordercity !== oldval.ordercity) {
+        this.getCurrentCityCarTypes(val.ordercity)
+      }
       this.calPrice()
     }
   },
@@ -486,11 +490,6 @@ export default {
 
     // 设置波纹效果
     this.clickRipple()
-
-    // setTimeout(() => {
-    //   console.log('测试=====click_token=======')
-    //   console.log(this.mipClickToken)
-    // }, 2000)
   },
 
   methods: {
@@ -574,7 +573,7 @@ export default {
     getCurrentCityCarTypes  (city) {
       let focusCity = city
       let urls = base.url + '/Setting/getCityData?city=' + focusCity
-      fetch(urls, {
+      window.fetchJsonp(urls, {
         method: 'get'
       })
         .then(response => response.json())
@@ -614,14 +613,12 @@ export default {
               this.floorAndTime.move.data = item.stairsFee
             }
           })
-
           this.RestoreData()
         })
     },
     // 计算订单价格
     calPrice () {
       let globaldata = this.globaldata
-
       let focusCity = globaldata.ordercity
       let carType = globaldata.carType
       let kilometer = globaldata.kilometer
@@ -645,7 +642,7 @@ export default {
       }
       let urls = base.url + '//Order/calPrice?' + base.setUrlParam(data)
 
-      fetch(urls, {
+      window.fetchJsonp(urls, {
         method: 'get'
       })
         .then(response => response.json())
@@ -686,11 +683,11 @@ export default {
       let warn = this.warn
       let globaldata = this.globaldata
       // 搬出 地址
-      let moveoutAddress = globaldata.moveOutAddress.localtion.title
+      let moveoutAddress = globaldata.moveOutAddress.localtion.name
       // 搬出楼层
       let moveout = globaldata.moveOutNum
       // 搬入地址
-      let moveinAddress = globaldata.moveInAddress.localtion.title
+      let moveinAddress = globaldata.moveInAddress.localtion.name
       // 搬入楼层
       let moveIn = globaldata.moveInNum
       // 搬家时间
@@ -729,6 +726,7 @@ export default {
     // 提交订单
     upOrder (sessionid) {
       console.log('查看ID:' + sessionid)
+      let promas = base.getRequest()
       let globaldata = this.globaldata
 
       let moveout = globaldata.moveOutAddress
@@ -739,31 +737,49 @@ export default {
       let carType = globaldata.carType
       let startSairsNum = globaldata.moveOutNum
       let endStairsNum = globaldata.moveInNum
-      let remark = this.floorAndTime.remark
+      //   let remark = this.floorAndTime.remark
+      let fr = ''
+      if (promas.hasOwnProperty('fr')) {
+        fr = promas.fr
+      }
+
+      let moveOutRemark = ''
+      let moveInRemark = ''
+      if (moveout.address !== '') {
+        moveOutRemark = '(' + moveout.address + ')'
+      }
+      if (movein.address !== '') {
+        moveInRemark = '(' + movein.address + ')'
+      }
 
       let poiList = [
         {
           deliver: '',
-          deliverAddress: moveout.localtion.title,
+          deliverAddress: moveout.localtion.name,
           deliverCity: moveout.localtion.city,
-          deliverLat: moveout.localtion.lat,
-          deliverLng: moveout.localtion.lng,
+          deliverLat: moveout.localtion.location
+            .lat,
+          deliverLng: moveout.localtion.location
+            .lng,
           deliverPhone: moveout.phone,
-          deliverRemark: moveout.localtion.address,
+          deliverRemark: moveout.localtion.address + moveOutRemark,
           deliverType: 1
         },
         {
           deliver: '',
-          deliverAddress: movein.localtion.title,
+          deliverAddress: movein.localtion.name,
           deliverCity: movein.localtion.city,
-          deliverLat: movein.localtion.lat,
-          deliverLng: movein.localtion.lng,
+          deliverLat: movein.localtion.location
+            .lat,
+          deliverLng: movein.localtion.location
+            .lng,
           deliverPhone: movein.phone,
-          deliverRemark: movein.localtion.address,
+          deliverRemark: movein.localtion.address + moveInRemark,
           deliverType: 2
         }
       ]
       let data = {
+        fr: fr, // 来自哪里
         Kilometer: kilometer, // 公里数
         TransTime: orderTime, // 服务时间
         orderCity: orderCity, // 下单城市
@@ -771,7 +787,7 @@ export default {
         start_stairs_num: startSairsNum, // 搬出楼层
         end_stairs_num: endStairsNum, // 搬入楼层
         OrderNum: '', // 订单号,（空为新建订单）
-        Remark: remark, // 订单备注信息
+        Remark: '', // 订单备注信息
         SafePrice: '', // 保价金额
         couponsId: '', // 订单所用的优惠券id
         detailType: '', // 详细的子车型
@@ -802,7 +818,7 @@ export default {
       }
       let urls = base.url + '//Order/update?' + base.setUrlParam(updata)
       //   this.fetchShow = true
-      fetch(urls, {
+      window.fetchJsonp(urls, {
         method: 'get'
       })
         .then(response => response.json())
@@ -851,6 +867,8 @@ export default {
     },
     // 切换车型数据
     changeTabData (index, isRestoreData) {
+      console.log('查看当前数据:' + index)
+      console.log('查看当前数据:' + isRestoreData)
       let move = this.floorAndTime.move
       let data = this.carTypes[index]
       //   更新当前楼层价格数据
@@ -994,6 +1012,17 @@ export default {
     },
 
     RestoreData () {
+      let promas = base.getRequest()
+      if (promas.hasOwnProperty('cardnum')) {
+        //   有从卡片进入的标志
+        this.homePageInto()
+      } else {
+        //  无从卡片进入的标志
+        this.reduction()
+      }
+    },
+    // 还原数据-----级别与homePageInto相同
+    reduction () {
       let floorAndTime = this.floorAndTime
       let data = base.getSession()
       console.log(data)
@@ -1016,7 +1045,16 @@ export default {
             carTypeItem.index = 2
             break
         }
-
+        if (this.hide && carTypeItem.index === 2) {
+          carTypeItem.index = 0
+          let obj = {
+            carType: 3
+          }
+          console.log(JSON.stringify(obj, null, 2))
+          let datas = base.mipExtendData(this.globaldata, obj)
+          base.mipSetGlobalData(obj)
+          base.setSession(datas)
+        }
         this.changeTab(carTypeItem, true)
 
         let str1 = ',楼层费'
@@ -1047,6 +1085,40 @@ export default {
           this.calPrice()
         }, 300)
       }
+    },
+
+    // 从卡片进入页面根据url参数进行车型选择
+    homePageInto () {
+      console.log('========从卡片进入页面根据url参数进行车型选择==============')
+      let promas = base.getRequest()
+      //   if (promas.hasOwnProperty('cardnum')) {
+      let index = promas.cardnum
+      //   let carTypeItem = {
+      //     index: index
+      //   }
+
+      //   sessionStorage.setItem('bdcardfrom', index)
+
+      //   this.changeTab(carTypeItem, true)
+      let data = ''
+      if (this.carTypes.length < 3) {
+        data = this.carTypes[0]
+      } else {
+        data = this.carTypes[index]
+      }
+      let obj = {
+        carType: data.type
+      }
+      console.log(JSON.stringify(obj, null, 2))
+      let datas = base.mipExtendData(this.globaldata, obj)
+      base.mipSetGlobalData(obj)
+      base.setSession(datas)
+
+      this.reduction()
+      // setTimeout(() => {
+      //   this.calPrice()
+      // }, 200)
+    //   }
     },
 
     // 点击波纹效果
@@ -1210,83 +1282,19 @@ export default {
 .banner-content {
   max-height: 1.6rem;
   overflow: hidden;
+  position: relative;
 }
 
 .head {
-  height: 0.9rem;
-  display: flex;
-  align-items: center;
-}
-.head-logo {
-  width: 0.92rem;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.head-logo::after {
-  content: "";
-  display: inline-block;
-  position: absolute;
-  border-radius: 5px;
-  width: 0.02rem;
-  height: 0.42rem;
-  right: 0;
-  background: #ecebeb;
-  top: 50%;
-    transform: translateY(-50%);
-}
-.head-ul {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-}
+    position: absolute;
+    left: .32rem;
+    top:.18rem;
+    z-index: 20;
+    .user{
+        width:.72rem;
+        height: .72rem;
 
-.head-ul li {
-  flex: 1;
-  display: flex;
-  align-items: center;
-
-  height: 100%;
-  list-style: none;
-  font-size: 0.3rem;
-  color: #666666;
-  letter-spacing: 0.0008rem;
-  text-align: center;
-  position: relative;
-}
-.head-ul li::after {
-  content: "";
-  display: inline-block;
-  position: absolute;
-}
-
-.head-ul li:nth-child(1) {
-  justify-content: center;
-  color: #333333;
-}
-
-.head-ul li:nth-child(1)::after {
-  width: 1.2rem;
-  height: 0.06rem;
-  background: #39a1e8;
-  bottom: .01rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.head-ul li:last-child {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  padding: 0 !important;
-}
-.head-ul li img.upline {
-  position: relative;
-  top: -0.09rem;
-  width: 1rem;
-  height: 0.26rem;
+    }
 }
 
 .tab {
@@ -1298,8 +1306,7 @@ export default {
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
   border-radius: 4px;
   padding: 0 0.3975rem;
-  /* padding-top: 0.28rem; */
-  padding-bottom: 0.4rem;
+//   padding-bottom: 0.4rem;
 }
 .lxn-tab-title {
   display: flex;
@@ -1399,9 +1406,6 @@ export default {
   transform: translateY(-50%);
   border-radius: 1.44rem;
 }
-.des-div p:last-child {
-  /* margin-top: 0.05rem; */
-}
 
 .swiper-container {
   margin: 0 auto;
@@ -1413,12 +1417,11 @@ export default {
 /*主体数据*/
 .main-conten {
   margin-top: 0.24rem;
-  height: 2.75rem;
+  height: 2.45rem;
 }
 .address {
   width: 100%;
   height: unset!important;
-  /* background: blue; */
 }
 .point {
   width: 0.16rem;
@@ -1444,7 +1447,6 @@ export default {
 .address-div input {
   font-size: 0.28rem;
   color: #666666 !important;
-//   background: red;
   line-height: .745rem;
 }
 .gomap{
@@ -1469,7 +1471,6 @@ export default {
 .address-div div.left {
   position: relative;
   flex: 3;
-//   height: .75rem;
 }
 .address-div div.left::after {
   content: "";
@@ -1488,7 +1489,6 @@ export default {
 }
 .address-div div.right {
   flex: 2;
-//   height: .75rem;
 }
 .address-div div.right input {
   text-align: right;
@@ -1498,7 +1498,6 @@ export default {
 }
 .move-second {
   border-top: 0.02rem solid rgba(68, 68, 68, 0.1);
-  border-bottom: 0.02rem solid rgba(68, 68, 68, 0.1);
 }
 .move-second .address-div-time {
   border: none;
@@ -1516,7 +1515,7 @@ export default {
 }
 .address-div:last-child{
     height: .75rem;
-    // background: red
+    display:none;
 }
 .movetime,
 .beizhu {
@@ -1527,7 +1526,7 @@ export default {
 }
 /*价格*/
 .price {
-  margin-top: 0.57rem;
+  margin-top: 0.4rem;
 }
 .price-num {
   font-size: 0.56rem;
@@ -1557,6 +1556,7 @@ export default {
 }
 .sure-order {
   margin: 0.28rem 0;
+  margin-bottom: .1rem;
   height: 0.76rem;
   line-height: 0.76rem;
   font-size: 0.34rem;
@@ -1564,6 +1564,33 @@ export default {
   background: #36a0e9;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
   border-radius: 2px;
+}
+.a-kefu{
+    display: block;
+    height: .8rem;
+    // background: red;
+}
+.kefu{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: .28rem;
+  color: #333333;
+  letter-spacing: 0.05px;
+  .safe-img{
+      width: .22rem;
+      height: .26rem;
+      margin-right:.1rem;
+  }
+  >div:last-child {
+    padding-left: .1rem;
+    padding-top: .04rem;
+  }
+  span{
+      color: #36A0E9;
+      text-decoration:underline;
+      font-weight: 600;
+  }
 }
 
 /*swiper*/

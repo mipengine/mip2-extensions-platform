@@ -37,12 +37,12 @@
         <ul>
           <li
             v-for="item in searchData"
-            :key="item.address+item.title"
+            :key="item.address+item.name"
             class="car-actives"
             @click="setAddress(item)">
             <div>
               <span class="img weizhi"/>
-              <p v-text="item.title"/>
+              <p v-text="item.name"/>
               <p v-text="item.address"/>
             </div>
           </li>
@@ -206,7 +206,10 @@ export default {
         // 还原上次填写的数据
         let moveout = this.moveOut
         moveout.localtion = data.localtion
-        this.searchVal = data.localtion.title
+        if (data.localtion.name) {
+          this.searchVal = data.localtion.name
+        }
+
         moveout.address = data.address
         moveout.phone = data.phone
         this.loading = false
@@ -223,7 +226,7 @@ export default {
     // 搜索结果
     searchResult (item) {
       if (item) {
-        this.searchData = item.data
+        this.searchData = item
       }
     },
     // 选择搜索结果
@@ -234,12 +237,13 @@ export default {
         ele.blur()
       })
       this.searchData = []
-      this.searchVal = item.title
+      this.searchVal = item.name
       this.moveOut.localtion = item
       console.log(JSON.stringify(item, null, 2))
     },
     // 确认搬出信息
     moveoutSure () {
+      let that = this
       let inputs = this.$element.querySelectorAll('input:focus')
       Array.prototype.slice.call(inputs).forEach(ele => {
         ele.blur()
@@ -254,7 +258,7 @@ export default {
       console.log(JSON.stringify(moveOut, null, 2))
       if (this.searchVal === '' || moveOut.localtion.lat === '') {
         warn.show = true
-        warn.texts = '地址不能为空'
+        warn.texts = '没有找到对应地址，请重新搜索'
       } else if (phone === '') {
         warn.show = true
         warn.texts = '联系方式不能为空'
@@ -264,7 +268,7 @@ export default {
       } else {
         console.log('可以提交')
         let moveInAddress = this.globaldata.moveInAddress
-        let objdata = this.deepClone(this.moveOut)
+        let objdata = JSON.parse(JSON.stringify(this.moveOut))
         let obj = ''
         // 如果 搬入地址电话未填写 默认 填写 搬出地址的电话
         if (moveInAddress.phone === '') {
@@ -280,24 +284,52 @@ export default {
         base.mipSetGlobalData(obj)
         base.setSession(datas)
         // 计算距离
-        let movein = this.globaldata.moveInAddress.localtion
-        let moveout = objdata.localtion
+
+        let moveout = {
+          'lat': '',
+          'lng': ''
+        }
+        let movein = {
+          'lat': '',
+          'lng': ''
+        }
+        if (this.globaldata.moveInAddress.localtion.location) {
+          movein = this.globaldata.moveInAddress.localtion.location
+        }
+        if (objdata.localtion.location) {
+          moveout = objdata.localtion.location
+        }
+
         console.log(JSON.stringify(moveout, null, 2))
         console.log(JSON.stringify(movein, null, 2))
         if (moveout.lat !== '' && movein.lat !== '') {
           let pointOut = new BMap.Point(moveout.lng, moveout.lat)
           let pointIn = new BMap.Point(movein.lng, movein.lat)
-          let kilometer =
-              this.maps.getDistance(pointOut, pointIn).toFixed(2) / 1000
-          console.log('查看距离:' + kilometer)
-          let obj = { kilometer: kilometer }
-          let datass = base.mipExtendData(datas, obj)
-          base.mipSetGlobalData(obj)
-          base.setSession(datass)
+          let kilometer = ''
+          let city = this.globaldata.ordercity
 
-          setTimeout(() => {
-            this.goOrder()
-          }, 100)
+          let transit = new BMap.DrivingRoute(city, {
+            onSearchComplete: function (drivingRouteResult) {
+              let numPlans = drivingRouteResult.getNumPlans()
+
+              if (numPlans) {
+                let firstPlanDistanceM = drivingRouteResult.getPlan(0).getDistance(false)
+                kilometer = Math.max(1, Math.ceil(firstPlanDistanceM / 1000))
+
+                console.log('查看距离:' + kilometer)
+                let obj = { kilometer: kilometer }
+
+                console.log(JSON.stringify(obj, null, 2))
+                let datass = base.mipExtendData(datas, obj)
+                console.log(JSON.stringify(datass))
+                base.mipSetGlobalData(obj)
+                base.setSession(datass)
+                setTimeout(() => {
+                  that.goOrder()
+                }, 100)
+              }
+            }})
+          transit.search(pointOut, pointIn)
         } else {
           console.log('没计算距离')
           this.goOrder()
@@ -357,55 +389,7 @@ export default {
       }
       return true
     },
-    deepClone (obj) {
-      if (obj == null || typeof obj !== 'object') {
-        return obj
-      }
-      switch (Object.prototype.toString.call(obj)) {
-        case '[object Array]': {
-          let result = new Array(obj.length)
-          for (let i = 0; i < result.length; ++i) {
-            result[i] = this.deepClone(obj[i])
-          }
-          return result
-        }
 
-        case '[object Error]': {
-          let result = new obj.constructor(obj.message)
-          result.stack = obj.stack // hack...
-          return result
-        }
-
-        case '[object Date]':
-        case '[object RegExp]':
-        case '[object Int8Array]':
-        case '[object Uint8Array]':
-        case '[object Uint8ClampedArray]':
-        case '[object Int16Array]':
-        case '[object Uint16Array]':
-        case '[object Int32Array]':
-        case '[object Uint32Array]':
-        case '[object Float32Array]':
-        case '[object Float64Array]':
-        case '[object Map]':
-        case '[object Set]':
-          return new obj.constructor(obj)
-
-        case '[object Object]': {
-          let keys = Object.keys(obj)
-          let result = {}
-          for (let i = 0; i < keys.length; ++i) {
-            let key = keys[i]
-            result[key] = this.deepClone(obj[key])
-          }
-          return result
-        }
-
-        default: {
-          throw new Error("Unable to copy obj! Its type isn't supported.")
-        }
-      }
-    },
     // 点击波纹效果
     clickRipple () {
       let util = MIP.util
@@ -456,9 +440,44 @@ export default {
         if (value === '') {
           this.searchData = []
         } else {
-          this.searchHandler.search(value)
+        //   this.searchHandler.search(value)
+          this.baiduWebApiSearch(value)
         }
       }, 200)
+    },
+    // 线上搜索城市
+    baiduWebApiSearch: function (value) {
+      let data = {
+        region: this.globaldata.ordercity,
+        query: value,
+        output: 'json',
+        page_size: 20,
+        ak: 'yqnitg5uvNmj1DkrhStCdM98hFYYbUVc'
+
+      }
+      let urls =
+      'https://api.map.baidu.com/place/v2/search?' + base.setUrlParam(data)
+      window.fetchJsonp(urls)
+        .then(response => response.json())
+        .catch(error => console.log(error))
+        .then(response => {
+          console.log('查看数据:' + JSON.stringify(response, null, 2))
+          let data = response
+          let searchData = []
+          if (data.hasOwnProperty('status') && +data.status === 0) {
+            if (data.results) {
+              let results = data.results
+              console.log(JSON.stringify(results, null, 2))
+              for (let i in results) {
+                if (results[i].hasOwnProperty('detail')) {
+                  searchData.push(results[i])
+                }
+              }
+            }
+          }
+          console.log(JSON.stringify(searchData, null, 2))
+          this.searchResult(searchData)
+        })
     }
 
   }

@@ -44,7 +44,7 @@
             v-show="index < 4 || showMoreSight"
             :key="index">
             <a
-              :href="host + '/sight/1/' + item.id"
+              :href="host + '/sight/' + item.typeCode + '/' + item.id"
               mip-link>
               <div class="sp-img">
                 <mip-img
@@ -197,6 +197,7 @@ export default {
         if (it.cover.indexOf('http') !== 0) {
           it.cover = 'https://m.6renyou.com/statics/img/default.png'
         }
+        it.typeCode = it.type === 'sight' ? '1' : '2'
         return it
       })
 

@@ -5,7 +5,8 @@
   "scripts": {
     "lint": "eslint {**/*,**}.{vue,js}",
     "validate": "sh tools/validate.sh",
-    "deploy:preview": "sh tools/build.sh"
+    "deploy:preview": "sh tools/build.sh",
+    "fix": "eslint --ext .vue,.js . --fix"
   },
   "husky": {
     "hooks": {
@@ -32,6 +33,7 @@
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
     "eslint-plugin-vue": "^4.5.0",
+    "execa": "^0.11.0",
     "husky": "^1.0.0-rc.8",
     "mip2": "^1.2.0"
   }

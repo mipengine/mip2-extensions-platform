@@ -355,7 +355,7 @@
 </style>
 
 <script>
-import { resetRem, Storage } from '../../common/utils/common'
+import { resetRem, Storage, Url } from '../../common/utils/common'
 import { gConst } from '../../common/js/config.js'
 import myOrderReqs from '../../common/api/myOrderApi.js'
 import commonApi from '../../common/api/common.js'
@@ -382,7 +382,7 @@ export default {
   },
   data () {
     return {
-      selected: 'notpay',
+      selected: 'payed',
       unPay: [],
       canceled: [],
       paid: [],
@@ -426,6 +426,9 @@ export default {
         }
       })
     })
+
+    this.initData()
+
     this.$element.customElement.addEventAction('exit', event => {
       // 这里可以输出登录之后的数据
       console.log('登出了')
@@ -434,6 +437,14 @@ export default {
     // self.allOrder()
   },
   methods: {
+    initData: function () {
+      const self = this
+      const urlParams = Url.getUrlData()
+      console.log('urlParams', urlParams)
+      if (urlParams) {
+        self.selected = urlParams.hasOwnProperty('selected') && urlParams.selected ? urlParams.selected : 'payed'
+      }
+    },
     allOrder: function () {
       let self = this
       // 用户为会员执行的操作
@@ -569,6 +580,7 @@ export default {
     toPay (theOrder, orderId, orderType) {
       let self = this
       let orderName = self.busType(theOrder.orderType, theOrder.remark)
+      let apitoken = Storage.get('apitoken')
       MIP.setData({
         payConfig: {
           fee: theOrder.amount,
@@ -576,7 +588,8 @@ export default {
           postData: {
             orderId: orderId,
             orderType: orderType,
-            orderName: orderName
+            orderName: orderName,
+            apitoken: apitoken
           }
         }
       })

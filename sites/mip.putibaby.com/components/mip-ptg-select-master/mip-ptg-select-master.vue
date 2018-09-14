@@ -1178,7 +1178,7 @@
       type="right"
       bottom="50px"
       class="rec_a">
-      <a @click="handleUpdateYcq">
+      <a @click="handleCustom">
         <slot name="bwtj"/>
       </a>
     </mip-fixed>
@@ -1794,6 +1794,15 @@ API.checkUnionAgain = function (opt, fn) {
     fn)
 }
 
+API.reportVisit = function (zw, city, fn) {
+  API.wrapRet_(
+    'https://mip.putibaby.com/api/ajax_report_visit', {
+      'zw_id': zw,
+      'city': city
+    },
+    fn)
+}
+
 function addClass (element, newName) {
   if (!element || !newName) return false
   if (element.className) {
@@ -1844,7 +1853,7 @@ export default {
     return {
       isLogin: false,
       isUnion: false,
-      list: null,
+      list: [],
       state: {
         isLoadingMore: false,
         loadMessage: '',
@@ -1897,6 +1906,7 @@ export default {
   },
   mounted () {
     window.MIP.viewer.fixedElement.init()
+
     console.log('This is pty order list component !')
     // 所有的图片（要是网络太好，自己加图片吧）
     const imgs = [
@@ -1997,6 +2007,34 @@ export default {
       var self = this
       console.log('should loading')
       console.log(this.dataJson)
+
+      function getParameterByName (name, url) {
+        if (!url) url = window.location.href
+        name = name.replace(/[[\]]/g, '\\$&')
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)')
+        var results = regex.exec(url)
+        if (!results) return null
+        if (!results[2]) return ''
+        return decodeURIComponent(results[2].replace(/\+/g, ' '))
+      }
+      var qcity = getParameterByName('city') || ''
+      qcity = qcity.replace('市', '')
+      var cities = ['北京', '天津', '哈尔滨', '武汉', '上海', '长春', '济南', '长沙', '广州', '杭州', '洛阳', '南阳', '深圳', '沈阳', '石家庄', '西安', '湘潭', '徐州', '成都', '南京', '黄石', '郑州', '青岛', '大连', '常州', '唐山', '保定', '秦皇岛', '襄阳', '太原', '昆明', '兰州', '呼和浩特', '乌鲁木齐', '合肥', '南昌', '福州', '厦门', '南宁']
+      if (cities.lastIndexOf(qcity) >= 0) {
+        this.filter.city = qcity
+        console.log(qcity)
+      }
+
+      var city = this.filter.city || ''
+      API.reportVisit(1, city, function (isOk, res) {
+        if (isOk) {
+          console.log(res)
+        } else {
+          console.log(res)
+        }
+      })
+
+      this.filter.city = this.filter.city || '北京'
       API.getSelectMaster(self.filter, function (isOk, res) {
         if (isOk) {
           console.log(res)
@@ -2068,6 +2106,10 @@ export default {
       }
       window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_ycq '), {})
     },
+    handleCustom () {
+      console.log('handleCustom')
+      window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/custom'), {})
+    },
     handleOrderList () {
       console.log('handleOrderList')
       if (!this.checkLogin_('order_list')) { return }
@@ -2084,7 +2126,6 @@ export default {
       this.state.isGif = true
       // this.$set(this.state, 'isGif', true)
       this.filter.pn = 0
-
       setTimeout(function () {
         API.getSelectMaster(self.filter, function (isOk, res) {
           if (isOk) {
