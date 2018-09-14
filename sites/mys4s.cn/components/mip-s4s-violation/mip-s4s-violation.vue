@@ -74,6 +74,69 @@
         v-if="detail"
         class="s4s-mask"
         @click="closeMake"/>
+
+      <mip-fixed type="top">
+        <div
+          v-show="showCaptcha"
+          class="captcha"
+        >
+          <div
+            class="s4s-mask"
+          />
+          <div class="captcha-container">
+            <div class="captcha-title">请输入验证码</div>
+            <mip-img
+              :src="captchUrl"
+              width="272"
+              height="90"
+              @click="getCaptcha"/>
+            <p
+              class="captcha-change"
+              @click="getCaptcha">看不清？换一张</p>
+            <div
+              class="captcha-input-container">
+              <div
+                v-for="item in captchValue"
+                :key="item"
+                class="captcha-input" >
+                {{ item||'' }}
+              </div>
+            </div>
+            <div class="captcha-keyboard">
+              <div
+                v-for="item in captchKeyArray"
+                :key="item"
+                class="captcha-key-list" >
+                <button
+                  v-for="ele in item"
+                  :key="ele"
+                  class="captcha-key"
+                  @click="onInputCaptcha(ele)">
+                  {{ ele }}
+                </button>
+              </div>
+              <div class="captcha-key-list">
+                <div class="captcha-key  captcha-key-disable">
+                  {{ '' }}
+                </div>
+                <button
+                  class="captcha-key"
+                  @click="onInputCaptcha(0)">
+                  0
+                </button>
+                <button
+                  class="captcha-key"
+                  @click="onInputCaptcha('←')">
+                  ←
+                </button>
+              </div>
+            </div>
+            <!-- <div
+              class="captch-btn"
+              @click="captchReady" >确定</div> -->
+          </div>
+        </div>
+      </mip-fixed>
     </div>
   </div>
 </template>
@@ -108,15 +171,23 @@ export default {
       driveUrl: '',
       showProvice: false,
       car_type: '',
-      system: {}
+      system: {},
+      needCaptcha: false,
+      captchKey: '',
+      showCaptcha: false,
+      captchValue: ['', '', '', ''],
+      captchKeyArray: [[1, 2, 3], [4, 5, 6], [7, 8, 9]],
+      captchUrl: ''
     }
+  },
+  watch: {
   },
   prerenderAllowed () {
     return true
   },
   mounted () {
     this.$on('customError', event => {
-      window.localStorage.clear()
+      // window.localStorage.clear()
       util.toast('登陆失败')
       // this.$emit('loginAgain')
       // this.$refs.index.click()
@@ -175,6 +246,89 @@ export default {
     })
   },
   methods: {
+    // 删除按键逻辑 删除前一位  2 3 4 格有效。
+    captchDelete (index, value) {
+      switch (index) {
+        case 1:
+          break
+        case 2:
+          if (this.captchValue2 === '') {
+            this['captchValue1'] = ''
+            setTimeout(() => { this.$refs['captchValue1'].focus() }, 0)
+          }
+          break
+        case 3:
+          if (this.captchValue3 === '') {
+            this['captchValue2'] = ''
+            setTimeout(() => { this.$refs['captchValue2'].focus() }, 0)
+          }
+          break
+        case 4:
+          if (this.captchValue4 === '') {
+            this['captchValue3'] = ''
+            setTimeout(() => { this.$refs['captchValue3'].focus() }, 0)
+          }
+          break
+        default:
+          break
+      }
+    },
+    captchReady () {
+      this.getIllegal(
+        null,
+        this.globalData.provice + this.globalData.car_no,
+        this.globalData.vin,
+        this.globalData.engine
+      )
+    },
+    getCaptcha () {
+      const that = this
+      util.fetchData('v3/captcha', {
+        width: 180,
+        height: 80,
+        cap_len: 4,
+        dot_count: 80,
+        skew: 1
+      }).then(res => {
+        if (res.code === 0) {
+          that.captchKey = res.data.key
+          that.captchUrl = res.data.image
+          that.captchValue = ['', '', '', '']
+        } else {
+          util.toast(res.msg)
+        }
+      })
+    },
+    closeCaptch () {
+      this.showCaptcha = false
+    },
+    onInputCaptcha (value) {
+      let arr = [...this.captchValue]
+      let index = 3
+      if (value === '←') {
+        let array = [...this.captchValue].join('')
+        arr = array.substring(0, array.length - 1).split('')
+        arr.length = 4
+      } else {
+        if (this.captchValue[3]) {
+          return
+        }
+        if (!this.captchValue[0]) {
+          index = 0
+        } else if (!this.captchValue[1]) {
+          index = 1
+        } else if (!this.captchValue[2]) {
+          index = 2
+        } else if (!this.captchValue[3]) {
+          index = 3
+        }
+        arr[index] = value + ''
+      }
+      this.captchValue = arr
+      if (arr[3]) {
+        this.captchReady()
+      }
+    },
     getQueryString (name) {
       let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
       let r = window.location.search.substr(1).match(reg)
@@ -193,19 +347,31 @@ export default {
     },
     // 获取违章
     getIllegal (formid, carNo, vin, engine) {
+      this.showCaptcha = false
       let self = this
       let param = {
         car_no: carNo ? carNo.toUpperCase() : '',
         vin: vin ? vin.toUpperCase() : '',
         engine: engine ? engine.toUpperCase() : '',
-        channel: 'baidu',
         car_type: this.globalData.car_type
+      }
+
+      if (this.needCaptcha) {
+        param.key = this.captchKey
+        param.value = this.captchValue.join('')
       }
       // car_no车牌号，vin车架号，engion发动机，{car_no: 陕KC1166 vin: LSVNJ49J472028756 engine: 020297
       util
         .fetchData('v3/violation/web/query', param)
         .then(res => {
-          if (res.code === 0 && res.data) {
+          // res.code = 90027
+          if (res.code === 90027) {
+            self.getCaptcha()
+            util.toast(res.msg || '需要填写验证码')
+            self.needCaptcha = true
+            self.showCaptcha = true
+          } else if (res.code === 0 && res.data) {
+            self.needCaptcha = false
             let newList = []
             if (res.data.Records && res.data.Records.length > 0) {
               res.data.Records.forEach(function (item) {
@@ -292,6 +458,7 @@ export default {
               })
             }
           } else {
+            self.needCaptcha = false
             util.toast(res.msg)
           }
         })
@@ -496,7 +663,7 @@ export default {
   color: #666;
   /* padding-right: 0.15rem; */
   overflow: hidden;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   text-overflow: ellipsis;
 }
 
@@ -520,7 +687,7 @@ export default {
   font-size: .12rem;
   line-height: .2rem;
   overflow: hidden;
-  white-space: nowrap;
+  /* white-space: nowrap; */
   text-overflow: ellipsis;
 }
 
@@ -585,5 +752,122 @@ export default {
   background: #ffffff;
   padding: .03rem .1rem;
   color: #fe7000;
+}
+
+.s4s-mask {
+  height: 100%;
+  height: 100vh;
+  z-index: 101;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.captcha{
+  position: relative;
+}
+.captcha-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateY(-50%) translateX(-50%);
+  background-color: #fff;
+  padding:.15rem;
+  border-radius: .05rem;
+  padding-bottom: 0;
+}
+.captcha-title{
+  color:#333333;
+  font-size: .18rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: .1rem;
+}
+.captcha-input:focus ,.captcha-input,.captcha-key {
+  outline: none;
+}
+.captcha-input-container {
+  width: 100%;
+  margin: .2rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.captcha-input-list {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+.captcha-change {
+  color:#6F6F6F;
+  font-size: .12rem;
+  margin-bottom: .125rem;
+  text-align: center;
+}
+.captcha-input {
+  height: .4rem;
+  line-height: .4rem;
+  font-size: .22rem;
+  color:#333;
+  flex: 1;
+  width:.4rem;
+  border:.01rem solid #eaeaea;
+  margin-right:.1rem;
+  max-width: .4rem;
+  text-align: center;
+}
+.captcha-input:last-child {
+  margin-right:0;
+}
+.captcha-btn {
+  width: 100%;
+  text-align: center;
+  line-height: .5rem;
+  font-size: .18rem;
+  background-image: linear-gradient(40deg, #FF7C00 0%, #FE5A00 100%);
+  border-radius: .05rem;
+  color:#fff;
+}
+.captcha-keyboard {
+  /* display: flex; */
+  /* justify-content: space-around; */
+  /* flex-wrap: wrap; */
+  margin-top:.25rem;
+}
+.captcha-key-list {
+  display: flex;
+  justify-content: space-around;
+  margin:.1rem;
+}
+.captcha-key {
+  border:none;
+  text-align: center;
+  color:#24252D;
+  font-size: .24rem;
+  width: .8rem;
+  height: .4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  user-select: none;
+}
+
+.captcha-key.captcha-key-disable:active {
+  background: none!important;
+}
+
+.captcha-key:active {
+  background-color: #ebebeb;
+}
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+  color: #6F6F6F;
+}
+input:-moz-placeholder, textarea:-moz-placeholder {
+  color:#6F6F6F;
+}
+input::-moz-placeholder, textarea::-moz-placeholder {
+  color:#6F6F6F;
+}
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+  color:#6F6F6F;
 }
 </style>

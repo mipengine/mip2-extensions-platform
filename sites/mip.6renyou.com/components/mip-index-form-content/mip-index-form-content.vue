@@ -16,6 +16,7 @@
                   name=""
                   type="text"
                   class="ipt-text"
+                  maxlength="100"
                   placeholder="请填写目的地">
               </div>
             </li>

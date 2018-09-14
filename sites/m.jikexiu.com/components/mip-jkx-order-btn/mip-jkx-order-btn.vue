@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
-    <div class="fixed_btn jj_fixBtn"><span>
+    <!-- 类名不能包含fixed -->
+    <div class="fix_btn jj_fixBtn"><span>
       <a
         id="float_tel"
         class="ask_btn"
@@ -16,20 +17,18 @@
 </div></template>
 
 <style scoped>
-  .fixed_btn {
+  .fix_btn {
       display: -webkit-flex;
       display: flex;
       overflow: hidden;
       width: 100%;
-      position: fixed;
-      bottom: 0px;
       height: 50px;
       background-color: #fff;
       padding: 0 4%;
       text-align: center;
       z-index: 999;
   }
-  .fixed_btn span {
+  .fix_btn span {
       margin-top: 6px;
       background-color: #F10215;
       overflow: hidden;
@@ -41,7 +40,7 @@
       line-height: 38px;
       color: #fff;
   }
-  .fixed_btn span:first-child {
+  .fix_btn span:first-child {
       margin-right: 3%;
       background-color: #fff;
   }
@@ -101,7 +100,6 @@ export default {
   },
   methods: {
     goOrder (href) {
-      console.log(this.info)
       // 如果已经登录，自己处理跳转
       if (this.info.isLogin) {
         window.MIP.viewer.open('./' + href, {isMipLink: true})
