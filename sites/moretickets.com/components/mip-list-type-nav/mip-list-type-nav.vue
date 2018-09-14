@@ -68,6 +68,7 @@
             width: 58.5rem;
             display: flex;
             height: 5rem;
+            -webkit-overflow-scrolling: touch;
             .type-nav{
                 padding: 0 1.3rem;
                 height: 100%;

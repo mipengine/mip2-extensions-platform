@@ -63,11 +63,16 @@
         ng-if="!cp.usable"
         ng-repeat="cp in allCoupons"/>
     </div>
-    <div
+    <!-- <div
       v-if="toastmsg"
       class="toast-msg">
       {{ toastmsg }}
-    </div>
+    </div> -->
+    <mip-st-toast v-show="toastmsg">
+      <div class="toast-container">
+        {{ toastmsg }}
+      </div>
+    </mip-st-toast>
   </div>
 </template>
 
@@ -121,6 +126,13 @@
   top: 100px;
   transform: translateX(-50%) translateY(-50%);
   z-index: 1000;
+}
+.toast-container{
+  font-size: 14px;
+  height: auto;
+  line-height: 28px;
+  padding: 10px 16px;
+  white-space: normal;
 }
 .coupon-item-component {
   .layout {
