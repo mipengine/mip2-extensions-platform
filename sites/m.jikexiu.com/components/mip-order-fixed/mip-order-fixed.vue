@@ -320,7 +320,6 @@ export default {
  .bot{
     width: 100%;
     height: 52px;
-    background: #fff;
     z-index: 100;
     .bot-left{
       float: left;

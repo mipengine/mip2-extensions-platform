@@ -333,8 +333,7 @@
     </mip-lightbox>
     <!--订单明细-->
     <mip-fixed
-      type="bottom"
-      still>
+      type="bottom">
       <div
         v-if="orderFeeFlag"
         class="pop-content">
@@ -371,8 +370,7 @@
       </div>
     </mip-fixed>
     <mip-fixed
-      type="bottom"
-      still>
+      type="bottom">
       <div class="footer">
         <div class="agreement-row">
           我已阅读<a
@@ -395,11 +393,16 @@
         </div>
       </div>
     </mip-fixed>
-    <div
+    <!-- <div
       v-show="toastmsg"
       class="toast-msg">
       {{ toastmsg }}
-    </div>
+    </div> -->
+    <mip-st-toast v-show="toastmsg">
+      <div class="toast-container">
+        {{ toastmsg }}
+      </div>
+    </mip-st-toast>
   </div>
 </template>
 
@@ -568,6 +571,13 @@ li, ol, ul {
   transform: translateX(-50%) translateY(-50%);
   z-index: 1000;
   font-size:1.4rem;
+}
+.toast-container{
+  font-size: 14px;
+  height: auto;
+  line-height: 28px;
+  padding: 10px 16px;
+  white-space: normal;
 }
 .questionIcon {
     display: inline-block;
@@ -1057,56 +1067,6 @@ li, ol, ul {
         margin: 0 -2rem;
         border-top: @normal-border;
     }
-    .footer{
-        // height: 5rem;
-        // min-height: 5rem;
-        // flex-basis: 5rem;
-        // line-height: 5rem;
-        // position: relative;
-        background-color: #fff;
-        .pt(2);
-        .agreement-row {
-            .lh(30);
-            .fs(12);
-            .pl(10);
-            // .color-gray();
-            border-bottom: 1px solid rgb(228,228,228,0,5);
-            border-top: 1px solid rgb(228,228,228,0.5);
-        }
-        .footer-text{
-            display: flex;
-            align-items: center;
-            text-align: center;
-            padding: 0.9rem 1.8rem;
-            .fs(14);
-            .total{
-               .fs(20);
-                color: @main-color;
-                padding: 0 0.5rem;
-            }
-            .monney {
-                flex: 1;
-                padding-right: 1rem;
-                text-align: right;
-                .word {
-                    font-size: 1.2rem;
-                    color: @medium-font;
-                }
-            }
-            .submit-btn{
-              font-weight: bold;
-              width: 14.4rem;
-              height: 4.4rem;
-              line-height: 4.4rem;
-              border-radius: 2px;
-              font-size: 1.6rem;
-              color: #fff;
-              text-align: center;
-              background-image: linear-gradient(287deg, #ff1d41, #ee0e87);
-            }
-        }
-
-    }
     .pop-content{
             margin-top:36px;
             width: 100%;
@@ -1152,6 +1112,56 @@ li, ol, ul {
             }
         }
 }
+
+  .footer{
+    // height: 5rem;
+    // min-height: 5rem;
+    // flex-basis: 5rem;
+    // line-height: 5rem;
+    // position: relative;
+    background-color: #fff;
+    .pt(2);
+    .agreement-row {
+        .lh(30);
+        .fs(12);
+        .pl(10);
+        // .color-gray();
+        border-bottom: 1px solid rgb(228,228,228,0,5);
+        border-top: 1px solid rgb(228,228,228,0.5);
+    }
+    .footer-text{
+        display: flex;
+        align-items: center;
+        text-align: center;
+        padding: 0.9rem 1.8rem;
+        .fs(14);
+        .total{
+            .fs(20);
+            color: @main-color;
+            padding: 0 0.5rem;
+        }
+        .monney {
+            flex: 1;
+            padding-right: 1rem;
+            text-align: right;
+            .word {
+                font-size: 1.2rem;
+                color: @medium-font;
+            }
+        }
+        .submit-btn{
+          font-weight: bold;
+          width: 14.4rem;
+          height: 4.4rem;
+          line-height: 4.4rem;
+          border-radius: 2px;
+          font-size: 1.6rem;
+          color: #fff;
+          text-align: center;
+          background-image: linear-gradient(287deg, #ff1d41, #ee0e87);
+        }
+    }
+  }
 
 </style>
 
