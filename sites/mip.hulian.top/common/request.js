@@ -5,7 +5,7 @@ const jsonpAction = (url, params, callbackStr = 'jsonpCallBack') => {
     }).then(res => {
       return res.text()
     }).then(results => {
-      resolve(results) 
+      resolve(results)
     }).catch(err => {
       reject(err)
     })
