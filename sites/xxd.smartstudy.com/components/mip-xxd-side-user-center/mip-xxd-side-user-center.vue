@@ -1,25 +1,62 @@
 <template>
   <div class="container-header-nav-mine">
-    <div class="title" v-if="info.id">
+    <div
+      v-if="info.id"
+      class="title"
+    >
       <div class="image-src">
-        <mip-img v-if="info.avatar" :src="info.avatar" alt="头像"></mip-img>
-        <mip-img v-else src="/v2/images/avatar-default.png" alt="默认头像"></mip-img>
+        <mip-img
+          v-if="info.avatar"
+          :src="info.avatar"
+          alt="头像"
+        />
+        <mip-img
+          v-else
+          src="/v2/images/avatar-default.png"
+          alt="默认头像"
+        />
       </div>
-      <div class="name">{{info.name}}</div>
+      <div class="name">{{ info.name }}</div>
     </div>
-    <div class="title" v-else>
+    <div
+      v-else
+      class="title"
+    >
       <div class="image-src">
-        <mip-img src="/v2/images/avatar-default.png" alt="默认头像"></mip-img>
+        <mip-img
+          src="/v2/images/avatar-default.png"
+          alt="默认头像"
+        />
       </div>
       <div
         class="login"
         on="tap:MIP.setData({isSideLogin:true}) tap:user.login"
-      >登录/注册</div>
+      >
+        登录/注册
+      </div>
     </div>
-    <div class="items" v-if="info.id">
-      <a class="item" href="/personal/match-school-list.html">我的选校</a>
-      <a class="item" href="/personal/questions">我的问答</a>
-      <a class="item" href="/personal/home.html">用户中心</a>
+    <div
+      v-if="info.id"
+      class="items"
+    >
+      <a
+        class="item"
+        href="/personal/match-school-list.html"
+      >
+        我的选校
+      </a>
+      <a
+        class="item"
+        href="/personal/questions"
+      >
+        我的问答
+      </a>
+      <a
+        class="item"
+        href="/personal/home.html"
+      >
+        用户中心
+      </a>
     </div>
   </div>
 </template>
@@ -32,7 +69,6 @@
   height: calc(100vh - 44px);
   background-color: #39f;
 }
-
 
 .container-header-nav-mine .title {
   padding: 4.2rem 3.1rem 3.5rem;
@@ -86,7 +122,9 @@ export default {
     info: {
       type: Object,
       required: true,
-      default: {}
+      default: function () {
+        return {}
+      }
     }
   }
 }
