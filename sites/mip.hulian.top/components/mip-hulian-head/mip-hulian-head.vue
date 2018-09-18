@@ -17,19 +17,11 @@ let tmpcookie
 let jsonstr
 let url
 export default {
-<<<<<<< HEAD
   data () {
     return {
       url : '',
       jsonstr : '',
       jsonobj : {}
-=======
-   data () {
-    return {
-      url:'',
-      jsonstr : '',
-      jsonobj: {}
->>>>>>> deffc1d0eb0e7356a88250b7701ec24f91c92f66
     }
   },
   beforeMount: function () {
@@ -60,15 +52,11 @@ export default {
           tmpcookie.title = titleregex.exec(text)[1].replace(rep,'').replace(/(^\s*)|(\s*$)/g, "")
           tmpcookie.des = desregex.exec(text)[1].replace(rep,'').replace(/(^\s*)|(\s*$)/g, "")
           tmpcookie.img = imgregex.exec(text)?imgregex.exec(text)[1].replace(/(^\s*)|(\s*$)/g, ""):''
-<<<<<<< HEAD
           tmpcookie.time = timeregex.exec(text)[1].replace(/\//g,'-').replace(' ', 'T').replace(/(^\s*)|(\s*$)/g, "")
-=======
           tmpcookie.time = timeregex.exec(text)[1].replace(/\//g,'-').replace(' ' , 'T').replace(/(^\s*)|(\s*$)/g, "")
->>>>>>> deffc1d0eb0e7356a88250b7701ec24f91c92f66
-          // console.log(tmpcookie);return;
           newArray.json = '{"@context": \'https://ziyuan.baidu.com/contexts/cambrian.jsonld\',"@id": \'' + json_id + '\',"title": \'' + tmpcookie.title + '\',"description": \'' + tmpcookie.des + '\',"images": [\'' + tmpcookie.img + '\'],"pubDate": \'' + tmpcookie.time + '\'}'
           let date=new Date();
-          date.setTime(date.getTime()+1*1000); //设置date为当前时间+30分
+          date.setTime(date.getTime()+1*1000);
           tmpcookie.expires = date.toGMTString()
           document.cookie = type + 'ck=' + JSON.stringify(tmpcookie)
           that.jsonobj = newArray
