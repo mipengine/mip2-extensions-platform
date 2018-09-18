@@ -1,7 +1,7 @@
 {
-  "name": "m.chinaacc.com",
+  "name": "xxd.smartstudy.com",
   "version": "0.0.1",
-  "description": "中华会计网校",
+  "description": "选校帝极速服务组件库",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
@@ -10,10 +10,8 @@
     "fix": "npm run fix:js",
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
-  "author": "yanxingqiao",
-  "dependencies": {
-    "xzh-sdk": "0.0.4"
-  },
+  "author": "zhangxiaowei (zhangxiaowei@innobuddy.com)",
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
