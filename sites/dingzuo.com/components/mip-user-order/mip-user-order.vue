@@ -1,25 +1,44 @@
 <template>
   <div class="mip-order">
-    <mip-fixed class="fixbox" type="top" left="0px">
-      <span @click="selectAll" :class="isAll?'select':''">全部</span>
-      <span @click="selectWait" :class="isWait?'select':''">待就餐</span>
-      <span @click="selectOk" :class="isOk?'select':''">完成</span>
+    <mip-fixed
+      class="fixbox"
+      type="top"
+      left="0px">
+      <span
+        :class="isAll?'select':''"
+        @click="selectAll">全部</span>
+      <span
+        :class="isWait?'select':''"
+        @click="selectWait">待就餐</span>
+      <span
+        :class="isOk?'select':''"
+        @click="selectOk">完成</span>
     </mip-fixed>
-    <div style="height: 46px;"></div>
-    <div class="hotel" v-for="hotel in hotels" :key="hotel.id">
-      <h3>{{hotel.name}}（{{hotel.address}}）<span v-if="hotel.isOk" class="success">完成</span><span v-else>待就餐</span></h3>
+    <div style="height: 46px;"/>
+    <div
+      v-for="hotel in hotels"
+      :key="hotel.id"
+      class="hotel">
+      <h3>{{ hotel.name }}（{{ hotel.address }}）<span
+        v-if="hotel.isOk"
+        class="success">完成</span><span v-else>待就餐</span></h3>
       <div class="listmain">
         <mip-img
           class="hotelimg"
           width="86px"
           height="63px"
           src="http://fs.kebide.com/2016/11/18/858eca3a7ab44df88ac2c12312a18de9.jpg"
-        ></mip-img>
+        />
         <div class="hoteldetails">
-          <p>{{hotel.room}}&nbsp;&nbsp;<span>VIP2</span>&nbsp;&nbsp;|&nbsp;&nbsp;{{hotel.people}}人<a href="./orderdetails.html">订单详情&nbsp;&nbsp;&gt;</a></p>
-          <p>{{hotel.date}}&nbsp;&nbsp;{{hotel.time}}</p>
-          <a v-if="hotel.isOk" class="zcyy" href="#">再次预约</a>
-          <a v-else href="#">取消预约</a>
+          <p>{{ hotel.room }}&nbsp;&nbsp;<span>VIP2</span>&nbsp;&nbsp;|&nbsp;&nbsp;{{ hotel.people }}人<a href="./orderdetails.html">订单详情&nbsp;&nbsp;&gt;</a></p>
+          <p>{{ hotel.date }}&nbsp;&nbsp;{{ hotel.time }}</p>
+          <a
+            v-if="hotel.isOk"
+            class="zcyy"
+            href="#">再次预约</a>
+          <a
+            v-else
+            href="#">取消预约</a>
           <p>位置 大厅</p>
         </div>
       </div>
@@ -118,53 +137,53 @@
 
 <script>
 export default {
-  data(){
-    return{
-      hotels:[],
-      hotellist:[
-        {id:1,name:"万龙洲海鲜大酒店",address:"望京店",date:"2018-08-12",time:"11:30",people:"6",room:"包间12",isOk:false},
-        {id:2,name:"白家大院",address:"苏州街店",date:"2018-08-11",time:"12:30",people:"6",room:"包间12",isOk:true},
-        {id:3,name:"白家大院",address:"望京店",date:"2018-08-13",time:"11:00",people:"6",room:"包间12",isOk:false}
+  data () {
+    return {
+      hotels: [],
+      hotellist: [
+        {id: 1, name: '万龙洲海鲜大酒店', address: '望京店', date: '2018-08-12', time: '11:30', people: '6', room: '包间12', isOk: false},
+        {id: 2, name: '白家大院', address: '苏州街店', date: '2018-08-11', time: '12:30', people: '6', room: '包间12', isOk: true},
+        {id: 3, name: '白家大院', address: '望京店', date: '2018-08-13', time: '11:00', people: '6', room: '包间12', isOk: false}
       ],
-      isAll:true,
-      isWait:false,
-      isOk:false
+      isAll: true,
+      isWait: false,
+      isOk: false
     }
   },
-  methods:{
-    selectAll(){
-      this.isAll = true;
-      this.isWait = false;
-      this.isOk = false;
-      this.hotels = this.hotellist;
+  mounted () {
+    this.hotels = this.hotellist
+  },
+  methods: {
+    selectAll () {
+      this.isAll = true
+      this.isWait = false
+      this.isOk = false
+      this.hotels = this.hotellist
     },
-    selectWait(){
-      this.isAll = false;
-      this.isWait = true;
-      this.isOk = false;
-      this.hotels = [];
-      let len = this.hotellist.length;
-      for(let i = 0;i < len;i ++){
-        if(!this.hotellist[i].isOk){
-          this.hotels.push(this.hotellist[i]);
+    selectWait () {
+      this.isAll = false
+      this.isWait = true
+      this.isOk = false
+      this.hotels = []
+      let len = this.hotellist.length
+      for (let i = 0; i < len; i++) {
+        if (!this.hotellist[i].isOk) {
+          this.hotels.push(this.hotellist[i])
         }
       }
     },
-    selectOk(){
-      this.isAll = false;
-      this.isWait = false;
-      this.isOk = true;
-      this.hotels = [];
-      let len = this.hotellist.length;
-      for(let i = 0;i < len;i ++){
-        if(this.hotellist[i].isOk){
-          this.hotels.push(this.hotellist[i]);
+    selectOk () {
+      this.isAll = false
+      this.isWait = false
+      this.isOk = true
+      this.hotels = []
+      let len = this.hotellist.length
+      for (let i = 0; i < len; i++) {
+        if (this.hotellist[i].isOk) {
+          this.hotels.push(this.hotellist[i])
         }
       }
     }
-  },
-  mounted(){
-    this.hotels = this.hotellist;
   }
 }
 </script>

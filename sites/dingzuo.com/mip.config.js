@@ -25,8 +25,8 @@ module.exports = {
      */
     autoopen: '/example/index.html'
   },
-  build:{
-    asset:"http://mip.kebide.com",
-    clean:true
+  build: {
+    asset: 'http://mip.kebide.com',
+    clean: true
   }
 }

@@ -2,18 +2,20 @@
   <div class="mip-complete">
     <div class="top">
       <mip-img
-              class="mesimg"
-              width="79"
-              height="72"
-              :src="success"
-              ></mip-img>
+        :src="success"
+        class="mesimg"
+        width="79"
+        height="72"
+      />
       <div class="mestext">
         <h2>预约成功</h2>
         <p>大厅</p>
       </div>
     </div>
     <div class="detail">到店就餐请报手机号即可<a href="./orderdetails.html">订单详情</a></div>
-    <mip-fixed class="pay" @click="toJump">完成</mip-fixed>
+    <mip-fixed
+      class="pay"
+      @click="toJump">完成</mip-fixed>
   </div>
 </template>
 
@@ -88,16 +90,16 @@ transform: scale(0.5, 0.5);
 </style>
 
 <script>
-import success from "@/static/success.png"
+import success from '@/static/success.png'
 export default {
-  data(){
-    return{
-      success:success
+  data () {
+    return {
+      success: success
     }
   },
-  methods:{
-    toJump(){
-        MIP.viewer.open("./index.html");
+  methods: {
+    toJump () {
+      MIP.viewer.open('./index.html')
     }
   }
 }

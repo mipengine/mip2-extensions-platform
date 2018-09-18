@@ -2,40 +2,44 @@
   <div class="order-details">
     <p class="type">待就餐</p>
     <div class="main">
-      <h3>{{hotelName}}</h3>
+      <h3>{{ hotelName }}</h3>
       <div class="hotelmes">
         <mip-img
           class="hotelimg"
           width="86px"
           height="63px"
           src="http://fs.kebide.com/2016/11/18/858eca3a7ab44df88ac2c12312a18de9.jpg"
-        ></mip-img>
+        />
         <div class="mesdetails">
-          <p>包间&nbsp;&nbsp;<span>VIP2</span>&nbsp;&nbsp;|&nbsp;&nbsp;{{orderNum}}</p>
-          <p>{{orderYear}}-{{orderMonth}}-{{orderDate}}&nbsp;&nbsp;{{orderTime}}</p>
-          <p>备注 {{userRemark}}</p>
+          <p>包间&nbsp;&nbsp;<span>VIP2</span>&nbsp;&nbsp;|&nbsp;&nbsp;{{ orderNum }}</p>
+          <p>{{ orderYear }}-{{ orderMonth }}-{{ orderDate }}&nbsp;&nbsp;{{ orderTime }}</p>
+          <p>备注 {{ userRemark }}</p>
         </div>
       </div>
       <div class="usermes">
         <h3>
           <mip-img
+            :src="userimg"
             class="userimg"
             width="18"
             height="22"
-            :src="userimg"
-          ></mip-img>
-          {{userName}}&nbsp;&nbsp;&nbsp;&nbsp;
+          />
+          {{ userName }}&nbsp;&nbsp;&nbsp;&nbsp;
           <mip-img
+            :src="telimg"
             class="telimg"
             width="14"
             height="14"
-            :src="telimg"
-          ></mip-img>
-          {{userPhone | phone}}</h3>
-        <p><span>下单时间</span>{{orderYear}}-{{orderMonth}}-{{orderDate}}&nbsp;&nbsp;{{orderTime}}</p>
+          />
+          {{ userPhone | phone }}</h3>
+        <p><span>下单时间</span>{{ orderYear }}-{{ orderMonth }}-{{ orderDate }}&nbsp;&nbsp;{{ orderTime }}</p>
       </div>
     </div>
-    <mip-fixed class="confirmmask" type="top" left="0" v-show="isMask">
+    <mip-fixed
+      v-show="isMask"
+      class="confirmmask"
+      type="top"
+      left="0">
       <div class="confirmbox">
         <p>确定取消预订</p>
         <p>取消后将不预留桌位</p>
@@ -185,51 +189,51 @@
 import userimg from '@/static/userimg.png'
 import telimg from '@/static/telimg.png'
 export default {
-  data(){
-    return{
-      orderDate:"",
-      orderTime:"",
-      orderNum:"",
-      userName:"",
-      userPhone:"",
-      userRemark:"",
-      orderMonth:"",
-      orderYear:"",
-			hotelName:"",
-      userimg:userimg,
-      telimg:telimg,
-      isMask:false
-    }
-  },
-  methods:{
-    maskShow(){
-      this.isMask = true;
-    },
-    maskHidden(){
-      this.isMask = false;
-    }
-  },
-  mounted(){
-    let date = new Date();
-    this.orderDate = (sessionStorage.getItem("orderDate")+"").padStart(2,0);
-    this.orderTime = sessionStorage.getItem("orderTime");
-    this.orderNum = sessionStorage.getItem("orderNum");
-    this.userName = sessionStorage.getItem("userName");
-    this.userPhone = sessionStorage.getItem("userPhone");
-    this.userRemark = sessionStorage.getItem("userRemark");
-		this.hotelName = sessionStorage.getItem("hotelName");
-    this.orderMonth = (sessionStorage.getItem("orderMonth")+"").padStart(2,0);
-    this.orderYear = date.getFullYear();
-  },
-  filters:{
-    phone(value){
-      if(!value){
-        return "";
+  filters: {
+    phone (value) {
+      if (!value) {
+        return ''
       }
-      let phone1 = value.substring(0,3);
-      let phone2 = value.substring(3,7);
-      let phone3 = value.substring(7,);
-      return phone1+"-"+phone2+"-"+phone3;
+      let phone1 = value.substring(0, 3)
+      let phone2 = value.substring(3, 7)
+      let phone3 = value.substring(7)
+      return phone1 + '-' + phone2 + '-' + phone3
+    }
+  },
+  data () {
+    return {
+      orderDate: '',
+      orderTime: '',
+      orderNum: '',
+      userName: '',
+      userPhone: '',
+      userRemark: '',
+      orderMonth: '',
+      orderYear: '',
+      hotelName: '',
+      userimg: userimg,
+      telimg: telimg,
+      isMask: false
+    }
+  },
+  mounted () {
+    let date = new Date()
+    this.orderDate = (sessionStorage.getItem('orderDate') + '').padStart(2, 0)
+    this.orderTime = sessionStorage.getItem('orderTime')
+    this.orderNum = sessionStorage.getItem('orderNum')
+    this.userName = sessionStorage.getItem('userName')
+    this.userPhone = sessionStorage.getItem('userPhone')
+    this.userRemark = sessionStorage.getItem('userRemark')
+    this.hotelName = sessionStorage.getItem('hotelName')
+    this.orderMonth = (sessionStorage.getItem('orderMonth') + '').padStart(2, 0)
+    this.orderYear = date.getFullYear()
+  },
+  methods: {
+    maskShow () {
+      this.isMask = true
+    },
+    maskHidden () {
+      this.isMask = false
     }
   }
 }

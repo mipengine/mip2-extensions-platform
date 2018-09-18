@@ -3,9 +3,15 @@
     <h3>订单已取消</h3>
     <p>请告知我们原因帮助我们改善服务</p>
     <ul class="reasons">
-      <li v-for="reason in reasons" ref="li" @click="select"><span><i></i></span>{{reason}}</li>
+      <li
+        v-for="reason in reasons"
+        ref="li"
+        :key="reason.id"
+        @click="select"><span><i/></span> {{ reason }} </li>
     </ul>
-    <mip-fixed class="pay" @click="toJump">提交</mip-fixed>
+    <mip-fixed
+      class="pay"
+      @click="toJump">提交</mip-fixed>
   </div>
 </template>
 
@@ -49,7 +55,7 @@ p{
   vertical-align: middle;
 }
 .reasons li i{
-  display: inline-block;
+  display: block;
   float: left;
   margin-top: 2px;
   margin-left: 2px;
@@ -82,28 +88,27 @@ p{
 
 <script>
 export default {
-  data(){
-    return{
-      reasons:["不想去了","订单信息有误，需重新下单","反馈太慢，等不及啦","已通过其他方式约定成功","其他"]
+  data () {
+    return {
+      reasons: ['不想去了', '订单信息有误，需重新下单', '反馈太慢，等不及啦', '已通过其他方式约定成功', '其他']
     }
   },
-  methods:{
-    select(e){
-      let $li = this.$refs.li;
-      let el = e.currentTarget;
-      let $len = $li.length;
-      let num = 0;
-      for(let i = 0;i < $len;i ++){
-        $li[i].className = "";
+  mounted () {
+    this.$refs.li[0].className = 'select'
+  },
+  methods: {
+    select (e) {
+      let $li = this.$refs.li
+      let el = e.currentTarget
+      let $len = $li.length
+      for (let i = 0; i < $len; i++) {
+        $li[i].className = ''
       }
-      el.className="select";
+      el.className = 'select'
     },
-    toJump(){
-      MIP.viewer.open("./index.html");
+    toJump () {
+      MIP.viewer.open('./index.html')
     }
-  },
-  mounted(){
-    this.$refs.li[0].className = "select";
   }
 }
 </script>

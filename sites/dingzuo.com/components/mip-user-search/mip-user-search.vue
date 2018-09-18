@@ -1,42 +1,54 @@
 <template type="mip-mustache">
   <div class="mip-search">
     <!-- 占位符 -->
-      <div style="height:44px;"></div>
-      <mip-fixed class="fixbox" type="top" left="0px">
-        <div class="header">
-            <div class="search">
-                <i class="iconfont">&#xe6a8;</i>
-                <div class="inpout"><input type="text" @focus="search" placeholder="找餐厅" v-model="hotelname"/></div>
-            </div>
-            <span>搜索</span>
+    <div style="height:44px;"/>
+    <mip-fixed
+      class="fixbox"
+      type="top"
+      left="0px">
+      <div class="header">
+        <div class="search">
+          <i class="iconfont">&#xe6a8;</i>
+          <div class="inpout"><input
+            v-model="hotelname"
+            type="text"
+            placeholder="找餐厅"
+            @focus="search"></div>
         </div>
-        <!-- 没有搜索到相关内容 -->
-        <div class="none">没有找到相关内容</div>
-      </mip-fixed>
-      <!-- 没有搜索到相关内容的占位符 -->
-      <div style="height: 56px;"></div>
-      <div style="margin-top: 10px;">
-        <!-- 没有搜索到相关内容时的平台推荐 -->
-        <mip-fixed type="top" left="0px" class="recommend"><h3>平台推荐</h3></mip-fixed>
-        <div style="height: 41px;"></div>
-        <!-- 餐厅列表 -->
-        <ul class="hotellist">
-            <li v-for="hotel in hotels" :key="hotel.id">
-                <mip-img
-                   class="hotelimg"
-                   width="115"
-                   height="76"
-                   src="http://fs.kebide.com/2016/11/18/858eca3a7ab44df88ac2c12312a18de9.jpg"
-                ></mip-img>
-                <div class="hotelmes">
-                    <p>{{hotel.name}}</p>
-                    <p><i>人均{{hotel.price}}元</i>|<i>{{hotel.type}}</i></p>
-                    <div class="address"><a href="details.html">预定</a><p><i class="iconfont">&#xe628;</i>{{hotel.address}}</p></div>
-                </div>
-            </li>
-        </ul>
-        <p class="bot"><i></i><span>我是有底线的</span></p>
+        <span>搜索</span>
       </div>
+      <!-- 没有搜索到相关内容 -->
+      <div class="none">没有找到相关内容</div>
+    </mip-fixed>
+    <!-- 没有搜索到相关内容的占位符 -->
+    <div style="height: 56px;"/>
+    <div style="margin-top: 10px;">
+      <!-- 没有搜索到相关内容时的平台推荐 -->
+      <mip-fixed
+        type="top"
+        left="0px"
+        class="recommend"><h3>平台推荐</h3></mip-fixed>
+      <div style="height: 41px;"/>
+      <!-- 餐厅列表 -->
+      <ul class="hotellist">
+        <li
+          v-for="hotel in hotels"
+          :key="hotel.id">
+          <mip-img
+            class="hotelimg"
+            width="115"
+            height="76"
+            src="http://fs.kebide.com/2016/11/18/858eca3a7ab44df88ac2c12312a18de9.jpg"
+          />
+          <div class="hotelmes">
+            <p>{{ hotel.name }}</p>
+            <p><i>人均{{ hotel.price }}元</i>|<i>{{ hotel.type }}</i></p>
+            <div class="address"><a href="details.html">预定</a><p><i class="iconfont">&#xe628;</i>{{ hotel.address }}</p></div>
+          </div>
+        </li>
+      </ul>
+      <p class="bot"><i/><span>我是有底线的</span></p>
+    </div>
   </div>
 </template>
 
@@ -101,7 +113,7 @@ i{
 /* 没有搜索到相关内容时的平台推荐 */
 .recommend{
     background: #F0F0F8;
-    padding-top: 10px; 
+    padding-top: 10px;
     top: 144px;
 }
 .recommend h3{
@@ -197,14 +209,14 @@ i{
 
 <script>
 export default{
-    data(){
-        return{
-            hotels:[
-                {id:1,name:"万龙洲海鲜大酒店(望京店)",price:"43",type:"粤菜",address:"朝阳区新源南路12号三层2号新店"},
-                {id:2,name:"金源酒店(望京店)",price:"43",type:"粤菜",address:"朝阳区新源南路12号"},
-                {id:3,name:"金源酒店(丽泽店)",price:"43",type:"粤菜",address:"朝阳区新源南路12号"}
-            ]
-        }
+  data () {
+    return {
+      hotels: [
+        {id: 1, name: '万龙洲海鲜大酒店(望京店)', price: '43', type: '粤菜', address: '朝阳区新源南路12号三层2号新店'},
+        {id: 2, name: '金源酒店(望京店)', price: '43', type: '粤菜', address: '朝阳区新源南路12号'},
+        {id: 3, name: '金源酒店(丽泽店)', price: '43', type: '粤菜', address: '朝阳区新源南路12号'}
+      ]
     }
+  }
 }
 </script>

@@ -9,6 +9,26 @@
 </template>
 
 <style scoped>
+h3::before{
+content: "";
+position: absolute;
+background:  #E0E0EB;
+width: 200%;
+height: 1px;
+position: absolute;
+top: -20px;
+left: 0;
+-webkit-transform-origin: 0 0;
+-moz-transform-origin: 0 0;
+-ms-transform-origin: 0 0;
+-o-transform-origin: 0 0;
+transform-origin: 0 0;
+-webkit-transform: scale(0.5, 0.5);
+-ms-transform: scale(0.5, 0.5);
+-o-transform: scale(0.5, 0.5);
+transform: scale(0.5, 0.5);
+}
+/* 隐藏滚动条 */
 h3{
   font-size: 18px;
   font-weight: normal;
@@ -30,6 +50,6 @@ p{
 
 <script>
 export default {
-  
+
 }
 </script>

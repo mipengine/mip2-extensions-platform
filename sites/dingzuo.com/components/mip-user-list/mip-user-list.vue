@@ -1,97 +1,140 @@
 <template type="mip-mustache">
-  <div class="mip-list" @click="maskNone">
-      <!-- 占位符 -->
-      <div style="height:90px;"></div>
-      <mip-fixed class="fixbox" type="top" left="0px">
-        <div class="header">
-            <mip-img
-                class="mylogo"
-                width="22"
-                height="22"
-                :src="urlmy"
-                @click="sideShow"
-            ></mip-img>
-            <div class="search">
-                <i @click="toSelect" class="iconfont">&#xe6a8;</i>
-                <div class="inpout"><input type="text" @focus="search" @blur="noSearch" placeholder="找餐厅" v-model="hotelname"/></div>
-            </div>
-            <!-- <span @click="toSelect">搜索</span> -->
+  <div
+    class="mip-list"
+    @click="maskNone">
+    <!-- 占位符 -->
+    <div style="height:90px;"/>
+    <mip-fixed
+      class="fixbox"
+      type="top"
+      left="0px">
+      <div class="header">
+        <mip-img
+          :src="urlmy"
+          class="mylogo"
+          width="22"
+          height="22"
+          @click="sideShow"
+        />
+        <div class="search">
+          <i
+            class="iconfont"
+            @click="toSelect">&#xe6a8;</i>
+          <div class="inpout"><input
+            v-model="hotelname"
+            type="text"
+            placeholder="找餐厅"
+            @focus="search"
+            @blur="noSearch"></div>
         </div>
-        <ul class="listheader" v-show="!isSearch">
-            <li :class='isRecommend?"liselect":""' @click="isRecommend=true">推荐</li>
-            <li :class='isRecommend?"":"liselect"' @click="isRecommend=false">去过的餐厅</li>
-        </ul>
-      </mip-fixed>
-      <div class="main" v-show="!isSearch">
-          <ul class="hotellist">
-              <li class="hotel" v-for="hotel in hotels" :key="hotel.Id">
-                  <mip-img
-                   class="hotelimg"
-                   width="115"
-                   height="76"
-                   :src="hotel.ImgPath"
-                  ></mip-img>
-                  <div class="hotelmes">
-                      <p>{{hotel.Name}}</p>
-                      <p><i class="iconfont">&#xe628;</i>新源南路</P>
-                      <p><span>人均 {{hotel.AverageSpendBegin}}-{{hotel.AverageSpendEnd}}元</span><span>&nbsp;|&nbsp;&nbsp;{{hotel.Cuisine}}</span></p>
-                      <p><span style="display:none">{{hotel.Id}}</span><a @click="toJump" href="https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=g8TDnemHMwFBwr33zAIxG9mGnYoOoBcw&redirect_uri=http://mip.kebide.com/details.html&scope=snsapi_base&state=STATE" mip-link :data-title="hotel.Name">预订</a></p>
-                  </div>
-              </li>
-          </ul>
+        <!-- <span @click="toSelect">搜索</span> -->
       </div>
-      <div class="searchbox" v-show="isSearch">
-          <p>猜你喜欢</p>
-          <ul class="hotels">
-              <li v-for="like in likes" @click="select">{{like}}</li>
-          </ul>
-      </div>
-      <mip-fixed id="mask" type="top" left="0px" ref="mask">
-          <div class="contactus" @click.stop="maskBlock">
-              <p>赶快联系我们吧</p>
-              <p>400-6789-434</p>
-              <ul class="operation">
-                  <li>
-                      <mip-img
-                        class="hotelimg"
-                        width="46"
-                        height="46"
-                        :src="url1"
-                        ></mip-img>
-                      <p>复制</p>
-                  </li>
-                  <li>
-                      <mip-img
-                        class="hotelimg"
-                        width="46"
-                        height="46"
-                        :src="url2"
-                        ></mip-img>
-                      <p>拨打</P>
-                  </li>
-                  <li>
-                      <mip-img
-                        class="hotelimg"
-                        width="46"
-                        height="46"
-                        :src="url3"
-                        ></mip-img>
-                      <p>添加到通讯录</p>
-                  </li>
-              </ul>
+      <ul
+        v-show="!isSearch"
+        class="listheader">
+        <li
+          :class="isRecommend?&quot;liselect&quot;:&quot;&quot;"
+          @click="isRecommend=true">推荐</li>
+        <li
+          :class="isRecommend?&quot;&quot;:&quot;liselect&quot;"
+          @click="isRecommend=false">去过的餐厅</li>
+      </ul>
+    </mip-fixed>
+    <div
+      v-show="!isSearch"
+      class="main">
+      <ul class="hotellist">
+        <li
+          v-for="hotel in hotels"
+          :key="hotel.Id"
+          class="hotel">
+          <mip-img
+            :src="hotel.ImgPath"
+            class="hotelimg"
+            width="115"
+            height="76"
+          />
+          <div class="hotelmes">
+            <p>{{ hotel.Name }}</p>
+            <p><span>人均 {{ hotel.AverageSpendBegin }}-{{ hotel.AverageSpendEnd }}元</span><span>&nbsp;|&nbsp;&nbsp;{{ hotel.Cuisine }}</span></p>
+            <p><i
+              class="iconfont"
+              style="color: #00C093;">&#xe628;</i>新源南路</P>
+            <p><span style="display:none">{{ hotel.Id }}</span><a
+              :data-title="hotel.Name"
+              href="https://openapi.baidu.com/oauth/2.0/authorize?response_type=code&client_id=g8TDnemHMwFBwr33zAIxG9mGnYoOoBcw&redirect_uri=http://mip.kebide.com/details.html&scope=snsapi_base&state=STATE"
+              mip-link
+              @click="toJump">预订</a></p>
           </div>
-      </mip-fixed>
-      <!-- 侧边栏 -->
-      <mip-fixed
-        class="sidebar"
-        type="top"
-        left="0"
-        ref="sidebar"
-        @click="sideHidden"
-      >
-        <div class="sidelist" ref="sidelist" @click.stop="hiddenSide = false">
-            <ul>
-                <!-- <li><a href="./order.html" @click="toHidden">
+        </li>
+      </ul>
+    </div>
+    <div
+      v-show="isSearch"
+      class="searchbox">
+      <p>猜你喜欢</p>
+      <ul class="hotels">
+        <li
+          v-for="like in likes"
+          :key="like.id"
+          @click="select">{{ like }}</li>
+      </ul>
+    </div>
+    <mip-fixed
+      id="mask"
+      ref="mask"
+      type="top"
+      left="0px">
+      <div
+        class="contactus"
+        @click.stop="maskBlock">
+        <p>赶快联系我们吧</p>
+        <p>400-6789-434</p>
+        <ul class="operation">
+          <li>
+            <mip-img
+              :src="url1"
+              class="hotelimg"
+              width="46"
+              height="46"
+            />
+            <p>复制</p>
+          </li>
+          <li>
+            <mip-img
+              :src="url2"
+              class="hotelimg"
+              width="46"
+              height="46"
+            />
+            <p>拨打</P>
+          </li>
+          <li>
+            <mip-img
+              :src="url3"
+              class="hotelimg"
+              width="46"
+              height="46"
+            />
+            <p>添加到通讯录</p>
+          </li>
+        </ul>
+      </div>
+    </mip-fixed>
+    <!-- 侧边栏 -->
+    <mip-fixed
+      ref="sidebar"
+      class="sidebar"
+      type="top"
+      left="0"
+      @click="sideHidden"
+    >
+      <div
+        ref="sidelist"
+        class="sidelist"
+        @click.stop="hiddenSide = false">
+        <ul>
+          <!-- <li><a href="./order.html" @click="toHidden">
                     <mip-img
                         class="listlogo"
                         width="22"
@@ -100,27 +143,37 @@
                     ></mip-img>
                     我的订单
                 </a></li> -->
-                <li><a href="./abouts.html" @click="toHidden">
-                    <mip-img
-                        class="listlogo"
-                        width="22"
-                        height="22"
-                        :src="aboutdz"
-                    ></mip-img>
-                    关于盯座
-                </a></li>
-                <li><a href="#" @click="maskBlock">
-                    <mip-img
-                        class="listlogo"
-                        width="22"
-                        height="22"
-                        :src="callus"
-                    ></mip-img>
-                    联系我们
-                </a></li>
-            </ul>
-        </div>
-      </mip-fixed>
+          <li><a
+            href="./abouts.html"
+            @click="toHidden">
+            <mip-img
+              :src="aboutdz"
+              class="listlogo"
+              width="22"
+              height="22"
+            />
+            关于盯座
+          </a></li>
+          <li><a
+            href="#"
+            @click="maskBlock">
+            <mip-img
+              :src="callus"
+              class="listlogo"
+              width="22"
+              height="22"
+            />
+            联系我们
+          </a></li>
+        </ul>
+        <mip-img
+          :src="sideback"
+          class="sideback"
+          width="160"
+          height="247"
+        />
+      </div>
+    </mip-fixed>
   </div>
 </template>
 <style scoped>
@@ -156,10 +209,13 @@ height: 38px;
 padding-top: 6px;
 font-size: 15px;
 color: #000000;
+padding-right: 10px;
 }
 .header .mylogo{
 vertical-align: middle;
-margin-left: 3%;
+margin-left: 10px;
+float: left;
+margin-top: 5px;
 }
 .header span{
 display: inline-block;
@@ -167,9 +223,8 @@ width: 12%;
 text-align: center;
 }
 .header .search{
-display: inline-block;
-margin-left: 2%;
-width: 78%;
+display: block;
+margin-left: 40px;
 height: 30px;
 border: 1px solid #DCDCE2;
 border-radius: 4px;
@@ -232,24 +287,24 @@ font-size: 16px;
 color: #666666;
 margin-left: 5px;
 }
-.main .hotellist .hotel .hotelmes p:nth-of-type(2){
+.main .hotellist .hotel .hotelmes p:nth-of-type(3){
 font-size: 13px;
-color: #FD8F14;
+color: #999999;
 margin-top: 5px;
 }
-.main .hotellist .hotel .hotelmes p:nth-of-type(3){
+.main .hotellist .hotel .hotelmes p:nth-of-type(2){
 font-size: 13px;
 color: #FD8F14;
 margin-top: 5px;
 height: 20px;
 }
-.main .hotellist .hotel .hotelmes p:nth-of-type(3) span{
-display: inline-block;
+.main .hotellist .hotel .hotelmes p:nth-of-type(2) span{
+display: block;
 float: left;
 }
-.main .hotellist .hotel .hotelmes p:nth-of-type(3) span:last-child{
+.main .hotellist .hotel .hotelmes p:nth-of-type(2) span:last-child{
 margin-left: 4px;
-color: #666666;
+color: #999999;
 height: 17px;
 width: 90px;
 overflow: hidden;
@@ -293,7 +348,7 @@ border-radius: 4px;
 }
 #mask .contactus p:nth-of-type(1){
 padding:0 15px;
-color: #666666;
+color: #999999;
 }
 #mask .contactus p:nth-of-type(2){
 height: 76px;
@@ -361,10 +416,16 @@ background: #FFFFFF;
 position: absolute;
 left: -160px;
 }
+.sidebar .sidelist .sideback{
+position: absolute;
+bottom: 0;
+left: 0;
+}
 .sidebar .sidelist ul{
 margin-top: 44px;
 padding: 15px;
 padding-right: 0;
+border-top: 1px solid #F0F0F8;
 }
 .sidebar .sidelist ul li{
 height: 40px;
@@ -379,168 +440,170 @@ margin-right: 10px;
 </style>
 
 <script>
-import img1 from "@/static/copy.png"
-import img2 from "@/static/phone.png"
-import img3 from "@/static/add.png"
-import imgmy from "@/static/my.png"
-import myorder from "@/static/myorder.png"
-import aboutdz from "@/static/aboutdz.png"
-import callus from "@/static/callus.png"
+import img1 from '@/static/copy.png'
+import img2 from '@/static/phone.png'
+import img3 from '@/static/add.png'
+import imgmy from '@/static/my.png'
+import myorder from '@/static/myorder.png'
+import aboutdz from '@/static/aboutdz.png'
+import callus from '@/static/callus.png'
+import sideback from '@/static/sideback.png'
 export default {
-    data(){
-        return{
-            // 餐厅列表
-            hotels:[],
-            // 猜你喜欢
-            likes:["白家大院","晋风庄园","九十九顶毡房","天水雅居","万龙洲","京兆伊","又一村"],
-            // 是否是推荐餐厅列表
-            isRecommend:true,
-            url1:img1,
-            url2:img2,
-            url3:img3,
-            urlmy:imgmy,
-            myorder:myorder,
-            aboutdz:aboutdz,
-            callus:callus,
-            // 是否是搜索
-            isSearch:false,
-            // 搜索的餐厅名
-            hotelname:'',
-            hidddenSide:false
-        }
-    },
-    mounted(){
-        // let req = new Request("http://218.245.1.14:8018/api/restaurant/GetRestaurants",{
-        //   method:"POST",
-        //   headers:{
-        //     'Content-Type': 'application/x-www-form-urlencoded' // 指定提交方式为表单提交
-        //   }
-        // });
-        let reqUrl = "http://booking.shengyan.com.cn/api/restaurant/GetRestaurants";
-        let that = this;
-        // 获取餐厅列表
-        fetch(reqUrl,{
-            method:"POST",
-            headers:{
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body:'epoiName'
-        }).then(function(response){
-            return response.json();
-        }).then(function(myJson){
-            that.hotels = myJson.Data;
-        }).catch(function(err){
-            console.log(err);
-        });
-        // 点击显示联系我们窗口
-        this.$nextTick(()=>{
-            let oBtn = document.getElementsByClassName("mip-shell-button")[1];
-            let oMask = this.$refs.mask;
-            if(oBtn){
-                oBtn.onclick = ()=>{
-                   oMask.style.display = "block";
-                }
-            }
-        });
-    },
-    methods:{
-        // 联系我们窗口隐藏
-        maskNone(){
-            this.$refs.mask.style.display = "none";
-        },
-        // 联系我们窗口显示
-        maskBlock(){
-            this.hiddenSide = true;
-            if(this.hiddenSide){
-                let sideBar = this.$refs.sidebar;
-                let sideList = this.$refs.sidelist;
-                let listLeft = 0;
-                let timer = setInterval(()=>{
-                    listLeft -= 5;
-                    sideList.style.left = listLeft + "px";
-                    if(listLeft <= -160){
-                        clearInterval(timer);
-                        setTimeout(()=>{
-                            sideBar.style.display="none";
-                            this.$refs.mask.style.display = "block";
-                        },200)
-                    }
-                },10)
-            }
-        },
-        // 页面跳转
-        toJump(e){
-            let el = e.target;
-            sessionStorage.setItem("hotelId",el.parentNode.firstChild.innerHTML);
-            sessionStorage.setItem("hotelName",el.parentNode.parentNode.children[0].innerHTML);
-        },
-        search(){
-            this.isSearch = true;
-            document.querySelector('body').style.background="#FFFFFF";
-        },
-        noSearch(){
-            if(this.hotelname===""){
-                this.isSearch = false;
-                document.querySelector('body').style.background="";
-            }
-        },
-        select(e){
-            let el = e.target;
-            this.hotelname = el.innerHTML;
-            this.isSearch = true;
-            document.querySelector('body').style.background="#FFFFFF";
-        },
-        toSelect(){
-            if(this.hotelname != ""){
-                // MIP.viewer.open("./search.html");
-                this.isSearch = false;
-                document.querySelector('body').style.background="";
-            }
-        },
-        sideShow(){
-            let sideBar = this.$refs.sidebar;
-            let sideList = this.$refs.sidelist;
-            sideBar.style.display="block";
-            let listLeft = -160;
-            let timer = setInterval(()=>{
-                listLeft += 5;
-                sideList.style.left = listLeft + "px";
-                if(listLeft >= 0){
-                    clearInterval(timer);
-                }
-            },10)
-        },
-        sideHidden(){
-            this.hiddenSide = true;
-            if(this.hiddenSide){
-                let sideBar = this.$refs.sidebar;
-                let sideList = this.$refs.sidelist;
-                let listLeft = 0;
-                let timer = setInterval(()=>{
-                    listLeft -= 5;
-                    sideList.style.left = listLeft + "px";
-                    if(listLeft <= -160){
-                        clearInterval(timer);
-                        let opacity = 10;
-                        let timer2 = setInterval(()=>{
-                            opacity--;
-                            sideBar.style.opacity = opacity/10;
-                            if(opacity<=0){
-                                clearInterval(timer2);
-                                sideBar.style.display="none";
-                                sideBar.style.opacity = 10;
-                            }
-                        },20)
-                    }
-                },10)
-            }
-        },
-        toHidden(){
-            let sideBar = this.$refs.sidebar;
-            let sideList = this.$refs.sidelist;
-            sideBar.style.display = "none";
-            sideList.style.left = "-160px";
-        }
+  data () {
+    return {
+      // 餐厅列表
+      hotels: [],
+      // 猜你喜欢
+      likes: ['白家大院', '晋风庄园', '九十九顶毡房', '天水雅居', '万龙洲', '京兆伊', '又一村'],
+      // 是否是推荐餐厅列表
+      isRecommend: true,
+      url1: img1,
+      url2: img2,
+      url3: img3,
+      urlmy: imgmy,
+      myorder: myorder,
+      aboutdz: aboutdz,
+      callus: callus,
+      sideback: sideback,
+      // 是否是搜索
+      isSearch: false,
+      // 搜索的餐厅名
+      hotelname: '',
+      hidddenSide: false
     }
+  },
+  mounted () {
+    // let req = new Request("http://218.245.1.14:8018/api/restaurant/GetRestaurants",{
+    //   method:"POST",
+    //   headers:{
+    //     'Content-Type': 'application/x-www-form-urlencoded' // 指定提交方式为表单提交
+    //   }
+    // });
+    let reqUrl = 'http://booking.shengyan.com.cn/api/restaurant/GetRestaurants'
+    let that = this
+    // 获取餐厅列表
+    fetch(reqUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'epoiName'
+    }).then(function (response) {
+      return response.json()
+    }).then(function (myJson) {
+      that.hotels = myJson.Data
+    }).catch(function (err) {
+      console.log(err)
+    })
+    // 点击显示联系我们窗口
+    this.$nextTick(() => {
+      let oBtn = document.getElementsByClassName('mip-shell-button')[1]
+      let oMask = this.$refs.mask
+      if (oBtn) {
+        oBtn.onclick = () => {
+          oMask.style.display = 'block'
+        }
+      }
+    })
+  },
+  methods: {
+    // 联系我们窗口隐藏
+    maskNone () {
+      this.$refs.mask.style.display = 'none'
+    },
+    // 联系我们窗口显示
+    maskBlock () {
+      this.hiddenSide = true
+      if (this.hiddenSide) {
+        let sideBar = this.$refs.sidebar
+        let sideList = this.$refs.sidelist
+        let listLeft = 0
+        let timer = setInterval(() => {
+          listLeft -= 5
+          sideList.style.left = listLeft + 'px'
+          if (listLeft <= -160) {
+            clearInterval(timer)
+            setTimeout(() => {
+              sideBar.style.display = 'none'
+              this.$refs.mask.style.display = 'block'
+            }, 200)
+          }
+        }, 10)
+      }
+    },
+    // 页面跳转
+    toJump (e) {
+      let el = e.target
+      sessionStorage.setItem('hotelId', el.parentNode.firstChild.innerHTML)
+      sessionStorage.setItem('hotelName', el.parentNode.parentNode.children[0].innerHTML)
+    },
+    search () {
+      this.isSearch = true
+      document.querySelector('body').style.background = '#FFFFFF'
+    },
+    noSearch () {
+      if (this.hotelname === '') {
+        this.isSearch = false
+        document.querySelector('body').style.background = ''
+      }
+    },
+    select (e) {
+      let el = e.target
+      this.hotelname = el.innerHTML
+      this.isSearch = true
+      document.querySelector('body').style.background = '#FFFFFF'
+    },
+    toSelect () {
+      if (this.hotelname !== '') {
+        // MIP.viewer.open("./search.html");
+        this.isSearch = false
+        document.querySelector('body').style.background = ''
+      }
+    },
+    sideShow () {
+      let sideBar = this.$refs.sidebar
+      let sideList = this.$refs.sidelist
+      sideBar.style.display = 'block'
+      let listLeft = -160
+      let timer = setInterval(() => {
+        listLeft += 5
+        sideList.style.left = listLeft + 'px'
+        if (listLeft >= 0) {
+          clearInterval(timer)
+        }
+      }, 10)
+    },
+    sideHidden () {
+      this.hiddenSide = true
+      if (this.hiddenSide) {
+        let sideBar = this.$refs.sidebar
+        let sideList = this.$refs.sidelist
+        let listLeft = 0
+        let timer = setInterval(() => {
+          listLeft -= 5
+          sideList.style.left = listLeft + 'px'
+          if (listLeft <= -160) {
+            clearInterval(timer)
+            let opacity = 10
+            let timer2 = setInterval(() => {
+              opacity--
+              sideBar.style.opacity = opacity / 10
+              if (opacity <= 0) {
+                clearInterval(timer2)
+                sideBar.style.display = 'none'
+                sideBar.style.opacity = 10
+              }
+            }, 20)
+          }
+        }, 10)
+      }
+    },
+    toHidden () {
+      let sideBar = this.$refs.sidebar
+      let sideList = this.$refs.sidelist
+      sideBar.style.display = 'none'
+      sideList.style.left = '-160px'
+    }
+  }
 }
 </script>
