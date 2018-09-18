@@ -1067,52 +1067,51 @@ li, ol, ul {
         margin: 0 -2rem;
         border-top: @normal-border;
     }
-    .pop-content{
-            margin-top:36px;
-            width: 100%;
-            background-color: #fff;
-            box-shadow: -1px 0px 13px 0px #9c9595;
-            color: #666;
-            .price-item {
-              font-size: 12px;
-              color: rgb( 73,73,73);
-              line-height: 20px;
-              margin-bottom: 5px;
-              text-indent: -5em;
-              padding-left: 5em;
-              .font2{
-                float:right;
-                text-align: right;
-                color: rgb(51,21,17);
-              }
-            }
-            .header {
-                .pt(30);
-                .fs(16);
-                text-align: center;
-                color: rgb(51,21,17);
-            }
-            .box {
-                .mt(30);
-                .mb(60);
-                padding: 0 1.5rem;
-                .fs(12);
-                color: rgb(119,119,119);
-                .lh(18);
-            }
-            .close{
-                width: 100%;
-                height: 5rem;
-                line-height: 5rem;
-                font-size: 1.6rem;
-                color: #fff;
-                text-align: center;
-                background-color: @main-color;
-                background-image: linear-gradient(to right, rgb( 239, 104, 86), rgb( 255, 49, 101));
-            }
-        }
 }
-
+  .pop-content{
+      margin-top:36px;
+      width: 100%;
+      background-color: #fff;
+      box-shadow: -1px 0px 13px 0px #9c9595;
+      color: #666;
+      .price-item {
+        font-size: 12px;
+        color: rgb( 73,73,73);
+        line-height: 20px;
+        margin-bottom: 5px;
+        text-indent: -5em;
+        padding-left: 5em;
+        .font2{
+          float:right;
+          text-align: right;
+          color: rgb(51,21,17);
+        }
+      }
+      .header {
+          .pt(30);
+          .fs(16);
+          text-align: center;
+          color: rgb(51,21,17);
+      }
+      .box {
+          .mt(30);
+          .mb(60);
+          padding: 0 1.5rem;
+          .fs(12);
+          color: rgb(119,119,119);
+          .lh(18);
+      }
+      .close{
+          width: 100%;
+          height: 5rem;
+          line-height: 5rem;
+          font-size: 1.6rem;
+          color: #fff;
+          text-align: center;
+          background-color: @main-color;
+          background-image: linear-gradient(to right, rgb( 239, 104, 86), rgb( 255, 49, 101));
+      }
+    }
   .footer{
     // height: 5rem;
     // min-height: 5rem;
