@@ -401,10 +401,9 @@
             font-size: 1rem;
             break-inside: avoid;
             box-sizing: border-box;
-            display: inline-block;
             height: 1.4rem;
             line-height: 1.4rem;
-            padding: 0 2px;
+            padding: 1px 2px;
             &.low-price {
               border-radius: 2px;
               background-image: linear-gradient(118deg, #ef6856, #ff3165);
