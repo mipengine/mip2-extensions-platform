@@ -147,8 +147,7 @@
       </div>
     </div>
     <mip-fixed
-      type="bottom"
-      still>
+      type="bottom">
       <div class="content-footer">
         <a
           class="customer-service"
@@ -199,8 +198,7 @@
       class="bottom-popup">
       <mip-fixed
         type="bottom"
-        class="popup-content"
-        still>
+        class="popup-content">
         <div class="popup-title">
           {{ content.show.isShowDescription?"观影须知":"购票提示" }}
         </div>
@@ -971,86 +969,6 @@
             }
         }
     }
-    .content-footer{
-        min-height: 6.2rem;
-        flex-basis: 6.2rem;
-        display: flex;
-        width: 100%;
-        border-top: 1px solid rgb(228,228,228);
-        padding: 0.9rem 0;
-        z-index: 1000;
-        align-items: center;
-        position: relative;
-        background-color: #fff;
-        .show-operation-tip{
-          display: none;
-          width: 100%;
-          position: absolute;
-          top: -4rem;
-          height: 4rem;
-          color: #fff;
-          background-image: linear-gradient(276deg, rgba(255, 29, 65, 0.93), rgba(238, 14, 135, 0.93));
-          line-height: 4rem;
-          text-align: center;
-          font-size: 1.3rem;
-        }
-        .icon{
-            width: 100%;
-            height: 2.5rem;
-        }
-        .label{
-             width: 100%;
-             font-size: 1rem;
-             color: rgb(170,170,170);
-             text-align: center;
-        }
-        .customer-service{
-            width: 5.5rem;
-            border-right: 1px solid rgb(228,228,228);
-            .icon{
-                background: url(~@/static/icon/customer-service.png) center center no-repeat;
-                background-size: 22px 22px;
-            }
-        }
-        .footer-btn-wrapper{
-          flex: 1;
-          padding-right: 0.9rem;
-          display: flex;
-        }
-        .footer-btn{
-          color: #fff;
-          line-height: 4.4rem;
-          height: 4.4rem;
-          text-align: center;
-          font-size: 1.6rem;
-          flex: 1;
-          margin-right: 0.9rem;
-          border-radius: 2px;
-        }
-        .choose-seat{
-            background-image: linear-gradient(107deg, #fec736, #ff8006);
-        }
-        .book-ticket{
-            background-image: linear-gradient(287deg, #f80000, #fc5f13);
-        }
-        .choose-ticket{
-            background-image: linear-gradient(287deg, #ff1d41, #ee0e87);
-        }
-        .prebook-btn{
-            background-image: linear-gradient(278deg, #00a35f, #30d08d);
-        }
-        .prebooked{
-            background-color: #f6f6f7;
-            color: #68676c;
-        }
-        .book-lackage{
-            background-color: #323038;
-        }
-        .lackage-booked,.show-over{
-          background-color: #f6f6f7;
-          color: #68676c;
-        }
-    }
     .popup-title{
       width: 100%;
       text-align: center;
@@ -1113,6 +1031,87 @@
       }
     }
   }
+}
+
+.content-footer{
+    min-height: 6.2rem;
+    flex-basis: 6.2rem;
+    display: flex;
+    width: 100%;
+    border-top: 1px solid rgb(228,228,228);
+    padding: 0.9rem 0;
+    z-index: 1000;
+    align-items: center;
+    position: relative;
+    background-color: #fff;
+    .show-operation-tip{
+      display: none;
+      width: 100%;
+      position: absolute;
+      top: -4rem;
+      height: 4rem;
+      color: #fff;
+      background-image: linear-gradient(276deg, rgba(255, 29, 65, 0.93), rgba(238, 14, 135, 0.93));
+      line-height: 4rem;
+      text-align: center;
+      font-size: 1.3rem;
+    }
+    .icon{
+        width: 100%;
+        height: 2.5rem;
+    }
+    .label{
+          width: 100%;
+          font-size: 1rem;
+          color: rgb(170,170,170);
+          text-align: center;
+    }
+    .customer-service{
+        width: 5.5rem;
+        border-right: 1px solid rgb(228,228,228);
+        .icon{
+            background: url(~@/static/icon/customer-service.png) center center no-repeat;
+            background-size: 22px 22px;
+        }
+    }
+    .footer-btn-wrapper{
+      flex: 1;
+      padding-right: 0.9rem;
+      display: flex;
+    }
+    .footer-btn{
+      color: #fff;
+      line-height: 4.4rem;
+      height: 4.4rem;
+      text-align: center;
+      font-size: 1.6rem;
+      flex: 1;
+      margin-right: 0.9rem;
+      border-radius: 2px;
+    }
+    .choose-seat{
+        background-image: linear-gradient(107deg, #fec736, #ff8006);
+    }
+    .book-ticket{
+        background-image: linear-gradient(287deg, #f80000, #fc5f13);
+    }
+    .choose-ticket{
+        background-image: linear-gradient(287deg, #ff1d41, #ee0e87);
+    }
+    .prebook-btn{
+        background-image: linear-gradient(278deg, #00a35f, #30d08d);
+    }
+    .prebooked{
+        background-color: #f6f6f7;
+        color: #68676c;
+    }
+    .book-lackage{
+        background-color: #323038;
+    }
+    .lackage-booked,.show-over{
+      background-color: #f6f6f7;
+      color: #68676c;
+    }
 }
 </style>
 
