@@ -82,7 +82,7 @@ export default {
   props: {
     prefixUrl: {
       type: String,
-      default: ""
+      default: ''
     },
     showTypeData: {
       type: Array,
@@ -90,45 +90,45 @@ export default {
     },
     activeType: {
       type: String,
-      default: "1"
+      default: '1'
     },
     keyword: {
       type: String,
-      default: ""
+      default: ''
     }
   },
-  data() {
+  data () {
     return {
       showNav: true
-    };
+    }
   },
-  mounted() {
-    let me = this;
-    console.log("列表导航加载ok!");
-    MIP.watch("keyword", newValue => {
-      me.showNav = newValue === "";
-      me.keyword = newValue;
-    });
+  mounted () {
+    let me = this
+    console.log('列表导航加载ok!')
+    MIP.watch('keyword', newValue => {
+      me.showNav = newValue === ''
+      me.keyword = newValue
+    })
   },
   methods: {
-    resetKeyword() {
+    resetKeyword () {
       MIP.setData({
-        keyword: ""
-      });
+        keyword: ''
+      })
     },
-    switchType(type) {
+    switchType (type) {
       MIP.setData({
         activeType: type,
         loading: true
-      });
-      setTimeout(function() {
-        if (MIP.getData("loading")) {
+      })
+      setTimeout(function () {
+        if (MIP.getData('loading')) {
           MIP.setData({
             loading: false
-          });
+          })
         }
-      }, 2000);
+      }, 2000)
     }
   }
-};
+}
 </script>

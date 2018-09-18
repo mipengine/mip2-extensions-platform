@@ -147,8 +147,9 @@
       </div>
     </div>
     <mip-fixed
+      v-show="displayPurchaseTip"
       type="bottom"
-      class="popup-content" v-show="displayPurchaseTip">
+      class="popup-content">
       <div class="bottom-popup" >
         <div class="popup-title">
           {{ content.show.isShowDescription?"观影须知":"购票提示" }}
@@ -1130,36 +1131,36 @@
 </style>
 
 <script>
-import { httpGet } from "@/common/httpUtil";
-import { searchValueByKey, templateCompile } from "@/common/urlUtil";
-import * as sessionStorageUtil from "@/common/sessionStorageUtil";
-import * as adapterStorageUtil from "@/common/adapterStorageUtil";
+import { httpGet } from '@/common/httpUtil'
+import { searchValueByKey, templateCompile } from '@/common/urlUtil'
+import * as sessionStorageUtil from '@/common/sessionStorageUtil'
+import * as adapterStorageUtil from '@/common/adapterStorageUtil'
 export default {
   props: {
     prefixUrl: {
       type: String,
-      default: ""
+      default: ''
     },
     src: {
       type: String,
-      default: ""
+      default: ''
     },
     nextUrl: {
       type: String,
-      default: ""
+      default: ''
     },
     showBuyTipUrl: {
       type: String,
-      default: ""
+      default: ''
     }
   },
-  data() {
+  data () {
     return {
       displayPurchaseTip: false,
       showWholeDetail: false,
       content: {
         show: {
-          posterURL: ""
+          posterURL: ''
         },
         showStatus: {},
         recommendShows: {}
@@ -1168,115 +1169,115 @@ export default {
       pocketCoupons: [],
       showStatusMap: {
         presell: {
-          title: "本节目尚在预售中",
-          tagName: "预售中",
-          tagClass: "presell"
+          title: '本节目尚在预售中',
+          tagName: '预售中',
+          tagClass: 'presell'
         },
         prebook: {
-          title: "本节目尚未开售",
-          tagName: "未开售",
-          tagClass: "prebook"
+          title: '本节目尚未开售',
+          tagName: '未开售',
+          tagClass: 'prebook'
         },
         lackage: {
-          title: "本节目暂时缺票",
-          tagName: "暂时缺票",
-          tagClass: "lackage"
+          title: '本节目暂时缺票',
+          tagName: '暂时缺票',
+          tagClass: 'lackage'
         }
       }
-    };
-  },
-  computed: {
-    isShowInPresell() {
-      let _self = this;
-      let status = _self.content.show.showStatus
-        ? _self.content.show.showStatus.code
-        : 2;
-      return status === 2 && _self.content.show.minPrice > 0;
-    },
-    isShowInLackage() {
-      let _self = this;
-      let status = _self.content.show.showStatus
-        ? _self.content.show.showStatus.code
-        : 2;
-      return (
-        (status === 2 || status === 3) && _self.content.show.minPrice === 0
-      );
-    },
-    isShowInPreBook() {
-      let _self = this;
-      let status = _self.content.show.showStatus
-        ? _self.content.show.showStatus.code
-        : 2;
-      return status === 1;
-    },
-    isShowInOver() {
-      let _self = this;
-      let status = _self.content.show.showStatus
-        ? _self.content.show.showStatus.code
-        : 2;
-      return status === 4;
     }
   },
-  mounted() {
-    let _self = this;
-    sessionStorageUtil.syncSessionData();
-    _self.prefixUrl && sessionStorageUtil.set("prefix", _self.prefixUrl);
-    _self.fetchShow(searchValueByKey("id"));
+  computed: {
+    isShowInPresell () {
+      let _self = this
+      let status = _self.content.show.showStatus
+        ? _self.content.show.showStatus.code
+        : 2
+      return status === 2 && _self.content.show.minPrice > 0
+    },
+    isShowInLackage () {
+      let _self = this
+      let status = _self.content.show.showStatus
+        ? _self.content.show.showStatus.code
+        : 2
+      return (
+        (status === 2 || status === 3) && _self.content.show.minPrice === 0
+      )
+    },
+    isShowInPreBook () {
+      let _self = this
+      let status = _self.content.show.showStatus
+        ? _self.content.show.showStatus.code
+        : 2
+      return status === 1
+    },
+    isShowInOver () {
+      let _self = this
+      let status = _self.content.show.showStatus
+        ? _self.content.show.showStatus.code
+        : 2
+      return status === 4
+    }
+  },
+  mounted () {
+    let _self = this
+    sessionStorageUtil.syncSessionData()
+    _self.prefixUrl && sessionStorageUtil.set('prefix', _self.prefixUrl)
+    _self.fetchShow(searchValueByKey('id'))
   },
   methods: {
-    fetchShow(id) {
-      let _self = this;
-      let fetchUrl = templateCompile(this.src, { id });
+    fetchShow (id) {
+      let _self = this
+      let fetchUrl = templateCompile(this.src, { id })
       httpGet(fetchUrl)
-        .then(function(data) {
+        .then(function (data) {
           if (data.result && data.result.data) {
-            _self.content.show = data.result.data;
-            let limitation = data.result.data.limitation;
-            adapterStorageUtil.set("buy_num_limit", limitation);
-            _self.content.showStatus = _self.getShowStatusTip() || {};
+            _self.content.show = data.result.data
+            let limitation = data.result.data.limitation
+            adapterStorageUtil.set('buy_num_limit', limitation)
+            _self.content.showStatus = _self.getShowStatusTip() || {}
           }
         })
-        .catch(function(err) {
-          console.log(err);
-        });
+        .catch(function (err) {
+          console.log(err)
+        })
     },
-    bookingLink(id) {
-      return `${this.nextUrl}?id=${id}`;
+    bookingLink (id) {
+      return `${this.nextUrl}?id=${id}`
     },
-    tips() {
+    tips () {
       return [
-        "演出详情仅供参考，具体信息以主办方公布信息及现场为准，请准时到场以免错过演出。",
-        "鉴于文体演出票品特殊性（具有时效性、唯一性等特征），一旦用户与卖家达成有效订单代表交易协议生效，用户不能主动要求取消交易（因演出活动被取消或延期除外）。",
-        "鉴于票品的不可复制性与稀缺性，本平台对每个演出（活动）均设有限购数量，平台有权无理由取消任何用户超过限购数量的交易，平台识别同一用户的方式包括但不限于同一注册手机号、同一收货手机号、同一快递地址、同一付款账户、同一下单设备等。",
-        "本平台尽最大努力促使卖家对交易协议的履行，如果卖家付票过程中发生问题，本平台可寻求其它卖家提供更高票面或相同票面更好位置票品代替，否则，平台将全额退款并按订单上约定的赔付方式与金额向用户进行赔付，详细规则请见<常见问题-无票赔付>。"
-      ];
+        '演出详情仅供参考，具体信息以主办方公布信息及现场为准，请准时到场以免错过演出。',
+        '鉴于文体演出票品特殊性（具有时效性、唯一性等特征），一旦用户与卖家达成有效订单代表交易协议生效，用户不能主动要求取消交易（因演出活动被取消或延期除外）。',
+        '鉴于票品的不可复制性与稀缺性，本平台对每个演出（活动）均设有限购数量，平台有权无理由取消任何用户超过限购数量的交易，平台识别同一用户的方式包括但不限于同一注册手机号、同一收货手机号、同一快递地址、同一付款账户、同一下单设备等。',
+        '本平台尽最大努力促使卖家对交易协议的履行，如果卖家付票过程中发生问题，本平台可寻求其它卖家提供更高票面或相同票面更好位置票品代替，否则，平台将全额退款并按订单上约定的赔付方式与金额向用户进行赔付，详细规则请见<常见问题-无票赔付>。'
+      ]
     },
-    getShowStatusTip() {
+    getShowStatusTip () {
       if (this.isShowInPresell) {
-        return this.showStatusMap.presell;
+        return this.showStatusMap.presell
       }
       if (this.isShowInPreBook) {
-        return this.showStatusMap.prebook;
+        return this.showStatusMap.prebook
       }
       if (this.isShowInLackage) {
-        return this.showStatusMap.lackage;
+        return this.showStatusMap.lackage
       }
     },
-    showPurchaseTip() {
-      let me = this;
+    showPurchaseTip () {
+      let me = this
       if (me.content.show.isShowDescription) {
-        let id = me.content.show.showOID;
-        let showBuyTipUrl = templateCompile(this.showBuyTipUrl, { id });
-        httpGet(showBuyTipUrl).then(function(data) {
+        let id = me.content.show.showOID
+        let showBuyTipUrl = templateCompile(this.showBuyTipUrl, { id })
+        httpGet(showBuyTipUrl).then(function (data) {
           if (data.statusCode === 200) {
-            me.showDesc = data.result.data;
-            me.displayPurchaseTip = true;
+            me.showDesc = data.result.data
+            me.displayPurchaseTip = true
           }
-        });
+        })
       } else {
-        me.displayPurchaseTip = true;
+        me.displayPurchaseTip = true
       }
     }
   }
-};
+}
 </script>
