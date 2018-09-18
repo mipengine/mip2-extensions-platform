@@ -1,6 +1,7 @@
 <template>
   <div class="floatConsult"><a
-    data-type="mip">咨询</a></div>
+    data-type="mip"
+    @click="callIM">咨询</a></div>
 </template>
 
 <script>
