@@ -70,7 +70,7 @@
 
     <!--收件人信息-->
     <div
-      v-if="isShowAddress"
+      v-if="isShowAddress || hasBook > 0"
       class="sjrxx clearfix">
       <div class="tit clearfix">
         <div class="tit-left fl pr">
