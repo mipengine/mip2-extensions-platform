@@ -12,7 +12,7 @@
         />
         <mip-img
           v-else
-          src="/v2/images/avatar-default.png"
+          src="https://xxd.smartstudy.com/v2/images/avatar-default.png"
           alt="默认头像"
         />
       </div>
@@ -24,13 +24,13 @@
     >
       <div class="image-src">
         <mip-img
-          src="/v2/images/avatar-default.png"
+          src="https://xxd.smartstudy.com/v2/images/avatar-default.png"
           alt="默认头像"
         />
       </div>
       <div
         class="login"
-        on="tap:MIP.setData({isSideLogin:true}) tap:user.login"
+        on="tap:helper.change tap:user.login"
       >
         登录/注册
       </div>
