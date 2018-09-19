@@ -208,21 +208,21 @@
         </div>
       </div>
     </div>
-    <div v-if="toastmsg">
-      <mip-fixed
-        type="top"
-        class="toast-container">
-        <div
-          class="toast-msg">
-          {{ toastmsg }}
-        </div>
-      </mip-fixed>
-    </div>
+    <mip-fixed
+      v-show="toastmsg"
+      type="top"
+      class="toast-wrap">
+      <div
+        v-if="toastmsg"
+        class="toast-msg">
+        {{ toastmsg }}
+      </div>
+    </mip-fixed>
   </div>
 </template>
 
 <style scoped lang="less">
-a{
+*{
   -webkit-tap-highlight-color: transparent;
   outline: none;
 }
@@ -451,7 +451,7 @@ a{
   -webkit-box-align: @align;
   box-align: @align;
 }
-.toast-container{
+.toast-wrap{
   top: 200px !important;
   text-align: center;
 }
@@ -694,9 +694,7 @@ export default {
       showEticket: false,
       limitation: 0,
       token: '',
-      pageData: {
-        toastmsg: ''
-      },
+      toastmsg: '',
       dateRange: [
         { text: '全部', value: 365, display: false },
         { text: '今天', value: 0, display: false },
@@ -818,9 +816,9 @@ export default {
       let me = this
       if (msg !== '') {
         timeout = timeout || 2000
-        me.pageData.toastmsg = msg
+        me.toastmsg = msg
         setTimeout(() => {
-          me.pageData.toastmsg = ''
+          me.toastmsg = ''
         }, timeout)
       }
     },
