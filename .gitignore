@@ -4,7 +4,6 @@ auth/
 mip-example/
 npm-debug.log
 Thumbs.db
-package-lock.json
 .DS_Store
 *.svn
 .svn
@@ -21,3 +20,4 @@ package-lock.json
 config
 README.txt
 servers
+package-lock.json
