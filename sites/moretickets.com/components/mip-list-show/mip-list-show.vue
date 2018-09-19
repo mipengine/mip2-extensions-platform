@@ -115,6 +115,7 @@ a{
   padding: 0 4%;
   position: relative;
   z-index: 1000;
+  padding-top: 26px;
   .box-flex(1)
 }
 .show-component{
