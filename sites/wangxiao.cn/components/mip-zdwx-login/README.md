@@ -14,8 +14,7 @@
 ## 示例
 
 示例说明
-<mip-zdwx-consult id="consult"></mip-zdwx-consult>
-<mip-zdwx-login></mip-zdwx-login>
+<mip-zdwx-login id="example" url="https://www.baidu.com"></mip-zdwx-login>
 
 ## 属性
 
