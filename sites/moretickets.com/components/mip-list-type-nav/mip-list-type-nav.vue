@@ -38,6 +38,10 @@
 </template>
 
 <style scoped lang="less">
+a{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
 .mip-fix-top {
   top: 94px !important;
 }
