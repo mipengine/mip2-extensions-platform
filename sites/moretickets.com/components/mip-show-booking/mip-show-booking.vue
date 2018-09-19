@@ -208,10 +208,15 @@
         </div>
       </div>
     </div>
-    <div
-      v-show="pageData.toastmsg"
-      class="toast-msg">
-      {{ pageData.toastmsg }}
+    <div v-if="toastmsg">
+      <mip-fixed
+        type="top"
+        class="toast-container">
+        <div
+          class="toast-msg">
+          {{ toastmsg }}
+        </div>
+      </mip-fixed>
     </div>
   </div>
 </template>
@@ -396,10 +401,9 @@
             font-size: 1rem;
             break-inside: avoid;
             box-sizing: border-box;
-            display: inline-block;
             height: 1.4rem;
             line-height: 1.4rem;
-            padding: 0 2px;
+            padding: 1px 2px;
             &.low-price {
               border-radius: 2px;
               background-image: linear-gradient(118deg, #ef6856, #ff3165);
@@ -443,18 +447,21 @@
   -webkit-box-align: @align;
   box-align: @align;
 }
+.toast-container{
+  top: 200px !important;
+  text-align: center;
+}
 .toast-msg {
-  width: 180px;
+  width: auto;
+  max-width: 70%;
   padding: 15px 10px;
+  display: inline-block;
   line-height: 20px;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.65);
-  position: absolute;
   border-radius: 5px;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 1000;
+  font-size:1.4rem;
+  box-sizing: border-box;
 }
 .book-show-footer {
   background-color: #fff;
@@ -770,11 +777,13 @@ export default {
         event.userInfo.tsessionid
       ) {
         adapterStorageUtil.set('mtl_session', event.userInfo.tsessionid)
-        if (_self.retryOrder) {
-          _self.confirmCallback()
-        } else {
-          _self.saveUserSelect(false)
-        }
+        _self.fetchShow(searchValueByKey('id'), function () {
+          if (_self.retryOrder) {
+            _self.confirmCallback()
+          } else {
+            _self.saveUserSelect(false)
+          }
+        })
       } else {
         _self.saveUserSelect(false)
         sessionStorageUtil.set('login_back_url', window.location.href)
@@ -894,6 +903,7 @@ export default {
         if (loginInfo.isLogin || this.baiduIsLogin) {
           this.nextUrl && MIP.viewer.open(this.nextUrl)
         } else {
+          this.retryOrder = true
           this.$emit('showlogin', {})
         }
       }

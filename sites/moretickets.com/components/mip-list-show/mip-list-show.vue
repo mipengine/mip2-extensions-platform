@@ -431,7 +431,8 @@ export default {
   data () {
     return {
       items: [],
-      pagination: {length: 10, offset: 0, count: 0}
+      pagination: {length: 10, offset: 0, count: 0},
+      keyword: ''
     }
   },
   computed: {
@@ -453,6 +454,7 @@ export default {
       me.fetchShow(0, newValue)
     })
     MIP.watch('keyword', newValue => {
+      me.keyword = newValue
       me.fetchShow(0, '', newValue)
     })
   },
