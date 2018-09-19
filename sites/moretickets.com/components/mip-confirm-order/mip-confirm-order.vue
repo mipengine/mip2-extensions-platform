@@ -8,7 +8,7 @@
           </div>
           <span
             style="font-size:12px;position:absolute;right:0;top:5px;color:rgb(170,170,170)"
-            @click="showCompensatePop()"><i style="font-size: 10px; font-style: normal; background-color: #ccc;color: #fff; border-radius: 50%;width: 12px;height: 12px;position: absolute;left: -15px;top: 2px;text-align: center;">?</i>退款及赔付规则</span>
+            on="tap:compensate-lightbox.toggle"><i style="font-size: 10px; font-style: normal; background-color: #ccc;color: #fff; border-radius: 50%;width: 12px;height: 12px;position: absolute;left: -15px;top: 2px;text-align: center;">?</i>退款及赔付规则</span>
         </div>
         <div class="show-detail">
           <div class="text-detail">
@@ -104,6 +104,7 @@
               :class="{'no-content': !ownerInfo.idCardNum}"
               v-model="ownerInfo.idCardNum"
               class="manual-input"
+              maxlength="18"
               placeholder="该节目需要提供身份证号">
           </div>
         </div>
@@ -115,6 +116,7 @@
               v-model="ownerInfo.userName"
               :class="{'no-content': !ownerInfo.userName}"
               class="manual-input"
+              maxlength="18"
               placeholder="请输入取票人姓名">
           </div>
           <div class="justify-row content-row">
@@ -123,6 +125,7 @@
               v-model="ownerInfo.telphone"
               :class="{'no-content': !ownerInfo.telphone}"
               class="manual-input"
+              maxlength="11"
               placeholder="请输入取票人手机号">
           </div>
           <div
@@ -133,6 +136,7 @@
               v-model="ownerInfo.idCardNum"
               :class="{'no-content': !ownerInfo.idCardNum}"
               class="manual-input"
+              maxlength="18"
               placeholder="该节目需要提供身份证号">
           </div>
           <div class="ticket-pickup-tip">
@@ -162,6 +166,7 @@
               v-model="ownerInfo.userName"
               :class="{'no-content': !ownerInfo.userName}"
               class="manual-input"
+              maxlength="18"
               placeholder="请输入取票人姓名">
           </div>
           <div class="justify-row content-row">
@@ -170,6 +175,7 @@
               v-model="ownerInfo.telphone"
               :class="{'no-content': !ownerInfo.telphone}"
               class="manual-input"
+              maxlength="11"
               placeholder="请输入取票人手机号">
           </div>
           <div
@@ -180,6 +186,7 @@
               v-model="ownerInfo.idCardNum"
               :class="{'no-content': !ownerInfo.idCardNum}"
               class="manual-input"
+              maxlength="18"
               placeholder="该节目需要提供身份证号">
           </div>
           <div class="ticket-pickup-tip">
@@ -209,6 +216,7 @@
               v-model="ownerInfo.userName"
               :class="{'no-content': !ownerInfo.userName}"
               class="manual-input"
+              maxlength="18"
               placeholder="请输入取票人姓名">
           </div>
           <div class="justify-row content-row">
@@ -217,6 +225,7 @@
               v-model="ownerInfo.telphone"
               :class="{'no-content': !ownerInfo.telphone}"
               class="manual-input"
+              maxlength="11"
               placeholder="请输入取票人手机号">
           </div>
           <div
@@ -227,6 +236,7 @@
               v-model="ownerInfo.idCardNum"
               :class="{'no-content': !ownerInfo.idCardNum}"
               class="manual-input"
+              maxlength="18"
               placeholder="该节目需要提供身份证号">
           </div>
           <div class="ticket-pickup-tip">
@@ -280,14 +290,92 @@
         <div>根据演出火爆情况，摩天轮可能会将您所选的快递送票、上门自取等取票方式调整为现场取票（已支付的快递费会退还），敬请谅解。现场无票全额退赔。</div>
       </div>
     </div>
+    <!-- 订单协议  -->
+    <mip-lightbox
+      id="order-lightbox"
+      layout="nodisplay"
+      content-scroll
+      class="mip-hidden">
+      <div
+        class="lightbox"
+        on="tap:order-lightbox.toggle">
+        <div
+          v-injectHtml="orderAgreementData"
+          id="userOrderAgreement"
+          style="width: 100% ;border: none; margin: 0;overflow: scroll;color: #000; text-align: left;line-height:24px;padding: 15px;">
+          加载协议中
+        </div>
+        <div
+          style="width: 150px;height: 30px;background-image: linear-gradient(287deg, #ff1d41, #ee0e87);font-size: 12px; color: #FFF; text-align: center;line-height: 30px; margin: 0 auto;margin-top: 10px"
+        >同意协议
+        </div>
+      </div>
+    </mip-lightbox>
+    <!-- 退款及赔付规则  -->
+    <mip-lightbox
+      id="compensate-lightbox"
+      layout="nodisplay"
+      content-scroll
+      class="mip-hidden">
+      <div
+        class="lightbox"
+        on="tap:compensate-lightbox.toggle">
+        <div
+          id="userOrderAgreement"
+          style="width: 100% ;border: none; margin: 0;overflow: scroll;color: #000; text-align: left;line-height:24px;padding: 15px;"
+          v-html="compensateRules.agreementContent">
+          加载协议中
+        </div>
+        <div
+          style="width: 150px;height: 30px;background-image: linear-gradient(287deg, #ff1d41, #ee0e87);font-size: 12px; color: #FFF; text-align: center;line-height: 30px; margin: 0 auto;margin-top: 10px"
+        >确定</div>
+      </div>
+    </mip-lightbox>
+    <!--订单明细-->
     <mip-fixed
-      type="bottom"
-      still>
+      type="bottom">
+      <div
+        v-if="orderFeeFlag"
+        class="pop-content">
+        <div class="header">订单明细</div>
+        <div class="box">
+          <div
+            v-for="(priceItem,index) in show.priceItems"
+            :key="index"
+            class="price-item clearfix">
+            {{ priceItem.priceItemName }}<note
+              v-if="priceItem.comments"
+              notecontent = "priceItem.comments" />
+            <span class="font2 space1">{{ priceItem.priceItemVal }}元</span>
+          </div>
+          <div
+            v-if="discount"
+            class="price-item clearfix">
+            抵用券<span class="font2 space1">-{{ discount }}元</span>
+          </div>
+          <div
+            v-if="selectedExpress && selectedExpress.deliverFee>0 && delivery==='express'"
+            class="price-item clearfix">
+            快递费<span class="font2 space1">{{ selectedExpress.deliverFee }}元</span>
+          </div>
+          <div class="price-item clearfix">
+            合计<span
+              class="font2 space1"
+              style="color:rgb(253,104,87)">{{ getAmount }}元</span>
+          </div>
+        </div>
+        <div
+          class="close"
+          @click="orderFeeFlag = false" >确定</div>
+      </div>
+    </mip-fixed>
+    <mip-fixed
+      type="bottom">
       <div class="footer">
         <div class="agreement-row">
           我已阅读<a
             class="agreement-link"
-            @click="showAgreeBox()">《第三方商品平台交易服务协议》</a>
+            on="tap:order-lightbox.toggle">《第三方商品平台交易服务协议》</a>
         </div>
         <div class="footer-text">
           <div class="monney">
@@ -301,82 +389,19 @@
           </div>
           <div
             class="submit-btn"
-            @click="comfirmOrder()">提交订单</div>
+            @click="confirmOrder()">提交订单</div>
         </div>
       </div>
     </mip-fixed>
-    <!-- 订单协议  -->
-    <div v-show="agreeBoxFlag">
-      <div class="pop_filter_bg"/>
-      <div class="pop_box">
+    <div v-if="toastmsg">
+      <mip-fixed
+        type="top"
+        class="toast-container">
         <div
-          v-injectHtml="orderAgreementData"
-          id="userOrderAgreement"
-          style=" height: 230px;width: 100% ;border: none; margin: 0;overflow: scroll;color: #000; text-align: left;line-height:24px;padding: 15px;">
-          加载协议中
+          class="toast-msg">
+          {{ toastmsg }}
         </div>
-        <div
-          style="width: 150px;height: 30px;background: #F2593F;font-size: 12px; color: #FFF; text-align: center;line-height: 30px; margin: 0 auto;margin-top: 10px"
-          @click.stop="agreeBoxFlag=false">同意协议</div>
-      </div>
-    </div>
-    <!-- 退款及赔付规则  -->
-    <div v-show="showCompensate">
-      <div class="pop_filter_bg"/>
-      <div class="pop_box">
-        <div
-          id="userOrderAgreement"
-          style=" height: 230px;width: 100% ;border: none; margin: 0;overflow: scroll;color: #000; text-align: left;line-height:24px;padding: 15px;"
-          v-html="compensateRules.agreementContent">
-          加载协议中
-        </div>
-        <div
-          style="width: 150px;height: 30px;background: #F2593F;font-size: 12px; color: #FFF; text-align: center;line-height: 30px; margin: 0 auto;margin-top: 10px"
-          @click.stop="showCompensate=false">确定</div>
-      </div>
-    </div>
-    <!--订单明细-->
-    <div
-      v-if="orderFeeFlag"
-      class="pop"/>
-    <div
-      v-if="orderFeeFlag"
-      class="pop-content">
-      <div class="header">订单明细</div>
-      <div class="box">
-        <div
-          v-for="(priceItem,index) in show.priceItems"
-          :key="index"
-          class="price-item clearfix">
-          {{ priceItem.priceItemName }}<note
-            v-if="priceItem.comments"
-            notecontent = "priceItem.comments" />
-          <span class="font2 space1">{{ priceItem.priceItemVal }}元</span>
-        </div>
-        <div
-          v-if="discount"
-          class="price-item clearfix">
-          抵用券<span class="font2 space1">-{{ discount }}元</span>
-        </div>
-        <div
-          v-if="selectedExpress && selectedExpress.deliverFee>0 && delivery==='express'"
-          class="price-item clearfix">
-          快递费<span class="font2 space1">{{ selectedExpress.deliverFee }}元</span>
-        </div>
-        <div class="price-item clearfix">
-          合计<span
-            class="font2 space1"
-            style="color:rgb(253,104,87)">{{ getAmount }}元</span>
-        </div>
-      </div>
-      <div
-        class="close"
-        @click="orderFeeFlag = false" >确定</div>
-    </div>
-    <div
-      v-show="toastmsg"
-      class="toast-msg">
-      {{ toastmsg }}
+      </mip-fixed>
     </div>
   </div>
 </template>
@@ -465,7 +490,7 @@ li, ol, ul {
   width: 100%;
   height: 100%;
   min-width: 1190px;
-  z-index: 9990;
+  z-index: 10001;
   background: #000;
   filter: Alpha(opacity=50);
   -moz-opacity: .5;
@@ -487,23 +512,11 @@ li, ol, ul {
   text-align: center;
   color: #fff;
   background-color: #FFF;
-  z-index: 9991;
+  z-index: 10002;
   -webkit-transition: opacity 1s;
   transition: opacity 1s;
   -webkit-border-radius: 4px;
   border-radius: 4px
-}
-.pop{
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    z-index: 9990;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.8);
-    // filter: Alpha(opacity=80);
-    // -moz-opacity: 0.8;
-    // opacity: 0.8;
 }
 .pop_cancel{
     position:absolute;
@@ -545,19 +558,21 @@ li, ol, ul {
 .no-border{
   border:0 !important;
 }
+.toast-container{
+  top: 200px !important;
+  text-align: center;
+}
 .toast-msg {
-  width: 180px;
+  width: auto;
+  max-width: 70%;
   padding: 15px 10px;
+  display: inline-block;
   line-height: 20px;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.65);
-  position: absolute;
   border-radius: 5px;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 1000;
   font-size:1.4rem;
+  box-sizing: border-box;
 }
 .questionIcon {
     display: inline-block;
@@ -1047,116 +1062,100 @@ li, ol, ul {
         margin: 0 -2rem;
         border-top: @normal-border;
     }
-    .footer{
-        // height: 5rem;
-        // min-height: 5rem;
-        // flex-basis: 5rem;
-        // line-height: 5rem;
-        // position: relative;
-        background-color: #fff;
-        .pt(2);
-        .agreement-row {
-            .lh(30);
-            .fs(12);
-            .pl(10);
-            // .color-gray();
-            border-bottom: 1px solid rgb(228,228,228,0,5);
-            border-top: 1px solid rgb(228,228,228,0.5);
-        }
-        .footer-text{
-            display: flex;
-            align-items: center;
-            text-align: center;
-            padding: 0.9rem 1.8rem;
-            .fs(14);
-            .total{
-               .fs(20);
-                color: @main-color;
-                padding: 0 0.5rem;
-            }
-            .monney {
-                flex: 1;
-                padding-right: 1rem;
-                text-align: right;
-                .word {
-                    font-size: 1.2rem;
-                    color: @medium-font;
-                }
-            }
-            .submit-btn{
-              font-weight: bold;
-              width: 14.4rem;
-              height: 4.4rem;
-              line-height: 4.4rem;
-              border-radius: 2px;
-              font-size: 1.6rem;
-              color: #fff;
-              text-align: center;
-              background-image: linear-gradient(287deg, #ff1d41, #ee0e87);
-            }
-        }
-
-    }
-    .pop {
-        position: absolute;
-        left: 0px;
-        top: 0px;
-        bottom: 0px;
-        z-index: 9990;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.2);
-        // filter: alpha(opacity=30);
-        // -moz-opacity: 0.8;
-        // opacity: 0.8;
-    }
-    .pop-content{
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            z-index: 9999;
-            width: 100%;
-            background-color: #fff;
-            color: #666;
-            .price-item {
-              font-size: 12px;
-              color: rgb( 73,73,73);
-              line-height: 20px;
-              margin-bottom: 5px;
-              text-indent: -5em;
-              padding-left: 5em;
-              .font2{
-                float:right;
-                text-align: right;
-                color: rgb(51,21,17);
-              }
-            }
-            .header {
-                .pt(30);
-                .fs(16);
-                text-align: center;
-                color: rgb(51,21,17);
-            }
-            .box {
-                .mt(30);
-                .mb(60);
-                padding: 0 1.5rem;
-                .fs(12);
-                color: rgb(119,119,119);
-                .lh(18);
-            }
-            .close{
-                width: 100%;
-                height: 5rem;
-                line-height: 5rem;
-                font-size: 1.6rem;
-                color: #fff;
-                text-align: center;
-                background-color: @main-color;
-                background-image: linear-gradient(to right, rgb( 239, 104, 86), rgb( 255, 49, 101));
-            }
-        }
 }
+  .pop-content{
+      margin-top:36px;
+      width: 100%;
+      background-color: #fff;
+      box-shadow: -1px 0px 13px 0px #9c9595;
+      color: #666;
+      .price-item {
+        font-size: 12px;
+        color: rgb( 73,73,73);
+        line-height: 20px;
+        margin-bottom: 5px;
+        text-indent: -5em;
+        padding-left: 5em;
+        .font2{
+          float:right;
+          text-align: right;
+          color: rgb(51,21,17);
+        }
+      }
+      .header {
+          .pt(30);
+          .fs(16);
+          text-align: center;
+          color: rgb(51,21,17);
+      }
+      .box {
+          .mt(30);
+          .mb(60);
+          padding: 0 1.5rem;
+          .fs(12);
+          color: rgb(119,119,119);
+          .lh(18);
+      }
+      .close{
+          width: 100%;
+          height: 5rem;
+          line-height: 5rem;
+          font-size: 1.6rem;
+          color: #fff;
+          text-align: center;
+          background-color: @main-color;
+          background-image: linear-gradient(to right, rgb( 239, 104, 86), rgb( 255, 49, 101));
+      }
+    }
+  .footer{
+    // height: 5rem;
+    // min-height: 5rem;
+    // flex-basis: 5rem;
+    // line-height: 5rem;
+    // position: relative;
+    background-color: #fff;
+    .pt(2);
+    .agreement-row {
+        .lh(30);
+        .fs(12);
+        .pl(10);
+        // .color-gray();
+        border-bottom: 1px solid rgb(228,228,228,0,5);
+        border-top: 1px solid rgb(228,228,228,0.5);
+    }
+    .footer-text{
+        display: flex;
+        align-items: center;
+        text-align: center;
+        padding: 0.9rem 1.8rem;
+        .fs(14);
+        .total{
+            .fs(20);
+            color: @main-color;
+            padding: 0 0.5rem;
+        }
+        .monney {
+            flex: 1;
+            padding-right: 1rem;
+            text-align: right;
+            .word {
+                font-size: 1.2rem;
+                color: @medium-font;
+            }
+        }
+        .submit-btn{
+          font-weight: bold;
+          width: 14.4rem;
+          height: 4.4rem;
+          line-height: 4.4rem;
+          border-radius: 2px;
+          font-size: 1.6rem;
+          color: #fff;
+          text-align: center;
+          background-image: linear-gradient(287deg, #ff1d41, #ee0e87);
+        }
+    }
+  }
 
 </style>
 
@@ -1332,8 +1331,6 @@ export default {
       finalAmount: 0,
       orderFeeFlag: false,
       orderPending: true,
-      showCompensate: false,
-      agreeBoxFlag: false,
       discount: 0,
       coupon: '',
       awardPoint: 0,
@@ -1344,7 +1341,12 @@ export default {
   },
   computed: {
     getAmount () {
-      return parseInt(this.totalAmount || 0) + parseInt(this.delivery === 'express' && this.selectedExpress && this.selectedExpress.deliverFee > 0 ? this.selectedExpress.deliverFee : 0) - parseInt(this.discount || 0)
+      let deliverFee = this.delivery === 'express' && this.selectedExpress && this.selectedExpress.deliverFee > 0 ? this.selectedExpress.deliverFee : 0
+      if (parseInt(this.totalAmount || 0) + parseInt(deliverFee) - parseInt(this.discount || 0) > 0) {
+        return parseInt(this.totalAmount || 0) + parseInt(deliverFee) - parseInt(this.discount || 0)
+      } else {
+        return 0
+      }
     }
   },
   mounted () {
@@ -1381,7 +1383,6 @@ export default {
     let compensatedPrice = this.orderFormData.compensatedPrice
 
     this.totalAmount = parseInt(ticketSalePrice) + parseInt(compensatedPrice || 0)
-
     // 在页面切换，也就是 <iframe> 展现/隐藏时，会在页面中触发切换事件
     window.addEventListener('show-page', () => {
       if (sessionStorageUtil.get('selected_addr')) {
@@ -1420,7 +1421,7 @@ export default {
       httpGet(fetchUrl)
         .then(function (data) {
           if (data.statusCode === 1005) {
-            me.lastUrl && sessionStorageUtil.set('login_back_url', me.lastUrl)
+            me.lastUrl && sessionStorageUtil.set('login_back_url', `${me.lastUrl}?id=${showOID}`)
             me.loginUrl && MIP.viewer.open(me.loginUrl, {replace: true})
           } else if (data.statusCode === 200 && data.result && data.result.data) {
             me.orderToken = data.result.token
@@ -1457,6 +1458,8 @@ export default {
               me.discount = show.discount
               me.coupon = 'Reduction'
             }
+            me.showAgreeBox()
+            me.showCompensatePop()
           } else {
             me.toast(data.comments || '下单异常', function () {
               MIP.viewer.page.back()
@@ -1588,15 +1591,18 @@ export default {
           console.log(err)
         })
     },
-    comfirmOrder () {
+    confirmOrder () {
       let me = this
       if (!me.orderToken) {
         return
       }
+      if (this.ownerInfo && this.ownerInfo.userName) {
+        this.ownerInfo.userName = this.ownerInfo.userName.replace(/(^\s*)|(\s*$)/g, '')
+      }
       if (this.delivery === 'express' && (!this.address.clientName || !this.address.cellphone)) {
         me.toast('请完善收货人信息')
         return
-      } else if (this.delivery !== 'express' && (!this.ownerInfo.userName || !/\d{10}/.test(this.ownerInfo.telphone))) {
+      } else if (this.delivery !== 'express' && (!this.ownerInfo.userName || !/1\d{10}/.test(this.ownerInfo.telphone))) {
         me.toast('请完善取票人信息')
         return
       }
@@ -1650,9 +1656,9 @@ export default {
             if (data && data.statusCode === 200) {
               me.orderData = data.result.data || {}
               if (me.getAmount === 0) { // 货到付款及金额等于0的时候不需要付款直接去订单详情页
-                me.nextUrl && MIP.viewer.open(`${me.nextUrl}#orderOID=${me.orderData.orderOID}`, {replace: true})
+                me.nextUrl && MIP.viewer.open(`${me.nextUrl}?orderOID=${me.orderData.orderOID}`, {replace: true})
               } else {
-                me.payUrl && MIP.viewer.open(`${me.payUrl}#transactionOID=${me.orderData.transaction.transactionOID}`, {replace: true})
+                me.payUrl && MIP.viewer.open(`${me.payUrl}?transactionOID=${me.orderData.transaction.transactionOID}`, {replace: true})
               }
             } else if (data.comments !== '') {
               me.toast(data.comments, function () {
@@ -1684,14 +1690,14 @@ export default {
     showAddrList () {
       let addressPageUrl = this.addressPageUrl
       if (this.address && this.address.locationOID) {
-        addressPageUrl += '#addressOID=' + this.address.addressOID
+        addressPageUrl += '?addressOID=' + this.address.addressOID
       }
       this.addressPageUrl && MIP.viewer.open(addressPageUrl)
     },
     showCouponList () {
       let couponPageUrl = this.couponPageUrl
       if (this.selectedCouponId) {
-        couponPageUrl += '#couponOID=' + this.selectedCouponId
+        couponPageUrl += '?couponOID=' + this.selectedCouponId
       }
       this.couponPageUrl && MIP.viewer.open(couponPageUrl)
     },
@@ -1703,8 +1709,6 @@ export default {
     },
     showCompensatePop () {
       let me = this
-      me.showCompensate = true
-      // me.compensateRules.agreementContent ="<p style=\"text-align:center;font-size:14px;font-weight:bold\"> 票品退款及赔付规则</p><p style=\"font-size:14px;font-weight:bold\">退款规则</p><p style=\"font-size: 12px;line-height:1.5\">鉴于文体演出票品特殊性（具有时效性、唯一性等特征），一旦票品售出概不支持无理由退换，由于用户自身原因要求退款的，按如下规则进行退款</p><p>&nbsp;</p><table  width=\"100%\"  style='border-collapse:collapse;font-size:12px'><tbody><tr class=\"firstRow\"><td valign=\"middle\" style=\"width:80px;border:1px solid #000;padding:5px 10px;\" align=\"center\" ><span ><strong>订单状态</strong></span></td><td valign=\"top\" style=\"font-size: 12px;border:1px solid #000;padding:5px 10px;\"><span >待配票（卖家尚未接单）</span></td></tr><tr><td valign=\"middle\" style=\"width:80px;border:1px solid #000;padding:5px 10px;\" align=\"center\" ><span ><strong>规则</strong></span></td><td valign=\"top\" style=\"font-size: 12px;border:1px solid #000;padding:5px 10px;\"><span >可直接申请退款，不收取任何手续费</span></td></tr></tbody></table><p>&nbsp;</p><table width=\"100%\" style=\"border-collapse:collapse;font-size:12px\"><tbody><tr class=\"firstRow\"><td valign=\"middle\" style=\"width:80px;border:1px solid #000;padding:5px 10px;\" align=\"center\"><span><strong>订单状态</strong></span></td><td valign=\"top\" style=\"font-size: 12px;border:1px solid #000;padding:5px 10px;\"><span>配票中（卖家已接单，已超出预计发货时间）</span></td></tr><tr><td valign=\"middle\" style=\"width:80px;border:1px solid #000;padding:5px 10px;\" align=\"center\"><span><strong>规则</strong></span></td><td valign=\"top\" style=\"font-size: 12px;border:1px solid #000;padding:5px 10px;\"><span>用户可在相应订单的订单详情页中申请“48小时内不发货则自动退款”，若卖家无法在用户提交申请后的48小时内发货，我们将自动为用户办理退款手续，且不收取任何手续费。</span></td></tr></tbody></table><p>&nbsp;</p><table width=\"100%\"  style='border-collapse:collapse;font-size:12px'><tbody><tr class=\"firstRow\"><td valign=\"middle\" style=\"width:80px;border:1px solid #000;padding:5px 10px;\" align=\"center\" ><span ><strong>订单状态</strong></span></td><td valign=\"top\" style=\"font-size: 12px;border:1px solid #000;padding:5px 10px;\" ><p><span style=\"font-size: 12px;\">配票中（卖家已接单，未超出预计发货时间）</span></p><p><span style=\"font-size: 12px;\">待收票（包括：票品已寄出、待上门取票、待现场取票）</span></p><p><span style=\" font-size: 12px;\">交易完成（用户已收到票）</span></p></td></tr><tr><td valign=\"middle\" style=\"width:80px;border:1px solid #000;padding:5px 10px;\" align=\"center\" ><span ><strong>规则</strong></span></td><td valign=\"top\" style=\"font-size: 12px;border:1px solid #000;padding:5px 10px;\" ><p><span style=\"  font-size: 12px;\">1、距离演出开始日期≥90天</span></p><p><span style=\"  font-size: 12px;\">收取订单实际支付金额（快递费除外）10%的退票手续费</span></p><p><span style=\"  font-size: 12px;\">2、距离演出开始日期≥60天＜90天</span></p><p><span style=\"  font-size: 12px;\">收取订单实际支付金额（快递费除外）15%的退票手续费</span></p><p><span style=\"  font-size: 12px;\">3、距离演出开始日期≥30天＜60天，且下单时演出未开票（预售订单）</span></p><p><span style=\"  font-size: 12px;\">收取订单实际支付金额（快递费除外）15%的退票手续费</span></p><p><span style=\"  font-size: 12px;\">4、距离演出开始日期≥30天＜60天，且下单时演出已开票（普通订单）</span></p><p><span style=\"  font-size: 12px;\">收取订单实际支付金额（快递费除外）30%的退票手续费</span></p><p><span style=\"font-size: 12px;\">5、距离演出开始日期≥10天&lt;30天&nbsp;</span></p><p><span style=\"font-size: 12px;\">收取订单实际支付金额（快递费除外）60%的手续费</span></p><p><span style=\"font-size: 12px;\">6、距离演出开始日期≥3天&lt;10天</span></p><p><span style=\" font-size: 12px;\">收取订单实际支付金额（快递费除外）90%的手续费</span></p><p><span style=\"font-size: 12px;\">7、距离演出开始日期&lt;3天</span></p><p><span style=\"font-size: 12px;\">不支持退换货</span></p></td></tr><tr><td valign=\"middle\" style=\"width:80px;border:1px solid #000;padding:5px 10px;\" align=\"center\" ><span ><strong>备注</strong></span></td><td valign=\"top\" style=\"border:1px solid #000;padding:5px 10px;\" ><p><span style=\"  font-size: 12px;\">1、若订单已发货，需先将票券寄回，平台收到票券后，按以上规则操作退款；规则涉及距离开演前日期以平台收到票券日期为准。</span></p><p><span style=\"  font-size: 12px;\">2、若订单使用抵用券，平台会返还已使用的抵用券，抵用券有效期不变。</span></p><p><span style=\"  font-size: 12px;\">3、非纸质类的电子票，暂不支持退换货。</span></p></td></tr></tbody></table><p>&nbsp;</p><p style=\"font-size:14px;font-weight:bold\">无票赔付规则</p><p style=\"font-size: 12px;line-height:1.5\">经摩天轮核实确认是由于卖家原因，导致用户最终无法获得所订票品，按如下规则进行赔付</p><p>&nbsp;</p><table width=\"100%\"  style='border-collapse:collapse;font-size:12px'><tbody><tr class=\"firstRow\"><td valign=\"middle\" style=\"border:1px solid #000;padding:5px 10px;\" align=\"center\"><p><span ><strong><span >赔付条件</span></strong></span></p></td><td valign=\"middle\" style=\"border:1px solid #000;padding:5px 10px;\" align=\"center\" ><span ><strong><span >赔付规则</span></strong></span></td></tr><tr><td valign=\"top\" style=\"border:1px solid #000;padding:5px 10px;\"><p><span >卖家未接单</span></p><p><span >提前通知无法提供用户票品</span></p></td><td valign=\"top\" style=\"border:1px solid #000;padding:5px 10px;\" ><p><span >订单退款，并赔付订单金额20%的抵用券</span></p></td></tr><tr><td valign=\"top\" style=\"border:1px solid #000;padding:5px 10px;\"><p><span >卖家已接单</span></p><p><span >提前通知无法提供用户票品（非现场无票）</span></p></td><td valign=\"top\" style=\"border:1px solid #000;padding:5px 10px;\" ><p><span >订单退款，并赔付订单金额40%的抵用券</span></p></td></tr><tr><td valign=\"top\" style=\"border:1px solid #000;padding:5px 10px;\"><p><span >卖家已接单</span></p><p><span >演出现场无法提供用户票品（现场无票）</span></p></td><td valign=\"top\" style=\"border:1px solid #000;padding:5px 10px;\" ><p><span >订单退款，并赔付订单金额100%的现金</span></p></td></tr></tbody></table><p style=\"line-height:1.5;font-size:12px\">        备注：<br>        1、订单赔付金额中不包括快递费部分。<br>        2、现金赔付部分，用户可通过在线或电话客服预留收款支付宝账号。</p>";
       me.refundUrl && httpGet(me.refundUrl)
         .then(function (data) {
           if (data.statusCode === 200) {
@@ -1724,7 +1728,6 @@ export default {
     },
     showAgreeBox () {
       let me = this
-      me.agreeBoxFlag = true
       if (me.orderAgreementData && !me.orderAgreementData.agreementTemplate) {
         let agreementOID = me.agreement_id
         let url = me.orderAgreementUrl

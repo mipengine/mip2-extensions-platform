@@ -9,10 +9,12 @@
         <!-- <a
           ref="telPhone"
           :href="'tel:' + telPhone"/> -->
-        <button
+        <a
           v-if="status == 1"
+          :href="'tel:' + telPhone"
+          target="_top"
           class="car-ask"
-          @click="askPrice">服务咨询</button>
+          @click="askPrice">服务咨询</a>
       </div>
       <!-- <div class='car-set u-certified'> -->
       <div class="car-set-content">
@@ -338,6 +340,7 @@ export default {
   },
   mounted () {
     this.certUrl = config.mHost + `/car/iws/${decodeURIComponent(getLocalStorage('locationUrl'))}`
+    this.getNumberCall()
   },
   methods: {
     // init () {
@@ -379,6 +382,29 @@ export default {
     showAsk () {
       this.$emit('showConsultingToast')
     },
+    getNumberCall () {
+    // this.showLoading = true;
+      let param = {
+        carid: getCarId(),
+        cityid: getCityId()
+      }
+      let that = this
+      requestFun('/ajax/common/get_tel_400', {
+        method: 'POST',
+        param: param
+      })
+        .then(res => {
+          // this.tel(res.tel);
+          that.telPhone = res.tel
+          // this.$nextTick(() => {
+          //   // this.$refs.telPhone.click()
+          //   window.location.href = 'tel:' + that.telPhone
+          // })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     // 优信认证切换
     certified (target) {
       this.showList = target
@@ -396,40 +422,20 @@ export default {
     },
     // 服务咨询
     askPrice () {
-      // this.showLoading = true;
-      let param = {
-        carid: getCarId(),
-        cityid: getCityId()
-      }
-      let that = this
-      requestFun('/ajax/common/get_tel_400', {
-        method: 'POST',
-        param: param
-      })
-        .then(res => {
-          // this.tel(res.tel);
-          that.telPhone = res.tel
-          this.$nextTick(() => {
-            // this.$refs.telPhone.click()
-            window.location.href = 'tel:' + that.telPhone
-          })
-          clickPoint(
-            'tel_consulting_detail',
-            {
-              carid: this.carid,
-              type: this.isDirect,
-              '400_num': res.tel,
-              button: 1
-            },
-            null,
-            {
-              pid: pid
-            }
-          )
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      this.getNumberCall()
+      clickPoint(
+        'tel_consulting_detail',
+        {
+          carid: this.carid,
+          type: this.isDirect,
+          '400_num': this.telPhone,
+          button: 1
+        },
+        null,
+        {
+          pid: pid
+        }
+      )
     },
     nextPage (key) {
       switch (key) {

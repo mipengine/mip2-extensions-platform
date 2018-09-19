@@ -66,10 +66,16 @@ export default {
       timeary: [],
       tab: 0,
       dis: null,
-      channel: 'baidu'
+      channel: 'baidu',
+      times: {},
+      useradd: ''
     }
   },
   mounted () {
+    let useradd = sessionStorage.getItem('useradd')
+    if (useradd) {
+      this.useradd = useradd
+    }
     this.timelist()
   },
   methods: {
@@ -122,6 +128,7 @@ export default {
       let date = base.timeformat(tab.date, 'yyyy/MM/dd')
       let appointTime = new Date(date + ' ' + dis).getTime()
       sessionStorage.setItem('apptime', appointTime)
+      sessionStorage.setItem('useradd', this.useradd)
       MIP.viewer.page.back()
     }
   }
@@ -139,6 +146,8 @@ export default {
   height: 60px;
   background: #fff;
   overflow-x: scroll;
+  margin-top: 44px;
+  border-top: 1px solid #f5f5f5;
 }
 
 .data {
@@ -222,5 +231,6 @@ export default {
     color: #fff;
     border: none;
     border-radius: 4px;
+    font-size: 16px;
   }
 </style>

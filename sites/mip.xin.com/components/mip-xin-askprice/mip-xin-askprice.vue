@@ -59,7 +59,8 @@
             v-if="!info.isLogin && baAuth && telCorrect"
             :style="{'margin-top':authBottom}"
             class="enquiryBtn tel-submit"
-            on="tap:customlog.login">获取底价</button>
+            on="tap:customlog.login"
+            @click="handleLogin">获取底价</button>
           <button
             v-else
             :style="{'margin-top':authBottom}"
@@ -114,8 +115,10 @@
                     <span class="carbday-scroll">{{ item.regist_date }}年 / {{ item.mileage }}公里</span>
                   </div>
                   <div class="pricedetail-scroll">
-                    <span class="similar-recommend-price-scroll">{{ item.panel_price }}万元</span>
-                    <span class="similar-recommend-monthprice-scroll">首付{{ item.show_price }}万</span>
+                    <div style="display:flex;align-items: baseline;">
+                      <span class="similar-recommend-price-scroll">{{ item.panel_price }}万</span>
+                      <span class="similar-recommend-monthprice-scroll">首付{{ item.show_price }}万</span>
+                    </div>
                     <div
                       v-if="item.isAsk && item.enquiry_status == 1"
                       class="pricedetail-div-scroll"
@@ -197,7 +200,7 @@ export default {
       // event.userInfo;
       // 后端交互会话标识
       // event.sessionId;
-      if (event.userInfo && window.location.href.indexOf('code=') > 0 && window.location.href.indexOf('state=') > 0) {
+      if (event.userInfo && window.location.href.indexOf('code') > 0 && window.location.href.indexOf('state') > 0) {
         console.log('授权成功')
       }
     })
@@ -205,7 +208,7 @@ export default {
     this.$on('clientLogout', event => {
       console.log('登出了')
     })
-    if (window.location.href.indexOf('code=') > 0 && window.location.href.indexOf('state=') > 0) {
+    if (window.location.href.indexOf('code') > 0 && window.location.href.indexOf('state') > 0) {
       this.bottomPrice()
       this.showAskToast = false
       this.showSimilarToast = true
@@ -230,6 +233,21 @@ export default {
     }
   },
   methods: {
+    handleLogin () {
+      clickPoint(
+        'getbottomprice_vehicle_detail',
+        {
+          carid: getCarId(),
+          type: this.isDirect,
+          authorize: 1,
+          button: 2
+        },
+        null,
+        {
+          pid: pid
+        }
+      )
+    },
     authMessage () {
       this.baAuth = !this.baAuth
     },
@@ -299,6 +317,22 @@ export default {
             this.showAskToast = false
             this.showSimilarToast = true
           }
+          // 登陆授权之后埋点
+          let type = this.isDirect
+          let telNum = this.telValue || getLocalStorage('phoneNumber')
+          clickPoint(
+            'bottomprice_submit_vehicle_detail',
+            {
+              carid: getCarId(),
+              type: type,
+              tel_num: telNum,
+              button: 2
+            },
+            null,
+            {
+              pid: pid
+            }
+          )
         })
         .catch(err => {
           if (err.error_code === 412) {
@@ -306,18 +340,6 @@ export default {
             this.reminMessage = '30秒内不能重复提交'
           }
         })
-      clickPoint(
-        'bottomprice_submit_vehicle_details',
-        {
-          carid: getCarId(),
-          type: this.isDirect,
-          tel_num: this.telValue
-        },
-        null,
-        {
-          pid: pid
-        }
-      )
     },
     // 询底价
     queryClick () {
@@ -327,6 +349,37 @@ export default {
         return
       }
       this.bottomPrice()
+      if (this.info.isLogin) {
+        clickPoint(
+          'getbottomprice_vehicle_detail',
+          {
+            carid: getCarId(),
+            type: this.isDirect,
+            authorize: 0,
+            button: 2
+            // tel_num: this.telValue
+          },
+          null,
+          {
+            pid: pid
+          }
+        )
+      } else {
+        clickPoint(
+          'getbottomprice_vehicle_detail',
+          {
+            carid: getCarId(),
+            type: this.isDirect,
+            authorize: 2,
+            button: 2
+            // tel_num: this.telValue
+          },
+          null,
+          {
+            pid: pid
+          }
+        )
+      }
     },
     // 一键询价
     askPriceOne (index) {
@@ -532,7 +585,7 @@ export default {
   display: flex;
   flex-direction: column;
   background: rgba(255, 255, 255, 1);
-  padding-bottom: 0.3rem;
+  margin-bottom: 0.3rem;
 }
 
 .carcontent-scroll {
@@ -562,6 +615,8 @@ export default {
   display: flex;
   flex-direction: column;
   margin-right: 0.2rem;
+  float: left;
+  width: 4rem;
 }
 
 .righttop-scroll {
@@ -581,8 +636,7 @@ export default {
 }
 
 .priceint-scroll {
-  width: 3.9rem;
-  padding-right: 0.47rem;
+  width: 2.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -619,16 +673,19 @@ export default {
 
 .pricedetail-div-scroll {
   border-radius: 0.03rem;
-  border: 0.01rem solid rgba(255, 90, 55, 1);
+  border: 1px solid rgba(255, 90, 55, 1);
   font-size: 0.24rem;
   font-family: PingFangSC-Regular;
   color: rgba(255, 90, 55, 1);
-  width: 1.22rem;
-  height: 0.46rem;
+  /**width: 1.22rem;
+  height: 0.46rem;*/
   text-align: center;
   line-height: 0.46rem;
-  margin-left: 0.2rem;
-  margin-right: 0.2rem;
+  padding-left: 0.15rem;
+  padding-right: 0.15rem;
+  white-space:nowrap;
+  margin-bottom:0.01rem;
+  padding-top: 0.01rem;
 }
 .asked-price-scroll {
   border-radius: 0.03rem;
@@ -649,6 +706,8 @@ export default {
   font-family: PingFangSC-Medium;
   color: rgba(248, 93, 0, 1);
   line-height: 0.3rem;
+  white-space: nowrap;
+
 }
 
 .similar-recommend-monthprice-scroll {
@@ -656,5 +715,10 @@ export default {
   font-family: PingFangSC-Regular;
   color: rgba(248, 93, 0, 1);
   margin-left: 0.08rem;
+  white-space: nowrap;
+}
+.image-scroll {
+  width:2.56rem;
+  float:left;
 }
 </style>

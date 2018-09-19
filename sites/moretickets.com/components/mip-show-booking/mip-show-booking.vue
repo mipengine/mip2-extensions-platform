@@ -43,11 +43,11 @@
             <div class="check-name">
               <span v-html="formatSession(s).sessionStr"/>
               <div
-                v-if="s.supportVr"
+                v-if="false && s.supportVr"
                 :class="formatSession(s).tagClass"
                 class="tag tag-vr">VR选座</div>
               <div
-                v-if="s.supportSeatPicking && !s.supportVr"
+                v-if="false && s.supportSeatPicking && !s.supportVr"
                 :class="formatSession(s).tagClass"
                 class="tag tag-seat">可选座</div>
               <div
@@ -208,10 +208,15 @@
         </div>
       </div>
     </div>
-    <div
-      v-show="pageData.toastmsg"
-      class="toast-msg">
-      {{ pageData.toastmsg }}
+    <div v-if="toastmsg">
+      <mip-fixed
+        type="top"
+        class="toast-container">
+        <div
+          class="toast-msg">
+          {{ toastmsg }}
+        </div>
+      </mip-fixed>
     </div>
   </div>
 </template>
@@ -396,10 +401,9 @@
             font-size: 1rem;
             break-inside: avoid;
             box-sizing: border-box;
-            display: inline-block;
             height: 1.4rem;
             line-height: 1.4rem;
-            padding: 0 2px;
+            padding: 1px 2px;
             &.low-price {
               border-radius: 2px;
               background-image: linear-gradient(118deg, #ef6856, #ff3165);
@@ -443,18 +447,21 @@
   -webkit-box-align: @align;
   box-align: @align;
 }
+.toast-container{
+  top: 200px !important;
+  text-align: center;
+}
 .toast-msg {
-  width: 180px;
+  width: auto;
+  max-width: 70%;
   padding: 15px 10px;
+  display: inline-block;
   line-height: 20px;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.65);
-  position: absolute;
   border-radius: 5px;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 1000;
+  font-size:1.4rem;
+  box-sizing: border-box;
 }
 .book-show-footer {
   background-color: #fff;
@@ -639,7 +646,7 @@
 import { httpGet } from '@/common/httpUtil'
 import * as sessionStorageUtil from '@/common/sessionStorageUtil'
 import * as adapterStorageUtil from '@/common/adapterStorageUtil'
-import { templateCompile } from '@/common/urlUtil'
+import { searchValueByKey, templateCompile } from '@/common/urlUtil'
 
 export default {
   props: {
@@ -696,7 +703,8 @@ export default {
         { text: '二个月', value: 60, display: false },
         { text: '三个月', value: 90, display: false }
       ],
-      selectedValue: 365
+      selectedValue: 365,
+      retryOrder: false
     }
   },
   computed: {
@@ -750,8 +758,8 @@ export default {
     sessionStorageUtil.syncSessionData()
     let _self = this
     this.prefixUrl && sessionStorageUtil.set('prefix', this.prefixUrl)
-    if (MIP.hash.get('id')) {
-      _self.fetchShow(MIP.hash.get('id'))
+    if (searchValueByKey('id')) {
+      _self.fetchShow(searchValueByKey('id'))
     }
     _self.limitation = adapterStorageUtil.get('buy_num_limit') || 0
     // 自定义login事件
@@ -768,11 +776,17 @@ export default {
         event.userInfo.bindMobile &&
         event.userInfo.tsessionid
       ) {
-        sessionStorageUtil.set('mtl_session', event.userInfo.tsessionid)
-        _self.saveUserSelect(false)
+        adapterStorageUtil.set('mtl_session', event.userInfo.tsessionid)
+        _self.fetchShow(searchValueByKey('id'), function () {
+          if (_self.retryOrder) {
+            _self.confirmCallback()
+          } else {
+            _self.saveUserSelect(false)
+          }
+        })
       } else {
         _self.saveUserSelect(false)
-        sessionStorageUtil.set('login_back_url', _self.nextUrl)
+        sessionStorageUtil.set('login_back_url', window.location.href)
         _self.loginUrl && MIP.viewer.open(_self.loginUrl)
       }
     })
@@ -780,15 +794,18 @@ export default {
     this.$on('baiduLoginError', event => {
       // 百度登录后
       _self.saveUserSelect(false)
+      // 过期后 百度尝试重新登录下单
+      _self.retryOrder = true
       this.$emit('showlogin', {})
+
       // sessionStorageUtil.set("login_back_url", _self.nextUrl);
       // _self.loginUrl && MIP.viewer.open(_self.loginUrl);
     })
 
     // 在页面切换，也就是 <iframe> 展现/隐藏时，会在页面中触发切换事件
     window.addEventListener('show-page', () => {
-      if (MIP.hash.get('id')) {
-        _self.fetchShow(MIP.hash.get('id'))
+      if (searchValueByKey('id')) {
+        _self.fetchShow(searchValueByKey('id'))
       }
     })
   },
@@ -886,6 +903,7 @@ export default {
         if (loginInfo.isLogin || this.baiduIsLogin) {
           this.nextUrl && MIP.viewer.open(this.nextUrl)
         } else {
+          this.retryOrder = true
           this.$emit('showlogin', {})
         }
       }

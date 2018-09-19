@@ -35,13 +35,22 @@
           placeholder="请输入驾驶证号码" >
       </div>
       <div
+        v-if="illegal.CarNo.substring(0, 1) === '豫'"
+        class="s4s-group">
+        <span class="s4s-group-tit">中文姓名</span>
+        <input
+          v-model="name"
+          type="text"
+          placeholder="请输入姓名" >
+      </div>
+      <div
         v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_file_number == 1"
         class="s4s-group">
-        <span class="s4s-group-tit">驾驶证档案号</span>
+        <span class="s4s-group-tit">行驶证档案号</span>
         <input
           v-model="drive_file_number"
           type="idcard"
-          placeholder="请输入驾驶证档案编号" >
+          placeholder="请输入行驶证档案编号" >
         <span
           class="s4s-help"
           @click="openDriveFileNumber">?</span>
@@ -308,6 +317,7 @@ export default {
       date: '',
       phone: '',
       price: 0,
+      name: '',
       ownFree: 0,
       lateFree: 0,
       illegal: {},
@@ -719,6 +729,12 @@ export default {
           return
         }
       }
+      if (this.illegal.CarNo.substring(0, 1) === '豫') {
+        if (!this.name) {
+          util.toast('请输入姓名')
+          return
+        }
+      }
       if (
         this.illegal.FreeRuleObject &&
         this.illegal.FreeRuleObject.drive_file_number === 1
@@ -800,7 +816,8 @@ export default {
           vin: this.illegal.vin || '',
           engion: this.illegal.engine || this.illegal.engion || '',
           drive_bar_code: this.drive_bar_code || '',
-          drive_file_number: this.drive_file_number || ''
+          drive_file_number: this.drive_file_number || '',
+          name: this.name
         }
         if (
           !window.localStorage.getItem(

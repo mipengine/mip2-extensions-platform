@@ -9,9 +9,11 @@
         class="preButton button"
         @click="showAsk">我要优惠</button>
       <!-- 电话组件，非百城拨打普通400电话  百城拨打天津400电话池-->
-      <button
+      <a
+        :href="'tel:' + telPhone"
+        target="_top"
         class="callButton button"
-        @click="call">电话客服</button>
+        @click="call">电话客服</a>
       <!-- 非百城 普通IM  百城 专家IM-->
       <button
         class="chatButton button"
@@ -24,23 +26,27 @@
         @click="gotoIm">在线客服</button>
     </mip-fixed>
     <div v-if="source==3">
+      <!--<a
+      id="telPhoneButton"
+      ref="telPhone"
+      :href="'tel:' + telPhone"
+      class="trigger-button"/> -->
       <a
-        id="telPhoneButton"
-        ref="telPhone"
-        :href="'tel:' + telPhone"
-        class="trigger-button"/>
-      <button
         id="bigImgCall"
+        :href="'tel:' + telPhone"
+        target="_top"
         class=" askCall bigImgCall "
-        @click="call">电话咨询</button>
+        @click="call">电话咨询</a>
     </div>
     <mip-fixed
       v-if="source == 4"
       type="bottom"
       class=" buttonWrap reportButton">
-      <button
+      <a
+        :href="'tel:' + telPhone"
+        target="_top"
         class="askCall button"
-        @click="call">电话客服</button>
+        @click="call">电话客服</a>
     </mip-fixed>
   </div>
 </template>
@@ -101,6 +107,7 @@ h1 {
   border-radius: 0.04rem;
   width: 2.6rem;
   height: 0.7rem;
+  padding: 0.15rem 0.4rem;
 }
 .reportButton {
   z-index: 9;
@@ -121,6 +128,10 @@ const pid = '/pages/detail'
 const pidParams = '/pages/params'
 const pidReport = '/pages/report'
 export default {
+  // https://github.com/mipengine/mip2/issues/252  解决uc浏览器白屏问题
+  prerenderAllowed () {
+    return true
+  },
   // source 1 :车辆详情 2 :参数配置页 3 大图 4 检测报告页
   props: {
     isBaiCheng: {
@@ -154,6 +165,7 @@ export default {
     base.setMediaBase()
   },
   mounted () {
+    this.getCallNum()
     this.isDirect = getLocalStorage('isDirect')
     this.imUrl = this.imUrl
     // 不要删，此处是用于监听轮播图滚动的。。。。
@@ -163,7 +175,8 @@ export default {
     })
   },
   methods: {
-    call () {
+    // 首次进入加载电话
+    getCallNum () {
       // 详情页电话客服执行的方法
       requestFun('/ajax/common/get_tel_400', {
         method: 'POST',
@@ -173,53 +186,53 @@ export default {
         }
       }).then(res => {
         this.telPhone = res.tel
-        this.$nextTick(() => {
-          window.location.href = 'tel:' + this.telPhone
-        })
-        if (this.source === '1') {
-        // 详情页埋点
-          clickPoint(
-            'tel_consulting_detail',
-            {
-              carid: getCarId(),
-              '400_num': res.tel,
-              type: this.carInfo.is_zg_car, // 0为非直购，1为直购
-              button: 2
-            },
-            null,
-            {
-              pid: pid
-            }
-          )
-        } else if (this.source === '3') {
-          // 大图埋点
-          clickPoint(
-            'tel_consulting_pic',
-            {
-              carid: getCarId(),
-              '400_num': res.tel,
-              type: this.isDirect // 0为非直购，1为直购
-            },
-            null,
-            {
-              pid: pid
-            }
-          )
-        } else if (this.source === '4') {
-          // 检测报告页
-          clickPoint(
-            'tel_consulting_examine',
-            {
-              carid: getCarId(),
-              '400_num': res.tel
-            },
-            null,
-            {
-              pid: pidReport
-            }
-          )
-        }
       })
+    },
+    call () {
+      this.getCallNum()
+      if (this.source === '1') {
+      // 详情页埋点
+        clickPoint(
+          'tel_consulting_detail',
+          {
+            carid: getCarId(),
+            '400_num': this.telPhone,
+            type: this.carInfo.is_zg_car, // 0为非直购，1为直购
+            button: 2
+          },
+          null,
+          {
+            pid: pid
+          }
+        )
+      } else if (this.source === '3') {
+        // 大图埋点
+        clickPoint(
+          'tel_consulting_pic',
+          {
+            carid: getCarId(),
+            '400_num': this.telPhone,
+            type: this.isDirect // 0为非直购，1为直购
+          },
+          null,
+          {
+            pid: pid
+          }
+        )
+      } else if (this.source === '4') {
+        // 检测报告页
+        clickPoint(
+          'tel_consulting_examine',
+          {
+            carid: getCarId(),
+            '400_num': this.telPhone
+          },
+          null,
+          {
+            pid: pidReport
+          }
+        )
+      }
     },
     showAsk () {
       if (this.isBaiCheng === '1') {

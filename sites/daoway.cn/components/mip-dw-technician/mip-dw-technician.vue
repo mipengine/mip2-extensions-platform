@@ -43,10 +43,15 @@ export default {
   data () {
     return {
       technician: [],
-      technicianId: base.getRequest(location.href).technicianId
+      technicianId: base.getRequest(location.href).technicianId,
+      useradd: ''
     }
   },
   mounted () {
+    let useradd = sessionStorage.getItem('useradd')
+    if (useradd) {
+      this.useradd = useradd
+    }
     this.technician = JSON.parse(localStorage.getItem('technician')).technicianList
   },
   methods: {
@@ -60,8 +65,8 @@ export default {
         name: techindex.name,
         id: techindex.dwid
       }
-      // MIP.setData(tech)
       sessionStorage.setItem('tech', JSON.stringify(tech))
+      sessionStorage.setItem('useradd', this.useradd)
       MIP.viewer.page.back()
     }
 

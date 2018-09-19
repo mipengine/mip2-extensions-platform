@@ -244,8 +244,10 @@ export default {
 .mipnav[type=top]{
   height: 42px;
   border-bottom: 1px solid #e5e5e5;
+  border-top: 1px solid #f5f5f5;
   padding: 10px 0;
   background: #fff;
+  margin-top: 44px;
 }
 .cm-box{
   margin-top: 60px;
