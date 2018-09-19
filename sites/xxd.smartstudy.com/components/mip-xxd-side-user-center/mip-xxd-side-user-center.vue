@@ -28,12 +28,7 @@
           alt="默认头像"
         />
       </div>
-      <div
-        class="login"
-        on="tap:helper.change tap:user.login"
-      >
-        登录/注册
-      </div>
+      <slot />
     </div>
     <div
       v-if="info.id"
@@ -91,14 +86,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap
-}
-
-.container-header-nav-mine .title .login {
-  display: block;
-  font-size: 1.4rem;
-  line-height: 2.2;
-  color: #fff;
-  border: 1px solid #fff
 }
 
 .container-header-nav-mine .item {

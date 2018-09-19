@@ -88,10 +88,6 @@ export default {
       type: String,
       default: ''
     },
-    showTypeData: {
-      type: Array,
-      default: () => []
-    },
     activeType: {
       type: String,
       default: '1'
@@ -103,7 +99,41 @@ export default {
   },
   data () {
     return {
-      showNav: true
+      showNav: true,
+      showTypeData: [
+        {
+          title: '演唱会',
+          type: '1'
+        },
+        {
+          title: '话剧歌剧',
+          type: '3'
+        },
+        {
+          title: '音乐会',
+          type: '2'
+        },
+        {
+          title: '儿童亲子',
+          type: '9'
+        },
+        {
+          title: '舞蹈芭蕾',
+          type: '5'
+        },
+        {
+          title: '展览休闲',
+          type: '7'
+        },
+        {
+          title: '曲艺杂谈',
+          type: '4'
+        },
+        {
+          title: '体育赛事',
+          type: '6'
+        }
+      ]
     }
   },
   mounted () {

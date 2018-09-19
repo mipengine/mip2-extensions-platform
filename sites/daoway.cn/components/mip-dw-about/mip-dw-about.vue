@@ -3,18 +3,18 @@
     <div class="logodiv">
       <img
         class="logo"
-        src="http://www.daoway.cn/mip/common/images/logo.png"
+        src="https://www.daoway.cn/mip/common/images/logo.png"
         style="width:55px; height:55px">
     </div>
     <div class="list">官方微信号
       <div class="rightv">到位</div>
     </div>
     <div class="list">商务合作
-      <div class="rightv rig"><a href="tel:010-64522010"/>010-64522010</div>
+      <div class="rightv rig"><a href="tel:010-64522010">010-64522010</a></div>
       <div class="navigator-arrow"/>
     </div>
     <div class="list last">客服电话
-      <div class="rightv rig"><a href="tel:4000908608"/>4000908608</div>
+      <div class="rightv rig"><a href="tel:4000908608">4000908608</a></div>
       <div class="navigator-arrow"/>
     </div>
     <mip-fixed type="bottom">
@@ -38,7 +38,6 @@
 .daoway{width: 100%; line-height: 18px;  text-align: center; }
 .www{color: #969696}
 .navigator-arrow{position: absolute; top: 22px; right: 3%;}
-.rig{padding-right: 3%}
 
 </style>
 
