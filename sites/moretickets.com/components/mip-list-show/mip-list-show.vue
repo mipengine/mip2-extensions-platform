@@ -78,6 +78,10 @@
 </template>
 
 <style scoped lang="less">
+a{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
 @main-color: #ff1d41;
 .box-flex(@flex){
     -moz-box-flex: @flex;
@@ -111,6 +115,7 @@
   padding: 0 4%;
   position: relative;
   z-index: 1000;
+  padding-top: 26px;
   .box-flex(1)
 }
 .show-component{

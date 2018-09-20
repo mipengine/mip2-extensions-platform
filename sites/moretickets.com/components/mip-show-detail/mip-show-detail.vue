@@ -236,6 +236,10 @@
 </template>
 
 <style scoped lang="less">
+a{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
 @main-color: #ff1d41;
 @dark-font: #323038;
 @normal-font: #494949;

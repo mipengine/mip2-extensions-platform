@@ -12,7 +12,7 @@
         />
         <mip-img
           v-else
-          src="/v2/images/avatar-default.png"
+          src="https://xxd.smartstudy.com/v2/images/avatar-default.png"
           alt="默认头像"
         />
       </div>
@@ -24,16 +24,11 @@
     >
       <div class="image-src">
         <mip-img
-          src="/v2/images/avatar-default.png"
+          src="https://xxd.smartstudy.com/v2/images/avatar-default.png"
           alt="默认头像"
         />
       </div>
-      <div
-        class="login"
-        on="tap:MIP.setData({isSideLogin:true}) tap:user.login"
-      >
-        登录/注册
-      </div>
+      <slot />
     </div>
     <div
       v-if="info.id"
@@ -91,14 +86,6 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap
-}
-
-.container-header-nav-mine .title .login {
-  display: block;
-  font-size: 1.4rem;
-  line-height: 2.2;
-  color: #fff;
-  border: 1px solid #fff
 }
 
 .container-header-nav-mine .item {
