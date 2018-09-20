@@ -6,7 +6,9 @@
 
 <script>
 import xzh from 'xzh-sdk'
+
 let context = null
+
 export default {
   created () {
     this.init()
