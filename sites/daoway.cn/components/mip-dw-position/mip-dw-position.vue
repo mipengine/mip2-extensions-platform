@@ -89,7 +89,9 @@
             type="text"
             @input="getlist">
         </div>
-        <div class="clear">取消</div>
+        <div
+          class="clear"
+          @click="clear">取消</div>
       </div>
       <div class="listbox">
         <div
@@ -154,6 +156,7 @@
 
 <script>
 import base from '../../common/utils/base'
+import '../../common/utils/base.less'
 export default {
   data () {
     return {
@@ -177,11 +180,14 @@ export default {
       communitypage: false,
       citypage: false,
       tapshow: false,
-      taphide: false
+      taphide: false,
+      userId: '',
+      token: ''
     }
   },
   mounted () {
-    let userId = localStorage.getItem('userId'); let token = localStorage.getItem('token')
+    let userId = localStorage.getItem('mipUserId')
+    let token = localStorage.getItem('mipToken')
     if (userId && token) {
       this.userAddress(userId)
     }
@@ -194,9 +200,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
           let data = text.data
@@ -218,9 +222,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let data = text.data
         that.community = data.communities
@@ -235,9 +237,7 @@ export default {
         method: 'get',
         credentials: 'include'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
           that.useraddr2 = text.data
@@ -272,21 +272,23 @@ export default {
       this.positionpage = false
       this.communitypage = true
     },
+    clear () {
+      this.searchval = ''
+      this.cityList = []
+    },
     getlist () { // community
       let that = this
       let url = '/daoway/rest/community/searchMerge?manualCity=' + encodeURIComponent(this.city) + '&search=' + this.searchval + '&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
           that.cityList = text.data
         } else {
-          this.warn.show = true
-          this.warn.texts = text.msg
+          that.warn.show = true
+          that.warn.texts = text.msg
         }
       }).catch(function (error) {
         console.log(error)
@@ -304,9 +306,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === 200) {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let datas = text.data
         that.hot = datas.hot
