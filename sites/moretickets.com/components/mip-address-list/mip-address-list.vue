@@ -121,21 +121,21 @@
           @click="saveAddress()">保存</div>
       </div>
     </div>
-    <div v-if="toastmsg">
-      <mip-fixed
-        type="top"
-        class="toast-container">
-        <div
-          class="toast-msg">
-          {{ toastmsg }}
-        </div>
-      </mip-fixed>
-    </div>
+    <mip-fixed
+      v-show="toastmsg"
+      type="top"
+      class="toast-wrap">
+      <div
+        v-if="toastmsg"
+        class="toast-msg">
+        {{ toastmsg }}
+      </div>
+    </mip-fixed>
   </div>
 </template>
 
 <style scoped lang="less">
-a{
+*{
   -webkit-tap-highlight-color: transparent;
   outline: none;
 }
@@ -231,7 +231,7 @@ a{
     }
   }
 }
-.toast-container{
+.toast-wrap{
   top: 200px !important;
   text-align: center;
 }
