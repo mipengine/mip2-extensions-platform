@@ -43,27 +43,39 @@
         @click="login()">登录摩天轮</div>
       <div class="login-tip">* 未注册过的手机号将自动创建摩天轮账号</div>
     </div>
-    <div
-      v-if="toastmsg"
-      class="toast-msg">
-      {{ toastmsg }}
-    </div>
+    <mip-fixed
+      v-show="toastmsg"
+      type="top"
+      class="toast-wrap">
+      <div
+        v-if="toastmsg"
+        class="toast-msg">
+        {{ toastmsg }}
+      </div>
+    </mip-fixed>
   </div>
 </template>
 
 <style scoped lang="less">
+*{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+.toast-wrap{
+  top: 200px !important;
+  text-align: center;
+}
 .toast-msg {
-  width: 180px;
+  width: auto;
+  max-width: 70%;
   padding: 15px 10px;
+  display: inline-block;
   line-height: 20px;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.65);
-  position: absolute;
   border-radius: 5px;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 1000;
+  font-size:1.4rem;
+  box-sizing: border-box;
 }
 .login-page {
   background-size: 100% 100%;
@@ -337,11 +349,11 @@ export default {
           if (jsonData.statusCode === 200) {
             // 存入后台返回的tsessionid
             if (jsonData.result.data && jsonData.result.data.tsessionid) {
-              sessionStorageUtil.set('mtl_session', jsonData.result.data.tsessionid)
+              adapterStorageUtil.set('mtl_session', jsonData.result.data.tsessionid)
             }
-            let loginBackUrl = sessionStorageUtil.get('loginBackUrl')
+            let loginBackUrl = sessionStorageUtil.get('login_back_url')
             if (loginBackUrl) {
-              sessionStorageUtil.remove('loginBackUrl')
+              sessionStorageUtil.remove('login_back_url')
               setTimeout(() => {
                 MIP.viewer.open(loginBackUrl, {replace: true})
               }, 10)

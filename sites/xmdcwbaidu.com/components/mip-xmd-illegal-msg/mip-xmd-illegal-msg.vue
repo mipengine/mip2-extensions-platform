@@ -126,19 +126,21 @@
           </div>
         </div>
 
-        <div
-          v-show="!!noIllegalShow"
-          class="noIllegal">
-          <div class="up">
-            <div class="img-box">
-              <mip-img src="../static/img/zan744@2x.png"/>
-            </div>
-            <div class="text">
-              <p>恭喜你</p>
-              <p>没有新的违章~!</p>
-            </div>
+        <!--<div-->
+        <!--v-show="!!noIllegalShow"-->
+        <!--class="noIllegal">-->
+      </div>
+      <div
+        v-show="(!allIllegals.length)"
+        class="noIllegal">
+        <div class="up">
+          <div class="img-box">
+            <mip-img src="../static/img/zan744@2x.png"/>
           </div>
-
+          <div class="text">
+            <p>恭喜你</p>
+            <p>没有新的违章~!</p>
+          </div>
         </div>
       </div>
     </div>
@@ -234,7 +236,7 @@
           <span>不做退款</span>，请自行通过行政复议处理。</p>
           <p>⑤ 广东省外产生的交通违法
             <span>处罚条款</span>与车牌所在地有异时，本服务按
-            <sapn>车牌所在地</sapn>
+            <span>车牌所在地</span>
             法规处理。
           </p>
         </div>
@@ -252,6 +254,8 @@
 <script>
 import '../../common/less/common.less'
 import {resetRem, Storage, Url} from '../../common/utils/common'
+// import BScroll from '../../common/utils/bscroll_Es6.esm.js'
+// var BScroll = require('../../common/utils/bscroll.min.js')
 import mtPopup from '../../common/components/mip-popup'
 import Reqs from '../../common/api/illegalApi'
 import {Mdialog} from '../../common/utils/dialog'
@@ -300,6 +304,774 @@ export default {
       canHandleIllegals: [],
       // 排序后的所有违章
       allIllegals: [],
+      /* allIllegalsTest: [
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },{
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+        {
+          collectionOrgan: "",
+          decisionNumber: "4211279000597014",
+          fine: 200,
+          finedMark: "未交款",
+          handledMark: "未处理",
+          illegal_status: 0,
+          member_id: null,
+          notificationNumber: "4211279000597014",
+          overdue: 0,
+          plateNumber: "粤L6J403",
+          plateType: "02",
+          showStatus: 0,
+          siteMark: "非现场处罚",
+          tip: null,
+          type: 0,
+          userId: null,
+          violationBehavior: "机动车违反禁令标志指示的",
+          violationCode: "1344",
+          violationLocation: "人民大道与烟草路和嘉隆路交叉口",
+          violationPoints: 3,
+          violationTime: "2016-08-14 20:21:00"
+        },
+      ], */
       // 车牌号
       allIllegalPoints: 0, // 所有扣分数
       allPay: 0,
@@ -380,12 +1152,14 @@ export default {
   },
   mounted () {
     const self = this
+
     self.setContainerH('.illegal-page')
     self.initData()
 
     self.$element.customElement.addEventAction('login', event => {
       console.log('登录信息', event)
       Storage.set('apitoken', event.userInfo.apitoken)
+      self.initData()
       Reqs.getMember({}).then((data) => {
         self.isMember = data.isMember
         Storage.setSession('memberSimpleInfo', data)
@@ -495,17 +1269,20 @@ export default {
     },
     handleData () {
       const self = this
-      self.matchExemptingInspection = self.illegalIndexResult.vehInspection.matchExemptingInspection
-      self.handlingNumber = self.illegalIndexResult.illegals.length
-      self.validEndDate = self.illegalIndexResult.vehInspection.validEndDate
-      // 判断年检是否过期
-      if (new Date() > new Date(self.validEndDate.replace(/-/g, '/'))) {
-        self.overdueStatus = 0
-      } else {
-        self.overdueStatus = 1
+      if (self.illegalIndexResult.vehInspection) {
+        self.matchExemptingInspection = self.illegalIndexResult.vehInspection.matchExemptingInspection
+        self.handlingNumber = self.illegalIndexResult.illegals.length
+        self.validEndDate = self.illegalIndexResult.vehInspection.validEndDate
+        // 判断年检是否过期
+        if (new Date() > new Date(self.validEndDate.replace(/-/g, '/'))) {
+          self.overdueStatus = 0
+        } else {
+          self.overdueStatus = 1
+        }
       }
+
       self.illegals = self.illegalIndexResult.illegals
-      self.serveFee = self.illegalIndexResult.fee// 每条违章的列表服务费价格一样，存起来和 i（循环次数）相乘
+      self.serveFee = self.illegalIndexResult.fee // 每条违章的列表服务费价格一样，存起来和 i（循环次数）相乘
       self.handleIllegalData(self.illegals)
 
       // 判断是否有待支付订单
@@ -598,6 +1375,8 @@ export default {
       const canNotHandle = [] // 暂不可办理
       const canHandle = []
       const handling = [] // 办理中
+      self.allIllegals = []
+      self.canHandleIllegals = []
       data.forEach((val) => {
         const status = String(val.illegal_status)
         if (status === '0') { // 可办理
@@ -616,6 +1395,16 @@ export default {
 
       // 待处理条数也是没有含待支付列表!!!
       self.handlingNumber = self.allIllegals.length
+
+      setTimeout(() => {
+        /* eslint-disable  no-unused-vars */
+        let illegalMsg = document.querySelector('.illegal-msg')
+        // console.log('illegalMsg', illegalMsg)
+        // let scroll = new BScroll(illegalMsg, {
+        //   scrollY: true,
+        //   click: true
+        // })
+      }, 300)
     },
     /*
                 *点击全选按钮
@@ -747,15 +1536,15 @@ export default {
       margin: 12px 0;
       width: 100%;
       box-sizing: border-box;
-      overflow: hidden;
-      overflow-y: scroll;
+      overflow: auto;
+      -webkit-overflow-scrolling: touch;
       .noIllegal {
-        width: 100%;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
+        min-height: 300px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         .up {
+          margin: auto;
           display: flex;
           justify-content: center;
           align-items: center;

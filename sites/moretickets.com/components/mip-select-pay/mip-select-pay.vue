@@ -59,6 +59,10 @@
 </template>
 
 <style scoped lang="less">
+*{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
   //选择支付方式页面
   .orderPay{
     font-size: 1.4rem;
@@ -159,7 +163,7 @@
 import { httpGet } from '@/common/httpUtil'
 import * as sessionStorageUtil from '@/common/sessionStorageUtil'
 import * as adapterStorageUtil from '@/common/adapterStorageUtil'
-import { templateCompile } from '@/common/urlUtil'
+import { searchValueByKey, templateCompile } from '@/common/urlUtil'
 import { Base64Encode } from '@/common/encryptUtil'
 
 export default {
@@ -209,7 +213,7 @@ export default {
     self.payWayName = MIP.util.platform.isWechatApp() ? 'wxPay' : 'aliPay'
     self.isAlipay = navigator.userAgent.indexOf('AlipayClient') > -1
 
-    self.loadOrder(MIP.hash.get('transactionOID'))
+    self.loadOrder(searchValueByKey('transactionOID'))
   },
   methods: {
     wakePay () {
@@ -222,7 +226,7 @@ export default {
             fee: this.order.additionalOffer || this.order.total || 0,
             postData: {
               orderId: this.order.orderOID || '',
-              transactionOID: MIP.hash.get('transactionOID') || '',
+              transactionOID: searchValueByKey('transactionOID') || '',
               deviceType: MIP.util.platform.isWechatApp() ? 'weixinApp' : 'weixinH5'
             }
           }
@@ -252,12 +256,13 @@ export default {
               if (self.order.orderStatus.name === 'Unpaid') {
                 self.getReserveTime(transactionOID)
               } else if (self.order.orderStatus.name === 'Canceled') {
-                let nextpage = `${self.nextUrl}#orderOID=${self.order.orderOID}`
+                let nextpage = `${self.nextUrl}?orderOID=${self.order.orderOID}`
                 self.nextUrl && MIP.viewer.open(nextpage, {replace: true})
               } else {
 
               }
             } else {
+              sessionStorageUtil.set('login_back_url', window.location.href)
               self.loginUrl && MIP.viewer.open(self.loginUrl)
             }
           })
@@ -274,7 +279,7 @@ export default {
         if (data.statusCode === 200) {
           if (data.result.time <= 0) {
             self.reserveTime = 0
-            self.nextUrl && MIP.viewer.open(`${self.nextUrl}#orderOID=${self.order.orderOID}`, {replace: true})
+            self.nextUrl && MIP.viewer.open(`${self.nextUrl}?orderOID=${self.order.orderOID}`, {replace: true})
           } else {
             self.reserveTime = data.result.time
             self.reserveTimeFormat = self.getReserveFormat(self.reserveTime)
@@ -296,13 +301,13 @@ export default {
           clearInterval(self.paymentChecktime)
           self.reserveTime = 0
           self.reserveTimeFormat = '00:00'
-          self.nextUrl && MIP.viewer.open(`${self.nextUrl}#orderOID=${self.order.orderOID}`, {replace: true})
+          self.nextUrl && MIP.viewer.open(`${self.nextUrl}?orderOID=${self.order.orderOID}`, {replace: true})
         }
       }, 1000)
     },
     wxAuth (isForceAuth) {
       let urlHost = 'mqa666.moretickets.com'
-      let callback = MIP.viewer.page.currentPageId
+      let callback = window.location.href
       let appid = ''
       if (urlHost.indexOf('moretickets.com') > -1 && urlHost.indexOf('qa') < 0 && urlHost.indexOf('dev') < 0) {
         appid = 'wx53b25b22e471f008'
