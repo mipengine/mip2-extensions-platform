@@ -1,6 +1,18 @@
 <template>
-  <div class="wrapper">
-
+  <div
+    id="test"
+    class="wrapper">
+    <mip-map
+      id="map"
+      on="getPositionComplete:test.success  getPositionFailed:test.fail"><!-- getLocal:test.search-->
+      <script type="application/json">
+        {
+        "ak": "epGAmM09OL7Lwy7cIu47pxzK",
+        "hide-map": true,
+        "get-position": true
+        }
+      </script>
+    </mip-map>
     <mip-fixed
       type="top"
       class="indexed">
@@ -181,7 +193,6 @@ export default {
       }
       that.point.lat = e.point.lat
       that.point.lng = e.point.lng
-
       let point = {
         lat: e.point.lat,
         lng: e.point.lng,
