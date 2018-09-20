@@ -222,7 +222,7 @@ export default {
   methods: {
     /* handler(){
       let that = this;
-      let url = '/daoway/rest/user/city';
+      let url = 'https://www.daoway.cn/daoway/rest/user/city';
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -244,7 +244,7 @@ export default {
     }, */
     getCommunity (lat, lng) {
       let that = this
-      let url = '/daoway/rest/community/autoPosition?lot=' + lng + '&lat=' + lat
+      let url = 'https://www.daoway.cn/daoway/rest/community/autoPosition?lot=' + lng + '&lat=' + lat
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -271,7 +271,7 @@ export default {
     /* banner () {
       let that = this;
       let position = that.position;
-      let url = '/daoway/rest/config/banners?city=' + encodeURIComponent(position.city) + '&community_id=' + position.id;
+      let url = 'https://www.daoway.cn/daoway/rest/config/banners?city=' + encodeURIComponent(position.city) + '&community_id=' + position.id;
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -305,7 +305,7 @@ export default {
     fenlei () { // 分类
       let that = this
       let position = that.position
-      let url = '/daoway/rest/category/for_filter?manualCity=' + encodeURIComponent(position.city) + '&weidian=true&recommendOnly=true&includeChaoshi=false&includeSecondPage=true&hasChaoshi=false&includeExtCategory=true&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/category/for_filter?manualCity=' + encodeURIComponent(position.city) + '&weidian=true&recommendOnly=true&includeChaoshi=false&includeSecondPage=true&hasChaoshi=false&includeExtCategory=true&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -331,7 +331,7 @@ export default {
       let that = this
       let position = that.position
       let lng = position.lng ? position.lng : position.lot
-      let url = '/daoway/rest/service_items/recommend_top?start=0&size=3&lot=' + lng + '&lat=' + position.lat + '&manualCity=' + encodeURIComponent(position.city) + '&includeNotInScope=true&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/service_items/recommend_top?start=0&size=3&lot=' + lng + '&lat=' + position.lat + '&manualCity=' + encodeURIComponent(position.city) + '&includeNotInScope=true&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -344,7 +344,7 @@ export default {
           that.warn.texts = text.msg
         }
       }).catch(function (error) {
-        console.log('22222' + error)
+        console.log(error)
       })
     },
     toservicedetail (id) { // 跳转到服务列表页

@@ -284,7 +284,7 @@ export default {
       that.appointTime = that.param.appointTime || ''
       that.quantity = that.param.quantity || that.quantity
       let serviceId = that.param.serviceId || that.serviceId
-      let url = '/daoway/rest/service/' + serviceId + '?manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lot || position.lng) + '&lat=' + position.lat + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/service/' + serviceId + '?manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lot || position.lng) + '&lat=' + position.lat + '&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -334,7 +334,7 @@ export default {
     },
     getCoupone () {
       let that = this
-      let url = '/daoway/rest/coupon/user/' + that.userId + '?serviceId=' + that.serviceId + '&bill=' + that.totalPrice + '&ignoreMinBill=false&priceIds=' + (that.param.priceIds || that.priceId) + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/coupon/user/' + that.userId + '?serviceId=' + that.serviceId + '&bill=' + that.totalPrice + '&ignoreMinBill=false&priceIds=' + (that.param.priceIds || that.priceId) + '&channel=' + that.channel
       fetch(url, {
         method: 'get',
         credentials: 'include'
@@ -439,7 +439,7 @@ export default {
       let position = that.position
       let serviceId = that.param.serviceId || that.serviceId
       let time = base.timeformat(that.appointTime, 'yyyy-MM-dd HH:mm:ss')
-      let url = '/daoway/rest/service/' + serviceId + '/avalible_technician?manualCity=' + encodeURIComponent(position.city || that.city) + '&lot=' + (position.lng || position.lot || that.lot) + '&lat=' + (position.lat || that.lat) + '&street=' + encodeURIComponent(position.addr || that.street) + '&includeBusyFlag=true&priceId=' + (that.param.priceId || that.priceId) + '&quantity=' + that.quantity + '&serviceTime=' + encodeURIComponent(time) + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/service/' + serviceId + '/avalible_technician?manualCity=' + encodeURIComponent(position.city || that.city) + '&lot=' + (position.lng || position.lot || that.lot) + '&lat=' + (position.lat || that.lat) + '&street=' + encodeURIComponent(position.addr || that.street) + '&includeBusyFlag=true&priceId=' + (that.param.priceId || that.priceId) + '&quantity=' + that.quantity + '&serviceTime=' + encodeURIComponent(time) + '&channel=' + that.channel
       if (that.doorNum) {
         url += '&house=' + encodeURIComponent(that.doorNum)
       }
@@ -506,7 +506,7 @@ export default {
     },
     buyAgain (orderId) {
       let that = this
-      let url = '/daoway/rest/order/' + orderId + '/again?userId=' + that.userId + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/order/' + orderId + '/again?userId=' + that.userId + '&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -567,9 +567,9 @@ export default {
       let opData = 'userId=' + that.userId + '&name=' + that.contactPerson + '&phone=' + that.phone + '&doorNum=' + that.doorNum + '&isConfirm=0' + '&communityId=' + (that.position.id || that.position.communityId) + '&id=' + userAddressId
       let url
       if (userAddressId) {
-        url = '/daoway/rest/user/' + that.userId + '/modifyUserAddress'
+        url = 'https://www.daoway.cn/daoway/rest/user/' + that.userId + '/modifyUserAddress'
       } else {
-        url = '/daoway/rest/user/' + that.userId + '/addUserAddress'
+        url = 'https://www.daoway.cn/daoway/rest/user/' + that.userId + '/addUserAddress'
       }
       fetch(url, {
         method: 'POST',
@@ -659,7 +659,7 @@ export default {
         }
         anydata = JSON.stringify(anydata)
         console.log(anydata)
-        let url = '/daoway/rest/orders/v2?h5=true&channel=' + that.channel
+        let url = 'https://www.daoway.cn/daoway/rest/orders/v2?h5=true&channel=' + that.channel
         fetch(url, {
           method: 'POST',
           credentials: 'include',
