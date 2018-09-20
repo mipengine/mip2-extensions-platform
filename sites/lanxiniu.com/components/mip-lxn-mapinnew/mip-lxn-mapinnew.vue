@@ -9,15 +9,6 @@
           type="text"
           placeholder="请输入地址"
           @input ="searchAddress">
-        <div
-          class="city-div actives"
-          @touchend="goCity()">
-          <span
-            class="city"
-            v-text="globaldata.ordercity">北京</span>
-          <span class="arrow"/>
-
-        </div>
       </div>
       <div class="msg">
         <span class="img menpaihao"/>
@@ -26,12 +17,15 @@
           type="text"
           placeholder="具体街道  门牌号">
       </div>
-      <div class="msg">
-        <span class="img lianxiren"/>
+      <div
+        class="msg actives inputfix"
+        @click="picker">
+        <span class="floor"/>
         <input
-          v-model="moveIn.phone"
-          type="number"
-          placeholder="联系方式(选填)">
+          v-model="moveInFloor"
+          type="text"
+          placeholder="请选择楼层(必填)"
+        >
       </div>
       <div class="searh-result">
         <ul>
@@ -70,9 +64,8 @@
 
 <script>
 import base from '../../common/utils/base'
-import map from '../../common/utils/map'
 import '../../common/utils/base.less'
-
+import picker from '../../common/utils/picker.js'
 base.setHtmlRem()
 export default {
   props: {
@@ -85,37 +78,29 @@ export default {
   },
   data () {
     return {
-      maps: '',
       init: true, // 数据初始化话完成   只执行一次
       interval: '', // 轮询查询全局数据是否合并完成
       searchVal: '',
       searchHandler: '',
       searchData: [],
-      cityhref: '',
       focusState: false, // 获取焦点
       moveIn: {
         localtion: {
-          address: '',
-          city: '',
-          province: '',
-          lat: '',
-          lng: '',
-          title: ''
+          name: ''
         },
         address: '',
-        phone: ''
+        floor: ''
       },
+      moveInFloor: '',
       warn: {
         show: false,
         texts: ''
       },
       loading: true,
+      maps: '',
       BMap: null,
       debounceTimeout: '' // 延时定时器
     }
-  },
-  created () {
-    this.cityhref = base.htmlhref.city
   },
   mounted () {
     console.log('这里是搬入地址选择页面 !')
@@ -127,12 +112,7 @@ export default {
       this.searchData = []
       this.moveIn = {
         localtion: {
-          address: '',
-          city: '',
-          province: '',
-          lat: '',
-          lng: '',
-          title: ''
+          name: ''
         },
         address: ''
       }
@@ -166,12 +146,6 @@ export default {
             this.chatGlobaldata()
           }
         })
-
-        // 数据监控
-        this.lxnDataWatch()
-
-        // 添加波纹
-        this.clickRipple()
       } else {
         MIP.viewer.open(base.htmlhref.order, { isMipLink: false })
         console.log('是手动刷新,跳转回去')
@@ -189,55 +163,22 @@ export default {
       }, 300)
     },
     // 地图初始化
-    mapInit (city) {
-      console.log('111111111111111111111111')
+    mapInit () {
       let BMap = this.BMap
-      let citys = city || this.globaldata.ordercity
       let lxndata = base.getSession()
-      console.log('查看lxndata:' + JSON.stringify(lxndata, null, 2))
-
-      let BaiduMap = map.mapInit()
-
-      let address = ''
-      console.log('查看lxndata:' + JSON.stringify(lxndata, null, 2))
-      if (lxndata === null) {
-        address = this.globaldata.moveInAddress
-      } else {
-        address = lxndata.moveInAddress
-        // 还原上次填写的数据
-        let movein = this.moveIn
-
-        let moveOutAddress = lxndata.moveOutAddress
-        let moveInAddress = address
-        console.log(JSON.stringify(moveInAddress, null, 2))
-        console.log(JSON.stringify(moveOutAddress, null, 2))
-        if (moveInAddress.localtion.name !== '') {
-          movein.localtion = moveInAddress.localtion
-          movein.address = moveInAddress.address
-          movein.phone = moveInAddress.phone
-        } else {
-          movein.localtion = moveInAddress.localtion
-          movein.phone = moveOutAddress.phone
+      if (lxndata !== null) {
+        let address = lxndata.moveInAddress
+        if (address.localtion.name !== '') {
+          this.moveIn = address
+          this.searchVal = address.localtion.name
+        }
+        if (address.floor !== '') {
+          this.moveInFloor = lxndata.currentCarItem.stairsFee[address.floor].name
         }
       }
-
-      let divs = this.$element.querySelector('#l-mapin')
-      let maps = new BaiduMap(this.$element, divs, address, data => {
-        // 还原上次填写的数据
-        let movein = this.moveIn
-        movein.localtion = data.localtion
-        if (data.localtion.name) {
-          this.searchVal = data.localtion.name
-        }
-
-        movein.address = data.address
-        movein.phone = data.phone
-        this.loading = false
-      })
-
+      let divs = this.$element.querySelector('#l-map')
       if (BMap.Map) {
-        this.searchHandler = maps.handleResult(BMap, citys, this.searchResult)
-        this.maps = maps.map
+        this.maps = new BMap.Map(divs)
       }
     },
     // 搜索地址
@@ -253,12 +194,9 @@ export default {
     // 选择搜索结果
     setAddress (item) {
       // 清空搜索数据,在地址框填入数据
-      let inputs = this.$element.querySelectorAll('input:focus')
-      Array.prototype.slice.call(inputs).forEach(ele => {
-        ele.blur()
-      })
-      this.searchVal = item.name
+      this.inputBlur()
       this.searchData = []
+      this.searchVal = item.name
       this.moveIn.localtion = item
     },
     // 确认搬出信息
@@ -272,19 +210,19 @@ export default {
       let warn = this.warn
       let moveIn = this.moveIn
       console.log(JSON.stringify(moveIn, null, 2))
-      if (this.searchVal === '' || moveIn.localtion.lat === '') {
+      if (this.searchVal === '' || moveIn.localtion.name === '') {
         warn.show = true
         warn.texts = '没有找到对应地址，请重新搜索'
+      } else if (this.moveInFloor === '') {
+        warn.show = true
+        warn.texts = '楼层不能为空'
       } else {
         console.log('可以提交')
 
-        let objdata = JSON.parse(JSON.stringify(this.moveIn))
-        console.log(JSON.stringify(objdata, null, 2))
-        let obj = { moveInAddress: objdata }
-        let datas = base.mipExtendData(this.globaldata, obj)
-        console.log('配置搬入数据' + JSON.stringify(datas, null, 2))
-        base.mipSetGlobalData(obj)
-        base.setSession(datas)
+        let obj = {
+          moveInAddress: this.moveIn
+        }
+        this.setGlobalData(obj)
 
         // 计算距离
         let moveout = {
@@ -295,14 +233,16 @@ export default {
           'lat': '',
           'lng': ''
         }
-        if (this.globaldata.moveOutAddress.localtion.location) {
-          moveout = this.globaldata.moveOutAddress.localtion.location
+        let lxnData = base.getSession()
+        if (lxnData && lxnData.moveOutAddress.localtion.location) {
+          moveout = lxnData.moveOutAddress.localtion.location
         }
 
-        if (objdata.localtion.location) {
-          movein = objdata.localtion.location
+        if (this.moveIn.localtion.location) {
+          movein = this.moveIn.localtion.location
         }
-
+        console.log(JSON.stringify(moveout, null, 2))
+        console.log(JSON.stringify(movein, null, 2))
         if (moveout.lat !== '' && movein.lat !== '') {
           let pointOut = new BMap.Point(moveout.lng, moveout.lat)
           let pointIn = new BMap.Point(movein.lng, movein.lat)
@@ -319,12 +259,7 @@ export default {
 
                 console.log('查看距离:' + kilometer)
                 let obj = { kilometer: kilometer }
-
-                console.log(JSON.stringify(obj, null, 2))
-                let datass = base.mipExtendData(datas, obj)
-                console.log(JSON.stringify(datass))
-                base.mipSetGlobalData(obj)
-                base.setSession(datass)
+                that.setGlobalData(obj)
                 setTimeout(() => {
                   that.goOrder()
                 }, 100)
@@ -339,94 +274,20 @@ export default {
       }
     },
 
-    // 全局数据监听
-    lxnDataWatch () {
-      MIP.watch('lxndata.ordercity', (newval, oldval) => {
-        console.log('=====..............===wacth监控=============城市改变了')
-        console.log(newval)
-        this.searchVal = ''
-        this.searchData = []
-        this.moveIn = {
-          localtion: {
-            address: '',
-            city: '',
-            province: '',
-            lat: '',
-            lng: '',
-            title: ''
-          },
-          address: ''
-        }
-
-        this.globaldata.ordercity = newval
-
-        setTimeout(() => {
-          this.mapInit(newval)
-        }, 100)
-
-        console.log(newval)
-      })
-    },
-    inputGetFocus () {
-      this.focusState = true
-    },
-
-    // 跳转到城市选择页面
-    goCity () {
-      let inputs = this.$element.querySelectorAll('input:focus')
-      Array.prototype.slice.call(inputs).forEach(ele => {
-        ele.blur()
-      })
-      MIP.viewer.open(base.htmlhref.city, { isMipLink: true })
-    },
     goOrder () {
       setTimeout(() => {
         MIP.viewer.page.back()
       }, 100)
     },
-    closeLayer () {
-      this.warn.show = false
-    },
-    // 校验电话号码
-    checkPhone (phone) {
-      if (!/^1(3|4|5|7|8)\d{9}$/.test(phone)) {
-        return false
-      }
-      return true
+
+    // 跳转到城市选择页面
+    goCity () {
+      this.inputBlur()
+      MIP.viewer.open(base.htmlhref.city, { isMipLink: true })
     },
 
-    // 点击波纹效果
-    clickRipple () {
-      let util = MIP.util
-      util.event.delegate(this.$element, '.btn', 'click', function (e) {
-        let target = e.target
-        if (target.className.indexOf('btn') > -1) {
-          let rect = target.getBoundingClientRect()
-          let ripple = target.querySelector('.ripple')
-          if (!ripple) {
-            ripple = document.createElement('span')
-            ripple.className = 'ripple'
-            ripple.style.height = ripple.style.width =
-              Math.max(rect.width, rect.height) + 'px'
-            target.appendChild(ripple)
-          }
-          ripple.classList.remove('show')
-          let top =
-            e.pageY -
-            rect.top -
-            ripple.offsetHeight / 2 -
-            document.body.scrollTop
-          let left =
-            e.pageX -
-            rect.left -
-            ripple.offsetWidth / 2 -
-            document.body.scrollLeft
-          ripple.style.top = top + 'px'
-          ripple.style.left = left + 'px'
-          ripple.classList.add('show')
-          return false
-        }
-      })
+    closeLayer () {
+      this.warn.show = false
     },
     // 延时搜索
     debounce () {
@@ -437,8 +298,13 @@ export default {
         let value = this.searchVal
         if (value === '') {
           this.searchData = []
+          this.moveIn = {
+            localtion: {
+              name: ''
+            },
+            address: ''
+          }
         } else {
-        //   this.searchHandler.search(value)
           this.baiduWebApiSearch(value)
         }
       }, 200)
@@ -468,7 +334,9 @@ export default {
               console.log(JSON.stringify(results, null, 2))
               for (let i in results) {
                 if (results[i].hasOwnProperty('detail')) {
-                  searchData.push(results[i])
+                  if (results[i].hasOwnProperty('address')) {
+                    searchData.push(results[i])
+                  }
                 }
               }
             }
@@ -476,6 +344,75 @@ export default {
           console.log(JSON.stringify(searchData, null, 2))
           this.searchResult(searchData)
         })
+    },
+    setGlobalData (obj) {
+      let data = base.mipExtendData(this.globaldata, obj)
+      base.mipSetGlobalData(obj)
+      base.setSession(data)
+    },
+    // 输入框 失去焦点
+    inputBlur () {
+      let inputs = this.$element.querySelectorAll('input:focus')
+      Array.prototype.slice.call(inputs).forEach(ele => {
+        ele.blur()
+      })
+    },
+    // 选择器关闭
+    pickerMaskClose () {
+      let element = this.$element
+      let picker = element.querySelector('.picker')
+      picker.classList.remove('open')
+      let elementParentNode = element.parentNode
+      setTimeout(function () {
+        if (elementParentNode.tagName === 'MIP-FIXED') {
+          MIP.util.css(elementParentNode, {
+            height: 'auto'
+          })
+        }
+
+        MIP.util.css(element, {
+          height: 'auto'
+        })
+      }, 10)
+    },
+    picker () {
+      console.log('============')
+      let that = this
+      let Picker = picker.Picker()
+      let lxnData = base.getSession()
+      let params = {
+        title: '',
+        pickerType: 'city',
+        type: 1,
+        keys: {
+          id: 'id',
+          value: 'name'
+        },
+        data: lxnData.currentCarItem.stairsFee,
+        successCallback: function (val) {
+          console.log(JSON.stringify(val, null, 2))
+          let value = val.value
+          console.log('查看数值:' + value)
+          that.moveInFloor = value
+          that.moveIn.floor = +val.code
+
+          that.setGlobalData(lxnData)
+
+          that.pickerMaskClose()
+        },
+        cancelCallback: function () {
+          that.pickerMaskClose()
+        },
+        createCallback: function () {
+          let mask = that.$element.querySelector('.picker-mask')
+          mask.addEventListener('click', function (e) {
+            that.pickerMaskClose()
+            that.cityPicker.hidePicker()
+          })
+        }
+      }
+
+      that.cityPicker = new Picker(params, that.$element)
     }
   }
 }
@@ -488,6 +425,7 @@ export default {
   display: none;
 }
 .wrapper {
+    height: 10rem;
   padding: 0.42rem 0.2rem;
   .content {
     background: #ffffff;
@@ -512,46 +450,7 @@ export default {
         top: 50% !important;
         transform: translateY(-50%);
       }
-      div.city-div {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 0;
-        width: 1.46rem;
-        text-align: center;
-        color: #666666;
-        height: 100%;
-        line-height: 1rem;
-      }
-      div.city-div::before {
-        content: "";
-        display: inline-block;
-        position: absolute;
-        border-radius: 5px;
-        width: 0.02rem;
-        height: 0.4rem;
-        left: 0;
-        top: 50%;
-        transform: translateY(-50%);
-        background: #ecebeb;
-      }
-      div.city-div a {
-        display: inline-block;
-        height: 100%;
-      }
-      .city {
-        color: #333333;
-      }
-      .arrow {
-        position: relative;
-        display: inline-block;
-        width: 0.15rem;
-        height: 0.15rem;
-        border: 0.02rem solid #666666;
-        border-right: none;
-        border-bottom: none;
-        transform: rotate(135deg);
-      }
+
     }
     div.msg:first-child input {
       padding-right: 1.46rem;
@@ -586,7 +485,8 @@ export default {
   padding-left: 0.4rem;
   padding-right: 0.4rem;
   // max-height: 7rem;
-  max-height: 260%;
+//   max-height: 260%;
+ max-height: 500%;
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   // background: red;
@@ -617,5 +517,35 @@ export default {
 }
 .searh-result li:last-child {
   border-bottom: none;
+}
+
+.floor{
+    position: absolute;
+    top: 50% !important;
+    transform: translateY(-50%);
+    display: inline-block;
+    height: 0.44rem;
+    width: 0.44rem;
+    background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACwAAAAsCAMAAAApWqozAAAAk1BMVEUAAABZs/82oek7p+42oeo2oeo3oeo3ouw7pu42oOo2oepApfI2oeo2oek3oes4o+s2oeo3oeo3oeo3oes3o+s2oOo4ouw4oeo3ouxFs/82oOo3oeo2oek3oOo2oek3oOo2oeo3ouo3oeo3oeo3ouo3o+k5ous4pew6oOpEqu42oOo2oeo3oeo6pOs7oO03oek2oOk9AHN+AAAAMHRSTlMABPce+8SPRRjZmBP07Ig54tCCYku+W1dOCfHb1M3IuKeik3luUj8oJA/nrJ0yK2q+1yXXAAABPUlEQVQ4y+3UyXKCQBAGYJEd2QREUAQUDBqXzPs/XXqgqwzVM8ohF6v8LyJ8SNNOz+yT98giskPDmkQt32WQ+UF9TY05w8yd51x1BorRricpPV01VA++F/Nu31PC647alknTEuzJsUewI8cOwUpqi6mdKgQDXxeUFmukNMflmC6PYhfUhwA+st2D7jI4cXcEf2QIV1cmHCTlQMsEvtwu/PcJ3vZC58LU4YDf91UxnpDgu47P5mWqKn8Envk2ZzQmXixShbcG3zX8yUeK8G0c29jkWNi5c2rmUOVq1DlospJk1OtQXDPiZQbVxPDitXghec0ZOl4xbGPehuKFFA8zsokWwA0jgMIaXImRfPpc3+pH3N8MtAokw+oyHGwV72SX26ttgGkaTmD3fIMBPnEr+FOsa1hTty8bmvLJP+YXEKtRLNPEed8AAAAASUVORK5CYII=);
+    background-size:.44rem .44rem;
+}
+.actives:active {
+    transform: translate(0.02rem, 0.02rem);
+    background: rgba(0, 0, 0, 0.02);
+}
+.inputfix {
+  position: relative;
+  display: block;
+  height: 100%;
+  width: 100%;
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+    background-color: rgba(0, 0, 0, 0);
+  }
 }
 </style>
