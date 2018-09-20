@@ -4,10 +4,10 @@
     <div class="course-head">
       <div class="course-audition">
         <a
-          :href="'http://m.chinaacc.com/mip/shitingList/' + courseType + '/c' + productId + '.html'"
+          :href="'http://m.chinaacc.com/mip/shitingList/' + courseType + '/c' + productId + '.shtml'"
           data-type="mip">
           <mip-img
-            :src="'http://m.chinaacc.com/static/images/course/'+ productId +'.jpg'"
+            :src="'http://m.chinaacc.com/mip/static/images/course/'+ productId +'.jpg'"
             layout="responsive"
             width="750"
             height="420"
@@ -33,23 +33,23 @@
               class="rv-support">
               <mip-img
                 v-if="courseInfo.enjoyDiscount == 1"
-                src="http://m.chinaacc.com/static/images/vip-icon.png"
+                src="http://m.chinaacc.com/mip/static/images/vip-icon.png"
                 alt="支持VIP"/>
               <mip-img
                 v-if="courseInfo.canuseCard == 1"
-                src="http://m.chinaacc.com/static/images/card-icon.png"
+                src="http://m.chinaacc.com/mip/static/images/card-icon.png"
                 alt="支持学习卡"/>
               <mip-img
                 v-if="courseInfo.saleProductKind == 1"
-                src="http://m.chinaacc.com/static/images/dow-icon.png"
+                src="http://m.chinaacc.com/mip/static/images/dow-icon.png"
                 alt="支持下载"/>
               <mip-img
                 v-if="courseInfo.isRelation == 1"
-                src="http://m.chinaacc.com/static/images/continued-icon.png"
+                src="http://m.chinaacc.com/mip/static/images/continued-icon.png"
                 alt="支持延期保障"/>
               <mip-img
                 v-if="courseInfo.isFQPay != 0"
-                src="http://m.chinaacc.com/static/images/fq-icon.png"
+                src="http://m.chinaacc.com/mip/static/images/fq-icon.png"
                 alt="支持分期"/>
             </div>
           </div>
@@ -249,7 +249,7 @@
             'cr-item-yellow':corrCourseItem.showColor === 5}"
           class="cr-item">
           <a
-            :href="'http://m.chinaacc.com/mip/kecheng/?cId=' + corrCourseItem.productId + '&type=' + courseType + '.html'"
+            :href="'http://m.chinaacc.com/mip/kecheng/?cId=' + corrCourseItem.productId + '&type=' + courseType + '.shtml'"
             class="cr-head">
             <strong>{{ corrCourseItem.eduSubjectName }}</strong>
             <p>{{ corrCourseItem.selCourseTitle }}</p>
