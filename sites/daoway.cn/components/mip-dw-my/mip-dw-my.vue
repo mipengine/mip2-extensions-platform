@@ -183,7 +183,7 @@ export default {
     },
     getmyhtml () {
       let that = this
-      let url = 'https://www.daoway.cnhttps://www.daoway.cn/daoway/rest/user/' + that.userId + '?isowner=1'
+      let url = 'https://www.daoway.cn/daoway/rest/user/' + that.userId + '?isowner=1'
       fetch(url, {
         method: 'get',
         credentials: 'include',
