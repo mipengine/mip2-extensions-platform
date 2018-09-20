@@ -35,7 +35,7 @@
           placeholder="请输入驾驶证号码" >
       </div>
       <div
-        v-if="illegal.CarNo.substring(0, 1) === '豫'"
+        v-if="illegal&&(illegal.car_no||illegal.CarNo).substring(0, 1) === '豫'"
         class="s4s-group">
         <span class="s4s-group-tit">中文姓名</span>
         <input
@@ -729,7 +729,7 @@ export default {
           return
         }
       }
-      if (this.illegal.CarNo.substring(0, 1) === '豫') {
+      if ((this.illegal.car_no || this.illegal.CarNo).substring(0, 1) === '豫') {
         if (!this.name) {
           util.toast('请输入姓名')
           return
