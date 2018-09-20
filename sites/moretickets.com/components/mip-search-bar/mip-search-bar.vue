@@ -13,7 +13,7 @@
         <div class="search-input">
           <input
             v-model="keyword"
-            placeholder="7K场折扣演出等着你"
+            placeholder="艺人、演出、场馆"
             type="search"
             class="search-box-input">
           <div
@@ -35,7 +35,7 @@
   width: 100%;
   background: #fff;
   @searchHeight: 3.2rem;
-  height: 4.4rem;
+  height: 50px;
   align-items: center;
   display: flex;
   .btn-search{

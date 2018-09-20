@@ -43,39 +43,35 @@
         @click="login()">登录摩天轮</div>
       <div class="login-tip">* 未注册过的手机号将自动创建摩天轮账号</div>
     </div>
-    <!-- <div
-      v-if="toastmsg"
-      class="toast-msg">
-      {{ toastmsg }}
-    </div> -->
-    <mip-st-toast v-show="toastmsg">
-      <div class="toast-container">
-        {{ toastmsg }}
-      </div>
-    </mip-st-toast>
+    <div v-if="toastmsg">
+      <mip-fixed
+        type="top"
+        class="toast-container">
+        <div
+          class="toast-msg">
+          {{ toastmsg }}
+        </div>
+      </mip-fixed>
+    </div>
   </div>
 </template>
 
 <style scoped lang="less">
+.toast-container{
+  top: 200px !important;
+  text-align: center;
+}
 .toast-msg {
-  width: 180px;
+  width: auto;
+  max-width: 70%;
   padding: 15px 10px;
+  display: inline-block;
   line-height: 20px;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.65);
-  position: absolute;
   border-radius: 5px;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 1000;
-}
-.toast-container{
-  font-size: 14px;
-  height: auto;
-  line-height: 28px;
-  padding: 10px 16px;
-  white-space: normal;
+  font-size:1.4rem;
+  box-sizing: border-box;
 }
 .login-page {
   background-size: 100% 100%;
