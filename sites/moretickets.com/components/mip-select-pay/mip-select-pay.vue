@@ -59,6 +59,10 @@
 </template>
 
 <style scoped lang="less">
+a{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
   //选择支付方式页面
   .orderPay{
     font-size: 1.4rem;

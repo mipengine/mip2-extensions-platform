@@ -57,6 +57,10 @@
 </template>
 
 <style scoped lang="less">
+a{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
 .toast-container{
   top: 200px !important;
   text-align: center;
