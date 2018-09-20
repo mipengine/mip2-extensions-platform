@@ -1,7 +1,9 @@
 <template>
   <div
     ref="sidenavLeft"
-    class="sidenav-wrapper">
+    class="sidenav-wrapper"
+    @click="click($event)"
+  >
     <sidenav-menu
       :menu="menu"
       :url="url"
@@ -76,6 +78,11 @@ export default {
   methods: {
     chapterSelected (key) {
       this.activeChapter = key
+    },
+    click (e) {
+      this.$nextTick(() => {
+        this.$emit('clicked', e)
+      })
     }
   }
 }
