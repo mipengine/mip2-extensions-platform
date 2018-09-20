@@ -21,7 +21,8 @@
       <div
         v-if="username || !userId"
         class="txt2"
-        on="tap:log.login">请点击登录</div><!--@click="goLoginPage"-->
+        on="tap:log.login"
+        @click="tologin">请点击登录</div><!--@click="goLoginPage"-->
     </div>
     <div
       class="mylist"
@@ -235,6 +236,21 @@ export default {
       }).catch(function (error) {
         // that.username = false;
         console.log(error)
+      })
+    },
+    tologin () {
+      let that = this
+      that.$element.customElement.addEventAction('customLogin', event => {
+        that.info = event.userInfo
+        that.userId = event.userInfo.userId
+        that.token = event.userInfo.token
+        base.setCookie('mipUserId', event.userInfo.userId)
+        base.setCookie('mipToken', event.userInfo.token)
+        document.cookie = 'token=' + event.userInfo.token + ';path=/'
+        that.getmyhtml()
+        localStorage.setItem('mipUserId', event.userInfo.userId)
+        localStorage.setItem('mipToken', event.userInfo.token)
+        localStorage.setItem('nick', event.userInfo.nick)
       })
     },
     goVouchersPage: function () {

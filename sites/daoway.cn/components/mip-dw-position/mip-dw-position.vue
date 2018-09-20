@@ -214,12 +214,6 @@ export default {
       that.point = point
       that.city = point.city
       that.getCommunity(point.lng, point.lat)
-    } else {
-      that.city = position.city || '北京'
-      that.point = null
-    }
-    if (point.city) {
-      that.city = point.city
     } else if (position) {
       that.city = position.city
     } else {
