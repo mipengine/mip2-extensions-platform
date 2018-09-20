@@ -347,7 +347,7 @@ export default {
   methods: {
     detailstr () {
       let that = this
-      let url = '/daoway/rest/service/full/' + that.id + '?channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/service/full/' + that.id + '?channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -425,7 +425,7 @@ export default {
     thidpage: function (priceId) { // 选择服务项目
       let that = this
       let position = base.getposition()
-      let url = '/daoway/rest/servicePrice/similarPricesByPriceId?priceId=' + priceId + '&city=' + encodeURIComponent(position.city) + '&lot=' + (position.lng || position.lot) + '&lat=' + position.lat + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/servicePrice/similarPricesByPriceId?priceId=' + priceId + '&city=' + encodeURIComponent(position.city) + '&lot=' + (position.lng || position.lot) + '&lat=' + position.lat + '&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {

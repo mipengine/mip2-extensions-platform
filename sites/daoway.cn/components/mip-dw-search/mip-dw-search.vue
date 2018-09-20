@@ -51,7 +51,7 @@ export default {
   methods: {
     searchname () {
       let that = this
-      let url = '/daoway/rest/services/auto_complete_words?word=' + encodeURIComponent(that.searchtxt) + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/services/auto_complete_words?word=' + encodeURIComponent(that.searchtxt) + '&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {

@@ -80,7 +80,7 @@ export default {
       let parm = that.parm
       let position = base.getposition()
       let communityId = position.id || position.communityId
-      let url = '/daoway/rest/service/' + parm.serviceId + '/appointable_times?includeBusyFlag=true&channel=' + that.channel + '&manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lot || position.lng) + '&lat=' + position.lat + '&communityId=' + communityId
+      let url = 'https://www.daoway.cn/daoway/rest/service/' + parm.serviceId + '/appointable_times?includeBusyFlag=true&channel=' + that.channel + '&manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lot || position.lng) + '&lat=' + position.lat + '&communityId=' + communityId
       if (parm.street) {
         url += '&street=' + encodeURIComponent(parm.street)
       }
