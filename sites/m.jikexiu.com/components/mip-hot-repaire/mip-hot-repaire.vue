@@ -17,7 +17,7 @@
           <p class="problem">{{ item.malfunctionName }}</p>
           <p class="price">￥{{ item.price }}</p>
           <p class="officePrice">
-            <span>市场价￥{{ item.officialPrice }}</span>
+            <span>{{ item.officialPrice>0?`￥${item.officialPrice}`:'' }}</span>
             <span class="arrow"/>
           </p>
         </div>

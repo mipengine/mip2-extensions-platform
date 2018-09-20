@@ -27,6 +27,10 @@
 </template>
 
 <style scoped lang="less">
+*{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
 /*元素顶部距离*/
 .mip-fix-top {
     top: 44px !important;

@@ -4,7 +4,7 @@
     <div class="content">
       <div><img
         style="vertical-align: top"
-        src="http://www.daoway.cn/mip/common/images/xuzhi.jpg"
+        src="https://www.daoway.cn/mip/common/images/xuzhi.jpg"
         width="100%"
         height="auto"></div>
       <div class="xuzhiconter">
@@ -61,7 +61,7 @@ li, ol {
 
 .xuzhiconter{padding:3%;}
 .xuzhiconter h3{font-size: 14px; color: #f95252; margin: 0; text-align: left}
-.xuzhiconter dt{width: 27px; height: 27px; display: inline-block; vertical-align: top; background: url("http://www.daoway.cn/mip/common/images/xuzhi_number.png") no-repeat center; background-size: 100% 100%; color: #fff; text-align: center; line-height: 27px; font-size: 14px;margin-top: 4px}
+.xuzhiconter dt{width: 27px; height: 27px; display: inline-block; vertical-align: top; background: url("https://www.daoway.cn/mip/common/images/xuzhi_number.png") no-repeat center; background-size: 100% 100%; color: #fff; text-align: center; line-height: 27px; font-size: 14px;margin-top: 4px}
 .xuzhiconter dd{width: 86%; margin: 0; display: inline-block; margin-left: 2%; margin-top: 5px; line-height: 22px}
 .xuzhiconter dd p{margin: 5px 0; font-size: 12px;text-align: left}
 .xuzhiconter dd p i{color: #f95252}

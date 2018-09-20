@@ -80,6 +80,7 @@
             <div class="select-wrapper">
               <select
                 v-model="location.city"
+                :disabled="cities.length>0?false:true"
                 @change="changeCity()">
                 <option value="">市</option>
                 <option
@@ -90,7 +91,9 @@
               <div class="select-arrow"/>
             </div>
             <div class="select-wrapper">
-              <select v-model="location.district">
+              <select
+                v-model="location.district"
+                :disabled="districts.length>0?false:true">
                 <option value="">区</option>
                 <option
                   v-for="(c,index) in districts"
@@ -118,20 +121,24 @@
           @click="saveAddress()">保存</div>
       </div>
     </div>
-    <!-- <div
-      v-if="toastmsg"
-      class="toast-msg">
-      {{ toastmsg }}
-    </div> -->
-    <mip-st-toast v-show="toastmsg">
-      <div class="toast-container">
+    <mip-fixed
+      v-show="toastmsg"
+      type="top"
+      class="toast-wrap">
+      <div
+        v-if="toastmsg"
+        class="toast-msg">
         {{ toastmsg }}
       </div>
-    </mip-st-toast>
+    </mip-fixed>
   </div>
 </template>
 
 <style scoped lang="less">
+*{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
 @main-color: #ff1d41;
 @dark-font: #323038;
 @normal-font: #494949;
@@ -224,25 +231,21 @@
     }
   }
 }
+.toast-wrap{
+  top: 200px !important;
+  text-align: center;
+}
 .toast-msg {
-  width: 180px;
+  width: auto;
+  max-width: 70%;
   padding: 15px 10px;
+  display: inline-block;
   line-height: 20px;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.65);
-  position: absolute;
   border-radius: 5px;
-  left: 50%;
-  top: 100px;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 1000;
-}
-.toast-container{
-  font-size: 14px;
-  height: auto;
-  line-height: 28px;
-  padding: 10px 16px;
-  white-space: normal;
+  font-size:1.4rem;
+  box-sizing: border-box;
 }
 .default-mark {
   background: #ff1d41;
@@ -630,14 +633,15 @@ export default {
     changeProvince () {
       let me = this
       let provinceCode = me.location.province
+      me.cities = []
       let cityUrl = templateCompile(me.cityUrl, { provinceCode })
       httpGet(cityUrl).then(function (res) {
         if (res.statusCode === 200) {
           me.cities = res.result.data || []
           if (me.cities.length > 0) {
             let cityCode = me.cities[0].code
-
             me.location.city = cityCode
+            me.districts = []
             let districtUrl = templateCompile(me.districtUrl, {
               provinceCode,
               cityCode
@@ -658,6 +662,7 @@ export default {
       let me = this
       let cityCode = me.location.city
       let provinceCode = me.location.province
+      me.districts = []
       let districtUrl = templateCompile(me.districtUrl, {
         provinceCode,
         cityCode
