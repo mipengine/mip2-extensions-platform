@@ -173,7 +173,8 @@ export default {
   height: 5rem;
   color: #fff;
   text-align: center;
-  background: linear-gradient(to right#FF8F53,#FF5E59);
+  background: -webkit-gradient(linear, right, #ff8f53, from(#FF5E59));
+  background: linear-gradient(to right,#FF8F53, #FF5E59);
   font-size: 1.6rem;
   border: none;
   border-radius: .2rem;
