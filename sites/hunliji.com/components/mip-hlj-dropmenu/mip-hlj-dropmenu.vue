@@ -101,13 +101,13 @@ export default {
 }
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .dropmenu-pd-warp .dropdown {
   top: 104PX;
 }
 
 .dropdown {
-  position: fixed;
+  position: absolute;
   z-index: 2;
   left: 0;
   top: 44PX;
@@ -161,7 +161,6 @@ export default {
 }
 
 .download-bar {
-  position: fixed;
   top: 0;
   left: 0;
   right: 0;
