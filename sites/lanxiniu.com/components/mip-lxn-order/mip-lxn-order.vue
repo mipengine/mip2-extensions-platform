@@ -512,27 +512,32 @@ export default {
         .then(response => {
           console.log(response)
           if (response.content) {
-            if (response.content.address) {
+            if (response.content.address_detail.city) {
               let privite = {
                 ordercity: '北京'
               }
-              let city = response.content.address
+              let city = response.content.address_detail.city
               let currentCity = city.substring(0, city.length - 1)
               let nowCityList = base.getSession().cityList
               if (nowCityList.indexOf(currentCity) > -1) {
                 privite.ordercity = currentCity
+                console.log('当前城市在服务城市列表里面')
+              } else {
+                console.log('不在城市列表')
               }
-              //   let lxnData = base.getSession()
-              //   if (lxnData) {
-              //     lxnData.ordercity = privite.ordercity
-              //     this.setGlobalData(lxnData)
-              //   } else {
+              console.log('查看城市列表:' + JSON.stringify(nowCityList, null, 2))
+              console.log('查看当前定位的城市:' + city)
+              console.log('查看截取的城市:' + currentCity)
+              console.log('查看获取数据城市:' + JSON.stringify(privite, null, 2))
 
-              //   }
               this.setGlobalData(privite)
 
               this.getCurrentCityCarTypes(privite.ordercity)
+            } else {
+              this.getCurrentCityCarTypes('北京')
             }
+          } else {
+            this.getCurrentCityCarTypes('北京')
           }
         })
     },
