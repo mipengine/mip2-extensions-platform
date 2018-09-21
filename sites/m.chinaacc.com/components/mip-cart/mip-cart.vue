@@ -175,7 +175,7 @@
         <i class="abs"/>
       </div>
       <div class="cen">
-        <mip-img src="//sale.chinaacc.com/web/images/mobile/xuanke1/shop_15.png"/>
+        <mip-img src="http://sale.chinaacc.com/web/images/mobile/xuanke1/shop_15.png"/>
       </div>
     </div>
     <!--空购物车 end-->
@@ -243,7 +243,7 @@
       class="protocols">
       <i
         class="closeXY"
-        @click="protocol=false"><img src="/static/images/protocols-close.png"></i>
+        @click="protocol=false"><img src="http://m.chinaacc.com/mip/static/images/protocols-close.png"></i>
       <h1>温馨提示</h1>
       <div class="xyContainer">
         <div

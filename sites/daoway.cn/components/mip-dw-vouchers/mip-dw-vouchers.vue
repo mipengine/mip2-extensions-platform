@@ -1,5 +1,10 @@
 <template>
   <div class="wrapper">
+    <mip-inservice-login
+      v-if="!userId"
+      id="log"
+      :config="config"
+      on="login:example.customLogin"/>
     <div class="div">
       <div
         v-for="c in coupone"
@@ -9,7 +14,7 @@
         @click="back(c)">
         <img
           class="vimg"
-          src="http://www.daoway.cn/mip/common/images/vouchersbg1.jpg"
+          src="https://www.daoway.cn/mip/common/images/vouchersbg1.jpg"
           style="width:344px; height:86px">
         <div class="tit">{{ c.categoryName }}</div>
         <div class="vname">{{ c.name }}</div>
@@ -23,7 +28,7 @@
       <img
         v-if="unableCoupone.length > 0"
         class="fenge"
-        src="http://www.daoway.cn/mip/common/images/fengexian.jpg"
+        src="https://www.daoway.cn/mip/common/images/fengexian.jpg"
         style="width:343px; height:12px">
       <div
         v-for="u in unableCoupone"
@@ -31,8 +36,8 @@
         class="list gray">
         <img
           class="vimg"
-          src="http://www.daoway.cn/mip/common/images/vouchersbg2.jpg"
-          style="width:344px; height:86px">
+          src="https://www.daoway.cn/mip/common/images/vouchersbg2.jpg"
+          style="width:100%; height:86px">
         <div class="tit">{{ u.categoryName }}</div>
         <div class="vname">{{ u.name }}</div>
         <div class="vn">{{ u.note }}</div>
@@ -53,7 +58,7 @@
       v-if="noquan"
       class="noquan">
       <img
-        src="http://www.daoway.cn/mip/common/images/coupon.png"
+        src="https://www.daoway.cn/mip/common/images/coupon.png"
         style="width:200px; height:200px">
       <div class="classname">暂无可用代金券</div>
     </div>
@@ -63,6 +68,26 @@
 import base from '../../common/utils/base'
 import '../../common/utils/base.less'
 export default {
+  props: {
+    payConfig: {
+      type: Object,
+      default: function () { return {} }
+    },
+    info: {
+      type: Object,
+      required: true,
+      default () {
+        return {}
+      }
+    },
+    config: {
+      type: Object,
+      required: true,
+      default () {
+        return {}
+      }
+    }
+  },
   data () {
     return {
       requestUrl: '',
@@ -75,30 +100,50 @@ export default {
       coupone: [],
       unableCoupone: [],
       userId: localStorage.getItem('mipUserId'),
-      channel: 'baidu',
+      token: localStorage.getItem('mipToken'),
+      channel: 'mip',
       from: base.getRequest(location.href).from || '',
       useradd: ''
     }
   },
-
   mounted () {
+    let that = this
+    if (that.userId) {
+      that.getCoupone()
+    } else {
+      that.$element.customElement.addEventAction('customLogin', event => {
+        console.log(event)
+        that.info = event.userInfo
+        document.cookie = 'token=' + event.userInfo.token + ';path=/'
+        that.userId = event.userInfo.userId
+        that.token = event.userInfo.token
+        that.getCoupone()
+        localStorage.setItem('mipUserId', event.userInfo.userId)
+        localStorage.setItem('mipToken', event.userInfo.token)
+        localStorage.setItem('nick', event.userInfo.nick)
+      })
+    }
+    window.addEventListener('hide-page', (e) => {
+      /* that.userId = localStorage.getItem('mipUserId');
+      that.token = localStorage.getItem('mipToken'); */
+      MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
+    })
     let useradd = sessionStorage.getItem('useradd')
     if (useradd) {
-      this.useradd = useradd
+      that.useradd = useradd
     }
     if (base.getRequest(location.href).requestUrl) {
-      this.requestUrl = JSON.parse(decodeURIComponent(base.getRequest(location.href).requestUrl))
+      that.requestUrl = JSON.parse(decodeURIComponent(base.getRequest(location.href).requestUrl))
     } else {
-      this.requestUrl = ''
+      that.requestUrl = ''
     }
-    this.getCoupone()
   },
   methods: {
     getCoupone () {
       let that = this
       let serviceId = that.requestUrl.serviceId || null
       let priceIds = that.requestUrl.priceIds
-      let url = '/daoway/rest/coupon/user/' + that.userId + '?serviceId=' + serviceId + '&ignoreMinBill=true&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/coupon/user/' + that.userId + '?serviceId=' + serviceId + '&ignoreMinBill=true&channel=' + that.channel
       let bill = that.requestUrl ? that.requestUrl.bill : null
       if (bill) {
         url += '&bill=' + bill
@@ -112,7 +157,6 @@ export default {
         return res.json()
       }).then(function (text) {
         let datas = text.data
-        console.log(datas)
         if (datas.length > 0) {
           let coupone = []
           let unableCoupone = []
@@ -175,9 +219,9 @@ export default {
     padding: 0 2px;
     background: #35bee5;
     color: #fff;
-    width: 75px;
+    width: 70px;
     border-radius: 0 10px 10px 0;
-    font-size: 14px;
+    font-size: 12px;
     margin-top: 10px;
     text-align: center;
     height: 15px;

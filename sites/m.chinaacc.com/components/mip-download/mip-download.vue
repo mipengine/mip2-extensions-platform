@@ -100,7 +100,6 @@
         <div
           class="dowMail-btns"
           on="tap:dowAllPop.toggle"><a
-            href="#"
             @click="resetFlag">确定</a></div>
       </div>
     </mip-lightbox>

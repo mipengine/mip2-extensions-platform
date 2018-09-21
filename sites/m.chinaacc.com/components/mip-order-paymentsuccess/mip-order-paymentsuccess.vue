@@ -6,11 +6,11 @@
       <!-- <a class="yy" href="https://author.baidu.com/home/1601150861293373" target="_slef">选购课程</a> -->
       <a
         class="yy"
-        href="//m.chinaacc.com/mip/shitingList/index.shtml"
+        href="https://m.baidu.com/wishwing/c/s/m.chinaacc.com/mip/shitingList/index.shtml"
         target="_slef">选购课程</a>
       <a
         class="yy"
-        href="//m.chinaacc.com"
+        href="http://m.chinaacc.com"
         target="_blank">去看书</a>
       <a
         class="see"
@@ -29,11 +29,12 @@ export default {
   },
   async mounted () {
     let params = getUrlParams()
-    if (params.payResult + '' === '0') {
+    let payResult = params.payResult
+    if (payResult == null || payResult + '' === '0') {
       this.orderState = '订单关闭'
-    } else if (params.payResult + '' === '1') {
+    } else if (payResult + '' === '1') {
       this.orderState = '订单支付成功'
-    } else if (params.payResult + '' === '2') {
+    } else if (payResult + '' === '2') {
       this.orderState = '订单支付失败'
     }
   },

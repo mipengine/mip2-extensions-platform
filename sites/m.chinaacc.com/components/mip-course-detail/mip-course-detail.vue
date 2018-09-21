@@ -4,10 +4,10 @@
     <div class="course-head">
       <div class="course-audition">
         <a
-          :href="'/mip/shitingList/' + courseType + '/c' + productId + '.html'"
+          :href="'https://m.baidu.com/wishwing/c/s/m.chinaacc.com/mip/shitingList/' + courseType + '/c' + productId + '.shtml'"
           data-type="mip">
           <mip-img
-            :src="'/static/images/course/'+ productId +'.jpg'"
+            :src="'http://m.chinaacc.com/mip/static/images/course/'+ productId +'.jpg'"
             layout="responsive"
             width="750"
             height="420"
@@ -21,10 +21,10 @@
           <div class="rv-item">
             <strong>活动</strong>
             <div
-              v-for="item in attatchProduct"
-              :key="item.productId"
+              v-for="item in discountShows"
+              :key="item.discountId"
               class="rv-dd"
-              v-text="item.productName"/>
+              v-text="item.discountName + item.detailName"/>
           </div>
           <div class="rv-item">
             <strong>活动</strong>
@@ -33,23 +33,23 @@
               class="rv-support">
               <mip-img
                 v-if="courseInfo.enjoyDiscount == 1"
-                src="/static/images/vip-icon.png"
+                src="http://m.chinaacc.com/mip/static/images/vip-icon.png"
                 alt="支持VIP"/>
               <mip-img
                 v-if="courseInfo.canuseCard == 1"
-                src="/static/images/card-icon.png"
+                src="http://m.chinaacc.com/mip/static/images/card-icon.png"
                 alt="支持学习卡"/>
               <mip-img
                 v-if="courseInfo.saleProductKind == 1"
-                src="/static/images/dow-icon.png"
+                src="http://m.chinaacc.com/mip/static/images/dow-icon.png"
                 alt="支持下载"/>
               <mip-img
                 v-if="courseInfo.isRelation == 1"
-                src="/static/images/continued-icon.png"
+                src="http://m.chinaacc.com/mip/static/images/continued-icon.png"
                 alt="支持延期保障"/>
               <mip-img
                 v-if="courseInfo.isFQPay != 0"
-                src="/static/images/fq-icon.png"
+                src="http://m.chinaacc.com/mip/static/images/fq-icon.png"
                 alt="支持分期"/>
             </div>
           </div>
@@ -79,7 +79,7 @@
               name="bzCourse"
               type="checkbox">
           </div>
-          <p class="ts">选中即同意<a href="//m.chinaacc.com/wangxiao/gonggao/li1803063216.shtml">延期保障协议</a></p>
+          <p class="ts">选中即同意<a href="http://m.chinaacc.com/wangxiao/gonggao/li1803063216.shtml">延期保障协议</a></p>
         </div>
       </div>
       <div
@@ -110,7 +110,7 @@
             class="cm-more"
             on="click:zzsMore.toggle"
             data-closetext="">
-            <a href="javascript:void(0)">更多好书</a>
+            <a>更多好书</a>
           </div>
         </div>
       </div>
@@ -142,7 +142,7 @@
             class="cm-more"
             on="click:dzsMore.toggle"
             data-closetext="">
-            <a href="javascript:void(0)">更多好书</a>
+            <a>更多好书</a>
           </div>
         </div>
       </div>
@@ -172,7 +172,7 @@
             class="cm-more"
             on="click:jkmnMore.toggle"
             data-closetext="">
-            <a href="javascript:void(0)">更多好书</a>
+            <a>更多好书</a>
           </div>
         </div>
       </div>
@@ -193,7 +193,8 @@
                 <table
                   cellspacing="0"
                   cellpadding="0"
-                  width="100%">
+                  width="100%"
+                  class="course-table">
                   <tr class="tabtit">
                     <td width="25%">阶段课程</td>
                     <td width="35%">授课名师</td>
@@ -249,7 +250,7 @@
             'cr-item-yellow':corrCourseItem.showColor === 5}"
           class="cr-item">
           <a
-            :href="'//m.chinaacc.com/mip/kecheng/?cId=' + corrCourseItem.productId + '&type=' + courseType + '.html'"
+            :href="'https://m.baidu.com/wishwing/c/s/m.chinaacc.com/mip/kecheng/?cId=' + corrCourseItem.productId + '&type=' + courseType + '.shtml'"
             class="cr-head">
             <strong>{{ corrCourseItem.eduSubjectName }}</strong>
             <p>{{ corrCourseItem.selCourseTitle }}</p>
@@ -346,7 +347,7 @@ export default {
       selCourseTitle: '',
       isRelation: '',
       price: '',
-      attatchProduct: [],
+      discountShows: [],
       bookType: {},
       courseContentList: [],
       shopCartNum: 0,
@@ -366,7 +367,7 @@ export default {
       that.selCourseTitle = courseInfo.selCourseTitle
       that.isRelation = courseInfo.isRelation
       that.price = currency(courseInfo.price)
-      that.attatchProduct = courseInfo.attatchProduct
+      that.discountShows = courseData.discountShows
       that.cwareInfoList = courseData.cwareInfoList
       that.bookType = courseData.bookType
       that.courseContentList = courseData.courseContentList
