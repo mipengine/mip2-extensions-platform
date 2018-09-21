@@ -1,30 +1,55 @@
 <template>
   <div :class="{'dropmenu-pd-warp': downloadShow}">
-    <div class="download-bar" id="j_download" v-show="downloadShow">
-      <div class="download-bar__hd" @click="closeDownload()">
-        <div class="download-bar__close" id="j_downloadBarClose"></div>
+    <div
+      v-show="downloadShow"
+      id="j_download"
+      class="download-bar">
+      <div
+        class="download-bar__hd"
+        @click="closeDownload()">
+        <div
+          id="j_downloadBarClose"
+          class="download-bar__close" />
       </div>
       <div class="download-bar__bd">
-        <div class="download-bar__logo"></div>
+        <div class="download-bar__logo" />
         <div class="download-bar__slogan">
           <p class="download-bar__slogan-1">免费制作请帖、结婚分期付款</p>
           <p class="download-bar__slogan-2">一站解决备婚难题</p>
         </div>
       </div>
       <div class="download-bar__ft">
-        <a class="download-bar__btn" id="j_downloadBarBtn" :href="downloadHref">立即下载</a>
+        <a
+          id="j_downloadBarBtn"
+          :href="downloadHref"
+          class="download-bar__btn">
+          立即下载
+        </a>
       </div>
     </div>
 
-    <div class="dropdown" id="j_dropdown" v-show="showMenu">
-      <div class="dropdown__mask" id="j_dropdownMask" @click="toggleEvent"></div>
+    <div
+      v-show="showMenu"
+      id="j_dropdown"
+      class="dropdown">
+      <div
+        id="j_dropdownMask"
+        class="dropdown__mask"
+        @click="toggleEvent"/>
       <div class="dropdown__list">
-        <div class="dropdown__list__row" v-for="(row, i) of menuList" :key="i">
-          <a class="dropdown__item" v-for="(col, j) of row" :key="j" :href="col.href">
+        <div
+          v-for="(row, i) of menuList"
+          :key="i"
+          class="dropdown__list__row">
+          <a
+            v-for="(col, j) of row"
+            :key="j"
+            :href="col.href"
+            class="dropdown__item">
             <div class="dropdown__item__icon">
-              <img :src="col.img" alt="">
+              <mip-img :src="col.img" />
             </div>
-            <div class="dropdown__item__txt">{{col.text}}</div>
+            <div class="dropdown__item__txt">{{ col.text }}</div>
           </a>
         </div>
       </div>
@@ -35,11 +60,20 @@
 <script>
 export default {
   props: {
-    menuList: Array,
-    showDownload: Boolean,
-    downloadHref: String
+    menuList: {
+      default: undefined,
+      type: Array
+    },
+    showDownload: {
+      default: false,
+      type: Boolean
+    },
+    downloadHref: {
+      default: '',
+      type: String
+    }
   },
-  data: function() {
+  data: function () {
     return {
       showMenu: false,
       downloadShow: this.showDownload
@@ -47,16 +81,16 @@ export default {
   },
   mounted () {
   },
-  created() {
+  created () {
     this.$element.customElement.addEventAction('toggle', this.toggleEvent)
   },
   methods: {
-    closeDownload: function() {
-      this.downloadShow = false;
+    closeDownload: function () {
+      this.downloadShow = false
       document.body.style.paddingTop = 0
     },
     toggleEvent: function () {
-      this.showMenu = !!!this.showMenu
+      this.showMenu = !this.showMenu
       if (this.showMenu) {
         document.body.style.overflow = 'hidden'
       } else {
@@ -126,7 +160,6 @@ export default {
   }
 }
 
-
 .download-bar {
   position: fixed;
   top: 0;
@@ -195,4 +228,3 @@ export default {
   padding-top: 60PX;
 }
 </style>
-
