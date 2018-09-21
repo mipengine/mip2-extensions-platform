@@ -33,14 +33,6 @@
 </template>
 
 <script>
-let {
-  CustomElement,
-  util,
-  viewer
-} = MIP
-
-let Gesture = util.Gesture
-
 export default {
   props: {
     menuList: Array,
