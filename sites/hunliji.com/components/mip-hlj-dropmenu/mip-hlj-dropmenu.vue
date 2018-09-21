@@ -54,8 +54,6 @@ export default {
     }
   },
   mounted () {
-    console.log(this.showDownload)
-
   },
   created() {
     this.$element.customElement.addEventAction('toggle', this.toggleEvent)
@@ -64,7 +62,6 @@ export default {
     closeDownload: function() {
       this.downloadShow = false;
       document.body.style.paddingTop = 0
-      console.log(this.downloadShow, 111)
     },
     toggleEvent: function () {
       this.showMenu = !!!this.showMenu
