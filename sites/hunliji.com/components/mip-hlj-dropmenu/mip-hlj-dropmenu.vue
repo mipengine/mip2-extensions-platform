@@ -12,7 +12,7 @@
         </div>
       </div>
       <div class="download-bar__ft">
-        <a class="download-bar__btn" id="j_downloadBarBtn">立即下载</a>
+        <a class="download-bar__btn" id="j_downloadBarBtn" :href="downloadHref">立即下载</a>
       </div>
     </div>
 
@@ -44,7 +44,8 @@ let Gesture = util.Gesture
 export default {
   props: {
     menuList: Array,
-    showDownload: Boolean
+    showDownload: Boolean,
+    downloadHref: String
   },
   data: function() {
     return {
@@ -79,7 +80,7 @@ export default {
 
 <style lang="less">
 .dropmenu-pd-warp .dropdown {
-  top: 114PX;
+  top: 104PX;
 }
 
 .dropdown {
