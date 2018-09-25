@@ -6,7 +6,7 @@
       <!-- <a class="yy" href="https://author.baidu.com/home/1601150861293373" target="_slef">选购课程</a> -->
       <a
         class="yy"
-        href="https://m.baidu.com/wishwing/c/s/m.chinaacc.com/mip/shitingList/index.shtml"
+        href="http://m.chinaacc.com/mip/shitingList/index.shtml"
         target="_slef">选购课程</a>
       <a
         class="yy"
