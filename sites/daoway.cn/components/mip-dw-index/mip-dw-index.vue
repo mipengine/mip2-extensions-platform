@@ -1,10 +1,8 @@
 <template>
-  <div
-    id="test"
-    class="wrapper">
-    <mip-map
+  <div class="wrapper">
+    <!--<mip-map
       id="map"
-      on="getPositionComplete:test.success  getPositionFailed:test.fail"><!-- getLocal:test.search-->
+      on="getPositionComplete:test.success  getPositionFailed:test.fail">&lt;!&ndash; getLocal:test.search&ndash;&gt;
       <script type="application/json">
         {
         "ak": "epGAmM09OL7Lwy7cIu47pxzK",
@@ -12,7 +10,7 @@
         "get-position": true
         }
       </script>
-    </mip-map>
+    </mip-map>-->
     <mip-fixed
       type="top"
       class="indexed">
@@ -180,8 +178,8 @@ export default {
     }
     that.$on('success', (e) => {
       /* that.warn.show = true;
-          that.warn.texts = JSON.stringify(e);
-          console.log(JSON.stringify(e)); */
+          that.warn.texts = JSON.stringify(e); */
+      console.log(JSON.stringify(e))
       let position = localStorage.getItem('position')
       let city = e.address.city.replace(/市$/g, '') || '北京'
       if (position) {
@@ -230,10 +228,12 @@ export default {
       }).then(function (text) {
         if (text.status === 'ok') {
           let data = text.data;
+            that.warn.show = true;
+            that.warn.texts = JSON.stringify(data)
           let tempLot = data.lot;
           let tempLat = data.lat;
           that.city = data.city.replace(/市$/g, '') || '北京';
-          that.getCommunity(tempLat, tempLot)
+          //that.getCommunity(tempLat, tempLot)
         }else {
             that.warn.show = true;
             that.warn.texts = text.msg
@@ -311,6 +311,8 @@ export default {
       }).then(function (res) {
         return res.json()
       }).then(function (text) {
+        /* that.warn.show = true;
+            that.warn.texts = 'w' +JSON.stringify(text); */
         if (text.status === 'ok') {
           let data = text.data
           let filterArr = []
@@ -324,7 +326,7 @@ export default {
           that.warn.texts = text.msg
         }
       }).catch(function (error) {
-        console.log('1111' + error)
+        console.log(error)
       })
     },
     servicelist () { // 分类
@@ -332,6 +334,8 @@ export default {
       let position = that.position
       let lng = position.lng ? position.lng : position.lot
       let url = 'https://www.daoway.cn/daoway/rest/service_items/recommend_top?start=0&size=3&lot=' + lng + '&lat=' + position.lat + '&manualCity=' + encodeURIComponent(position.city) + '&includeNotInScope=true&channel=' + that.channel
+      /* that.warn.show = true;
+        that.warn.texts = 'qqqqqq' +JSON.stringify(url); */
       fetch(url, {
         method: 'get'
       }).then(function (res) {
