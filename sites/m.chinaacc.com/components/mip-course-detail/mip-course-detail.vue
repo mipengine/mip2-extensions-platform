@@ -4,7 +4,7 @@
     <div class="course-head">
       <div class="course-audition">
         <a
-          :href="'http://m.chinaacc.com/mip/shitingList/' + courseType + '/c' + productId + '.shtml'"
+          :href="'https://m.baidu.com/wishwing/c/s/m.chinaacc.com/mip/shitingList/' + courseType + '/c' + productId + '.shtml'"
           data-type="mip">
           <mip-img
             :src="'http://m.chinaacc.com/mip/static/images/course/'+ productId +'.jpg'"
@@ -21,10 +21,10 @@
           <div class="rv-item">
             <strong>活动</strong>
             <div
-              v-for="item in attatchProduct"
-              :key="item.productId"
+              v-for="item in discountShows"
+              :key="item.discountId"
               class="rv-dd"
-              v-text="item.productName"/>
+              v-text="item.discountName + item.detailName"/>
           </div>
           <div class="rv-item">
             <strong>活动</strong>
@@ -193,7 +193,8 @@
                 <table
                   cellspacing="0"
                   cellpadding="0"
-                  width="100%">
+                  width="100%"
+                  class="course-table">
                   <tr class="tabtit">
                     <td width="25%">阶段课程</td>
                     <td width="35%">授课名师</td>
@@ -249,7 +250,7 @@
             'cr-item-yellow':corrCourseItem.showColor === 5}"
           class="cr-item">
           <a
-            :href="'http://m.chinaacc.com/mip/kecheng/?cId=' + corrCourseItem.productId + '&type=' + courseType + '.shtml'"
+            :href="'https://m.baidu.com/wishwing/c/s/m.chinaacc.com/mip/kecheng/?cId=' + corrCourseItem.productId + '&type=' + courseType + '.shtml'"
             class="cr-head">
             <strong>{{ corrCourseItem.eduSubjectName }}</strong>
             <p>{{ corrCourseItem.selCourseTitle }}</p>
@@ -346,7 +347,7 @@ export default {
       selCourseTitle: '',
       isRelation: '',
       price: '',
-      attatchProduct: [],
+      discountShows: [],
       bookType: {},
       courseContentList: [],
       shopCartNum: 0,
@@ -366,7 +367,7 @@ export default {
       that.selCourseTitle = courseInfo.selCourseTitle
       that.isRelation = courseInfo.isRelation
       that.price = currency(courseInfo.price)
-      that.attatchProduct = courseInfo.attatchProduct
+      that.discountShows = courseData.discountShows
       that.cwareInfoList = courseData.cwareInfoList
       that.bookType = courseData.bookType
       that.courseContentList = courseData.courseContentList
