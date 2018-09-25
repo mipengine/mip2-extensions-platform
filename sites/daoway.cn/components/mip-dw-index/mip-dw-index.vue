@@ -200,14 +200,27 @@ export default {
     })
     that.$on('fail', (e) => {
       /* that.warn.show = true;
-          that.warn.texts = JSON.stringify(e); */
+       that.warn.texts = JSON.stringify(e); */
       localStorage.removeItem('point')
       let position = localStorage.getItem('position')
       if (position) {
         that.position = base.getposition()
         that.callBack()
       } else {
-        that.toposition()
+        if (e.address.city) {
+          that.city = e.address.city.replace(/市$/g, '')
+        }
+        if (e.point.lat && e.point.lng) {
+          let point = {
+            lat: e.point.lat,
+            lng: e.point.lng,
+            city: that.city
+          }
+          localStorage.setItem('point', JSON.stringify(point))
+          that.getCommunity(e.point.lat, e.point.lng)
+        } else {
+          that.toposition()
+        }
       }
     })
     window.addEventListener('show-page', (e) => {
@@ -251,6 +264,7 @@ export default {
         return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
+          console.log(text.data[0])
           that.position = text.data[0]
           that.callBack()
           base.position(text.data[0])
