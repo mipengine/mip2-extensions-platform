@@ -116,7 +116,7 @@ export default {
     nav () {
       let that = this
       let category = that.category
-      let url = '/daoway/rest/category/for_filter?manualCity=' + encodeURIComponent(that.position.city) + '&category=' + category + '&weidian=false&recommendOnly=true&includeChaoshi=false&includeSecondPage=false&hasChaoshi=false&hasTagImg=true&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/category/for_filter?manualCity=' + encodeURIComponent(that.position.city) + '&category=' + category + '&weidian=false&recommendOnly=true&includeChaoshi=false&includeSecondPage=false&hasChaoshi=false&hasTagImg=true&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -142,7 +142,7 @@ export default {
     getServicelist (index, category, tag) {
       let that = this
       let position = that.position
-      let url = '/daoway/rest/service_items/filter?start=' + index + '&size=30&manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lng || position.lot) + '&lat=' + position.lat + '&category=' + category + '&channel=' + that.channel + tag
+      let url = 'https://www.daoway.cn/daoway/rest/service_items/filter?start=' + index + '&size=30&manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lng || position.lot) + '&lat=' + position.lat + '&category=' + category + '&channel=' + that.channel + tag
       console.log(url)
       fetch(url, {
         method: 'get'

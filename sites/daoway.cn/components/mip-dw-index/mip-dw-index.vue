@@ -1,6 +1,16 @@
 <template>
   <div class="wrapper">
-
+    <!--<mip-map
+      id="map"
+      on="getPositionComplete:test.success  getPositionFailed:test.fail">&lt;!&ndash; getLocal:test.search&ndash;&gt;
+      <script type="application/json">
+        {
+        "ak": "epGAmM09OL7Lwy7cIu47pxzK",
+        "hide-map": true,
+        "get-position": true
+        }
+      </script>
+    </mip-map>-->
     <mip-fixed
       type="top"
       class="indexed">
@@ -168,8 +178,8 @@ export default {
     }
     that.$on('success', (e) => {
       /* that.warn.show = true;
-          that.warn.texts = JSON.stringify(e);
-          console.log(JSON.stringify(e)); */
+          that.warn.texts = JSON.stringify(e); */
+      console.log(JSON.stringify(e))
       let position = localStorage.getItem('position')
       let city = e.address.city.replace(/市$/g, '') || '北京'
       if (position) {
@@ -181,7 +191,6 @@ export default {
       }
       that.point.lat = e.point.lat
       that.point.lng = e.point.lng
-
       let point = {
         lat: e.point.lat,
         lng: e.point.lng,
@@ -191,14 +200,27 @@ export default {
     })
     that.$on('fail', (e) => {
       /* that.warn.show = true;
-          that.warn.texts = JSON.stringify(e); */
+       that.warn.texts = JSON.stringify(e); */
       localStorage.removeItem('point')
       let position = localStorage.getItem('position')
       if (position) {
         that.position = base.getposition()
         that.callBack()
       } else {
-        that.toposition()
+        if (e.address.city) {
+          that.city = e.address.city.replace(/市$/g, '')
+        }
+        if (e.point.lat && e.point.lng) {
+          let point = {
+            lat: e.point.lat,
+            lng: e.point.lng,
+            city: that.city
+          }
+          localStorage.setItem('point', JSON.stringify(point))
+          that.getCommunity(e.point.lat, e.point.lng)
+        } else {
+          that.toposition()
+        }
       }
     })
     window.addEventListener('show-page', (e) => {
@@ -211,7 +233,7 @@ export default {
   methods: {
     /* handler(){
       let that = this;
-      let url = '/daoway/rest/user/city';
+      let url = 'https://www.daoway.cn/daoway/rest/user/city';
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -219,10 +241,12 @@ export default {
       }).then(function (text) {
         if (text.status === 'ok') {
           let data = text.data;
+            that.warn.show = true;
+            that.warn.texts = JSON.stringify(data)
           let tempLot = data.lot;
           let tempLat = data.lat;
           that.city = data.city.replace(/市$/g, '') || '北京';
-          that.getCommunity(tempLat, tempLot)
+          //that.getCommunity(tempLat, tempLot)
         }else {
             that.warn.show = true;
             that.warn.texts = text.msg
@@ -233,13 +257,14 @@ export default {
     }, */
     getCommunity (lat, lng) {
       let that = this
-      let url = '/daoway/rest/community/autoPosition?lot=' + lng + '&lat=' + lat
+      let url = 'https://www.daoway.cn/daoway/rest/community/autoPosition?lot=' + lng + '&lat=' + lat
       fetch(url, {
         method: 'get'
       }).then(function (res) {
         return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
+          console.log(text.data[0])
           that.position = text.data[0]
           that.callBack()
           base.position(text.data[0])
@@ -260,7 +285,7 @@ export default {
     /* banner () {
       let that = this;
       let position = that.position;
-      let url = '/daoway/rest/config/banners?city=' + encodeURIComponent(position.city) + '&community_id=' + position.id;
+      let url = 'https://www.daoway.cn/daoway/rest/config/banners?city=' + encodeURIComponent(position.city) + '&community_id=' + position.id;
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -294,12 +319,14 @@ export default {
     fenlei () { // 分类
       let that = this
       let position = that.position
-      let url = '/daoway/rest/category/for_filter?manualCity=' + encodeURIComponent(position.city) + '&weidian=true&recommendOnly=true&includeChaoshi=false&includeSecondPage=true&hasChaoshi=false&includeExtCategory=true&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/category/for_filter?manualCity=' + encodeURIComponent(position.city) + '&weidian=true&recommendOnly=true&includeChaoshi=false&includeSecondPage=true&hasChaoshi=false&includeExtCategory=true&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
         return res.json()
       }).then(function (text) {
+        /* that.warn.show = true;
+            that.warn.texts = 'w' +JSON.stringify(text); */
         if (text.status === 'ok') {
           let data = text.data
           let filterArr = []
@@ -313,14 +340,16 @@ export default {
           that.warn.texts = text.msg
         }
       }).catch(function (error) {
-        console.log('1111' + error)
+        console.log(error)
       })
     },
     servicelist () { // 分类
       let that = this
       let position = that.position
       let lng = position.lng ? position.lng : position.lot
-      let url = '/daoway/rest/service_items/recommend_top?start=0&size=3&lot=' + lng + '&lat=' + position.lat + '&manualCity=' + encodeURIComponent(position.city) + '&includeNotInScope=true&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/service_items/recommend_top?start=0&size=3&lot=' + lng + '&lat=' + position.lat + '&manualCity=' + encodeURIComponent(position.city) + '&includeNotInScope=true&channel=' + that.channel
+      /* that.warn.show = true;
+        that.warn.texts = 'qqqqqq' +JSON.stringify(url); */
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -333,7 +362,7 @@ export default {
           that.warn.texts = text.msg
         }
       }).catch(function (error) {
-        console.log('22222' + error)
+        console.log(error)
       })
     },
     toservicedetail (id) { // 跳转到服务列表页
