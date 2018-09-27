@@ -1,8 +1,9 @@
 <template>
-  <div v-if="status !== 'hidden'" 
-  class="mip-download-wrapper">
+  <div 
+       v-if="status !== 'hidden'"
+       class="mip-download-wrapper">
     <div :class="[btnStyle === 1 ? styleObject.radius:'',status === 'online' ? styleObject.safe:styleObject.disabled]" 
-    @click="handleSafeClick">
+         @click="handleSafeClick">
       <i class="iconfont el-icon-logo">&nbsp;|</i>
       <span>安全下载</span>
     </div>
@@ -14,7 +15,7 @@ export default {
     url: {
       type: String,
       default () {
-        return "#"
+        return '#'
       }
     },
     btnStyle: {
@@ -26,7 +27,7 @@ export default {
     source: {
       type: String,
       default () {
-        return ""
+        return ''
       }
     },
     versionCode: {
@@ -36,7 +37,7 @@ export default {
       }
     }
   },
-  data() {
+  data () {
     return {
       dataList: {},
       timer: null,
@@ -50,7 +51,7 @@ export default {
       }
     }
   },
-  created() {
+  created () {
     this.doLog('pageview', {
       act: 'pageEnter',
       from: this.source,
@@ -62,7 +63,7 @@ export default {
       return res.json()
     }).then(function (data) {
       if (data.error !== 0) {
-        that.status = 'hidden';
+        that.status = 'hidden'
         that.doLog('pageview', {
           act: 'dataLoaded',
           err: data.error,
@@ -78,7 +79,7 @@ export default {
         })
         that.status = data.status
       }
-      that.dataList = data;
+      that.dataList = data
     }).catch(function (err) {
       that.doLog('pageview', {
         act: 'dataError',
@@ -89,21 +90,21 @@ export default {
     })
   },
   methods: {
-    getServerUrl() {
+    getServerUrl () {
       let params = {
         'url': this.url,
         'from': this.source,
         'versionCode': this.versionCode
-      };
+      }
       let urlParams = this.obj2QueryStr(params)
       return this.api + urlParams
     },
-    handleSafeClick() {
+    handleSafeClick () {
       if (this.status === 'online') {
         this.highdownByCoustomScheme(this.dataList.invokeParam, this.dataList.fallbackHighdown)
       }
     },
-    highdownByCoustomScheme(app, fallback) {
+    highdownByCoustomScheme (app, fallback) {
       let timeout = 1000
       let start = Date.now()
       let intent = 'bdashighdown://mobile.baidu.com/appsearch/highdownload?' + app
@@ -115,7 +116,7 @@ export default {
       ifr.src = intent
       document.body.appendChild(ifr)
       if (this.timer) {
-        clearTimeout(this.timer);
+        clearTimeout(this.timer)
       }
       this.timer = setTimeout(function () {
         let unhidden = self.unHidden()
@@ -125,7 +126,7 @@ export default {
         }
       }, timeout)
     },
-    unHidden() {
+    unHidden () {
       if ('webkitHidden' in document) {
         return !document.webkitHidden
       }
@@ -137,18 +138,18 @@ export default {
       }
       return true
     },
-    obj2QueryStr(params) {
+    obj2QueryStr (params) {
       return Object.keys(params).map(key => key + '=' + params[key]).join('&')
     },
-    doLog(logtype, queryInfo = {}, headerInfo = {}) {
+    doLog (logtype, queryInfo = {}, headerInfo = {}) {
       const LOG_BASE = 'https://mobile.baidu.com/app?'
       queryInfo = Object.assign(queryInfo, {
         action: 'log',
         logtype: logtype,
         mip: 'mip-download-safe'
-      });
+      })
       let url = LOG_BASE + this.obj2QueryStr(queryInfo)
-      let img = document.createElement("img")
+      let img = document.createElement('img')
       img.src = url
     }
   }
