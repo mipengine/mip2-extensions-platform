@@ -54,6 +54,7 @@
                     that.doLog('pageview', {
                         act: 'dataLoaded',
                         err: data.error,
+                        tj:'mip_download_'+url,
                         from: that.source
                     });
                 } else {
