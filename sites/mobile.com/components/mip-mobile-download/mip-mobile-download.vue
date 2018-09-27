@@ -43,7 +43,7 @@ export default {
       dataList: {},
       timer: null,
       status: 'hidden',
-      api: 'http://mobile.baidu.com/appsite?action=miphighdown&',
+      api: 'https://mobile.baidu.com/app?action=miphighdown&',
       // api: 'http://yq01-ae.epc.baidu.com:8777/appsite?action=miphighdown&',
       styleObject: {
         'radius': 'btn-radius',
