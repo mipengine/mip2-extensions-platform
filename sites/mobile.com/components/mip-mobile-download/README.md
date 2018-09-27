@@ -3,7 +3,7 @@
  |标题 | 内容 |
 ----|----|
 类型| 通用 |
-支持布局 | 无
+支持布局 | 
 所需脚本| [https://c.mipcdn.com/extensions/platform/v2/mipProject/mip-safe-download/mip-safe-download.js](https://c.mipcdn.com/extensions/platform/v2/mipProject/mip-safe-download/mip-safe-download.js)
 
 ## 说明
@@ -17,7 +17,7 @@
     <mip-mobile-download
             url="https://app.3dmgame.com/mip/android/86378.html"
             source="1021815n"
-            version-code=100012
+            version-code=10
             btn-style=1
     >
     </mip-mobile-download>
