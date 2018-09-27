@@ -70,7 +70,7 @@
                 that.dataList = data;
             }).catch(function (err) {
                 that.doLog('pageview', {act: 'dataError', req: url, err: err});
-                this.status = 'hidden';
+                that.status = 'hidden';
             })
         },
         methods: {
