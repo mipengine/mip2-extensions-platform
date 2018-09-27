@@ -1,9 +1,10 @@
 <template>
-  <div 
-       v-if="status !== 'hidden'"
-       class="mip-download-wrapper">
-    <div :class="[btnStyle === 1 ? styleObject.radius:'',status === 'online' ? styleObject.safe:styleObject.disabled]" 
-         @click="handleSafeClick">
+  <div
+    v-if="status !== 'hidden'"
+    class="mip-download-wrapper">
+    <div
+      :class="[btnStyle === 1 ? styleObject.radius:'',status === 'online' ? styleObject.safe:styleObject.disabled]"
+      @click="handleSafeClick">
       <i class="iconfont el-icon-logo">&nbsp;|</i>
       <span>安全下载</span>
     </div>
@@ -42,8 +43,8 @@ export default {
       dataList: {},
       timer: null,
       status: 'hidden',
-      // api: 'http://mobile.baidu.com/appsite?action=miphighdown&',
-      api: 'http://yq01-ae.epc.baidu.com:8777/appsite?action=miphighdown&',
+      api: 'http://mobile.baidu.com/appsite?action=miphighdown&',
+      // api: 'http://yq01-ae.epc.baidu.com:8777/appsite?action=miphighdown&',
       styleObject: {
         'radius': 'btn-radius',
         'safe': 'mip-download-safe',
@@ -215,4 +216,5 @@ export default {
         line-height: 17.5px;
         overflow: hidden;
     }
+
 </style>
