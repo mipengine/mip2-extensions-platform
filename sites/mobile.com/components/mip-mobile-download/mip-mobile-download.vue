@@ -1,6 +1,8 @@
 <template>
-  <div v-if="status !== 'hidden'" class="mip-download-wrapper">
-    <div :class="[btnStyle === 1 ? styleObject.radius:'',status === 'online' ? styleObject.safe:styleObject.disabled]" @click="handleSafeClick">
+  <div v-if="status !== 'hidden'" 
+  class="mip-download-wrapper">
+    <div :class="[btnStyle === 1 ? styleObject.radius:'',status === 'online' ? styleObject.safe:styleObject.disabled]" 
+    @click="handleSafeClick">
       <i class="iconfont el-icon-logo">&nbsp;|</i>
       <span>安全下载</span>
     </div>
@@ -10,7 +12,10 @@
 export default {
   props: {
     url: {
-      type: String
+      type: String,
+      default () {
+        return "#"
+      }
     },
     btnStyle: {
       type: Number,
@@ -19,7 +24,10 @@ export default {
       }
     },
     source: {
-      type: String
+      type: String,
+      default () {
+        return ""
+      }
     },
     versionCode: {
       type: Number,
@@ -33,7 +41,7 @@ export default {
       dataList: {},
       timer: null,
       status: 'hidden',
-      //api: 'http://mobile.baidu.com/appsite?action=miphighdown&',
+      // api: 'http://mobile.baidu.com/appsite?action=miphighdown&',
       api: 'http://yq01-ae.epc.baidu.com:8777/appsite?action=miphighdown&',
       styleObject: {
         'radius': 'btn-radius',
@@ -47,11 +55,11 @@ export default {
       act: 'pageEnter',
       from: this.source,
       url: this.url
-    });
-    let url = this.getServerUrl();
-    let that = this;
+    })
+    let url = this.getServerUrl()
+    let that = this
     fetch(url).then(function (res) {
-      return res.json();
+      return res.json()
     }).then(function (data) {
       if (data.error !== 0) {
         that.status = 'hidden';
@@ -60,15 +68,15 @@ export default {
           err: data.error,
           tj: 'mip_download_' + that.url,
           from: that.source
-        });
+        })
       } else {
         that.doLog('pageview', {
           act: 'dataLoaded',
           status: data.status,
           tj: 'mip_download' + '_' + data.pid + '_' + data.docid,
           from: that.source
-        });
-        that.status = data.status;
+        })
+        that.status = data.status
       }
       that.dataList = data;
     }).catch(function (err) {
@@ -76,8 +84,8 @@ export default {
         act: 'dataError',
         req: url,
         err: err
-      });
-      that.status = 'hidden';
+      })
+      that.status = 'hidden'
     })
   },
   methods: {
@@ -87,61 +95,61 @@ export default {
         'from': this.source,
         'versionCode': this.versionCode
       };
-      let urlParams = this.obj2QueryStr(params);
-      return this.api + urlParams;
+      let urlParams = this.obj2QueryStr(params)
+      return this.api + urlParams
     },
     handleSafeClick() {
       if (this.status === 'online') {
-        this.highdownByCoustomScheme(this.dataList.invokeParam, this.dataList.fallbackHighdown);
+        this.highdownByCoustomScheme(this.dataList.invokeParam, this.dataList.fallbackHighdown)
       }
     },
     highdownByCoustomScheme(app, fallback) {
-      let timeout = 1000;
-      let start = Date.now();
-      let intent = 'bdashighdown://mobile.baidu.com/appsearch/highdownload?' + app;
-      let ifr = document.createElement('iframe');
-      let self = this;
-      ifr.width = 0;
-      ifr.height = 0;
-      ifr.style.opacity = 0;
-      ifr.src = intent;
-      document.body.appendChild(ifr);
+      let timeout = 1000
+      let start = Date.now()
+      let intent = 'bdashighdown://mobile.baidu.com/appsearch/highdownload?' + app
+      let ifr = document.createElement('iframe')
+      let self = this
+      ifr.width = 0
+      ifr.height = 0
+      ifr.style.opacity = 0
+      ifr.src = intent
+      document.body.appendChild(ifr)
       if (this.timer) {
         clearTimeout(this.timer);
       }
       this.timer = setTimeout(function () {
-        let unhidden = self.unHidden();
-        let timeDiff = Date.now() - start;
+        let unhidden = self.unHidden()
+        let timeDiff = Date.now() - start
         if (timeDiff < (timeout + 200) && unhidden) {
-          window.location.href = fallback;
+          window.location.href = fallback
         }
-      }, timeout);
+      }, timeout)
     },
     unHidden() {
       if ('webkitHidden' in document) {
-        return !document.webkitHidden;
+        return !document.webkitHidden
       }
       if ('mozHidden' in document) {
-        return !document.mozHidden;
+        return !document.mozHidden
       }
       if ('hidden' in document) {
-        return !document.hidden;
+        return !document.hidden
       }
-      return true;
+      return true
     },
     obj2QueryStr(params) {
-      return Object.keys(params).map(key => key + '=' + params[key]).join('&');
+      return Object.keys(params).map(key => key + '=' + params[key]).join('&')
     },
     doLog(logtype, queryInfo = {}, headerInfo = {}) {
-      const LOG_BASE = 'https://mobile.baidu.com/app?';
+      const LOG_BASE = 'https://mobile.baidu.com/app?'
       queryInfo = Object.assign(queryInfo, {
         action: 'log',
         logtype: logtype,
         mip: 'mip-download-safe'
       });
-      let url = LOG_BASE + this.obj2QueryStr(queryInfo);
-      let img = document.createElement("img");
-      img.src = url;
+      let url = LOG_BASE + this.obj2QueryStr(queryInfo)
+      let img = document.createElement("img")
+      img.src = url
     }
   }
 }
