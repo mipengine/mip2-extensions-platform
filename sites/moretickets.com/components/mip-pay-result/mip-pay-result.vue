@@ -32,6 +32,10 @@
 </template>
 
 <style scoped lang="less">
+*{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
 @main-color: #ff1d41;
 
 @dark-font: #323038;
@@ -147,6 +151,7 @@ export default {
                   self.loadOrder()
                 } else {
                   clearInterval(self.resultInterval)
+                  self.nextUrl && MIP.viewer.open(`${self.nextUrl}?orderOID=${data.result.data.orderOID}`)
                 }
               }, 2000)
             } else {

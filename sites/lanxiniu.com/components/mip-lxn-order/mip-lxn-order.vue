@@ -1,206 +1,150 @@
 <template>
   <div class="wrapper">
-    <div class="head">
+
+    <div class="banner-content">
       <div
         on="tap:sidebar.open"
-        class="head-logo actives">
-        <span class="img user_img"/>
+        class="head actives">
+        <mip-img
+          class="user"
+          src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAApVBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASEhIAAAAAAAAAAAAAAAAAAADLy8srKyv5+flkZGQ+Pj7m5ube3t6/v7/+/v78/Pz09PTx8fHHx8fExMS3t7eurq4AAAD6+vrw8PDR0dGpqamlpaWIiIiCgoJ4eHhRUVH29vbt7e3p6enh4eHV1dXJycmcnJyYmJiPj49ycnLX19fLy8v///80YWSfAAAANnRSTlNNAEclHAVMQCsRUUQ+PDIKq1fvaVzOw6H7+ObhqKWZkzbz3rOOjHp2cWLq2dTHt6uFg31vuq2EvXj9AAACEElEQVRYw6TP6U7CQBSG4Y/Zx24pZRNMAEkQFwiJce7/0sRUQpmeU9v4/D9vvoMRQyuZp4kwRiRpLpUeMeiAdxYR63zfgJYWJCt1j4CWAiwRJYiAEugkVGegyPCnrOADXqAH4bmAMujFKDrg0JujAhsMsGkHHAZxcUBhIHUf8AYDGd8MFAKUl6/jx2xegSSKRiAjz99DbfYKSnYLKBDWi3A1PoCirgFNPXAODWNyg9C/AYm2chuapqDIOkAOeAr39twE0AOwjAInbsIlYNE2CZEVKPYn4EH4DJEtSP4ScP8JuEvAos8Lz2B+gAZpFQV2oGkokOZR4ACaggSpHIemIxgSOWj7Rbh5m4CRIwXj/BiulhU4KRJwqml9vtiVYCUQ4FXz02y3nqCDgAHvoYYOhguU36WXzQrCMBCEIa0HQdH+WfuTCKVRUaFUZN//0TwIHpJJIMx3b0M2u7Mz9tT/i1A+dRX8gYJHm1IcArqmYBGLRny6FRdxB74fBGLRM6JGagTT3VEjZb4cS4gJtXLuFfAhQWYwTN44rxLmBcbZE5SPRKhdQQGSNkmEtytpQFRLgeAibIGsnyWCcW6AFsuQcIUMrbaqkRD9Baw2sFyLmzWtHsfl+GMZtW7NfK29LgLrPQW1AQYjhRxYnBT2wGSloA6szWONJmt1abPN230+cPCRhw9dfOzjgycfffnwTcf/L1foiQI8KsLLAAAAAElFTkSuQmCC"/>
       </div>
-      <ul class="head-ul">
-        <li>普通搬家<span/></li>
-        <li
-          class="actives"
-          @touchend="rishiMove">
-          <span>
-            日式搬家
-            <img
-              src="https://www.lanxiniu.com/Public/baidumip/upline.png"
-              class="upline">
-          </span>
-
-        </li>
-      </ul>
+      <mip-img src="https://www.lanxiniu.com/Public/baidumip/newbanners.png"/>
     </div>
-    <!-- <div class="banner-content">
-      <mip-img src="https://www.lanxiniu.com/Public/baidumip/banners.png"/>
-    </div> -->
-    <div class="tab">
-      <div class="tab-div">
-        <ul class="lxn-tab-title">
-          <li
-            v-for="item in tabData"
-            :key="item.index"
-            :class="{active:item.isActive,'lxn-hide':item.hide}"
-            class="car-actives"
-            @touchend="changeTab(item)">
-            <span >{{ item.name }}</span>
-          </li>
-        </ul>
-        <div class="swiper-div">
-          <div class="swiper-container">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">
-                <div class="car-img-div">
-                  <div class="car xiaomian"/>
-                </div>
-              </div>
-              <div class="swiper-slide">
-                <div class="car-img-div">
-                  <div class="car jinbei"/>
-                </div>
-              </div>
-              <div
-                :class="{'lxn-hide':hide}"
-                class="swiper-slide">
-                <div class="car-img-div">
-                  <div class="car xianghuo"/>
-                </div>
-              </div>
-            </div>
+    <div class="order-data">
+      <div>
+        <div class="address-data">
+          <div class="title">
+            <div>搬家地址</div>
+            <div/>
+            <div/>
           </div>
-        </div>
-        <div class="car-deccription">
-          <div>
-            <div class="des-div">
-              <p>{{ currentCar.weight }}</p>
-              <p>载重</p>
+          <div class="address-detail">
+            <div>
+              <span class="move-icon out"/>
             </div>
-            <div class="des-div">
-              <p>{{ currentCar.ckg }}</p>
-              <p>长宽高</p>
-            </div>
-            <div class="des-div">
-              <p>{{ currentCar.volume }}</p>
-              <p>体积</p>
-            </div>
-          </div>
-        </div>
-        <div class="main-conten">
-          <mip-form
-            method="get"
-            url="https://www.lanxiniu.com//Order/calPrice">
-            <div class="address">
-              <div class="address-div move-out">
-                <div class="point move-out-point"/>
-                <div class="address-div-flex">
-                  <div class="left">
-                    <a
-                      :href="htmlhref.mapout"
-                      data-type="mip"
-
-                      class="actives inputfix">
-                      <input
-                        v-model="globaldata.moveOutAddress.localtion.title"
-                        :readonly="isRead"
-                        type="text"
-                        placeholder="您要从哪里搬出"
-                      >
-                    </a>
-
-                  </div>
-                  <div
-                    class="right actives inputfix"
-                    @click="picker({'type':'floor','status':'out'})">
-                    <input
-                      v-model="floorAndTime.move.moveOut"
-                      :readonly="isRead"
-
-                      type="text"
-                      placeholder="搬出楼层"
-                    >
-                  </div>
-                </div>
-
-              </div>
-              <div class="address-div move-in">
-                <div class="point move-in-point"/>
-                <div class="address-div-flex address-div-flex2 ">
-                  <div class="left">
-                    <a
-                      :href="htmlhref.mapin"
-                      class=" actives inputfix"
-                      data-type="mip">
-                      <input
-                        v-model="globaldata.moveInAddress.localtion.title"
-                        :readonly="isRead"
-                        type="text"
-                        placeholder="想要搬到哪里去"
-                      >
-                    </a>
-                  </div>
-                  <div
-                    class="right actives inputfix"
-                    @click="picker({'type':'floor','status':'in'})">
-                    <input
-                      v-model="floorAndTime.move.moveIn"
-                      :readonly="isRead"
-                      type="text"
-                      placeholder="搬入楼层"
-                    >
-                  </div>
-                </div>
-              </div>
-
-              <div class="address-div move-second">
-                <span class="img movetime"/>
-                <div class="address-div-flex address-div-time ">
-                  <div
-                    class="left noafter actives"
-                    @click="picker({'type':'time'})">
-                    <span>搬家时间</span>
-                  </div>
-                  <div
-                    class="right actives inputfix"
-                    @click="picker({'type':'time'})">
-                    <input
-                      v-model="floorAndTime.time"
-                      :readonly="isRead"
-                      class="btn "
-                      type="text"
-                      placeholder="选择时间"
-                    >
-                  </div>
-                </div>
-              </div>
-              <div class="address-div ">
-                <span class="img beizhu"/>
+            <div class="actives">
+              <a
+                :href="htmlhref.mapout"
+                data-type="mip"
+                class="inputfix">
                 <input
-                  v-model="floorAndTime.remark"
+                  v-model="moveOut"
                   type="text"
-                  placeholder="备注"
-                  @input="saveMask">
+                  placeholder="您要从哪里搬出">
+              </a>
+            </div>
+          </div>
+          <div class="address-detail">
+            <div>
+              <span class="move-icon in"/>
+            </div>
+            <div style="border-bottom:unset">
+              <a
+                :href="htmlhref.mapin"
+                data-type="mip"
+                class=" actives inputfix">
+                <input
+                  v-model="moveIn"
+                  type="text"
+                  placeholder="想要搬到哪里去">
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="line"/>
+        <div class="carType-data">
+          <div class="title">
+            <div>选择车型</div>
+            <div>(根据物品数量)</div>
+            <div
+              data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22checkcartype%22%2C%22click%22%5D%7D"
+              class="actives"
+              @click="hrefToCostdes">查看车型详情</div>
+          </div>
+          <div class="card-car-content">
+            <div
+              v-for="item in tabData"
+              :key="item.name"
+              class="car-item">
+              <div class="par-des">
+                <div
+                  :class="{checked:item.checked}"
+                  class="des"
+                  @click="checkCurrentCar(item)">
+                  <div>{{ item.name }}</div>
+                  <div>{{ item.price }}</div>
+                  <mip-img
+                    :src="item.srcs"
+                    class="car-img"/>
+                    <!-- <div class="cardes">{{ item.des }}</div> -->
+                </div>
+
               </div>
             </div>
-          </mip-form>
+          </div>
+          <div class="parent-sure-order">
+            <div
+              data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22getorderprice%22%2C%22click%22%5D%7D"
+              class="sure-order"
+              @click="guJia">{{ btnName }}</div>
+          </div>
         </div>
       </div>
 
-      <div class="price">
-        <span
-          class="price-num"
-          v-text="floorAndTime.price"/>
-        <span class="price-unit">
-          元
-        </span>
-        <a
-          :href="htmlhref.costdes"
-          data-type="mip"> <span class="zifei">
-            资费说明</span></a>
+    </div>
 
+    <div class="service">
+      <div class="div-kefu">
+        <label class="kefu">
+          <div>
+            <mip-img
+              class="safe-img"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABwAAAAcCAMAAABF0y+mAAAAY1BMVEUAAABxx2Byx2F3zm9yx19xx2Bxx2BzyGFyx19xx19xx2Bxx19xx19yx2ByyGBzymR9zmJyxmBxx2Bxx19xx19yx19xx2ByyGByyGBzyGF0yGJ1y2KI3mZxx19xx2B1x2Fxxl8FL1ThAAAAIHRSTlMA+V4K9bLIPtzN6uW5qVYbD/LhvqObkG1kQCkTB6mFMlLCCsgAAACrSURBVCjPrdLJDgIhDIDhAsMMzL7vat//KU2kKY7gSf9b86UHSOHSw9gd4jUTIoq5iVA2CnSVUoFvW+46x7eErSZJ2GGkjhBjiT9jMtsA2TbYQyTLANYQq55MYoAjtClZiKaFdmDz6D41VQDeMCE0bhzOl1GGUNOsmwU5TVhjJEl4FqHlCr6vSuCqT9PgUyly/CzusBc74JLS3m68x8ncUVFDJLWWRU93+WNPmLcwoQe88x0AAAAASUVORK5CYII=" />
+          </div>
+          <div>客服全程监管, 免费5000元搬家保障</div>
+        </label>
       </div>
-      <!-- <p
-        on="tap:user.login"
-        class="sure-order btn"
-        @touchend="sureOrder">
-        确认下单
-      </p> -->
-      <p
-        id="sureorer"
-        data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22order%22%2C%22click%22%5D%7D"
-        class="sure-order btn"
-        @touchend="sureOrder">
-        确认下单
-      </p>
+      <div class="option">
+        <div
+          data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22costdes%22%2C%22click%22%5D%7D"
+          @click="hrefToCostdes">
+          <mip-img
+            class="option-img"
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAAYFBMVEUAAADq6uri4uJt0P9rw/+i6f9rxP9rwv9qw/9rw/9sxP9rxf9txf9rw/9qw/9rxP9rw/9qwv9qw/9qw/9rw/9rxP9rw/9sxP9sw/9uxv9uxf9vyP9rwv9sw/9qwv/h4eFNxbdYAAAAHnRSTlMADMMLrgN/7N7UV0wj9el5+fDkwo2FcmNANSwXm5ozd0SEAAABjklEQVRIx+2XSZLDIAxFnWDjAcdzPIfc/5Zd7UYJg4nd9bf5Owq9QhICRLCvaOofbRJXVZy0j36KgtOKRFhLQ3UozvGsjOWO4pIdrzo00qNmOFhdpPKDUvGJvcsD3f3RhvJQoSfyPJUnlOa7bGEYJV025ozlY9YlxkSxQ7NUN+CzPjfzQl/b9VyL98adacZvWtwf8hwuwY6W0Jtz8Z7hgUf8bSOMukpfLmeBV9ntFbZea4MkKdZDS9KgpaOxfD70vHmntPTl8XLx7Un5ijimgBeLvV4teqGw48hONbfZ51PRruPC8qVgDuvQrDAjjGqKw2WJdpeu//yepNLssi49k/W0DXs6Rza7T9MZ67fRqkadxXroTpmv26il4jJZk3bLrDX8GA3WS49GlFQiuc766ZzKZBtVasR01k8zZV5BMOQ2lDBoq5AieUDlCR0M80jy/x1J5DKAriHoAkSuXujSR54b6KFDnljkcUfaCqihQVoppIlD20e8ccVbZrxZx78J+AeFvkYrfY3W36/RV0o/ajqlHYCl+8UAAAAASUVORK5CYII=" />
+          <div>费用标准</div>
+        </div>
+        <div>
+          <a
+            :href="customeServerUrl"
+            data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22serveronline%22%2C%22click%22%5D%7D">
+            <mip-img
+              class="option-img"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAApVBMVEUAAABrw//h4eFqw//k5OTi4uJsxP90yf/Q///j4+Pn5+fi4uLi4uJrw//i4uJrw/9qwv9rw/9rw/9qw/9rxP9rw/9sxP9rw//j4+Nswv/k5ORs0//i4uLi4uLi4uLi4uLi4uLi4uLj4+Pl5eXm5uZrw//i4uJqwv/h4eHj4+Pi4uLq6ur///9qw//h4eHi4uLi4uLi4uLj4+Ph4eHi4uJqwv/h4eEzkvEiAAAANXRSTlMAvef7HKYkEANjCu3d8+HZxa6qkHVdWlFOOzkM/MfAsoWAdCMQovbWmmtUGAah18uolUkzLOXvEtIAAAIPSURBVEjH7ZbZdoIwEIYDVUBErQuKKILivm/w/o/W02QSIRDCOell/7uY+TKZhYlIoPiwDwNnu3WCcH+IUX1Zx303zam7P1q1UPsAJMcfbDm6bKcCtZcS3HfSCjl+BXqO5mml5tFZxJ5uGbMg8vzYtmPfi4LMkbeTgL0yk+CYC88+BmzrWko3WLhhSWh+yAJvVLC6h0rl6ULaWsDWfY0EWt/BZME3zBI2IlShCIyWXEiQ0BWq1ApK4efS2aVHSgQX7NrFE0Np91th4Ya2TtK4RlKtHVISm3fsoRryONdn4niBamlBXNMmf5LDXvXgF7F+wvJRdCx3/YAVqVMrb2K6F63X6fS0i2vmd1qkWmTxxottLtUT7Sth+tImuYRvMfAmg7L1q2yqp98Jp+9pNuEYiMsbYZiUaFhrfJpaUirNrMHuEoF2UtrSEqE02c2HSYWGxfnT1PVmg+Y5U6DB2JjNjPEgU7QpxzTa+DUA+lOjvoFARv9TMWAp00yxmqQ3mNsRymjEnJNuYYwOMxP/yrIFLKNZzvCSMSkIl4l66CNOfXojXC7K5GCXmhg8bNBjXSG8AYsBKmgAWxsRzEIeF+ExDVoI98DCKMIGbPWEcAcsZkV4BlsdJVjp2koJUynV5c+aRKk9lT4MpU9SaRiojCGFAag0etWHvvpzo/7QyZ9YsaSPe32Z7ob8rdi4JvoX0w8ouxLoG0Sx1gAAAABJRU5ErkJggg==" />
+            <div>在线咨询</div>
+          </a>
+
+        </div>
+        <div>
+          <a
+            data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22call400%22%2C%22click%22%5D%7D"
+            href="tel:4006785966">
+            <mip-img
+              class="option-img"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAA51BMVEUAAABtxv9rw//d//9sw//j4+NsxP9rw/9rw/9sxP+A2/9qw//k5OTi4uJqw//i4uJrw//i4uJrw/9rxP/j4+Pj4+NsxP9xy//s7Ox7yv9rw//i4uLi4uLi4uJrw/9qwv9rwv/i4uJqw/9rw/9qw/9qw//i4uJqwv9qxP/i4uLj4+Pn5+fh4eHi4uLi4uLh4eHi4uLl5eXl5eV2xP9q1f/i4uJrwv/j4+Pi4uJsxP9sw/9sxv9tw/9sw/9txv9wx//o6Oj////i4uLi4uLh4eHi4uLi4uLi4uLi4uLi4uLm5uZqwv/h4eGTplBAAAAAS3RSTlMAGdkCfywn7d9PB/Yl9fPq4sSKglFCNBUNCernn3/5zsG2rqmclZJxYVY1H9e+inhzOhwNDMd6a2VaVUdEQC4gFQfs697QqaWGhRR8xdNsAAACMElEQVRIx+2V2XqiMBSAD4IIgtZ9wbUu1VGnVWu3aTvt7Mvh/Z9nEBNDhAOtc9Xv639liD9JzhLgnTeKrvyH66SOthUDMWSr9qy6mn9JcrM9xAPb7hRzrs/V71msPEY8sNctN0CxQrsmYshOn7hBPtqE2ywg5x4oO0csXt67UwDSdpdRbt3i7jVI2FW7Ma/eFLl9C2E07g4gmnSb2dVwmjLMtZ6A4sMua60GGeoy0KR3mTuDA4bMLTSlxw17/VcVw5XrM5ddNc/kUvBh58rf5tlq7y99+VyWa8ioSYd0GafPwFhsh19VSZ7w4gKItFs8xDf+UC7zkdi1hD1/nl1835ZWmgXBj/gFBOmL4gqj/vH+v2AJ8ovllzRvMPkBIrkVCWr7DSLN8hLRwyJXcrv7oLOVF9Jkl8mXhLz2jIqQfxAywanrtsW2i8S2Cc69ZLO3ePyMDNgjJS95lNInZKruYlYuwt6uEkVCUPFzxexvyeV5WKkV4HaHaIzPpF1piN9ES2pwBEMmO5sjZBOPX1pcgPk6JENfverr5br1mo3Tn5tPEMO9Ev+hs2LsKaYUIuAcjTr3NSJhj4U9iIz50wCRsrM9Yee1TehcZQuRthUDBY4m1XmtxGJC2rqDQVKlu0d9c6k/TEspacLRIco28AUYwpVQesluTyGLfJzkjrNAYxbi1IJJeSInBFa5mdwlWiZKzWj1l/W3OczLZn5ohg5Lo9Ymo76R6XYzRn80qanwjsc/TQbv4fcQpE8AAAAASUVORK5CYII=" />
+            <div>客服热线</div>
+          </a>
+        </div>
+        <div
+          data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22userguide%22%2C%22click%22%5D%7D"
+          @click="hrefToUserguide">
+          <mip-img
+            class="option-img"
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAAYFBMVEUAAADq6uri4uJt0P9rw/+i6f9rxP9rwv9qw/9rw/9sxP9rxf9txf9rw/9qw/9rxP9rw/9qwv9qw/9qw/9rw/9rxP9rw/9sxP9sw/9uxv9uxf9vyP9rwv9sw/9qwv/h4eFNxbdYAAAAHnRSTlMADMMLrgN/7N7UV0wj9el5+fDkwo2FcmNANSwXm5ozd0SEAAABjklEQVRIx+2XSZLDIAxFnWDjAcdzPIfc/5Zd7UYJg4nd9bf5Owq9QhICRLCvaOofbRJXVZy0j36KgtOKRFhLQ3UozvGsjOWO4pIdrzo00qNmOFhdpPKDUvGJvcsD3f3RhvJQoSfyPJUnlOa7bGEYJV025ozlY9YlxkSxQ7NUN+CzPjfzQl/b9VyL98adacZvWtwf8hwuwY6W0Jtz8Z7hgUf8bSOMukpfLmeBV9ntFbZea4MkKdZDS9KgpaOxfD70vHmntPTl8XLx7Un5ijimgBeLvV4teqGw48hONbfZ51PRruPC8qVgDuvQrDAjjGqKw2WJdpeu//yepNLssi49k/W0DXs6Rza7T9MZ67fRqkadxXroTpmv26il4jJZk3bLrDX8GA3WS49GlFQiuc766ZzKZBtVasR01k8zZV5BMOQ2lDBoq5AieUDlCR0M80jy/x1J5DKAriHoAkSuXujSR54b6KFDnljkcUfaCqihQVoppIlD20e8ccVbZrxZx78J+AeFvkYrfY3W36/RV0o/ajqlHYCl+8UAAAAASUVORK5CYII=" />
+          <div>用户指南</div>
+        </div>
+      </div>
+
     </div>
 
     <div
@@ -232,264 +176,79 @@
 <script>
 import base from '../../common/utils/base.js'
 import '../../common/utils/base.less'
-import picker from '../../common/utils/picker.js'
 export default {
   props: {
     globaldata: {
       type: Object,
-      default: function () { return {} }
+      default: function () {
+        return {}
+      }
     },
     userlogin: {
       type: Object,
-      default: function () { return {} }
+      default: function () {
+        return {}
+      }
     },
     mipClickToken: {
       type: String,
-      default: function () { return '' }
+      default: function () {
+        return ''
+      }
     }
   },
   data () {
     return {
-      fetchShow: false, // fetch请求loading
-      hide: false, // 显示车型用数据
-      isRead: true,
+      customeServerUrl: '',
       htmlhref: {},
-      mySwiper: '', // 滑动轮播图
-
-      swiperWidth: 0,
-      currentIndex: 0,
-      maxIndex: 2,
-      transform: 0,
-      startX: 0,
-      endX: 0,
-
-      cityPicker: '', // 选择器
-      outIsFill: false,
-      inIsFill: false,
-      floorAndTime: {
-        move: {
-          data: '',
-          moveOut: '',
-          moveIn: ''
-        },
-        time: '',
-        remark: '', // 备注
-        price: 96 // 价格
-      },
-      carTypes: [
-        {
-          stairsFee: [
-            {
-              id: 0,
-              name: '有电梯,无楼梯费'
-            },
-            {
-              id: 1,
-              name: '无电梯1层,楼层费0元'
-            },
-            {
-              id: 2,
-              name: '无电梯2层,楼层费10元'
-            },
-            {
-              id: 3,
-              name: '无电梯3层,楼层费20元'
-            },
-            {
-              id: 4,
-              name: '无电梯4层,楼层费40元'
-            },
-            {
-              id: 5,
-              name: '无电梯5层,楼层费60元'
-            },
-            {
-              id: 6,
-              name: '无电梯6层,楼层费80元'
-            },
-            {
-              id: 7,
-              name: '无电梯7层,楼层费110元'
-            },
-            {
-              id: 8,
-              name: '无电梯8层,楼层费140元'
-            }
-          ]
-        },
-        {
-          stairsFee: [
-            {
-              id: 0,
-              name: '有电梯,无楼梯费'
-            },
-            {
-              id: 1,
-              name: '无电梯1层,楼层费0元'
-            },
-            {
-              id: 2,
-              name: '无电梯2层,楼层费12元'
-            },
-            {
-              id: 3,
-              name: '无电梯3层,楼层费24元'
-            },
-            {
-              id: 4,
-              name: '无电梯4层,楼层费48元'
-            },
-            {
-              id: 5,
-              name: '无电梯5层,楼层费72元'
-            },
-            {
-              id: 6,
-              name: '无电梯6层,楼层费96元'
-            },
-            {
-              id: 7,
-              name: '无电梯7层,楼层费132元'
-            },
-            {
-              id: 8,
-              name: '无电梯8层,楼层费168元'
-            }
-          ]
-        },
-        {
-          stairsFee: [
-            {
-              id: 0,
-              name: '有电梯,无楼梯费'
-            },
-            {
-              id: 1,
-              name: '无电梯1层,楼层费0元'
-            },
-            {
-              id: 2,
-              name: '无电梯2层,楼层费15元'
-            },
-            {
-              id: 3,
-              name: '无电梯3层,楼层费30元'
-            },
-            {
-              id: 4,
-              name: '无电梯4层,楼层费60元'
-            },
-            {
-              id: 5,
-              name: '无电梯5层,楼层费90元'
-            },
-            {
-              id: 6,
-              name: '无电梯6层,楼层费120元'
-            },
-            {
-              id: 7,
-              name: '无电梯7层,楼层费165元'
-            },
-            {
-              id: 8,
-              name: '无电梯8层,楼层费210元'
-            }
-          ]
-        }
-      ], // 车型数据
-      currentCar: {
-        // 当前车型---效果用数据
-        name: '小面',
-        index: 0,
-        weight: '600KG', // 载重
-        ckg: '1.7m×1.2m×1.1m', // 长宽高
-        volume: '2.2立方', // 体积
-        hide: false, // 是否隐藏
-        isActive: true // 被选中状态
-      },
+      fetchShow: false, // fetch请求loading
+      moveOut: '',
+      moveIn: '',
       currentCarItem: '', // 当前车型---数据用
-      tabData: [
-        // 自定义车型数据
-        {
-          name: '小面',
-          index: 0,
-          weight: '600KG', // 载重
-          ckg: '1.7m×1.2m×1.1m', // 长宽高
-          volume: '2.2立方', // 体积
-          hide: false, // 是否隐藏
-          isActive: true // 被选中状态
-        },
-        {
-          name: '金杯',
-          index: 1,
-          weight: '1500KG', // 载重
-          ckg: '2.7m×1.4m×1.2m', // 长宽高
-          volume: '4.5立方', // 体积
-          hide: false, // 是否隐藏
-          isActive: false // 被选中状态
-        },
-        {
-          name: '4.2米厢货',
-          index: 2,
-          weight: '3000KG', // 载重
-          ckg: '4.2m×1.8m×1.8m', // 长宽高
-          volume: '13立方', // 体积
-          hide: false, // 是否显示
-          isActive: false // 被选中状态
-        }
-      ],
+      //   车辆数据
+      tabData: [],
+      couponsId: 0, // 优惠券id
+      btnName: '获取报价',
       warn: {
         // 弹窗
         show: false,
         texts: ''
-      },
-      debounce: ''
+      }
     }
   },
   watch: {
     globaldata (val, oldval) {
-      console.log('查看之前的城市:' + oldval.ordercity + '=============现在的城市:' + val.ordercity)
+      console.log(
+        '查看之前的城市:' +
+          oldval.ordercity +
+          '=============现在的城市:' +
+          val.ordercity
+      )
       if (val.ordercity !== oldval.ordercity) {
         this.getCurrentCityCarTypes(val.ordercity)
       }
-      this.calPrice()
     }
   },
   created () {
     base.setHtmlRem()
   },
   mounted () {
-    window.addEventListener('show-page', (e) => {
+    //   页面显示的时候
+    window.addEventListener('show-page', e => {
       console.log('页面显示')
-      let data = base.getSession()
-      if (data !== null) {
-        console.log(JSON.stringify(data, null, 2))
-        let obj = {
-          moveOutAddress: data.moveOutAddress,
-          moveInAddress: data.moveInAddress
-
-        }
-        base.mipSetGlobalData(obj)
+      let lxndata = base.getSession()
+      if (lxndata !== null) {
+        console.log(JSON.stringify(lxndata, null, 2))
+        this.moveOut = lxndata.moveOutAddress.localtion.name
+        this.moveIn = lxndata.moveInAddress.localtion.name
       }
+      this.calPrice()
     })
     // 基本数据初始化
     this.initData()
 
     // 添加MIP组件监听
     this.addMipWatch()
-
-    // 滑动初始化
-    // this.swiperInit();
-
-    // 获取当前城市的车型信息
-    this.getCurrentCityCarTypes(this.globaldata.ordercity)
-
-    // 全局数据监听
-    this.lxnDataWatch()
-
-    // 设置波纹效果
-    this.clickRipple()
   },
 
   methods: {
@@ -497,11 +256,10 @@ export default {
     initData () {
       // 配置链接信息
       this.htmlhref = base.htmlhref
-      // 配置 车辆信息
-      this.floorAndTime.move.data = this.carTypes[0].stairsFee
-
-      this.getwidth()
-      this.swiperTouch()
+      this.customeServerUrl = base.customeServerUrl
+      this.reduction()
+      // 获取当前城市的车型信息
+      //   this.getCurrentCityCarTypes(this.globaldata.ordercity)
     },
     // 添加tab监听
     addMipWatch () {
@@ -517,7 +275,14 @@ export default {
           let wxauth = event.userInfo.wxauth
           let promas = base.getRequest()
           if (+wxauth === 1 && !promas.hasOwnProperty('istop')) {
-            MIP.viewer.open('https://www.lanxiniu.com/Weixin/auth?token=' + event.sessionId + '&redirect_url=' + location.href + '&isdev=1', { isMipLink: false })
+            MIP.viewer.open(
+              'https://www.lanxiniu.com/Weixin/auth?token=' +
+                event.sessionId +
+                '&redirect_url=' +
+                location.href +
+                '&isdev=1',
+              { isMipLink: false }
+            )
           }
         } else {
           console.log('不是微信内')
@@ -532,7 +297,7 @@ export default {
           let config = {
             redirectUri: ''
           }
-          MIP.setData({'config': config})
+          MIP.setData({ config: config })
           this.$nextTick(() => {
             console.log('点击头像登录')
             this.$emit('actionName')
@@ -541,23 +306,26 @@ export default {
       })
 
       //   订单列表跳转
-      this.$element.customElement.addEventAction('goorderlist', (event, str) => {
-        let isLogin = this.userlogin.isLogin
-        console.log('订单列表跳转')
-        if (isLogin) {
-          MIP.viewer.open(base.htmlhref.orderlist, { isMipLink: true })
-        } else {
-          console.log('未登录')
-          let config = {
-            redirectUri: base.htmlhref.orderlist
+      this.$element.customElement.addEventAction(
+        'goorderlist',
+        (event, str) => {
+          let isLogin = this.userlogin.isLogin
+          console.log('订单列表跳转')
+          if (isLogin) {
+            MIP.viewer.open(base.htmlhref.orderlist, { isMipLink: true })
+          } else {
+            console.log('未登录')
+            let config = {
+              redirectUri: base.htmlhref.orderlist
+            }
+            MIP.setData({ config: config })
+            this.$nextTick(() => {
+              console.log('点击订单列表录')
+              this.$emit('actionOrderList')
+            })
           }
-          MIP.setData({'config': config})
-          this.$nextTick(() => {
-            console.log('点击订单列表录')
-            this.$emit('actionOrderList')
-          })
         }
-      })
+      )
 
       //   资费说明跳转
       this.$element.customElement.addEventAction('gocostdes', (event, str) => {
@@ -565,41 +333,119 @@ export default {
       })
 
       //   用户指南跳转
-      this.$element.customElement.addEventAction('gouserguide', (event, str) => {
-        MIP.viewer.open(base.htmlhref.userguide, { isMipLink: true })
+      this.$element.customElement.addEventAction(
+        'gouserguide',
+        (event, str) => {
+          MIP.viewer.open(base.htmlhref.userguide, { isMipLink: true })
+        }
+      )
+    },
+
+    // 选择车型
+    checkCurrentCar (item) {
+      this.tabData.forEach(ele => {
+        ele.checked = false
+        if (ele.type === item.type) {
+          ele.checked = true
+        }
       })
+      this.currentCarItem = item
+      let obj = {
+        currentCarItem: this.currentCarItem
+      }
+      this.setGlobalData(obj)
+      //   console.log(JSON.stringify(item, null, 2))
+      this.calPrice()
+    },
+    // 去估价
+    guJia () {
+      this.checkData()
+    },
+    // 提交订单前检查数据
+    checkData (sessionId) {
+      console.log('------------------')
+      //   let warn = this.warn
+      let moveOut = this.moveOut
+      let moveIn = this.moveIn
+      console.log('查看搬出地址数据')
+      if (moveOut) {
+        if (moveIn) {
+        //   this.upOrder()
+          MIP.viewer.open(base.htmlhref.payorder, { isMipLink: true })
+        } else {
+          this.openLayer('请填写搬入地址')
+        }
+      } else {
+        this.openLayer('请填写搬出地址')
+      }
+    },
+    closeLayer () {
+      this.warn.show = false
+    },
+    // 还原数据
+    reduction () {
+      //   let lxnData = base.getSession()
+      //   if (lxnData) {
+      //     let moveOutAddress = lxnData.moveOutAddress
+      //     let moveInAddress = lxnData.moveInAddress
+      //     this.moveOut = moveOutAddress.localtion.name
+      //     this.moveIn = moveInAddress.localtion.name
+      //   }
+      this.getOpenCity()
+    },
+    // 获取开通城市列表
+    getOpenCity () {
+      let city = encodeURIComponent('北京')
+      let urls = base.url + '/Setting/getCityData?city=' + city
+      window
+        .fetchJsonp(urls)
+        .then(response => response.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => {
+          //   console.log('查看开通城市:' + JSON.stringify(response.data.open_citys, null, 2))
+          let cityList = response.data.open_citys
+
+          if (cityList) {
+            let obj = {
+              cityList: response.data.open_citys
+            }
+            this.setGlobalData(obj)
+            // let lxnData = base.getSession()
+            // if (lxnData) {
+            //   lxnData.cityList = cityList
+            //   this.setGlobalData(lxnData)
+            // } else {
+
+            // }
+          }
+          this.ipLocaltion()
+        })
     },
     // 请求当前城市的车型列表
-    getCurrentCityCarTypes  (city) {
-      let focusCity = city
-      let urls = base.url + '/Setting/getCityData?city=' + focusCity
-      fetch(urls, {
-        method: 'get'
-      })
+    getCurrentCityCarTypes (city) {
+      //   let focusCity = city
+      let urls = base.url + '/Setting/getCityData?city=' + city
+      window
+        .fetchJsonp(urls, {
+          method: 'get'
+        })
         .then(response => response.json())
         .catch(error => console.error('Error:', error))
         .then(response => {
           let service = response.data.setting.service
-          for (let i = 0; i < service.length; i++) {
-            if (service[i].type === 5) {
-              //   car = service[i].car;
-              this.carTypes = service[i].car
-              break
-            }
-          }
-          // 如果当前城市车型小于3个  隐藏最后一个
 
-          if (this.carTypes.length < 3) {
-            this.hide = true
-            this.tabData[2].hide = true
-            this.maxIndex = 1
-          } else {
-            this.hide = false
-            this.tabData[2].hide = false
-            this.maxIndex = 2
-          }
-          // 设置默认楼层数据
-          this.carTypes.forEach((item) => {
+          this.setCityCarTypes(service)
+        })
+    },
+    setCityCarTypes (service) {
+      for (let i = 0; i < service.length; i++) {
+        if (service[i].type === 5) {
+          //   console.log(JSON.stringify(service[i].car, null, 2))
+          let carType = service[i].car
+          this.tabData = []
+          let priceUnit = '元('
+          let distanceUnit = '公里)'
+          carType.forEach(item => {
             let arr = item.stairs_fee.map((item, index) => {
               let arr = {
                 id: index,
@@ -607,25 +453,142 @@ export default {
               }
               return arr
             })
-
-            item.stairsFee = arr
-            if (item.type === 3) {
-              this.floorAndTime.move.data = item.stairsFee
+            // item.stairsFee = arr
+            let itemType = +item.type
+            let car = {
+              type: 0,
+              checked: false,
+              name: item.name,
+              stairsFee: arr,
+              //   des: '适合2人物品',
+              price:
+                item.start_price + priceUnit + item.start_km + distanceUnit,
+              srcs: 'https://www.lanxiniu.com/Public/baidumip/jinbei.png'
             }
+            // 小面
+            if (itemType === 3) {
+            //   car.des = '适合1人物品'
+              car.carType = 3
+              car.srcs =
+                'https://www.lanxiniu.com/Public/baidumip/xiaomian.png'
+            }
+            // 金杯或大面包
+            if (itemType === 2) {
+              car.carType = 2
+              car.type = 1
+            }
+            if (itemType === 23) {
+              car.carType = 23
+              car.type = 1
+            }
+
+            // 厢货
+            if (itemType === 20) {
+            //   car.des = '适合家庭搬家'
+              car.carType = 20
+              car.type = 2
+              car.srcs =
+                'https://www.lanxiniu.com/Public/baidumip/xianghuo.png'
+            }
+            this.tabData.push(car)
           })
-          this.RestoreData()
+          this.tabData[0].checked = true
+          this.currentCarItem = this.tabData[0]
+          // console.log(JSON.stringify(this.currentCarItem, null, 2))
+          let obj = {
+            currentCarItem: this.currentCarItem
+          }
+          this.setGlobalData(obj)
+          this.calPrice()
+          break
+        }
+      }
+    },
+    // 使用百度地图 webapi --ip定位
+    ipLocaltion () {
+      window
+        .fetchJsonp('https://api.map.baidu.com/location/ip?ak=' + base.ak)
+        .then(response => response.json())
+        .catch(error => console.error('Error:', error))
+        .then(response => {
+          console.log(response)
+          if (response.content) {
+            if (response.content.address_detail.city) {
+              let privite = {
+                ordercity: '北京'
+              }
+              let city = response.content.address_detail.city
+              let currentCity = city.substring(0, city.length - 1)
+              let nowCityList = base.getSession().cityList
+              if (nowCityList.indexOf(currentCity) > -1) {
+                privite.ordercity = currentCity
+                console.log('当前城市在服务城市列表里面')
+              } else {
+                console.log('不在城市列表')
+              }
+              console.log('查看城市列表:' + JSON.stringify(nowCityList, null, 2))
+              console.log('查看当前定位的城市:' + city)
+              console.log('查看截取的城市:' + currentCity)
+              console.log('查看获取数据城市:' + JSON.stringify(privite, null, 2))
+
+              this.setGlobalData(privite)
+
+              this.getCurrentCityCarTypes(privite.ordercity)
+            } else {
+              this.getCurrentCityCarTypes('北京')
+            }
+          } else {
+            this.getCurrentCityCarTypes('北京')
+          }
         })
+    },
+    // 跳转资费说明
+    hrefToCostdes () {
+      let lxnData = base.getSession()
+      let ordercity = '北京'
+      let carType = 3
+      if (lxnData.ordercity) {
+        ordercity = lxnData.ordercity
+      }
+      if (lxnData.currentCarItem) {
+        carType = lxnData.currentCarItem.carType
+      }
+      MIP.viewer.open(
+        base.htmlhref.costdes +
+          '?carType=' +
+          carType +
+          '&ordercity=' +
+          encodeURIComponent(ordercity),
+        { isMipLink: true }
+      )
+    },
+    // 跳转用户指南
+    hrefToUserguide () {
+      MIP.viewer.open(base.htmlhref.userguide, { isMipLink: true })
+    },
+
+    setGlobalData (obj) {
+      //   console.log('调用设置数据')
+      let data = base.mipExtendData(this.globaldata, obj)
+      base.mipSetGlobalData(obj)
+      base.setSession(data)
+    },
+    // 打开弹窗
+    openLayer (str) {
+      let warn = this.warn
+      warn.show = true
+      warn.texts = str
     },
     // 计算订单价格
     calPrice () {
-      let globaldata = this.globaldata
-
-      let focusCity = globaldata.ordercity
-      let carType = globaldata.carType
-      let kilometer = globaldata.kilometer
-      let orderTime = globaldata.orderTime
-      let moveOutNum = globaldata.moveOutNum
-      let moveInNum = globaldata.moveInNum
+      let lxnData = base.getSession()
+      let focusCity = lxnData.ordercity
+      let carType = lxnData.currentCarItem.carType
+      let kilometer = lxnData.kilometer
+      let orderTime = lxnData.orderTime
+      let moveOutNum = lxnData.moveOutAddress.floor
+      let moveInNum = lxnData.moveInAddress.floor
+      let sessionId = this.userlogin.sessionId
       let data = {
         from: 'baidumip',
         orderCity: focusCity, // 下单城市
@@ -639,613 +602,24 @@ export default {
         orderType: 5, // 订单类型
         serverType: 100, // 服务类型(默认100)
         square: 0, // 平米数(默认0)
-        cityCode: 12 // 城市code
+        cityCode: 12, // 城市code
+        sessionId: sessionId
       }
       let urls = base.url + '//Order/calPrice?' + base.setUrlParam(data)
 
-      fetch(urls, {
-        method: 'get'
-      })
+      window
+        .fetchJsonp(urls, {
+          method: 'get'
+        })
         .then(response => response.json())
         .catch(error => console.error('Error:', error))
         .then(response => {
-          let price = response.data.showPay
-          this.floorAndTime.price = price
-        })
-    },
-    // 确认下单
-    sureOrder () {
-      let islogin = this.userlogin.isLogin
-      let sessionId = this.userlogin.sessionId
-      if (islogin) {
-        this.checkData(sessionId)
-      } else {
-        let config = {
-          redirectUri: ''
-        }
-        MIP.setData({'config': config})
-        this.$nextTick(() => {
-          this.$emit('actionOrder')
-        })
-      }
-    },
-
-    // 全局数据监听
-    lxnDataWatch () {
-      //   监控城市
-      MIP.watch('lxndata.ordercity', (newval, oldval) => {
-        console.log('监控到全局数据改变')
-        this.getCurrentCityCarTypes(newval)
-      })
-    },
-
-    // 提交订单前检查数据
-    checkData (sessionId) {
-      let warn = this.warn
-      let globaldata = this.globaldata
-      // 搬出 地址
-      let moveoutAddress = globaldata.moveOutAddress.localtion.title
-      // 搬出楼层
-      let moveout = globaldata.moveOutNum
-      // 搬入地址
-      let moveinAddress = globaldata.moveInAddress.localtion.title
-      // 搬入楼层
-      let moveIn = globaldata.moveInNum
-      // 搬家时间
-      let time = globaldata.orderTime
-
-      if (moveoutAddress !== '') {
-        if (moveout !== '') {
-          if (moveinAddress !== '') {
-            if (moveIn !== '') {
-              if (time !== '') {
-                console.log('可以提交订单')
-                let sessionid = base.getbaiduLogMsg()
-                console.log('本地取id:' + sessionid)
-                this.upOrder(sessionid)
-              } else {
-                warn.show = true
-                warn.texts = '搬家时间不能为空'
-              }
-            } else {
-              warn.show = true
-              warn.texts = '搬入楼层不能为空'
-            }
-          } else {
-            warn.show = true
-            warn.texts = '搬入地址不能为空'
-          }
-        } else {
-          warn.show = true
-          warn.texts = '搬出楼层不能为空'
-        }
-      } else {
-        warn.show = true
-        warn.texts = '搬出地址不能为空'
-      }
-    },
-    // 提交订单
-    upOrder (sessionid) {
-      console.log('查看ID:' + sessionid)
-      let globaldata = this.globaldata
-
-      let moveout = globaldata.moveOutAddress
-      let movein = globaldata.moveInAddress
-      let kilometer = globaldata.kilometer
-      let orderCity = globaldata.ordercity
-      let orderTime = globaldata.orderTime
-      let carType = globaldata.carType
-      let startSairsNum = globaldata.moveOutNum
-      let endStairsNum = globaldata.moveInNum
-      let remark = this.floorAndTime.remark
-
-      let poiList = [
-        {
-          deliver: '',
-          deliverAddress: moveout.localtion.title,
-          deliverCity: moveout.localtion.city,
-          deliverLat: moveout.localtion.lat,
-          deliverLng: moveout.localtion.lng,
-          deliverPhone: moveout.phone,
-          deliverRemark: moveout.localtion.address,
-          deliverType: 1
-        },
-        {
-          deliver: '',
-          deliverAddress: movein.localtion.title,
-          deliverCity: movein.localtion.city,
-          deliverLat: movein.localtion.lat,
-          deliverLng: movein.localtion.lng,
-          deliverPhone: movein.phone,
-          deliverRemark: movein.localtion.address,
-          deliverType: 2
-        }
-      ]
-      let data = {
-        Kilometer: kilometer, // 公里数
-        TransTime: orderTime, // 服务时间
-        orderCity: orderCity, // 下单城市
-        CarType: carType, // 车型
-        start_stairs_num: startSairsNum, // 搬出楼层
-        end_stairs_num: endStairsNum, // 搬入楼层
-        OrderNum: '', // 订单号,（空为新建订单）
-        Remark: remark, // 订单备注信息
-        SafePrice: '', // 保价金额
-        couponsId: '', // 订单所用的优惠券id
-        detailType: '', // 详细的子车型
-        discountAmount: '', // 折扣总额
-        networkenvironment: '', // 网络环境
-        orderFrom: 16, // 订单来源
-        userLat: '', // 用户所在纬度
-        userLog: '', // 用户所在经度
-        orderType: 5, // 订单类型
-        usedServeType: 100, // 服务类型
-        carringType: 0, // 是否需要搬运， 0 无需
-        receiptType: 0, // 是否需要回单， 0 不需要回单
-        returnMoneyType: '', // 是否需要回款
-        remark: 'lxntest'
-      }
-      console.log(JSON.stringify(data, null, 2))
-      console.log(this.mipClickToken)
-      let updata = {
-        from_detail: 'baidu',
-        fr: 'xiongzhanghao',
-        click_token: this.mipClickToken,
-        token: sessionid,
-        couponsId: 0, // 所用的优惠券id(默认0)
-        OrderNum: '', // 订单号(空为新建订单)这里默认新建订单
-        assignCarType: 0, // 默认个人选择
-        poiList: JSON.stringify(poiList), // 配送地点信息
-        data: JSON.stringify(data) // 订单信息
-      }
-      let urls = base.url + '//Order/update?' + base.setUrlParam(updata)
-      //   this.fetchShow = true
-      fetch(urls, {
-        method: 'get'
-      })
-        .then(response => response.json())
-        .catch(error => console.error('Error:', error))
-        .then(response => {
-          console.log(JSON.stringify(response, null, 2))
-          //   this.fetchShow = false
           let data = response.data
-          if (data.warning) {
-            data.warning = ''
-          }
-          let obj = {
-            order: data
-          }
-          let datas = base.mipExtendData(this.globaldata, obj)
-
-          console.log(JSON.stringify(datas, null, 2))
-
-          base.mipSetGlobalData(obj)
-          base.setSession(datas)
-
-          setTimeout(function () {
-            // 添加版本号
-            console.log(JSON.stringify(datas, null, 2))
-            if (base.getbaiduLogMsg !== null) {
-              MIP.viewer.open(base.htmlhref.payorder + '?OrderNum=' + data.OrderNum, { isMipLink: true })
-            }
-            // MIP.viewer.page.router.push(base.htmlhref.payorder);
-          }, 500)
+          let price = data.showPay
+          this.couponsId = data.couponsId
+          console.log('查看价格:' + price)
+          this.btnName = '获取报价 (预估' + price + '元)'
         })
-    },
-    // 切换车型效果
-    changeTab (item, isRestoreData) {
-      let isRestor = isRestoreData || false
-      let index = item.index
-      this.currentCar = item
-      this.tabData.forEach(element => {
-        element.isActive = false
-        if (element.index === index) {
-          element.isActive = true
-        }
-      })
-      let num = -this.swiperWidth * item.index
-      this.moveSBack(num, isRestor)
-    //   this.changeTabData(index, isRestor)
-    },
-    // 切换车型数据
-    changeTabData (index, isRestoreData) {
-      console.log('查看当前数据:' + index)
-      console.log('查看当前数据:' + isRestoreData)
-      let move = this.floorAndTime.move
-      let data = this.carTypes[index]
-      //   更新当前楼层价格数据
-      move.data = data.stairsFee
-      let floorData = move.data
-      let str1 = ',楼层费'
-      let str2 = '...'
-      let moveOutNum = this.globaldata.moveOutNum
-      let moveInNum = this.globaldata.moveInNum
-      if (moveOutNum !== '') {
-        move.moveOut = floorData[moveOutNum].name.replace(str1, str2)
-      }
-      if (moveInNum !== '') {
-        move.moveIn = floorData[moveInNum].name.replace(str1, str2)
-      }
-
-      let flag = isRestoreData || false
-      if (!flag) {
-        console.log('手动操作进行保存')
-        //   切换车型时 重置搬出搬入数据
-        let obj = {
-          carType: data.type
-        //   moveOutNum: '',
-        //   moveInNum: ''
-        }
-        console.log(JSON.stringify(obj, null, 2))
-        let datas = base.mipExtendData(this.globaldata, obj)
-        base.mipSetGlobalData(obj)
-        base.setSession(datas)
-      } else {
-      }
-    },
-    // 选择器关闭
-    pickerMaskClose () {
-      let element = this.$element
-      let picker = element.querySelector('.picker')
-      picker.classList.remove('open')
-      let elementParentNode = element.parentNode
-      setTimeout(function () {
-        if (elementParentNode.tagName === 'MIP-FIXED') {
-          MIP.util.css(elementParentNode, {
-            height: 'auto'
-          })
-        }
-
-        MIP.util.css(element, {
-          height: 'auto'
-        })
-      }, 200)
-    },
-    picker (item) {
-      let that = this
-      let Picker = picker.Picker()
-      let params = ''
-      if (item.type === 'floor') {
-        params = {
-          title: '',
-          pickerType: 'city',
-          type: 1,
-          keys: {
-            id: 'id',
-            value: 'name'
-          },
-          data: that.floorAndTime.move.data,
-          successCallback: function (val) {
-            let move = that.floorAndTime.move
-
-            let str1 = ',楼层费'
-            let str2 = '...'
-            let value = val.value.replace(str1, str2)
-            let obj = ''
-            if (item.status === 'out') {
-              move.moveOut = value
-              obj = { moveOutNum: Number(val.code) }
-              base.mipSetGlobalData(obj)
-            } else {
-              obj = { moveInNum: Number(val.code) }
-
-              base.mipSetGlobalData(obj)
-              move.moveIn = value
-            }
-            let datas = base.mipExtendData(that.globaldata, obj)
-            base.setSession(datas)
-
-            that.pickerMaskClose()
-          },
-          cancelCallback: function () {
-            that.pickerMaskClose()
-          },
-          createCallback: function () {
-            let mask = that.$element.querySelector('.picker-mask')
-            mask.addEventListener('click', function (e) {
-              that.pickerMaskClose()
-              that.cityPicker.hidePicker()
-            })
-          }
-        }
-
-        that.cityPicker = new Picker(params, that.$element)
-      } else {
-        params = {
-          title: ' ',
-          pickerType: 'time',
-          type: 5,
-          defaultValue: '',
-          separator: '',
-          successCallback: function (val) {
-            let values = val.value.replace(/-/g, '/')
-            let date = Date.parse(new Date(values)) / 1000
-            let floorTime = that.floorAndTime
-            floorTime.time = val.value
-            let obj = { orderTime: date }
-            let datas = base.mipExtendData(that.globaldata, obj)
-            base.mipSetGlobalData(obj)
-            base.setSession(datas)
-            that.pickerMaskClose()
-          },
-          cancelCallback: function () {
-            that.pickerMaskClose()
-          },
-          createCallback: function () {
-            let mask = that.$element.querySelector('.picker-mask')
-            mask.addEventListener('click', function (e) {
-              that.pickerMaskClose()
-              that.cityPicker.hidePicker()
-            })
-          }
-        }
-        that.cityPicker = new Picker(params, that.$element)
-      }
-    },
-    // 保存 备注(后期加入)
-    saveMask () {
-      let obj = { remark: this.floorAndTime.remark }
-      let datas = base.mipExtendData(this.globaldata, obj)
-      base.mipSetGlobalData(obj)
-      base.setSession(datas)
-    },
-    closeLayer () {
-      this.warn.show = false
-    },
-
-    RestoreData () {
-      let promas = base.getRequest()
-      if (promas.hasOwnProperty('cardnum')) {
-        //   有从卡片进入的标志
-        this.homePageInto()
-      } else {
-        //  无从卡片进入的标志
-        this.reduction()
-      }
-    },
-    // 还原数据-----级别与homePageInto相同
-    reduction () {
-      let floorAndTime = this.floorAndTime
-      let data = base.getSession()
-      console.log(data)
-      if (data !== null) {
-        console.log('存在缓存数据')
-
-        base.mipSetGlobalData(data)
-
-        // 还原车型
-        let carTypeItem = {
-          index: 0
-        }
-        switch (data.carType) {
-          case 3:
-            break
-          case 2:
-            carTypeItem.index = 1
-            break
-          case 20:
-            carTypeItem.index = 2
-            break
-        }
-        if (this.hide && carTypeItem.index === 2) {
-          carTypeItem.index = 0
-          let obj = {
-            carType: 3
-          }
-          console.log(JSON.stringify(obj, null, 2))
-          let datas = base.mipExtendData(this.globaldata, obj)
-          base.mipSetGlobalData(obj)
-          base.setSession(datas)
-        }
-        this.changeTab(carTypeItem, true)
-
-        let str1 = ',楼层费'
-        let str2 = '...'
-
-        if (data.moveOutNum !== '') {
-          let num = data.moveOutNum
-          let value = floorAndTime.move.data[num].name.replace(str1, str2)
-          floorAndTime.move.moveOut = value
-        }
-        if (data.moveInNum !== '') {
-          let nums = data.moveInNum
-          let values = floorAndTime.move.data[nums].name.replace(str1, str2)
-          floorAndTime.move.moveIn = values
-        }
-        // 时间
-        if (data.orderTime !== '') {
-          let time = base.timeformat(new Date(data.orderTime * 1000), 'yyyy-MM-dd hh:mm')
-          floorAndTime.time = time
-        }
-        // 配置地址
-        // 配置备注
-        if (data.remark !== '') {
-          floorAndTime.remark = data.remark
-        }
-
-        setTimeout(() => {
-          this.calPrice()
-        }, 300)
-      }
-    },
-
-    // 从卡片进入页面根据url参数进行车型选择
-    homePageInto () {
-      console.log('========从卡片进入页面根据url参数进行车型选择==============')
-      let promas = base.getRequest()
-      //   if (promas.hasOwnProperty('cardnum')) {
-      let index = promas.cardnum
-      //   let carTypeItem = {
-      //     index: index
-      //   }
-
-      //   sessionStorage.setItem('bdcardfrom', index)
-
-      //   this.changeTab(carTypeItem, true)
-      let data = ''
-      if (this.carTypes.length < 3) {
-        data = this.carTypes[0]
-      } else {
-        data = this.carTypes[index]
-      }
-      let obj = {
-        carType: data.type
-      }
-      console.log(JSON.stringify(obj, null, 2))
-      let datas = base.mipExtendData(this.globaldata, obj)
-      base.mipSetGlobalData(obj)
-      base.setSession(datas)
-
-      this.reduction()
-      // setTimeout(() => {
-      //   this.calPrice()
-      // }, 200)
-    //   }
-    },
-
-    // 点击波纹效果
-    clickRipple () {
-      let util = MIP.util
-      util.event.delegate(
-        this.$element,
-        '.btn',
-        'click',
-        function (e) {
-          let target = e.target
-          if (target.className.indexOf('btn') > -1) {
-            let rect = target.getBoundingClientRect()
-            let ripple = target.querySelector('.ripple')
-            if (!ripple) {
-              ripple = document.createElement('span')
-              ripple.className = 'ripple'
-              ripple.style.height = ripple.style.width =
-                Math.max(rect.width, rect.height) + 'px'
-              target.appendChild(ripple)
-            }
-            ripple.classList.remove('show')
-            let top =
-              e.pageY -
-              rect.top -
-              ripple.offsetHeight / 2 -
-              document.body.scrollTop
-            let left =
-              e.pageX -
-              rect.left -
-              ripple.offsetWidth / 2 -
-              document.body.scrollLeft
-            ripple.style.top = top + 'px'
-            ripple.style.left = left + 'px'
-            ripple.classList.add('show')
-            return false
-          }
-        }
-      )
-    },
-
-    // 日式搬家提示
-    rishiMove () {
-      let warn = this.warn
-      warn.show = true
-      warn.texts = '暂未上线,敬请期待!'
-    },
-    // 自定义滑动效果
-    getwidth () {
-      let swiper = this.$element.querySelector('.swiper-wrapper')
-      let width = MIP.util.css(swiper, 'width')
-      width = Number(width.substring(0, width.length - 2))
-      this.swiperWidth = width
-    },
-    moves (num) {
-      let swiper = this.$element.querySelector('.swiper-wrapper')
-      num = -num
-      let currentIndex = this.currentIndex
-      num = -currentIndex * this.swiperWidth + num
-      this.transform = num
-      let t = 'translateX(' + num + 'px)'
-      MIP.util.css(swiper, {
-        transform: t,
-        'transition-duration': '0ms'
-      })
-    },
-    // 不足距离 返回
-    moveSBack (num, isRestoreData) {
-      let swiper = this.$element.querySelector('.swiper-wrapper')
-      this.transform = num
-      let t = 'translateX(' + num + 'px)'
-      MIP.util.css(swiper, {
-        transform: t,
-        'transition-duration': '300ms'
-      })
-
-      let transformNum = Math.abs(num)
-      this.currentIndex = parseInt(transformNum / this.swiperWidth)
-      let index = this.currentIndex
-      this.currentCar = this.tabData[index]
-      this.tabData.forEach(element => {
-        element.isActive = false
-        if (element.index === index) {
-          element.isActive = true
-        }
-      })
-      let flag = isRestoreData || false
-      this.changeTabData(index, flag)
-
-      setTimeout(function () {
-        MIP.util.css(swiper, {
-          'transition-duration': '0ms'
-        })
-      }, 100)
-    },
-    swiperTouch () {
-    //   let that = this
-      let swiper = this.$element.querySelector('.swiper-wrapper')
-      swiper.addEventListener('touchstart', (event, str) => {
-        event.preventDefault()
-        let touch = event.touches[0]
-        this.startX = touch.pageX
-      })
-      swiper.addEventListener('touchmove', (event, str) => {
-        event.preventDefault()
-        let touch = event.touches[0]
-        this.endX = touch.pageX
-        let num = this.startX - touch.pageX
-        this.moves(num)
-      })
-      swiper.addEventListener('touchend', (event, str) => {
-        let num = this.startX - this.endX
-        if (this.transform > 0) {
-          this.moveSBack(0)
-        } else {
-          let temp = num
-          if (num < 0) {
-            temp = -num
-          }
-
-          if (num < 0) {
-            if (temp > this.swiperWidth / 5) {
-              let curentIndex = this.currentIndex
-              if (curentIndex !== 0) {
-                this.moveSBack(-this.swiperWidth * (curentIndex - 1))
-              }
-            } else {
-              let num = -this.currentIndex * this.swiperWidth
-              this.moveSBack(num)
-            }
-          } else {
-            if (temp > this.swiperWidth / 5) {
-              let curentIndexs = this.currentIndex
-              if (curentIndexs !== this.maxIndex) {
-                this.moveSBack(-this.swiperWidth * (curentIndexs + 1))
-              } else {
-                this.moveSBack(-this.swiperWidth * this.maxIndex)
-              }
-            } else {
-              let nums = -this.currentIndex * this.swiperWidth
-              this.moveSBack(nums)
-            }
-          }
-        }
-      })
     }
   }
 }
@@ -1262,355 +636,210 @@ export default {
 }
 
 .banner-content {
-  max-height: 1.6rem;
+  height: 2.2rem;
+  max-height: 2.2rem;
   overflow: hidden;
+  position: relative;
+  background: #008ff1;
 }
 
 .head {
-  height: 0.9rem;
-  display: flex;
-  align-items: center;
-}
-.head-logo {
-  width: 0.92rem;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-.head-logo::after {
-  content: "";
-  display: inline-block;
   position: absolute;
-  border-radius: 5px;
-  width: 0.02rem;
-  height: 0.42rem;
-  right: 0;
-  background: #ecebeb;
-  top: 50%;
-    transform: translateY(-50%);
-}
-.head-ul {
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
+  left: 0.32rem;
+  top: 0.18rem;
+  z-index: 20;
+  .user {
+    width: 0.72rem;
+    height: 0.72rem;
+  }
 }
 
-.head-ul li {
-  flex: 1;
-  display: flex;
-  align-items: center;
-
-  height: 100%;
-  list-style: none;
-  font-size: 0.3rem;
-  color: #666666;
-  letter-spacing: 0.0008rem;
-  text-align: center;
+.order-data {
   position: relative;
-}
-.head-ul li::after {
-  content: "";
-  display: inline-block;
-  position: absolute;
-}
-
-.head-ul li:nth-child(1) {
-  justify-content: center;
-  color: #333333;
-}
-
-.head-ul li:nth-child(1)::after {
-  width: 1.2rem;
-  height: 0.06rem;
-  background: #39a1e8;
-  bottom: .01rem;
-  left: 50%;
-  transform: translateX(-50%);
-}
-.head-ul li:last-child {
-  display: flex;
-  align-items: center;
-  height: 100%;
-  padding: 0 !important;
-}
-.head-ul li img.upline {
-  position: relative;
-  top: -0.09rem;
-  width: 1rem;
-  height: 0.26rem;
-}
-
-.tab {
+  top: -0.6rem;
   padding: 0 0.2rem;
-  margin-top: 0.3rem;
-}
-.tab-div {
-  background: #ffffff;
-  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
-  border-radius: 4px;
-  padding: 0 0.3975rem;
-  /* padding-top: 0.28rem; */
-  padding-bottom: 0.4rem;
-}
-.lxn-tab-title {
-  display: flex;
-}
-.lxn-tab-title li {
-  flex: 1;
-  color: #666666;
-  font-size: 0.28rem;
-  letter-spacing: 0.7px;
-  padding-top: 0.28rem;
-  padding-bottom: 0.3rem;
-}
-.active {
-  color: #39a1e8 !important;
-  position: relative;
-}
-.active::after {
-  content: "";
-  display: inline-block;
-  position: absolute;
-  width: 0.46rem;
-  height: 0.06rem;
-  background: #39a1e8;
-  bottom: 0.2rem;
-  left: 50%;
-  transform: translateX(-50%);
-  border-radius: 1.44rem;
+  > div {
+    box-shadow: 0 0 6px 0 rgba(163, 163, 163, 0.5);
+    border-radius: 0.08rem;
+    background: #ffffff;
+  }
+  .line {
+    background: #f1f1f1;
+    height: 0.04rem;
+  }
+  .address-data {
+    padding-bottom: 0.05rem;
+  }
+  .title {
+    font-size: 0.28rem;
+    color: #444444;
+    letter-spacing: 0.06px;
+    display: flex;
+    align-items: center;
+    padding: 0 0.24rem;
+    padding-top: 0.4rem;
+    > div {
+      font-weight: 600;
+    }
+  }
+  .address-detail {
+    display: flex;
+    align-items: center;
+    padding-left: 0.4rem;
+    padding-right: 0.8rem;
+    > div {
+      height: 100%;
+      display: flex;
+      align-items: center;
+      a {
+        display: inline-block;
+        width: 100%;
+      }
+    }
+    > div:last-child {
+      flex: 1;
+      margin-left: 0.24rem;
+      border-bottom: 0.02rem solid rgba(68, 68, 68, 0.1);
+    }
+    input {
+      font-size: 0.28rem;
+      height: 0.9rem;
+      width: 100%;
+      line-height: normal;
+    }
+    .move-icon {
+      display: inline-block;
+      width: 0.32rem;
+      height: 0.33rem;
+    }
+    .out {
+      background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAhCAMAAACP+FljAAAAclBMVEUAAABqwUxrwUt401pqwEtswUxtxE5sxE6Z5mZrwUtrwUxrwEtrwUtqwUxrwUtrwUxrwkxrwkxrwk13yVJrwUxrwExrwUxrwExrwUtrwUtqwUtrwUtrwUxrwUtrw01sw0tqw01uxE5wwlJtwlVrwE1qwEuxRKQzAAAAJXRSTlMA9ukI+zkpJAPTgvTHraVxZVVPDs3v4dvZyrqbkXldQz0gGRV+Lyg0EAAAAPJJREFUOMutktlywyAMRQUYg/etWZq1Scr//2JnpFomwn7LefLV8UgDAj6K606HqjqcOreq8yYwTZ76LgsRWSf9OQjO774MCb+x/5mrqq7V/G1h4YtKx7sH8Pcjpe+kQWMomka2uGDeT3Oe9li4iAk3YG5ihsb8BOaJBc1ZYTbAGDqSGOGAcVgoOLeYr8BcsdByHqhjznujmQP/4DW1zP99gVH7ZBWqtMbYUlEqYWHSvGfeup4gog8JPcT4Wvrai/dYvfvKgaCXAxLa2LeQYorFFwZWeGg+4QNWsYq8srDBmOFdjbDJuAthR36D1zC84MP8Aa29M46ZA4zMAAAAAElFTkSuQmCC);
+      background-size: 0.32rem 0.33rem;
+    }
+    .in {
+      background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAhCAMAAACP+FljAAAAb1BMVEUAAAD/mQL/mAL/mAL/mQP/mQT/mgb/nAf/mxf/mQL/mQP/mQP/mAP/mgL/mgP/mwP/mwr/tiT/oED/mQL/mQL/mQL/mQL/mQL/mQL/mQP/mQP/mQP/mgP/mgL/mgP/mQT/mQT/nQj/mRH/mQL/mAJSU60jAAAAJHRSTlMA9en4gjkpJAvTx62lZVVPFwcEzXPv4dvZyrqbkXldQz0gD27b1oouAAAA6klEQVQ4y62SVxLDIAxEBRgb9xKn94T7nzEzKFaw5Pz5fbG7GglGwKpk42mv1P40ZotxWnqiTGU+Gh9h3jw/e8Z5nidekMT5Y3JVUajpbOHHBq3DfQAY7gdUR9Gg7FH2JW9xCXr3mvRrF4wLm3AD4sZm6KA7ILpgaNJ48R6IHp/ERmTRVoKRk66CvgJxDUZFusGOKe0NZzZUMGhsmX7zHO84iFWYxDpnEyOX4bQXaAcRtSyoYUbB84L/RzXPlfiXNR8gqOK8AonLf3nuYIGnphc+YRFrMDcW/tBiQQt/abfeb6Nc0jVNByvzAVdgMoCPYveVAAAAAElFTkSuQmCC);
+      background-size: 0.32rem 0.33rem;
+    }
+    .actives:active {
+      transform: translate(0.02rem, 0.02rem);
+      background: rgba(0, 0, 0, 0.02);
+    }
+  }
+  .address-detail:last-child {
+    margin-top: 0.02rem;
+  }
+  .carType-data {
+    .title {
+      padding-top: 0;
+      > div {
+        padding-top: 0.4rem;
+        padding-bottom: 0.36rem;
+      }
+      > div:last-child {
+        flex: 1;
+        text-align: right;
+        color: #36a0e9;
+      }
+      > div:nth-child(2) {
+        font-size: 0.2rem;
+        color: #444444;
+        letter-spacing: 0.04px;
+        padding-left: 0.05rem;
+      }
+    }
+    .card-car-content {
+      display: flex;
+      padding: 0 0.1rem;
+    }
+
+    .card-car-content > div {
+      flex: 1;
+      justify-content: center;
+      padding: 0 .05rem;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .car-item:nth-child(1) {
+      padding-left: 0;
+    }
+
+    .car-item:nth-child(3) {
+      padding-right: 0;
+    }
+    .par-des {
+      text-align: center;
+      //   background: red;
+    }
+    .par-des > div {
+      box-sizing: border-box;
+      max-width: 2.2rem;
+    }
+    .car-item > div > div {
+      border: 0.02rem solid #e1e1e1;
+      border-radius: 0.12rem;
+      padding: 0.15rem 0.1rem;
+      padding-right: 0;
+      padding-bottom: .3rem;
+    }
+    .car-item > div > div.checked {
+      border: 0.04rem solid #40b1ff;
+    }
+    .car-item > div > div.checked .cardes {
+      background: #40b1ff;
+    }
+
+    .des {
+      font-size: 0.28rem;
+      color: #555;
+      letter-spacing: 0.06px;
+      text-align: right;
+      overflow: hidden;
+      display: inline-block;
+      position: relative;
+    }
+    .des > div {
+      text-align: left;
+    }
+    .des > div:nth-child(1) {
+      font-weight: 700;
+    }
+
+    .des > div:nth-child(2) {
+      font-size: 0.24rem;
+      color: #666;
+      margin-top: 0.06rem;
+    }
+    .des .car-img {
+      width: 2.3rem;
+      height: 0.96rem;
+      position: relative;
+      top: 0.2rem;
+      right: -0.4rem;
+    }
+    // .des .cardes {
+    //   display: flex;
+    //   align-items: center;
+    //   position: absolute;
+    //   bottom: 0;
+    //   left: 0;
+    //   font-size: 0.2rem;
+    //   padding: 0.05rem 0.15rem;
+    //   border-top-right-radius: 0.15rem;
+    //   color: #ffffff;
+    //   background: #d1d1d1;
+    //   letter-spacing: 0.32px;
+    // }
+  }
 }
 
-.swiper-div {
-  margin-bottom: 0.2rem;
-}
-.swiper-container {
-  width: 100%;
-  height: 1.08rem;
-}
-.car-img-div {
-  width: 2.24rem;
-  height: 1.06rem;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-.car-img-div .car {
-  width: 100%;
-  height: 100%;
-  background-size: 100% 100%;
-}
-.car-img-div .xiaomian {
-  background-image: url(https://www.lanxiniu.com/Public/baidumip/xiaomian.png);
-}
-.car-img-div .jinbei {
-  background-image: url(https://www.lanxiniu.com/Public/baidumip/jinbei.png);
-}
-.car-img-div .xianghuo {
-  background-image: url(https://www.lanxiniu.com/Public/baidumip/xianghuo.png);
-}
-
-.car-deccription > div {
-  display: flex;
-  height: 0.75rem;
-  align-items: center;
-  background: #f1f1f1;
-  box-shadow: 0 2px 4px 0 rgba(234, 234, 234, 0.5);
-  border-radius: 0.04rem;
-  font-size: 0.2rem;
-  color: #666666;
-  position: relative;
-  padding-top: 0.02rem;
-}
-.car-deccription > div::before {
-  display: block;
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: -0.24rem;
-  transform: translateX(-50%);
-
-  border-width: 0.16rem 0.16rem 0.1rem 0.16rem;
-  border-style: solid;
-  border-color: transparent transparent #f1f1f1 transparent;
-}
-.des-div {
-  flex: 1;
-  position: relative;
-}
-.des-div:not(:last-child)::after {
-  content: "";
-  display: inline-block;
-  position: absolute;
-  width: 0.02rem;
-  height: 0.28rem;
-  background: #ffffff;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  border-radius: 1.44rem;
-}
-.des-div p:last-child {
-  /* margin-top: 0.05rem; */
-}
-
-.swiper-container {
-  margin: 0 auto;
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-}
-
-/*主体数据*/
-.main-conten {
-  margin-top: 0.24rem;
-  height: 2.75rem;
-}
-.address {
-  width: 100%;
-  height: unset!important;
-  /* background: blue; */
-}
-.point {
-  width: 0.16rem;
-  height: 0.16rem;
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-}
-.move-out-point {
-  background: #feb02a;
-}
-.move-in-point {
-  background: #a1d48f;
-}
-
-.address-div {
-  padding-left: 0.6rem;
-  position: relative;
-  font-size: 0.28rem;
-}
-.address-div input {
-  font-size: 0.28rem;
-  color: #666666 !important;
-//   background: red;
-  line-height: .745rem;
-}
-.gomap{
- height: 100%;
- display: flex;
- align-items: center;
- color: #999999;
-}
-.gomap.hastext{
-    color: #666666;
-}
-
-.address-div-flex {
-  display: flex;
-  height: 100%;
-  border-bottom: 0.02rem solid rgba(68, 68, 68, 0.1);
-  padding-bottom: .04rem;
-}
-.address-div-flex2 {
-  border: none;
-}
-.address-div div.left {
-  position: relative;
-  flex: 3;
-//   height: .75rem;
-}
-.address-div div.left::after {
-  content: "";
-  display: inline-block;
-  position: absolute;
-  width: 0.02rem;
-  height: 0.3rem;
-  background: #e1e1e1;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  border-radius: 1.44rem;
-}
-.noafter::after {
-  width: 0 !important;
-}
-.address-div div.right {
-  flex: 2;
-//   height: .75rem;
-}
-.address-div div.right input {
-  text-align: right;
-}
-.address-div input{
-    height: .745rem;
-}
-.move-second {
-  border-top: 0.02rem solid rgba(68, 68, 68, 0.1);
-  border-bottom: 0.02rem solid rgba(68, 68, 68, 0.1);
-}
-.move-second .address-div-time {
-  border: none;
-}
-.move-second .left {
-  text-align: left;
-  position: relative;
-}
-.move-second .left span {
-  font-size: 0.28rem;
-  color: #666666;
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-}
-.address-div:last-child{
-    height: .75rem;
-    // background: red
-}
-.movetime,
-.beizhu {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  transform: translateY(-50%);
-}
-/*价格*/
-.price {
-  margin-top: 0.57rem;
-}
-.price-num {
-  font-size: 0.56rem;
-  color: #f37272;
-  position: relative;
-  top: 0.06rem;
-}
-.price-unit {
-  position: relative;
-  color: #f37272;
-  margin-right: 0.2rem;
-}
-.price-unit::after {
-  content: "";
-  display: inline-block;
-  position: absolute;
-  width: 0.02rem;
-  height: 0.35rem;
-  background: #f37272;
-  right: -0.07rem;
-  bottom: -0.01rem;
-  border-radius: 1.44rem;
-}
-.zifei {
-  font-size: 0.24rem;
-  color: #4dabeb;
+.parent-sure-order {
+  padding: 0 0.28rem;
+  padding-bottom: 0.2rem;
 }
 .sure-order {
   margin: 0.28rem 0;
+  margin-bottom: 0.1rem;
   height: 0.76rem;
   line-height: 0.76rem;
   font-size: 0.34rem;
@@ -1619,57 +848,70 @@ export default {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.3);
   border-radius: 2px;
 }
+.sure-order:active {
+  background: rgba(54, 160, 233, 0.9);
+}
 
-/*swiper*/
-.swiper-wrapper {
+.inputfix {
   position: relative;
-  width: 100%;
+  display: block;
   height: 100%;
-  z-index: 1;
-  display: -webkit-box;
-  display: -moz-box;
-  display: -ms-flexbox;
-  display: -webkit-flex;
-  display: flex;
-  -webkit-transition-property: -webkit-transform;
-  -moz-transition-property: -moz-transform;
-  -o-transition-property: -o-transform;
-  -ms-transition-property: -ms-transform;
-  transition-property: transform;
-  -webkit-box-sizing: content-box;
-  -moz-box-sizing: content-box;
-  box-sizing: content-box;
-}
-
-.swiper-container-android .swiper-slide,
-.swiper-wrapper {
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -o-transform: translate(0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-}
-.swiper-slide {
-  -webkit-flex-shrink: 0;
-  -ms-flex: 0 0 auto;
-  flex-shrink: 0;
   width: 100%;
-  height: 100%;
-  position: relative;
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    content: "";
+    background-color: rgba(0, 0, 0, 0);
+  }
 }
+.service {
+  padding: 0 0.54rem;
+  .div-kefu {
+    height: 0.1rem;
+    border-top: 0.02rem solid #e1e1e1;
 
-.inputfix{
-    position: relative;
-    // display: inline-block;
-    display: block;
-    height: 100%;
-    width: 100%;
-    &::before{
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        content: "";
-        background-color: rgba(0, 0, 0, 0)
+    padding: 0 0.8rem;
+  }
+  .option {
+    margin-top: 0.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    > div {
+      flex: 1;
+      font-size: 0.24rem;
+      color: #666666;
+      letter-spacing: 0.05px;
+      text-align: center;
     }
-
+    > div:active {
+      background: rgba(0, 0, 0, 0.02);
+    }
+    .option-img {
+      width: 0.6rem;
+      height: 0.6rem;
+      margin: 0 auto;
+      margin-bottom: 0.1rem;
+    }
+  }
+}
+.kefu {
+  position: relative;
+  top: -0.15rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.24rem;
+  color: #333333;
+  background: #ffffff;
+  letter-spacing: 0.05px;
+  .safe-img {
+    width: 0.28rem;
+    height: 0.28rem;
+    margin-right: 0.1rem;
+  }
 }
 </style>

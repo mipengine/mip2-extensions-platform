@@ -18,12 +18,8 @@
       <div
         v-if="!locationCity.locationCityName"
         class="fail-location"
-        @click="getLocation()">无法获取，点击刷新<div style="display:inline-block;width:12px;"><mip-img
-          layout="container"
-          src="/static/icon/refresh_site.png"
-          alt=""
-          width="12"
-          height="12"/></div></div>
+        @click="getLocation()">无法获取，点击刷新<div class="refresh-icon"/>
+      </div>
       <div
         data-key="历史"
         class="city-type-title">最近访问的城市</div>
@@ -95,6 +91,19 @@
 </template>
 
 <style scoped lang="less">
+*{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+.refresh-icon{
+  width:12px;
+  height:12px;
+  display: inline-block;
+  background-image:url(~@/static/icon/refresh_site.png);
+  background-size:12px 12px;
+  background-position:center center;
+  background-repeat: no-repeat;
+}
 .selectCity {
   background: #fff;
   margin: 0;

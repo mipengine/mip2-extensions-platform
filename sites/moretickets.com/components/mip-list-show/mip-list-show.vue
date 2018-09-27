@@ -78,6 +78,10 @@
 </template>
 
 <style scoped lang="less">
+*{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
 @main-color: #ff1d41;
 .box-flex(@flex){
     -moz-box-flex: @flex;
@@ -111,6 +115,7 @@
   padding: 0 4%;
   position: relative;
   z-index: 1000;
+  padding-top: 26px;
   .box-flex(1)
 }
 .show-component{
@@ -431,7 +436,8 @@ export default {
   data () {
     return {
       items: [],
-      pagination: {length: 10, offset: 0, count: 0}
+      pagination: {length: 10, offset: 0, count: 0},
+      keyword: ''
     }
   },
   computed: {
@@ -453,6 +459,7 @@ export default {
       me.fetchShow(0, newValue)
     })
     MIP.watch('keyword', newValue => {
+      me.keyword = newValue
       me.fetchShow(0, '', newValue)
     })
   },
