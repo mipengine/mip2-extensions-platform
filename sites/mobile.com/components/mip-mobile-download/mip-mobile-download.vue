@@ -35,6 +35,7 @@
                 timer: null,
                 status: 'hidden',
                 api: 'http://mobile.baidu.com/appsite?action=miphighdown&',
+                // api: 'http://yq01-ae.epc.baidu.com:8777/appsite?action=miphighdown&',
                 styleObject: {
                     'radius': 'btn-radius',
                     'safe': 'mip-download-safe',
@@ -54,7 +55,7 @@
                     that.doLog('pageview', {
                         act: 'dataLoaded',
                         err: data.error,
-                        tj:'mip_download_'+url,
+                        tj:'mip_download_'+that.url,
                         from: that.source
                     });
                 } else {
