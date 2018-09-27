@@ -10,7 +10,7 @@
           <div
             v-for="(showType,index) in showTypeData"
             :key="index"
-            :class="{'active': showType.type === activeType}"
+            :class="{'active': showType.type === activeType,'opacity': isOpacity}"
             class="type-nav"
             @click="switchType(showType.type)">
             <div class="type-name">{{ showType.title }}</div>
@@ -70,6 +70,10 @@
       white-space: nowrap;
       display: inline-block;
       flex-shrink: 0;
+      opacity: 1;
+      &.opacity{
+        opacity: 0.99;
+      }
       &.active {
         .type-name {
           border-bottom: 3px solid @main-color;
@@ -100,6 +104,7 @@ export default {
   data () {
     return {
       showNav: true,
+      isOpacity: false,
       showTypeData: [
         {
           title: '演唱会',
@@ -133,16 +138,25 @@ export default {
           title: '体育赛事',
           type: '6'
         }
-      ]
+      ],
+      interval: null,
+      times: 0
     }
   },
   mounted () {
     let me = this
-    console.log('列表导航加载ok!')
     MIP.watch('keyword', newValue => {
       me.showNav = newValue === ''
       me.keyword = newValue
     })
+    this.interval = setInterval(function () {
+      if (me.times >= 5) {
+        clearInterval(me.interval)
+        me.isOpacity = false
+      }
+      me.times += 1
+      me.isOpacity = true
+    }, 500)
   },
   methods: {
     resetKeyword () {
