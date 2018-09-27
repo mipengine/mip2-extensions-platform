@@ -3,7 +3,7 @@
  |标题 | 内容 |
 ----|----|
 类型| 通用 |
-支持布局 | 
+支持布局 | 无
 所需脚本| [https://c.mipcdn.com/extensions/platform/v2/mipProject/mip-safe-download/mip-safe-download.js](https://c.mipcdn.com/extensions/platform/v2/mipProject/mip-safe-download/mip-safe-download.js)
 
 ## 说明
