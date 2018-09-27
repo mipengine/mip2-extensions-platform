@@ -93,22 +93,20 @@ export default {
       this.showMenu = !this.showMenu
       this.stopBodyScroll(this.showMenu)
     },
-    stopBodyScroll(isFixed) {
-        var bodyEl = document.body
-        var top = 0
-        if (isFixed) {
-            top = window.scrollY
-        
-            bodyEl.style.position = 'fixed'
-            bodyEl.style.top = -top + 'px'
-            bodyEl.style.width = '100%'
-        } else {
-            bodyEl.style.position = ''
-            bodyEl.style.top = ''
-            bodyEl.style.width = ''
-        
-            window.scrollTo(0, top) // 回到原先的top
-        }
+    stopBodyScroll (isFixed) {
+      let bodyEl = document.body
+      let top = 0
+      if (isFixed) {
+        top = window.scrollY
+        bodyEl.style.position = 'fixed'
+        bodyEl.style.top = -top + 'px'
+        bodyEl.style.width = '100%'
+      } else {
+        bodyEl.style.position = ''
+        bodyEl.style.top = ''
+        bodyEl.style.width = ''
+        window.scrollTo(0, top)
+      }
     }
   }
 }
