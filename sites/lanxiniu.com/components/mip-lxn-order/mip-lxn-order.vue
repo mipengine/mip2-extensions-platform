@@ -85,6 +85,7 @@
           </div>
           <div class="parent-sure-order">
             <div
+              data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22getorderprice%22%2C%22click%22%5D%7D"
               class="sure-order"
               @click="guJia">{{ btnName }}</div>
           </div>
