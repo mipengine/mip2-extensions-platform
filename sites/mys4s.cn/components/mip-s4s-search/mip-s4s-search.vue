@@ -85,7 +85,14 @@
       </div>
     </div>
     <div class=" s4s-car-info s4s-illegal-body">
-      <h2 class="s4s-car-name">输入行驶证信息</h2>
+      <h2
+        class="s4s-car-name"
+        style="display:flex;justify-content: space-between;">输入行驶证信息 <mip-img
+          src="https://app.s4s.cn/xcar/static/img/photo.png"
+          width="26"
+          height="22"
+          @click="upload"
+      /></h2>
       <div class="s4s-group">
         <div class="s4s-group-tit">车牌号码</div>
         <div
