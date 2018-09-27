@@ -117,10 +117,10 @@ export default {
         document.cookie = 'token=' + event.userInfo.token + ';path=/'
         that.userId = event.userInfo.userId
         that.token = event.userInfo.token
-        that.getCoupone()
         localStorage.setItem('mipUserId', event.userInfo.userId)
         localStorage.setItem('mipToken', event.userInfo.token)
         localStorage.setItem('nick', event.userInfo.nick)
+        that.getCoupone()
       })
     }
     window.addEventListener('hide-page', (e) => {
