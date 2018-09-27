@@ -44,7 +44,6 @@ export default {
       timer: null,
       status: 'hidden',
       api: 'https://mobile.baidu.com/app?action=miphighdown&',
-      // api: 'http://yq01-ae.epc.baidu.com:8777/appsite?action=miphighdown&',
       styleObject: {
         'radius': 'btn-radius',
         'safe': 'mip-download-safe',
