@@ -1,5 +1,7 @@
 <template>
-  <div class="s4s-page" >
+  <div
+    id="s4s"
+    class="s4s-page">
     <!-- <mip-img
       src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/banner.png"
       styel="width:100%;" /> -->
@@ -34,7 +36,9 @@
         {{ all?'收起':'显示全部' }}
       </div>
     </div>
-    <div class="s4s-car-info">
+    <div
+      class="s4s-car-info"
+      style="display:none;">
       <div style="display: flex;align-items:center;">
         <div style="flex:1;">
           <h2 class="s4s-car-name" >请您上传行驶证
@@ -81,7 +85,7 @@
       </div>
     </div>
     <div class=" s4s-car-info s4s-illegal-body">
-      <h2 class="s4s-car-name">或直接输入行驶证信息</h2>
+      <h2 class="s4s-car-name">输入行驶证信息</h2>
       <div class="s4s-group">
         <div class="s4s-group-tit">车牌号码</div>
         <div
@@ -160,6 +164,50 @@
       class="s4s-btn"
       style="margin-top:0;width:calc( 100% - .3rem )"
       @click="formSubmit"> 查询违章 </button>
+    <div>
+      <div
+        v-if="data.length"
+        class="s4s-ad">
+        <div class="s4s-ad-header">
+          <div class="s4s-ad-line" />
+          <div class="s4s-ad-header-content">猜你想看</div>
+          <div class="s4s-ad-line" />
+        </div>
+        <div class="s4s-ad-list">
+          <div
+            v-for="item in data"
+            :key="item.id"
+            class="s4s-ad-item"
+            @click="gotoNews(item)"
+          >
+            <mip-img
+              v-if="item.cover_url1&& item.cover_url1 !== 'None'"
+              :src="item.cover_url1"
+              class="s4s-ad-image"
+              mode="aspectFill"
+            />
+            <div class="s4s-ad-content">
+              <h4 class="s4s-ad-title">
+                {{ item.title }}
+              </h4>
+              <div class="flex">
+                <div class="s4s-ad-time flex-1">
+                  {{ item.last_modify_time }}
+                </div>
+                <div
+                  v-if="item.Type===1"
+                  class="s4s-ad-time">
+                  <mip-img
+                    src="https://app.s4s.cn/xcar/static/img/eye.png"
+                    style="width:17px;height:10px;margin-right:4px;" /> {{ item.show_num }}
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <a
       ref="violation"
       data-type="mip"
@@ -216,6 +264,9 @@ import util from '../../common/util'
 export default {
   data () {
     return {
+      data: [],
+      page: 0,
+      loading: false,
       car: null,
       provice: '省',
       showProvice: false,
@@ -431,8 +482,45 @@ export default {
       console.log('show-page')
       that.fetchLocalCar()
     })
+    const s4s = document.getElementById('s4s')
+    s4s.addEventListener('scroll', () => {
+      if (s4s.scrollHeight - s4s.scrollTop <= s4s.clientHeight + 200 && !this.loading) {
+        this.load(this.page + 1)
+      }
+    })
+    this.load(this.page, true)
   },
   methods: {
+    load (page, refresh) {
+      if (this.loading) {
+        return
+      }
+      this.started = true
+      this.loading = true
+      const params = {
+        page_num: page || 1,
+        list_id: this.listid
+      }
+      util.fetchData('v5/price/get_news_list', params)
+        .then((res) => {
+          if (res.code === 0) {
+            this.data = [...this.data, ...res.data]
+            this.page = page
+          } else {
+          }
+          this.loading = false
+        })
+        .catch(e => {
+          this.loading = false
+        })
+    },
+    gotoNews ({id, Type}) {
+      if (Type === 1) {
+        MIP.viewer.open(`https://mys4s.cn/static/xcar/index.html#/News/${id}?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xform=baidu_jisu_vio`)
+      } if (Type === 2) {
+        MIP.viewer.open(`https://mys4s.cn/static/xcar/index.html#/Evaluation?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xform=baidu_jisu_vio`)
+      }
+    },
     fetchLocalCar () {
       console.log('获取本地车辆信息')
       try {
@@ -846,5 +934,113 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 
 .car-title span{
   color:#FE7000;
+}
+.s4s-ad {
+  font-size: .14rem;
+  color: #2E2E2E;
+
+  /* 小程序无 */
+  padding: 0 .15rem;
+  /*  */
+}
+
+.s4s-ad-header {
+  font-size: .12rem;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: .2rem 0;
+}
+
+.s4s-ad-header-content {
+  margin: 0 .2rem;
+}
+
+.s4s-ad-item {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: .02rem;
+  padding: .15rem .15rem;
+  margin-top: .1rem;
+  box-shadow: 0 .02rem .04rem 0 #EFEFEF;
+}
+.s4s-ad-item:visited .s4s-ad-title{
+  color: #5B5E6A;
+}
+.s4s-ad-image {
+  width: 1.2rem;
+  min-width: 1.2rem;
+  height: .8rem;
+  background-color: #f8f8f8;
+  margin-right: .15rem;
+  border-radius: 2px;
+}
+
+.s4s-ad-title {
+  font-size: .14rem;
+  color: #2E2E2E;
+  width: 100%;
+  line-height: .2rem;
+  max-height: .4rem;
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.s4s-ad-content {
+  min-width: 0;
+  width: 100%;
+}
+
+.s4s-ad-time {
+  font-size: .12rem;
+  margin-top: .09rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.s4s-ad-look {
+  display: flex;
+  align-items: center;
+}
+.s4s-ad-look svg{
+  margin-right: .02rem;
+}
+
+.s4s-ad-line {
+  width: .6rem;
+  height: .01rem;
+  display: inline-block;
+  background-image: linear-gradient(-135deg, #DDDDDD 0%, #F8F8F8 100%);
+}
+.s4s-ad-line:last-child {
+  background-image: linear-gradient(-135deg, #F8F8F8 0%, #DDDDDD 100%);
+
+}
+
+.s4s-ad-icon {
+  width: .12rem;
+  height: .12rem;
+}
+
+.s4s-ad-icon-container {
+  display: flex;
+  flex: 1;
+}
+
+.s4s-ad-btn {
+  border: .5px solid #3A82FF;
+  color: #3A82FF;
+  border-radius: .02rem;
+  font-size: .10rem;
+}
+.flex {
+  display: flex;
+}
+.flex-1 {
+  flex: 1;
 }
 </style>
