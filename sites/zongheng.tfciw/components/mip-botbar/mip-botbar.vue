@@ -282,11 +282,7 @@ export default {
       }, {})
     },
     _jumpDownload (href) {
-      if (MIP.util.platform.isIOS()) {
-        window.top.location.href = href.iosHref
-      } else {
-        window.top.location.href = href.androidHref
-      }
+      window.location.href = MIP.util.platform.isIOS() ? href.iosHref : href.androidHref
     },
     initNum (dis) {
       const oWrapper = this.$element.querySelector('.wrapper')
