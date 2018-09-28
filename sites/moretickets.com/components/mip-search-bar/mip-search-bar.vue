@@ -13,7 +13,7 @@
         <div class="search-input">
           <input
             v-model="keyword"
-            placeholder="7K场折扣演出等着你"
+            placeholder="艺人、演出、场馆"
             type="search"
             class="search-box-input">
           <div
@@ -27,6 +27,10 @@
 </template>
 
 <style scoped lang="less">
+*{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
 /*元素顶部距离*/
 .mip-fix-top {
     top: 44px !important;
@@ -35,7 +39,7 @@
   width: 100%;
   background: #fff;
   @searchHeight: 3.2rem;
-  height: 4.4rem;
+  height: 50px;
   align-items: center;
   display: flex;
   .btn-search{
@@ -92,12 +96,25 @@
     .search-box-input {
       width: 100%;
       height: @searchHeight;
+      line-height: normal;
       border: none;
       color: #333;
       background: transparent;
       padding: 5px;
       padding-left: 3rem;
       font-size: 1.2rem;
+      &::-webkit-input-placeholder{
+        line-height: 15px;
+      }
+      &::-moz-placeholder{
+        line-height: 15px;
+      }
+      &::-o-placeholder{
+        line-height: 15px;
+      }
+      &::placeholder{
+        line-height: 15px;
+      }
     }
     .search-placeholder {
       letter-spacing: 1px;

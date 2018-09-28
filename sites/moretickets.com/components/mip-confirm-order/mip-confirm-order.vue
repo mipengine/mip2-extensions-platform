@@ -333,8 +333,7 @@
     </mip-lightbox>
     <!--订单明细-->
     <mip-fixed
-      type="bottom"
-      still>
+      type="bottom">
       <div
         v-if="orderFeeFlag"
         class="pop-content">
@@ -371,8 +370,7 @@
       </div>
     </mip-fixed>
     <mip-fixed
-      type="bottom"
-      still>
+      type="bottom">
       <div class="footer">
         <div class="agreement-row">
           我已阅读<a
@@ -395,15 +393,24 @@
         </div>
       </div>
     </mip-fixed>
-    <div
+    <mip-fixed
       v-show="toastmsg"
-      class="toast-msg">
-      {{ toastmsg }}
-    </div>
+      type="top"
+      class="toast-wrap">
+      <div
+        v-if="toastmsg"
+        class="toast-msg">
+        {{ toastmsg }}
+      </div>
+    </mip-fixed>
   </div>
 </template>
 
 <style scoped lang="less">
+*{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
 @main-color: #ff1d41;
 @dark-font: #323038;
 @normal-font: #494949;
@@ -555,19 +562,21 @@ li, ol, ul {
 .no-border{
   border:0 !important;
 }
+.toast-wrap{
+  top: 200px !important;
+  text-align: center;
+}
 .toast-msg {
-  width: 180px;
+  width: auto;
+  max-width: 70%;
   padding: 15px 10px;
+  display: inline-block;
   line-height: 20px;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.65);
-  position: absolute;
   border-radius: 5px;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 1000;
   font-size:1.4rem;
+  box-sizing: border-box;
 }
 .questionIcon {
     display: inline-block;
@@ -1057,101 +1066,100 @@ li, ol, ul {
         margin: 0 -2rem;
         border-top: @normal-border;
     }
-    .footer{
-        // height: 5rem;
-        // min-height: 5rem;
-        // flex-basis: 5rem;
-        // line-height: 5rem;
-        // position: relative;
-        background-color: #fff;
-        .pt(2);
-        .agreement-row {
-            .lh(30);
-            .fs(12);
-            .pl(10);
-            // .color-gray();
-            border-bottom: 1px solid rgb(228,228,228,0,5);
-            border-top: 1px solid rgb(228,228,228,0.5);
-        }
-        .footer-text{
-            display: flex;
-            align-items: center;
-            text-align: center;
-            padding: 0.9rem 1.8rem;
-            .fs(14);
-            .total{
-               .fs(20);
-                color: @main-color;
-                padding: 0 0.5rem;
-            }
-            .monney {
-                flex: 1;
-                padding-right: 1rem;
-                text-align: right;
-                .word {
-                    font-size: 1.2rem;
-                    color: @medium-font;
-                }
-            }
-            .submit-btn{
-              font-weight: bold;
-              width: 14.4rem;
-              height: 4.4rem;
-              line-height: 4.4rem;
-              border-radius: 2px;
-              font-size: 1.6rem;
-              color: #fff;
-              text-align: center;
-              background-image: linear-gradient(287deg, #ff1d41, #ee0e87);
-            }
-        }
-
-    }
-    .pop-content{
-            margin-top:36px;
-            width: 100%;
-            background-color: #fff;
-            box-shadow: -1px 0px 13px 0px #9c9595;
-            color: #666;
-            .price-item {
-              font-size: 12px;
-              color: rgb( 73,73,73);
-              line-height: 20px;
-              margin-bottom: 5px;
-              text-indent: -5em;
-              padding-left: 5em;
-              .font2{
-                float:right;
-                text-align: right;
-                color: rgb(51,21,17);
-              }
-            }
-            .header {
-                .pt(30);
-                .fs(16);
-                text-align: center;
-                color: rgb(51,21,17);
-            }
-            .box {
-                .mt(30);
-                .mb(60);
-                padding: 0 1.5rem;
-                .fs(12);
-                color: rgb(119,119,119);
-                .lh(18);
-            }
-            .close{
-                width: 100%;
-                height: 5rem;
-                line-height: 5rem;
-                font-size: 1.6rem;
-                color: #fff;
-                text-align: center;
-                background-color: @main-color;
-                background-image: linear-gradient(to right, rgb( 239, 104, 86), rgb( 255, 49, 101));
-            }
-        }
 }
+  .pop-content{
+      margin-top:36px;
+      width: 100%;
+      background-color: #fff;
+      box-shadow: -1px 0px 13px 0px #9c9595;
+      color: #666;
+      .price-item {
+        font-size: 12px;
+        color: rgb( 73,73,73);
+        line-height: 20px;
+        margin-bottom: 5px;
+        text-indent: -5em;
+        padding-left: 5em;
+        .font2{
+          float:right;
+          text-align: right;
+          color: rgb(51,21,17);
+        }
+      }
+      .header {
+          .pt(30);
+          .fs(16);
+          text-align: center;
+          color: rgb(51,21,17);
+      }
+      .box {
+          .mt(30);
+          .mb(60);
+          padding: 0 1.5rem;
+          .fs(12);
+          color: rgb(119,119,119);
+          .lh(18);
+      }
+      .close{
+          width: 100%;
+          height: 5rem;
+          line-height: 5rem;
+          font-size: 1.6rem;
+          color: #fff;
+          text-align: center;
+          background-color: @main-color;
+          background-image: linear-gradient(to right, rgb( 239, 104, 86), rgb( 255, 49, 101));
+      }
+    }
+  .footer{
+    // height: 5rem;
+    // min-height: 5rem;
+    // flex-basis: 5rem;
+    // line-height: 5rem;
+    // position: relative;
+    background-color: #fff;
+    .pt(2);
+    .agreement-row {
+        .lh(30);
+        .fs(12);
+        .pl(10);
+        // .color-gray();
+        border-bottom: 1px solid rgb(228,228,228,0,5);
+        border-top: 1px solid rgb(228,228,228,0.5);
+    }
+    .footer-text{
+        display: flex;
+        align-items: center;
+        text-align: center;
+        padding: 0.9rem 1.8rem;
+        .fs(14);
+        .total{
+            .fs(20);
+            color: @main-color;
+            padding: 0 0.5rem;
+        }
+        .monney {
+            flex: 1;
+            padding-right: 1rem;
+            text-align: right;
+            .word {
+                font-size: 1.2rem;
+                color: @medium-font;
+            }
+        }
+        .submit-btn{
+          font-weight: bold;
+          width: 14.4rem;
+          height: 4.4rem;
+          line-height: 4.4rem;
+          border-radius: 2px;
+          font-size: 1.6rem;
+          color: #fff;
+          text-align: center;
+          background-image: linear-gradient(287deg, #ff1d41, #ee0e87);
+        }
+    }
+  }
 
 </style>
 

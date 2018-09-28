@@ -16,10 +16,12 @@
   </div>
 </template>
 <script>
-
+import config from '../../config.js'
+const baseUrl = config[config.env]['baseUrl'] // 获取当前环境下的baseUrl
 export default {
   data: () => ({
-    bannerLength: 1
+    bannerLength: 1,
+    baseUrl
   })
 }
 </script>

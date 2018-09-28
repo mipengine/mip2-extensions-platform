@@ -66,14 +66,14 @@
         <li class="address">
           <div class="left">搬出地址</div>
           <div class="right">
-            <p v-text="detail.poiList[0].deliverRemark"/>
+            <p v-text="detail.poiList[0].deliverAddress"/>
             <p v-text="moveOutFloor">有电梯,无楼梯费</p>
           </div>
         </li>
         <li class="address">
           <div class="left">搬入地址</div>
           <div class="right">
-            <p v-text="detail.poiList[1].deliverRemark"/>
+            <p v-text="detail.poiList[1].deliverAddress"/>
             <p v-text="moveInFloor">有电梯,无楼梯费</p>
           </div>
         </li>

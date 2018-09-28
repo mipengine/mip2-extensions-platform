@@ -91,6 +91,10 @@
 </template>
 
 <style scoped lang="less">
+*{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
 .refresh-icon{
   width:12px;
   height:12px;
