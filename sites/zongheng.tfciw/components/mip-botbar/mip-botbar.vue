@@ -439,7 +439,7 @@ export default {
       &.word_wrapper {
         top: 8px;
         left: 78px;
-
+        max-width: 50%;
         .title {
           font-size: 17px;
           height: 17px;
@@ -450,11 +450,15 @@ export default {
         }
 
         .brief {
+          width: 100%;
           font-size: 12px;
           height: 12px;
           line-height: 12px;
           margin-top: 4px;
           color: #999;
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
         }
       }
     }
