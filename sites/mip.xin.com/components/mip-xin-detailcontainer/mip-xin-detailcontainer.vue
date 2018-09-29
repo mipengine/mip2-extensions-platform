@@ -241,7 +241,7 @@ export default {
       this.showCarMessgae = true
     },
     openParams () {
-      let ev = 'examine_report_detail'
+      let ev = 'examine_report'
       clickPoint(
         ev,
         {
