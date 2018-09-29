@@ -101,6 +101,12 @@ export default {
     },
     handleSafeClick () {
       if (this.status === 'online') {
+        this.doLog('click', {
+          act: 'btn-click',
+          status: this.status,
+          tj: 'mip_download' + '_' + this.dataList.pid + '_' + this.dataList.docid + '_' + this.url,
+          from: this.source
+        })
         this.highdownByCoustomScheme(this.dataList.invokeParam, this.dataList.fallbackHighdown)
       }
     },
