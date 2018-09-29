@@ -19,9 +19,7 @@
         placeholder=""
         class="ip-disable w98p">
     </div>
-    <div
-      class="arrow"
-      @click="openScrollSelect()">
+    <div>
       <label>起征点</label>
       <input
         id="threshold"
@@ -62,7 +60,6 @@ export default {
 			threshold: 5000,
 			values: [
 				'5000',
-				'4800(外籍人士，包括港澳台)'
 			],
 			scrollshow: false,
 			amount: '',
