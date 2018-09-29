@@ -624,3 +624,105 @@ input::-webkit-input-placeholder {
         -webkit-transform: translate(-50%, -50%) scale(0.7);
     }
 }
+
+.commewai {
+    background: #ffffff;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 999999999;
+    height: 70%;
+    width: 90%;
+    -webkit-box-shadow: 0 32px 48px 4px rgba(0, 0, 0, 0.14);
+    box-shadow: 0 32px 48px 4px rgba(0, 0, 0, 0.14);
+    border-radius: 4px;
+    text-align: center;
+    color: #666;
+    .header {
+      text-align: right;
+      position: relative;
+  
+      .close {
+        position: absolute;
+        top: -12px;
+        right: -12px;
+        background: #fff;
+  
+        font-size: 15px;
+        width: 25px;
+        height: 25px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .close:active {
+        background: rgba(0, 0, 0, 0.1);
+      }
+      .close::before {
+        content: "\2716";
+      }
+    }
+    .borders {
+      height: 98%;
+    }
+    .contents {
+      margin-top: 10px;
+      height: 98%;
+      overflow: auto;
+      padding: 8px;
+      padding-top: 0;
+      .last-des{
+          margin-top: 8px;
+          text-align: left;
+          div{
+              font-size: 12px;
+          }
+      }
+    }
+    .cost-box {
+      margin-top: 8px;
+      background: #fff;
+      box-shadow: 0px 0px 8px #ccc;
+      .title {
+        padding: 10px;
+        text-align: left;
+      }
+      .ewailist {
+        > div {
+          font-size: 12px;
+          display: flex;
+          align-items: center;
+          border-bottom: 1px solid #ddd;
+  
+          > div:first-child {
+            padding: 5px 8px;
+            flex: 1;
+            text-align: left;
+          }
+          > div:last-child {
+            flex: 2;
+            text-align: left;
+            p {
+              padding: 5px 0;
+              border-bottom: 1px solid #ddd;
+            }
+            p:last-child {
+              border-bottom: none;
+            }
+          }
+        }
+  
+        > div:nth-of-type(even) {
+          background: #edf4fc;
+        }
+  
+        > div:nth-of-type(odd) {
+          background-color: #ffffff;
+        }
+      }
+    }
+  }
