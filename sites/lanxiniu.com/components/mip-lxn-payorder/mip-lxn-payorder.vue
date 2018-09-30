@@ -170,6 +170,12 @@ export default {
       default: function () {
         return {}
       }
+    },
+    mipClickToken: {
+      type: String,
+      default: function () {
+        return ''
+      }
     }
   },
   data () {
@@ -515,7 +521,7 @@ export default {
         remark: remark
       }
       console.log(JSON.stringify(data, null, 2))
-      console.log(this.mipClickToken)
+      console.log('查看mipclicktoken' + this.mipClickToken)
       let updata = {
         from_detail: 'baidu',
         fr: 'xiongzhanghao',

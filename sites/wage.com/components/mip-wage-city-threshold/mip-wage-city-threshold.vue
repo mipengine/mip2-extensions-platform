@@ -19,9 +19,7 @@
         placeholder=""
         class="ip-disable w98p">
     </div>
-    <div
-      class="arrow"
-      @click="openScrollSelect()">
+    <div>
       <label>起征点</label>
       <input
         id="threshold"
@@ -59,10 +57,9 @@ export default {
 			showaddress: false,
 			provinceName: '北京',
 			cityName: '北京市',
-			threshold: 3500,
+			threshold: 5000,
 			values: [
-				'3500',
-				'4800(外籍人士，包括港澳台)'
+				'5000',
 			],
 			scrollshow: false,
 			amount: '',
@@ -146,7 +143,7 @@ export default {
 		// 显示选择值
 		showselect: function (obj) {
 			let selectValue = obj.detail[0];
-			selectValue === '3500' ? this.threshold = 3500 : this.threshold = 4800;
+			selectValue === '5000' ? this.threshold = 5000 : this.threshold = 4800;
 			this.colseScrollSelect();
 			this.$emit('getthreshold', this.threshold);
 		},
