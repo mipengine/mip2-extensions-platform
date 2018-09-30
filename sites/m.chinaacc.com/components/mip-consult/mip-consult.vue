@@ -17,7 +17,7 @@ export default {
     init () {
       if (!context) {
         let url = window.location.href
-        let paramstr = encodeURIComponent('redirectUrl=' + url);
+        let paramstr = encodeURIComponent('redirectUrl=' + url)
         context = Promise.resolve()
           .then(() => {
             return window.fetchJsonp(

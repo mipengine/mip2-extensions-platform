@@ -138,7 +138,7 @@ export default {
       let that = this
       let params = getUrlParams()
       that.courseEduId = params.courseEduId
-      let paramstr = encodeURIComponent('courseEduId=' + that.courseEduId);
+      let paramstr = encodeURIComponent('courseEduId=' + that.courseEduId)
       let url =
         '//m.chinaacc.com/m_member/baidu/download/getDownTypeList.shtm?' +
         paramstr
