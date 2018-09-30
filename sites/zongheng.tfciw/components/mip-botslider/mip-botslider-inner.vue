@@ -441,21 +441,21 @@ export default {
         left: 78px;
         max-width: 50%;
         .title {
-          font-size: 17px;
+          font-size: 17px!important;
           height: 17px;
           line-height: 17px;
-          color: #000;
+          color: #000!important;
           margin: 0;
           padding: 0;
         }
 
         .brief {
           width: 100%;
-          font-size: 12px;
+          font-size: 12px!important;
           height: 12px;
           line-height: 12px;
           margin-top: 4px;
-          color: #999;
+          color: #999!important;
           overflow: hidden;
           text-overflow:ellipsis;
           white-space: nowrap;
