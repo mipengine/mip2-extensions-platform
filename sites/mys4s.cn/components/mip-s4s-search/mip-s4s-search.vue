@@ -216,6 +216,9 @@
       </div>
     </div>
     <a
+      ref="opens"
+      href=""/>
+    <a
       ref="violation"
       data-type="mip"
       href="violation.html"/>
@@ -523,10 +526,11 @@ export default {
     },
     gotoNews ({id, Type}) {
       if (Type === 1) {
-        MIP.viewer.open(`https://mys4s.cn/static/xcar/index.html#/News/${id}?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xform=baidu_jisu_vio`)
+        this.$refs.opens.href = `https://mys4s.cn/static/xcar/index.html#/News/${id}?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xfrom=baidu_jisu_vio`
       } if (Type === 2) {
-        MIP.viewer.open(`https://mys4s.cn/static/xcar/index.html#/Evaluation?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xform=baidu_jisu_vio`)
+        this.$refs.opens.href = `https://mys4s.cn/static/xcar/index.html#/Evaluation?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xfrom=baidu_jisu_vio`
       }
+      this.$refs.opens.click()
     },
     fetchLocalCar () {
       console.log('获取本地车辆信息')
