@@ -17,10 +17,11 @@ export default {
     init () {
       if (!context) {
         let url = window.location.href
+        let paramstr = encodeURIComponent('redirectUrl=' + url);
         context = Promise.resolve()
           .then(() => {
             return window.fetchJsonp(
-              '//m.chinaacc.com/m_member/baidu/getXZJs.shtm?redirectUrl=' + url,
+              '//m.chinaacc.com/m_member/baidu/getXZJs.shtm?' + paramstr,
               {
                 jsonpCallback: 'jsonpCallback'
               }
