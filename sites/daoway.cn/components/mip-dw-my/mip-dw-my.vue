@@ -6,43 +6,50 @@
       on="login:example.customLogin logout:example.customLogout"/>
     <div class="mybg">
       <img
-        :src="userInfo.iconUrl?userInfo.iconUrl:'http://www.daoway.cn/images/myicon.png'"
+        :src="userInfos.iconUrl?userInfos.iconUrl:'https://www.daoway.cn/images/myicon.png'"
         class="myicon">
       <div
         v-if="userId"
         class="txt">
-        <div class="username">{{ userInfo.nick }}
+        <div class="username">{{ userInfos.nick }}
           <img
-            v-if="userInfo"
-            :src="userInfo.levelIcon"
+            v-if="userInfos.levelIcon"
+            :src="userInfos.levelIcon"
             class="starimg">
         </div>
       </div>
       <div
-        v-if="!userId"
+        v-if="username || !userId"
         class="txt2"
-        on="tap:log.login">请点击登录</div><!--@click="goLoginPage"-->
+        on="tap:log.login"
+        @click="tologin">请点击登录</div><!--@click="goLoginPage"-->
     </div>
     <div
-      v-if="userInfo.couponCount"
       class="mylist"
       style="margin-top:0; border:0"
-      @click="goVouchersPage" >
+      @click="goVouchersPage">
       <div class="item">
         <img
-          src="http://www.daoway.cn/images/quan.png"
+          src="https://www.daoway.cn/images/quan.png"
           class="cartimg"
           style="width:20px; height:20px">
         <div class="cart">代金券</div>
-        <div class="carttel">{{ userInfo.couponCount }}张<img
-          class="m-more"
-          src="https://www.daoway.cn/h5/image/go_06.png"></div>
+        <div
+          v-if="userId"
+          class="carttel">{{ userInfos.couponCount > 0?userInfos.couponCount +'张':'' }}<img
+            class="m-more"
+            src="https://www.daoway.cn/h5/image/go_06.png"></div>
+        <div
+          v-else
+          class="carttel"><img
+            class="m-more"
+            src="https://www.daoway.cn/h5/image/go_06.png"></div>
       </div>
     </div>
     <div class="mylist">
       <div class="item" >
         <img
-          src="http://www.daoway.cn/images/tel.png"
+          src="https://www.daoway.cn/images/tel.png"
           class="cartimg"
           style="width:20px; height:20px">
         <div class="cart">联系客服</div>
@@ -58,7 +65,7 @@
         class="item"
         @click="toabout">
         <img
-          src="http://www.daoway.cn/images/about.png"
+          src="https://www.daoway.cn/images/about.png"
           class="cartimg"
           style="width:20px; height:20px">
         <div class="cart">关于</div>
@@ -68,6 +75,7 @@
       </div>
     </div>
     <div
+      v-if="userId"
       class="exit"
       on="tap:log.logout"
       @click="exit">退出登录</div><!-- @click="loginOut"-->
@@ -91,16 +99,16 @@
           data-type="mip"
           data-title="到位上门服务"
           @click="toindex"
-        ><img src="http://www.daoway.cn/mip/common/images/home2.png">首页</a>
+        ><img src="https://www.daoway.cn/mip/common/images/home2.png">首页</a>
         <a
           data-type="mip"
           data-title="订单"
-          @click="toorder"><img src="http://www.daoway.cn/mip/common/images/order2.png">订单</a>
+          @click="toorder"><img src="https://www.daoway.cn/mip/common/images/order2.png">订单</a>
         <a
           class="regclolr"
           data-type="mip"
           data-title="我的"
-          @click="tomy"><img src="http://www.daoway.cn/mip/common/images/my.png">我的</a>
+          @click="tomy"><img src="https://www.daoway.cn/mip/common/images/my.png">我的</a>
       </div>
     </mip-fixed>
 
@@ -124,9 +132,9 @@ export default {
   data () {
     return {
       phoneNumber: '400-0908-608',
-      iconUrl: 'http://www.daoway.cn/mip/common/images/myicon.png',
+      iconUrl: 'https://www.daoway.cn/mip/common/images/myicon.png',
       couponCount: 0,
-      userInfo: {},
+      userInfos: {},
       warn: {
         // 弹窗
         show: false,
@@ -135,22 +143,22 @@ export default {
       redirect_uri: base.htmlhref.my,
       client_id: 'vnQZ7pPB0gsWHZZF4n6h0WDOl8KOr7Lq',
       ClientSecret: 'kM6rbBN43zhAEOFxeQ9Wnj2MzVzkROA0',
-      userId: '',
-      token: ''
+      userId: localStorage.getItem('mipUserId') || '',
+      token: localStorage.getItem('mipToken') || '',
+      username: false
     }
   },
   mounted () {
-    let userId = localStorage.getItem('mipUserId')
-    let token = localStorage.getItem('mipToken')
-    if (userId && token) {
-      this.userId = userId
-      this.token = token
+    if (this.userId && this.token) {
       this.getmyhtml()
     } else {
       this.$element.customElement.addEventAction('customLogin', event => {
         this.info = event.userInfo
         this.userId = event.userInfo.userId
         this.token = event.userInfo.token
+        base.setCookie('mipUserId', event.userInfo.userId)
+        base.setCookie('mipToken', event.userInfo.token)
+        document.cookie = 'token=' + event.userInfo.token + ';path=/'
         this.getmyhtml()
         localStorage.setItem('mipUserId', event.userInfo.userId)
         localStorage.setItem('mipToken', event.userInfo.token)
@@ -162,21 +170,21 @@ export default {
     exit () {
       this.userId = ''
       this.token = ''
-      this.userInfo.couponCount = false
+      this.userInfos.couponCount = false
+      this.username = true
       localStorage.removeItem('mipUserId')
       localStorage.removeItem('mipToken')
       localStorage.removeItem('nick')
-      MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
-    },
-    showloading () {
-      this.loading = true
+      base.setCookie('mipUserId', '')
+      base.setCookie('mipToken', '')
+      // MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
     },
     closeLayer () {
       this.warn.show = false
     },
     getmyhtml () {
       let that = this
-      let url = '/daoway/rest/user/' + that.userId + '?isowner=1'
+      let url = 'https://www.daoway.cn/daoway/rest/user/' + that.userId + '?isowner=1'
       fetch(url, {
         method: 'get',
         credentials: 'include',
@@ -187,57 +195,80 @@ export default {
         return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
+          that.username = false
           let data = text.data
           let userInfo = {}
           if (data.iconUrl) {
-            userInfo.iconUrl = data.iconUrl ? data.iconUrl : 'http://www.daoway.cn/images/myicon.png'
+            userInfo.iconUrl = data.iconUrl ? data.iconUrl : 'https://www.daoway.cn/images/myicon.png'
           }
           userInfo.nick = data.nick
           userInfo.couponCount = data.couponCount
           let level = data.level
           if (level === '100') { // 青铜会员
-            userInfo.levelIcon = 'http://www.daoway.cn/mip/common/images/q.png'
+            userInfo.levelIcon = 'https://www.daoway.cn/mip/common/images/q.png'
             userInfo.levelhtml = '青铜会员'
           } else if (level === '200') { // 白银会员
             userInfo.levelhtml = '白银会员'
-            userInfo.levelIcon = 'http://www.daoway.cn/mip/common/images/b.png'
+            userInfo.levelIcon = 'https://www.daoway.cn/mip/common/images/b.png'
           } else if (level === '300') { // 黄金会员
             userInfo.levelhtml = '黄金会员'
-            userInfo.levelIcon = 'http://www.daoway.cn/mip/common/images/h.png'
+            userInfo.levelIcon = 'https://www.daoway.cn/mip/common/images/h.png'
           } else if (level === '400') { // 钻石会员
             userInfo.levelhtml = '钻石会员'
-            userInfo.levelIcon = 'http://www.daoway.cn/mip/common/imagesz.png'
+            userInfo.levelIcon = 'https://www.daoway.cn/mip/common/imagesz.png'
           } else {
-            userInfo.levelIcon = 'http://www.daoway.cn/mip/common/images/p.png'
+            userInfo.levelIcon = 'https://www.daoway.cn/mip/common/images/p.png'
           }
-          that.userInfo = userInfo
+          that.userInfos = userInfo
         } else {
-          that.warn.show = true
-          that.warn.texts = text.msg
+          that.exit()
+          /* that.userId = '';
+            that.token = '';
+            localStorage.removeItem('mipUserId');
+            localStorage.removeItem('mipToken');
+            localStorage.removeItem('nick');
+            base.setCookie('mipUserId','');
+            base.setCookie('mipToken','');
+            return that.userId; */
+          /* that.warn.show = true
+          that.warn.texts = text.msg */
         }
       }).catch(function (error) {
+        // that.username = false;
         console.log(error)
       })
     },
+    tologin () {
+      let that = this
+      that.$element.customElement.addEventAction('customLogin', event => {
+        that.info = event.userInfo
+        that.userId = event.userInfo.userId
+        that.token = event.userInfo.token
+        base.setCookie('mipUserId', event.userInfo.userId)
+        base.setCookie('mipToken', event.userInfo.token)
+        document.cookie = 'token=' + event.userInfo.token + ';path=/'
+        //
+        localStorage.setItem('mipUserId', event.userInfo.userId)
+        localStorage.setItem('mipToken', event.userInfo.token)
+        localStorage.setItem('nick', event.userInfo.nick)
+        that.getmyhtml()
+        // MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
+      })
+    },
     goVouchersPage: function () {
-      let miniUserId = this.userId
-      if (miniUserId) {
-        MIP.viewer.open(base.htmlhref.vouchers + '?from=my', { isMipLink: true })
-      } else {
-        this.userId = ''
-      }
+      MIP.viewer.open(base.htmlhref.vouchers + '?from=my', { isMipLink: true })
     },
     toabout () {
       MIP.viewer.open(base.htmlhref.about, { isMipLink: true })
     },
     toindex () {
-      MIP.viewer.open(base.htmlhref.index, {isMipLink: false})
+      MIP.viewer.open(base.htmlhref.index, {isMipLink: true})
     },
     toorder () {
-      MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
+      MIP.viewer.open(base.htmlhref.order, {isMipLink: true})
     },
     tomy () {
-      MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
+      MIP.viewer.open(base.htmlhref.my, {isMipLink: true})
     }
   }
 }
@@ -264,17 +295,19 @@ export default {
         width: 100%;
         background: #fff;
         border-top: 1px solid #ededed;
+        padding:5px 0 1px;
+        text-align: center;
     }
     .bottomnav a{
-        line-height: 23px;
+        line-height: 20px;
         display: inline-block;
         width: 32%;
         text-align: center;
         font-size: 12px;
-        margin-top: 5px;
+        margin-top: 1px;
     }
     .bottomnav a img{
-        width: 25px;
+        width: 20px;
         height: auto;
         display: block;
         text-align: center;
@@ -322,12 +355,13 @@ export default {
     }
 
     .txt2 {
-        width: 20%;
-        line-height: 30px;
+        width: 74%;
+        line-height: 36px;
         vertical-align: top;
-        margin-top: 15px;
-        margin-left: 10px;
+        padding-top: 15px;
+        padding-left: 10px;
         display: inline-block;
+        font-size: 16px;
     }
 
     .starimg {
@@ -359,8 +393,8 @@ export default {
     .item {
         margin-left: 1.5%;
         width: 97%;
-        height: 40px;
-        line-height: 40px;
+        height: 45px;
+        line-height: 45px;
         position: relative;
     }
 

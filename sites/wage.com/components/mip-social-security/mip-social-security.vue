@@ -35,7 +35,7 @@
         :class="{'ip-disable':ok}"
         :value="getBase"
         type="number"
-        placeholder="0-1000,000 最多两位小数"
+        placeholder="0-10,000,000最多两位小数"
         @input="inputBaseMoney">
     </div>
     <!-- <span>{{tag}}</span> -->
@@ -49,7 +49,7 @@
         placeholder="请输入5-12"
         class="w96p"
         @input="inputProportion"
-        @blur="getProportion">
+      >
     </div>
     <mip-fixed
       v-show="scrollshow"
@@ -134,6 +134,7 @@ export default {
 			isAfter: false,
 			cok:false,
 			isOnClick:true,
+			wage:0,
 		};
 	},
 	computed: {
@@ -263,30 +264,43 @@ export default {
 		},
 		// 公积金比例
 		inputProportion: function (e) {
-			let sNum = e.target.value.toString(); // 先转换成字符串类型
-			// if (sNum > 12) {
-			// 	sNum = '12';
-			// } else if (sNum < 5 && sNum > 1) {
-			// 	sNum = '5';
-			// }
-			if (sNum.indexOf('.') > 0) {
-				let index = sNum.indexOf('.');
-				sNum = sNum.slice(0, index);
+			if(e.target.value){
+				let sNum = e.target.value.toString(); // 先转换成字符串类型
+				if (sNum.indexOf('.') > 0) {
+					let index = sNum.indexOf('.');
+					sNum = sNum.slice(0, index);
+				}
+				e.target.value = sNum;
+				this.$emit('getproportion', e.target.value);
+
 			}
-			e.target.value = sNum;
-			this.$emit('getproportion', e.target.value);
-		},
-		getProportion: function (e) {
-			// if (e.target.value < 5) {
-			// 	e.target.value = '5';
-			// }
-			// this.$emit('getproportion', e.target.value);
+
 		},
 		inputBaseMoney: function (e) {
-			this.baseMoney = Number(this.moneyFilter(e.target.value));
-			e.target.value = this.baseMoney;
+			if(e.target.value){
+				let match = e.target.value.match(/^\d{1,8}\.\d{0,2}|\d{1,8}/);
+				const max = 10000000;
+				if (match[0] > max) {
+					//double的有效位数是10,小数位分了两位,故整数位限制为8位
+					(match[0]/max) >= 10&&(match[0]/max) <=20?match[0] = max:match[0] = match[0].substring(0, 7);
+
+				}
+				if(match){
+					e.target.value = match[0];
+					this.wage = match[0];
+				}
+			}else{
+				this.wage&&this.wage.length>1?e.target.value = this.wage:e.target.value = '';
+			}
+			this.baseMoney = Number(e.target.value);
 			this.fromBase = this.baseMoney;
 			this.sendBaseMoney();
+			// if(e.target.value){
+			// 	this.baseMoney = Number(this.moneyFilter(e.target.value));
+			// 	e.target.value = this.baseMoney;
+			// 	this.fromBase = this.baseMoney;
+			// 	this.sendBaseMoney();
+			// }
 		},
 		moneyFilter(str) {
 			//过滤掉非法字符(也会过滤掉',')
@@ -301,9 +315,10 @@ export default {
 				dec = '';
 			num = num.replace(/。/g, '.'); //兼容中文输入法
 			var list = num.split('.');
-			if (list[0] > 10000000) {
+			const max = 10000000;
+			if (list[0] > max) {
 				//double的有效位数是10,小数位分了两位,故整数位限制为8位
-				result = list[0].substring(0, 7);
+				(list[0]/max) >= 10&&(list[0]/max) <=20?result = list[0].substring(0, 8):result = list[0].substring(0, 7);
 			} else {
 				result = list[0];
 			}
@@ -380,13 +395,13 @@ label {
 
 input {
     width: 100%;
-    padding-left: 6em;
+    padding-left: 4em;
     text-align: right;
     box-sizing: border-box;
     border: none;
     outline: none;
 	color: #333;
-	letter-spacing:1px;
+	letter-spacing:0.5px;
 	font-size: 15px;
 	font-family: PingFang-SC-Medium;
 	font-weight: 400;

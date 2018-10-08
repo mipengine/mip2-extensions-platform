@@ -88,7 +88,6 @@ export default {
   },
   watch: {
     info (val) {
-      // this.name = val.userInfo.userinfo.nickname
     }
   },
   mounted () {
@@ -97,6 +96,14 @@ export default {
     this.phone = this.getPhone()
     this.name = this.getName()
     this.$on('login', (ev) => {
+      this.submitOrder()
+    })
+  },
+  methods: {
+    submitOrder () {
+      if (this.name === null || this.name.trim() === '') return
+      if (this.phone === null || this.phone.trim() === '') return
+
       this.enabled = true
       this.tip = '正在提交数据，请稍后...'
 
@@ -125,6 +132,12 @@ export default {
           this.baiduCB(this.name, this.phone, this.info)
           MIP.viewer.open(this.host + '/order/result')
         } else {
+          if (res.message === '您的需求已经提交') {
+            toast.show('您上一个订单派送中，请稍后再提交', options)
+            this.enabled = false
+            this.tip = '提交需求'
+            return
+          }
           toast.show(res.message, options)
           this.enabled = false
           this.tip = '提交需求'
@@ -134,24 +147,30 @@ export default {
         this.enabled = false
         this.tip = '提交需求'
       })
-    })
-  },
-  methods: {
+    },
     submitTap: function () {
       let re = /^1\d{10}$/
-      if (this.name !== '' && this.phone !== '' && this.name !== null && this.phone !== null) {
-        if (re.test(this.phone)) {
-          if (this.info != null && this.info.userInfo && this.info.userInfo.userinfo) {
-            this.$emit('login')
-            return
-          }
-          this.savePhone()
-          this.$emit('bridge')
+
+      if (this.name === null || this.name.trim() === '') {
+        toast.show('请输入姓名', options)
+        return
+      }
+
+      if (this.phone === null || this.phone.trim() === '') {
+        toast.show('请输入电话', options)
+        return
+      }
+
+      if (re.test(this.phone)) {
+        if (this.info && this.info.userInfo && this.info.userInfo.userinfo) {
         } else {
-          toast.show('电话号码输入有误', options)
+          this.$emit('bridge')
+          return
         }
+        this.savePhone()
+        this.submitOrder()
       } else {
-        toast.show('请输入姓名和电话', options)
+        toast.show('电话号码输入有误', options)
       }
     },
     savePhone () {

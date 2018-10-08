@@ -13,6 +13,7 @@ class Header {
     const homeEle = document.createElement('a')
     const iconEle = document.createElement('i')
     homeEle.appendChild(iconEle)
+    homeEle.setAttribute('data-type', 'mip')
     iconEle.className = 'icon-home'
     homeEle.className = 'back-home'
     homeEle.href = homeUrl
