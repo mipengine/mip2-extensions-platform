@@ -1,32 +1,30 @@
 <template>
-  <div class="root-box">
-    <div class="container lad-wrapper" >
+  <div class="container lad-wrapper" >
       <!-- 弹框 -->
       <div
         v-if="isShowDeleteBox"
-        id="modal"
         class="modal">
         <div class="modal-content">
           <h4 class="tip">提示</h4>
           <div class="modal-body">
-            <p id="tip1">是否确定清除车辆信息</p>
+            <p>是否确定清除车辆信息</p>
           </div>
           <footer class="modal-footer">
             <div
-              id="cancel"
+              class="cancel"
               @click="cancalDeleteBox"
             >取消</div>
             <div
-              id="sure"
+              class="sure"
               @click="deleteConfirm">确定</div>
           </footer>
         </div>
       </div>
       <div>
-        <!-- 没有输入信息就跳到结果页--其实不太可能 -->
+        <!-- 没有输入信息就跳到结果页--其实不太可能 --> <!-- 驾驶证输入错误的信息 -->
         <div
-          v-if="noInfo"
-          id="newerror">
+          v-if="noInfo || wrongInfo_license"
+          class="newerror">
           <mip-img
             id="tu"
             width="84"
@@ -34,27 +32,13 @@
             src="../static/img/tu.png" />
           <h1 class="weihuzhong">您所输入的信息有误，无法<br>查询到违章信息，请重新输入正确信息</h1>
           <div
-            id="inputagain"
-            @click="inputAgain">点击重新输入</div>
-        </div>
-        <!-- 驾驶证输入错误的信息 -->
-        <div
-          v-if="wrongInfo_license"
-          id="newerror">
-          <mip-img
-            id="tu"
-            width="84"
-            height="84"
-            src="../static/img/tu.png" />
-          <h1 class="weihuzhong">您所输入的信息有误，无法<br>查询到违章信息，请重新输入正确信息</h1>
-          <div
-            id="inputagain"
+            class="inputagain"
             @click="inputAgain">点击重新输入</div>
         </div>
         <!-- 车辆输入了错误的信息 -->
         <div
           v-if="wrongInfo"
-          id="newerror2">
+          class="newerror">
           <mip-img
             id="tu"
             width="84"
@@ -63,7 +47,7 @@
           <h1 class="weihuzhong">暂无法查询违章信息，可能原因如下：</h1>
           <h1 class="weihuzhong2">1.你的车辆是以下其中一种状态：转出，被盗抢，注销，达到报废标准<br>2.你所输入的车辆查询信息有误</h1>
           <div
-            id="inputagain"
+            class="inputagain"
             @click="inputAgain">点击重新输入</div>
         </div>
         <div
@@ -75,14 +59,14 @@
       <div v-if="!noInfo && !wrongInfo && !wrongInfo_license">
         <!-- license 驾驶证 -->
         <div v-if="isLicense" >
-          <div id="idcard">
+          <div class="idcard">
             <div class="top">
-              <p id="id_carid">
+              <div class="card_num">
                 {{ id_license }}
-              </p>
+              </div>
               <div @click="deleteCardOrLicense">
                 <mip-img
-                  id="delete"
+                  class="delete"
                   layout="responsive"
                   width="200"
                   height="200"
@@ -90,24 +74,24 @@
               </div>
             </div>
             <div class="middle">
-              <div id="weizhang">
-                <div class="weizhangcishu">
+              <div class="middle-item">
+                <div class="middle-item-text">
                   {{ weizhangcishu_license }}
                 </div>
-                <div class="weizhangtext">违章</div>
+                <div class="middle-item-text2">违章</div>
               </div>
-              <div id="fakuan">
-                <div class="fakuanshu">
+              <div class="middle-item">
+                <div class="middle-item-text">
                   {{ fakuanshu_license }}
                 </div>
-                <div class="fakuantext">罚款</div>
+                <div class="middle-item-text2">罚款</div>
                 <div class="fengexian" />
               </div>
-              <div id="koufen">
-                <div class="koufenshu">
+              <div class="middle-item">
+                <div class="middle-item-text">
                   {{ koufenshu_license }}
                 </div>
-                <div class="koufentext">扣分</div>
+                <div class="middle-item-text2">扣分</div>
                 <div class="fengexian" />
               </div>
             </div>
@@ -127,14 +111,12 @@
               </div>
             </div>
             <div class="bottom2">
-              <div id="staus">
-                <div id="staus_left">
+                <div class="staus_left">
                   状态
                 </div>
-                <div id="id_staus_right">
-                  <span id="id_staus_right_span">{{ status_license }}</span>
+                <div class="id_staus_right">
+                  <span class="id_staus_right_span">{{ status_license }}</span>
                 </div>
-              </div>
             </div>
           </div>
           <div
@@ -162,42 +144,43 @@
           </div>
           <div
             v-if="hasLicenseIllegal"
-            class="cxjgresult">
-            <div
+            >
+            <div 
               v-for="item in results_license"
-              :key="item.index">
+              :key="item.index"
+              class="cxjgresult">
               <div class="cxjgitem_1">{{ item.cljgmc }}</div>
               <div class="cxjgfgx" />
               <div class="weifadetail">
-                <div class="weifashijian">
+                <div class="weifa-detail-item">
                   <div class="time_left_item">违法时间</div>
                   <div class="time_right_item">{{ item.wfsj }}</div>
                 </div>
-                <div class="weifadizhi">
+                <div class="weifa-detail-item">
                   <div class="address_left_item">违法地址</div>
                   <div class="address_right_item">{{ item.wfdz }}</div>
                 </div>
-                <div class="weifaxingwei">
+                <div class="weifa-detail-item">
                   <div class="behavior_left_item">违法行为</div>
                   <div class="behavior_right_item">{{ item.wfxw }}</div>
                 </div>
-                <div class="fakuanjine">
+                <div class="weifa-detail-item">
                   <div class="jine_left_item">罚款金额</div>
                   <div class="jine_right_item">
                   <strong class="amount">{{ item.fkje }}</strong>元</div>
                 </div>
-                <div class="weijijifen">
+                <div class="weifa-detail-item">
                   <div class="jifen_left_item">违纪记分</div>
                   <div class="jifen_right_item">
                   <strong class="amount">{{ item.wfjfs }}</strong>分</div>
                 </div>
-                <div class="zhinajin">
+                <div class="weifa-detail-item">
                   <div class="zhinajin_left_item">滞纳金</div>
                   <div class="zhinajin_right_item">
                     <strong class="amount">{{ item.znj }}</strong>元
                   </div>
                 </div>
-                <div class="juedingshubianhao">
+                <div class="weifa-detail-item">
                   <div class="juedingshu_left_item">决定书编号</div>
                   <div class="juedingshu_right_item">{{ item.jdsbh }}</div>
                 </div>
@@ -216,19 +199,18 @@
             <div
               class="chufajuedingshu"
               @click="cxwzcl">查询车辆违章</div>
-
           </div>
         </div>
         <!-- card 车辆 -->
         <div v-if="isCard">
-          <div id="license">
+          <div class="license">
             <div class="top">
-              <p id="carid">
+              <p class="card_num">
                 {{ id_card }}
               </p>
               <div @click="deleteCardOrLicense">
                 <mip-img
-                  id="delete"
+                  class="delete"
                   layout="responsive"
                   width="200"
                   height="200"
@@ -236,24 +218,24 @@
               </div>
             </div>
             <div class="middle">
-              <div id="weizhang">
-                <div class="weizhangcishu">
+              <div class="middle-item">
+                <div class="middle-item-text">
                   {{ weizhangcishu }}
                 </div>
-                <div class="weizhangtext">违章</div>
+                <div class="middle-item-text2">违章</div>
               </div>
-              <div id="fakuan">
-                <div class="fakuanshu">
+              <div class="middle-item">
+                <div class="middle-item-text">
                   {{ fakuanshu }}
                 </div>
-                <div class="fakuantext">罚款</div>
+                <div class="middle-item-text2">罚款</div>
                 <div class="fengexian" />
               </div>
-              <div id="koufen">
-                <div class="koufenshu">
+              <div class="middle-item">
+                <div class="middle-item-text">
                   {{ koufenshu }}
                 </div>
-                <div class="koufentext">扣分</div>
+                <div class="middle-item-text2">扣分</div>
                 <div class="fengexian" />
               </div>
             </div>
@@ -275,14 +257,12 @@
               </div>
             </div>
             <div class="bottom2">
-              <div id="staus">
-                <div id="staus_left">
+                <div class="staus_left">
                   状态
                 </div>
-                <div id="staus_right">
+                <div class="staus_right">
                   {{ status }}
                 </div>
-              </div>
             </div>
           </div>
           <div
@@ -310,31 +290,32 @@
           </div>
           <div
             v-if="hasCardIllegal"
-            class="cxjgresult">
+            >
             <div
               v-for="item in results"
-              :key="item.index">
+              :key="item.index"
+              class="cxjgresult">
               <div class="cxjgitem_1">{{ item.cjjgmc }}</div>
               <div class="cxjgfgx" />
               <div class="weifadetail">
-                <div class="weifashijian">
+                <div class="weifa-detail-item">
                   <div class="time_left_item">违法时间</div>
                   <div class="time_right_item">{{ item.wfsj }}</div>
                 </div>
-                <div class="weifadizhi">
+                <div class="weifa-detail-item">
                   <div class="address_left_item">违法地址</div>
                   <div class="address_right_item">{{ item.wfdz }}</div>
                 </div>
-                <div class="weifaxingwei">
+                <div class="weifa-detail-item">
                   <div class="behavior_left_item">违法行为</div>
                   <div class="behavior_right_item">{{ item.wfxw }}</div>
                 </div>
-                <div class="fakuanjine">
+                <div class="weifa-detail-item">
                   <div class="jine_left_item">罚款金额</div>
                   <div class="jine_right_item">
                   <strong class="amount">{{ item.fkje }}</strong>元</div>
                 </div>
-                <div class="weijijifen">
+                <div class="weifa-detail-item">
                   <div class="jifen_left_item">违纪记分</div>
                   <div class="jifen_right_item">
                   <strong class="amount">{{ item.wfjfs }}</strong>分</div>
@@ -359,198 +340,46 @@
 
         <div
           v-if="isFixBottomTip === false"
-          id="fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
+          class="no_fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
 
         <div
           v-if="isFixBottomTip === true"
           class="fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
 
       </div>
-    </div>
   </div>
 </template>
 
 <style scoped>
 /* 自定义样式 */
-
-@media screen and (min-width: 320px) {
-  html {
-    font-size: 17.0667px !important;
-  }
-  body {
-    font-size: 12px !important;
-  }
-}
-
-@media screen and (min-width: 360px) {
-  html {
-    font-size: 19.2px !important;
-  }
-  body {
-    font-size: 13px !important;
-  }
-}
-
-@media screen and (min-width: 375px) {
-  html {
-    font-size: 20px !important;
-  }
-  body {
-    font-size: 13.5px !important;
-  }
-}
-
-@media screen and (min-width: 411px) {
-  html {
-    font-size: 21.92px !important;
-  }
-  body {
-    font-size: 14px !important;
-  }
-}
-
-@media screen and (min-width: 414px) {
-  html {
-    font-size: 22.08px !important;
-  }
-  body {
-    font-size: 14px !important;
-  }
-}
-
-@media screen and (min-width: 540px) {
-  html {
-    font-size: 28.8px !important;
-  }
-  body {
-    font-size: 21px !important;
-  }
-}
-
-@media screen and (min-width: 562px) {
-  html {
-    font-size: 29.9733px !important;
-  }
-  body {
-    font-size: 18px !important;
-  }
-}
-
-@media screen and (min-width: 600px) {
-  html {
-    font-size: 34px !important;
-  }
-  body {
-    font-size: 26px !important;
-  }
-}
-
-@media screen and (min-width: 720px) {
-  html {
-    font-size: 38.4px !important;
-  }
-  body {
-    font-size: 24px !important;
-  }
-}
-
-@media screen and (min-width: 768px) {
-  html {
-    font-size: 40.96px !important;
-  }
-  body {
-    font-size: 25px !important;
-  }
-}
-
-@media screen and (min-width: 885px) {
-  html {
-    font-size: 48px !important;
-  }
-  body {
-    font-size: 28px !important;
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  html {
-    font-size: 54.6133px !important;
-  }
-  body {
-    font-size: 31px !important;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  html {
-    font-size: 65px !important;
-  }
-  body {
-    font-size: 40px !important;
-  }
-}
-
-@media screen and (min-width: 1300px) {
-  html {
-    font-size: 70px !important;
-  }
-  body {
-    font-size: 42px !important;
-  }
-}
-.root-box {
-  display: flex;
-  flex-direction: column;
-  overflow: auto;
-  background: rgba(245, 245, 245, 1);
-}
-
-body {
-  background: rgba(245, 245, 245, 1);
-  position: absolute;
-}
-
-#fix_bottom {
+.no_fix_bottom {
   width: 100%;
   text-align: center;
   font-size: 0.55rem;
   font-family: PingFang-SC-Medium;
   color: rgba(153, 153, 153, 1);
-  border-box: content-box;
   box-sizing: border-box;
   margin: 0.5rem auto;
 }
 
 .container {
-  /* flex-grow: 2; */
   width: 92%;
   margin: 0 auto;
-  /* overflow: scroll; */
   overflow: auto !important;
-  /* height: auto; */
 }
 
-#id_carid {
+.card_num {
   padding-left: 0.75rem;
-  padding-top: 1.275rem;
+  padding-top: 0.85rem;
   font-size: 1rem;
   font-family: PingFang-SC-Bold;
   color: rgba(255, 255, 255, 1);
-  line-height: 0px;
+  height: 1rem;
   float: left;
+  box-sizing: border-box;
 }
 
-#carid {
-  padding-left: 0.75rem;
-  padding-top: 1.275rem;
-  font-size: 1rem;
-  font-family: PingFang-SC-Bold;
-  color: rgba(255, 255, 255, 1);
-  line-height: 0px;
-  float: left;
-}
-
-#delete {
+.delete {
   border-width: 0.75rem;
   border-radius: 0.375rem;
   float: right;
@@ -568,25 +397,20 @@ body {
 }
 
 .middle {
+  margin-top: 0.6rem;
   width: 100%;
+  height: 1.9rem;
 }
 
-#idcard {
-  /* display: none; */
+.idcard {
   width: 100% !important;
   margin: 0.5rem auto 1rem auto;
   height: 9.55rem;
   background-image: url(../../static/img/idcard.png);
   /* background-image: url('http://test.xx-motor.com/wzcx.com/static/img/idcard.png'); */
-  background-repeat: no-repeat;
-  background-position-x: center;
-  -moz-background-size: contain;
-  -webkit-background-size: contain;
-  -o-background-size: contain;
-  background-size: contain;
 }
 
-#inputagain {
+.inputagain {
   width: 8rem;
   height: 2.2rem;
   background: rgba(0, 160, 233, 1);
@@ -602,40 +426,25 @@ body {
   margin-bottom: 0.75rem;
 }
 
-#license {
+.license {
+  width: 100% !important;
   margin: 0.5rem auto 1rem auto;
   height: 9.55rem;
   background-image: url(../../static/img/license.png);
-  /* background-image: url('http://test.xx-motor.com/wzcx.com/static/img/license.png'); */
-  background-repeat: no-repeat;
-  background-position-x: center;
-  -moz-background-size: contain;
-  -webkit-background-size: contain;
-  -o-background-size: contain;
-  background-size: contain;
 }
 
-#weizhang,
-#fakuan,
-#koufen {
-  margin-top: 0.75rem;
+.middle-item {
   float: left;
   height: 1.75rem;
   width: 5.5rem;
   text-align: center;
 }
 
-.weizhangcishu,
-.fakuanshu,
-.koufenshu {
+.middle-item-text {
   font-size: 1rem;
   color: rgba(255, 255, 255, 1);
   font-weight: bold;
   font-family: PingFang-SC-Bold;
-}
-
-.middle {
-  display: inline-block;
 }
 
 .bottom1 {
@@ -657,9 +466,7 @@ body {
   color: rgba(255, 255, 255, 1);
 }
 
-.weizhangtext,
-.fakuantext,
-.koufentext {
+.middle-item-text2 {
   font-size: 0.7rem;
   font-family: PingFang-SC-Medium;
   color: rgba(255, 255, 255, 1);
@@ -695,21 +502,25 @@ body {
 }
 
 .bottom2 {
+  height: 0.9rem;
   margin-left: 0.775rem;
   margin-top: 0.2rem;
 }
 
-#staus_left {
+.staus_left {
   font-size: 0.7rem;
   font-family: PingFang-SC-Medium;
   color: rgba(255, 255, 255, 1);
   float: left;
+  height: 0.9rem;
+  line-height: 0.9rem;
 }
-#id_staus_right {
+.id_staus_right {
   float: left;
   margin-left: 0.725rem;
+  height: 0.9rem;
 }
-#id_staus_right_span {
+.id_staus_right_span {
   display: table-cell;
   text-align: center;
   vertical-align: middle;
@@ -721,22 +532,8 @@ body {
   color: rgba(96, 182, 109, 1);
   font-size: 0.5rem;
 }
-/* #id_staus_right {
-  float:left;
-  display: inline-block;
-  padding: 0 0.75rem;
-  line-height: 0.9rem;
-  height: 0.9rem;
-  background: rgba(29, 112, 47, 1);
-  border-radius: 0.9rem;
-  text-align: center;
-  margin-left: 0.725rem;
-  font-family: PingFang-SC-Medium;
-  color: rgba(96, 182, 109, 1);
-  font-size: 0.5rem;
-} */
 
-#staus_right {
+.staus_right {
   float: left;
   line-height: 0.9rem;
   display: inline-block;
@@ -830,6 +627,7 @@ body {
 }
 
 .cxjgresult {
+  padding-bottom: .75rem;
   margin-bottom: 0.75rem;
   margin-top: 0.75rem;
   width: 100%;
@@ -857,7 +655,6 @@ body {
   width: 100%;
   flex-direction: column;
   justify-content: space-between;
-  margin-bottom: 1rem;
   display: -webkit-box;
   /* 老版本语法: Safari, iOS, Android browser, older WebKit browsers. */
   -webkit-flex-direction: column;
@@ -997,10 +794,7 @@ body {
   margin-bottom: 0.725rem;
 }
 
-.weifashijian,
-.weifadizhi,
-.weifaxingwei,
-.juedingshubianhao {
+.weifa-detail-item {
   margin-top: 0.725rem;
 }
 
@@ -1067,25 +861,7 @@ body {
   line-height: 2.25rem;
 }
 
-#newerror {
-  /* display: none; */
-  /* height: 22rem; */
-  margin-top: 5rem;
-  width: 100%;
-  text-align: center;
-}
-
-#newerror2 {
-  display: block;
-  height: 22rem;
-  margin-top: 5rem;
-  width: 100%;
-  text-align: center;
-}
-
-#haserror {
-  display: none;
-  height: 22rem;
+.newerror {
   margin-top: 5rem;
   width: 100%;
   text-align: center;
@@ -1104,17 +880,6 @@ body {
   font-family: PingFang-SC-Medium;
   color: rgba(153, 153, 153, 1);
   text-align: left;
-}
-
-.shaohouzaishi {
-  margin-top: 0.5rem;
-  font-size: 0.6rem;
-  font-family: PingFang-SC-Medium;
-  color: rgba(153, 153, 153, 1);
-}
-
-p {
-  text-align: center;
 }
 
 .btn {
@@ -1146,6 +911,7 @@ p {
   animation: zoom 0.6s;
   resize: both;
   overflow: auto;
+  flex-direction: column;
   -webkit-flex-direction: column;
   -webkit-box-orient: vertical;
   -webkit-box-pack: justify;
@@ -1213,7 +979,7 @@ p {
   border-top: 1px solid #ccc;
 }
 
-#sure {
+.sure {
   float: right;
   font-size: 0.9rem;
   font-family: PingFang-SC-Medium;
@@ -1224,7 +990,7 @@ p {
   line-height: 2rem;
 }
 
-#cancel {
+.cancel {
   border-right: 1px solid #ccc;
   float: left;
   font-size: 0.9rem;
@@ -1265,10 +1031,6 @@ p {
   border-radius: 0.5rem;
 }
 
-#savekong {
-  height: 1rem;
-}
-
 #tu {
   height: calc(100vw / 5) !important;
   width: calc(100vw / 5) !important;
@@ -1276,10 +1038,10 @@ p {
 </style>
 
 <script>
-import base from '../../common/utils/base.js'
+import base from "../../common/utils/base.js";
 // import {BScroll} from '../../common/utils/bscroll.min.js'
 export default {
-  data () {
+  data() {
     return {
       noInfo: false,
       isLicense: false,
@@ -1288,260 +1050,259 @@ export default {
       hasCardIllegal: false,
       isFixBottomTip: false,
       isShowDeleteBox: false, // 控制弹框
-      id_card: '',
-      weizhangcishu: '',
-      koufenshu: '',
-      tyyxqz: '',
-      qzbfsj: '',
-      status: '',
-      id_license: '',
-      weizhangcishu_license: '',
-      koufenshu_license: '',
-      tyyxqz_license: '',
-      qzbfsj_license: '',
-      status_license: '',
+      id_card: "",
+      weizhangcishu: "",
+      koufenshu: "",
+      tyyxqz: "",
+      qzbfsj: "",
+      status: "",
+      id_license: "",
+      weizhangcishu_license: "",
+      koufenshu_license: "",
+      tyyxqz_license: "",
+      qzbfsj_license: "",
+      status_license: "",
       results: [],
       results_license: [],
       wrongInfo: false,
       wrongInfo_license: false,
       htmlhref: {}
-    }
+    };
   },
-  created () {
+  created() {
     // base.resetRem()
   },
-  mounted () {
-    base.resetRem()
-    console.log('document', document)
+  mounted() {
+    base.resetRem();
+    console.log("document", document);
     // base.setContainerH('.root-box')
     // let wrapper = document.querySelector('.ald-wrapper')
     // let scroll = new BScroll(wrapper, {})
 
     // 基本数据初始化
-    this.initData()
+    this.initData();
     let options = {
       headers: {
-        'X-CLIENT-SOURCE': escape('百度'),
-        'X-CHANNEL-ID': '4291',
-        'X-CHANNEL-NAME': escape('百度阿拉丁')
+        "X-CLIENT-SOURCE": escape("百度"),
+        "X-CHANNEL-ID": "4291",
+        "X-CHANNEL-NAME": escape("百度阿拉丁")
       }
+    };
+    let reg1 = /[0-9a-zA-Z]/g;
+    console.log("This is my first custom component !");
+    if (!this.getUrlParam("license_no") && !this.getUrlParam("plate_no")) {
+      console.log("没有输入信息就跳转到这个页面");
+      let that = this;
+      that.noInfo = true;
+      that.isFixBottomTip = true;
     }
-    let reg1 = /[0-9a-zA-Z]/g
-    console.log('This is my first custom component !')
-    if (!this.getUrlParam('license_no') && !this.getUrlParam('plate_no')) {
-      console.log('没有输入信息就跳转到这个页面')
-      let that = this
-      that.noInfo = true
-      that.isFixBottomTip = true
-    }
-    if (this.getUrlParam('license_no')) {
-      let that = this
-      that.getUrlParam('file_no')
+    if (this.getUrlParam("license_no")) {
+      let that = this;
+      that.getUrlParam("file_no");
       fetch(
-        'https://gdjmt.gdsecurity.cn:8081/jmt-api/aladdin/getLicenseInfo?license_no=' +
-          that.getUrlParam('license_no') +
-          '&file_no=' +
-          that.getUrlParam('file_no'),
+        "https://gdjmt.gdsecurity.cn:8081/jmt-api/aladdin/getLicenseInfo?license_no=" +
+          that.getUrlParam("license_no") +
+          "&file_no=" +
+          that.getUrlParam("file_no"),
         options
       )
-        .then(function (res) {
-          return res.json()
+        .then(function(res) {
+          return res.json();
         })
-        .then(function (res) {
-          that.noInfo = false
-          console.log('license信息', res)
+        .then(function(res) {
+          that.noInfo = false;
+          console.log("license信息", res);
           if (res.errcode === 0) {
-            that.isLicense = true
-            let realLicense = res.result.license_no
-            let licenseLength = realLicense.length
-            let one = realLicense.substring(6, licenseLength - 10)
+            that.isLicense = true;
+            let realLicense = res.result.license_no;
+            let licenseLength = realLicense.length;
+            let one = realLicense.substring(6, licenseLength - 10);
             let two = realLicense
               .substring(licenseLength - 10, licenseLength - 1)
-              .replace(reg1, '*')
-            let three = realLicense.substring(licenseLength - 1)
-            let chulied = one.concat(two, three)
-            that.id_license = chulied
-            that.weizhangcishu_license = res.result.undeal_count
-            that.fakuanshu_license = res.result.undeal_amount_of_money
-            that.koufenshu_license = res.result.undeal_amount_of_score
-            that.tyyxqz_license = res.result.check_date
-            that.qzbfsj_license = res.result.valid_date
-            that.leijijifen_license = res.result.ljjf
-            that.status_license = res.result.status
+              .replace(reg1, "*");
+            let three = realLicense.substring(licenseLength - 1);
+            let chulied = one.concat(two, three);
+            that.id_license = chulied;
+            that.weizhangcishu_license = res.result.undeal_count;
+            that.fakuanshu_license = res.result.undeal_amount_of_money;
+            that.koufenshu_license = res.result.undeal_amount_of_score;
+            that.tyyxqz_license = res.result.check_date;
+            that.qzbfsj_license = res.result.valid_date;
+            that.leijijifen_license = res.result.ljjf;
+            that.status_license = res.result.status;
             if (res.result_set.length > 0) {
-              that.hasLicenseIllegal = true
-              that.results_license = res.result_set
-              that.isFixBottomTip = false
+              that.hasLicenseIllegal = true;
+              that.results_license = res.result_set;
+              that.isFixBottomTip = false;
             }
             if (res.result_set.length === 0) {
-              that.hasLicenseIllegal = false
-              that.isFixBottomTip = true
-              let containerH = base.getContainerH('.root-box')
+              that.hasLicenseIllegal = false;
+              that.isFixBottomTip = true;
+              let containerH = base.getContainerH(".root-box");
               if (containerH < 600) {
-                that.isFixBottomTip = false
+                that.isFixBottomTip = false;
               }
             }
           }
 
           if (res.errcode === -200) {
-            that.wrongInfo_license = true
-            that.isFixBottomTip = true
+            that.wrongInfo_license = true;
+            that.isFixBottomTip = true;
           }
-        })
+        });
     }
     // 如果能获取
-    if (this.getUrlParam('plate_no')) {
-      let that = this
-      that.getUrlParam('car_type')
-      that.getUrlParam('eng_no')
+    if (this.getUrlParam("plate_no")) {
+      let that = this;
+      that.getUrlParam("car_type");
+      that.getUrlParam("eng_no");
       fetch(
-        'https://gdjmt.gdsecurity.cn:8081/jmt-api/aladdin/getCarInfo?plate_no=' +
-          that.getUrlParam('plate_no') +
-          '&car_type=' +
-          that.getUrlParam('car_type') +
-          '&eng_no=' +
-          that.getUrlParam('eng_no'),
+        "https://gdjmt.gdsecurity.cn:8081/jmt-api/aladdin/getCarInfo?plate_no=" +
+          that.getUrlParam("plate_no") +
+          "&car_type=" +
+          that.getUrlParam("car_type") +
+          "&eng_no=" +
+          that.getUrlParam("eng_no"),
         options
       )
-        .then(function (res) {
-          return res.json()
+        .then(function(res) {
+          return res.json();
         })
-        .then(function (res) {
-          console.log('plate信息', res)
+        .then(function(res) {
+          console.log("plate信息", res);
           if (res.errcode === 0) {
-            that.isCard = true
-            that.noInfo = false
-            that.isLicense = false
-            that.id_card = res.result.hphm
-            that.weizhangcishu = res.result.undeal_count
-            that.fakuanshu = res.result.undeal_amount_of_money
-            that.koufenshu = res.result.undeal_amount_of_score
-            that.tyyxqz = res.result.invalidated_date
-            that.qzbfsj = res.result.valid_date
-            that.leijijife = res.result.ljjf
-            that.status = res.result.status
+            that.isCard = true;
+            that.noInfo = false;
+            that.isLicense = false;
+            that.id_card = res.result.hphm;
+            that.weizhangcishu = res.result.undeal_count;
+            that.fakuanshu = res.result.undeal_amount_of_money;
+            that.koufenshu = res.result.undeal_amount_of_score;
+            that.tyyxqz = res.result.invalidated_date;
+            that.qzbfsj = res.result.valid_date;
+            that.leijijife = res.result.ljjf;
+            that.status = res.result.status;
             if (res.result_set.length > 0) {
-              that.hasCardIllegal = true
-              that.results = res.result_set
-              that.isFixBottomTip = false
+              that.hasCardIllegal = true;
+              that.results = res.result_set;
+              that.isFixBottomTip = false;
             }
             if (res.result_set.length === 0) {
-              that.isFixBottomTip = true
-              let containerH = base.getContainerH('.root-box')
+              that.isFixBottomTip = true;
+              let containerH = base.getContainerH(".root-box");
               if (containerH < 600) {
-                that.isFixBottomTip = false
+                that.isFixBottomTip = false;
               }
             }
           }
           if (res.errcode === -200) {
-            that.wrongInfo = true
-            that.isFixBottomTip = true
+            that.wrongInfo = true;
+            that.isFixBottomTip = true;
           }
-        })
+        });
     }
   },
   methods: {
-    toOtherPage (url) {
-      MIP.viewer.open(this.htmlhref[url], { isMipLink: true })
+    toOtherPage(url) {
+      MIP.viewer.open(this.htmlhref[url], { isMipLink: true });
     },
-    getUrlParam (name) {
+    getUrlParam(name) {
       // 用于获取url的参数后置参数
-      let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)') // 构造一个含有目标参数的正则表达式对象
-      let r = window.location.search.substr(1).match(reg) // 匹配目标参数
+      let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); // 构造一个含有目标参数的正则表达式对象
+      let r = window.location.search.substr(1).match(reg); // 匹配目标参数
       if (r != null) {
-        return decodeURI(r[2])
+        return decodeURI(r[2]);
       }
-      return null // 返回参数值
+      return null; // 返回参数值
     },
     // 基本数据初始化
-    initData () {
+    initData() {
       // 配置链接信息
-      this.htmlhref = base.htmlhref
+      this.htmlhref = base.htmlhref;
     },
-    inputAgain: function () {
-      console.log('到这里了', MIP.viewer)
-      if (this.getUrlParam('license_no')) {
-        console.log('111111', window)
+    inputAgain: function() {
+      console.log("到这里了", MIP.viewer);
+      if (this.getUrlParam("license_no")) {
         // window.top.location.href = 'https://www.baidu.com/s?wd=驾驶人违法查询'
-        MIP.viewer.open('https://www.baidu.com/s?wd=驾驶人违法查询', {
+        MIP.viewer.open("https://www.baidu.com/s?wd=驾驶人违法查询", {
           isMipLink: false
-        })
+        });
       } else {
-        console.log('22222222', window)
-        MIP.viewer.open('https://www.baidu.com/s?wd=违章查询', {
+        console.log("22222222", window);
+        MIP.viewer.open("https://www.baidu.com/s?wd=违章查询", {
           isMipLink: false
-        })
+        });
         // window.top.location.href = 'https://www.baidu.com/s?wd=违章查询'
       }
     },
-    ckwddd () {
-      MIP.viewer.open(base.outAldhttp + 'mip-my-order.html', {
+    ckwddd() {
+      MIP.viewer.open(base.outAldhttp + "mip-my-order.html", {
         isMipLink: true
-      })
+      });
     },
-    ljblwz () {
-      let that = this
+    ljblwz() {
+      let that = this;
       // let baseUrl = 'https://yz-alipay.fundway.net/'
-      if (that.getUrlParam('license_no')) {
+      if (that.getUrlParam("license_no")) {
         // window.top.location.href =
         //     baseUrl +
         //     "yzcw-web-admin/login/xmd/xmd_baidu_xzh/site_illegal_payment/auth";
         MIP.viewer.open(
-          base.outAldhttp + 'mip-xmd-illegal-index.html?selected=decision',
+          base.outAldhttp + "mip-xmd-illegal-index.html?selected=decision",
           { isMipLink: true }
-        )
+        );
       }
-      if (that.getUrlParam('plate_no')) {
-        let plateNo = that.getUrlParam('plate_no')
-        plateNo = plateNo.substr(0, 1) === '粤' ? plateNo : '粤' + plateNo
-        plateNo = encodeURIComponent(plateNo)
+      if (that.getUrlParam("plate_no")) {
+        let plateNo = that.getUrlParam("plate_no");
+        plateNo = plateNo.substr(0, 1) === "粤" ? plateNo : "粤" + plateNo;
+        plateNo = encodeURIComponent(plateNo);
         MIP.viewer.open(
           base.outAldhttp +
-            'mip-xmd-illegal-msg.html?' +
-            'PLATENUMBER=' +
+            "mip-xmd-illegal-msg.html?" +
+            "PLATENUMBER=" +
             plateNo +
-            '&FDJH=' +
-            that.getUrlParam('eng_no') +
-            '&PLATETYPE=' +
-            that.getUrlParam('car_type'),
+            "&FDJH=" +
+            that.getUrlParam("eng_no") +
+            "&PLATETYPE=" +
+            that.getUrlParam("car_type"),
           { isMipLink: true }
-        )
+        );
       }
     },
-    cxwzcl () {
+    cxwzcl() {
       MIP.viewer.open(
-        base.outAldhttp + 'mip-xmd-illegal-index.html?selected=illegal',
+        base.outAldhttp + "mip-xmd-illegal-index.html?selected=illegal",
         { isMipLink: true }
-      )
+      );
     },
-    wycfjds () {
+    wycfjds() {
       MIP.viewer.open(
-        base.outAldhttp + 'mip-xmd-illegal-index.html?selected=decision',
+        base.outAldhttp + "mip-xmd-illegal-index.html?selected=decision",
         { isMipLink: true }
-      )
+      );
     },
-    deleteCardOrLicense (str) {
-      let that = this
-      console.log('删除')
-      that.isShowDeleteBox = true
+    deleteCardOrLicense(str) {
+      let that = this;
+      console.log("删除");
+      that.isShowDeleteBox = true;
     },
-    cancalDeleteBox () {
-      let that = this
-      that.isShowDeleteBox = false
+    cancalDeleteBox() {
+      let that = this;
+      that.isShowDeleteBox = false;
     },
-    deleteConfirm () {
-      let that = this
-      that.isShowDeleteBox = false
-      if (that.getUrlParam('license_no')) {
-        MIP.viewer.open('https://www.baidu.com/s?wd=驾驶人违法查询', {
+    deleteConfirm() {
+      let that = this;
+      that.isShowDeleteBox = false;
+      if (that.getUrlParam("license_no")) {
+        MIP.viewer.open("https://www.baidu.com/s?wd=驾驶人违法查询", {
           isMipLink: false
-        })
+        });
       } else {
-        MIP.viewer.open('https://www.baidu.com/s?wd=违章查询', {
+        MIP.viewer.open("https://www.baidu.com/s?wd=违章查询", {
           isMipLink: false
-        })
+        });
       }
     }
   }
-}
+};
 </script>
