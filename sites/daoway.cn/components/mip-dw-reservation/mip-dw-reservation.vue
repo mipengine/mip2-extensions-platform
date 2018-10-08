@@ -208,15 +208,16 @@ export default {
   },
   mounted () {
     let that = this
-    that.position = base.getposition();
-    if(!that.position){
+    that.position = base.getposition()
+    if (!that.position) {
       that.position = {
-        id: 272026,
-        city: "北京",
-        name: "天安门",
-        addr: "北京市东城区东长安街",
-        lot: 116.40387423499,
-        lat: 39.915167717716
+        id: '272026',
+        name: '天安门',
+        addr: '北京市东城区东长安街',
+        lot: '116.40387423499',
+        lat: '39.915167717716',
+        area: '东城区',
+        city: '北京'
       }
     }
     if (that.position && that.position.contactPerson) {
@@ -226,7 +227,7 @@ export default {
       that.contactPerson = nick
     }
     if (that.position && that.position.phone) {
-      that.phone = that.position.phone ;
+      that.phone = that.position.phone
     }
     if (that.orderId) {
       that.buyAgain(that.orderId)
@@ -532,12 +533,12 @@ export default {
           }
           let totalPrice = (prices[0].price * prices[0].quantity)
           let communityId = resultData.communityId
-          let addr = communityId ? resultData.city + ' ' + resultData.communityArea + resultData.communityName : resultData.street;
+          let addr = communityId ? resultData.city + ' ' + resultData.communityArea + resultData.communityName : resultData.street
           let appointTime = resultData.nextAppointTime
           let canChooseTechnician = resultData.canChooseTechnician
           that.prices = prices
           that.totalPrice = totalPrice.toFixed(2)
-          that.formatTime = base.timeformat(appointTime, 'yyyy-MM-dd HH:mm');
+          that.formatTime = base.timeformat(appointTime, 'yyyy-MM-dd HH:mm')
           that.nextAppointTime = appointTime
           that.appointTime = appointTime
           that.noFixFeePrice = resultData.noFixFeePrice
@@ -566,7 +567,7 @@ export default {
             MIP.viewer.page.back()
           }, 1000)
         };
-      }).catch(function(error) {
+      }).catch(function (error) {
         console.log(error)
       })
     },
