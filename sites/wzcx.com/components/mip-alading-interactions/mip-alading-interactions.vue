@@ -1,352 +1,352 @@
 <template>
   <div class="container lad-wrapper" >
-      <!-- 弹框 -->
+    <!-- 弹框 -->
+    <div
+      v-if="isShowDeleteBox"
+      class="modal">
+      <div class="modal-content">
+        <h4 class="tip">提示</h4>
+        <div class="modal-body">
+          <p>是否确定清除车辆信息</p>
+        </div>
+        <footer class="modal-footer">
+          <div
+            class="cancel"
+            @click="cancalDeleteBox"
+          >取消</div>
+          <div
+            class="sure"
+            @click="deleteConfirm">确定</div>
+        </footer>
+      </div>
+    </div>
+    <div>
+      <!-- 没有输入信息就跳到结果页--其实不太可能 --> <!-- 驾驶证输入错误的信息 -->
       <div
-        v-if="isShowDeleteBox"
-        class="modal">
-        <div class="modal-content">
-          <h4 class="tip">提示</h4>
-          <div class="modal-body">
-            <p>是否确定清除车辆信息</p>
-          </div>
-          <footer class="modal-footer">
-            <div
-              class="cancel"
-              @click="cancalDeleteBox"
-            >取消</div>
-            <div
-              class="sure"
-              @click="deleteConfirm">确定</div>
-          </footer>
-        </div>
-      </div>
-      <div>
-        <!-- 没有输入信息就跳到结果页--其实不太可能 --> <!-- 驾驶证输入错误的信息 -->
+        v-if="noInfo || wrongInfo_license"
+        class="newerror">
+        <mip-img
+          id="tu"
+          width="84"
+          height="84"
+          src="../static/img/tu.png" />
+        <h1 class="weihuzhong">您所输入的信息有误，无法<br>查询到违章信息，请重新输入正确信息</h1>
         <div
-          v-if="noInfo || wrongInfo_license"
-          class="newerror">
+          class="inputagain"
+          @click="inputAgain">点击重新输入</div>
+      </div>
+      <!-- 车辆输入了错误的信息 -->
+      <div
+        v-if="wrongInfo"
+        class="newerror">
+        <mip-img
+          id="tu"
+          width="84"
+          height="84"
+          src="../static/img/tu.png" />
+        <h1 class="weihuzhong">暂无法查询违章信息，可能原因如下：</h1>
+        <h1 class="weihuzhong2">1.你的车辆是以下其中一种状态：转出，被盗抢，注销，达到报废标准<br>2.你所输入的车辆查询信息有误</h1>
+        <div
+          class="inputagain"
+          @click="inputAgain">点击重新输入</div>
+      </div>
+      <div
+        v-if="isFixBottomTip === true"
+        class="fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
+    </div>
+
+    <!-- 输入正确且有返回的情况 -->
+    <div v-if="!noInfo && !wrongInfo && !wrongInfo_license">
+      <!-- license 驾驶证 -->
+      <div v-if="isLicense" >
+        <div class="idcard">
+          <div class="top">
+            <div class="card_num">
+              {{ id_license }}
+            </div>
+            <div @click="deleteCardOrLicense">
+              <mip-img
+                class="delete"
+                layout="responsive"
+                width="200"
+                height="200"
+                src="../static/img/delete.png" />
+            </div>
+          </div>
+          <div class="middle">
+            <div class="middle-item">
+              <div class="middle-item-text">
+                {{ weizhangcishu_license }}
+              </div>
+              <div class="middle-item-text2">违章</div>
+            </div>
+            <div class="middle-item">
+              <div class="middle-item-text">
+                {{ fakuanshu_license }}
+              </div>
+              <div class="middle-item-text2">罚款</div>
+              <div class="fengexian" />
+            </div>
+            <div class="middle-item">
+              <div class="middle-item-text">
+                {{ koufenshu_license }}
+              </div>
+              <div class="middle-item-text2">扣分</div>
+              <div class="fengexian" />
+            </div>
+          </div>
+          <div class="bottom1">
+            <div>
+              <div class="bottom1_left">
+                <div class="tyyxqz">
+                  检验有效期至：{{ tyyxqz_license }}
+                </div>
+                <div class="qzbfsj">
+                  强制报废时间：{{ qzbfsj_license }}
+                </div>
+              </div>
+              <div id="leijijifen">
+                累计记分：{{ leijijifen_license }}分
+              </div>
+            </div>
+          </div>
+          <div class="bottom2">
+            <div class="staus_left">
+              状态
+            </div>
+            <div class="id_staus_right">
+              <span class="id_staus_right_span">{{ status_license }}</span>
+            </div>
+          </div>
+        </div>
+        <div
+          v-if="hasLicenseIllegal"
+          class="two_button">
+          <div
+            class="ckwddd"
+            @click="ckwddd">查看我的订单</div>
+          <div
+            class="ljblwz"
+            @click="ljblwz">立即办理违章</div>
+        </div>
+        <div
+          v-if="!hasLicenseIllegal"
+          class="two_button">
+          <div
+            class="ckwddd"
+            @click="ckwddd">查看我的订单</div>
+          <div class="ljblwz_no">立即办理违章</div>
+        </div>
+        <div class="cxjg">
+          <div class="zfgx" />
+          <div class="cxjgtext">查询结果</div>
+          <div class="yfgx" />
+        </div>
+        <div
+          v-if="hasLicenseIllegal"
+        >
+          <div
+            v-for="item in results_license"
+            :key="item.index"
+            class="cxjgresult">
+            <div class="cxjgitem_1">{{ item.cljgmc }}</div>
+            <div class="cxjgfgx" />
+            <div class="weifadetail">
+              <div class="weifa-detail-item">
+                <div class="time_left_item">违法时间</div>
+                <div class="time_right_item">{{ item.wfsj }}</div>
+              </div>
+              <div class="weifa-detail-item">
+                <div class="address_left_item">违法地址</div>
+                <div class="address_right_item">{{ item.wfdz }}</div>
+              </div>
+              <div class="weifa-detail-item">
+                <div class="behavior_left_item">违法行为</div>
+                <div class="behavior_right_item">{{ item.wfxw }}</div>
+              </div>
+              <div class="weifa-detail-item">
+                <div class="jine_left_item">罚款金额</div>
+                <div class="jine_right_item">
+                <strong class="amount">{{ item.fkje }}</strong>元</div>
+              </div>
+              <div class="weifa-detail-item">
+                <div class="jifen_left_item">违纪记分</div>
+                <div class="jifen_right_item">
+                <strong class="amount">{{ item.wfjfs }}</strong>分</div>
+              </div>
+              <div class="weifa-detail-item">
+                <div class="zhinajin_left_item">滞纳金</div>
+                <div class="zhinajin_right_item">
+                  <strong class="amount">{{ item.znj }}</strong>元
+                </div>
+              </div>
+              <div class="weifa-detail-item">
+                <div class="juedingshu_left_item">决定书编号</div>
+                <div class="juedingshu_right_item">{{ item.jdsbh }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          v-if="!hasLicenseIllegal"
+          class="noresult">
           <mip-img
             id="tu"
             width="84"
             height="84"
             src="../static/img/tu.png" />
-          <h1 class="weihuzhong">您所输入的信息有误，无法<br>查询到违章信息，请重新输入正确信息</h1>
+          <h1 class="noweifa">恭喜你尚无新违法记录</h1>
           <div
-            class="inputagain"
-            @click="inputAgain">点击重新输入</div>
+            class="chufajuedingshu"
+            @click="cxwzcl">查询车辆违章</div>
         </div>
-        <!-- 车辆输入了错误的信息 -->
+      </div>
+      <!-- card 车辆 -->
+      <div v-if="isCard">
+        <div class="license">
+          <div class="top">
+            <p class="card_num">
+              {{ id_card }}
+            </p>
+            <div @click="deleteCardOrLicense">
+              <mip-img
+                class="delete"
+                layout="responsive"
+                width="200"
+                height="200"
+                src="../static/img/delete.png" />
+            </div>
+          </div>
+          <div class="middle">
+            <div class="middle-item">
+              <div class="middle-item-text">
+                {{ weizhangcishu }}
+              </div>
+              <div class="middle-item-text2">违章</div>
+            </div>
+            <div class="middle-item">
+              <div class="middle-item-text">
+                {{ fakuanshu }}
+              </div>
+              <div class="middle-item-text2">罚款</div>
+              <div class="fengexian" />
+            </div>
+            <div class="middle-item">
+              <div class="middle-item-text">
+                {{ koufenshu }}
+              </div>
+              <div class="middle-item-text2">扣分</div>
+              <div class="fengexian" />
+            </div>
+          </div>
+          <div class="bottom1">
+            <div>
+              <div class="bottom1_left">
+                <div class="tyyxqz">
+                  <!-- 审核有效期：{{tyyxqz}} -->
+                  检验有效期至：{{ tyyxqz }}
+                </div>
+                <div class="qzbfsj">
+                  <!-- 下次体检日期: {{qzbfsj}} -->
+                  强制报废时间：{{ qzbfsj }}
+                </div>
+              </div>
+              <div class="bottom1_right">
+                办理六年免检
+              </div>
+            </div>
+          </div>
+          <div class="bottom2">
+            <div class="staus_left">
+              状态
+            </div>
+            <div class="staus_right">
+              {{ status }}
+            </div>
+          </div>
+        </div>
         <div
-          v-if="wrongInfo"
-          class="newerror">
+          v-if="hasCardIllegal"
+          class="two_button">
+          <div
+            class="ckwddd"
+            @click="ckwddd">查看我的订单</div>
+          <div
+            class="ljblwz"
+            @click="ljblwz">立即办理违章</div>
+        </div>
+        <div
+          v-if="!hasCardIllegal"
+          class="two_button">
+          <div
+            class="ckwddd"
+            @click="ckwddd">查看我的订单</div>
+          <div class="ljblwz_no">立即办理违章</div>
+        </div>
+        <div class="cxjg">
+          <div class="zfgx" />
+          <div class="cxjgtext">查询结果</div>
+          <div class="yfgx" />
+        </div>
+        <div
+          v-if="hasCardIllegal"
+        >
+          <div
+            v-for="item in results"
+            :key="item.index"
+            class="cxjgresult">
+            <div class="cxjgitem_1">{{ item.cjjgmc }}</div>
+            <div class="cxjgfgx" />
+            <div class="weifadetail">
+              <div class="weifa-detail-item">
+                <div class="time_left_item">违法时间</div>
+                <div class="time_right_item">{{ item.wfsj }}</div>
+              </div>
+              <div class="weifa-detail-item">
+                <div class="address_left_item">违法地址</div>
+                <div class="address_right_item">{{ item.wfdz }}</div>
+              </div>
+              <div class="weifa-detail-item">
+                <div class="behavior_left_item">违法行为</div>
+                <div class="behavior_right_item">{{ item.wfxw }}</div>
+              </div>
+              <div class="weifa-detail-item">
+                <div class="jine_left_item">罚款金额</div>
+                <div class="jine_right_item">
+                <strong class="amount">{{ item.fkje }}</strong>元</div>
+              </div>
+              <div class="weifa-detail-item">
+                <div class="jifen_left_item">违纪记分</div>
+                <div class="jifen_right_item">
+                <strong class="amount">{{ item.wfjfs }}</strong>分</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          v-if="!hasCardIllegal"
+          class="noresult">
           <mip-img
             id="tu"
             width="84"
             height="84"
             src="../static/img/tu.png" />
-          <h1 class="weihuzhong">暂无法查询违章信息，可能原因如下：</h1>
-          <h1 class="weihuzhong2">1.你的车辆是以下其中一种状态：转出，被盗抢，注销，达到报废标准<br>2.你所输入的车辆查询信息有误</h1>
+          <h1 class="noweifa">恭喜你尚无新违法记录</h1>
           <div
-            class="inputagain"
-            @click="inputAgain">点击重新输入</div>
+            class="chufajuedingshu"
+            @click="wycfjds">我有处罚决定书</div>
         </div>
-        <div
-          v-if="isFixBottomTip === true"
-          class="fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
       </div>
 
-      <!-- 输入正确且有返回的情况 -->
-      <div v-if="!noInfo && !wrongInfo && !wrongInfo_license">
-        <!-- license 驾驶证 -->
-        <div v-if="isLicense" >
-          <div class="idcard">
-            <div class="top">
-              <div class="card_num">
-                {{ id_license }}
-              </div>
-              <div @click="deleteCardOrLicense">
-                <mip-img
-                  class="delete"
-                  layout="responsive"
-                  width="200"
-                  height="200"
-                  src="../static/img/delete.png" />
-              </div>
-            </div>
-            <div class="middle">
-              <div class="middle-item">
-                <div class="middle-item-text">
-                  {{ weizhangcishu_license }}
-                </div>
-                <div class="middle-item-text2">违章</div>
-              </div>
-              <div class="middle-item">
-                <div class="middle-item-text">
-                  {{ fakuanshu_license }}
-                </div>
-                <div class="middle-item-text2">罚款</div>
-                <div class="fengexian" />
-              </div>
-              <div class="middle-item">
-                <div class="middle-item-text">
-                  {{ koufenshu_license }}
-                </div>
-                <div class="middle-item-text2">扣分</div>
-                <div class="fengexian" />
-              </div>
-            </div>
-            <div class="bottom1">
-              <div>
-                <div class="bottom1_left">
-                  <div class="tyyxqz">
-                    检验有效期至：{{ tyyxqz_license }}
-                  </div>
-                  <div class="qzbfsj">
-                    强制报废时间：{{ qzbfsj_license }}
-                  </div>
-                </div>
-                <div id="leijijifen">
-                  累计记分：{{ leijijifen_license }}分
-                </div>
-              </div>
-            </div>
-            <div class="bottom2">
-                <div class="staus_left">
-                  状态
-                </div>
-                <div class="id_staus_right">
-                  <span class="id_staus_right_span">{{ status_license }}</span>
-                </div>
-            </div>
-          </div>
-          <div
-            v-if="hasLicenseIllegal"
-            class="two_button">
-            <div
-              class="ckwddd"
-              @click="ckwddd">查看我的订单</div>
-            <div
-              class="ljblwz"
-              @click="ljblwz">立即办理违章</div>
-          </div>
-          <div
-            v-if="!hasLicenseIllegal"
-            class="two_button">
-            <div
-              class="ckwddd"
-              @click="ckwddd">查看我的订单</div>
-            <div class="ljblwz_no">立即办理违章</div>
-          </div>
-          <div class="cxjg">
-            <div class="zfgx" />
-            <div class="cxjgtext">查询结果</div>
-            <div class="yfgx" />
-          </div>
-          <div
-            v-if="hasLicenseIllegal"
-            >
-            <div 
-              v-for="item in results_license"
-              :key="item.index"
-              class="cxjgresult">
-              <div class="cxjgitem_1">{{ item.cljgmc }}</div>
-              <div class="cxjgfgx" />
-              <div class="weifadetail">
-                <div class="weifa-detail-item">
-                  <div class="time_left_item">违法时间</div>
-                  <div class="time_right_item">{{ item.wfsj }}</div>
-                </div>
-                <div class="weifa-detail-item">
-                  <div class="address_left_item">违法地址</div>
-                  <div class="address_right_item">{{ item.wfdz }}</div>
-                </div>
-                <div class="weifa-detail-item">
-                  <div class="behavior_left_item">违法行为</div>
-                  <div class="behavior_right_item">{{ item.wfxw }}</div>
-                </div>
-                <div class="weifa-detail-item">
-                  <div class="jine_left_item">罚款金额</div>
-                  <div class="jine_right_item">
-                  <strong class="amount">{{ item.fkje }}</strong>元</div>
-                </div>
-                <div class="weifa-detail-item">
-                  <div class="jifen_left_item">违纪记分</div>
-                  <div class="jifen_right_item">
-                  <strong class="amount">{{ item.wfjfs }}</strong>分</div>
-                </div>
-                <div class="weifa-detail-item">
-                  <div class="zhinajin_left_item">滞纳金</div>
-                  <div class="zhinajin_right_item">
-                    <strong class="amount">{{ item.znj }}</strong>元
-                  </div>
-                </div>
-                <div class="weifa-detail-item">
-                  <div class="juedingshu_left_item">决定书编号</div>
-                  <div class="juedingshu_right_item">{{ item.jdsbh }}</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            v-if="!hasLicenseIllegal"
-            class="noresult">
-            <mip-img
-              id="tu"
-              width="84"
-              height="84"
-              src="../static/img/tu.png" />
-            <h1 class="noweifa">恭喜你尚无新违法记录</h1>
-            <div
-              class="chufajuedingshu"
-              @click="cxwzcl">查询车辆违章</div>
-          </div>
-        </div>
-        <!-- card 车辆 -->
-        <div v-if="isCard">
-          <div class="license">
-            <div class="top">
-              <p class="card_num">
-                {{ id_card }}
-              </p>
-              <div @click="deleteCardOrLicense">
-                <mip-img
-                  class="delete"
-                  layout="responsive"
-                  width="200"
-                  height="200"
-                  src="../static/img/delete.png" />
-              </div>
-            </div>
-            <div class="middle">
-              <div class="middle-item">
-                <div class="middle-item-text">
-                  {{ weizhangcishu }}
-                </div>
-                <div class="middle-item-text2">违章</div>
-              </div>
-              <div class="middle-item">
-                <div class="middle-item-text">
-                  {{ fakuanshu }}
-                </div>
-                <div class="middle-item-text2">罚款</div>
-                <div class="fengexian" />
-              </div>
-              <div class="middle-item">
-                <div class="middle-item-text">
-                  {{ koufenshu }}
-                </div>
-                <div class="middle-item-text2">扣分</div>
-                <div class="fengexian" />
-              </div>
-            </div>
-            <div class="bottom1">
-              <div>
-                <div class="bottom1_left">
-                  <div class="tyyxqz">
-                    <!-- 审核有效期：{{tyyxqz}} -->
-                    检验有效期至：{{ tyyxqz }}
-                  </div>
-                  <div class="qzbfsj">
-                    <!-- 下次体检日期: {{qzbfsj}} -->
-                    强制报废时间：{{ qzbfsj }}
-                  </div>
-                </div>
-                <div class="bottom1_right">
-                  办理六年免检
-                </div>
-              </div>
-            </div>
-            <div class="bottom2">
-                <div class="staus_left">
-                  状态
-                </div>
-                <div class="staus_right">
-                  {{ status }}
-                </div>
-            </div>
-          </div>
-          <div
-            v-if="hasCardIllegal"
-            class="two_button">
-            <div
-              class="ckwddd"
-              @click="ckwddd">查看我的订单</div>
-            <div
-              class="ljblwz"
-              @click="ljblwz">立即办理违章</div>
-          </div>
-          <div
-            v-if="!hasCardIllegal"
-            class="two_button">
-            <div
-              class="ckwddd"
-              @click="ckwddd">查看我的订单</div>
-            <div class="ljblwz_no">立即办理违章</div>
-          </div>
-          <div class="cxjg">
-            <div class="zfgx" />
-            <div class="cxjgtext">查询结果</div>
-            <div class="yfgx" />
-          </div>
-          <div
-            v-if="hasCardIllegal"
-            >
-            <div
-              v-for="item in results"
-              :key="item.index"
-              class="cxjgresult">
-              <div class="cxjgitem_1">{{ item.cjjgmc }}</div>
-              <div class="cxjgfgx" />
-              <div class="weifadetail">
-                <div class="weifa-detail-item">
-                  <div class="time_left_item">违法时间</div>
-                  <div class="time_right_item">{{ item.wfsj }}</div>
-                </div>
-                <div class="weifa-detail-item">
-                  <div class="address_left_item">违法地址</div>
-                  <div class="address_right_item">{{ item.wfdz }}</div>
-                </div>
-                <div class="weifa-detail-item">
-                  <div class="behavior_left_item">违法行为</div>
-                  <div class="behavior_right_item">{{ item.wfxw }}</div>
-                </div>
-                <div class="weifa-detail-item">
-                  <div class="jine_left_item">罚款金额</div>
-                  <div class="jine_right_item">
-                  <strong class="amount">{{ item.fkje }}</strong>元</div>
-                </div>
-                <div class="weifa-detail-item">
-                  <div class="jifen_left_item">违纪记分</div>
-                  <div class="jifen_right_item">
-                  <strong class="amount">{{ item.wfjfs }}</strong>分</div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            v-if="!hasCardIllegal"
-            class="noresult">
-            <mip-img
-              id="tu"
-              width="84"
-              height="84"
-              src="../static/img/tu.png" />
-            <h1 class="noweifa">恭喜你尚无新违法记录</h1>
-            <div
-              class="chufajuedingshu"
-              @click="wycfjds">我有处罚决定书</div>
-          </div>
-        </div>
+      <div
+        v-if="isFixBottomTip === false"
+        class="no_fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
 
-        <div
-          v-if="isFixBottomTip === false"
-          class="no_fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
+      <div
+        v-if="isFixBottomTip === true"
+        class="fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
 
-        <div
-          v-if="isFixBottomTip === true"
-          class="fix_bottom">更多服务请关注"广东公安熊掌号"和"粤警民通公众号"</div>
-
-      </div>
+    </div>
   </div>
 </template>
 
@@ -1038,10 +1038,10 @@
 </style>
 
 <script>
-import base from "../../common/utils/base.js";
+import base from '../../common/utils/base.js'
 // import {BScroll} from '../../common/utils/bscroll.min.js'
 export default {
-  data() {
+  data () {
     return {
       noInfo: false,
       isLicense: false,
@@ -1050,259 +1050,259 @@ export default {
       hasCardIllegal: false,
       isFixBottomTip: false,
       isShowDeleteBox: false, // 控制弹框
-      id_card: "",
-      weizhangcishu: "",
-      koufenshu: "",
-      tyyxqz: "",
-      qzbfsj: "",
-      status: "",
-      id_license: "",
-      weizhangcishu_license: "",
-      koufenshu_license: "",
-      tyyxqz_license: "",
-      qzbfsj_license: "",
-      status_license: "",
+      id_card: '',
+      weizhangcishu: '',
+      koufenshu: '',
+      tyyxqz: '',
+      qzbfsj: '',
+      status: '',
+      id_license: '',
+      weizhangcishu_license: '',
+      koufenshu_license: '',
+      tyyxqz_license: '',
+      qzbfsj_license: '',
+      status_license: '',
       results: [],
       results_license: [],
       wrongInfo: false,
       wrongInfo_license: false,
       htmlhref: {}
-    };
+    }
   },
-  created() {
+  created () {
     // base.resetRem()
   },
-  mounted() {
-    base.resetRem();
-    console.log("document", document);
+  mounted () {
+    base.resetRem()
+    console.log('document', document)
     // base.setContainerH('.root-box')
     // let wrapper = document.querySelector('.ald-wrapper')
     // let scroll = new BScroll(wrapper, {})
 
     // 基本数据初始化
-    this.initData();
+    this.initData()
     let options = {
       headers: {
-        "X-CLIENT-SOURCE": escape("百度"),
-        "X-CHANNEL-ID": "4291",
-        "X-CHANNEL-NAME": escape("百度阿拉丁")
+        'X-CLIENT-SOURCE': escape('百度'),
+        'X-CHANNEL-ID': '4291',
+        'X-CHANNEL-NAME': escape('百度阿拉丁')
       }
-    };
-    let reg1 = /[0-9a-zA-Z]/g;
-    console.log("This is my first custom component !");
-    if (!this.getUrlParam("license_no") && !this.getUrlParam("plate_no")) {
-      console.log("没有输入信息就跳转到这个页面");
-      let that = this;
-      that.noInfo = true;
-      that.isFixBottomTip = true;
     }
-    if (this.getUrlParam("license_no")) {
-      let that = this;
-      that.getUrlParam("file_no");
+    let reg1 = /[0-9a-zA-Z]/g
+    console.log('This is my first custom component !')
+    if (!this.getUrlParam('license_no') && !this.getUrlParam('plate_no')) {
+      console.log('没有输入信息就跳转到这个页面')
+      let that = this
+      that.noInfo = true
+      that.isFixBottomTip = true
+    }
+    if (this.getUrlParam('license_no')) {
+      let that = this
+      that.getUrlParam('file_no')
       fetch(
-        "https://gdjmt.gdsecurity.cn:8081/jmt-api/aladdin/getLicenseInfo?license_no=" +
-          that.getUrlParam("license_no") +
-          "&file_no=" +
-          that.getUrlParam("file_no"),
+        'https://gdjmt.gdsecurity.cn:8081/jmt-api/aladdin/getLicenseInfo?license_no=' +
+          that.getUrlParam('license_no') +
+          '&file_no=' +
+          that.getUrlParam('file_no'),
         options
       )
-        .then(function(res) {
-          return res.json();
+        .then(function (res) {
+          return res.json()
         })
-        .then(function(res) {
-          that.noInfo = false;
-          console.log("license信息", res);
+        .then(function (res) {
+          that.noInfo = false
+          console.log('license信息', res)
           if (res.errcode === 0) {
-            that.isLicense = true;
-            let realLicense = res.result.license_no;
-            let licenseLength = realLicense.length;
-            let one = realLicense.substring(6, licenseLength - 10);
+            that.isLicense = true
+            let realLicense = res.result.license_no
+            let licenseLength = realLicense.length
+            let one = realLicense.substring(6, licenseLength - 10)
             let two = realLicense
               .substring(licenseLength - 10, licenseLength - 1)
-              .replace(reg1, "*");
-            let three = realLicense.substring(licenseLength - 1);
-            let chulied = one.concat(two, three);
-            that.id_license = chulied;
-            that.weizhangcishu_license = res.result.undeal_count;
-            that.fakuanshu_license = res.result.undeal_amount_of_money;
-            that.koufenshu_license = res.result.undeal_amount_of_score;
-            that.tyyxqz_license = res.result.check_date;
-            that.qzbfsj_license = res.result.valid_date;
-            that.leijijifen_license = res.result.ljjf;
-            that.status_license = res.result.status;
+              .replace(reg1, '*')
+            let three = realLicense.substring(licenseLength - 1)
+            let chulied = one.concat(two, three)
+            that.id_license = chulied
+            that.weizhangcishu_license = res.result.undeal_count
+            that.fakuanshu_license = res.result.undeal_amount_of_money
+            that.koufenshu_license = res.result.undeal_amount_of_score
+            that.tyyxqz_license = res.result.check_date
+            that.qzbfsj_license = res.result.valid_date
+            that.leijijifen_license = res.result.ljjf
+            that.status_license = res.result.status
             if (res.result_set.length > 0) {
-              that.hasLicenseIllegal = true;
-              that.results_license = res.result_set;
-              that.isFixBottomTip = false;
+              that.hasLicenseIllegal = true
+              that.results_license = res.result_set
+              that.isFixBottomTip = false
             }
             if (res.result_set.length === 0) {
-              that.hasLicenseIllegal = false;
-              that.isFixBottomTip = true;
-              let containerH = base.getContainerH(".root-box");
+              that.hasLicenseIllegal = false
+              that.isFixBottomTip = true
+              let containerH = base.getContainerH('.root-box')
               if (containerH < 600) {
-                that.isFixBottomTip = false;
+                that.isFixBottomTip = false
               }
             }
           }
 
           if (res.errcode === -200) {
-            that.wrongInfo_license = true;
-            that.isFixBottomTip = true;
+            that.wrongInfo_license = true
+            that.isFixBottomTip = true
           }
-        });
+        })
     }
     // 如果能获取
-    if (this.getUrlParam("plate_no")) {
-      let that = this;
-      that.getUrlParam("car_type");
-      that.getUrlParam("eng_no");
+    if (this.getUrlParam('plate_no')) {
+      let that = this
+      that.getUrlParam('car_type')
+      that.getUrlParam('eng_no')
       fetch(
-        "https://gdjmt.gdsecurity.cn:8081/jmt-api/aladdin/getCarInfo?plate_no=" +
-          that.getUrlParam("plate_no") +
-          "&car_type=" +
-          that.getUrlParam("car_type") +
-          "&eng_no=" +
-          that.getUrlParam("eng_no"),
+        'https://gdjmt.gdsecurity.cn:8081/jmt-api/aladdin/getCarInfo?plate_no=' +
+          that.getUrlParam('plate_no') +
+          '&car_type=' +
+          that.getUrlParam('car_type') +
+          '&eng_no=' +
+          that.getUrlParam('eng_no'),
         options
       )
-        .then(function(res) {
-          return res.json();
+        .then(function (res) {
+          return res.json()
         })
-        .then(function(res) {
-          console.log("plate信息", res);
+        .then(function (res) {
+          console.log('plate信息', res)
           if (res.errcode === 0) {
-            that.isCard = true;
-            that.noInfo = false;
-            that.isLicense = false;
-            that.id_card = res.result.hphm;
-            that.weizhangcishu = res.result.undeal_count;
-            that.fakuanshu = res.result.undeal_amount_of_money;
-            that.koufenshu = res.result.undeal_amount_of_score;
-            that.tyyxqz = res.result.invalidated_date;
-            that.qzbfsj = res.result.valid_date;
-            that.leijijife = res.result.ljjf;
-            that.status = res.result.status;
+            that.isCard = true
+            that.noInfo = false
+            that.isLicense = false
+            that.id_card = res.result.hphm
+            that.weizhangcishu = res.result.undeal_count
+            that.fakuanshu = res.result.undeal_amount_of_money
+            that.koufenshu = res.result.undeal_amount_of_score
+            that.tyyxqz = res.result.invalidated_date
+            that.qzbfsj = res.result.valid_date
+            that.leijijife = res.result.ljjf
+            that.status = res.result.status
             if (res.result_set.length > 0) {
-              that.hasCardIllegal = true;
-              that.results = res.result_set;
-              that.isFixBottomTip = false;
+              that.hasCardIllegal = true
+              that.results = res.result_set
+              that.isFixBottomTip = false
             }
             if (res.result_set.length === 0) {
-              that.isFixBottomTip = true;
-              let containerH = base.getContainerH(".root-box");
+              that.isFixBottomTip = true
+              let containerH = base.getContainerH('.root-box')
               if (containerH < 600) {
-                that.isFixBottomTip = false;
+                that.isFixBottomTip = false
               }
             }
           }
           if (res.errcode === -200) {
-            that.wrongInfo = true;
-            that.isFixBottomTip = true;
+            that.wrongInfo = true
+            that.isFixBottomTip = true
           }
-        });
+        })
     }
   },
   methods: {
-    toOtherPage(url) {
-      MIP.viewer.open(this.htmlhref[url], { isMipLink: true });
+    toOtherPage (url) {
+      MIP.viewer.open(this.htmlhref[url], { isMipLink: true })
     },
-    getUrlParam(name) {
+    getUrlParam (name) {
       // 用于获取url的参数后置参数
-      let reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); // 构造一个含有目标参数的正则表达式对象
-      let r = window.location.search.substr(1).match(reg); // 匹配目标参数
+      let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)') // 构造一个含有目标参数的正则表达式对象
+      let r = window.location.search.substr(1).match(reg) // 匹配目标参数
       if (r != null) {
-        return decodeURI(r[2]);
+        return decodeURI(r[2])
       }
-      return null; // 返回参数值
+      return null // 返回参数值
     },
     // 基本数据初始化
-    initData() {
+    initData () {
       // 配置链接信息
-      this.htmlhref = base.htmlhref;
+      this.htmlhref = base.htmlhref
     },
-    inputAgain: function() {
-      console.log("到这里了", MIP.viewer);
-      if (this.getUrlParam("license_no")) {
+    inputAgain: function () {
+      console.log('到这里了', MIP.viewer)
+      if (this.getUrlParam('license_no')) {
         // window.top.location.href = 'https://www.baidu.com/s?wd=驾驶人违法查询'
-        MIP.viewer.open("https://www.baidu.com/s?wd=驾驶人违法查询", {
+        MIP.viewer.open('https://www.baidu.com/s?wd=驾驶人违法查询', {
           isMipLink: false
-        });
+        })
       } else {
-        console.log("22222222", window);
-        MIP.viewer.open("https://www.baidu.com/s?wd=违章查询", {
+        console.log('22222222', window)
+        MIP.viewer.open('https://www.baidu.com/s?wd=违章查询', {
           isMipLink: false
-        });
+        })
         // window.top.location.href = 'https://www.baidu.com/s?wd=违章查询'
       }
     },
-    ckwddd() {
-      MIP.viewer.open(base.outAldhttp + "mip-my-order.html", {
+    ckwddd () {
+      MIP.viewer.open(base.outAldhttp + 'mip-my-order.html', {
         isMipLink: true
-      });
+      })
     },
-    ljblwz() {
-      let that = this;
+    ljblwz () {
+      let that = this
       // let baseUrl = 'https://yz-alipay.fundway.net/'
-      if (that.getUrlParam("license_no")) {
+      if (that.getUrlParam('license_no')) {
         // window.top.location.href =
         //     baseUrl +
         //     "yzcw-web-admin/login/xmd/xmd_baidu_xzh/site_illegal_payment/auth";
         MIP.viewer.open(
-          base.outAldhttp + "mip-xmd-illegal-index.html?selected=decision",
+          base.outAldhttp + 'mip-xmd-illegal-index.html?selected=decision',
           { isMipLink: true }
-        );
+        )
       }
-      if (that.getUrlParam("plate_no")) {
-        let plateNo = that.getUrlParam("plate_no");
-        plateNo = plateNo.substr(0, 1) === "粤" ? plateNo : "粤" + plateNo;
-        plateNo = encodeURIComponent(plateNo);
+      if (that.getUrlParam('plate_no')) {
+        let plateNo = that.getUrlParam('plate_no')
+        plateNo = plateNo.substr(0, 1) === '粤' ? plateNo : '粤' + plateNo
+        plateNo = encodeURIComponent(plateNo)
         MIP.viewer.open(
           base.outAldhttp +
-            "mip-xmd-illegal-msg.html?" +
-            "PLATENUMBER=" +
+            'mip-xmd-illegal-msg.html?' +
+            'PLATENUMBER=' +
             plateNo +
-            "&FDJH=" +
-            that.getUrlParam("eng_no") +
-            "&PLATETYPE=" +
-            that.getUrlParam("car_type"),
+            '&FDJH=' +
+            that.getUrlParam('eng_no') +
+            '&PLATETYPE=' +
+            that.getUrlParam('car_type'),
           { isMipLink: true }
-        );
+        )
       }
     },
-    cxwzcl() {
+    cxwzcl () {
       MIP.viewer.open(
-        base.outAldhttp + "mip-xmd-illegal-index.html?selected=illegal",
+        base.outAldhttp + 'mip-xmd-illegal-index.html?selected=illegal',
         { isMipLink: true }
-      );
+      )
     },
-    wycfjds() {
+    wycfjds () {
       MIP.viewer.open(
-        base.outAldhttp + "mip-xmd-illegal-index.html?selected=decision",
+        base.outAldhttp + 'mip-xmd-illegal-index.html?selected=decision',
         { isMipLink: true }
-      );
+      )
     },
-    deleteCardOrLicense(str) {
-      let that = this;
-      console.log("删除");
-      that.isShowDeleteBox = true;
+    deleteCardOrLicense (str) {
+      let that = this
+      console.log('删除')
+      that.isShowDeleteBox = true
     },
-    cancalDeleteBox() {
-      let that = this;
-      that.isShowDeleteBox = false;
+    cancalDeleteBox () {
+      let that = this
+      that.isShowDeleteBox = false
     },
-    deleteConfirm() {
-      let that = this;
-      that.isShowDeleteBox = false;
-      if (that.getUrlParam("license_no")) {
-        MIP.viewer.open("https://www.baidu.com/s?wd=驾驶人违法查询", {
+    deleteConfirm () {
+      let that = this
+      that.isShowDeleteBox = false
+      if (that.getUrlParam('license_no')) {
+        MIP.viewer.open('https://www.baidu.com/s?wd=驾驶人违法查询', {
           isMipLink: false
-        });
+        })
       } else {
-        MIP.viewer.open("https://www.baidu.com/s?wd=违章查询", {
+        MIP.viewer.open('https://www.baidu.com/s?wd=违章查询', {
           isMipLink: false
-        });
+        })
       }
     }
   }
-};
+}
 </script>
