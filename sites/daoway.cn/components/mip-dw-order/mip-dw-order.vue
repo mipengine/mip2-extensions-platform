@@ -265,6 +265,9 @@ export default {
         that.getOrderList(0)
       })
     }
+    window.addEventListener('show-page', (e) => {
+      MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
+    })
   },
   methods: {
     wxpay (url) {

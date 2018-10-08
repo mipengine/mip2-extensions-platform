@@ -1,5 +1,18 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper"><!-- v-if="!position"-->
+    <mip-map
+      v-if="!position"
+      id="map"
+      on="getPositionComplete:test.success  getPositionFailed:test.fail">
+      <script type="application/json">
+        {
+        "ak": "epGAmM09OL7Lwy7cIu47pxzK",
+        "hide-map": true,
+        "get-position": true
+        }
+      </script>
+    </mip-map>
+    <div id="test"/>
     <mip-fixed type="top">
       <div class="sc-nav">
         <mip-scrollbox
@@ -62,6 +75,18 @@
         v-if="nomore"
         class="loding">~暂时只有这些了~</p>
     </div>
+    <div
+      v-show="warn.show"
+      class="layer">
+      <div class="layer-content zoomIn">
+        <p
+          class="layer-text"
+          v-text="warn.texts"/>
+        <p
+          class="layer-sure active-layer"
+          @click="closeLayer">知道了</p>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -86,10 +111,16 @@ export default {
       channel: 'mip',
       nomore: false,
       startY: '',
-      endY: ''
+      endY: '',
+      warn: {
+        // 弹窗
+        show: false,
+        texts: ''
+      }
     }
   },
   mounted () {
+    let that = this
     let category = this.category
     this.nav()
     if (this.tag === '全部') {
@@ -107,12 +138,78 @@ export default {
       let touch = e.touches[0]
       this.endY = touch.pageY
       /* if(this.endY >= this.startY){
-          this.morelist();
-      } */
+              this.morelist();
+          } */
       this.morelist()
+    })
+    that.$on('success', (e) => {
+      /* that.warn.show = true;
+           that.warn.texts = JSON.stringify(e.point); */
+      console.log(JSON.stringify(e.point))
+      let position = localStorage.getItem('position')
+      let city = e.address.city.replace(/市$/g, '') || '北京'
+      if (position) {
+        that.position = base.getposition()
+        this.getServicelist(0, category, this.tags)
+      } else {
+        that.position.city = city
+        that.getCommunity(e.point.lat, e.point.lng)
+        this.getServicelist(0, category, this.tags)
+      }
+      let point = {
+        lat: e.point.lat,
+        lng: e.point.lng,
+        city: city
+      }
+      localStorage.setItem('point', JSON.stringify(point))
+    })
+    that.$on('fail', (e) => {
+      /* that.warn.show = true;
+           that.warn.texts = JSON.stringify(e); */
+      localStorage.removeItem('point')
+      let position = localStorage.getItem('position')
+      if (position) {
+        that.position = base.getposition()
+        this.getServicelist(0, category, this.tags)
+      } else {
+        if (e.address.city) {
+          that.position.city = e.address.city.replace(/市$/g, '') || '北京'
+        }
+        if (e.point.lat && e.point.lng) {
+          that.getCommunity(e.point.lat, e.point.lng)
+          that.getServicelist(0, category, this.tags)
+          let point = {
+            lat: e.point.lat,
+            lng: e.point.lng,
+            city: that.city
+          }
+          localStorage.setItem('point', JSON.stringify(point))
+        } else {
+          that.toposition()
+        }
+      }
     })
   },
   methods: {
+    getCommunity (lat, lng) {
+      let that = this
+      let url = 'https://www.daoway.cn/daoway/rest/community/autoPosition?lot=' + lng + '&lat=' + lat
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        return res.json()
+      }).then(function (text) {
+        if (text.status === 'ok') {
+          that.position = text.data[0]
+          base.position(text.data[0])
+        } else {
+          that.warn.show = true
+          that.warn.texts = text.msg
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
     nav () {
       let that = this
       let category = that.category
@@ -241,6 +338,13 @@ export default {
     },
     todetail (id) {
       MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, { isMipLink: true })
+    },
+    toposition () {
+      MIP.viewer.open(base.htmlhref.position, {isMipLink: true})
+    },
+    closeLayer () {
+      this.warn.show = false
+      this.warn.texts = ''
     }
   }
 }
@@ -319,8 +423,8 @@ export default {
     }
 
     .scbl-left img {
-        width: 105px;
-        height: 105px;
+        width: 100%;
+        height: auto;
         border-radius: 4px
     }
 
