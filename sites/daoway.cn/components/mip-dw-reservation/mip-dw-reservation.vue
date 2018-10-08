@@ -6,7 +6,7 @@
         <ul class="re-form">
           <li @click="toposition"><img src="https://www.daoway.cn/images/icon2.jpg"><input
             v-model="addr"
-            style="background:rgba(0,0,0,0); height: auto; text-align: left;"
+            style="background:rgba(0,0,0,0); height: auto; text-align: left; vertical-align: middle"
             type="button"
             placeholder="请填写您的住址"><img
               class="re-more"
@@ -208,15 +208,25 @@ export default {
   },
   mounted () {
     let that = this
-    that.position = base.getposition()
-    if (that.position.contactPerson) {
+    that.position = base.getposition();
+    if(!that.position){
+      that.position = {
+        id: 272026,
+        city: "北京",
+        name: "天安门",
+        addr: "北京市东城区东长安街",
+        lot: 116.40387423499,
+        lat: 39.915167717716
+      }
+    }
+    if (that.position && that.position.contactPerson) {
       that.contactPerson = that.position.contactPerson
     } else {
       let nick = localStorage.getItem('nick')
       that.contactPerson = nick
     }
-    if (that.position.phone) {
-      that.phone = that.position.phone
+    if (that.position && that.position.phone) {
+      that.phone = that.position.phone ;
     }
     if (that.orderId) {
       that.buyAgain(that.orderId)
@@ -522,12 +532,12 @@ export default {
           }
           let totalPrice = (prices[0].price * prices[0].quantity)
           let communityId = resultData.communityId
-          let addr = communityId ? resultData.city + ' ' + resultData.communityArea + resultData.communityName : resultData.street
+          let addr = communityId ? resultData.city + ' ' + resultData.communityArea + resultData.communityName : resultData.street;
           let appointTime = resultData.nextAppointTime
           let canChooseTechnician = resultData.canChooseTechnician
           that.prices = prices
           that.totalPrice = totalPrice.toFixed(2)
-          that.formatTime = base.timeformat(appointTime, 'yyyy-MM-dd HH:mm')
+          that.formatTime = base.timeformat(appointTime, 'yyyy-MM-dd HH:mm');
           that.nextAppointTime = appointTime
           that.appointTime = appointTime
           that.noFixFeePrice = resultData.noFixFeePrice
@@ -556,7 +566,7 @@ export default {
             MIP.viewer.page.back()
           }, 1000)
         };
-      }).catch(function (error) {
+      }).catch(function(error) {
         console.log(error)
       })
     },
@@ -718,6 +728,14 @@ export default {
     input{
         border: none;
     }
+    @media (min-device-width:1078px){
+      input:focus{
+        font-size: 14px !important;
+      }}
+    @media (min-device-width : 320px) and (max-device-width : 1077px){
+      input:focus{
+        font-size: 14px !important;
+      }}
     i {
         font-style: normal
     }
@@ -778,7 +796,6 @@ export default {
         text-overflow: ellipsis;
         background: #fff;
         color: #303030;
-
     }
 
     .re-form li:last-child input {
