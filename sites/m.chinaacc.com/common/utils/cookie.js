@@ -4,9 +4,19 @@ export const setCookie = (key, value) => {
     '=',
     encodeURIComponent(value),
     '; path=/',
-    '; domain=.chinaacc.com'
+    '; domain=.baidu.com'
   ].join(''))
 }
+
+/* export const setCookie = (key, value) => {
+  return (document.cookie = [
+    encodeURIComponent(key),
+    '=',
+    encodeURIComponent(value),
+    '; path=/',
+    '; domain=.chinaacc.com'
+  ].join(''))
+} */
 
 export const getCookie = key => {
   let results

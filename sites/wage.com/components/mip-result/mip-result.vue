@@ -308,7 +308,7 @@ export default {
 					wage: 8000,
 					realIncome: 6000,
 					tax: 200,
-					threshold: 3500,
+					threshold: 5000,
 					taxableIncome: 350
 				};
 			}

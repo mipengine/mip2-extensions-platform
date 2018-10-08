@@ -26,8 +26,9 @@ export default {
       that.code = params.code
       if (that.code != null) {
         // 存在code，调起接口获取openId
+        let paramstr = encodeURIComponent('code=' + that.code)
         let result = window.fetchJsonp(
-          '//m.chinaacc.com/m_member/baidu/wxOauth.shtm?code=' + that.code,
+          '//m.chinaacc.com/m_member/baidu/wxOauth.shtm?' + paramstr,
           {
             jsonpCallback: 'jsonpCallback'
           }

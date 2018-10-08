@@ -138,9 +138,10 @@ export default {
       let that = this
       let params = getUrlParams()
       that.courseEduId = params.courseEduId
+      let paramstr = encodeURIComponent('courseEduId=' + that.courseEduId)
       let url =
-        '//m.chinaacc.com/m_member/baidu/download/getDownTypeList.shtm?courseEduId=' +
-        that.courseEduId
+        '//m.chinaacc.com/m_member/baidu/download/getDownTypeList.shtm?' +
+        paramstr
       let result = window.fetchJsonp(url, {
         jsonpCallback: 'jsonpCallback'
       })
@@ -171,11 +172,10 @@ export default {
         that.errorMsg = '请输入正确的邮箱'
         return
       }
+      let paramstr = encodeURIComponent('infoId=' + that.infoId + '&email=' + that.email)
       let url =
-        '//m.chinaacc.com/m_member/baidu/download/freeDown.shtm?infoId=' +
-        that.infoId +
-        '&email=' +
-        that.email
+        '//m.chinaacc.com/m_member/baidu/download/freeDown.shtm?' +
+        paramstr
       let result = window.fetchJsonp(url, {
         jsonpCallback: 'jsonpCallback'
       })
