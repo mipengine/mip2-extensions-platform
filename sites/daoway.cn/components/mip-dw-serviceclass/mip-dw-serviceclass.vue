@@ -122,6 +122,7 @@ export default {
   mounted () {
     let that = this
     let category = this.category
+
     this.nav()
     if (this.tag === '全部') {
       // this.tags = '&tag=';
@@ -143,73 +144,24 @@ export default {
       this.morelist()
     })
     that.$on('success', (e) => {
-      /* that.warn.show = true;
-           that.warn.texts = JSON.stringify(e.point); */
-      console.log(JSON.stringify(e.point))
-      let position = localStorage.getItem('position')
-      let city = e.address.city.replace(/市$/g, '') || '北京'
-      if (position) {
-        that.position = base.getposition()
-        this.getServicelist(0, category, this.tags)
-      } else {
-        that.position.city = city
-        that.getCommunity(e.point.lat, e.point.lng)
-        this.getServicelist(0, category, this.tags)
-      }
       let point = {
         lat: e.point.lat,
-        lng: e.point.lng,
-        city: city
+        lng: e.point.lng
       }
       localStorage.setItem('point', JSON.stringify(point))
     })
     that.$on('fail', (e) => {
-      /* that.warn.show = true;
-           that.warn.texts = JSON.stringify(e); */
       localStorage.removeItem('point')
-      let position = localStorage.getItem('position')
-      if (position) {
-        that.position = base.getposition()
-        this.getServicelist(0, category, this.tags)
-      } else {
-        if (e.address.city) {
-          that.position.city = e.address.city.replace(/市$/g, '') || '北京'
+      if (e.point.lat && e.point.lng) {
+        let point = {
+          lat: e.point.lat,
+          lng: e.point.lng
         }
-        if (e.point.lat && e.point.lng) {
-          that.getCommunity(e.point.lat, e.point.lng)
-          that.getServicelist(0, category, this.tags)
-          let point = {
-            lat: e.point.lat,
-            lng: e.point.lng,
-            city: that.city
-          }
-          localStorage.setItem('point', JSON.stringify(point))
-        } else {
-          that.toposition()
-        }
+        localStorage.setItem('point', JSON.stringify(point))
       }
     })
   },
   methods: {
-    getCommunity (lat, lng) {
-      let that = this
-      let url = 'https://www.daoway.cn/daoway/rest/community/autoPosition?lot=' + lng + '&lat=' + lat
-      fetch(url, {
-        method: 'get'
-      }).then(function (res) {
-        return res.json()
-      }).then(function (text) {
-        if (text.status === 'ok') {
-          that.position = text.data[0]
-          base.position(text.data[0])
-        } else {
-          that.warn.show = true
-          that.warn.texts = text.msg
-        }
-      }).catch(function (error) {
-        console.log(error)
-      })
-    },
     nav () {
       let that = this
       let category = that.category
@@ -223,7 +175,9 @@ export default {
         return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
+          console.log(text.data)
           let data = text.data[0]
+          document.title = text.data[0].name
           let filterAry = data.tagsInfo
           let filter = {
             name: '全部',
