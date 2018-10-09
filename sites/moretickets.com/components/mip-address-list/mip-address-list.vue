@@ -588,10 +588,10 @@ export default {
             if (res.statusCode === 200) {
               me.toastmsg = ''
               me.showEditAddressFlag = false
-              if(me.location.default){
+              if (me.location.default) {
                 me.addresses.forEach(item => {
-                  item.isDefault = false;
-                });
+                  item.isDefault = false
+                })
               }
               res.result.data &&
                 res.result.data.addressOID &&

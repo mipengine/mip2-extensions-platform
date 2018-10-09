@@ -1042,7 +1042,7 @@ export default {
     plus () {
       if (this.count < this.ticketMaxBuyCount) {
         this.count++
-      }else if(this.ticketMaxBuyCount <limitation){
+      } else if (this.ticketMaxBuyCount < this.limitation) {
         this.toast('该票面库存不足')
       }
     },
