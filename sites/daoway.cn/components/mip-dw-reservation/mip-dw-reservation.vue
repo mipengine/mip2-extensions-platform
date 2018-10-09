@@ -6,7 +6,7 @@
         <ul class="re-form">
           <li @click="toposition"><img src="https://www.daoway.cn/images/icon2.jpg"><input
             v-model="addr"
-            style="background:rgba(0,0,0,0); height: auto; text-align: left; vertical-align: middle"
+            style="background:rgba(0,0,0,0); text-align: left; vertical-align: middle"
             type="button"
             placeholder="请填写您的住址"><img
               class="re-more"
@@ -731,12 +731,15 @@ export default {
     }
     @media (min-device-width:1078px){
       input:focus{
-        font-size: 14px !important;
-      }}
+        font-size: 14px ;
+      }
+    }
     @media (min-device-width : 320px) and (max-device-width : 1077px){
       input:focus{
-        font-size: 14px !important;
-      }}
+        font-size: 14px ;
+      }
+    }
+
     i {
         font-style: normal
     }
@@ -761,7 +764,10 @@ export default {
 
     .re-form li {
         line-height: 43px;
-        font-size: 14px;
+      height: 43px;
+      overflow: hidden;
+      width: 99.5%;
+      font-size: 14px;
       color: #303030;
     }
 
@@ -791,14 +797,16 @@ export default {
         height: 40px;
         line-height: 40px;
         border-bottom: 1px solid #ececec;
-        font-size: 14px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         background: #fff;
         color: #303030;
+        font: 14px Arial;
     }
-
+      input:focus{
+        font-size: 14px ;
+      }
     .re-form li:last-child input {
         border: none
     }
