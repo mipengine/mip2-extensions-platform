@@ -10,7 +10,7 @@
             class="inputButton"
             @click="searchcommunity()"><img
               class="icon-small"
-              src="http://www.daoway.cn/images/serch.png">搜索您所在的小区</div>
+              src="https://www.daoway.cn/images/serch.png">搜索您所在的小区</div>
         </div>
       </div>
       <div class="box">
@@ -41,14 +41,15 @@
             <div
               v-if="tapshow"
               class="bottomarrow"
-              @click="taptoggle">展开全部地址 ∨</div>
+              @click="taptoggle">展开全部地址 <img src="https://www.daoway.cn/mip/common/images/down2.png"></div>
             <div
               v-else
               class="bottomarrow"
-              @click="taptoggle" >收起部分地址 ∧</div>
+              @click="taptoggle" >收起部分地址 <img src="https://www.daoway.cn/mip/common/images/down22.png"></div>
           </div>
         </div>
         <div
+          v-if="point"
           class="usedadd"
           style="margin-top:0">附近小区</div>
         <div
@@ -67,7 +68,6 @@
           </div>
         </div>
       </div>
-
     </div>
     <div
       v-if="communitypage"
@@ -76,12 +76,12 @@
         <div class="selectCity">
           <div
             class="c-position"
-            @click="tocity()">{{ city }}</div><i>▼</i>
+            @click="tocity()">{{ city }}</div><i class="sanjiao">▼</i>
         </div>
         <div class="c-inputxt">
           <img
             class="c-icon-small"
-            src="http://www.daoway.cn/images/serch.png" >
+            src="https://www.daoway.cn/images/serch.png" >
           <input
             v-model="searchval"
             class="com-input"
@@ -151,6 +151,19 @@
         </mip-fixed>
       </div>
     </div>
+
+    <div
+      v-show="warn.show"
+      class="layer">
+      <div class="layer-content zoomIn">
+        <p
+          class="layer-text"
+          v-text="warn.texts"/>
+        <p
+          class="layer-sure active-layer"
+          @click="closeLayer">知道了</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -160,7 +173,7 @@ import '../../common/utils/base.less'
 export default {
   data () {
     return {
-      channel: 'baidu',
+      channel: 'mip',
       zoom: 3,
       city: '',
       warn: {
@@ -182,21 +195,37 @@ export default {
       tapshow: false,
       taphide: false,
       userId: '',
-      token: ''
+      token: '',
+      point: {}
     }
   },
   mounted () {
+    let that = this
     let userId = localStorage.getItem('mipUserId')
     let token = localStorage.getItem('mipToken')
+    localStorage.removeItem('useradd')
+
     if (userId && token) {
       this.userAddress(userId)
     }
-    this.handler()
+    let point = JSON.parse(localStorage.getItem('point')) || ''
+    let position = base.getposition()
+    if (point) {
+      that.point = point
+      that.city = point.city
+      that.getCommunity(point.lng, point.lat)
+    } else if (position) {
+      that.city = position.city
+    } else {
+      that.city = '北京'
+    }
+
+    // this.handler()
   },
   methods: {
-    handler () {
+    /* handler () {
       let that = this
-      let url = '/daoway/rest/user/city'
+      let url = 'https://www.daoway.cn/daoway/rest/user/city'
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -206,7 +235,8 @@ export default {
           let data = text.data
           let tempLot = data.lot
           let tempLat = data.lat
-          that.city = data.city.replace(/市$/g, '') || '北京'
+          that.city = data.city.replace(/市$/g, '') || '北京';
+          //that.community = data.community;
           that.getCommunity(tempLot, tempLat)
         } else {
           this.warn.show = true
@@ -215,10 +245,10 @@ export default {
       }).catch(function (error) {
         console.log(error)
       })
-    },
+    }, */
     getCommunity (lot, lat) {
       let that = this
-      let url = '/daoway/rest/community/autoPositionMerge?lot=' + lot + '&lat=' + lat
+      let url = 'https://www.daoway.cn/daoway/rest/community/autoPositionMerge?lot=' + lot + '&lat=' + lat
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -232,7 +262,7 @@ export default {
     },
     userAddress (userId) {
       let that = this
-      let url = '/daoway/rest/user/' + userId + '/getUserAddress' + '?channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/user/' + userId + '/getUserAddress' + '?channel=' + that.channel
       fetch(url, {
         method: 'get',
         credentials: 'include'
@@ -247,8 +277,8 @@ export default {
           }
           that.useraddr3 = text.data.slice(0, 2)
         } else {
-          that.warn.show = true
-          that.warn.texts = text.msg
+          // that.warn.show = true
+          // that.warn.texts = text.msg;
         }
       }).catch(function (error) {
         console.log(error)
@@ -265,7 +295,9 @@ export default {
     },
     tapback (i) {
       base.position(i)
-      MIP.setData({'#position': i})
+      // MIP.setData({'#position': i})
+      console.log(i)
+
       MIP.viewer.page.back()
     },
     searchcommunity: function () {
@@ -278,7 +310,7 @@ export default {
     },
     getlist () { // community
       let that = this
-      let url = '/daoway/rest/community/searchMerge?manualCity=' + encodeURIComponent(this.city) + '&search=' + this.searchval + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/community/searchMerge?manualCity=' + encodeURIComponent(this.city) + '&search=' + this.searchval + '&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -302,7 +334,7 @@ export default {
     },
     citylist () {
       let that = this
-      let url = '/daoway/rest/community/city_list?channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/community/city_list?channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -332,6 +364,10 @@ export default {
       this.positionpage = false
       this.communitypage = true
       this.citypage = false
+    },
+    closeLayer () {
+      this.warn.show = false
+      this.warn.texts = ''
     }
   }
 }
@@ -350,6 +386,10 @@ export default {
     li, ol {
         list-style: none
     }
+    .sanjiao{
+        font-size: 10px;
+    }
+    #city{background: #fff}
     .position{display: inline-block; width: 80px}
     .fids{background: #fff; padding: 10px 3%}
     .inputxt{width: 70%; display: inline-block}
@@ -432,6 +472,11 @@ export default {
         line-height: 40px;
         font-size: 14px;
     }
+    .bottomarrow img{
+        width: 9px;
+        height: auto;
+
+    }
 
     .botrow {
         position: relative;
@@ -478,7 +523,7 @@ export default {
     }
 
     .com-input{
-        padding-left:16%;height:25px;
+        height:25px;
     }
 
     .list {
@@ -500,11 +545,10 @@ export default {
     .listbox {
         width: 100%;
         background: #fff;
+        border-top: 1px solid #e5e5e5;
     }
 
     .fids .selectCity {
-        height: 40px;
-        line-height: 40px;
         margin: 0 3px;
         display: inline-block;
     }
@@ -514,15 +558,18 @@ export default {
     .fids .c-inputxt{
         display: inline-block;
         background: #ddd;
-        height: 30px;
-        line-height: 30px;
+        height: 25px;
+        line-height: 25px;
         border-radius: 16px;
         width: 65%;
+        margin: 0 3%;
+        text-align: center;
     }
     .c-inputxt input{
         width: 66%;
         display: inline-block;
         background: none;
+        font-size: 14px;
 
     }
     .c-icon-small{
@@ -530,7 +577,6 @@ export default {
         height: auto;
         position: relative;
         top:4px;
-        left: 5%;
     }
     .clear{display: inline-block}
     .city div {

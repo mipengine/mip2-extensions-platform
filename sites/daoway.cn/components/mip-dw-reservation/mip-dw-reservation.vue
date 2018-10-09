@@ -4,23 +4,25 @@
       <div class="line"><img src="https://www.daoway.cn/h5/image/line.jpg"></div>
       <mip-form>
         <ul class="re-form">
-          <li><img src="https://www.daoway.cn/images/icon2.jpg"><input
+          <li @click="toposition"><img src="https://www.daoway.cn/images/icon2.jpg"><input
             v-model="addr"
-            type="text"
-            placeholder="请填写您的住址"
-            @click="toposition"><img
+            style="background:rgba(0,0,0,0); text-align: left; vertical-align: middle"
+            type="button"
+            placeholder="请填写您的住址"><img
               class="re-more"
               src="https://www.daoway.cn/h5/image/go_06.png"></li>
-          <li><img src="https://www.daoway.cn/images/icon3.jpg"><input
+          <li><i class="imgp"/><input
             v-model="doorNum"
             type="text"
-            placeholder="请输入具体楼号、门牌号">
+            placeholder="请输入具体楼号、门牌号"
+            maxlength = "100">
           </li>
-          <li><img src="https://www.daoway.cn/images/icon4.jpg"><input
+          <li><img src="https://www.daoway.cn/images/icon3.jpg"><input
             v-model="contactPerson"
             type="text"
-            placeholder="联系人"></li>
-          <li><img src="https://www.daoway.cn/images/icon5.jpg"><input
+            placeholder="联系人"
+            maxlength = "20"></li>
+          <li><img src="https://www.daoway.cn/images/icon4.jpg"><input
             v-model="phone"
             type="number"
             maxlength="11"
@@ -31,14 +33,15 @@
     </div>
     <div class="re-input re-input2">
       <ul class="re-form re-form2">
-        <li><span><img src="https://www.daoway.cn/images/icon2.jpg">服务时间</span>
+        <li><span><img src="https://www.daoway.cn/images/icon5.jpg">服务时间</span>
           <div @click ="totime"><i class="re-time">{{ formatTime }}</i><img
             class="re-more"
             src="https://www.daoway.cn/h5/image/go_06.png">
           </div>
         </li>
+        <!-- && selectedTechnical-->
         <li
-          v-if="canChooseTechnician && selectedTechnical"
+          v-if="canChooseTechnician"
           :id="selectedTechnical.technicianId"
           @click="totechnical(selectedTechnical.technicianId)"><span><img src="https://www.daoway.cn/images/icon3.jpg">服务人员</span>
           <div><i class="re-tech">{{ selectedTechnical.name }} {{ selectedTechnical.sex }} <img :src="selectedTechnical.photoURL"></i><img
@@ -48,7 +51,7 @@
       </ul>
     </div>
 
-    <div class="re-input2">
+    <div class="re-input2 renput">
       <div class="goumai">
         <div
           v-for="p in prices"
@@ -60,17 +63,17 @@
             class="re-iconm">
           <div class="gtit">
             <div class="gtitname">{{ p.name }}</div>
-            {{ p.price }}{{ p.price_unit }}
+            {{ p.price }}{{ p.price_unit || p.priceUnit }}
           </div>
           <div class="gadd">
             <img
               class="jia"
-              src="http://www.daoway.cn/images/jian.jpg"
+              src="https://www.daoway.cn/mip/common/images/subtract.png"
               @click="jian(quantity,p.price)">
             <div class="nub">{{ quantity }}</div>
             <img
               class="jian"
-              src="http://www.daoway.cn/images/jia.jpg"
+              src="https://www.daoway.cn/mip/common/images/add.png"
               @click="add(quantity,p.price)">
           </div>
         </div>
@@ -101,17 +104,17 @@
       </div>
       <div class="project">
         <div class="project-tit">服务金额
-          <div class="price">{{ totalPrice }}</div>
+          <div class="price">{{ totalPrice }}元</div>
         </div>
         <div
           v-if="realyFixFee>0"
           class="project-tit">上门费
-          <div class="price">{{ realyFixFee }}元</div>
+          <div class="price">{{ realyFixFee.toFixed(2) }}元</div>
         </div>
         <div
           v-if="coupone"
           class="project-tit">优惠金额
-          <div class="price">-{{ coupone.bill }}元</div>
+          <div class="price">-{{ coupone.bill.toFixed(2) }}元</div>
         </div>
         <!--<div class="project-tit" style="display: none">夜间上门费
                     <div class="price">30</div>
@@ -152,6 +155,9 @@
 import base from '../../common/utils/base'
 import '../../common/utils/base.less'
 export default {
+  prerenderAllowed () {
+    return true
+  },
   props: {
     payConfig: {
       type: Object,
@@ -192,24 +198,35 @@ export default {
       orderId: base.getRequest(location.href).orderId,
       orderInfo: {},
       // code: base.getRequest(location.href).code,
-      userId: localStorage.getItem('mipUserId'),
-      channel: 'baidu',
+      userId: localStorage.getItem('mipUserId') || base.getCookie('mipUserId'),
+      channel: 'mip',
       oauthCode: '',
       tradeType: '',
       returnurl: base.htmlhref.orderdetail,
-      useradd: {}
+      useradd: ''
     }
   },
   mounted () {
     let that = this
     that.position = base.getposition()
-    if (that.position.contactPerson) {
+    if (!that.position) {
+      that.position = {
+        id: '272026',
+        name: '天安门',
+        addr: '北京市东城区东长安街',
+        lot: '116.40387423499',
+        lat: '39.915167717716',
+        area: '东城区',
+        city: '北京'
+      }
+    }
+    if (that.position && that.position.contactPerson) {
       that.contactPerson = that.position.contactPerson
     } else {
       let nick = localStorage.getItem('nick')
       that.contactPerson = nick
     }
-    if (that.position.phone) {
+    if (that.position && that.position.phone) {
       that.phone = that.position.phone
     }
     if (that.orderId) {
@@ -220,45 +237,57 @@ export default {
     }
     if (MIP.util.platform.isWechatApp()) { // 在微信里
       let wxcode = base.getRequest(location.href).code
-      that.oauthCode = wxcode
-      that.tradeType = 'JSAPI'
+      if (wxcode) {
+        that.oauthCode = wxcode
+        that.tradeType = 'JSAPI'
+      } else {
+        that.wxlogincode()
+      }
     } else {
       that.oauthCode = ''
       that.tradeType = 'MWEB'
     }
     window.addEventListener('show-page', () => {
       let technician = JSON.parse(sessionStorage.getItem('tech'))
-      let useradd = JSON.parse(sessionStorage.getItem('useradd'))
-      if (useradd) {
-        that.phone = useradd.phone
-        that.contactPerson = useradd.contactPerson
-        that.addr = useradd.addr
-        that.doorNum = useradd.doorNum
-      } else {
-        that.position = base.getposition()
-        if (that.position) {
-          that.gethtml()
-          that.setPostion()
-        }
-      }
-      that.selectedTechnical = technician
       if (that.canChooseTechnician) {
         if (technician) {
           that.selectedTechnical = technician
+        } else {
+          that.selectedTechnical = JSON.parse(localStorage.getItem('technician')).technicianList[0]
         }
       }
       let coupone = JSON.parse(sessionStorage.getItem('coupone'))
       that.coupone = coupone
       if (coupone && coupone.bill > 0) {
-        that.alltotalPrices = parseFloat((that.totalPrice + that.realyFixFee - coupone.bill).toFixed(2))
+        that.alltotalPrices = parseFloat(Number((that.totalPrice + that.realyFixFee - coupone.bill)))
       }
       let apptime = Number(sessionStorage.getItem('apptime'))
       if (apptime) {
         that.formatTime = base.timeformat(apptime, 'MM月dd日(day) HH:mm')
+        that.appointTime = apptime
+      }
+      let useradd = JSON.parse(localStorage.getItem('useradd'))
+      if (useradd) {
+        this.phone = useradd.phone
+        this.contactPerson = useradd.contactPerson
+        this.addr = useradd.addr
+        this.doorNum = useradd.doorNum
+      } else {
+        if (base.getposition()) {
+          that.position = base.getposition()
+          that.gethtml()
+          that.setPostion()
+        }
       }
     })
   },
   methods: {
+    wxlogincode () {
+      let appid = 'wx0290cc2004b61c97'
+      let loginUrl = encodeURIComponent(location.href)
+      let scope = 'snsapi_base'
+      MIP.viewer.open('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + loginUrl + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect', { isMipLink: true })
+    },
     gethtml () {
       let that = this
       let position = that.position
@@ -266,7 +295,7 @@ export default {
       that.appointTime = that.param.appointTime || ''
       that.quantity = that.param.quantity || that.quantity
       let serviceId = that.param.serviceId || that.serviceId
-      let url = '/daoway/rest/service/' + serviceId + '?manualCity=' + encodeURIComponent(position.city) + '&lot=' + position.lot + '&lat=' + position.lat + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/service/' + serviceId + '?manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lot || position.lng) + '&lat=' + position.lat + '&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -302,7 +331,7 @@ export default {
           that.minBuyNum = prices[0].minBuyNum || 1
           that.quantity = that.param.quantity || that.quantity
           that.totalPrice = (prices[0].price * that.quantity).toFixed(2)
-          that.alltotalPrices = Number(that.totalPrice + data.fixFee).toFixed(2)
+          that.alltotalPrices = Number(prices[0].price * that.quantity + (data.fixFee || 0))
           that.canChooseTechnician = data.canChooseTechnician
           that.setFixFee(data)
           that.setPostion()
@@ -316,7 +345,7 @@ export default {
     },
     getCoupone () {
       let that = this
-      let url = '/daoway/rest/coupon/user/' + that.userId + '?serviceId=' + that.serviceId + '&bill=' + that.totalPrice + '&ignoreMinBill=false&priceIds=' + (that.param.priceIds || that.priceId) + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/coupon/user/' + that.userId + '?serviceId=' + that.serviceId + '&bill=' + that.totalPrice + '&ignoreMinBill=false&priceIds=' + (that.param.priceIds || that.priceId) + '&channel=' + that.channel
       fetch(url, {
         method: 'get',
         credentials: 'include'
@@ -326,11 +355,11 @@ export default {
         if (text.status === 'ok') {
           if (text.data[0] && text.data[0].bill > 0) {
             that.coupone = text.data[0]
-            that.alltotalPrices = parseFloat((that.totalPrice + that.realyFixFee - that.coupone.bill).toFixed(2))
+            that.alltotalPrices = parseFloat((Number(that.totalPrice) + that.realyFixFee) - that.coupone.bill)
           }
         } else {
-          that.warn.show = true
-          that.warn.texts = text.msg
+          /* that.warn.show = true
+          that.warn.texts = text.msg */
         }
       }).catch(function (error) {
         console.log(error)
@@ -342,7 +371,7 @@ export default {
     setFixFee (data) {
       let that = this
       let realyFixFee = 0
-      if (data.noFixFeePrice && that.totalPrices < data.noFixFeePrice) {
+      if (data.noFixFeePrice && that.totalPrice < data.noFixFeePrice) {
         realyFixFee = data.fixFee
       }
       that.realyFixFee = realyFixFee
@@ -388,6 +417,22 @@ export default {
       } else {
         that.addr = that.position.addr
       }
+      if (that.canChooseTechnician) {
+        let selectedTechnical = JSON.parse(sessionStorage.getItem('tech'))
+        if (selectedTechnical) {
+          that.selectedTechnical = selectedTechnical
+        } else {
+          that.getTechnicalInfo()
+        }
+      }
+      let useradd = JSON.parse(localStorage.getItem('useradd'))
+      if (useradd) {
+        that.phone = useradd.phone
+        that.contactPerson = useradd.contactPerson
+        that.addr = useradd.addr
+        that.doorNum = useradd.doorNum
+        return
+      }
       if (position.communityId || position.id) {
         if (position.doorNum) {
           that.doorNum = position.doorNum
@@ -399,21 +444,13 @@ export default {
           that.phone = position.phone
         }
       }
-      if (that.canChooseTechnician) {
-        let selectedTechnical = JSON.parse(sessionStorage.getItem('tech'))
-        if (selectedTechnical) {
-          that.selectedTechnical = selectedTechnical
-        } else {
-          that.getTechnicalInfo()
-        }
-      }
     },
     getTechnicalInfo () {
       let that = this
       let position = that.position
       let serviceId = that.param.serviceId || that.serviceId
       let time = base.timeformat(that.appointTime, 'yyyy-MM-dd HH:mm:ss')
-      let url = '/daoway/rest/service/' + serviceId + '/avalible_technician?manualCity=' + encodeURIComponent(position.city || that.city) + '&lot=' + (position.lot || that.lot) + '&lat=' + (position.lat || that.lat) + '&street=' + encodeURIComponent(position.addr || that.street) + '&includeBusyFlag=true&priceId=' + (that.param.priceId || that.priceId) + '&quantity=' + that.quantity + '&serviceTime=' + encodeURIComponent(time) + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/service/' + serviceId + '/avalible_technician?manualCity=' + encodeURIComponent(position.city || that.city) + '&lot=' + (position.lng || position.lot || that.lot) + '&lat=' + (position.lat || that.lat) + '&street=' + encodeURIComponent(position.addr || that.street) + '&includeBusyFlag=true&priceId=' + (that.param.priceId || that.priceId) + '&quantity=' + that.quantity + '&serviceTime=' + encodeURIComponent(time) + '&channel=' + that.channel
       if (that.doorNum) {
         url += '&house=' + encodeURIComponent(that.doorNum)
       }
@@ -445,14 +482,15 @@ export default {
       useradd.contactPerson = that.contactPerson
       useradd.phone = that.phone
       useradd.id = that.position.id || that.position.communityId
-      sessionStorage.setItem('useradd', JSON.stringify(useradd))
+      localStorage.setItem('useradd', JSON.stringify(useradd))
     },
     totechnical (id) {
       this.sessuseradd()
+      console.log(id)
       MIP.viewer.open(base.htmlhref.technician + '?technicianId=' + id, { isMipLink: true })
     },
     toposition () {
-      MIP.viewer.open(base.htmlhref.position + '?reservation=true', { isMipLink: false })
+      MIP.viewer.open(base.htmlhref.position + '?reservation=true', { isMipLink: true })
     },
     tovouchers () {
       let that = this
@@ -472,14 +510,14 @@ export default {
       that.sessuseradd()
       let parm = {
         serviceId: that.param.serviceId || that.serviceId,
-        priceId: that.param.priceId
+        priceId: that.param.priceId || that.priceId
       }
       parm = JSON.stringify(parm)
       MIP.viewer.open(base.htmlhref.time + '?parm=' + encodeURIComponent(parm), { isMipLink: true })
     },
     buyAgain (orderId) {
       let that = this
-      let url = '/daoway/rest/order/' + orderId + '/again?userId=' + that.userId + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/order/' + orderId + '/again?userId=' + that.userId + '&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -487,19 +525,19 @@ export default {
       }).then(function (text) {
         if (text.status === 'ok') {
           let resultData = text.data
-          console.log(resultData)
+          // console.log(resultData);
           let prices = resultData.prices
           for (let i = 0; i < prices.length; i++) {
             prices[i].quantity = prices[i].minBuyNum || 1
             prices[i].pic_url = prices[i].picUrl
           }
-          let totalPrice = prices[0].price * prices[0].quantity
+          let totalPrice = (prices[0].price * prices[0].quantity)
           let communityId = resultData.communityId
           let addr = communityId ? resultData.city + ' ' + resultData.communityArea + resultData.communityName : resultData.street
           let appointTime = resultData.nextAppointTime
           let canChooseTechnician = resultData.canChooseTechnician
           that.prices = prices
-          that.totalPrice = totalPrice
+          that.totalPrice = totalPrice.toFixed(2)
           that.formatTime = base.timeformat(appointTime, 'yyyy-MM-dd HH:mm')
           that.nextAppointTime = appointTime
           that.appointTime = appointTime
@@ -514,10 +552,10 @@ export default {
           that.serviceId = prices[0].serviceId
           that.addr = addr
           that.communityId = communityId
-          that.lot = resultData.lng
+          that.lot = resultData.lot
           that.lat = resultData.lat
           that.city = resultData.city
-          that.alltotalPrices = totalPrice + resultData.fixFee
+          that.alltotalPrices = parseFloat(totalPrice + resultData.fixFee)
           that.priceId = prices[0].id
           that.setFixFee(resultData)
           that.getTechnicalInfo()
@@ -528,7 +566,7 @@ export default {
             that.closeLayer()
             MIP.viewer.page.back()
           }, 1000)
-        }
+        };
       }).catch(function (error) {
         console.log(error)
       })
@@ -537,12 +575,12 @@ export default {
       let that = this
       let useradd = sessionStorage.getItem('useradd')
       let userAddressId = ''
-      let opData = 'userId=' + that.userId + '&name=' + that.contactPerson + '&phone=' + that.phone + '&doorNum=' + that.doorNum + '&isConfirm=0' + '&communityId=' + that.position.id || that.position.communityId + '&id=' + userAddressId
+      let opData = 'userId=' + that.userId + '&name=' + that.contactPerson + '&phone=' + that.phone + '&doorNum=' + that.doorNum + '&isConfirm=0' + '&communityId=' + (that.position.id || that.position.communityId) + '&id=' + userAddressId
       let url
       if (userAddressId) {
-        url = '/daoway/rest/user/' + that.userId + '/modifyUserAddress'
+        url = 'https://www.daoway.cn/daoway/rest/user/' + that.userId + '/modifyUserAddress'
       } else {
-        url = '/daoway/rest/user/' + that.userId + '/addUserAddress'
+        url = 'https://www.daoway.cn/daoway/rest/user/' + that.userId + '/addUserAddress'
       }
       fetch(url, {
         method: 'POST',
@@ -564,8 +602,8 @@ export default {
           }
           localStorage.setItem({'position': JSON.stringify(that.position)})
         } else {
-          that.warn.show = true
-          that.warn.texts = text.msg
+          /* that.warn.show = true
+          that.warn.texts = text.msg */
         }
       }).catch(function (error) {
         console.log(error)
@@ -607,7 +645,8 @@ export default {
           items.quantity = that.quantity
           ary.push(items)
         }
-        let token = localStorage.getItem('mipToken')
+        let token = localStorage.getItem('mipToken') || base.getCookie('mipToken')
+        console.log(that.formatTime)
         let anydata = {
           'userId': that.userId,
           'serviceId': that.serviceId,
@@ -616,7 +655,7 @@ export default {
           'appointTime': base.timeformat(that.appointTime, 'yyyy-MM-dd HH:mm:ss'),
           'contactPerson': contactPerson,
           'items': ary,
-          'addrLot': position.lot,
+          'addrLot': (position.lot || position.lng || that.lot),
           'addrLat': position.lat,
           'city': position.city,
           'communityId': position.communityId || position.id,
@@ -630,7 +669,8 @@ export default {
           'couponId': that.coupone ? that.coupone.id : null
         }
         anydata = JSON.stringify(anydata)
-        let url = '/daoway/rest/orders/v2?h5=true&channel=' + that.channel
+        console.log(anydata)
+        let url = 'https://www.daoway.cn/daoway/rest/orders/v2?h5=true&channel=' + that.channel
         fetch(url, {
           method: 'POST',
           credentials: 'include',
@@ -689,12 +729,26 @@ export default {
     input{
         border: none;
     }
+    @media (min-device-width:1078px){
+      input:focus{
+        font-size: 14px ;
+      }
+    }
+    @media (min-device-width : 320px) and (max-device-width : 1077px){
+      input:focus{
+        font-size: 14px ;
+      }
+    }
+
     i {
         font-style: normal
     }
 
     li, ol {
         list-style: none
+    }
+    .wrapper{
+      height: 100%;
     }
 
     .fbotom{
@@ -703,10 +757,18 @@ export default {
     .re-form {
         margin-left: 3%;
     }
+    .imgp{
+      display: inline-block;
+      width: 13px;
+    }
 
     .re-form li {
         line-height: 43px;
-        font-size: 14px;
+      height: 43px;
+      overflow: hidden;
+      width: 99.5%;
+      font-size: 14px;
+      color: #303030;
     }
 
     .re-form li img {
@@ -725,35 +787,44 @@ export default {
         font-size: 0
     }
     .quan div.novouchers{
-      color: #ccc;
+      color: #898989;
     }
 
     .re-form input {
-        width: 86%;
+        width: 84.2%;
         margin-left: 3%;
         display: inline-block;
         height: 40px;
         line-height: 40px;
         border-bottom: 1px solid #ececec;
-        font-size: 14px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        background: #fff;
+        color: #303030;
+        font: 14px Arial;
     }
-
+      input:focus{
+        font-size: 14px ;
+      }
     .re-form li:last-child input {
         border: none
     }
 
     .re-form li img.re-more, .re-more {
         width: 8px;
-        height: auto
+        height: auto;
+        margin-left: 4%;
     }
 
     .re-input2 {
         margin-top: 10px;
         font-size: 14px;
-        background: #fff
+        background: #fff;
+
+    }
+    .renput{
+      margin-bottom:60px
     }
 
     .re-form2 span {
@@ -765,7 +836,6 @@ export default {
     .re-form2 div {
         float: right;
         width: 60%;
-        border-bottom: 1px solid #ececec;
         text-align: right
     }
 
@@ -856,12 +926,11 @@ export default {
         margin-left: 29px;
         vertical-align: middle;
         padding: 6px 0;
-      font-size: 13px;
+       font-size: 14px;
     }
 
     .project {
         width: 94%;
-        margin-bottom: 100px;
         margin-left: 3%;
     }
 
@@ -934,7 +1003,7 @@ export default {
 
     .guize1 {
         color: #e63020;
-        margin-right: 12px;
+        margin-right: 2%;
     }
 
     .act {
