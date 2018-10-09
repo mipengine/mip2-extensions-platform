@@ -102,7 +102,7 @@
               >
             </div>
             <div class="yzm actives">
-              <div @click="setYanzm">{{ verCode }}</div>
+              <div @touchend="setYanzm">{{ verCode }}</div>
             </div>
           </li>
         </ul>
@@ -659,7 +659,10 @@ export default {
       //   额外服务费说明
       commewai: {
         show: false
-      }
+      },
+      time: 60,
+      timeInterval: null,
+      onlyOne: true
     }
   },
 
@@ -1003,6 +1006,10 @@ export default {
             lxnData.phone = ''
             lxnData.orderTime = ''
             this.setGlobalData(lxnData)
+            clearInterval(this.timeInterval)
+            this.time = 60
+            this.verCode = '获取验证码'
+            this.verCodeFlag = true
           } else {
             this.openLayer(response.msg)
           }
@@ -1011,53 +1018,63 @@ export default {
         })
     },
     setYanzm () {
-      if (this.verCodeFlag) {
-        let phone = this.userPhone
-        if (phone) {
-          if (this.checkPhone(phone)) {
-            let updata = {
-              phone: phone
-            }
-            let urls =
+      if (this.onlyOne) {
+        if (this.verCodeFlag) {
+          let phone = this.userPhone
+          if (phone) {
+            if (this.checkPhone(phone)) {
+              this.onlyOne = false
+              this.countDown(59)
+              let updata = {
+                phone: phone
+              }
+              let urls =
               'https://openapi.lanxiniu.com/Phone/send?' +
               base.setUrlParam(updata)
-            window
-              .fetchJsonp(urls)
-              .then(response => response.json())
-              .catch(error => console.error('Error:', error))
-              .then(response => {
-                console.log('查看数据:' + JSON.stringify(response, null, 2))
-                if (response.code === 0) {
-                  this.countDown(59)
-                } else {
-                  this.openLayer(response.msg)
-                }
-              })
+              window
+                .fetchJsonp(urls)
+                .then(response => response.json())
+                .catch(error => console.error('Error:', error))
+                .then(response => {
+                  console.log('查看数据:' + JSON.stringify(response, null, 2))
+                  if (response.code === 0) {
+
+                  } else {
+                    this.openLayer(response.msg)
+                    clearInterval(this.timeInterval)
+                    this.time = 60
+                    this.verCode = '获取验证码'
+                    this.verCodeFlag = true
+                    this.onlyOne = true
+                  }
+                })
+            } else {
+              this.openLayer('手机号格式不正确')
+            }
           } else {
-            this.openLayer('手机号格式不正确')
+            this.openLayer('请填写联系方式')
           }
-        } else {
-          this.openLayer('请填写联系方式')
         }
       }
     },
     // 倒计时
     countDown: function (num) {
-      console.log(num)
-      let that = this
-      for (let i = 0; i <= num; i++) {
-        (function (i) {
-          setTimeout(() => {
-            console.log(i)
-            that.verCode = i + 's后重新获取'
-            that.verCodeFlag = false
-            if (i === 0) {
-              that.verCode = '获取验证码'
-              that.verCodeFlag = true
-            }
-          }, (num + 1 - i) * 1000)
-        })(i)
-      }
+    //   console.log(num)
+      this.time -= 1
+      this.verCode = this.time + 's后重新获取'
+      this.verCodeFlag = false
+      this.timeInterval = setInterval(() => {
+        this.time -= 1
+        this.verCode = this.time + 's后重新获取'
+        this.verCodeFlag = false
+        if (this.time === 0) {
+          clearInterval(this.timeInterval)
+          this.time = 60
+          this.verCode = '获取验证码'
+          this.verCodeFlag = true
+          this.onlyOne = true
+        }
+      }, 1000)
     },
     checkYzm () {
       let updata = {
@@ -1073,7 +1090,7 @@ export default {
         .then(response => {
           console.log('查看登陆后数据:' + JSON.stringify(response, null, 2))
           if (response.code === 0) {
-            // this.countDown(59)
+            this.countDown(59)
             this.upOrder(response.data.token)
           } else {
             this.openLayer(response.msg)
