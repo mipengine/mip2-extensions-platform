@@ -6,7 +6,7 @@
         <ul class="re-form">
           <li @click="toposition"><img src="https://www.daoway.cn/images/icon2.jpg"><input
             v-model="addr"
-            style="background:rgba(0,0,0,0); height: auto; text-align: left;"
+            style="background:rgba(0,0,0,0); text-align: left; vertical-align: middle"
             type="button"
             placeholder="请填写您的住址"><img
               class="re-more"
@@ -209,13 +209,24 @@ export default {
   mounted () {
     let that = this
     that.position = base.getposition()
-    if (that.position.contactPerson) {
+    if (!that.position) {
+      that.position = {
+        id: '272026',
+        name: '天安门',
+        addr: '北京市东城区东长安街',
+        lot: '116.40387423499',
+        lat: '39.915167717716',
+        area: '东城区',
+        city: '北京'
+      }
+    }
+    if (that.position && that.position.contactPerson) {
       that.contactPerson = that.position.contactPerson
     } else {
       let nick = localStorage.getItem('nick')
       that.contactPerson = nick
     }
-    if (that.position.phone) {
+    if (that.position && that.position.phone) {
       that.phone = that.position.phone
     }
     if (that.orderId) {
@@ -718,6 +729,17 @@ export default {
     input{
         border: none;
     }
+    @media (min-device-width:1078px){
+      input:focus{
+        font-size: 14px ;
+      }
+    }
+    @media (min-device-width : 320px) and (max-device-width : 1077px){
+      input:focus{
+        font-size: 14px ;
+      }
+    }
+
     i {
         font-style: normal
     }
@@ -742,7 +764,10 @@ export default {
 
     .re-form li {
         line-height: 43px;
-        font-size: 14px;
+      height: 43px;
+      overflow: hidden;
+      width: 99.5%;
+      font-size: 14px;
       color: #303030;
     }
 
@@ -772,15 +797,16 @@ export default {
         height: 40px;
         line-height: 40px;
         border-bottom: 1px solid #ececec;
-        font-size: 14px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         background: #fff;
         color: #303030;
-
+        font: 14px Arial;
     }
-
+      input:focus{
+        font-size: 14px ;
+      }
     .re-form li:last-child input {
         border: none
     }
