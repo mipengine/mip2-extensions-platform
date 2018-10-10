@@ -1,11 +1,5 @@
 export const setCookie = (key, value) => {
-  return (document.cookie = [
-    encodeURIComponent(key),
-    '=',
-    encodeURIComponent(value),
-    '; path=/',
-    '; domain=.baidu.com'
-  ].join(''))
+  document.cookie = encodeURIComponent(key) + '=' + encodeURIComponent(value)
 }
 
 /* export const setCookie = (key, value) => {
