@@ -6,6 +6,7 @@
 
 <script>
 import xzh from 'xzh-sdk'
+import { formatParams } from '../../common/utils'
 
 let context = null
 
@@ -17,11 +18,13 @@ export default {
     init () {
       if (!context) {
         let url = window.location.href
-        let paramstr = encodeURIComponent('redirectUrl=' + url)
+        let paramMap = {
+          'redirectUrl': url
+        }
         context = Promise.resolve()
           .then(() => {
             return window.fetchJsonp(
-              '//m.chinaacc.com/m_member/baidu/getXZJs.shtm?' + paramstr,
+              '//m.chinaacc.com/m_member/baidu/getXZJs.shtm?' + formatParams(paramMap),
               {
                 jsonpCallback: 'jsonpCallback'
               }
