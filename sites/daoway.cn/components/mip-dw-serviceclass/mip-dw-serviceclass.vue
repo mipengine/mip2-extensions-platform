@@ -1,7 +1,6 @@
 <template>
   <div class="wrapper"><!-- v-if="!position"-->
     <mip-map
-      v-if="!position"
       id="map"
       on="getPositionComplete:test.success  getPositionFailed:test.fail">
       <script type="application/json">
@@ -122,7 +121,6 @@ export default {
   mounted () {
     let that = this
     let category = this.category
-
     this.nav()
     if (this.tag === '全部') {
       // this.tags = '&tag=';
@@ -144,24 +142,70 @@ export default {
       this.morelist()
     })
     that.$on('success', (e) => {
+      let that = this
+      let position = localStorage.getItem('position')
+      let city = e.address.city.replace(/市$/g, '') || '北京'
+      if (position) {
+        that.position = base.getposition()
+      } else {
+        that.city = city
+        that.getCommunity(e.point.lat, e.point.lng)
+      }
+      that.point.lat = e.point.lat
+      that.point.lng = e.point.lng
       let point = {
         lat: e.point.lat,
-        lng: e.point.lng
+        lng: e.point.lng,
+        city: city
       }
       localStorage.setItem('point', JSON.stringify(point))
     })
     that.$on('fail', (e) => {
       localStorage.removeItem('point')
-      if (e.point.lat && e.point.lng) {
-        let point = {
-          lat: e.point.lat,
-          lng: e.point.lng
+      let position = localStorage.getItem('position')
+      if (position) {
+        that.position = base.getposition()
+      } else {
+        if (e.address.city) {
+          that.city = e.address.city.replace(/市$/g, '') || '北京'
         }
-        localStorage.setItem('point', JSON.stringify(point))
+        if (e.point.lat && e.point.lng) {
+          let point = {
+            lat: e.point.lat,
+            lng: e.point.lng,
+            city: that.city
+          }
+          localStorage.setItem('point', JSON.stringify(point))
+          that.getCommunity(e.point.lat, e.point.lng)
+        } else {
+          that.toposition()
+        }
       }
     })
   },
   methods: {
+    getCommunity (lat, lng) {
+      let that = this
+      let url = 'https://www.daoway.cn/daoway/rest/community/autoPosition?lot=' + lng + '&lat=' + lat
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        return res.json()
+      }).then(function (text) {
+        that.warn.show = true
+        that.warn.texts = JSON.stringify(text)
+        if (text.status === 'ok') {
+          that.position = text.data[0]
+          base.position(text.data[0])
+          MIP.viewer.open(base.htmlhref.serviceclass + '?category=' + that.category + '&tag=' + that.tag, {isMipLink: false})
+        } else {
+          that.warn.show = true
+          that.warn.texts = text.msg
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
     nav () {
       let that = this
       let category = that.category

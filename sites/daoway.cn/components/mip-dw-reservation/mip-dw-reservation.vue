@@ -33,6 +33,12 @@
     </div>
     <div class="re-input re-input2">
       <ul class="re-form re-form2">
+        <!-- <li v-if="hasDstAddr"><span><img src="https://www.daoway.cn/images/icon5.jpg">目的地址</span>
+          <div @click ="tohasDstAddr"><i class="re-time">北京</i><img
+                  class="re-more"
+                  src="https://www.daoway.cn/h5/image/go_06.png">
+          </div>
+        </li>-->
         <li><span><img src="https://www.daoway.cn/images/icon5.jpg">服务时间</span>
           <div @click ="totime"><i class="re-time">{{ formatTime }}</i><img
             class="re-more"
@@ -203,7 +209,8 @@ export default {
       oauthCode: '',
       tradeType: '',
       returnurl: base.htmlhref.orderdetail,
-      useradd: ''
+      useradd: '',
+      hasDstAddr: false
     }
   },
   mounted () {
@@ -320,6 +327,7 @@ export default {
             that.warn.show = true
             that.warn.texts = '该项目已下线'
           }
+          console.log(data)
           let apptime = Number(sessionStorage.getItem('apptime'))
           that.serviceId = data.id
           that.noFixFeePrice = data.noFixFeePrice
@@ -333,6 +341,7 @@ export default {
           that.totalPrice = (prices[0].price * that.quantity).toFixed(2)
           that.alltotalPrices = Number(prices[0].price * that.quantity + (data.fixFee || 0))
           that.canChooseTechnician = data.canChooseTechnician
+          that.hasDstAddr = data.hasDstAddr
           that.setFixFee(data)
           that.setPostion()
         } else {
@@ -631,6 +640,10 @@ export default {
       } else if (!reg1.test(phone)) {
         that.warn.show = true
         that.warn.texts = '请填写正确的手机号'
+        /* else if (that.hasDstAddr && !that.dst_addr) {
+         that.warn.show = true
+         that.warn.texts = '目的地址不能为空'
+         } */
       } else if (that.minBuyPrice > that.totalPrice) {
         let temp = (that.minBuyPrice - that.totalPrice).toFixed(2)
         that.warn.show = true
@@ -646,12 +659,12 @@ export default {
           ary.push(items)
         }
         let token = localStorage.getItem('mipToken') || base.getCookie('mipToken')
-        console.log(that.formatTime)
+        console.log(position, that.doorNum || position.doorNum)
         let anydata = {
           'userId': that.userId,
           'serviceId': that.serviceId,
           'note': that.note || null,
-          'address': that.addr + ' ' + that.doorNum,
+          'address': that.addr + ' ' + that.doorNum || position.doorNum,
           'appointTime': base.timeformat(that.appointTime, 'yyyy-MM-dd HH:mm:ss'),
           'contactPerson': contactPerson,
           'items': ary,
@@ -659,8 +672,8 @@ export default {
           'addrLat': position.lat,
           'city': position.city,
           'communityId': position.communityId || position.id,
-          'street': position.addr,
-          'house': position.doorNum,
+          'street': position.addr || that.addr,
+          'house': position.doorNum || that.doorNum,
           'fixFee': that.realyFixFee,
           'phone': that.phone,
           'technicianId': that.selectedTechnical ? that.selectedTechnical.technicianId : '',
@@ -669,7 +682,6 @@ export default {
           'couponId': that.coupone ? that.coupone.id : null
         }
         anydata = JSON.stringify(anydata)
-        console.log(anydata)
         let url = 'https://www.daoway.cn/daoway/rest/orders/v2?h5=true&channel=' + that.channel
         fetch(url, {
           method: 'POST',
