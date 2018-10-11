@@ -208,15 +208,24 @@
         </div>
       </div>
     </div>
-    <div
-      v-show="pageData.toastmsg"
-      class="toast-msg">
-      {{ pageData.toastmsg }}
-    </div>
+    <mip-fixed
+      v-show="toastmsg"
+      type="top"
+      class="toast-wrap">
+      <div
+        v-if="toastmsg"
+        class="toast-msg">
+        {{ toastmsg }}
+      </div>
+    </mip-fixed>
   </div>
 </template>
 
 <style scoped lang="less">
+*{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
 @main-color: #ff1d41;
 @dark-font: #323038;
 @normal-font: #494949;
@@ -396,10 +405,9 @@
             font-size: 1rem;
             break-inside: avoid;
             box-sizing: border-box;
-            display: inline-block;
             height: 1.4rem;
             line-height: 1.4rem;
-            padding: 0 2px;
+            padding: 1px 2px;
             &.low-price {
               border-radius: 2px;
               background-image: linear-gradient(118deg, #ef6856, #ff3165);
@@ -443,18 +451,21 @@
   -webkit-box-align: @align;
   box-align: @align;
 }
+.toast-wrap{
+  top: 200px !important;
+  text-align: center;
+}
 .toast-msg {
-  width: 180px;
+  width: auto;
+  max-width: 70%;
   padding: 15px 10px;
+  display: inline-block;
   line-height: 20px;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.65);
-  position: absolute;
   border-radius: 5px;
-  left: 50%;
-  top: 50%;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 1000;
+  font-size:1.4rem;
+  box-sizing: border-box;
 }
 .book-show-footer {
   background-color: #fff;
@@ -683,9 +694,7 @@ export default {
       showEticket: false,
       limitation: 0,
       token: '',
-      pageData: {
-        toastmsg: ''
-      },
+      toastmsg: '',
       dateRange: [
         { text: '全部', value: 365, display: false },
         { text: '今天', value: 0, display: false },
@@ -807,9 +816,9 @@ export default {
       let me = this
       if (msg !== '') {
         timeout = timeout || 2000
-        me.pageData.toastmsg = msg
+        me.toastmsg = msg
         setTimeout(() => {
-          me.pageData.toastmsg = ''
+          me.toastmsg = ''
         }, timeout)
       }
     },
@@ -1033,6 +1042,8 @@ export default {
     plus () {
       if (this.count < this.ticketMaxBuyCount) {
         this.count++
+      } else if (this.ticketMaxBuyCount < this.limitation) {
+        this.toast('该票面库存不足')
       }
     },
     tips () {

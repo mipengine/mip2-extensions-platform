@@ -261,6 +261,10 @@ export default {
           this.url = url
           this.beyondUrl = res.car_info.super_url
           this.imUrl = res.im_url
+          if (getLocalStorage('channel')) {
+            this.imUrl = `${this.imUrl}&channel=${getLocalStorage('channel')}`
+            res.im_url = `${res.im_url}&channel=${getLocalStorage('channel')}`
+          }
           this.$emit('showPrice', this.carInfo)
           this.$emit('getImurl', res.im_url)
         }

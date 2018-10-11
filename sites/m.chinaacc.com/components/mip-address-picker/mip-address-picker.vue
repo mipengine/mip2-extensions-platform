@@ -97,7 +97,6 @@ export default {
       let setting = {
         parentId: id
       }
-
       getAreaCode(setting).then(res => {
         let arr = []
         if (res !== undefined || res != null || res + '' !== '') {

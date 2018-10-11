@@ -1,5 +1,17 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper"><!-- v-if="!position"-->
+    <mip-map
+      id="map"
+      on="getPositionComplete:test.success  getPositionFailed:test.fail">
+      <script type="application/json">
+        {
+        "ak": "epGAmM09OL7Lwy7cIu47pxzK",
+        "hide-map": true,
+        "get-position": true
+        }
+      </script>
+    </mip-map>
+    <div id="test"/>
     <mip-fixed type="top">
       <div class="sc-nav">
         <mip-scrollbox
@@ -41,9 +53,7 @@
             <li
               class="sc-r-text"
               v-html="i.description"/>
-            <li class="sc-r-price">{{ i.price }}<i>{{ i.price_unit }}</i>
-              <span v-if="i.firstReduce">首单立减{{ i.firstReduce }}</span>
-              <span v-if="i.totalReduce">满{{ i.totalReduce.total }}减{{ i.totalReduce.reduce }}</span>
+            <li class="sc-r-price">{{ i.price }}<i>{{ i.price_unit }}</i><span v-if="i.firstReduce">首单立减{{ i.firstReduce }}</span><span v-if="i.totalReduce">满{{ i.totalReduce.total }}减{{ i.totalReduce.reduce }}</span>
             </li>
             <li class="sc-r-home"><img
               class="sc-home"
@@ -62,7 +72,19 @@
         class="loding">加载中...</p>
       <p
         v-if="nomore"
-        class="loding">没有更多了</p>
+        class="loding">~暂时只有这些了~</p>
+    </div>
+    <div
+      v-show="warn.show"
+      class="layer">
+      <div class="layer-content zoomIn">
+        <p
+          class="layer-text"
+          v-text="warn.texts"/>
+        <p
+          class="layer-sure active-layer"
+          @click="closeLayer">知道了</p>
+      </div>
     </div>
   </div>
 </template>
@@ -70,9 +92,12 @@
 import base from '../../common/utils/base'
 import '../../common/utils/base.less'
 export default {
+  prerenderAllowed () {
+    return true
+  },
   data () {
     return {
-      position: JSON.parse(localStorage.getItem('position')),
+      position: base.getposition(),
       category: base.getRequest(location.href).category,
       filterAry: [],
       tag: decodeURI(base.getRequest(location.href).tag),
@@ -82,38 +107,132 @@ export default {
       sw: true,
       ary: [],
       loding: false,
-      channel: 'baidu',
-      nomore: false
+      channel: 'mip',
+      nomore: false,
+      startY: '',
+      endY: '',
+      warn: {
+        // 弹窗
+        show: false,
+        texts: ''
+      }
     }
   },
-  created () {
-    window.addEventListener('scroll', this.morelist)
-  },
   mounted () {
+    let that = this
     let category = this.category
-    let tag = this.tag
     this.nav()
-    this.getServicelist(0, category, tag)
-    window.addEventListener('scroll', this.morelist)
+    if (this.tag === '全部') {
+      // this.tags = '&tag=';
+    } else {
+      this.tags = '&tag=' + encodeURIComponent(this.tag)
+    }
+    this.getServicelist(0, category, this.tags)
+    let body = this.$element.querySelector('.wrapper')
+    body.addEventListener('touchstart', (e, str) => {
+      let touch = e.touches[0]
+      this.startY = touch.pageY
+    })
+    body.addEventListener('touchmove', (e, str) => {
+      let touch = e.touches[0]
+      this.endY = touch.pageY
+      /* if(this.endY >= this.startY){
+              this.morelist();
+          } */
+      this.morelist()
+    })
+    that.$on('success', (e) => {
+      let that = this
+      let position = localStorage.getItem('position')
+      let city = e.address.city.replace(/市$/g, '') || '北京'
+      if (position) {
+        that.position = base.getposition()
+      } else {
+        that.city = city
+        that.getCommunity(e.point.lat, e.point.lng)
+      }
+      that.point.lat = e.point.lat
+      that.point.lng = e.point.lng
+      let point = {
+        lat: e.point.lat,
+        lng: e.point.lng,
+        city: city
+      }
+      localStorage.setItem('point', JSON.stringify(point))
+    })
+    that.$on('fail', (e) => {
+      localStorage.removeItem('point')
+      let position = localStorage.getItem('position')
+      if (position) {
+        that.position = base.getposition()
+      } else {
+        if (e.address.city) {
+          that.city = e.address.city.replace(/市$/g, '') || '北京'
+        }
+        if (e.point.lat && e.point.lng) {
+          let point = {
+            lat: e.point.lat,
+            lng: e.point.lng,
+            city: that.city
+          }
+          localStorage.setItem('point', JSON.stringify(point))
+          that.getCommunity(e.point.lat, e.point.lng)
+        } else {
+          that.toposition()
+        }
+      }
+    })
   },
   methods: {
-    nav () {
+    getCommunity (lat, lng) {
       let that = this
-      let category = that.category
-      let url = '/daoway/rest/category/for_filter?manualCity=' + encodeURIComponent(that.position.city) + '&category=' + category + '&weidian=false&recommendOnly=true&includeChaoshi=false&includeSecondPage=false&hasChaoshi=false&hasTagImg=true&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/community/autoPosition?lot=' + lng + '&lat=' + lat
       fetch(url, {
         method: 'get'
       }).then(function (res) {
         return res.json()
       }).then(function (text) {
-        let data = text.data[0]
-        let filterAry = data.tagsInfo
-        let filter = {
-          name: '全部',
-          url: 'http://www.daoway.cn/mip/common/images/all.png'
+        that.warn.show = true
+        that.warn.texts = JSON.stringify(text)
+        if (text.status === 'ok') {
+          that.position = text.data[0]
+          base.position(text.data[0])
+          MIP.viewer.open(base.htmlhref.serviceclass + '?category=' + that.category + '&tag=' + that.tag, {isMipLink: false})
+        } else {
+          that.warn.show = true
+          that.warn.texts = text.msg
         }
-        filterAry.unshift(filter)
-        that.filterAry = filterAry
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    nav () {
+      let that = this
+      let category = that.category
+      let url = 'https://www.daoway.cn/daoway/rest/category/for_filter?category=' + category + '&weidian=false&recommendOnly=true&includeChaoshi=false&includeSecondPage=false&hasChaoshi=false&hasTagImg=true&channel=' + that.channel
+      if (that.position) {
+        url += '&manualCity=' + encodeURIComponent(that.position.city)
+      }
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        return res.json()
+      }).then(function (text) {
+        if (text.status === 'ok') {
+          console.log(text.data)
+          let data = text.data[0]
+          document.title = text.data[0].name
+          let filterAry = data.tagsInfo
+          let filter = {
+            name: '全部',
+            url: 'https://www.daoway.cn/mip/common/images/all.png'
+          }
+          filterAry.unshift(filter)
+          that.filterAry = filterAry
+        } else {
+          that.warn.show = true
+          that.warn.texts = text.msg
+        }
       }).catch(function (error) {
         console.error(error)
       })
@@ -121,47 +240,64 @@ export default {
     getServicelist (index, category, tag) {
       let that = this
       let position = that.position
-      let url = '/daoway/rest/service_items/filter?start=' + index + '&size=30&manualCity=' + encodeURIComponent(position.city) + '&lot=' + position.lot + '&lat=' + position.lat + '&category=' + category + '&channel=' + that.channel + tag
+      let url = ''
+      if (position) {
+        url = 'https://www.daoway.cn/daoway/rest/service_items/filter?start=' + index + '&size=30&manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lng || position.lot) + '&lat=' + position.lat + '&category=' + category + '&channel=' + that.channel + tag
+      } else {
+        url = 'https://www.daoway.cn/daoway/rest/service_items/filter?start=' + index + '&size=30' + '&category=' + category + '&channel=' + that.channel + tag
+      }
       fetch(url, {
         method: 'get'
       }).then(function (res) {
         return res.json()
       }).then(function (text) {
-        let datas = text.data.items
-        let ary = that.ary
-        for (let i = 0; i < datas.length; i++) {
-          let data = datas[i]
-          let promotion = data.promotion
-          let totalReduce = promotion.total_reduce
-          let firstReduce = promotion.first_reduce
-          let positiveCommentRate
-          if (data.salesNum === 0) {
-            positiveCommentRate = '暂无评价'
-          } else {
-            if (data.positiveCommentRate && data.positiveCommentRate !== '--') {
-              positiveCommentRate = '好评' + data.positiveCommentRate
-            } else {
-              positiveCommentRate = '暂无评价'
+        if (text.status === 'ok') {
+          let datas = text.data.items
+          let ary = that.ary
+          if (datas.length > 0) {
+            for (let i = 0; i < datas.length; i++) {
+              let data = datas[i]
+              let promotion = data.promotion
+              let totalReduce = promotion.total_reduce
+              let firstReduce = promotion.first_reduce
+              let positiveCommentRate
+              if (data.salesNum === 0) {
+                positiveCommentRate = '暂无评价'
+              } else {
+                if (data.positiveCommentRate && data.positiveCommentRate !== '--') {
+                  positiveCommentRate = '好评' + data.positiveCommentRate
+                } else {
+                  positiveCommentRate = '暂无评价'
+                }
+              }
+              let obj = {
+                aheadHours: data.fastestDay ? data.fastestDay : data.aheadHours + '小时',
+                description: data.description,
+                id: data.id,
+                name: data.name,
+                pic_url: data.pic_url,
+                positiveCommentRate: positiveCommentRate,
+                price: data.price,
+                price_unit: data.price_unit,
+                salesNum: data.salesNum,
+                serviceTitle: data.serviceTitle,
+                totalReduce: totalReduce ? totalReduce[0] : null,
+                firstReduce: firstReduce || null
+              }
+              ary.push(obj)
             }
+            that.item = ary
+            that.sw = true
+          } else {
+            that.loding = false
+            that.nomore = true
+            that.sw = false
           }
-          let obj = {
-            aheadHours: data.fastestDay ? data.fastestDay : data.aheadHours + '小时',
-            description: data.description,
-            id: data.id,
-            name: data.name,
-            pic_url: data.pic_url,
-            positiveCommentRate: positiveCommentRate,
-            price: data.price,
-            price_unit: data.price_unit,
-            salesNum: data.salesNum,
-            serviceTitle: data.serviceTitle,
-            totalReduce: totalReduce ? totalReduce[0] : null,
-            firstReduce: firstReduce || null
-          }
-          ary.push(obj)
+        } else {
+          that.warn.show = true
+          that.warn.texts = text.msg
+          that.loding = false
         }
-        that.item = ary
-        that.sw = true
       }).catch(function (error) {
         console.error(error)
       })
@@ -176,15 +312,16 @@ export default {
         that.tags = '&tag=' + encodeURIComponent(that.tag)
       }
       that.ary = []
-      window.scrollTo(0, 0)
       that.getServicelist(0, category, that.tags)
+      that.loding = false
+      window.scrollTo(0, 0)
     },
     morelist () {
       let that = this
       let category = that.category
       let index = that.ary.length
       if (document.body.scrollTop || document.documentElement.scrollTop + window.innerHeight >= document.body.offsetHeight) {
-        if (that.sw === true || index < 5) {
+        if (that.sw === true && that.ary.length >= 5) {
           that.sw = false
           setTimeout(() => {
             that.loding = true
@@ -193,10 +330,19 @@ export default {
         } else {
           that.loding = false
         }
+      } else {
+        that.loding = false
       }
     },
     todetail (id) {
       MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, { isMipLink: true })
+    },
+    toposition () {
+      MIP.viewer.open(base.htmlhref.position, {isMipLink: true})
+    },
+    closeLayer () {
+      this.warn.show = false
+      this.warn.texts = ''
     }
   }
 }
@@ -222,11 +368,14 @@ export default {
     }
     .sc-nav {
         width: 100%;
-        height: 80px;
+        height: 70px;
         padding: 5px 0;
         background: #fff;
         margin-top: 44px;
         border-top: 1px solid #f5f5f5;
+    }
+    mip-scrollbox [data-inner]{
+        margin-top: -37px;
     }
 
     .sc-list {
@@ -256,7 +405,7 @@ export default {
     }
 
     .sc-box {
-        margin-top: 88px;
+        margin-top: 76px;
         box-sizing: border-box;
     }
 
@@ -268,12 +417,12 @@ export default {
         flex-wrap: wrap;
         background: #fff;
         margin-bottom: 8px;
-        padding: 6px 2% 4px;
+        padding: 5px 2% 2px;
     }
 
     .scbl-left img {
-        width: 105px;
-        height: 105px;
+        width: 100%;
+        height: auto;
         border-radius: 4px
     }
 
@@ -325,7 +474,7 @@ export default {
     }
 
     .scbl-right ul li.scbl-aciy span:first-child {
-        border-bottom: 1px solid red;
+        border-bottom: 0.5px solid red;
         background: #ff7871;
         color: #fff;
     }
@@ -343,7 +492,7 @@ export default {
         height: auto;
         position: relative;
         top: 4px;
-        margin-right: 2px
+        margin-right: 1px
     }
 
     .sc-r-tit {
@@ -374,10 +523,15 @@ export default {
         font-size: 12px;
     }
     .sc-r-price span{
-        border: 1px solid red;
+        border: 0.5px solid red;
         font-size: 10px;
         padding: 0 2px;
         border-radius: 2px;
+        display: inline-block;
+        height: 15px;
+        line-height: 15px;
+        margin-left: 1px;
+        margin-right: 2px;
 
     }
 

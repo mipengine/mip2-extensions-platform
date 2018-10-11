@@ -40,8 +40,7 @@
         </div>
       </div>
       <mip-fixed
-        type="bottom"
-        still>
+        type="bottom">
         <div class="footer">
           <div class="pre-btn-icon"/>
           <div
@@ -81,6 +80,7 @@
             <div class="select-wrapper">
               <select
                 v-model="location.city"
+                :disabled="cities.length>0?false:true"
                 @change="changeCity()">
                 <option value="">市</option>
                 <option
@@ -91,7 +91,9 @@
               <div class="select-arrow"/>
             </div>
             <div class="select-wrapper">
-              <select v-model="location.district">
+              <select
+                v-model="location.district"
+                :disabled="districts.length>0?false:true">
                 <option value="">区</option>
                 <option
                   v-for="(c,index) in districts"
@@ -119,15 +121,24 @@
           @click="saveAddress()">保存</div>
       </div>
     </div>
-    <div
-      v-if="toastmsg"
-      class="toast-msg">
-      {{ toastmsg }}
-    </div>
+    <mip-fixed
+      v-show="toastmsg"
+      type="top"
+      class="toast-wrap">
+      <div
+        v-if="toastmsg"
+        class="toast-msg">
+        {{ toastmsg }}
+      </div>
+    </mip-fixed>
   </div>
 </template>
 
 <style scoped lang="less">
+*{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
 @main-color: #ff1d41;
 @dark-font: #323038;
 @normal-font: #494949;
@@ -220,18 +231,21 @@
     }
   }
 }
+.toast-wrap{
+  top: 200px !important;
+  text-align: center;
+}
 .toast-msg {
-  width: 180px;
+  width: auto;
+  max-width: 70%;
   padding: 15px 10px;
+  display: inline-block;
   line-height: 20px;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.65);
-  position: absolute;
   border-radius: 5px;
-  left: 50%;
-  top: 100px;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 1000;
+  font-size:1.4rem;
+  box-sizing: border-box;
 }
 .default-mark {
   background: #ff1d41;
@@ -270,77 +284,78 @@
       height: 100%;
     }
   }
-  .footer {
-    height: 5rem;
-    min-height: 5rem;
-    background: #fff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    .box-align(center);
-    .box-pack(center);
-    .pre-btn-icon {
-      width: 2.2rem;
-      height: 2.2rem;
-      border-radius: 2rem;
-      border: 2px solid @main-color;
-      position: relative;
-      margin-right: 2rem;
-      &:before {
-        content: "";
-        position: absolute;
-        height: 2px;
-        background: @main-color;
-        left: 25%;
-        top: 50%;
-        width: 50%;
-        transform: translateY(-50%);
-      }
-      &:after {
-        content: "";
-        position: absolute;
-        width: 2px;
-        background: @main-color;
-        left: 50%;
-        top: 25%;
-        height: 50%;
-        transform: translateX(-50%);
-      }
+}
+.footer {
+  height: 5rem;
+  min-height: 5rem;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .box-align(center);
+  .box-pack(center);
+  .pre-btn-icon {
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 2rem;
+    border: 2px solid @main-color;
+    position: relative;
+    margin-right: 2rem;
+    &:before {
+      content: "";
+      position: absolute;
+      height: 2px;
+      background: @main-color;
+      left: 25%;
+      top: 50%;
+      width: 50%;
+      transform: translateY(-50%);
     }
-    .btn-text {
-      color: @main-color;
-      line-height: 5rem;
-      font-size: 1.6rem;
+    &:after {
+      content: "";
+      position: absolute;
+      width: 2px;
+      background: @main-color;
+      left: 50%;
+      top: 25%;
+      height: 50%;
+      transform: translateX(-50%);
     }
   }
-  .address-list {
-    margin-top: 1rem;
-    background-color: #fff;
-    .address-item {
-      padding: 0.5rem 1rem;
-      border-bottom: 1px solid #eee;
-      line-height: 3rem;
-      position: relative;
-      overflow: hidden;
-      &:last-child {
-        border-bottom: none;
-      }
-      .user-cellphone {
-        padding: 0 0.5rem;
-      }
-      &.selected {
-        .selected-img {
-          display: block;
-        }
-      }
+  .btn-text {
+    color: @main-color;
+    line-height: 5rem;
+    font-size: 1.6rem;
+  }
+}
+.address-list {
+  margin-top: 1rem;
+  margin-bottom: 6rem;
+  background-color: #fff;
+  .address-item {
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid #eee;
+    line-height: 3rem;
+    position: relative;
+    overflow: hidden;
+    &:last-child {
+      border-bottom: none;
+    }
+    .user-cellphone {
+      padding: 0 0.5rem;
+    }
+    &.selected {
       .selected-img {
-        display: none;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        right: 1rem;
-        width: 3.5rem;
+        display: block;
       }
+    }
+    .selected-img {
+      display: none;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 1rem;
+      width: 3.5rem;
     }
   }
 }
@@ -573,6 +588,11 @@ export default {
             if (res.statusCode === 200) {
               me.toastmsg = ''
               me.showEditAddressFlag = false
+              if (me.location.default) {
+                me.addresses.forEach(item => {
+                  item.isDefault = false
+                })
+              }
               res.result.data &&
                 res.result.data.addressOID &&
                 me.addresses.push(res.result.data)
@@ -619,14 +639,15 @@ export default {
     changeProvince () {
       let me = this
       let provinceCode = me.location.province
+      me.cities = []
       let cityUrl = templateCompile(me.cityUrl, { provinceCode })
       httpGet(cityUrl).then(function (res) {
         if (res.statusCode === 200) {
           me.cities = res.result.data || []
           if (me.cities.length > 0) {
             let cityCode = me.cities[0].code
-
             me.location.city = cityCode
+            me.districts = []
             let districtUrl = templateCompile(me.districtUrl, {
               provinceCode,
               cityCode
@@ -647,6 +668,7 @@ export default {
       let me = this
       let cityCode = me.location.city
       let provinceCode = me.location.province
+      me.districts = []
       let districtUrl = templateCompile(me.districtUrl, {
         provinceCode,
         cityCode

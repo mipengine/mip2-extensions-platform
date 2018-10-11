@@ -91,6 +91,10 @@
 </template>
 
 <style scoped lang="less">
+*{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
 .refresh-icon{
   width:12px;
   height:12px;
@@ -166,9 +170,13 @@ ul li{
 }
 .city-wrap{
     display:flex;
+    display: -webkit-flex;
     align-items: center;
+    -webkit-align-items: center;
     justify-content:left;
+    -webkit-justify-content:left;
     flex-flow:row wrap;
+    -webkit-flex-flow:row wrap;
 }
 .all-city-wrap{
     margin: 0 -40px 0 -15px;
