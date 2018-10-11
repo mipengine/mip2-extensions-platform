@@ -196,7 +196,7 @@ export default {
       taphide: false,
       userId: '',
       token: '',
-      point: {}
+      point: JSON.parse(localStorage.getItem('point'))
     }
   },
   mounted () {
@@ -204,16 +204,13 @@ export default {
     let userId = localStorage.getItem('mipUserId')
     let token = localStorage.getItem('mipToken')
     localStorage.removeItem('useradd')
-
     if (userId && token) {
       this.userAddress(userId)
     }
-    let point = JSON.parse(localStorage.getItem('point')) || ''
     let position = base.getposition()
-    if (point) {
-      that.point = point
-      that.city = point.city
-      that.getCommunity(point.lng, point.lat)
+    if (that.point) {
+      that.city = that.point.city
+      that.getCommunity(that.point.lng, that.point.lat)
     } else if (position) {
       that.city = position.city
     } else {
