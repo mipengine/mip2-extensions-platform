@@ -1,5 +1,5 @@
 export const setCookie = (key, value) => {
-  document.cookie = encodeURIComponent(key) + '=' + encodeURIComponent(value)
+  document.cookie = encodeURIComponent(key) + '=' + encodeURIComponent(value) + ';path=/'
 }
 
 /* export const setCookie = (key, value) => {
