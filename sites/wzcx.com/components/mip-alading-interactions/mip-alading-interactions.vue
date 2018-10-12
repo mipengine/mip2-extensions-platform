@@ -363,8 +363,8 @@
 }
 
 .container {
-  width: 92%;
-  margin: 0 auto;
+  /* width: 92%; */
+  margin: 0 0.3rem;;
   overflow: auto !important;
 }
 
@@ -403,10 +403,11 @@
 }
 
 .idcard {
-  width: 100% !important;
+  width: 100%;
   margin: 0.5rem auto 1rem auto;
-  height: 9.55rem;
-  background-image: url(../../static/img/idcard.png);
+  height: 9.95rem;
+  background: url(../../static/img/idcard.png) no-repeat;
+  background-size: 100% 100%;
   /* background-image: url('http://test.xx-motor.com/wzcx.com/static/img/idcard.png'); */
 }
 
@@ -427,9 +428,10 @@
 }
 
 .license {
-  width: 100% !important;
+  width: 100%;
   margin: 0.5rem auto 1rem auto;
-  height: 9.55rem;
+  height: 9.95rem;
+  background-size: 100% 100%;
   background-image: url(../../static/img/license.png);
 }
 
