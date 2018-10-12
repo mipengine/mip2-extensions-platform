@@ -5,6 +5,7 @@
 <style scoped>
 </style>
 <script>
+import './log'
 export default {
   props: {
     src: {
@@ -21,16 +22,6 @@ export default {
     }
   },
   mounted () {
-    let getScript = (url) => {
-      let scriptNode = window.document.createElement('script')
-      let head =
-        document.getElementsByTagName('head')[0] || document.documentElement
-      scriptNode.src = url
-      scriptNode.charset = 'GBK'
-      scriptNode.async = true
-      head.insertBefore(scriptNode, head.firstChild)
-    }
-    getScript('//g.alicdn.com/alilog/mlog/aplus_v2.js')
     // let element = this.$element
     // let img = new Image()
     // img.style.display = 'none'
