@@ -222,7 +222,7 @@ export default {
   methods: {
     getState () {
       let that = this
-      let url = '/daoway/rest/order/' + that.orderId + '?userId=' + that.userId + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/order/' + that.orderId + '?userId=' + that.userId + '&channel=' + that.channel
       fetch(url, {
         method: 'get',
         credentials: 'include'
@@ -540,7 +540,7 @@ export default {
     },
     closesure (orderId, action) {
       let that = this
-      let url = '/daoway/rest/order/' + orderId + '/' + action + '?channel=' + that.channel + '&userId=' + that.userId
+      let url = 'https://www.daoway.cn/daoway/rest/order/' + orderId + '/' + action + '?channel=' + that.channel + '&userId=' + that.userId
       fetch(url, {
         method: 'POST',
         credentials: 'include',
@@ -558,11 +558,10 @@ export default {
             that.warn.show = true
             that.warn.texts = '订单已完成'
           }
+          MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + that.orderId, {isMipLink: false})
           setTimeout(() => {
             that.warn.show = false
           }, 600)
-          MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + that.orderId, {isMipLink: true})
-          // that.getState();
         } else {
           that.warn.show = true
           that.warn.texts = text.msg

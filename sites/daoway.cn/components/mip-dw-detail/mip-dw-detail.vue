@@ -192,7 +192,20 @@
         <p
           class="layer-sure active-layer"
           on="tap:log.login"
-          @click="closeLayer2">知道了,马上登录</p>
+          @click="closeLayer2">知道了，马上登录</p>
+      </div>
+    </div>
+
+    <div
+      v-show="warn3.show"
+      class="layer">
+      <div
+        class="layer-content zoomIn fade"
+        style="width:26%;left: 35%;">
+        <p
+          style="text-align: center;color: #fff; background:rgba(0,0,0,0.9); font-weight: normal; border-radius:10px"
+          class="layer-text"
+          v-text="warn3.texts"/>
       </div>
     </div>
 
@@ -274,7 +287,13 @@ export default {
         show: false,
         texts: ''
       },
+      noshow: true,
       warn2: {
+        // 弹窗
+        show: false,
+        texts: ''
+      },
+      warn3: {
         // 弹窗
         show: false,
         texts: ''
@@ -317,8 +336,8 @@ export default {
     this.detailstr()
     if (!this.userId && !this.token) {
       this.$on('customLogin', event => {
-        this.warn.show = false
-        this.warn.texts = ''
+        /* that.warn3.show = false
+        that.warn3.texts = '' */
         this.userId = event.userInfo.userId
         this.token = event.userInfo.token
         base.setCookie('mipUserId', event.userInfo.userId)
@@ -343,11 +362,35 @@ export default {
       }
       // }
     })
+    /* let position = base.getposition()
+    if (!position) {
+      let point = JSON.parse(localStorage.getItem('point'))
+      this.getCommunity(point.lat, point.lng)
+    } */
   },
   methods: {
+    /* getCommunity (lat, lng) {
+      let that = this
+      let url = 'https://www.daoway.cn/daoway/rest/community/autoPosition?lot=' + lng + '& =' + lat
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        return res.json()
+      }).then(function (text) {
+        if (text.status === 'ok') {
+          that.position = text.data[0]
+          base.position(text.data[0])
+        } else {
+          /!*that.warn.show = true
+          that.warn.texts = text.msg*!/
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    }, */
     detailstr () {
       let that = this
-      let url = '/daoway/rest/service/full/' + that.id + '?channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/service/full/' + that.id + '?channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -425,7 +468,7 @@ export default {
     thidpage: function (priceId) { // 选择服务项目
       let that = this
       let position = base.getposition()
-      let url = '/daoway/rest/servicePrice/similarPricesByPriceId?priceId=' + priceId + '&city=' + encodeURIComponent(position.city) + '&lot=' + (position.lng || position.lot) + '&lat=' + position.lat + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/servicePrice/similarPricesByPriceId?priceId=' + priceId + '&city=' + encodeURIComponent(position.city) + '&lot=' + (position.lng || position.lot) + '&lat=' + position.lat + '&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -492,19 +535,6 @@ export default {
         } else {
           that.warn2.show = true
           that.warn2.texts = '请先登录再继续下单'
-          /* that.$on('customLogin', event => {
-            this.userId = event.userInfo.userId;
-            this.token = event.userInfo.token ;
-            base.setCookie('mipUserId',event.userInfo.userId);
-            base.setCookie('mipToken',event.userInfo.token);
-            localStorage.setItem('mipUserId', event.userInfo.userId);
-            localStorage.setItem('mipToken', event.userInfo.token);
-            localStorage.setItem('nick', event.userInfo.nick);
-          }) */
-          /*
-          this.$nextTick(function () {
-            this.$emit('actionName');
-          }); */
         }
       }
     },
@@ -513,6 +543,8 @@ export default {
       that.warn2.show = false
       that.warn2.texts = ''
       that.$on('customLogin', event => {
+        that.warn3.show = true
+        that.warn3.texts = '登录成功'
         that.userId = event.userInfo.userId
         that.token = event.userInfo.token
         base.setCookie('mipUserId', event.userInfo.userId)
@@ -520,12 +552,17 @@ export default {
         localStorage.setItem('mipUserId', event.userInfo.userId)
         localStorage.setItem('mipToken', event.userInfo.token)
         localStorage.setItem('nick', event.userInfo.nick)
+        setTimeout(() => {
+          that.warn3.show = false
+          that.warn3.texts = ''
+        }, 1000)
       })
     }
   }
 }
 </script>
 <style scoped>
+
     * {
         padding: 0;
         margin: 0;

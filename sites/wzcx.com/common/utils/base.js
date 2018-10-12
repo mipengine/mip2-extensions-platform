@@ -1,4 +1,4 @@
-const outAldhttp = 'https://yjmtpt.xx-motor.com/xmdcwbaidu.com/example/'
+const outAldhttp = 'https://yz-alipay.fundway.net/xmdcwbaidu.com/example/'
 
 function setContainerH (dom) {
   const agent = window.navigator.userAgent

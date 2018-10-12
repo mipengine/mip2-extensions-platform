@@ -2,13 +2,13 @@
   <div class="wrapper">
 
     <div class="banner-content">
-      <div
+      <!-- <div
         on="tap:sidebar.open"
         class="head actives">
         <mip-img
           class="user"
           src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAApVBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAASEhIAAAAAAAAAAAAAAAAAAADLy8srKyv5+flkZGQ+Pj7m5ube3t6/v7/+/v78/Pz09PTx8fHHx8fExMS3t7eurq4AAAD6+vrw8PDR0dGpqamlpaWIiIiCgoJ4eHhRUVH29vbt7e3p6enh4eHV1dXJycmcnJyYmJiPj49ycnLX19fLy8v///80YWSfAAAANnRSTlNNAEclHAVMQCsRUUQ+PDIKq1fvaVzOw6H7+ObhqKWZkzbz3rOOjHp2cWLq2dTHt6uFg31vuq2EvXj9AAACEElEQVRYw6TP6U7CQBSG4Y/Zx24pZRNMAEkQFwiJce7/0sRUQpmeU9v4/D9vvoMRQyuZp4kwRiRpLpUeMeiAdxYR63zfgJYWJCt1j4CWAiwRJYiAEugkVGegyPCnrOADXqAH4bmAMujFKDrg0JujAhsMsGkHHAZxcUBhIHUf8AYDGd8MFAKUl6/jx2xegSSKRiAjz99DbfYKSnYLKBDWi3A1PoCirgFNPXAODWNyg9C/AYm2chuapqDIOkAOeAr39twE0AOwjAInbsIlYNE2CZEVKPYn4EH4DJEtSP4ScP8JuEvAos8Lz2B+gAZpFQV2oGkokOZR4ACaggSpHIemIxgSOWj7Rbh5m4CRIwXj/BiulhU4KRJwqml9vtiVYCUQ4FXz02y3nqCDgAHvoYYOhguU36WXzQrCMBCEIa0HQdH+WfuTCKVRUaFUZN//0TwIHpJJIMx3b0M2u7Mz9tT/i1A+dRX8gYJHm1IcArqmYBGLRny6FRdxB74fBGLRM6JGagTT3VEjZb4cS4gJtXLuFfAhQWYwTN44rxLmBcbZE5SPRKhdQQGSNkmEtytpQFRLgeAibIGsnyWCcW6AFsuQcIUMrbaqkRD9Baw2sFyLmzWtHsfl+GMZtW7NfK29LgLrPQW1AQYjhRxYnBT2wGSloA6szWONJmt1abPN230+cPCRhw9dfOzjgycfffnwTcf/L1foiQI8KsLLAAAAAElFTkSuQmCC"/>
-      </div>
+      </div> -->
       <mip-img src="https://www.lanxiniu.com/Public/baidumip/newbanners.png"/>
     </div>
     <div class="order-data">
@@ -60,7 +60,7 @@
             <div
               data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22checkcartype%22%2C%22click%22%5D%7D"
               class="actives"
-              @click="hrefToCostdes">查看车型详情</div>
+              @click="hrefToCostdes">查看车型价格</div>
           </div>
           <div class="card-car-content">
             <div
@@ -85,6 +85,7 @@
           </div>
           <div class="parent-sure-order">
             <div
+              data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22getorderprice%22%2C%22click%22%5D%7D"
               class="sure-order"
               @click="guJia">{{ btnName }}</div>
           </div>
@@ -105,62 +106,64 @@
         </label>
       </div>
       <div class="option">
-        <div
-          data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22costdes%22%2C%22click%22%5D%7D"
-          @click="hrefToCostdes">
-          <mip-img
-            class="option-img"
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAAYFBMVEUAAADq6uri4uJt0P9rw/+i6f9rxP9rwv9qw/9rw/9sxP9rxf9txf9rw/9qw/9rxP9rw/9qwv9qw/9qw/9rw/9rxP9rw/9sxP9sw/9uxv9uxf9vyP9rwv9sw/9qwv/h4eFNxbdYAAAAHnRSTlMADMMLrgN/7N7UV0wj9el5+fDkwo2FcmNANSwXm5ozd0SEAAABjklEQVRIx+2XSZLDIAxFnWDjAcdzPIfc/5Zd7UYJg4nd9bf5Owq9QhICRLCvaOofbRJXVZy0j36KgtOKRFhLQ3UozvGsjOWO4pIdrzo00qNmOFhdpPKDUvGJvcsD3f3RhvJQoSfyPJUnlOa7bGEYJV025ozlY9YlxkSxQ7NUN+CzPjfzQl/b9VyL98adacZvWtwf8hwuwY6W0Jtz8Z7hgUf8bSOMukpfLmeBV9ntFbZea4MkKdZDS9KgpaOxfD70vHmntPTl8XLx7Un5ijimgBeLvV4teqGw48hONbfZ51PRruPC8qVgDuvQrDAjjGqKw2WJdpeu//yepNLssi49k/W0DXs6Rza7T9MZ67fRqkadxXroTpmv26il4jJZk3bLrDX8GA3WS49GlFQiuc766ZzKZBtVasR01k8zZV5BMOQ2lDBoq5AieUDlCR0M80jy/x1J5DKAriHoAkSuXujSR54b6KFDnljkcUfaCqihQVoppIlD20e8ccVbZrxZx78J+AeFvkYrfY3W36/RV0o/ajqlHYCl+8UAAAAASUVORK5CYII=" />
-          <div>费用标准</div>
-        </div>
-        <div>
-          <a
-            :href="customeServerUrl"
-            data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22serveronline%22%2C%22click%22%5D%7D">
-            <mip-img
-              class="option-img"
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAApVBMVEUAAABrw//h4eFqw//k5OTi4uJsxP90yf/Q///j4+Pn5+fi4uLi4uJrw//i4uJrw/9qwv9rw/9rw/9qw/9rxP9rw/9sxP9rw//j4+Nswv/k5ORs0//i4uLi4uLi4uLi4uLi4uLi4uLj4+Pl5eXm5uZrw//i4uJqwv/h4eHj4+Pi4uLq6ur///9qw//h4eHi4uLi4uLi4uLj4+Ph4eHi4uJqwv/h4eEzkvEiAAAANXRSTlMAvef7HKYkEANjCu3d8+HZxa6qkHVdWlFOOzkM/MfAsoWAdCMQovbWmmtUGAah18uolUkzLOXvEtIAAAIPSURBVEjH7ZbZdoIwEIYDVUBErQuKKILivm/w/o/W02QSIRDCOell/7uY+TKZhYlIoPiwDwNnu3WCcH+IUX1Zx303zam7P1q1UPsAJMcfbDm6bKcCtZcS3HfSCjl+BXqO5mml5tFZxJ5uGbMg8vzYtmPfi4LMkbeTgL0yk+CYC88+BmzrWko3WLhhSWh+yAJvVLC6h0rl6ULaWsDWfY0EWt/BZME3zBI2IlShCIyWXEiQ0BWq1ApK4efS2aVHSgQX7NrFE0Np91th4Ya2TtK4RlKtHVISm3fsoRryONdn4niBamlBXNMmf5LDXvXgF7F+wvJRdCx3/YAVqVMrb2K6F63X6fS0i2vmd1qkWmTxxottLtUT7Sth+tImuYRvMfAmg7L1q2yqp98Jp+9pNuEYiMsbYZiUaFhrfJpaUirNrMHuEoF2UtrSEqE02c2HSYWGxfnT1PVmg+Y5U6DB2JjNjPEgU7QpxzTa+DUA+lOjvoFARv9TMWAp00yxmqQ3mNsRymjEnJNuYYwOMxP/yrIFLKNZzvCSMSkIl4l66CNOfXojXC7K5GCXmhg8bNBjXSG8AYsBKmgAWxsRzEIeF+ExDVoI98DCKMIGbPWEcAcsZkV4BlsdJVjp2koJUynV5c+aRKk9lT4MpU9SaRiojCGFAag0etWHvvpzo/7QyZ9YsaSPe32Z7ob8rdi4JvoX0w8ouxLoG0Sx1gAAAABJRU5ErkJggg==" />
-            <div>在线咨询</div>
-          </a>
+        <div class="customer-service">
+          <div>
+            <div class="content actives">
+              <a
+                :href="customeServerUrl"
+                data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22serveronline%22%2C%22click%22%5D%7D">
+                <div>
+                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAMAAACfWMssAAAAhFBMVEUAAAA4pfA5pvBMtP84pvJAqfI4pvE5pvI4pvJTvP84pfA4pvE6p/M4pfE5pvI5pvE9qPVDvf85pvA5p/E7p/M4pfA4pvE5pvA4pfA5qPI4pvE5pvI4pvE4pvE4pvI6pvI6qvJAqPQ/sP84pvE5pvE4pvI9p/Q7p/U5pfA5pvE4pvE4pfAOH0fTAAAAK3RSTlMAv3oKTRL6hlsE4txB71XHHwfQbjH0upyLOumWs451RSUWDtagZSwaqqaE8TYywQAAAbBJREFUSMftldtSq0AQRRkQGBhuAYGExCTmqq7//79T1CGUAo3xxQcr+43uWjN9m8Z66FeVRXq71VH2M+rZP9Lp6D/fj1V8UXUf6tQAnvKLJCl85QHUzh255YA5u7dv92yAPPs2zAbiYvHZtChiaL4J9zUEsx9a9wbC1zlukULqju1ua1/MgB/tyVIkHzJ3LfEu066LR3kVwRqWkm8JteRzPWJXdMZ4klN3F4pXasH1BisZXMGb4IppAhkMGmKhiaCsGSmYbmUG73PgO2RSEi9z4ItUggj8OdCHaNKRwHoOXEMylWEFYCIJiwxAlY3sJf9lT3N25y4HJ7shGN9WwEooHMr2DYTusGKbtklbyKfAHLZtqzfDyoe3CU5hP+b2kN7eQfhlnPqLlrAbgztY9ld/HksHVF+EpzH41BdNgfMAfxNMDgdHBDd4Yh8BThIY5fZgctL+tQKUwWBypDfeUDq3HFRVbQYv9tJHFIyXf93t5HDqYAO6xXxvsCSuMaizPtEXdZQkJ12kYIYLxwNAXDtrOunRP/wIEGtLkI4Bwol4gqiwk4Ml6pDYxS6wHvpT+gcv0D9s+8rqYgAAAABJRU5ErkJggg==">
+                </div>
+                <div>
+                  <div>在线咨询</div>
+                  <div>9:00-18:00</div>
+                </div>
+              </a>
 
-        </div>
-        <div>
-          <a
-            data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22call400%22%2C%22click%22%5D%7D"
-            href="tel:4006785966">
-            <mip-img
-              class="option-img"
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAA51BMVEUAAABtxv9rw//d//9sw//j4+NsxP9rw/9rw/9sxP+A2/9qw//k5OTi4uJqw//i4uJrw//i4uJrw/9rxP/j4+Pj4+NsxP9xy//s7Ox7yv9rw//i4uLi4uLi4uJrw/9qwv9rwv/i4uJqw/9rw/9qw/9qw//i4uJqwv9qxP/i4uLj4+Pn5+fh4eHi4uLi4uLh4eHi4uLl5eXl5eV2xP9q1f/i4uJrwv/j4+Pi4uJsxP9sw/9sxv9tw/9sw/9txv9wx//o6Oj////i4uLi4uLh4eHi4uLi4uLi4uLi4uLi4uLm5uZqwv/h4eGTplBAAAAAS3RSTlMAGdkCfywn7d9PB/Yl9fPq4sSKglFCNBUNCernn3/5zsG2rqmclZJxYVY1H9e+inhzOhwNDMd6a2VaVUdEQC4gFQfs697QqaWGhRR8xdNsAAACMElEQVRIx+2V2XqiMBSAD4IIgtZ9wbUu1VGnVWu3aTvt7Mvh/Z9nEBNDhAOtc9Xv639liD9JzhLgnTeKrvyH66SOthUDMWSr9qy6mn9JcrM9xAPb7hRzrs/V71msPEY8sNctN0CxQrsmYshOn7hBPtqE2ywg5x4oO0csXt67UwDSdpdRbt3i7jVI2FW7Ma/eFLl9C2E07g4gmnSb2dVwmjLMtZ6A4sMua60GGeoy0KR3mTuDA4bMLTSlxw17/VcVw5XrM5ddNc/kUvBh58rf5tlq7y99+VyWa8ioSYd0GafPwFhsh19VSZ7w4gKItFs8xDf+UC7zkdi1hD1/nl1835ZWmgXBj/gFBOmL4gqj/vH+v2AJ8ovllzRvMPkBIrkVCWr7DSLN8hLRwyJXcrv7oLOVF9Jkl8mXhLz2jIqQfxAywanrtsW2i8S2Cc69ZLO3ePyMDNgjJS95lNInZKruYlYuwt6uEkVCUPFzxexvyeV5WKkV4HaHaIzPpF1piN9ES2pwBEMmO5sjZBOPX1pcgPk6JENfverr5br1mo3Tn5tPEMO9Ev+hs2LsKaYUIuAcjTr3NSJhj4U9iIz50wCRsrM9Yee1TehcZQuRthUDBY4m1XmtxGJC2rqDQVKlu0d9c6k/TEspacLRIco28AUYwpVQesluTyGLfJzkjrNAYxbi1IJJeSInBFa5mdwlWiZKzWj1l/W3OczLZn5ohg5Lo9Ymo76R6XYzRn80qanwjsc/TQbv4fcQpE8AAAAASUVORK5CYII=" />
-            <div>客服热线</div>
-          </a>
-        </div>
-        <div
-          data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22userguide%22%2C%22click%22%5D%7D"
-          @click="hrefToUserguide">
-          <mip-img
-            class="option-img"
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAAAYFBMVEUAAADq6uri4uJt0P9rw/+i6f9rxP9rwv9qw/9rw/9sxP9rxf9txf9rw/9qw/9rxP9rw/9qwv9qw/9qw/9rw/9rxP9rw/9sxP9sw/9uxv9uxf9vyP9rwv9sw/9qwv/h4eFNxbdYAAAAHnRSTlMADMMLrgN/7N7UV0wj9el5+fDkwo2FcmNANSwXm5ozd0SEAAABjklEQVRIx+2XSZLDIAxFnWDjAcdzPIfc/5Zd7UYJg4nd9bf5Owq9QhICRLCvaOofbRJXVZy0j36KgtOKRFhLQ3UozvGsjOWO4pIdrzo00qNmOFhdpPKDUvGJvcsD3f3RhvJQoSfyPJUnlOa7bGEYJV025ozlY9YlxkSxQ7NUN+CzPjfzQl/b9VyL98adacZvWtwf8hwuwY6W0Jtz8Z7hgUf8bSOMukpfLmeBV9ntFbZea4MkKdZDS9KgpaOxfD70vHmntPTl8XLx7Un5ijimgBeLvV4teqGw48hONbfZ51PRruPC8qVgDuvQrDAjjGqKw2WJdpeu//yepNLssi49k/W0DXs6Rza7T9MZ67fRqkadxXroTpmv26il4jJZk3bLrDX8GA3WS49GlFQiuc766ZzKZBtVasR01k8zZV5BMOQ2lDBoq5AieUDlCR0M80jy/x1J5DKAriHoAkSuXujSR54b6KFDnljkcUfaCqihQVoppIlD20e8ccVbZrxZx78J+AeFvkYrfY3W36/RV0o/ajqlHYCl+8UAAAAASUVORK5CYII=" />
-          <div>用户指南</div>
+            </div>
+          </div>
+          <div>
+            <div
+              class="content actives">
+              <a
+                data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22call400%22%2C%22click%22%5D%7D"
+                href="tel:4006785966">
+                <div>
+                  <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADgAAAA4CAMAAACfWMssAAAAnFBMVEUAAABY2Vg9uTZEvT09uTY/vDg+ujdAvDhEuzhLzUU9uTY9uTY9ujY9uTY+uTZEvkE9uTY9uTY9uTY9uTc+uTc/uzg+vDc9uTY9ujY9uTY+uTY9ujg+uzk/uzhAvz09uTY+uTY9vDc9uDY+uTY+uTY+uTc+uTc+ujg/ujdCvTk9uTY9uTY+uTc+ujZAuzk+uTY9uzY+uzc9ujY9uDbw4EVJAAAAM3RSTlMABN0S7C2DIRYI+/F94sAM9/TWyZc4M7Spo4t1RyUZ0q0pxbmxZF9aVB3mzZ15P29rUNp0+phoAAAB/ElEQVRIx+2V2W6rQBBE8bAYs6/GGMxiBxuvsVP//2+XMRh0owhmIuUlSj2gfuCoRt01PcKfflqb6rr8Bra4e4CZcnOzwEWj/MjrF2iQ1itA4fQzHJgHYUNANlzgXseJeinAmoeb59CrZ+HxWSa9kcFludjBnHfeH/DmzODRg2V39RpImEH5hLdXXZrwVVawlLDqB3MBKuammoOjEEr03GxSz7AWveUKTsiamwhkaOUBODCCNDD1q7bf4IasYOgg7sOgIRJZQXHbJ21p4hQKzLoCxuugMHhSTrqxyzp2osChADC6EBUzHrAkIDLNe9PTg8AjA7hQq1QC4dp16hZORcOgAGeZh3x0VmIMbDlIatU2NPMH0pYfS3EyBREQ2LSwgDyd0R6vJDjbZGolLD1oCv3/GAHSWrXfCZ76CMLFKJmacN8pmV004Eyaj1XFJgA9qsWJ9SoZlGzNqG3zFhm+BmjWXhxrkAPp/kxOGeS6lbYhUutIb9DdbSwHLvSk/f24VIcFemvaBLMeWbGJDlcRvzjMbadhNTbOuwQUXz0DNxfxaBD2pB3jJ2XW5C4KLUC6lJ+4AtMrJQscgPwXGLHhvOkEL/Y+AC8IxeF1Qc6U/MwgAHS/UFK73Uk+6y0tFRoYwKEzUIt4znG36/jsAvGMHr5NOTsrP66Z8Kdfq3+BjDeLTUUD1AAAAABJRU5ErkJggg==">
+                </div>
+                <div>
+                  <div>客服热线</div>
+                  <div>8:00-20:00</div>
+                </div>
+              </a>
+
+            </div>
+          </div>
         </div>
       </div>
 
     </div>
 
-    <div
+    <mip-fixed
       v-show="warn.show"
-      class="layer"
+      class="layerfixed">
+      <div
+        v-show="warn.show"
+        class="layer"
+        @touchstart.prevent/>
+      <div
+        v-show="warn.show"
+        class="layer-content zoomIn">
+        <p
+          class="layer-text"
+          v-text="warn.texts"/>
+        <p
+          class="layer-sure active-layer"
+          @touchend.stop.prevent="closeLayer">知道了</p>
+      </div>
+    </mip-fixed>
 
-      @touchstart.prevent/>
-    <div
-      v-show="warn.show"
-      class="layer-content zoomIn">
-      <p
-        class="layer-text"
-        v-text="warn.texts"/>
-      <p
-        class="layer-sure active-layer"
-        @touchend.stop.prevent="closeLayer">知道了</p>
-    </div>
     <div
       v-if="fetchShow"
       class="mip-loading-box">
@@ -369,7 +372,7 @@ export default {
       console.log('查看搬出地址数据')
       if (moveOut) {
         if (moveIn) {
-        //   this.upOrder()
+          //   this.upOrder()
           MIP.viewer.open(base.htmlhref.payorder, { isMipLink: true })
         } else {
           this.openLayer('请填写搬入地址')
@@ -466,7 +469,7 @@ export default {
             }
             // 小面
             if (itemType === 3) {
-            //   car.des = '适合1人物品'
+              //   car.des = '适合1人物品'
               car.carType = 3
               car.srcs =
                 'https://www.lanxiniu.com/Public/baidumip/xiaomian.png'
@@ -483,7 +486,7 @@ export default {
 
             // 厢货
             if (itemType === 20) {
-            //   car.des = '适合家庭搬家'
+              //   car.des = '适合家庭搬家'
               car.carType = 20
               car.type = 2
               car.srcs =
@@ -512,27 +515,36 @@ export default {
         .then(response => {
           console.log(response)
           if (response.content) {
-            if (response.content.address) {
+            if (response.content.address_detail.city) {
               let privite = {
                 ordercity: '北京'
               }
-              let city = response.content.address
+              let city = response.content.address_detail.city
               let currentCity = city.substring(0, city.length - 1)
               let nowCityList = base.getSession().cityList
               if (nowCityList.indexOf(currentCity) > -1) {
                 privite.ordercity = currentCity
+                console.log('当前城市在服务城市列表里面')
+              } else {
+                console.log('不在城市列表')
               }
-              //   let lxnData = base.getSession()
-              //   if (lxnData) {
-              //     lxnData.ordercity = privite.ordercity
-              //     this.setGlobalData(lxnData)
-              //   } else {
+              console.log(
+                '查看城市列表:' + JSON.stringify(nowCityList, null, 2)
+              )
+              console.log('查看当前定位的城市:' + city)
+              console.log('查看截取的城市:' + currentCity)
+              console.log(
+                '查看获取数据城市:' + JSON.stringify(privite, null, 2)
+              )
 
-              //   }
               this.setGlobalData(privite)
 
               this.getCurrentCityCarTypes(privite.ordercity)
+            } else {
+              this.getCurrentCityCarTypes('北京')
             }
+          } else {
+            this.getCurrentCityCarTypes('北京')
           }
         })
     },
@@ -749,7 +761,7 @@ export default {
     .card-car-content > div {
       flex: 1;
       justify-content: center;
-      padding: 0 .05rem;
+      padding: 0 0.05rem;
       overflow: hidden;
       box-sizing: border-box;
     }
@@ -774,7 +786,7 @@ export default {
       border-radius: 0.12rem;
       padding: 0.15rem 0.1rem;
       padding-right: 0;
-      padding-bottom: .3rem;
+      padding-bottom: 0.3rem;
     }
     .car-item > div > div.checked {
       border: 0.04rem solid #40b1ff;
@@ -811,19 +823,6 @@ export default {
       top: 0.2rem;
       right: -0.4rem;
     }
-    // .des .cardes {
-    //   display: flex;
-    //   align-items: center;
-    //   position: absolute;
-    //   bottom: 0;
-    //   left: 0;
-    //   font-size: 0.2rem;
-    //   padding: 0.05rem 0.15rem;
-    //   border-top-right-radius: 0.15rem;
-    //   color: #ffffff;
-    //   background: #d1d1d1;
-    //   letter-spacing: 0.32px;
-    // }
   }
 }
 
@@ -866,7 +865,6 @@ export default {
   .div-kefu {
     height: 0.1rem;
     border-top: 0.02rem solid #e1e1e1;
-
     padding: 0 0.8rem;
   }
   .option {
@@ -874,24 +872,51 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    > div {
-      flex: 1;
-      font-size: 0.24rem;
-      color: #666666;
-      letter-spacing: 0.05px;
-      text-align: center;
-    }
-    > div:active {
-      background: rgba(0, 0, 0, 0.02);
-    }
-    .option-img {
-      width: 0.6rem;
-      height: 0.6rem;
-      margin: 0 auto;
-      margin-bottom: 0.1rem;
-    }
   }
 }
+.customer-service {
+  margin-top: 0.1rem;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  //   padding: .2rem .4rem;
+  width: 100%;
+}
+.customer-service > div {
+  flex: 1;
+  padding-right: 0.15rem;
+}
+.customer-service > div:last-child {
+  padding-right: 0;
+  padding-left: 0.15rem;
+}
+.customer-service > div .content {
+  display: flex;
+  border: 0.02rem solid #e1e1e1;
+  border-radius: 6px;
+  align-items: center;
+  font-size: 0.24rem;
+  color: #666666;
+  letter-spacing: 0.05px;
+  justify-content: center;
+
+  background: #fff;
+}
+.customer-service > div .content a {
+  display: flex;
+  padding: 0.1rem 0;
+  width: 100%;
+  justify-content: center;
+}
+.customer-service > div .content a > div:last-child {
+  padding-left: 0.2rem;
+  text-align: left;
+}
+.customer-service img {
+  width: 0.56rem;
+  height: 0.56rem;
+}
+
 .kefu {
   position: relative;
   top: -0.15rem;

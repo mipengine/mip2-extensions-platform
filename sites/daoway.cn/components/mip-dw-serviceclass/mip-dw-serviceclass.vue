@@ -1,5 +1,17 @@
 <template>
-  <div class="wrapper">
+  <div class="wrapper"><!-- v-if="!position"-->
+    <mip-map
+      id="map"
+      on="getPositionComplete:test.success  getPositionFailed:test.fail">
+      <script type="application/json">
+        {
+        "ak": "epGAmM09OL7Lwy7cIu47pxzK",
+        "hide-map": true,
+        "get-position": true
+        }
+      </script>
+    </mip-map>
+    <div id="test"/>
     <mip-fixed type="top">
       <div class="sc-nav">
         <mip-scrollbox
@@ -62,6 +74,18 @@
         v-if="nomore"
         class="loding">~暂时只有这些了~</p>
     </div>
+    <div
+      v-show="warn.show"
+      class="layer">
+      <div class="layer-content zoomIn">
+        <p
+          class="layer-text"
+          v-text="warn.texts"/>
+        <p
+          class="layer-sure active-layer"
+          @click="closeLayer">知道了</p>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -86,10 +110,16 @@ export default {
       channel: 'mip',
       nomore: false,
       startY: '',
-      endY: ''
+      endY: '',
+      warn: {
+        // 弹窗
+        show: false,
+        texts: ''
+      }
     }
   },
   mounted () {
+    let that = this
     let category = this.category
     this.nav()
     if (this.tag === '全部') {
@@ -107,23 +137,91 @@ export default {
       let touch = e.touches[0]
       this.endY = touch.pageY
       /* if(this.endY >= this.startY){
-          this.morelist();
-      } */
+              this.morelist();
+          } */
       this.morelist()
+    })
+    that.$on('success', (e) => {
+      let that = this
+      let position = localStorage.getItem('position')
+      let city = e.address.city.replace(/市$/g, '') || '北京'
+      if (position) {
+        that.position = base.getposition()
+      } else {
+        that.city = city
+        that.getCommunity(e.point.lat, e.point.lng)
+      }
+      that.point.lat = e.point.lat
+      that.point.lng = e.point.lng
+      let point = {
+        lat: e.point.lat,
+        lng: e.point.lng,
+        city: city
+      }
+      localStorage.setItem('point', JSON.stringify(point))
+    })
+    that.$on('fail', (e) => {
+      localStorage.removeItem('point')
+      let position = localStorage.getItem('position')
+      if (position) {
+        that.position = base.getposition()
+      } else {
+        if (e.address.city) {
+          that.city = e.address.city.replace(/市$/g, '') || '北京'
+        }
+        if (e.point.lat && e.point.lng) {
+          let point = {
+            lat: e.point.lat,
+            lng: e.point.lng,
+            city: that.city
+          }
+          localStorage.setItem('point', JSON.stringify(point))
+          that.getCommunity(e.point.lat, e.point.lng)
+        } else {
+          that.toposition()
+        }
+      }
     })
   },
   methods: {
+    getCommunity (lat, lng) {
+      let that = this
+      let url = 'https://www.daoway.cn/daoway/rest/community/autoPosition?lot=' + lng + '&lat=' + lat
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        return res.json()
+      }).then(function (text) {
+        that.warn.show = true
+        that.warn.texts = JSON.stringify(text)
+        if (text.status === 'ok') {
+          that.position = text.data[0]
+          base.position(text.data[0])
+          MIP.viewer.open(base.htmlhref.serviceclass + '?category=' + that.category + '&tag=' + that.tag, {isMipLink: false})
+        } else {
+          that.warn.show = true
+          that.warn.texts = text.msg
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
     nav () {
       let that = this
       let category = that.category
-      let url = '/daoway/rest/category/for_filter?manualCity=' + encodeURIComponent(that.position.city) + '&category=' + category + '&weidian=false&recommendOnly=true&includeChaoshi=false&includeSecondPage=false&hasChaoshi=false&hasTagImg=true&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/category/for_filter?category=' + category + '&weidian=false&recommendOnly=true&includeChaoshi=false&includeSecondPage=false&hasChaoshi=false&hasTagImg=true&channel=' + that.channel
+      if (that.position) {
+        url += '&manualCity=' + encodeURIComponent(that.position.city)
+      }
       fetch(url, {
         method: 'get'
       }).then(function (res) {
         return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
+          console.log(text.data)
           let data = text.data[0]
+          document.title = text.data[0].name
           let filterAry = data.tagsInfo
           let filter = {
             name: '全部',
@@ -142,8 +240,12 @@ export default {
     getServicelist (index, category, tag) {
       let that = this
       let position = that.position
-      let url = '/daoway/rest/service_items/filter?start=' + index + '&size=30&manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lng || position.lot) + '&lat=' + position.lat + '&category=' + category + '&channel=' + that.channel + tag
-      console.log(url)
+      let url = ''
+      if (position) {
+        url = 'https://www.daoway.cn/daoway/rest/service_items/filter?start=' + index + '&size=30&manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lng || position.lot) + '&lat=' + position.lat + '&category=' + category + '&channel=' + that.channel + tag
+      } else {
+        url = 'https://www.daoway.cn/daoway/rest/service_items/filter?start=' + index + '&size=30' + '&category=' + category + '&channel=' + that.channel + tag
+      }
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -234,6 +336,13 @@ export default {
     },
     todetail (id) {
       MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, { isMipLink: true })
+    },
+    toposition () {
+      MIP.viewer.open(base.htmlhref.position, {isMipLink: true})
+    },
+    closeLayer () {
+      this.warn.show = false
+      this.warn.texts = ''
     }
   }
 }
@@ -312,8 +421,8 @@ export default {
     }
 
     .scbl-left img {
-        width: 105px;
-        height: 105px;
+        width: 100%;
+        height: auto;
         border-radius: 4px
     }
 
