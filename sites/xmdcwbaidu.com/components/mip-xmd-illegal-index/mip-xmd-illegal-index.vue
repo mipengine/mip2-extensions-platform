@@ -53,7 +53,7 @@
                 <div class="ldf-inline-field-other">
                   粤
                 </div>
-                <a class="mint-cell mint-field illegal-input is-nolabel">
+                <a class="mint-cell mint-field uppercase illegal-input is-nolabel">
                   <div class="mint-cell-left"/>
                   <div class="mint-cell-wrapper">
                     <div class="mint-cell-title"><span class="mint-cell-text"/></div>
@@ -100,7 +100,7 @@
             <div class="mint-cell-left"/>
             <div class="mint-cell-wrapper">
               <div class="mint-cell-title"><span class="mint-cell-text">验证码</span></div>
-              <div class="mint-cell-value">
+              <div class="mint-cell-value mint-cell-value-yzm">
                 <input
                   v-model="imgCode"
                   placeholder="请输入验证码"
@@ -113,7 +113,9 @@
                 <span class="mint-field-state is-default"><i class="mintui mintui-field-default"/></span>
                 <div
                   class="mint-field-other"
-                  @click="updateVcode"><mip-img :src="imgCodeUrl"/></div>
+                  @click="updateVcode"><mip-img
+                    :src="imgCodeUrl"
+                    layout="fill"/></div>
               </div>
             </div>
             <div class="mint-cell-right"/>
@@ -211,7 +213,7 @@
             <div class="mint-cell-left"/>
             <div class="mint-cell-wrapper">
               <div class="mint-cell-title"><span class="mint-cell-text">验证码</span></div>
-              <div class="mint-cell-value">
+              <div class="mint-cell-value mint-cell-value-yzm">
                 <input
                   v-model="imgCode"
                   placeholder="请输入验证码"
@@ -224,7 +226,9 @@
                 <span class="mint-field-state is-default"><i class="mintui mintui-field-default"/></span>
                 <div
                   class="mint-field-other"
-                  @click="updateVcode"><mip-img :src="imgCodeUrl"/></div>
+                  @click="updateVcode"><mip-img
+                    :src="imgCodeUrl"
+                    layout="fill"/></div>
               </div>
             </div>
             <div class="mint-cell-right"/>
@@ -352,11 +356,29 @@
   margin: 0 auto;
   text-align: center;
 
+  .uppercase {
+    input {
+      text-transform: uppercase;
+    }
+  }
+
   .mint-cell {
     .mint-cell-wrapper {
       padding: 0 15px;
       .mint-cell-title {
         text-align: left;
+      }
+      .mint-cell-value-yzm {
+        .mint-field-core {
+          width: initial;
+          /*flex-grow: 2;*/
+          max-width: 2.6rem;
+        }
+        justify-content: space-between;
+        .mint-field-other {
+          width: 70px;
+          height: 25px;
+        }
       }
     }
   }
@@ -814,6 +836,7 @@ export default {
             engine: params.engine
           })
           Storage.set('illegalIndexResult', data)
+          console.log('ad', gConst.BASE_URL_PAGE + 'mip-xmd-illegal-msg.html')
           MIP.viewer.open(gConst.BASE_URL_PAGE + 'mip-xmd-illegal-msg.html')
         })
         .catch(() => {
@@ -862,6 +885,12 @@ export default {
         if (self.engine.length !== 6) {
           Toast.open({
             message: '发动机号输入有误, <br>请重新输入'
+          })
+          return true
+        }
+        if (!self.info.hasOwnProperty('isLogin') || self.info.isLogin !== true) {
+          Toast.open({
+            message: '未登录'
           })
           return true
         }

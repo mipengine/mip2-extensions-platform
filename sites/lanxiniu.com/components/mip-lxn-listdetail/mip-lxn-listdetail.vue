@@ -48,7 +48,7 @@
     </div>
     <div class="cost">
       <span class="title">费用</span>
-      <span class="content"><span v-text="detail.needPay"/> 元</span>
+      <span class="content"><span v-text="detail.needPay"/> 元<span v-text="detail.alreadyPay"/></span>
       <span class="order-detail"><a
         href="javascript:void(0)"
         @click="coseDetail(detail)">费用明细</a></span>
@@ -66,14 +66,14 @@
         <li class="address">
           <div class="left">搬出地址</div>
           <div class="right">
-            <p v-text="detail.poiList[0].deliverRemark"/>
+            <p v-text="detail.poiList[0].deliverAddress"/>
             <p v-text="moveOutFloor">有电梯,无楼梯费</p>
           </div>
         </li>
         <li class="address">
           <div class="left">搬入地址</div>
           <div class="right">
-            <p v-text="detail.poiList[1].deliverRemark"/>
+            <p v-text="detail.poiList[1].deliverAddress"/>
             <p v-text="moveInFloor">有电梯,无楼梯费</p>
           </div>
         </li>
@@ -104,9 +104,13 @@
         <span class="normal">联系司机</span>
       </a>
       <span
-        v-show="detail.OrderStatus.isNeedPay === 1"
+        v-show="detail.OrderStatus.mipPayType === 1"
         class="order-again"
-        @click.stop="payOrder(detail)">立即支付</span>
+        @click.stop="payOrder(detail)">支付定金</span>
+      <span
+        v-show="detail.OrderStatus.mipPayType === 2"
+        class="order-again"
+        @click.stop="payOrder(detail)">支付尾款</span>
 
     </div>
 
@@ -190,19 +194,23 @@ export default {
         show: false,
         texts: ''
       },
-      loading: false
+      loading: false,
+      interval: ''
     }
   },
   created () {
     base.setHtmlRem()
   },
   mounted () {
+    window.addEventListener('hide-page', (e) => {
+      this.interval && clearInterval(this.interval)
+    })
     this.$element.customElement.addEventAction('login', (event, str) => {
-      let interval = setInterval(() => {
+      this.interval = setInterval(() => {
         console.log(JSON.stringify(this.userlogin, null, 2))
         if (this.userlogin.sessionId !== '') {
           this.getRequest()
-          clearInterval(interval)
+          clearInterval(this.interval)
         }
       }, 200)
       console.log('查看用户信息:' + JSON.stringify(event, null, 2))
@@ -230,7 +238,10 @@ export default {
         method: 'get'
       })
         .then(response => response.json())
-        .catch(error => console.error('Error:', error))
+        .catch(error => {
+          this.hideloading()
+          console.error('Error:', error)
+        })
         .then(response => {
           console.log(response)
           this.hideloading()
@@ -254,6 +265,20 @@ export default {
           if (Number(this.driverInfo.did) !== 0) {
             this.hasDriver = true
             this.driverInfo.phone = 'tel:' + this.driverInfo.phone
+          }
+
+          // 计算 已支付金额
+          this.detail.alreadyPay = '(已支付' + (this.detail.needPay - this.detail.noPay) + '元)'
+
+          // 增加 定金支付方式
+          this.detail.OrderStatus.mipPayType = 0
+          // 支付定金
+          if (+this.detail.frontMoney > 0 && +this.detail.OrderFlag < 2000) {
+            this.detail.OrderStatus.mipPayType = 1
+          }
+          // 支付尾款
+          if (+this.detail.OrderStatus.isNeedPay === 1 && +this.detail.OrderFlag > 2000) {
+            this.detail.OrderStatus.mipPayType = 2
           }
         })
     },
@@ -329,20 +354,30 @@ export default {
       console.log(item.OrderNum)
       console.log('支付订单')
       //   let sessionid = base.getbaiduLogMsg()
+
+      let price = 0
+
+      if (item.OrderStatus.mipPayType === 1) {
+        price = item.frontMoney + '元'
+      } else {
+        price = item.noPay + '元'
+      }
       let sessionid = this.userlogin.sessionId
       let urlsParam = base.setUrlParam({
         orderNum: item.OrderNum,
         sessionId: sessionid,
-        total_fee: item.needPay
+        total_fee: price,
+        ver: 2.0
       })
 
       let obj = {
         sessionId: sessionid,
         redirectUrl: 'https://www.lanxiniu.com/Pay/success?' + urlsParam,
-        fee: item.needPay + '元',
+        fee: price,
         postData: {
           orderNum: item.OrderNum,
-          token: sessionid
+          token: sessionid,
+          ver: 2.0
         }
       }
       MIP.setData({

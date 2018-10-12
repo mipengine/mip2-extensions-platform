@@ -201,7 +201,7 @@ input::-webkit-input-placeholder {
     left: 0;
     width: 100% !important;
     height: 100% !important;
-    z-index: 99;
+    z-index: 9999;
 
 }
 
@@ -219,11 +219,19 @@ input::-webkit-input-placeholder {
 }
 
 .layer p{
-    width: 80%;
-    margin: 0 10%;
-    font-size: 14px;
+    width: 90%;
+    margin: 0 5%;
     line-height: 40px;
+    text-align: center;
+    padding: 0 3%;
+    font-size: 15px;
 
+}
+.layer p.layer-text{
+    line-height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 3px 0;
 }
 .layer p:first-child{
     border-radius: 10px 10px 0 0;
@@ -238,9 +246,7 @@ input::-webkit-input-placeholder {
     align-items: center;
     justify-content: center;
     background: #FFFFFF;
-    font-size: .3rem;
-    color: #666666;
-
+    color: #303030;
 }
 
 .layer-sure {
@@ -249,7 +255,7 @@ input::-webkit-input-placeholder {
     font-size: .3rem;
     color: #1390F4;
     ;
-    border-top: .02rem solid #E1E1E1;
+    border-top: 1px solid #E1E1E1;
 }
 
 /* 解释型弹窗 */
