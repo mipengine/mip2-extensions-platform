@@ -6,7 +6,7 @@
         <ul class="re-form">
           <li @click="toposition"><img src="https://www.daoway.cn/images/icon2.jpg"><input
             v-model="addr"
-            style="background:rgba(0,0,0,0); height: auto; text-align: left;"
+            style="background:rgba(0,0,0,0); text-align: left; vertical-align: middle"
             type="button"
             placeholder="请填写您的住址"><img
               class="re-more"
@@ -33,6 +33,12 @@
     </div>
     <div class="re-input re-input2">
       <ul class="re-form re-form2">
+        <!-- <li v-if="hasDstAddr"><span><img src="https://www.daoway.cn/images/icon5.jpg">目的地址</span>
+          <div @click ="tohasDstAddr"><i class="re-time">北京</i><img
+                  class="re-more"
+                  src="https://www.daoway.cn/h5/image/go_06.png">
+          </div>
+        </li>-->
         <li><span><img src="https://www.daoway.cn/images/icon5.jpg">服务时间</span>
           <div @click ="totime"><i class="re-time">{{ formatTime }}</i><img
             class="re-more"
@@ -203,19 +209,31 @@ export default {
       oauthCode: '',
       tradeType: '',
       returnurl: base.htmlhref.orderdetail,
-      useradd: ''
+      useradd: '',
+      hasDstAddr: false
     }
   },
   mounted () {
     let that = this
     that.position = base.getposition()
-    if (that.position.contactPerson) {
+    if (!that.position) {
+      that.position = {
+        id: '272026',
+        name: '天安门',
+        addr: '北京市东城区东长安街',
+        lot: '116.40387423499',
+        lat: '39.915167717716',
+        area: '东城区',
+        city: '北京'
+      }
+    }
+    if (that.position && that.position.contactPerson) {
       that.contactPerson = that.position.contactPerson
     } else {
       let nick = localStorage.getItem('nick')
       that.contactPerson = nick
     }
-    if (that.position.phone) {
+    if (that.position && that.position.phone) {
       that.phone = that.position.phone
     }
     if (that.orderId) {
@@ -309,6 +327,7 @@ export default {
             that.warn.show = true
             that.warn.texts = '该项目已下线'
           }
+          console.log(data)
           let apptime = Number(sessionStorage.getItem('apptime'))
           that.serviceId = data.id
           that.noFixFeePrice = data.noFixFeePrice
@@ -322,6 +341,7 @@ export default {
           that.totalPrice = (prices[0].price * that.quantity).toFixed(2)
           that.alltotalPrices = Number(prices[0].price * that.quantity + (data.fixFee || 0))
           that.canChooseTechnician = data.canChooseTechnician
+          that.hasDstAddr = data.hasDstAddr
           that.setFixFee(data)
           that.setPostion()
         } else {
@@ -620,6 +640,10 @@ export default {
       } else if (!reg1.test(phone)) {
         that.warn.show = true
         that.warn.texts = '请填写正确的手机号'
+        /* else if (that.hasDstAddr && !that.dst_addr) {
+         that.warn.show = true
+         that.warn.texts = '目的地址不能为空'
+         } */
       } else if (that.minBuyPrice > that.totalPrice) {
         let temp = (that.minBuyPrice - that.totalPrice).toFixed(2)
         that.warn.show = true
@@ -635,12 +659,12 @@ export default {
           ary.push(items)
         }
         let token = localStorage.getItem('mipToken') || base.getCookie('mipToken')
-        console.log(that.formatTime)
+        console.log(position, that.doorNum || position.doorNum)
         let anydata = {
           'userId': that.userId,
           'serviceId': that.serviceId,
           'note': that.note || null,
-          'address': that.addr + ' ' + that.doorNum,
+          'address': that.addr + ' ' + that.doorNum || position.doorNum,
           'appointTime': base.timeformat(that.appointTime, 'yyyy-MM-dd HH:mm:ss'),
           'contactPerson': contactPerson,
           'items': ary,
@@ -648,8 +672,8 @@ export default {
           'addrLat': position.lat,
           'city': position.city,
           'communityId': position.communityId || position.id,
-          'street': position.addr,
-          'house': position.doorNum,
+          'street': position.addr || that.addr,
+          'house': position.doorNum || that.doorNum,
           'fixFee': that.realyFixFee,
           'phone': that.phone,
           'technicianId': that.selectedTechnical ? that.selectedTechnical.technicianId : '',
@@ -658,7 +682,6 @@ export default {
           'couponId': that.coupone ? that.coupone.id : null
         }
         anydata = JSON.stringify(anydata)
-        console.log(anydata)
         let url = 'https://www.daoway.cn/daoway/rest/orders/v2?h5=true&channel=' + that.channel
         fetch(url, {
           method: 'POST',
@@ -718,6 +741,17 @@ export default {
     input{
         border: none;
     }
+    @media (min-device-width:1078px){
+      input:focus{
+        font-size: 14px ;
+      }
+    }
+    @media (min-device-width : 320px) and (max-device-width : 1077px){
+      input:focus{
+        font-size: 14px ;
+      }
+    }
+
     i {
         font-style: normal
     }
@@ -742,7 +776,10 @@ export default {
 
     .re-form li {
         line-height: 43px;
-        font-size: 14px;
+      height: 43px;
+      overflow: hidden;
+      width: 99.5%;
+      font-size: 14px;
       color: #303030;
     }
 
@@ -772,15 +809,16 @@ export default {
         height: 40px;
         line-height: 40px;
         border-bottom: 1px solid #ececec;
-        font-size: 14px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         background: #fff;
         color: #303030;
-
+        font: 14px Arial;
     }
-
+      input:focus{
+        font-size: 14px ;
+      }
     .re-form li:last-child input {
         border: none
     }

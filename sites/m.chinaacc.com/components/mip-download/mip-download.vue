@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import { getUrlParams } from '../../common/utils'
+import { getUrlParams, formatParams } from '../../common/utils'
 export default {
   data () {
     return {
@@ -138,11 +138,10 @@ export default {
       let that = this
       let params = getUrlParams()
       that.courseEduId = params.courseEduId
-      let paramstr = encodeURIComponent('courseEduId=' + that.courseEduId)
-      let url =
-        '//m.chinaacc.com/m_member/baidu/download/getDownTypeList.shtm?' +
-        paramstr
-      let result = window.fetchJsonp(url, {
+      let paramMap = {
+        'courseEduId': that.courseEduId
+      }
+      let result = window.fetchJsonp('//m.chinaacc.com/m_member/baidu/download/getDownTypeList.shtm?' + formatParams(paramMap), {
         jsonpCallback: 'jsonpCallback'
       })
       result
@@ -172,11 +171,11 @@ export default {
         that.errorMsg = '请输入正确的邮箱'
         return
       }
-      let paramstr = encodeURIComponent('infoId=' + that.infoId + '&email=' + that.email)
-      let url =
-        '//m.chinaacc.com/m_member/baidu/download/freeDown.shtm?' +
-        paramstr
-      let result = window.fetchJsonp(url, {
+      let paramMap = {
+        'infoId': that.infoId,
+        'email': that.email
+      }
+      let result = window.fetchJsonp('//m.chinaacc.com/m_member/baidu/download/freeDown.shtm?' + formatParams(paramMap), {
         jsonpCallback: 'jsonpCallback'
       })
       result
