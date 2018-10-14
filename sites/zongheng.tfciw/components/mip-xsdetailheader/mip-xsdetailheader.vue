@@ -1,23 +1,23 @@
 <template>
   <div class="wrapper">
-    <p class="title">雪中悍刀行-西北有雄风</p>
+    <p class="title">{{ title }}</p>
     <div class="info_wrapper">
       <mip-img
         :src="imgsrc"
         class="cover"
         width="122"
         height="162"/>
-      <p class="author">作者：<span>烽火戏诸侯</span></p>
-      <p class="cal">分类：<span>东方玄幻</span></p>
-      <p class="status">状态：<span>连载中</span></p>
+      <p class="author">作者：<span>{{ author }}</span></p>
+      <p class="cal">分类：<span>{{ cal }}</span></p>
+      <p class="status">状态：<span>{{ status }}</span></p>
       <div class="rank_list">榜单：<span class="rank">玄幻榜 NO.20</span></div>
     </div>
     <div class="btn_wrapper">
       <a
-        href="#"
+        :href="calhref"
         class="show_cal">查看目录</a>
       <a
-        href="#"
+        :href="readhref"
         class="go_read">全书免费阅读</a>
     </div>
     <div
@@ -28,7 +28,7 @@
       </mip-showmore>
       <div on="tap:showmore.toggle" data-closeclass="mip-showmore-open" data-closetext="收起内容" class="mip-showmore-btn">></div> -->
       <div class="content_wrapper">
-        悠悠万古千万帝, 唯我独凌于众帝之上的神帝、仙王、仙帝、天帝被我如蝼蚁般捏死的不知几何。曾经有一个自诩无敌的神王，最后被我踩死了。
+        {{ content }}
       </div>
       <span
         href="javascript:;"
@@ -43,6 +43,28 @@
 <script>
 import arrowimg from '@/static/arrow_down.png'
 export default {
+  props: {
+    title: {
+      type: String,
+      default: ''
+    },
+    author: {
+      type: String,
+      default: ''
+    },
+    cal: {
+      type: String,
+      default: ''
+    },
+    status: {
+      type: String,
+      default: ''
+    },
+    content: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       imgsrc: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539414185202&di=0bb3b102ec880966373fbb05083dc123&imgtype=0&src=http%3A%2F%2Feasyread.ph.126.net%2FWpR9K-B9fTZlegXs3Ok13g%3D%3D%2F8796093022761980346.jpg',
@@ -52,9 +74,14 @@ export default {
   },
   mounted () {
     let oContent = this.$element.querySelector('.content_wrapper')
+    let oShowMoreImg = this.$element.querySelector('.show_more')
     if (oContent.clientHeight > 72) {
       MIP.util.css(oContent, {
         '-webkit-line-clamp': '3'
+      })
+    } else {
+      MIP.util.css(oShowMoreImg, {
+        'display': 'none'
       })
     }
   },
@@ -86,7 +113,7 @@ export default {
 
 <style lang="less" scoped>
 .wrapper {
-  padding: 0 17px;
+  background: #fff;
   .title {
     font-size: 19px;
     color: #000;
@@ -162,6 +189,7 @@ export default {
     }
     .show_more {
       position: absolute;
+      background: #fff;
       right: -5px;
       bottom: 0;
       border: none;
