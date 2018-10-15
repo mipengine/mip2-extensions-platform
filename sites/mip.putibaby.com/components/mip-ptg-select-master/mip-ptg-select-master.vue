@@ -1318,6 +1318,7 @@
 
   .ptgPrice {
     font-size: 16px;
+    font-family: Arial, 'Hiragino Sans GB', 'Microsoft Yahei', '微软雅黑', Tahoma, Helvetica, STHeiti;
     color: red;
     position: absolute;
     right: 8px;

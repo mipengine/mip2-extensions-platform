@@ -2,6 +2,7 @@ node_modules/
 dist/
 .idea/
 npm-debug.log
+example/
 Thumbs.db
 .DS_Store
 *.swp

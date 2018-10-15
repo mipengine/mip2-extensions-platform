@@ -196,7 +196,7 @@ export default {
       taphide: false,
       userId: '',
       token: '',
-      point: {}
+      point: JSON.parse(localStorage.getItem('point'))
     }
   },
   mounted () {
@@ -204,22 +204,13 @@ export default {
     let userId = localStorage.getItem('mipUserId')
     let token = localStorage.getItem('mipToken')
     localStorage.removeItem('useradd')
-
     if (userId && token) {
       this.userAddress(userId)
     }
-    let point = JSON.parse(localStorage.getItem('point')) || ''
     let position = base.getposition()
-    if (point) {
-      that.point = point
-      that.city = point.city
-      that.getCommunity(point.lng, point.lat)
-    } else {
-      that.city = position.city || '北京'
-      that.point = null
-    }
-    if (point.city) {
-      that.city = point.city
+    if (that.point) {
+      that.city = that.point.city
+      that.getCommunity(that.point.lng, that.point.lat)
     } else if (position) {
       that.city = position.city
     } else {
@@ -231,7 +222,7 @@ export default {
   methods: {
     /* handler () {
       let that = this
-      let url = '/daoway/rest/user/city'
+      let url = 'https://www.daoway.cn/daoway/rest/user/city'
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -254,7 +245,7 @@ export default {
     }, */
     getCommunity (lot, lat) {
       let that = this
-      let url = '/daoway/rest/community/autoPositionMerge?lot=' + lot + '&lat=' + lat
+      let url = 'https://www.daoway.cn/daoway/rest/community/autoPositionMerge?lot=' + lot + '&lat=' + lat
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -268,7 +259,7 @@ export default {
     },
     userAddress (userId) {
       let that = this
-      let url = '/daoway/rest/user/' + userId + '/getUserAddress' + '?channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/user/' + userId + '/getUserAddress' + '?channel=' + that.channel
       fetch(url, {
         method: 'get',
         credentials: 'include'
@@ -316,7 +307,7 @@ export default {
     },
     getlist () { // community
       let that = this
-      let url = '/daoway/rest/community/searchMerge?manualCity=' + encodeURIComponent(this.city) + '&search=' + this.searchval + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/community/searchMerge?manualCity=' + encodeURIComponent(this.city) + '&search=' + this.searchval + '&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -340,7 +331,7 @@ export default {
     },
     citylist () {
       let that = this
-      let url = '/daoway/rest/community/city_list?channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/community/city_list?channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {

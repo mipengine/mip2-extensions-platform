@@ -51,7 +51,6 @@ export default {
           tmpcookie.des = desregex.exec(text)[1].replace(rep, '').replace(/(^\s*)|(\s*$)/g, '')
           tmpcookie.img = imgregex.exec(text) ? imgregex.exec(text)[1].replace(/(^\s*)|(\s*$)/g, '') : ''
           tmpcookie.time = timeregex.exec(text)[1].replace(/\//g, '-').replace(' ', 'T').replace(/(^\s*)|(\s*$)/g, '')
-          tmpcookie.time = timeregex.exec(text)[1].replace(/\//g, '-').replace(' ', 'T').replace(/(^\s*)|(\s*$)/g, '')
           newArray.json = '{"@context": \'https://ziyuan.baidu.com/contexts/cambrian.jsonld\',"@id": \'' + jsonid + '\',"title": \'' + tmpcookie.title + '\',"description": \'' + tmpcookie.des + '\',"images": [\'' + tmpcookie.img + '\'],"pubDate": \'' + tmpcookie.time + '\'}'
           let date = new Date()
           date.setTime(date.getTime() + 1 * 1000)
