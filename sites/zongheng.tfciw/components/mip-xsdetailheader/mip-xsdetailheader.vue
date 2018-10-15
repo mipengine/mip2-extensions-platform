@@ -197,6 +197,7 @@ export default {
       opacity: 0;
       display: inline-block;
       transition: .3s ease-in-out;
+      display: none;
     }
     .circular {
       width: 14px;
