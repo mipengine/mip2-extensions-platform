@@ -1,75 +1,75 @@
 <template>
   <div v-show="devicedata.show">
-    <div 
-ref="mask"
-         class="mask">
-      <div 
-class="mask-wrapper"
-           @click.self="close">
+    <div
+      ref="mask"
+      class="mask">
+      <div
+        class="mask-wrapper"
+        @click.self="close">
         <div class="mask-content">
           <div class="head">
-            <span 
-class="close"
-                  @click.self="close" />
-            <p 
-v-for="(item,index) in tab"
-               :key="index"
-               :class="{active:(last?changeColor:changeColor1) == index}"
-               @click="changeTab(index)">{{ item }}</p>
+            <span
+              class="close"
+              @click.self="close" />
+            <p
+              v-for="(item,index) in tab"
+              :key="index"
+              :class="{active:(last?changeColor:changeColor1) == index}"
+              @click="changeTab(index)">{{ item }}</p>
           </div>
           <div class="content-wrapper">
             <div v-show="last">
-              <div 
-v-show="changeColor==0"
-                   class="content">
-                <div 
-v-for="(item,index) in data1"
-                     :key="index"
-                     :class="{act:brandsIndex1==index}"
-                     class="brandsList"
-                     @click="choosetype(item,index)">{{ item.name||item.model }}</div>
+              <div
+                v-show="changeColor==0"
+                class="content">
+                <div
+                  v-for="(item,index) in data1"
+                  :key="index"
+                  :class="{act:brandsIndex1==index}"
+                  class="brandsList"
+                  @click="choosetype(item,index)">{{ item.name||item.model }}</div>
               </div>
-              <div 
-v-show="changeColor==1"
-                   class="content">
-                <div 
-v-for="(item,index) in data2"
-                     :key="index"
-                     :class="{act:brandsIndex2==index}"
-                     class="brandsList"
-                     @click="chooseBrands(item,index)">{{ item.name||item.model }}</div>
+              <div
+                v-show="changeColor==1"
+                class="content">
+                <div
+                  v-for="(item,index) in data2"
+                  :key="index"
+                  :class="{act:brandsIndex2==index}"
+                  class="brandsList"
+                  @click="chooseBrands(item,index)">{{ item.name||item.model }}</div>
               </div>
-              <div 
-v-show="changeColor==2"
-                   class="content">
-                <div 
-v-for="(item,index) in data3"
-                     :key="index"
-                     :class="{act:brandsIndex3==index}"
-                     class="brandsList"
-                     @click="chooseModel(item,index)">{{ item.name||item.model }}</div>
+              <div
+                v-show="changeColor==2"
+                class="content">
+                <div
+                  v-for="(item,index) in data3"
+                  :key="index"
+                  :class="{act:brandsIndex3==index}"
+                  class="brandsList"
+                  @click="chooseModel(item,index)">{{ item.name||item.model }}</div>
               </div>
             </div>
             <div v-show="!last">
-              <div 
-v-show="changeColor1==0"
-                   class="content">
-                <div 
-v-for="(item,index) in data4"
-                     :key="index"
-                     :class="{act:brandsIndex1==index}"
-                     class="brandsList"
-                     @click="choosetype(item,index)">{{ item.name||item.model }}</div>
+              <div
+                v-show="changeColor1==0"
+                class="content">
+                <div
+                  v-for="(item,index) in data4"
+                  :key="index"
+                  :class="{act:brandsIndex1==index}"
+                  class="brandsList"
+                  @click="choosetype(item,index)">{{ item.name||item.model }}</div>
               </div>
-              <div 
-v-show="changeColor1==1"
-                   class="content">
-                <div 
-v-for="(item,index) in data5"
-                     :key="index"
-                     :class="{act:brandsIndex2==index}"
-                     class="brandsList"
-                     @click="chooseBrands(item,index)">{{ item.name||item.model }}
+              <div
+                v-show="changeColor1==1"
+                class="content">
+                <div
+                  v-for="(item,index) in data5"
+                  :key="index"
+                  :class="{act:brandsIndex2==index}"
+                  class="brandsList"
+                  @click="chooseBrands(item,index)">{{ item.name||item.model }}
                   <p>{{ item.price>=0?`￥${item.price}`:'待检测' }}</p>
                 </div>
               </div>
@@ -284,7 +284,8 @@ export default {
       this.brandsIndex1 = index
       this.changeColor = 1
       this.changeColor1 = 1
-      this.categoryId = item.id
+      // this.categoryId = item.id
+      this.brandId = item.id
       if (this.last) {
         this.tab[0] = item.name
         this.data2 = this.data1[index].brandList
@@ -296,7 +297,8 @@ export default {
     chooseBrands (item, index) {
       this.brandsIndex2 = index
       this.changeColor = 2
-      this.brandId = item.id
+      // this.brandId = item.id
+      this.categoryId = item.id
       this.queryBrand()
       if (!this.last) {
         this.tab[1] = item.title
