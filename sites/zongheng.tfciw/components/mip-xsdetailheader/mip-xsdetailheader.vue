@@ -48,6 +48,10 @@ export default {
       type: String,
       default: ''
     },
+    imgsrc: {
+      type: String,
+      default: ''
+    },
     author: {
       type: String,
       default: ''
@@ -75,7 +79,6 @@ export default {
   },
   data () {
     return {
-      imgsrc: 'https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1539414185202&di=0bb3b102ec880966373fbb05083dc123&imgtype=0&src=http%3A%2F%2Feasyread.ph.126.net%2FWpR9K-B9fTZlegXs3Ok13g%3D%3D%2F8796093022761980346.jpg',
       oSwitch: true,
       arrow: arrowimg
     }
@@ -122,13 +125,13 @@ export default {
 <style lang="less" scoped>
 .wrapper {
   background: #fff;
-  padding: 0 17px;
+  padding: 30px 17px 0;
   .title {
     font-size: 19px;
     color: #000;
     line-height: 19px;
     text-align: center;
-    margin: 30px 0;
+    margin: 0 0 30px 0;
   }
   .info_wrapper {
     height: 162px;
