@@ -116,24 +116,24 @@ export default {
         'display': 'none'
       })
     }
-    let oTag = this.$element.querySelector('.xsdetailcal')
-    let newTag = this.$element.querySelector('.xsdetailtag')
-    setTimeout(() => {
-      MIP.util.css(this.$element.querySelectorAll('.circular'), {
-        'opacity': '0'
-      })
-      MIP.util.css(this.$element.querySelector('.rank_list'), {
-        'opacity': '1'
-      })
-      MIP.util.css(oTag, {
-        'transform': `translateY(-14px)`,
-        'opacity': '0'
-      })
-      MIP.util.css(newTag, {
-        'transform': `translateX(-${oTag.clientWidth + 22}px)`,
-        'opacity': '1'
-      })
-    }, 1000)
+    // let oTag = this.$element.querySelector('.xsdetailcal')
+    // let newTag = this.$element.querySelector('.xsdetailtag')
+    // setTimeout(() => {
+    //   MIP.util.css(this.$element.querySelectorAll('.circular'), {
+    //     'opacity': '0'
+    //   })
+    //   MIP.util.css(this.$element.querySelector('.rank_list'), {
+    //     'opacity': '1'
+    //   })
+    //   MIP.util.css(oTag, {
+    //     'transform': `translateY(-14px)`,
+    //     'opacity': '0'
+    //   })
+    //   MIP.util.css(newTag, {
+    //     'transform': `translateX(-${oTag.clientWidth + 22}px)`,
+    //     'opacity': '1'
+    //   })
+    // }, 1000)
   },
   methods: {
     showMore () {
