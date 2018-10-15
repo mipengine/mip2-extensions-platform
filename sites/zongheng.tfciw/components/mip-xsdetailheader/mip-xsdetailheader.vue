@@ -63,6 +63,14 @@ export default {
     content: {
       type: String,
       default: ''
+    },
+    calhref: {
+      type: String,
+      default: ''
+    },
+    readhref: {
+      type: String,
+      default: ''
     }
   },
   data () {
@@ -114,6 +122,7 @@ export default {
 <style lang="less" scoped>
 .wrapper {
   background: #fff;
+  padding: 0 17px;
   .title {
     font-size: 19px;
     color: #000;
@@ -179,6 +188,7 @@ export default {
     line-height: 24px;
     color: #555;
     .content_wrapper {
+      padding-right: 6px;
       overflow: hidden;
       display: -webkit-box;
       text-overflow: ellipsis;
@@ -194,7 +204,7 @@ export default {
       bottom: 0;
       border: none;
       padding: 0;
-      width: 20px;
+      width: 14px;
       height: 14px;
       line-height: 14px;
       text-align: center;
