@@ -8,9 +8,9 @@
         width="122"
         height="162"/>
       <p class="author">作者：<span>{{ author }}</span></p>
-      <p class="cal">分类：<span>{{ cal }}</span></p>
-      <p class="status">状态：<span>{{ status }}</span></p>
-      <div class="rank_list">榜单：<span class="rank">玄幻榜 NO.20</span></div>
+      <p class="cal">分类：<span class="xsdetailcal">{{ cal }}</span></p>
+      <p class="status">状态：<span class="xsdetailstatus">{{ status }}</span></p>
+      <div class="rank_list">榜单：<span class="rank xsdetailrank">玄幻榜 NO.20</span></div>
     </div>
     <div class="btn_wrapper">
       <a
