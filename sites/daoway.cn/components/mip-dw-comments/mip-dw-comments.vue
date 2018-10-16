@@ -160,7 +160,7 @@ export default {
       let tager = commentTab[index]
       let filter = tager.id // 评论类别 all/good/average/bad/hasImg
       // console.log(serviceId,start,filter,index)
-      let url = '/daoway/rest/service/' + serviceId + '/comments?start=' + start + '&size=30&filter=' + filter + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/service/' + serviceId + '/comments?start=' + start + '&size=30&filter=' + filter + '&channel=' + that.channel
       if (that.priceId) {
         url += '&priceId=' + that.priceId
       }
@@ -205,7 +205,7 @@ export default {
             comment.area = comment.area || ''
             if (!comment.iconUrl) {
               comment.iconUrl = 'https://www.daoway.cn/mip/common/images/iconimg.png'
-            };
+            }
             that.commentTab[index].comment.push(comment)
           }
           that.sw = true
@@ -247,7 +247,7 @@ export default {
               that.loding = true
             }, 500)
             that.commentlist(that.serviceId, that.priceId, that.index, start)
-          }
+          };
         }
       } else {
         that.loding = false

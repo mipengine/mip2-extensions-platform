@@ -1049,12 +1049,15 @@
 .content-footer {
   min-height: 6.2rem;
   flex-basis: 6.2rem;
+  -webkit-flex-basis:6.2rem;
   display: flex;
+  display: -webkit-flex;
   width: 100%;
   border-top: 1px solid rgb(228, 228, 228);
   padding: 0.9rem 0;
   z-index: 1000;
   align-items: center;
+  -webkit-align-items: center;
   position: relative;
   background-color: #fff;
   .show-operation-tip {
@@ -1094,8 +1097,10 @@
   }
   .footer-btn-wrapper {
     flex: 1;
+    -webkit-flex:1;
     padding-right: 0.9rem;
     display: flex;
+    display:-webkit-flex;
   }
   .footer-btn {
     color: #fff;
@@ -1104,6 +1109,7 @@
     text-align: center;
     font-size: 1.6rem;
     flex: 1;
+    -webkit-flex:1;
     margin-right: 0.9rem;
     border-radius: 2px;
   }

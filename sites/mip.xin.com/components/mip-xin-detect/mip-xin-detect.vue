@@ -71,6 +71,7 @@ import { requestFun } from '../../common/utils/reqUtils'
 import { clickPoint } from '../../common/utils/stastic.js'
 import { getLocalStorage, getDomain } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
+const pidReport = '/pages/report'
 const imageTitle = '//c5.xinstatic.com' // 图片地址需要拼接
 export default {
   // props: ['carid'],
@@ -138,6 +139,17 @@ export default {
         null,
         {
           pid: pid
+        }
+      )
+      clickPoint(
+        'video_examine',
+        {
+          carid: this.carid,
+          operation: 3
+        },
+        null,
+        {
+          pid: pidReport
         }
       )
       // MIP.viewer.open(

@@ -21,7 +21,8 @@
       <div
         v-if="username || !userId"
         class="txt2"
-        on="tap:log.login">请点击登录</div><!--@click="goLoginPage"-->
+        on="tap:log.login"
+        @click="tologin">请点击登录</div><!--@click="goLoginPage"-->
     </div>
     <div
       class="mylist"
@@ -183,7 +184,7 @@ export default {
     },
     getmyhtml () {
       let that = this
-      let url = '/daoway/rest/user/' + that.userId + '?isowner=1'
+      let url = 'https://www.daoway.cn/daoway/rest/user/' + that.userId + '?isowner=1'
       fetch(url, {
         method: 'get',
         credentials: 'include',
@@ -235,6 +236,23 @@ export default {
       }).catch(function (error) {
         // that.username = false;
         console.log(error)
+      })
+    },
+    tologin () {
+      let that = this
+      that.$element.customElement.addEventAction('customLogin', event => {
+        that.info = event.userInfo
+        that.userId = event.userInfo.userId
+        that.token = event.userInfo.token
+        base.setCookie('mipUserId', event.userInfo.userId)
+        base.setCookie('mipToken', event.userInfo.token)
+        document.cookie = 'token=' + event.userInfo.token + ';path=/'
+        //
+        localStorage.setItem('mipUserId', event.userInfo.userId)
+        localStorage.setItem('mipToken', event.userInfo.token)
+        localStorage.setItem('nick', event.userInfo.nick)
+        that.getmyhtml()
+        // MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
       })
     },
     goVouchersPage: function () {

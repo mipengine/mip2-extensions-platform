@@ -117,10 +117,10 @@ export default {
         document.cookie = 'token=' + event.userInfo.token + ';path=/'
         that.userId = event.userInfo.userId
         that.token = event.userInfo.token
-        that.getCoupone()
         localStorage.setItem('mipUserId', event.userInfo.userId)
         localStorage.setItem('mipToken', event.userInfo.token)
         localStorage.setItem('nick', event.userInfo.nick)
+        that.getCoupone()
       })
     }
     window.addEventListener('hide-page', (e) => {
@@ -143,7 +143,7 @@ export default {
       let that = this
       let serviceId = that.requestUrl.serviceId || null
       let priceIds = that.requestUrl.priceIds
-      let url = '/daoway/rest/coupon/user/' + that.userId + '?serviceId=' + serviceId + '&ignoreMinBill=true&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/coupon/user/' + that.userId + '?serviceId=' + serviceId + '&ignoreMinBill=true&channel=' + that.channel
       let bill = that.requestUrl ? that.requestUrl.bill : null
       if (bill) {
         url += '&bill=' + bill

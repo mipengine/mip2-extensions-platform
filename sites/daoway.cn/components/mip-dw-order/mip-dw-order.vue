@@ -265,6 +265,9 @@ export default {
         that.getOrderList(0)
       })
     }
+    window.addEventListener('show-page', (e) => {
+      MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
+    })
   },
   methods: {
     wxpay (url) {
@@ -290,7 +293,7 @@ export default {
         status = '&status=' + filter
       }
       let start = orderitem.items.length
-      let url = '/daoway/rest/orders/bought_by/' + that.userId + '?channel=' + that.channel + '&start=' + start + '&size=30' + status
+      let url = 'https://www.daoway.cn/daoway/rest/orders/bought_by/' + that.userId + '?channel=' + that.channel + '&start=' + start + '&size=30' + status
       fetch(url, {
         method: 'get',
         credentials: 'include'
@@ -561,7 +564,7 @@ export default {
     },
     closesure (orderId, action) {
       let that = this
-      let url = '/daoway/rest/order/' + orderId + '/' + action + '?channel=' + that.channel + '&userId=' + that.userId
+      let url = 'https://www.daoway.cn/daoway/rest/order/' + orderId + '/' + action + '?channel=' + that.channel + '&userId=' + that.userId
       fetch(url, {
         method: 'POST',
         credentials: 'include',
@@ -618,7 +621,7 @@ export default {
                 that.loding = true
               }, 500)
               that.getOrderList(index)
-            }
+            };
           } else {
             // 暂时只有这些了
             that.noList = false

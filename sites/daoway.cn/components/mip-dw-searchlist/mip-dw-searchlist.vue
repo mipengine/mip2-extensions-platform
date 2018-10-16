@@ -123,7 +123,7 @@ export default {
       let searchText = that.searchText
       let start = that.searchList.length
       let position = that.position
-      let url = '/daoway/rest/service_items/search?start=' + start + '&size=30&manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lot || position.lng) + '&lat=' + position.lat + '&text=' + encodeURIComponent(searchText) + '&sort_by=auto&sort=desc&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/service_items/search?start=' + start + '&size=30&manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lot || position.lng) + '&lat=' + position.lat + '&text=' + encodeURIComponent(searchText) + '&sort_by=auto&sort=desc&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -151,7 +151,7 @@ export default {
     },
     autosearch (searchText) {
       let that = this
-      let url = '/daoway/rest/services/auto_complete_words?word=' + encodeURIComponent(searchText) + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/services/auto_complete_words?word=' + encodeURIComponent(searchText) + '&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -197,7 +197,7 @@ export default {
             that.loding = true
           }, 500)
           that.getsearch()
-        }
+        };
       } else {
         that.loding = false
       }
