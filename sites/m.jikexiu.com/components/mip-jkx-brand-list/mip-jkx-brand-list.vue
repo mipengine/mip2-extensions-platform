@@ -1,8 +1,6 @@
 <template>
   <div class="wrapper">
-    <div
-      class="list"
-    >
+    <div class="list">
       <li
         v-for="item in data"
         :key="item.id"
@@ -14,11 +12,12 @@
           class="img"
           layout="container"
           width="1"
-          height="1"/>
+          height="1" />
         <p>{{ item.name }}</p>
       </li>
     </div>
-</div></template>
+  </div>
+</template>
 
 <style scoped>
 .wrapper {
@@ -28,23 +27,23 @@
   background: #fff;
   padding-bottom: 10px;
 }
-.list{
+.list {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
 }
-.list li{
+.list li {
   width: 25%;
 }
-.img{
+.img {
   display: block;
-    width: 38px;
-    height: 38px;
-    margin: 10px auto;
+  width: 38px;
+  height: 38px;
+  margin: 10px auto;
 }
-p{
+p {
   text-align: center;
-    color: #333;
+  color: #333;
 }
 </style>
 
@@ -64,35 +63,35 @@ export default {
       data: [{
         'name': '苹果',
         'src': 'https://rs.jikexiu.com/appresources/images2016/landing/img1.png',
-        'href': 'order.html?categoryId=12-8'
+        'href': 'order.html?brandId=8'
       }, {
         'name': '华为',
         'src': 'https://rs.jikexiu.com/appresources/images2016/landing/img2.png',
-        'href': 'order.html?categoryId=12-12'
+        'href': 'order.html?brandId=12'
       }, {
         'name': '小米',
         'src': 'https://rs.jikexiu.com/appresources/images2016/landing/img3.png',
-        'href': 'order.html?categoryId=12-10'
+        'href': 'order.html?brandId=10'
       }, {
         'name': '三星',
         'src': 'https://rs.jikexiu.com/appresources/images2016/landing/img4.png',
-        'href': 'order.html?categoryId=12-11'
+        'href': 'order.html?brandId=11'
       }, {
-        'name': '乐视',
-        'src': 'https://rs.jikexiu.com/appresources/images2016/landing/ls.png',
-        'href': 'order.html?categoryId=12-19'
+        'name': 'OPPO',
+        'src': 'https://rs.jikexiu.com/appresources/images2016/landing/oppo.png',
+        'href': 'order.html?brandId=17'
       }, {
-        'name': '金立',
-        'src': 'https://rs.jikexiu.com/appresources/images2016/landing/jl.png',
-        'href': 'order.html?categoryId=12-20'
+        'name': 'vivo',
+        'src': 'https://rs.jikexiu.com/appresources/images2016/landing/vivo.png',
+        'href': 'order.html?brandId=16'
       }, {
         'name': '魅族',
         'src': 'https://rs.jikexiu.com/appresources/images2016/landing/mz.png',
-        'href': 'order.html?categoryId=12-14'
+        'href': 'order.html?brandId=14'
       }, {
         'name': '努比亚',
         'src': 'https://rs.jikexiu.com/appresources/images2016/landing/nby.png',
-        'href': 'order.html?categoryId=12-13'
+        'href': 'order.html?brandId=13'
       }]
     }
   },
