@@ -97,16 +97,6 @@ export default {
   watch: {
     devicedata (val) {
       if (val.showFault) {
-        // if (val.name && this.name !== val.name) {
-        //   this.name = val.name
-        //   this.name1 = '选择故障'
-        //   this.showTxt2 = false
-        // } else {
-        //   this.name = val.name
-        //   if (val.name1 && this.name1 !== val.name1) {
-        //     this.name1 = val.name1
-        //   }
-        // }
         this.name1 = val.name1
         this.showTxt1 = val.showTxt1
         this.showTxt2 = val.showTxt2
@@ -132,30 +122,62 @@ export default {
   mounted () {
     let href = window.location.href
     if (this.info.isLogin) {
-      if (href.indexOf('categoryId') > 0) {
-        this.categoryId = href
+      if (href.indexOf('brandId') > 0) {
+        this.brandId = href
           .split('?')[1]
           .split('&')[0]
           .split('=')[1]
-          .split('-')[0]
-        this.brandId =
+          .indexOf('-') >= 0 ? href
+            .split('?')[1]
+            .split('&')[0]
+            .split('=')[1]
+            .split('-')[1] : href
+            .split('?')[1]
+            .split('&')[0]
+            .split('=')[1]
+            .split('-')[0] || 0
+        this.categoryId =
         href
           .split('?')[1]
           .split('&')[0]
           .split('=')[1]
-          .split('-')[1] || 0
+          .indexOf('-') >= 0 ? href
+            .split('?')[1]
+            .split('&')[0]
+            .split('=')[1].split('-')[0] : 0
         this.show = true
         this.last = true
-        this.tab = ['类型', '品牌', '型号']
-        this.changeColor = this.brandId > 0 ? 2 : 0
+        this.tab = ['品牌', '类型', '型号']
+        if (this.categoryId > 0 && this.brandId > 0) {
+          this.changeColor = 2
+        } else if (this.brandId > 0 && this.categoryId === 0) {
+          this.changeColor = 1
+        } else {
+          this.changeColor = 0
+        }
+
+        // this.changeColor = this.brandId > 0 ? 2 : 0
+        // const brand = function () {
+        //   let fun = {
+        //     12: '手机',
+        //     20: '跑步机',
+        //     13: '平板',
+        //     15: '笔记本',
+        //     16: '一体机',
+        //     32: '智能手表',
+        //     26: '存储器'
+        //   }
+        //   return fun[this.brandId]
+        // }
+        // this.tab[0] = brand()
         MIP.setData({
           deviceData: {
             show: true,
-            changeColor: this.brandId > 0 ? 2 : 0,
+            changeColor: this.changeColor,
             last: true,
             categoryId: this.categoryId,
             brandId: this.brandId,
-            tab: ['类型', '品牌', '型号']
+            tab: this.tab
           }
         })
       } else if (href.indexOf('modelName') > 0) {

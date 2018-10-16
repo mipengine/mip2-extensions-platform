@@ -63,35 +63,35 @@ export default {
       data: [{
         'name': '苹果',
         'src': 'https://rs.jikexiu.com/appresources/images2016/landing/img1.png',
-        'href': 'order.html?categoryId=12-8'
+        'href': 'order.html?brandId=8'
       }, {
         'name': '华为',
         'src': 'https://rs.jikexiu.com/appresources/images2016/landing/img2.png',
-        'href': 'order.html?categoryId=12-12'
+        'href': 'order.html?brandId=12'
       }, {
         'name': '小米',
         'src': 'https://rs.jikexiu.com/appresources/images2016/landing/img3.png',
-        'href': 'order.html?categoryId=12-10'
+        'href': 'order.html?brandId=10'
       }, {
         'name': '三星',
         'src': 'https://rs.jikexiu.com/appresources/images2016/landing/img4.png',
-        'href': 'order.html?categoryId=12-11'
+        'href': 'order.html?brandId=11'
       }, {
         'name': 'OPPO',
         'src': 'https://rs.jikexiu.com/appresources/images2016/landing/oppo.png',
-        'href': 'order.html?categoryId=12-17'
+        'href': 'order.html?brandId=17'
       }, {
         'name': 'vivo',
         'src': 'https://rs.jikexiu.com/appresources/images2016/landing/vivo.png',
-        'href': 'order.html?categoryId=12-16'
+        'href': 'order.html?brandId=16'
       }, {
         'name': '魅族',
         'src': 'https://rs.jikexiu.com/appresources/images2016/landing/mz.png',
-        'href': 'order.html?categoryId=12-14'
+        'href': 'order.html?brandId=14'
       }, {
         'name': '努比亚',
         'src': 'https://rs.jikexiu.com/appresources/images2016/landing/nby.png',
-        'href': 'order.html?categoryId=12-13'
+        'href': 'order.html?brandId=13'
       }]
     }
   },

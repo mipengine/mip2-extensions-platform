@@ -208,18 +208,22 @@ export default {
             }
           })
           // 品牌下的类型
+          let cI = 0
           res.data.list.forEach((v, i) => {
             v.brandList.forEach((V, I) => {
               brand.forEach((val, ind) => {
                 if (V.name === val.name) {
                   val.brandList.push(v)
                 }
+                if (Number(val.id) === Number(this.brandId)) {
+                  cI = ind
+                }
               })
             })
           })
           this.data1 = brand
           if (this.changeColor === 1 && this.data1.length > 0) {
-            this.data2 = this.data1[0].brandList
+            this.data2 = this.data1[cI].brandList
           } else {
             this.data2 = this.data1[0].brandList
           }
