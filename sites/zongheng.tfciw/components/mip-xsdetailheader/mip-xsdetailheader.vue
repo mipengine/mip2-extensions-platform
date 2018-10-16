@@ -250,6 +250,7 @@ export default {
   }
   .btn_wrapper {
     display: flex;
+    font-size: 14px;
     margin-bottom: 10px;
     a {
       display: inline-block;
