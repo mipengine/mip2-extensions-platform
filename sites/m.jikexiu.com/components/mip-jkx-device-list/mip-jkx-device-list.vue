@@ -133,7 +133,7 @@ export default {
       // }, { passive: false })
       if (val.last) {
         this.last = val.last
-        this.tab = ['类型', '品牌', '型号']
+        this.tab = ['品牌', '类型', '型号']
         this.changeColor = 0
         this.queryBrand()
       } else {
@@ -168,7 +168,7 @@ export default {
   methods: {
     changeTab (index) {
       if (this.last) {
-        if (index === 0) this.tab = ['类型', '品牌', '型号']
+        if (index === 0) this.tab = ['品牌', '类型', '型号']
         this.changeColor = index
       } else {
         if (index === 0) this.tab = ['分类', '故障']
@@ -181,8 +181,49 @@ export default {
       request(apiUrl.categoryList).then(res => {
         if (res.code === 200) {
           this.data1 = res.data.list
+          let brand = []
+          // let len = this.data1.length
+          // 整理收集品牌
+          res.data.list.forEach((val, ind) => {
+            brand = [...brand, ...val.brandList]
+          })
+          // 去除手机相同品牌
+          brand.forEach((v, i) => {
+            brand.forEach((V, I) => {
+              brand[i].brandList = []
+
+              if (i !== I && v.id === V.id) {
+                brand.splice(I, 1)
+              }
+            })
+          })
+          // 调整顺序，删掉其它品牌
+          brand.forEach((v, i) => {
+            if (v.name === '苹果') {
+              brand.unshift(v)
+              brand.splice(i + 1, 1)
+            }
+            if (v.name === '其他品牌') {
+              brand.splice(i, 1)
+            }
+          })
+          // 品牌下的类型
+          let cI = 0
+          res.data.list.forEach((v, i) => {
+            v.brandList.forEach((V, I) => {
+              brand.forEach((val, ind) => {
+                if (V.name === val.name) {
+                  val.brandList.push(v)
+                }
+                if (Number(val.id) === Number(this.brandId)) {
+                  cI = ind
+                }
+              })
+            })
+          })
+          this.data1 = brand
           if (this.changeColor === 1 && this.data1.length > 0) {
-            this.data2 = this.data1[0].brandList
+            this.data2 = this.data1[cI].brandList
           } else {
             this.data2 = this.data1[0].brandList
           }
@@ -247,7 +288,8 @@ export default {
       this.brandsIndex1 = index
       this.changeColor = 1
       this.changeColor1 = 1
-      this.categoryId = item.id
+      // this.categoryId = item.id
+      this.brandId = item.id
       if (this.last) {
         this.tab[0] = item.name
         this.data2 = this.data1[index].brandList
@@ -259,7 +301,8 @@ export default {
     chooseBrands (item, index) {
       this.brandsIndex2 = index
       this.changeColor = 2
-      this.brandId = item.id
+      // this.brandId = item.id
+      this.categoryId = item.id
       this.queryBrand()
       if (!this.last) {
         this.tab[1] = item.title
