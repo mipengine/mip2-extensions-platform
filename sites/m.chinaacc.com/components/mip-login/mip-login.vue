@@ -48,6 +48,8 @@ export default {
         // 已登录
         setCookie('sessionId', event.sessionId)
         setCookie('mip-token', event.sessionId)
+        let luserInfo = event.userInfo.userInfo
+        setCookie('cdeluid', luserInfo.uid)
         that.$emit('isLogin', {})
       } else {
         that.loginFlag = true
@@ -75,6 +77,7 @@ export default {
         if (_json.flag) {
           // 存在登录用户
           that.loginFlag = false
+          setCookie('cdeluid', _json.uid)
           // 扩散
           that.$emit('isLogin', {})
         } else {
