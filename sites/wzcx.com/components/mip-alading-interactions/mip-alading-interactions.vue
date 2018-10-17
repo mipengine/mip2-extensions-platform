@@ -1067,15 +1067,12 @@ export default {
     }
   },
   created () {
-    // base.resetRem()
+
   },
   mounted () {
     base.resetRem()
     console.log('document', document)
-    // base.setContainerH('.root-box')
-    // let wrapper = document.querySelector('.ald-wrapper')
-    // let scroll = new BScroll(wrapper, {})
-
+    this.getControlBtn()
     // 基本数据初始化
     this.initData()
     let options = {
@@ -1299,6 +1296,23 @@ export default {
           isMipLink: false
         })
       }
+    },
+    getControlBtn () {
+      const that = this
+      fetch(
+        'https://wxcity.fundway.net/gdjmt.wx.xcx/ad/getAdsToBdald.do'
+      )
+        .then(function (res) {
+          return res.json()
+        })
+        .then(function (res) {
+          console.log('res', res)
+          if (res.code === 200 || res.code === '200') {
+            const result = JSON.parse(res.result)
+            that.isShowMyOrder = result.isShow_orderBtn
+            that.isShowViolation = result.isShow_blBtn
+          }
+        })
     }
   }
 }
