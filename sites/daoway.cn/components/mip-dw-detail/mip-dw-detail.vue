@@ -362,14 +362,14 @@ export default {
       }
       // }
     })
-    let position = base.getposition()
+    /* let position = base.getposition()
     if (!position) {
       let point = JSON.parse(localStorage.getItem('point'))
       this.getCommunity(point.lat, point.lng)
-    }
+    } */
   },
   methods: {
-    getCommunity (lat, lng) {
+    /* getCommunity (lat, lng) {
       let that = this
       let url = 'https://www.daoway.cn/daoway/rest/community/autoPosition?lot=' + lng + '& =' + lat
       fetch(url, {
@@ -381,13 +381,13 @@ export default {
           that.position = text.data[0]
           base.position(text.data[0])
         } else {
-          that.warn.show = true
-          that.warn.texts = text.msg
+          /!*that.warn.show = true
+          that.warn.texts = text.msg*!/
         }
       }).catch(function (error) {
         console.log(error)
       })
-    },
+    }, */
     detailstr () {
       let that = this
       let url = 'https://www.daoway.cn/daoway/rest/service/full/' + that.id + '?channel=' + that.channel

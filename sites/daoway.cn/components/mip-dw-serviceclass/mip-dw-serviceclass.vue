@@ -1,7 +1,6 @@
 <template>
   <div class="wrapper"><!-- v-if="!position"-->
     <mip-map
-      v-if="!position"
       id="map"
       on="getPositionComplete:test.success  getPositionFailed:test.fail">
       <script type="application/json">
@@ -103,6 +102,7 @@ export default {
       filterAry: [],
       tag: decodeURI(base.getRequest(location.href).tag),
       item: [],
+      city: base.getRequest(location.href).city,
       indx: 0,
       tags: '',
       sw: true,
@@ -122,14 +122,58 @@ export default {
   mounted () {
     let that = this
     let category = this.category
-
-    this.nav()
     if (this.tag === '全部') {
       // this.tags = '&tag=';
     } else {
       this.tags = '&tag=' + encodeURIComponent(this.tag)
     }
+    if (that.city) {
+      that.getcity(that.city)
+    }
+    this.nav()
     this.getServicelist(0, category, this.tags)
+    that.$on('success', (e) => {
+      let that = this
+      let position = localStorage.getItem('position')
+      let city = e.address.city.replace(/市$/g, '') || that.city || '北京'
+      if (position) {
+        that.position = base.getposition()
+      } else {
+        that.city = city
+        that.getCommunity(e.point.lat, e.point.lng)
+      }
+      that.point.lat = e.point.lat
+      that.point.lng = e.point.lng
+      let point = {
+        lat: e.point.lat,
+        lng: e.point.lng,
+        city: city
+      }
+      localStorage.setItem('point', JSON.stringify(point))
+    })
+    that.$on('fail', (e) => {
+      localStorage.removeItem('point')
+      let position = localStorage.getItem('position')
+      if (position) {
+        that.position = base.getposition()
+      } else {
+        if (e.address.city) {
+          that.city = e.address.city.replace(/市$/g, '') || that.city || '北京'
+        }
+        if (e.point.lat && e.point.lng) {
+          let point = {
+            lat: e.point.lat,
+            lng: e.point.lng,
+            city: that.city
+          }
+          localStorage.setItem('point', JSON.stringify(point))
+          that.getCommunity(e.point.lat, e.point.lng)
+        } else {
+          that.toposition()
+        }
+      }
+    })
+
     let body = this.$element.querySelector('.wrapper')
     body.addEventListener('touchstart', (e, str) => {
       let touch = e.touches[0]
@@ -139,29 +183,53 @@ export default {
       let touch = e.touches[0]
       this.endY = touch.pageY
       /* if(this.endY >= this.startY){
-              this.morelist();
-          } */
+       this.morelist();
+       } */
       this.morelist()
-    })
-    that.$on('success', (e) => {
-      let point = {
-        lat: e.point.lat,
-        lng: e.point.lng
-      }
-      localStorage.setItem('point', JSON.stringify(point))
-    })
-    that.$on('fail', (e) => {
-      localStorage.removeItem('point')
-      if (e.point.lat && e.point.lng) {
-        let point = {
-          lat: e.point.lat,
-          lng: e.point.lng
-        }
-        localStorage.setItem('point', JSON.stringify(point))
-      }
     })
   },
   methods: {
+    getcity (city) {
+      let that = this
+      let url = 'https://www.daoway.cn/daoway/rest/user/getcity?city=' + city
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        return res.json()
+      }).then(function (text) {
+        if (text.status === 'ok') {
+          // console.log(text.data.community[0])
+          that.position = text.data.community[0]
+          base.position(text.data.community[0])
+        } else {
+          console.log(text.msg)
+          that.warn.show = true
+          that.warn.texts = text.msg
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
+    getCommunity (lat, lng) {
+      let that = this
+      let url = 'https://www.daoway.cn/daoway/rest/community/autoPosition?lot=' + lng + '&lat=' + lat
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        return res.json()
+      }).then(function (text) {
+        if (text.status === 'ok') {
+          that.position = text.data[0]
+          base.position(text.data[0])
+          MIP.viewer.open(base.htmlhref.serviceclass + '?category=' + that.category + '&tag=' + that.tag, {isMipLink: false})
+        } else {
+          that.warn.show = true
+          that.warn.texts = text.msg
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
     nav () {
       let that = this
       let category = that.category
@@ -175,7 +243,6 @@ export default {
         return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
-          console.log(text.data)
           let data = text.data[0]
           document.title = text.data[0].name
           let filterAry = data.tagsInfo
@@ -202,6 +269,7 @@ export default {
       } else {
         url = 'https://www.daoway.cn/daoway/rest/service_items/filter?start=' + index + '&size=30' + '&category=' + category + '&channel=' + that.channel + tag
       }
+      console.log(url)
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -298,7 +366,6 @@ export default {
     },
     closeLayer () {
       this.warn.show = false
-      this.warn.texts = ''
     }
   }
 }
