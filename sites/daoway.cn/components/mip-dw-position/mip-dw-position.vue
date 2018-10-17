@@ -196,7 +196,8 @@ export default {
       taphide: false,
       userId: '',
       token: '',
-      point: JSON.parse(localStorage.getItem('point'))
+      point: JSON.parse(localStorage.getItem('point')),
+      hasDstAddr: base.getRequest(location.href).hasDstAddr
     }
   },
   mounted () {
@@ -291,10 +292,19 @@ export default {
       }
     },
     tapback (i) {
-      base.position(i)
-      // MIP.setData({'#position': i})
       console.log(i)
-
+      if (this.hasDstAddr) {
+        if (!i.communityId && i.id) {
+          MIP.viewer.open(base.htmlhref.address, {replace: true})
+          // MIP.viewer.open(base.htmlhref.address, {replace: true})//+'?hasDstAddr='+ this.hasDstAddr
+          localStorage.setItem('addposition', JSON.stringify(i))
+          return
+        } else {
+          localStorage.setItem('position2', JSON.stringify(i))
+        }
+      } else {
+        base.position(i)
+      }
       MIP.viewer.page.back()
     },
     searchcommunity: function () {
