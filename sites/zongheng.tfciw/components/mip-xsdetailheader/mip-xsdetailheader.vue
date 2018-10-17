@@ -252,6 +252,49 @@ export default {
         stroke-dashoffset: -120px;
       }
     }
+    .xsdetailcal, .xsdetailstatus {
+      display: inline-block;
+      transition: .3s ease-in-out;
+    }
+    .xsdetailtag, .xsdetailcode {
+      opacity: 0;
+      display: inline-block;
+      transition: .3s ease-in-out;
+      display: none;
+    }
+    .circular {
+      width: 14px;
+      height: 14px;
+      animation: loading-rotate 2s linear infinite;
+    }
+    .path {
+      stroke-dasharray: 90,150;
+      stroke-dashoffset: 0;
+      stroke-width: 2;
+      /* stroke: #409eff; */
+      stroke: #555;
+      stroke-linecap: round;
+      animation: loading-dash 1.5s ease-in-out infinite;
+    }
+    @keyframes loading-rotate {
+      100% {
+        transform: rotate(1turn);
+      }
+    }
+    @keyframes loading-dash {
+      0% {
+        stroke-dasharray: 1,200;
+        stroke-dashoffset: 0;
+      }
+      50% {
+        stroke-dasharray: 90,150;
+        stroke-dashoffset: -40px;
+      }
+      100% {
+        stroke-dasharray: 90,150;
+        stroke-dashoffset: -120px;
+      }
+    }
     .rank_list {
       height: 28px;
       line-height: 28px;

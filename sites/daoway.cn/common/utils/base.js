@@ -49,7 +49,8 @@ export default ({
     vouchers: lxnhttp + component + 'vouchers.html',
     about: lxnhttp + component + 'about.html',
     search: lxnhttp + component + 'search.html',
-    searchlist: lxnhttp + component + 'searchlist.html'
+    searchlist: lxnhttp + component + 'searchlist.html',
+    address: lxnhttp + component + 'address.html'
 
     // community:lxnhttp + 'mip-dw-community/example/mip-dw-community.html',
     // city: lxnhttp + 'city.html',
