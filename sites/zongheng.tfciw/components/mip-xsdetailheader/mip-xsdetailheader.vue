@@ -7,8 +7,11 @@
         class="cover"
         width="122"
         height="162"/>
-      <p class="author">作者：<span>{{ author }}</span></p>
-      <p class="cal">分类：<span class="xsdetailcal">{{ cal }}</span>
+      <p class="author">
+        <span class="h">作者：</span><span>{{ author }}</span>
+      </p>
+      <p class="cal">
+        <span class="h">分类：</span><span class="xsdetailcal">{{ cal }}</span>
         <svg
           viewBox="25 25 50 50"
           class="circular">
@@ -21,7 +24,8 @@
         </svg>
         <span class="xsdetailtag">西方魔幻</span>
       </p>
-      <p class="status">状态：<span class="xsdetailstatus">{{ status }}</span>
+      <p class="status">
+        <span class="h">状态：</span><span class="xsdetailstatus">{{ status }}</span>
         <svg
           viewBox="25 25 50 50"
           class="circular">
@@ -169,9 +173,14 @@ export default {
     font-size: 19px;
     color: #000;
     line-height: 19px;
+    max-height: 38px;
     text-align: center;
     margin: 0 0 30px 0;
     font-weight: bold;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
   }
   .info_wrapper {
     height: 162px;
@@ -188,6 +197,16 @@ export default {
       color: #555;
       line-height: 14px;
       margin-bottom: 15px;
+      position: relative;
+      padding-left: 42px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      .h {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
     }
     .xsdetailcal, .xsdetailstatus {
       display: inline-block;
@@ -200,6 +219,7 @@ export default {
       display: none;
     }
     .circular {
+      display: none;
       width: 14px;
       height: 14px;
       animation: loading-rotate 2s linear infinite;
