@@ -43,7 +43,8 @@
     <div class="btn_wrapper">
       <a
         :href="calhref"
-        class="show_cal">查看目录</a>
+        class="show_cal"
+        mip-link>查看目录</a>
       <a
         :href="readhref"
         class="go_read"
