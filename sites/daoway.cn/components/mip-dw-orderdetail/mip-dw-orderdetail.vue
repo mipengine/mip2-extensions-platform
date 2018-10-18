@@ -558,11 +558,10 @@ export default {
             that.warn.show = true
             that.warn.texts = '订单已完成'
           }
+          MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + that.orderId, {isMipLink: false})
           setTimeout(() => {
             that.warn.show = false
           }, 600)
-          MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + that.orderId, {isMipLink: true})
-          // that.getState();
         } else {
           that.warn.show = true
           that.warn.texts = text.msg
