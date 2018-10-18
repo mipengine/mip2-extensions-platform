@@ -313,22 +313,24 @@ export default {
     }
   }
   .btn_wrapper {
-    display: flex;
+    /* display: flex; */
     font-size: 14px;
+    height: 38px;
     margin-bottom: 10px;
     a {
-      display: inline-block;
-      flex: 1;
-      text-align: center;
+      width: 48.5%;
       height: 38px;
       line-height: 38px;
       border-radius: 3px;
       box-sizing: border-box;
+      text-align: center;
       &.show_cal {
         border: 1px solid #707379;
         color: #000;
+        float: left;
       }
       &.go_read {
+        float: right;
         border: 1px solid #EE6420;
         margin-left: 7px;
         background: #EE6420;
