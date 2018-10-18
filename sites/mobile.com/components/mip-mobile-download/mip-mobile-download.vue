@@ -198,7 +198,7 @@ export default {
         border-radius: 18.5px;
     }
     .mip-download-wrapper .safeScanWrapper{
-        display: inline-block;
+        margin: 0 auto;
         width: 275px;
         font-size: 10px;
         line-height: 20px;
@@ -207,6 +207,6 @@ export default {
     }
     .safeScanWrapper .safeScan{
         width: 100%;
-        text-align: left;
+        text-align: center;
     }
 </style>
