@@ -1,5 +1,5 @@
 <template>
-	<div class="wrapper">
+ 	<div class="wrapper">
 		<mip-carousel autoplay defer="1000" layout="responsive" width="600" height="400" indicator indicatorId="mip-carousel-example">
 			<mip-img src="https://www.mipengine.org/static/img/sample_01.jpg">
 			</mip-img>
@@ -19,16 +19,16 @@
 </template>
 
 <style scoped>
-	.wrapper {
-		margin: 0 auto;
-		text-align: center;
-	}
+.wrapper {
+  margin: 0 auto;
+  text-align: center;
+}
 </style>
 
 <script>
-	export default {
-		mounted() {
-
-		}
-	}
+export default {
+  mounted () {
+    console.log('This is my first custom component !')
+  }
+}
 </script>
