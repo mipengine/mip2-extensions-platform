@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <h1>我是第一个组件</h1>
+    <h1>MIP 2.0 component example</h1>
     <h3>This is my first custom component !</h3>
   </div>
 </template>
