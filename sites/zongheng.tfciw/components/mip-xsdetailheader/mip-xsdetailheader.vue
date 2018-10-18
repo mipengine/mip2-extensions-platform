@@ -317,7 +317,7 @@ export default {
     font-size: 14px;
     margin-bottom: 10px;
     a {
-      display: inline-block;
+      display: block;
       flex: 1;
       text-align: center;
       height: 38px;
