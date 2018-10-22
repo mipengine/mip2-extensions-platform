@@ -201,8 +201,6 @@ export default {
       position: relative;
       padding-left: 42px;
       overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
       .h {
         position: absolute;
         top: 0;
@@ -256,6 +254,10 @@ export default {
     .xsdetailcal, .xsdetailstatus {
       display: inline-block;
       transition: .3s ease-in-out;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .xsdetailtag, .xsdetailcode {
       opacity: 0;
