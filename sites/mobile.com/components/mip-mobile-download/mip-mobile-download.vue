@@ -8,7 +8,7 @@
       <span>安全下载</span>
     </div>
     <div class="safeScanWrapper">
-      <p class="safeScan">安全下载:使用百度手机助手下载,更快更安全.</p>
+      <p class="safeScan">安全下载:使用百度手机助手下载,更快更安全</p>
     </div>
   </div>
 </template>
