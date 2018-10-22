@@ -12,7 +12,7 @@
       </p>
       <p class="cal">
         <span class="h">分类：</span><span class="xsdetailcal">{{ cal }}</span>
-        <svg
+        <!-- <svg
           viewBox="25 25 50 50"
           class="circular">
           <circle
@@ -22,11 +22,11 @@
             fill="none"
             class="path"/>
         </svg>
-        <span class="xsdetailtag">西方魔幻</span>
+        <span class="xsdetailtag">西方魔幻</span> -->
       </p>
       <p class="status">
         <span class="h">状态：</span><span class="xsdetailstatus">{{ status }}</span>
-        <svg
+        <!-- <svg
           viewBox="25 25 50 50"
           class="circular">
           <circle
@@ -36,7 +36,7 @@
             fill="none"
             class="path"/>
         </svg>
-        <span class="xsdetailcode">已完结</span>
+        <span class="xsdetailcode">已完结</span> -->
       </p>
       <div class="rank_list">榜单：<span class="rank xsdetailrank">玄幻榜 NO.20</span></div>
     </div>
@@ -201,8 +201,6 @@ export default {
       position: relative;
       padding-left: 42px;
       overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
       .h {
         position: absolute;
         top: 0;
@@ -212,6 +210,10 @@ export default {
     .xsdetailcal, .xsdetailstatus {
       display: inline-block;
       transition: .3s ease-in-out;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .xsdetailtag, .xsdetailcode {
       opacity: 0;
