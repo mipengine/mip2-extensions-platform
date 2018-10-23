@@ -320,7 +320,7 @@
           </p>
           <p>③本服务不提供相关票据，如遇特殊情况无法办理，将于结果反馈后
             <span class="clause-num">7个工作日</span>原路退款，如有疑问，可致电客服。
-            <span class="clause-num">020-31136463。</span>
+            <span class="clause-num">40000016353。</span>
           </p>
           <p>④付款成功后，请勿通过其他渠道
             <span>重复处理</span>，生成的纠纷

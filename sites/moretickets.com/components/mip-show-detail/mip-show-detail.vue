@@ -934,13 +934,15 @@
   }
   .content-header {
     width: 100%;
+    min-height: 17.8rem;
     position: relative;
-    display: flex;
-    align-items: flex-end;
     padding: 2.9rem 1.8rem;
     .show-img {
       width: 8.4rem;
       height: 11.8rem;
+      z-index: 10;
+      position: relative;
+      float:left;
       z-index: 10;
     }
     .discount {
@@ -963,18 +965,10 @@
       }
     }
     .detail {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
       color: #fff;
       z-index: 10;
-      padding-left: 1.5rem;
-      .row {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
+      padding-left: 10rem;
+      position: relative;
       .show-name {
         line-height: 2.2rem;
         height: 6.6rem;
@@ -1000,6 +994,15 @@
         }
       }
     }
+    &:before,
+    &:after {
+        content:"";
+        display: table;
+      }
+    &:after {
+        clear:both;
+        overflow: hidden;
+      }
   }
   .tag-detail {
     padding-bottom: 2.9rem;
@@ -1049,12 +1052,15 @@
 .content-footer {
   min-height: 6.2rem;
   flex-basis: 6.2rem;
+  -webkit-flex-basis:6.2rem;
   display: flex;
+  display: -webkit-flex;
   width: 100%;
   border-top: 1px solid rgb(228, 228, 228);
   padding: 0.9rem 0;
   z-index: 1000;
   align-items: center;
+  -webkit-align-items: center;
   position: relative;
   background-color: #fff;
   .show-operation-tip {
@@ -1094,8 +1100,10 @@
   }
   .footer-btn-wrapper {
     flex: 1;
+    -webkit-flex:1;
     padding-right: 0.9rem;
     display: flex;
+    display:-webkit-flex;
   }
   .footer-btn {
     color: #fff;
@@ -1104,6 +1112,7 @@
     text-align: center;
     font-size: 1.6rem;
     flex: 1;
+    -webkit-flex:1;
     margin-right: 0.9rem;
     border-radius: 2px;
   }

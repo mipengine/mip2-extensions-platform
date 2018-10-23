@@ -320,6 +320,9 @@
         </div>
       </div>
     </div>
+    <a
+      ref="opens"
+      href=""/>
     <mip-fixed type="top">
       <div
         v-if="openShow"
@@ -530,10 +533,11 @@ export default {
     },
     gotoNews ({id, Type}) {
       if (Type === 1) {
-        MIP.viewer.open(`https://mys4s.cn/static/xcar/index.html#/News/${id}?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xfrom=baidu_jisu_vio`)
+        this.$refs.opens.href = `https://mys4s.cn/static/xcar/index.html#/News/${id}?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xfrom=baidu_jisu_vio`
       } if (Type === 2) {
-        MIP.viewer.open(`https://mys4s.cn/static/xcar/index.html#/Evaluation?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xfrom=baidu_jisu_vio`)
+        this.$refs.opens.href = `https://mys4s.cn/static/xcar/index.html#/Evaluation?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xfrom=baidu_jisu_vio`
       }
+      this.$refs.opens.click()
     },
     // 罚单
     openTicket () {
