@@ -12,7 +12,14 @@
       </script>
     </mip-map>
     <div id="test"/>
-    <mip-fixed type="top">
+    <mip-fixed
+      type="top"
+      class="mipfix">
+      <div class="searchdiv"><img src="https://www.daoway.cn/mip/common/images/search2.png"><input
+        v-model="searchtext"
+        type="text"
+        placeholder="搜索家政、维修、搬家、按摩、美容等万千服务"
+        @input="search"></div>
       <div class="sc-nav">
         <mip-scrollbox
           data-type="row"
@@ -41,9 +48,12 @@
         :key="i"
         :id="i.id"
         class="sc-box-list"
-        @click="todetail(i.id)">
+        @click="todetail(i.id,i.inDistanceScope)">
         <div class="scbl-left">
           <img :src="i.pic_url">
+          <div
+            v-if="!i.inDistanceScope"
+            class="posimg"><img src="https://www.daoway.cn/mip/common/images/position2.png"><div>地址超出服务范围</div></div>
         </div>
         <div class="scbl-right">
           <ul>
@@ -73,6 +83,16 @@
       <p
         v-if="nomore"
         class="loding">~暂时只有这些了~</p>
+    </div>
+    <div
+      v-if="searchlist.length>0"
+      class="searchlist">
+      <ul>
+        <li
+          v-for="s in searchlist"
+          :key="s"
+          @click="tapsearch(s)">{{ s }}</li>
+      </ul>
     </div>
     <div
       v-show="warn.show"
@@ -116,7 +136,10 @@ export default {
         // 弹窗
         show: false,
         texts: ''
-      }
+      },
+      searchtext: '',
+      searchlist: {},
+      start: 0
     }
   },
   mounted () {
@@ -269,7 +292,6 @@ export default {
       } else {
         url = 'https://www.daoway.cn/daoway/rest/service_items/filter?start=' + index + '&size=30' + '&category=' + category + '&channel=' + that.channel + tag
       }
-      console.log(url)
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -277,6 +299,7 @@ export default {
       }).then(function (text) {
         if (text.status === 'ok') {
           let datas = text.data.items
+          console.log(datas)
           let ary = that.ary
           if (datas.length > 0) {
             for (let i = 0; i < datas.length; i++) {
@@ -294,6 +317,7 @@ export default {
                   positiveCommentRate = '暂无评价'
                 }
               }
+
               let obj = {
                 aheadHours: data.fastestDay ? data.fastestDay : data.aheadHours + '小时',
                 description: data.description,
@@ -306,8 +330,10 @@ export default {
                 salesNum: data.salesNum,
                 serviceTitle: data.serviceTitle,
                 totalReduce: totalReduce ? totalReduce[0] : null,
-                firstReduce: firstReduce || null
+                firstReduce: firstReduce || null,
+                inDistanceScope: data.inDistanceScope
               }
+
               ary.push(obj)
             }
             that.item = ary
@@ -358,14 +384,37 @@ export default {
         that.loding = false
       }
     },
-    todetail (id) {
-      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, { isMipLink: true })
+    todetail (id, inDistanceScope) {
+      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id + '&inDistanceScope=' + inDistanceScope, { isMipLink: true })
     },
     toposition () {
       MIP.viewer.open(base.htmlhref.position, {isMipLink: true})
     },
     closeLayer () {
       this.warn.show = false
+    },
+    search () {
+      let that = this
+      let url = 'https://www.daoway.cn/daoway/rest/services/auto_complete_words?word=' + encodeURIComponent(that.searchtext) + '&channel=' + this.channel
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        return res.json()
+      }).then(function (text) {
+        if (text.status === 'ok') {
+          that.searchlist = text.data
+        } else {
+          that.warn.show = true
+          that.warn.texts = text.msg
+        }
+      }).catch(function (error) {
+        console.error(error)
+      })
+    },
+    tapsearch (searchText) {
+      if (searchText) {
+        MIP.viewer.open(base.htmlhref.searchlist + '?searchText=' + encodeURIComponent(searchText), {isMipLink: true})
+      }
     }
   }
 }
@@ -394,11 +443,14 @@ export default {
         height: 70px;
         padding: 5px 0;
         background: #fff;
-        margin-top: 44px;
+        margin-top: 10px;
         border-top: 1px solid #f5f5f5;
     }
     mip-scrollbox [data-inner]{
         margin-top: -37px;
+    }
+    .mipfix{
+        background: #fff;
     }
 
     .sc-list {
@@ -428,7 +480,7 @@ export default {
     }
 
     .sc-box {
-        margin-top: 76px;
+        margin-top: 124px;
         box-sizing: border-box;
     }
 
@@ -454,7 +506,8 @@ export default {
     }
 
     .scbl-left {
-        width: 28%
+        width: 28%;
+        position: relative;
     }
 
     .scbl-right {
@@ -555,7 +608,6 @@ export default {
         line-height: 15px;
         margin-left: 1px;
         margin-right: 2px;
-
     }
 
     .sc-home-yishou {
@@ -570,5 +622,62 @@ export default {
         font-size: 12px;
         color: #898989;
     }
+    .searchdiv{
+        width: 94%;
+        margin: 44px 3% 0;
+        border: 1px solid #898989;
+        background: #fff;
+        padding: 0 2%;
+        height: 40px;
+        border-radius: 4px;
+    }
+    .searchdiv img{
+        width: 14px;
+        height: auto;
+        vertical-align: middle;
+    }
 
+    .searchdiv input{
+        width: 90%;
+        margin-left: 2%;
+    }
+    .searchlist{
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        position: absolute;
+        top:60px;
+        left: 0;
+        z-index: 10001;
+    }
+    .searchlist li{
+        width: 98%;
+        margin-left: 2%;
+        border-bottom: 1px solid #e5e5e5;
+        line-height: 40px;
+    }
+    .posimg{
+        position: absolute;
+        top:0 ;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        color: #fff;
+        text-align: center;
+        padding-top: 34%;
+    }
+    .posimg img{
+        width: 12px;
+        height: auto;
+        vertical-align: middle;
+    }
+
+    .posimg div{
+        width: 52px;
+        margin-left: 3px;
+        font-size: 12px;
+        display: inline-block;
+        vertical-align: middle;
+    }
 </style>
