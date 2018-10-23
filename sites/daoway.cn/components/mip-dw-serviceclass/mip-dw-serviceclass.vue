@@ -12,7 +12,9 @@
       </script>
     </mip-map>
     <div id="test"/>
-    <mip-fixed type="top">
+    <mip-fixed
+      type="top"
+      class="mipfix">
       <div class="searchdiv"><img src="https://www.daoway.cn/mip/common/images/search2.png"><input
         v-model="searchtext"
         type="text"
@@ -447,7 +449,7 @@ export default {
     mip-scrollbox [data-inner]{
         margin-top: -37px;
     }
-    mip-fixed{
+    .mipfix{
         background: #fff;
     }
 
