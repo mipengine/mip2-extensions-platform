@@ -25,9 +25,12 @@
           :key="i"
           :id="i.id"
           class="sc-box-list"
-          @click="todetail(i.id)">
+          @click="todetail(i.id,i.inDistanceScope)">
           <div class="scbl-left">
             <img :src="i.pic_url">
+            <div
+              v-if="!i.inDistanceScope"
+              class="posimg"><img src="https://www.daoway.cn/mip/common/images/position2.png"><div>地址超出服务范围</div></div>
           </div>
           <div class="scbl-right">
             <ul>
@@ -202,8 +205,8 @@ export default {
         that.loding = false
       }
     },
-    todetail (id) {
-      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, {isMipLink: true})
+    todetail (id, inDistanceScope) {
+      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id + '&inDistanceScope=' + inDistanceScope, { isMipLink: true })
     }
   }
 }
@@ -321,8 +324,8 @@ export default {
     }
 
     .scbl-left img {
-        width: 105px;
-        height: 105px;
+        width: 100%;
+        height: auto;
         border-radius: 4px
     }
 
@@ -331,7 +334,8 @@ export default {
     }
 
     .scbl-left {
-        width: 28%
+        width: 28%;
+        position: relative;
     }
 
     .scbl-right {
@@ -448,6 +452,30 @@ export default {
     .sc-r-home, .sc-r-home div, .sc-r-home span {
         font-size: 12px;
         color: #898989;
+    }
+    .posimg{
+        position: absolute;
+        top:0 ;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.5);
+        color: #fff;
+        text-align: center;
+        padding-top: 34%;
+    }
+    .posimg img{
+        width: 12px;
+        height: auto;
+        vertical-align: middle;
+    }
+
+    .posimg div{
+        width: 52px;
+        margin-left: 3px;
+        font-size: 12px;
+        display: inline-block;
+        vertical-align: middle;
     }
 
 </style>
