@@ -7,8 +7,11 @@
         class="cover"
         width="122"
         height="162"/>
-      <p class="author">作者：<span>{{ author }}</span></p>
-      <p class="cal">分类：<span class="xsdetailcal">{{ cal }}</span>
+      <p class="author">
+        <span class="h">作者：</span><span>{{ author }}</span>
+      </p>
+      <p class="cal">
+        <span class="h">分类：</span><span class="xsdetailcal">{{ cal }}</span>
         <svg
           viewBox="25 25 50 50"
           class="circular">
@@ -21,7 +24,8 @@
         </svg>
         <span class="xsdetailtag">西方魔幻</span>
       </p>
-      <p class="status">状态：<span class="xsdetailstatus">{{ status }}</span>
+      <p class="status">
+        <span class="h">状态：</span><span class="xsdetailstatus">{{ status }}</span>
         <svg
           viewBox="25 25 50 50"
           class="circular">
@@ -39,7 +43,8 @@
     <div class="btn_wrapper">
       <a
         :href="calhref"
-        class="show_cal">查看目录</a>
+        class="show_cal"
+        mip-link>查看目录</a>
       <a
         :href="readhref"
         class="go_read"
@@ -169,9 +174,14 @@ export default {
     font-size: 19px;
     color: #000;
     line-height: 19px;
+    max-height: 38px;
     text-align: center;
     margin: 0 0 30px 0;
     font-weight: bold;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
   }
   .info_wrapper {
     height: 162px;
@@ -188,10 +198,66 @@ export default {
       color: #555;
       line-height: 14px;
       margin-bottom: 15px;
+      position: relative;
+      padding-left: 42px;
+      overflow: hidden;
+      .h {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
     }
     .xsdetailcal, .xsdetailstatus {
       display: inline-block;
       transition: .3s ease-in-out;
+    }
+    .xsdetailtag, .xsdetailcode {
+      opacity: 0;
+      display: inline-block;
+      transition: .3s ease-in-out;
+      display: none;
+    }
+    .circular {
+      display: none;
+      width: 14px;
+      height: 14px;
+      animation: loading-rotate 2s linear infinite;
+    }
+    .path {
+      stroke-dasharray: 90,150;
+      stroke-dashoffset: 0;
+      stroke-width: 2;
+      /* stroke: #409eff; */
+      stroke: #555;
+      stroke-linecap: round;
+      animation: loading-dash 1.5s ease-in-out infinite;
+    }
+    @keyframes loading-rotate {
+      100% {
+        transform: rotate(1turn);
+      }
+    }
+    @keyframes loading-dash {
+      0% {
+        stroke-dasharray: 1,200;
+        stroke-dashoffset: 0;
+      }
+      50% {
+        stroke-dasharray: 90,150;
+        stroke-dashoffset: -40px;
+      }
+      100% {
+        stroke-dasharray: 90,150;
+        stroke-dashoffset: -120px;
+      }
+    }
+    .xsdetailcal, .xsdetailstatus {
+      display: inline-block;
+      transition: .3s ease-in-out;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .xsdetailtag, .xsdetailcode {
       opacity: 0;
@@ -249,22 +315,24 @@ export default {
     }
   }
   .btn_wrapper {
-    display: flex;
+    /* display: flex; */
     font-size: 14px;
+    height: 38px;
     margin-bottom: 10px;
     a {
-      display: inline-block;
-      flex: 1;
-      text-align: center;
+      width: 48.5%;
       height: 38px;
       line-height: 38px;
       border-radius: 3px;
       box-sizing: border-box;
+      text-align: center;
       &.show_cal {
         border: 1px solid #707379;
         color: #000;
+        float: left;
       }
       &.go_read {
+        float: right;
         border: 1px solid #EE6420;
         margin-left: 7px;
         background: #EE6420;

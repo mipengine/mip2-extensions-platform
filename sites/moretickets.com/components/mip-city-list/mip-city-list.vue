@@ -45,7 +45,8 @@
       </div>
       <div
         v-for="(type,index) in cities.allCities"
-        :key="index">
+        :key="index"
+        style="clear:both;">
         <div
           :data-key="type.title"
           class="city-type-title">{{ type.title }}</div>
@@ -124,6 +125,7 @@ ul li{
   color: #aaaaaa;
   margin-bottom:12px;
   margin-top:15px;
+  clear: both;
 }
 .city-item{
     width: 30%;
@@ -138,6 +140,7 @@ ul li{
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    float: left;
 }
 .fail-location{
     font-size: 16px;
@@ -169,14 +172,9 @@ ul li{
     margin-top: 18px;
 }
 .city-wrap{
-    display:flex;
-    display: -webkit-flex;
-    align-items: center;
-    -webkit-align-items: center;
-    justify-content:left;
-    -webkit-justify-content:left;
-    flex-flow:row wrap;
-    -webkit-flex-flow:row wrap;
+    float: left;
+    width: 100%;
+    clear: both;
 }
 .all-city-wrap{
     margin: 0 -40px 0 -15px;
