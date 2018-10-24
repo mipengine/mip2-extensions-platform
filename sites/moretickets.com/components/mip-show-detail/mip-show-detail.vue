@@ -139,10 +139,7 @@
             摩天轮服务保障
           </div>
         </div>
-        <div class="assurance-items">
-          <div class="assurance-item real">真票保障</div>
-          <div class="assurance-item ticket">出票保障</div>
-          <div class="assurance-item delivery">配送保障</div>
+        <div class="assurance-items"><div class="assurance-item real">真票保障</div><div class="assurance-item ticket">出票保障</div><div class="assurance-item delivery">配送保障</div>
         </div>
       </div>
     </div>
@@ -808,7 +805,7 @@
       .assurance-items {
         font-size: 1.3rem;
         .assurance-item {
-          width: 33%;
+          width: 32%;
           line-height: 1.8rem;
           padding-top: 4rem;
           background-repeat: no-repeat;
@@ -816,9 +813,7 @@
           background-size: 30px;
           color: #95949d;
           display: inline-block;
-          margin-left: 41px;
           text-align: center;
-          }
           &.real {
             background-image: url(~@/static/icon/assurance-real-dark.png);
           }
