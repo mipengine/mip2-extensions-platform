@@ -324,7 +324,8 @@ export default {
       token: localStorage.getItem('mipToken') || base.getCookie('mipToken'),
       startY: '',
       endY: '',
-      param: {}
+      param: {},
+      inDistanceScope: base.getRequest(location.href).inDistanceScope
     }
   },
   /* created () {
@@ -333,6 +334,12 @@ export default {
   mounted () {
     sessionStorage.removeItem('tech')
     localStorage.removeItem('technician')
+    let position = base.getposition()
+    console.log(this.inDistanceScope)
+    if (this.inDistanceScope === 'false') {
+      this.warn.show = true
+      this.warn.texts = '抱歉！您的地址“' + position.name + '”已超出该商家设定的服务范围。该商家可能暂时无法为您提供服务'
+    }
     this.detailstr()
     if (!this.userId && !this.token) {
       this.$on('customLogin', event => {
@@ -362,6 +369,7 @@ export default {
       }
       // }
     })
+
     /* let position = base.getposition()
     if (!position) {
       let point = JSON.parse(localStorage.getItem('point'))
@@ -369,25 +377,6 @@ export default {
     } */
   },
   methods: {
-    /* getCommunity (lat, lng) {
-      let that = this
-      let url = 'https://www.daoway.cn/daoway/rest/community/autoPosition?lot=' + lng + '& =' + lat
-      fetch(url, {
-        method: 'get'
-      }).then(function (res) {
-        return res.json()
-      }).then(function (text) {
-        if (text.status === 'ok') {
-          that.position = text.data[0]
-          base.position(text.data[0])
-        } else {
-          /!*that.warn.show = true
-          that.warn.texts = text.msg*!/
-        }
-      }).catch(function (error) {
-        console.log(error)
-      })
-    }, */
     detailstr () {
       let that = this
       let url = 'https://www.daoway.cn/daoway/rest/service/full/' + that.id + '?channel=' + that.channel
