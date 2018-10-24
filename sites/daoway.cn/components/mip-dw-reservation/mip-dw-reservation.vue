@@ -263,6 +263,7 @@ export default {
     }
     if (that.orderId) {
       that.buyAgain(that.orderId)
+      that.gethtml()
     } else {
       that.gethtml()
       that.setPostion()

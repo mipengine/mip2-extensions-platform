@@ -17,9 +17,10 @@
       class="mipfix">
       <div class="searchdiv"><img src="https://www.daoway.cn/mip/common/images/search2.png"><input
         v-model="searchtext"
-        type="text"
+        type="search"
         placeholder="搜索家政、维修、搬家、按摩、美容等万千服务"
-        @input="search"></div>
+        @input="search"
+        @keyup.13="tapsearch(searchText)"></div>
       <div class="sc-nav">
         <mip-scrollbox
           data-type="row"
@@ -425,6 +426,9 @@ export default {
         margin: 0;
         box-sizing: border-box;
     }
+    .wrapper{
+      position: relative;
+    }
 
     i {
         font-style: normal
@@ -640,13 +644,14 @@ export default {
     .searchdiv input{
         width: 90%;
         margin-left: 2%;
+        font-size: 14px;
     }
     .searchlist{
         width: 100%;
         height: 100%;
         background: #fff;
         position: absolute;
-        top:60px;
+        top:55px;
         left: 0;
         z-index: 10001;
     }
