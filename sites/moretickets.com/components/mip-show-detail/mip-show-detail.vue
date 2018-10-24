@@ -806,18 +806,19 @@
         }
       }
       .assurance-items {
-        display: flex;
-        justify-content: space-around;
         font-size: 1.3rem;
-        align-items: center;
         .assurance-item {
-          width: 5.2rem;
+          width: 33%;
           line-height: 1.8rem;
           padding-top: 4rem;
           background-repeat: no-repeat;
           background-position: center top;
           background-size: 30px;
           color: #95949d;
+          display: inline-block;
+          margin-left: 41px;
+          text-align: center;
+          }
           &.real {
             background-image: url(~@/static/icon/assurance-real-dark.png);
           }
