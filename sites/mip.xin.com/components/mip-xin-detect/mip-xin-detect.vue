@@ -46,7 +46,7 @@
                 <span class="test-list-value" >{{ item.flaw_all_num }}项</span>
                 <mip-img
                   class="testFlawimg"
-                  src="http://c2.xinstatic.com/f3/20180416/1840/5ad47da23e611535388.png"/>
+                  src="//c2.xinstatic.com/f3/20180416/1840/5ad47da23e611535388.png"/>
               </div>
               <div
                 v-if="item.all_num - item.flaw_all_num > 0"
@@ -54,7 +54,7 @@
                 <span class="test-list-value" >{{ item.all_num - item.flaw_all_num }}项</span>
                 <mip-img
                   class="testNormalimg"
-                  src="http://c2.xinstatic.com/f3/20180416/1840/5ad47da23e2e4430972.png"/>
+                  src="//c2.xinstatic.com/f3/20180416/1840/5ad47da23e2e4430972.png"/>
               </div>
               <div class="testArrow"/>
             </div>
@@ -69,8 +69,9 @@
 <script>
 import { requestFun } from '../../common/utils/reqUtils'
 import { clickPoint } from '../../common/utils/stastic.js'
-import { getLocalStorage } from '../../common/utils/utils.js'
+import { getLocalStorage, getDomain } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
+const pidReport = '/pages/report'
 const imageTitle = '//c5.xinstatic.com' // 图片地址需要拼接
 export default {
   // props: ['carid'],
@@ -88,7 +89,7 @@ export default {
       carRepairImg: '', // 检测员头像
       testMessage: {},
       haveReport: false,
-      user_pic: 'http://c2.xinstatic.com/f3/20180321/1450/5ab200c91cd19349288.png', // 默认头像地址
+      user_pic: '//c2.xinstatic.com/f3/20180321/1450/5ab200c91cd19349288.png', // 默认头像地址
       urlReport: '' // 跳转链接
     }
   },
@@ -115,9 +116,10 @@ export default {
           }
         }
         let opurl = getLocalStorage('locationUrl')
-          ? getLocalStorage('locationUrl') + '&'
-          : '?'
-        this.urlReport = `/report_${this.carid}.html${opurl}index=`
+          ? getLocalStorage('locationUrl') + encodeURIComponent('&')
+          : encodeURIComponent('?')
+        let index = encodeURIComponent('index=')
+        this.urlReport = `${getDomain()}/report_${this.carid}.html${opurl}${index}`
       })
       .catch(err => {
         console.log(err)
@@ -137,6 +139,17 @@ export default {
         null,
         {
           pid: pid
+        }
+      )
+      clickPoint(
+        'video_examine',
+        {
+          carid: this.carid,
+          operation: 3
+        },
+        null,
+        {
+          pid: pidReport
         }
       )
       // MIP.viewer.open(
@@ -242,8 +255,8 @@ export default {
   color: #848484;
 }
 .car-test-desc {
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
+  margin-left: 0.4rem;
+  margin-right: 0.4rem;
   font-size: 0.28rem;
   font-family: PingFangSC-Regular;
   color: rgba(88, 88, 88, 1);

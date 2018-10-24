@@ -9,6 +9,7 @@
       id="callmask"
       class="callMask"
       type="top"
+      still
       @click="hideMask">
       <div
         id="askPrice"
@@ -30,7 +31,7 @@
           </mip-form>
           <!-- <mip-img
             class="close"
-            src="http://s4.xinstatic.com/m/img/smallprogram/close.png"
+            src="//s4.xinstatic.com/m/img/smallprogram/close.png"
             @click="clearTel" /> -->
         </div>
         <div
@@ -45,11 +46,11 @@
             <mip-img
               v-if="baAuth"
               class="auth-icon "
-              src="http://c2.xinstatic.com/f3/20180803/1517/5b64017eea4a3722229.png"/>
+              src="//c2.xinstatic.com/f3/20180803/1517/5b64017eea4a3722229.png"/>
             <mip-img
               v-if="!baAuth"
               class="auth-icon "
-              src="http://c2.xinstatic.com/f3/20180803/1517/5b6401764c164734049.png"/>
+              src="//c2.xinstatic.com/f3/20180803/1517/5b6401764c164734049.png"/>
             <label
               for="bdAuth"
               class="auth-font">登陆百度账号，第一时间了解订单状态</label>
@@ -58,7 +59,8 @@
             v-if="!info.isLogin && baAuth && telCorrect"
             :style="{'margin-top':authBottom}"
             class="enquiryBtn tel-submit"
-            on="tap:customlog.login">获取底价</button>
+            on="tap:customlog.login"
+            @click="handleLogin">获取底价</button>
           <button
             v-else
             :style="{'margin-top':authBottom}"
@@ -73,6 +75,7 @@
       id="callmaskSimilar"
       type="top"
       class="callMask"
+      still
       @click="hideMask">
       <div
         id="similarToast"
@@ -80,7 +83,7 @@
         <div class="ask-price-success">
           <mip-img
             class="askprice-success-boximg"
-            src="http://c2.xinstatic.com/f3/20180717/1102/5b4d5c379c451177647.png"/>
+            src="//c2.xinstatic.com/f3/20180717/1102/5b4d5c379c451177647.png"/>
           <span class="askprice-success-font">询价成功</span>
         </div>
       </div>
@@ -112,12 +115,14 @@
                     <span class="carbday-scroll">{{ item.regist_date }}年 / {{ item.mileage }}公里</span>
                   </div>
                   <div class="pricedetail-scroll">
-                    <span class="similar-recommend-price-scroll">{{ item.panel_price }}万元</span>
-                    <span class="similar-recommend-monthprice-scroll">首付{{ item.show_price }}万</span>
+                    <div style="display:flex;align-items: baseline;">
+                      <span class="similar-recommend-price-scroll">{{ item.panel_price }}万</span>
+                      <span class="similar-recommend-monthprice-scroll">首付{{ item.show_price }}万</span>
+                    </div>
                     <div
                       v-if="item.isAsk && item.enquiry_status == 1"
                       class="pricedetail-div-scroll"
-                      @click="askPriceOne(index)">一键询价</div>
+                      @click="askPriceOne(index,item.carid)">一键询价</div>
                     <div
                       v-if="!item.isAsk && item.enquiry_status == 1"
                       class="asked-price-scroll">已询价</div>
@@ -137,8 +142,7 @@ import { clickPoint } from '../../common/utils/stastic.js'
 import {
   getLocalStorage,
   getCarId,
-  setLocalStorage,
-  getQuery
+  setLocalStorage
 } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
 export default {
@@ -196,17 +200,16 @@ export default {
       // event.userInfo;
       // 后端交互会话标识
       // event.sessionId;
-      if (event.userInfo && getQuery().state) {
-        this.bottomPrice()
+      if (event.userInfo && window.location.href.indexOf('code') > 0 && window.location.href.indexOf('state') > 0) {
+        console.log('授权成功')
       }
-      console.log('授权成功')
     })
     // 自定义exit事件
     this.$on('clientLogout', event => {
       console.log('登出了')
     })
-
-    if (getQuery().state) {
+    if (window.location.href.indexOf('code') > 0 && window.location.href.indexOf('state') > 0) {
+      this.bottomPrice()
       this.showAskToast = false
       this.showSimilarToast = true
     }
@@ -230,6 +233,21 @@ export default {
     }
   },
   methods: {
+    handleLogin () {
+      clickPoint(
+        'getbottomprice_vehicle_detail',
+        {
+          carid: getCarId(),
+          type: this.isDirect,
+          authorize: 1,
+          button: 2
+        },
+        null,
+        {
+          pid: pid
+        }
+      )
+    },
     authMessage () {
       this.baAuth = !this.baAuth
     },
@@ -299,6 +317,22 @@ export default {
             this.showAskToast = false
             this.showSimilarToast = true
           }
+          // 登陆授权之后埋点
+          let type = this.isDirect
+          let telNum = this.telValue || getLocalStorage('phoneNumber')
+          clickPoint(
+            'bottomprice_submit_vehicle_detail',
+            {
+              carid: getCarId(),
+              type: type,
+              tel_num: telNum,
+              button: 2
+            },
+            null,
+            {
+              pid: pid
+            }
+          )
         })
         .catch(err => {
           if (err.error_code === 412) {
@@ -306,32 +340,52 @@ export default {
             this.reminMessage = '30秒内不能重复提交'
           }
         })
-      clickPoint(
-        'bottomprice_submit_vehicle_details',
-        {
-          carid: getCarId(),
-          type: this.isDirect,
-          tel_num: this.telValue
-        },
-        null,
-        {
-          pid: pid
-        }
-      )
     },
     // 询底价
     queryClick () {
       if (!this.telCorrect) {
         this.remain = true
         this.reminMessage = '请输入正确的手机号'
+        return
       }
       this.bottomPrice()
+      if (this.info.isLogin) {
+        clickPoint(
+          'getbottomprice_vehicle_detail',
+          {
+            carid: getCarId(),
+            type: this.isDirect,
+            authorize: 0,
+            button: 2
+            // tel_num: this.telValue
+          },
+          null,
+          {
+            pid: pid
+          }
+        )
+      } else {
+        clickPoint(
+          'getbottomprice_vehicle_detail',
+          {
+            carid: getCarId(),
+            type: this.isDirect,
+            authorize: 2,
+            button: 2
+            // tel_num: this.telValue
+          },
+          null,
+          {
+            pid: pid
+          }
+        )
+      }
     },
     // 一键询价
-    askPriceOne (index) {
+    askPriceOne (index, carid) {
       let param = {
         // type: "enquiry",
-        carid: getCarId(),
+        carid: carid || getCarId(),
         mobile: this.telValue,
         cityid: JSON.parse(this.cityMessage).cityid
       }
@@ -531,7 +585,7 @@ export default {
   display: flex;
   flex-direction: column;
   background: rgba(255, 255, 255, 1);
-  padding-bottom: 0.3rem;
+  margin-bottom: 0.3rem;
 }
 
 .carcontent-scroll {
@@ -561,6 +615,8 @@ export default {
   display: flex;
   flex-direction: column;
   margin-right: 0.2rem;
+  float: left;
+  width: 4rem;
 }
 
 .righttop-scroll {
@@ -580,8 +636,7 @@ export default {
 }
 
 .priceint-scroll {
-  width: 3.9rem;
-  padding-right: 0.47rem;
+  width: 2.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -618,16 +673,19 @@ export default {
 
 .pricedetail-div-scroll {
   border-radius: 0.03rem;
-  border: 0.01rem solid rgba(255, 90, 55, 1);
+  border: 1px solid rgba(255, 90, 55, 1);
   font-size: 0.24rem;
   font-family: PingFangSC-Regular;
   color: rgba(255, 90, 55, 1);
-  width: 1.22rem;
-  height: 0.46rem;
+  /**width: 1.22rem;
+  height: 0.46rem;*/
   text-align: center;
   line-height: 0.46rem;
-  margin-left: 0.2rem;
-  margin-right: 0.2rem;
+  padding-left: 0.15rem;
+  padding-right: 0.15rem;
+  white-space:nowrap;
+  margin-bottom:0.01rem;
+  padding-top: 0.01rem;
 }
 .asked-price-scroll {
   border-radius: 0.03rem;
@@ -648,6 +706,8 @@ export default {
   font-family: PingFangSC-Medium;
   color: rgba(248, 93, 0, 1);
   line-height: 0.3rem;
+  white-space: nowrap;
+
 }
 
 .similar-recommend-monthprice-scroll {
@@ -655,5 +715,10 @@ export default {
   font-family: PingFangSC-Regular;
   color: rgba(248, 93, 0, 1);
   margin-left: 0.08rem;
+  white-space: nowrap;
+}
+.image-scroll {
+  width:2.56rem;
+  float:left;
 }
 </style>

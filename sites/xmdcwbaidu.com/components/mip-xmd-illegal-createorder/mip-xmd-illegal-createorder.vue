@@ -5,6 +5,7 @@
       class="ldf-normal-item">
       <span>含扣分违章，只能扣除车主本人分数</span>
     </div>
+
     <div
       v-if="isVerifySelf"
       class="input-container">
@@ -26,7 +27,28 @@
           </div>
         </div>
         <div class="mint-cell-right"/>
-    </a></div>
+      </a>
+      <a class="mint-cell mint-field">
+        <div class="mint-cell-left"/>
+        <div class="mint-cell-wrapper">
+          <div class="mint-cell-title"><span class="mint-cell-text">档案编号</span></div>
+          <div class="mint-cell-value"><input
+            v-model="fileNumber"
+            placeholder="请输入档案编号"
+            type="text"
+            class="mint-field-core"
+            maxlength="12">
+            <div
+              class="mint-field-clear"
+              style="display: none;"><i class="mintui mintui-field-error"/></div>
+            <span class="mint-field-state is-default"><i class="mintui mintui-field-default"/></span>
+            <div class="mint-field-other"/>
+          </div>
+        </div>
+        <div class="mint-cell-right"/>
+      </a>
+    </div>
+
     <div class="ldf-normal-item">
       <span>请补充线上代办所需的车主姓名资料</span>
     </div>
@@ -127,6 +149,7 @@ export default {
 
       illegals: {},
 
+      fileNumber: '',
       plateNumber: '',
       plateType: '',
       engine: '',
@@ -202,6 +225,7 @@ export default {
       }
       if (self.isVerifySelf) {
         params.driverLicense = self.drivingLicnse.replace(/[\s+]/g, '')
+        params.fileNumber = self.fileNumber
       }
 
       Reqs.checkOwnVehicle(params).then(function (data) {
@@ -347,6 +371,12 @@ export default {
       if (self.isVerifySelf && self.drivingLicnse.length < 15) {
         Toast.open({
           message: '驾驶证号输入有误, <br>请重新输入'
+        })
+        return true
+      }
+      if (self.isVerifySelf && self.fileNumber.length !== 12) {
+        Toast.open({
+          message: '档案编号输入有误, <br>请重新输入'
         })
         return true
       }

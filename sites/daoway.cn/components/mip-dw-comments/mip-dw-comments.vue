@@ -31,7 +31,7 @@
               <img
                 v-for="(i,index) in [1, 2, 3, 4, 5]"
                 :key="i"
-                :src="com.star< index ? '/common/images/star.png' : '/common/images/red_star.png'">
+                :src="com.star< index ? 'https://www.daoway.cn/mip/common/images/star.png' : 'https://www.daoway.cn/mip/common/images/red_star.png'">
               <div
                 class="data"
                 v-html="com.createtime"/>
@@ -40,11 +40,11 @@
               class="comtxt"
               v-html="com.comment"/>
             <div
-              v-if="com.imgThumbPath"
+              v-if="com.imgPath"
               class="picture">
               <div>
                 <img
-                  v-for="i in com.imgThumbPath"
+                  v-for="i in com.imgPath"
                   :key="i"
                   :src="i"
                   class="tapimg">
@@ -65,20 +65,20 @@
             <div class="reptit">商家回复:</div>{{ com.replyComment }}</div>
           </div>
           <img
-            src="/common/images/maijia_03.png"
+            src="https://www.daoway.cn/mip/common/images/maijia_03.png"
             class="chengjiao" >
         </div>
         <div
           v-if="nocomments"
           class="list2">
           <img
-            src="/common/images/pingjia.png"
+            src="https://www.daoway.cn/mip/common/images/pingjia.png"
             style="width:100px; height:100px; display:block; margin:0 auto;" >
           <div class="jianyi">您的评价是最好的建议</div>
         </div>
         <div
           v-if="loding"
-          class="zhexie">加载中...</div>
+          class="zhexie loding">加载中...</div>
         <div
           v-if="over"
           class="zhexie">~暂时只有这些了~</div>
@@ -89,6 +89,9 @@
 <script>
 import base from '../../common/utils/base'
 export default {
+  prerenderAllowed () {
+    return true
+  },
   data () {
     return {
       serviceId: base.getRequest(location.href).serviceId,
@@ -97,6 +100,8 @@ export default {
       index: 0,
       indx: 0,
       loding: false,
+      startY: '',
+      endY: '',
       commentTab: [
         {
           id: 'all',
@@ -127,13 +132,26 @@ export default {
       ],
       img: [],
       nocomments: false,
-      over: false
+      over: false,
+      channel: 'mip'
     }
   },
   mounted () {
     let that = this
     that.commentlist(that.serviceId, that.priceId, 0, 0)
-    window.addEventListener('scroll', this.morelist)
+    // window.addEventListener('scroll', this.morelist)
+    let body = this.$element.querySelector('.wrapper')
+    body.addEventListener('touchstart', (e, str) => {
+      let touch = e.touches[0]
+      this.startY = touch.pageY
+    })
+    body.addEventListener('touchmove', (e, str) => {
+      let touch = e.touches[0]
+      this.endY = touch.pageY
+      // if(this.endY >= this.startY){
+      this.morelist()
+      // }
+    })
   },
   methods: {
     commentlist (serviceId, priceId, index, start) {
@@ -142,19 +160,16 @@ export default {
       let tager = commentTab[index]
       let filter = tager.id // 评论类别 all/good/average/bad/hasImg
       // console.log(serviceId,start,filter,index)
-      let url = '/daoway/rest/service/' + serviceId + '/comments?start=' + start + '&size=30&filter=' + filter + '&channel=' + base.channel
+      let url = 'https://www.daoway.cn/daoway/rest/service/' + serviceId + '/comments?start=' + start + '&size=30&filter=' + filter + '&channel=' + that.channel
       if (that.priceId) {
         url += '&priceId=' + that.priceId
       }
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let data = text.data
-        // console.log(data)
         if (that.filter === 'all') {
           for (let c = 0; c < 5; c++) {
             let ct = that.commentTab[c]
@@ -178,21 +193,25 @@ export default {
             }
           }
         }
-        for (let i = 0; i < data.comments.length; i++) {
-          let comment = data.comments[i]
-          comment.imgThumbPath = comment.imgThumbPath ? comment.imgThumbPath.split(',') : []
-          comment.imgPath = comment.imgPath ? comment.imgPath.split(',') : []
-          comment.createtime = base.timeformat(comment.createtime, 'yyyy-MM-dd')
-          comment.name = comment.name || ''
-          comment.firstPriceName = comment.firstPriceName || ''
-          comment.replyComment = comment.replyComment || ''
-          comment.area = comment.area || ''
-          if (!comment.iconUrl) {
-            comment.iconUrl = '/common/images/iconimg.png'
-          };
-          that.commentTab[index].comment.push(comment)
+        if (data.comments.length > 0) {
+          for (let i = 0; i < data.comments.length; i++) {
+            let comment = data.comments[i]
+            comment.imgThumbPath = comment.imgThumbPath ? comment.imgThumbPath.split(',') : []
+            comment.imgPath = comment.imgPath ? comment.imgPath.split(',') : []
+            comment.createtime = base.timeformat(comment.createtime, 'yyyy-MM-dd')
+            comment.name = comment.name || ''
+            comment.firstPriceName = comment.firstPriceName || ''
+            comment.replyComment = comment.replyComment || ''
+            comment.area = comment.area || ''
+            if (!comment.iconUrl) {
+              comment.iconUrl = 'https://www.daoway.cn/mip/common/images/iconimg.png'
+            }
+            that.commentTab[index].comment.push(comment)
+          }
+          that.sw = true
+        } else {
+          that.loding = false
         }
-        that.sw = true
       }).catch(function (error) {
         console.error('Error:', error)
       })
@@ -207,9 +226,10 @@ export default {
       that.indx = index
       if (tager.count === 0) {
         that.nocomments = true
-        that.loding = false
       }
+      that.loding = false
       that.commentlist(that.serviceId, that.priceId, index, 0)
+      window.scrollTo(0, 0)
     },
     morelist () {
       let that = this
@@ -223,10 +243,14 @@ export default {
             that.over = true
             that.nocomments = false
           } else {
-            that.loding = true
-          }
-          that.commentlist(that.serviceId, that.priceId, that.index, start)
+            setTimeout(() => {
+              that.loding = true
+            }, 500)
+            that.commentlist(that.serviceId, that.priceId, that.index, start)
+          };
         }
+      } else {
+        that.loding = false
       }
     }
   }
@@ -241,12 +265,15 @@ export default {
 .mipnav[type=top]{
   height: 42px;
   border-bottom: 1px solid #e5e5e5;
+  border-top: 1px solid #f5f5f5;
   padding: 10px 0;
   background: #fff;
+  margin-top: 44px;
 }
 .cm-box{
   margin-top: 60px;
 }
+
 .item {
   width: 16%;
   margin: 0 2%;
@@ -321,6 +348,7 @@ export default {
 
 .comtxt {
   margin: 5px auto;
+  color: #303030;
 }
 
 .addre div {

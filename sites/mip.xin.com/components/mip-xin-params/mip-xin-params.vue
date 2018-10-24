@@ -7,7 +7,7 @@
         :key="index">
         <div class="box-list-tit">
           <div class="tip-title">
-            <span>
+            <span class="tip-title-value">
               {{ paramItem.pcname }}
             </span>
             <div
@@ -70,6 +70,9 @@
   justify-content: space-between;
   /* overflow: hidden; */
   width: 100%;
+}
+.tip-title-value{
+  font-weight:600
 }
 .box-list-bot {
   height: 1rem;
@@ -155,6 +158,10 @@ import { requestFun } from '../../common/utils/reqUtils'
 import { viewPoint } from '../../common/utils/stastic.js'
 let pid = '/pages/params'
 export default {
+  // https://github.com/mipengine/mip2/issues/252  解决uc浏览器白屏问题
+  prerenderAllowed () {
+    return true
+  },
   props: {
     query: {
       type: Object,

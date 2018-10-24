@@ -98,7 +98,9 @@
             </div>
           </div>
         </div>
-        <div class="drive-info-list drive-list-bottom">
+        <div
+          :class="{'drive-list-bottom' : needCcid.length > 0}"
+          class="drive-info-list">
           <div class="driveList drive-width">
             <!-- <div>
                         <span class="driveKey">上架时间</span >
@@ -141,7 +143,9 @@
           </div>
         </div>
       </div>
-      <div class="car-set">
+      <div
+        v-if="needCcid.length > 0"
+        class="car-set">
         <div
           v-for="(item, index) in needCcid"
           v-if="index < 4"
@@ -176,7 +180,8 @@ import {
   setLocalStorage,
   getLocalStorage,
   getCarId,
-  getCityId
+  getCityId,
+  getAgreement
 } from '../../common/utils/utils.js'
 const pid = '/pages/detail'
 export default {
@@ -256,6 +261,10 @@ export default {
           this.url = url
           this.beyondUrl = res.car_info.super_url
           this.imUrl = res.im_url
+          if (getLocalStorage('channel')) {
+            this.imUrl = `${this.imUrl}&channel=${getLocalStorage('channel')}`
+            res.im_url = `${res.im_url}&channel=${getLocalStorage('channel')}`
+          }
           this.$emit('showPrice', this.carInfo)
           this.$emit('getImurl', res.im_url)
         }
@@ -279,8 +288,8 @@ export default {
   created () {},
   methods: {
     openConfig (url) {
-      MIP.viewer.open(url + getLocalStorage('locationUrl'), {
-        isMipLink: true
+      MIP.viewer.open(url + decodeURIComponent(getLocalStorage('locationUrl')), {
+        isMipLink: false
       })
     },
     openParmas () {
@@ -301,7 +310,7 @@ export default {
     },
     openFance () {
       let opurl = getLocalStorage('locationUrl')
-        ? getLocalStorage('locationUrl') + '&'
+        ? decodeURIComponent(getLocalStorage('locationUrl')) + '&'
         : '?'
       MIP.viewer.open(
         `${
@@ -310,7 +319,7 @@ export default {
           JSON.parse(this.cityMessage).ename
         }`,
         {
-          isMipLink: true
+          isMipLink: false
         }
       )
       clickPoint(
@@ -342,10 +351,10 @@ export default {
     beyondCompare () {
       let url = ''
       if (getLocalStorage('locationUrl')) {
-        url = '&' + getLocalStorage('locationUrl').split('?')[1]
+        url = '&' + decodeURIComponent(getLocalStorage('locationUrl')).split('?')[1]
       }
-      MIP.viewer.open(this.beyondUrl + `${url}`, {
-        isMipLink: true
+      MIP.viewer.open(getAgreement() + this.beyondUrl + `${url}`, {
+        isMipLink: false
       })
     }
   }
@@ -362,18 +371,19 @@ export default {
 }
 
 .car-title {
-  width: 6.7rem;
+  /**width: 6.7rem;**/
   margin-left: 0.4rem;
   line-height: 0.3rem;
-  padding-top: 0.68rem;
+  padding-top: 0.3rem;
   min-height: 0.36rem;
+  padding-right: 0.2rem;
 }
 
 .car-desc {
   font-size: 0.36rem;
   font-weight: bold;
   color: #3a4144;
-  line-height: 0.6rem;
+  line-height: 0.5rem;
 }
 
 .price-info {
@@ -404,7 +414,7 @@ export default {
   font-size: 0.6rem;
   color: #f85d00;
   font-weight: bold;
-  margin-top: 0.26rem;
+  /**margin-top: 0.26rem;**/
   margin-bottom: -0.15rem;
   min-height: 0.6rem;
   /* background-color: #f85d00 */
@@ -500,7 +510,7 @@ export default {
   /* height: 1rem; */
   padding-left: 0.4rem;
   padding-right: 0.4rem;
-  padding-bottom: 0.3rem;
+  padding-bottom: 0.2rem;
 }
 
 .car-fanice-see {
@@ -546,8 +556,8 @@ export default {
 }
 
 .open-car-allmessagebox {
-  padding-left: 0.4rem;
-  padding-right: 0.4rem;
+  margin-left: 0.35rem;
+  /**margin-right: 0.4rem;*/
   margin-bottom: 0.2rem;
 }
 

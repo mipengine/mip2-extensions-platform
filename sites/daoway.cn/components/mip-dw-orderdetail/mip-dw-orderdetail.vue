@@ -1,6 +1,5 @@
 <template>
   <div class="wrapper">
-
     <div class="stabox">
       <div class="state">
         <div class="icon">
@@ -29,23 +28,23 @@
         </div>
         <div class="statetit">
           <div
-            :class="{act: orderhtml.images1=='/common/images/11_03.png'}"
+            :class="{act: orderhtml.images1=='https://www.daoway.cn/mip/common/images/11_03.png'}"
             style="margin-left:0"
             class="tit">{{ orderhtml.status1 }}
             <div class="time">{{ orderhtml.time1 }}</div>
           </div>
           <div
-            :class="{act: orderhtml.images2=='/common/images/11_03.png'}"
+            :class="{act: orderhtml.images2=='https://www.daoway.cn/mip/common/images/11_03.png'}"
             class="tit">{{ orderhtml.status2 }}
             <div class="time">{{ orderhtml.time2 }}</div>
           </div>
           <div
-            :class="{act: orderhtml.images3=='/common/images/11_03.png'}"
+            :class="{act: orderhtml.images3=='https://www.daoway.cn/mip/common/images/11_03.png'}"
             class="tit">{{ orderhtml.status3 }}
             <div class="time">{{ orderhtml.time3 }}</div>
           </div>
           <div
-            :class="{act: orderhtml.images4=='/common/images/11_03.png'}"
+            :class="{act: orderhtml.images4=='https://www.daoway.cn/mip/common/images/11_03.png'}"
             class="tit">{{ orderhtml.status4 }}
             <div class="time">{{ orderhtml.time4 }}</div>
           </div>
@@ -60,49 +59,52 @@
         v-for="i in orderhtml.items"
         :key="i"
         class="xiangmu"
-        style="line-height: 90px;height: 90px;">
+        style="line-height: 60px;height: 60px;">
         <div class="xtit">{{ i.name }}</div>
-        <div>x{{ i.quantity }}</div>
-        <div class="price">{{ i.price }}元</div>
+        <div>×{{ i.quantity }}</div>
+        <div class="price">{{ i.price.toFixed(2) }}元</div>
       </div>
       <div
         v-if="orderhtml.allStatusPartReturnOrder && orderhtml.allStatusPartReturnOrder.status == 'RETURNED' "
         class="xiangmu small">
         <div class="xtit">退款金额</div>
-        <div class="price red">-{{ orderhtml.allStatusPartReturnOrder.bill }}元</div>
+        <div class="price red">-{{ orderhtml.allStatusPartReturnOrder.bill.toFixed(2) }}元</div>
       </div>
       <div
         v-if="orderhtml.allStatusAppendOrder"
         class="xiangmu small">
         <div class="xtit">补差价</div>
-        <div class="price">{{ orderhtml.allStatusAppendOrder }}元</div>
+        <div class="price">{{ orderhtml.allStatusAppendOrder.toFixed(2) }}元</div>
       </div>
       <div
         v-if="orderhtml.fixFee && orderhtml.fixFee>0"
         class="xiangmu small">
         <div class="xtit">上门费</div>
-        <div class="price">{{ orderhtml.fixFee }}元</div>
+        <div class="price">{{ orderhtml.fixFee.toFixed(2) }}元</div>
       </div>
       <div
         v-if="orderhtml.extraFee && orderhtml.extraFee>0"
         class="xiangmu small">
         <div class="xtit">增项费用</div>
-        <div class="price">{{ orderhtml.extraFee }}元</div>
+        <div class="price">{{ orderhtml.extraFee.toFixed(2) }}元</div>
       </div>
       <div
         v-if="orderhtml.couponBill && orderhtml.couponBill>0"
         class="xiangmu small">
         <div class="xtit">代金券</div>
-        <div class="price red">-{{ orderhtml.couponBill }}元</div>
+        <div class="price red">-{{ orderhtml.couponBill.toFixed(2) }}元</div>
       </div>
       <div
-        v-if="orderhtml.statusId == '9'"
         class="xiangmu small"
         style="border-bottom:none">
-        <div class="price">待付金额:
+        <div
+          v-if="orderhtml.statusId == '9'"
+          class="price">待付金额:
           <div class="red">{{ bill }}元</div>
         </div>
-        <div class="price">实付金额:
+        <div
+          v-else
+          class="price">实付金额:
           <div class="red">{{ bill }}元</div>
         </div>
       </div>
@@ -114,7 +116,7 @@
       <div class="city">{{ orderhtml.address }}
       </div>
     </div>
-    <div class="bigdiv">
+    <div class="bigdiv bigd">
       <div
         class="buchajia"
         style="height:45px; line-height:45px">订单信息</div>
@@ -133,23 +135,23 @@
         <div>{{ orderhtml.note||"" }}</div>
       </div>
     </div>
-    <!--<divclass="od-daigou"v-if="userPhone&&userPhone!=orderhtml.userPhone">该订单由您的好友{{orderhtml.userPhone}}为您订购</div>-->
-    <div class="last"/>
     <div class="footer">
       <mip-fixed
         class="mipfds"
         type="bottom">
         <div class="call">
-          <img src="http://www.daoway.cn/call.png">联系商家
+          <a :href="'tel:' + sellerPhone">
+            <img src="https://www.daoway.cn/call.png">联系商家
+          </a>
         </div>
         <div class="rightbtn">
           <button
-            v-if="orderhtml.button1"
-            @click="buybtn(orderhtml.button1)">{{ orderhtml.button1.text }}</button>
-          <button
             v-if="orderhtml.button2"
-            class="bgred"
             @click="buybtn(orderhtml.button2)">{{ orderhtml.button2.text }}</button>
+          <button
+            v-if="orderhtml.button1"
+            class="bgred"
+            @click="buybtn(orderhtml.button1)">{{ orderhtml.button1.text }}</button>
         </div>
       </mip-fixed>
     </div>
@@ -165,11 +167,11 @@
           <p
             v-if="sure"
             class="layer-sure active-layer"
-            @touchend="close">取消</p>
+            @click="close">取消</p>
           <p
             v-if="sure"
             class="layer-sure active-layer"
-            @touchend="closeLayer">确定</p>
+            @click="closeLayer">确定</p>
         </div>
       </div>
     </div>
@@ -177,6 +179,7 @@
 </template>
 <script>
 import base from '../../common/utils/base'
+import '../../common/utils/base.less'
 export default {
   data () {
     return {
@@ -191,29 +194,47 @@ export default {
       },
       action: '',
       sure: true,
-      channel: 'baidu',
-      userId: localStorage.getItem('userId'),
-      token: localStorage.getItem('token')
+      channel: 'mip',
+      userId: localStorage.getItem('mipUserId'),
+      token: localStorage.getItem('mipToken'),
+      oauthCode: '',
+      tradeType: '',
+      returnurl: base.htmlhref.orderdetail,
+      sellerPhone: '',
+      quantity: '',
+      serviceId: ''
     }
   },
   mounted () {
     this.getState()
+    let that = this
+    if (MIP.util.platform.isWechatApp()) { // 在微信里
+      let wxcode = base.getRequest(location.href).code
+      if (wxcode) {
+        that.oauthCode = wxcode
+        that.tradeType = 'JSAPI'
+      }
+    } else {
+      that.oauthCode = ''
+      that.tradeType = 'MWEB'
+    }
   },
   methods: {
     getState () {
       let that = this
-      let url = '/daoway/rest/order/' + that.orderId + '?userId=' + that.userId + '&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/order/' + that.orderId + '?userId=' + that.userId + '&channel=' + that.channel
       fetch(url, {
         method: 'get',
         credentials: 'include'
       }).then(function (res) {
-        if (res && res.status === '200') {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
           let data = text.data
+          that.quantity = data.items[0].quantity
+          that.serviceId = data.serviceId
           that.friendId = data.sellerId
+          that.sellerPhone = data.sellerPhone
           data.formatTime = base.timeformat(data.appointTime, 'yyyy-MM-dd(day) HH:mm')
           // let paid = data.paid
           let statusId = data.statusId
@@ -223,13 +244,13 @@ export default {
               data.status2 = '商家接单'
               data.status3 = '上门服务'
               data.status4 = '确认完成'
-              data.images1 = '/common/images/11_03.png'
-              data.line1 = '/common/images/line2.png'
-              data.images2 = '/common/images/yuan.png'
-              data.line2 = '/common/images/line2.png'
-              data.images3 = '/common/images/yuan.png'
-              data.line3 = '/common/images/line2.png'
-              data.images4 = '/common/images/yuan.png'
+              data.images1 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line1 = 'https://www.daoway.cn/mip/common/images/line2.png'
+              data.images2 = 'https://www.daoway.cn/mip/common/images/yuan.png'
+              data.line2 = 'https://www.daoway.cn/mip/common/images/line2.png'
+              data.images3 = 'https://www.daoway.cn/mip/common/images/yuan.png'
+              data.line3 = 'https://www.daoway.cn/mip/common/images/line2.png'
+              data.images4 = 'https://www.daoway.cn/mip/common/images/yuan.png'
               data.button1 = {
                 text: '立即支付',
                 action: 'pay'
@@ -244,13 +265,13 @@ export default {
               data.status2 = '商家接单'
               data.status3 = '上门服务'
               data.status4 = '确认完成'
-              data.images1 = '/common/images/11_03.png'
-              data.line1 = '/common/images/line3.png'
-              data.images2 = '/common/images/yuan.png'
-              data.line2 = '/common/images/line2.png'
-              data.images3 = '/common/images/yuan.png'
-              data.line3 = '/common/images/line2.png'
-              data.images4 = '/common/images/yuan.png'
+              data.images1 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line1 = 'https://www.daoway.cn/mip/common/images/line3.png'
+              data.images2 = 'https://www.daoway.cn/mip/common/images/yuan.png'
+              data.line2 = 'https://www.daoway.cn/mip/common/images/line2.png'
+              data.images3 = 'https://www.daoway.cn/mip/common/images/yuan.png'
+              data.line3 = 'https://www.daoway.cn/mip/common/images/line2.png'
+              data.images4 = 'https://www.daoway.cn/mip/common/images/yuan.png'
               data.button2 = {
                 text: '取消订单',
                 action: 'cancelBtn'
@@ -261,13 +282,13 @@ export default {
               data.status2 = '商家接单'
               data.status3 = '上门服务'
               data.status4 = '确认完成'
-              data.images1 = '/common/images/11_03.png'
-              data.line1 = '/common/images/line3.png'
-              data.images2 = '/common/images/11_03.png'
-              data.line2 = '/common/images/line3.png'
-              data.images3 = '/common/images/yuan.png'
-              data.line3 = '/common/images/line2.png'
-              data.images4 = '/common/images/yuan.png'
+              data.images1 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line1 = 'https://www.daoway.cn/mip/common/images/line3.png'
+              data.images2 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line2 = 'https://www.daoway.cn/mip/common/images/line3.png'
+              data.images3 = 'https://www.daoway.cn/mip/common/images/yuan.png'
+              data.line3 = 'https://www.daoway.cn/mip/common/images/line2.png'
+              data.images4 = 'https://www.daoway.cn/mip/common/images/yuan.png'
               /* if (paid && paid == "1") {
                                     if (data.totalPrice + data.fixFee > 0) {
                                         data.button1 = {
@@ -286,13 +307,13 @@ export default {
               data.status2 = '商家接单'
               data.status3 = '服务完成'
               data.status4 = '等待确认'
-              data.images1 = '/common/images/11_03.png'
-              data.line1 = '/common/images/line3.png'
-              data.images2 = '/common/images/11_03.png'
-              data.line2 = '/common/images/line3.png'
-              data.images3 = '/common/images/11_03.png'
-              data.line3 = '/common/images/line.png'
-              data.images4 = '/common/images/yuan.png'
+              data.images1 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line1 = 'https://www.daoway.cn/mip/common/images/line3.png'
+              data.images2 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line2 = 'https://www.daoway.cn/mip/common/images/line3.png'
+              data.images3 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line3 = 'https://www.daoway.cn/mip/common/images/line.png'
+              data.images4 = 'https://www.daoway.cn/mip/common/images/yuan.png'
               /* if (paid && paid == "1") {
                                     if (data.totalPrice + data.fixFee > 0) {
                                         data.button1 = {
@@ -311,13 +332,13 @@ export default {
               data.status2 = '商家接单'
               data.status3 = '上门服务'
               data.status4 = '申请退款'
-              data.images1 = '/common/images/11_03.png'
-              data.line1 = '/common/images/line3.png'
-              data.images2 = '/common/images/11_03.png'
-              data.line2 = '/common/images/line3.png'
-              data.images3 = '/common/images/yuan.png'
-              data.line3 = '/common/images/line2.png'
-              data.images4 = '/common/images/yuan.png'
+              data.images1 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line1 = 'https://www.daoway.cn/mip/common/images/line3.png'
+              data.images2 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line2 = 'https://www.daoway.cn/mip/common/images/line3.png'
+              data.images3 = 'https://www.daoway.cn/mip/common/images/yuan.png'
+              data.line3 = 'https://www.daoway.cn/mip/common/images/line2.png'
+              data.images4 = 'https://www.daoway.cn/mip/common/images/yuan.png'
               /* data.button2 = {
                                     text: '取消退款',
                                     action: 'cancelApplyRefund'
@@ -328,13 +349,13 @@ export default {
               data.status2 = '商家接单'
               data.status3 = '上门服务'
               data.status4 = '官方仲裁'
-              data.images1 = '/common/images/11_03.png'
-              data.line1 = '/common/images/line3.png'
-              data.images2 = '/common/images/11_03.png'
-              data.line2 = '/common/images/line3.png'
-              data.images3 = '/common/images/yuan.png'
-              data.line3 = '/common/images/line2.png'
-              data.images4 = '/common/images/yuan.png'
+              data.images1 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line1 = 'https://www.daoway.cn/mip/common/images/line3.png'
+              data.images2 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line2 = 'https://www.daoway.cn/mip/common/images/line3.png'
+              data.images3 = 'https://www.daoway.cn/mip/common/images/yuan.png'
+              data.line3 = 'https://www.daoway.cn/mip/common/images/line2.png'
+              data.images4 = 'https://www.daoway.cn/mip/common/images/yuan.png'
               break
             case '2': // 交易成功
             case '6': // 系统自动交易成功
@@ -342,15 +363,15 @@ export default {
               data.status2 = '商家接单'
               data.status3 = '服务完成'
               data.status4 = '确认完成'
-              data.images1 = '/common/images/11_03.png'
-              data.line1 = '/common/images/line3.png'
-              data.images2 = '/common/images/11_03.png'
-              data.line2 = '/common/images/line3.png'
-              data.images3 = '/common/images/11_03.png'
-              data.line3 = '/common/images/line3.png'
-              data.images4 = '/common/images/11_03.png'
+              data.images1 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line1 = 'https://www.daoway.cn/mip/common/images/line3.png'
+              data.images2 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line2 = 'https://www.daoway.cn/mip/common/images/line3.png'
+              data.images3 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line3 = 'https://www.daoway.cn/mip/common/images/line3.png'
+              data.images4 = 'https://www.daoway.cn/mip/common/images/11_03.png'
               data.button1 = {
-                text: '再次购买',
+                text: '再来一单',
                 action: 'buyAgain'
               }
               /* data.button2 = {
@@ -364,15 +385,15 @@ export default {
               data.status2 = '商家接单'
               data.status3 = '服务完成'
               data.status4 = '确认完成'
-              data.images1 = '/common/images/11_03.png'
-              data.line1 = '/common/images/line3.png'
-              data.images2 = '/common/images/11_03.png'
-              data.line2 = '/common/images/line3.png'
-              data.images3 = '/common/images/11_03.png'
-              data.line3 = '/common/images/line3.png'
-              data.images4 = '/common/images/11_03.png'
-              data.button2 = {
-                text: '再次购买',
+              data.images1 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line1 = 'https://www.daoway.cn/mip/common/images/line3.png'
+              data.images2 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line2 = 'https://www.daoway.cn/mip/common/images/line3.png'
+              data.images3 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.line3 = 'https://www.daoway.cn/mip/common/images/line3.png'
+              data.images4 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.button1 = {
+                text: '再来一单',
                 action: 'buyAgain'
               }
               break
@@ -383,15 +404,15 @@ export default {
               data.status2 = '商家接单'
               data.status3 = '上门服务'
               data.status4 = '取消订单'
-              data.images1 = '/common/images/yuan.png'
-              data.line1 = '/common/images/line2.png'
-              data.images2 = '/common/images/yuan.png'
-              data.line2 = '/common/images/line2.png'
-              data.images3 = '/common/images/yuan.png'
-              data.line3 = '/common/images/line2.png'
-              data.images4 = '/common/images/11_03.png'
+              data.images1 = 'https://www.daoway.cn/mip/common/images/yuan.png'
+              data.line1 = 'https://www.daoway.cn/mip/common/images/line2.png'
+              data.images2 = 'https://www.daoway.cn/mip/common/images/yuan.png'
+              data.line2 = 'https://www.daoway.cn/mip/common/images/line2.png'
+              data.images3 = 'https://www.daoway.cn/mip/common/images/yuan.png'
+              data.line3 = 'https://www.daoway.cn/mip/common/images/line2.png'
+              data.images4 = 'https://www.daoway.cn/mip/common/images/11_03.png'
               data.button2 = {
-                text: '再次购买',
+                text: '再来一单',
                 action: 'buyAgain'
               }
               break
@@ -400,15 +421,15 @@ export default {
               data.status2 = '商家接单'
               data.status3 = '上门服务'
               data.status4 = '取消订单'
-              data.images1 = '/common/images/yuan.png'
-              data.line1 = '/common/images/line2.png'
-              data.images2 = '/common/images/yuan.png'
-              data.line2 = '/common/images/line2.png'
-              data.images3 = '/common/images/yuan.png'
-              data.line3 = '/common/images/line2.png'
-              data.images4 = '/common/images/11_03.png'
-              data.button2 = {
-                text: '再次购买',
+              data.images1 = 'https://www.daoway.cn/mip/common/images/yuan.png'
+              data.line1 = 'https://www.daoway.cn/mip/common/images/line2.png'
+              data.images2 = 'https://www.daoway.cn/mip/common/images/yuan.png'
+              data.line2 = 'https://www.daoway.cn/mip/common/images/line2.png'
+              data.images3 = 'https://www.daoway.cn/mip/common/images/yuan.png'
+              data.line3 = 'https://www.daoway.cn/mip/common/images/line2.png'
+              data.images4 = 'https://www.daoway.cn/mip/common/images/11_03.png'
+              data.button1 = {
+                text: '再来一单',
                 action: 'buyAgain'
               }
               break
@@ -447,6 +468,7 @@ export default {
             }
           }
           that.orderhtml = data
+
           that.bill = (data.totalPrice + data.fixFee - data.couponBill).toFixed(2)
         } else {
           that.warn.show = true
@@ -461,14 +483,21 @@ export default {
       let action = status.action
       let orderId = that.orderhtml.orderId
       if (action === 'buyAgain') {
-        MIP.viewer.open(base.htmlhref.reservation + '?orderId=' + orderId, { isMipLink: true })
-        // 再次购买
+        if (MIP.util.platform.isWechatApp()) {
+          let appid = 'wx0290cc2004b61c97'
+          let loginUrl = encodeURIComponent(base.htmlhref.reservation + '?orderId=' + encodeURIComponent(orderId) + '&serviceId=' + that.serviceId + '&quantity=' + that.quantity)
+          let scope = 'snsapi_base'
+          MIP.viewer.open('https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + loginUrl + '&response_type=code&scope=' + scope + '&state=STATE#wechat_redirect', { isMipLink: true })
+        } else {
+          MIP.viewer.open(base.htmlhref.reservation + '?orderId=' + encodeURIComponent(orderId) + '&serviceId=' + that.serviceId + '&quantity=' + that.quantity, { isMipLink: true })
+        }
       } else if (action === 'pay') {
         let totalPrice = that.orderhtml.totalPrice
         let couponBill = that.orderhtml.couponBill
         let couponId = that.orderhtml.couponId
         let fixFee = that.orderhtml.fixFee
-        let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent('http://test.daoway.cn/mip/components/mip-dw-orderdetail/example/mip-dw-orderdetail.html?orderId=' + orderId)
+        // let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + orderId)
+        let redirectUrl = that.returnurl + '?orderId=' + orderId
         MIP.setData({'payConfig': {
           'fee': (totalPrice + fixFee - couponBill).toFixed(2),
           'sessionId': that.token,
@@ -481,13 +510,15 @@ export default {
             wallet: 0,
             couponId: couponId || '',
             'appendOrderId': '',
-            'returnUrl': redirectUrl
+            'returnUrl': redirectUrl,
+            'oauthCode': that.oauthCode,
+            'tradeType': that.tradeType
           }
         }})
         that.$emit('actionpay')
       } else if (action === 'cancelBtn') {
         that.warn.show = true
-        that.warn.texts = '确认取消该订单吗'
+        that.warn.texts = '确定要取消此订单吗'
         that.action = 'buyer_cancel'
         // 取消订单
       } else if (action === 'confirmBtn') {
@@ -509,15 +540,13 @@ export default {
     },
     closesure (orderId, action) {
       let that = this
-      let url = '/daoway/rest/order/' + orderId + '/' + action + '?channel=' + that.channel + '&userId=' + that.userId
+      let url = 'https://www.daoway.cn/daoway/rest/order/' + orderId + '/' + action + '?channel=' + that.channel + '&userId=' + that.userId
       fetch(url, {
         method: 'POST',
         credentials: 'include',
         headers: {'content-type': 'application/x-www-form-urlencoded'}
       }).then(function (res) {
-        if (res && res.status === '200') {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
           if (action === 'buyer_cancel') {
@@ -529,11 +558,10 @@ export default {
             that.warn.show = true
             that.warn.texts = '订单已完成'
           }
+          MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + that.orderId, {isMipLink: false})
           setTimeout(() => {
             that.warn.show = false
           }, 600)
-          MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + that.orderId, {isMipLink: false})
-          // that.getState();
         } else {
           that.warn.show = true
           that.warn.texts = text.msg
@@ -541,6 +569,9 @@ export default {
       }).catch(function (error) {
         console.log(error)
       })
+    },
+    toindex () {
+      MIP.viewer.open(base.htmlhref.index, { isMipLink: true })
     }
 
   }
@@ -564,13 +595,18 @@ export default {
     .call img{
         width: 18px;
         height: auto;
+      display: block;
+      margin: 0 auto;
     }
     .mipfds{
-        width: 94%;
-        margin: 0 auto 6px;
+      width: 100%;
+      margin: 0 auto;
+      background: #fff;
+      padding: 5px 3%;
+      border-top: 1px solid #f5f5f5;
     }
 
-    .theclose{width: 80%; margin: 0 auto}
+    .theclose{width: 90%; margin: 0 auto}
     .layer p.active-layer{
         width: 50%;
         float: left;
@@ -589,7 +625,7 @@ export default {
         width: 99%;
         padding: 0 2%;
         background: #fff;
-        height: 110px;
+        height: 100px;
         margin-top: 10px;
     }
 
@@ -603,18 +639,19 @@ export default {
     }
 
     .icon {
-        width: 88%;
+        width: 92%;
         margin: 4px auto;
+        text-align: center;
     }
 
     .line {
         margin-left: 2px;
         margin-right: 2px;
-        width: 60px;
+        width: 56px;
         height: auto;
     }
     .od-icon1{
-        width: 24px;
+        width: 22px;
         height: auto;
     }
 
@@ -624,18 +661,17 @@ export default {
     }
 
     .statetit {
-        width: 94%;
+        width: 100%;
         margin: 8px auto 0;
     }
 
     .tit {
         color: #fcb3b0;
         display: inline-block;
-        font-size: 12px;
-        margin-left: 9%;
+        font-size: 11px;
         vertical-align: top;
-        position: relative;
-        left: 6px;
+        width: 24%;
+        text-align: center;
     }
 
     .act {
@@ -644,12 +680,12 @@ export default {
 
     .time {
         color: #ffe4e4;
-        font-size: 12px;
+        font-size: 10px;
         margin-top: 2px;
     }
 
     .buchajia {
-        width: 94%;
+        width: 100%;
         padding: 0 3%;
         border-bottom: 1px solid #e5e5e5;
         height: 50px;
@@ -661,14 +697,16 @@ export default {
         width: 78%;
         display: inline-block;
         font-size: 16px;
+      color: #303030;
     }
 
     .xiangmu {
         width: 97%;
         margin-left: 3%;
         border-bottom: 1px solid #e5e5e5;
-        line-height: 35px;
-        height: 35px;
+        line-height:40px;
+        height: 40px;
+      color: #303030;
     }
 
     .xiangmu div {
@@ -680,7 +718,7 @@ export default {
     }
 
     .xtit2 {
-        width: 18%;
+        width: 19%;
     }
 
     .price {
@@ -704,6 +742,7 @@ export default {
         background: #fff;
         font-size: 14px;
         height:100%;
+      color: #303030;
     }
 
     .user div, .city div {
@@ -713,19 +752,6 @@ export default {
 
     .user{
        height: 30px;
-    }
-
-    .last {
-        margin-bottom: 55px;
-        height: 10px;
-    }
-
-    .footer {
-        width: 100%;
-        height: 50px;
-        background: #fff;
-        padding: 0 3%;
-        border-top: 1px solid #e5e5e5;
     }
 
     .footer img {
@@ -769,6 +795,10 @@ export default {
     .bigdiv {
         background: #fff;
         width: 100%;
+
+    }
+    .bigd{
+      margin-bottom: 50px;
     }
 
     .edit div{
@@ -788,4 +818,7 @@ export default {
         padding: 0 3%;
         color: #898989;
     }
+  .wrapper{
+    height: 100%;
+  }
 </style>

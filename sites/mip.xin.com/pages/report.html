@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
     <title>
         <%-title%>
     </title>
@@ -15,32 +15,31 @@
 </head>
 
 <body>
-    <mip-shell>
+    <mip-shell-inservice mip-shell>
         <script type="application/json">
-            {
-                "routes": [{
-                    "pattern": "*",
-                    "meta": {
-                        "header": {
-                            "show": true,
-                            "xiongzhang": true,
-                            "title": "优信二手车",
-                           "logo": "//c2.xinstatic.com/f3/20180727/1951/5b5b072fb1a77543583.png",
-                            "buttonGroup": [{
-                                "name": "关于优信二手车",
-                                "text": "关于优信二手车",
-                                "link": "https://author.baidu.com/home/1578861028762702?from=mip.xin.com"
-                            }]
-                        },
-                        "view": {
-                            "isIndex": false
+               
+                {   
+                    "isId": "1578861028762702",
+                    "routes": [
+                        {
+                            "pattern": "*",
+                            "meta": {
+                                "header": {
+                                    "show": true,
+                                    "xiongzhang": true,
+                                    "title": "优信二手车"
+                                },
+                                "view": {
+                                    "isIndex": false
+                                }
+                            }
                         }
-
-                    }
-                }]
-            }
-        </script>
-    </mip-shell>
+    
+                    ]
+                }
+            
+            </script>
+    </mip-shell-inservice>
     <mip-data>
         <script type="application/json">
             {
@@ -54,12 +53,13 @@
     </div>
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
     <script src="https://c.mipcdn.com/static/v2/mip.xin.com/mip-fixed/mip-fixed.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-shell-inservice/mip-shell-inservice.js"></script>
 
-    <script src="https://c.mipcdn.com/extensions/platform/v2/mip.xin.com/mip-xin-item/mip-xin-item.js"></script>
-    <script src="https://c.mipcdn.com/extensions/platform/v2/mip.xin.com/mip-xin-switch/mip-xin-switch.js"></script>
-    <script src="https://c.mipcdn.com/extensions/platform/v2/mip.xin.com/mip-xin-tab/mip-xin-tab.js"></script>
-    <script src="https://c.mipcdn.com/extensions/platform/v2/mip.xin.com/mip-xin-flawcount/mip-xin-flawcount.js"></script>
-    <script src="https://c.mipcdn.com/extensions/platform/v2/mip.xin.com/mip-xin-button/mip-xin-button.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-item/mip-xin-item.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-switch/mip-xin-switch.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-tab/mip-xin-tab.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-flawcount/mip-xin-flawcount.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-button/mip-xin-button.js"></script>
 
 </body>
 

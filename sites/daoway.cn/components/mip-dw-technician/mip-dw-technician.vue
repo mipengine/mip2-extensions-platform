@@ -6,7 +6,7 @@
       :id="t.technicianId"
       class="weui-cell">
       <div class="weui-cell__hd">
-        <img :src="t.photoURL ? t.photoURL : '/common/images/iconimg.png'">
+        <img :src="t.photoURL ? t.photoURL : 'https://www.daoway.cn/mip/common/images/iconimg.png'">
       </div>
       <div class="weui-cell__cd">
         <i v-html="t.name"/>
@@ -16,7 +16,7 @@
           <img
             v-for="(i,index) in [1, 2, 3, 4, 5]"
             :key="i"
-            :src="t.level < index ? '/common/images/star.png/' : '/common/images/red_star.png'">
+            :src="t.level < index ? 'https://www.daoway.cn/mip/common/images/star.png/' : 'https://www.daoway.cn/mip/common/images/red_star.png'">
           <div style="display:inline-block; margin-left: 10px;">已接{{ t.orderAmount }}单</div>
         </div>
         <div>{{ t.description }}</div>
@@ -38,14 +38,20 @@
 
 <script>
 import base from '../../common/utils/base'
+import '../../common/utils/base.less'
 export default {
   data () {
     return {
       technician: [],
-      technicianId: base.getRequest(location.href).technicianId
+      technicianId: base.getRequest(location.href).technicianId,
+      useradd: ''
     }
   },
   mounted () {
+    let useradd = sessionStorage.getItem('useradd')
+    if (useradd) {
+      this.useradd = useradd
+    }
     this.technician = JSON.parse(localStorage.getItem('technician')).technicianList
   },
   methods: {
@@ -59,11 +65,10 @@ export default {
         name: techindex.name,
         id: techindex.dwid
       }
-      // MIP.setData(tech)
       sessionStorage.setItem('tech', JSON.stringify(tech))
+      sessionStorage.setItem('useradd', this.useradd)
       MIP.viewer.page.back()
     }
-
   }
 }
 </script>

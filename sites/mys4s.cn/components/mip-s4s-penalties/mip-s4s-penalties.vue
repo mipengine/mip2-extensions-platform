@@ -1,5 +1,7 @@
 <template>
-  <div class="s4s-page">
+  <div
+    id="s4s2"
+    class="s4s-page">
     <div class="s4s-body" >
       <div style="display:none">
         <canvas
@@ -273,8 +275,54 @@
           class="s4s-btn"
           @click="tryToPay">立即办理 </button>
       </template>
+      <div>
+        <div
+          v-if="data.length"
+          class="s4s-ad">
+          <div class="s4s-ad-header">
+            <div class="s4s-ad-line" />
+            <div class="s4s-ad-header-content">猜你想看</div>
+            <div class="s4s-ad-line" />
+          </div>
+          <div class="s4s-ad-list">
+            <div
+              v-for="item in data"
+              :key="item.id"
+              class="s4s-ad-item"
+              @click="gotoNews(item)"
+            >
+              <mip-img
+                v-if="item.cover_url1&& item.cover_url1 !== 'None'"
+                :src="item.cover_url1"
+                class="s4s-ad-image"
+                mode="aspectFill"
+              />
+              <div class="s4s-ad-content">
+                <h4 class="s4s-ad-title">
+                  {{ item.title }}
+                </h4>
+                <div class="flex">
+                  <div class="s4s-ad-time flex-1">
+                    {{ item.last_modify_time }}
+                  </div>
+                  <div
+                    v-if="item.Type===1"
+                    class="s4s-ad-time">
+                    <mip-img
+                      src="https://app.s4s.cn/xcar/static/img/eye.png"
+                      style="width:17px;height:10px;margin-right:4px;" /> {{ item.show_num }}
+                  </div>
+                </div>
 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+    <a
+      ref="opens"
+      href=""/>
     <mip-fixed type="top">
       <div
         v-if="openShow"
@@ -406,7 +454,10 @@ export default {
         '港',
         '澳'
       ],
-      height: ''
+      height: '',
+      data: [],
+      page: 0,
+      loading: false
     }
   },
   computed: {
@@ -447,8 +498,47 @@ export default {
         .replace(/....(?!$)/g, '$& ')
     }
   },
-  mounted () { },
+  mounted () {
+    const s4s = document.getElementById('s4s2')
+    s4s.addEventListener('scroll', () => {
+      if (s4s.scrollHeight - s4s.scrollTop <= s4s.clientHeight + 200 && !this.loading) {
+        this.load(this.page + 1)
+      }
+    })
+    this.load(this.page, true)
+  },
   methods: {
+    load (page, refresh) {
+      if (this.loading) {
+        return
+      }
+      this.started = true
+      this.loading = true
+      const params = {
+        page_num: page || 1,
+        list_id: this.listid
+      }
+      util.fetchData('v5/price/get_news_list', params)
+        .then((res) => {
+          if (res.code === 0) {
+            this.data = [...this.data, ...res.data]
+            this.page = page
+          } else {
+          }
+          this.loading = false
+        })
+        .catch(e => {
+          this.loading = false
+        })
+    },
+    gotoNews ({id, Type}) {
+      if (Type === 1) {
+        this.$refs.opens.href = `https://mys4s.cn/static/xcar/index.html#/News/${id}?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xfrom=baidu_jisu_vio`
+      } if (Type === 2) {
+        this.$refs.opens.href = `https://mys4s.cn/static/xcar/index.html#/Evaluation?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xfrom=baidu_jisu_vio`
+      }
+      this.$refs.opens.click()
+    },
     // 罚单
     openTicket () {
       this.openShow = true
@@ -792,7 +882,7 @@ export default {
           //   formData.append('image', blob, item.name)
           let data = canvas.toDataURL('image/jpeg').split(',')[1]
           // 获取base64图片大小，返回MB数字
-          let size = parseInt(data.length - (data.length / 8) * 2)
+          let size = parseInt(data.length - data.length / 8 * 2)
           console.log(size)
           if (size) {
             const isLt2M = size / 1024 / 1024 < 2
@@ -801,9 +891,10 @@ export default {
               return
             }
             util.toast('正在上传')
-            util.fetchData('v3/violation/image/upload', {
-              imageString: data
-            })
+            util
+              .fetchData('v3/violation/image/upload', {
+                imageString: data
+              })
               .then(data => {
                 if (data.code === 0) {
                   util.toast('上传成功')
@@ -830,10 +921,10 @@ export default {
   color: #333;
 }
 .s4s-pay-body {
-  margin-top: .15rem;
+  margin-top: 0.15rem;
   background: #fff;
-  padding: .2rem .15rem 0 .15rem;
-  border-radius: .04rem;
+  padding: 0.2rem 0.15rem 0 0.15rem;
+  border-radius: 0.04rem;
 }
 .s4s-group img {
   width: 0.2rem;
@@ -842,20 +933,20 @@ export default {
 
 .s4s-order-container {
   background-color: #fff;
-  padding: .25rem .15rem;
+  padding: 0.25rem 0.15rem;
 }
 .s4s-order-title {
   color: #4b4b4b;
-  font-size: .2rem;
+  font-size: 0.2rem;
   font-weight: bold;
   display: flex;
   align-items: center;
 }
 
 .s4s-order-input {
-  border: .01rem solid #eeeeee;
-  border-radius: .04rem;
-  margin-top: .15rem;
+  border: 0.01rem solid #eeeeee;
+  border-radius: 0.04rem;
+  margin-top: 0.15rem;
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -869,13 +960,13 @@ export default {
   -webkit-box-flex: 5;
   -ms-flex: 5;
   flex: 5;
-  padding: .06rem .1rem;
-  font-size: .2rem;
-  color:#4F7EFF;
+  padding: 0.06rem 0.1rem;
+  font-size: 0.2rem;
+  color: #4f7eff;
   font-weight: 400;
 }
 .group-upload {
-  align-items:end;
+  align-items: end;
   height: auto;
 }
 .s4s-order-input span {
@@ -885,7 +976,7 @@ export default {
   flex: 2;
   background: #3388ff;
   margin: 0;
-  line-height: .5rem;
+  line-height: 0.5rem;
   text-align: center;
   background-image: linear-gradient(40deg, #ff7c00 0%, #fe5a00 100%);
 }
@@ -895,29 +986,29 @@ export default {
   display: -moz-box;
   display: -webkit-flex;
   display: flex;
-  align-items:center;
-  -moz-box-align:center;
-  -webkit-box-align:center;
-  -webkit-justify-content:space-around;
-  justify-content:space-around;
-  -webkit-box-pack:space-around;
-  -moz-box-pack:space-around;
+  align-items: center;
+  -moz-box-align: center;
+  -webkit-box-align: center;
+  -webkit-justify-content: space-around;
+  justify-content: space-around;
+  -webkit-box-pack: space-around;
+  -moz-box-pack: space-around;
   margin: 0.2rem 0;
   text-align: center;
 }
 .s4s-order-img-container mip-img + mip-img {
-  margin-right: -.22rem;
-  margin-left: .16rem;
+  margin-right: -0.22rem;
+  margin-left: 0.16rem;
   /* margin-top: .12rem; */
 }
 .flex-center {
-  margin-bottom: .1rem;
+  margin-bottom: 0.1rem;
 }
 .s4s-order-content {
-  font-size: .12rem;
-  padding: 0 .1rem;
+  font-size: 0.12rem;
+  padding: 0 0.1rem;
   color: #999;
-  line-height: .21rem;
+  line-height: 0.21rem;
 }
 .s4s-order-content span {
   text-decoration: underline;
@@ -932,7 +1023,7 @@ export default {
 }
 
 .s4s-title {
-  font-size: .2rem;
+  font-size: 0.2rem;
   /* padding: .15rem; */
   padding-top: 0.25rem;
   font-weight: bold;
@@ -940,31 +1031,31 @@ export default {
 .s4s-help-tip {
   float: none;
   display: inline-block;
-  margin: 0 .1rem;
+  margin: 0 0.1rem;
   margin-top: 1px;
 }
 .s4s-order-text {
   color: #fe7000;
-  font-size: .12rem;
-  margin-top: .15rem;
+  font-size: 0.12rem;
+  margin-top: 0.15rem;
 }
 .flex-center {
-  display:-webkit-box;
+  display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  align-items:center;
-  -moz-box-align:center;
-  -webkit-box-align:center;
-  -webkit-justify-content:center;
-  justify-content:center;
-  -moz-box-pack:center;
-  -webkit-box-pack:center;
-  -moz-box-pack:center;
+  align-items: center;
+  -moz-box-align: center;
+  -webkit-box-align: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -moz-box-pack: center;
+  -webkit-box-pack: center;
+  -moz-box-pack: center;
 }
 .s4s-order-tip-text {
-  font-size: .13rem;
+  font-size: 0.13rem;
   color: #666;
 }
 .image-container {
@@ -972,24 +1063,28 @@ export default {
   width: 100%;
   overflow: hidden;
 }
-input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
   color: #ccc;
 }
-input:-moz-placeholder, textarea:-moz-placeholder {
-  color:#ccc;
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+  color: #ccc;
 }
-input::-moz-placeholder, textarea::-moz-placeholder {
-  color:#ccc;
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: #ccc;
 }
-input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-  color:#ccc;
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: #ccc;
 }
 .provice {
-  background-image: linear-gradient(40deg,  #ff7c00 0%, #fe5a00 100%);
+  background-image: linear-gradient(40deg, #ff7c00 0%, #fe5a00 100%);
   border-radius: 0.04rem;
   color: #fff;
   /* width: 0.45rem; */
-  min-width: .5rem;
+  min-width: 0.5rem;
   height: 0.25rem;
   margin-right: 0.1rem;
   padding: 0.01rem 0.09rem;
@@ -1014,7 +1109,8 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   transition: transform 0.3s ease-out;
   -webkit-transition: -webkit-transform 0.3s ease-out;
 }
-.s4s-provice-tit,.s4s-provice-tit-hide {
+.s4s-provice-tit,
+.s4s-provice-tit-hide {
   float: left;
   width: 9%;
   padding: 0.05rem;
@@ -1025,9 +1121,9 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   text-align: center;
   font-size: 0.14rem;
 }
-.s4s-provice-tit-hide{
+.s4s-provice-tit-hide {
   width: 33.899999999%;
-  background: #BBC3C7;
+  background: #bbc3c7;
   color: #fff;
 }
 @media screen and (min-width: 500px) {
@@ -1036,7 +1132,7 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
     margin-left: 1.09999999%;
     margin-top: 1.09999999%;
   }
-  .s4s-provice-tit-hide{
+  .s4s-provice-tit-hide {
     width: 98%;
     margin-left: 1.09999999%;
     margin-top: 1.09999999%;
@@ -1047,29 +1143,141 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   color: #fff;
 }
 .s4s-input-size {
-  color:#999;
-  font-size:.14rem;
-  font-weight:normal;
+  color: #999;
+  font-size: 0.14rem;
+  font-weight: normal;
   vertical-align: middle;
-  margin-left:.1rem;
+  margin-left: 0.1rem;
 }
 .btn-border {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
 }
-::-webkit-input-placeholder { /* WebKit, Blink, Edge */
-  font-weight: normal!important;
+::-webkit-input-placeholder {
+  /* WebKit, Blink, Edge */
+  font-weight: normal !important;
 }
-:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
-  font-weight: normal!important;
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  font-weight: normal !important;
 }
-::-moz-placeholder { /* Mozilla Firefox 19+ */
-  font-weight: normal!important;
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  font-weight: normal !important;
 }
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-  font-weight: normal!important;
+:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  font-weight: normal !important;
 }
 input {
-  color:#333;
+  color: #333;
+}
+.s4s-ad {
+  font-size: .14rem;
+  color: #2E2E2E;
+
+  /* 小程序无 */
+  padding: 0 .15rem;
+  /*  */
+}
+
+.s4s-ad-header {
+  font-size: .12rem;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: .2rem 0;
+}
+
+.s4s-ad-header-content {
+  margin: 0 .2rem;
+}
+
+.s4s-ad-item {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: .02rem;
+  padding: .15rem .15rem;
+  margin-top: .1rem;
+  box-shadow: 0 .02rem .04rem 0 #EFEFEF;
+}
+.s4s-ad-item:visited .s4s-ad-title{
+  color: #5B5E6A;
+}
+.s4s-ad-image {
+  width: 1.2rem;
+  min-width: 1.2rem;
+  height: .8rem;
+  background-color: #f8f8f8;
+  margin-right: .15rem;
+  border-radius: 2px;
+}
+
+.s4s-ad-title {
+  font-size: .14rem;
+  color: #2E2E2E;
+  width: 100%;
+  line-height: .2rem;
+  max-height: .4rem;
+  overflow: hidden;
+  display: -webkit-box;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.s4s-ad-content {
+  min-width: 0;
+  width: 100%;
+}
+
+.s4s-ad-time {
+  font-size: .12rem;
+  margin-top: .09rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.s4s-ad-look {
+  display: flex;
+  align-items: center;
+}
+.s4s-ad-look svg{
+  margin-right: .02rem;
+}
+
+.s4s-ad-line {
+  width: .6rem;
+  height: .01rem;
+  display: inline-block;
+  background-image: linear-gradient(-135deg, #DDDDDD 0%, #F8F8F8 100%);
+}
+.s4s-ad-line:last-child {
+  background-image: linear-gradient(-135deg, #F8F8F8 0%, #DDDDDD 100%);
+
+}
+
+.s4s-ad-icon {
+  width: .12rem;
+  height: .12rem;
+}
+
+.s4s-ad-icon-container {
+  display: flex;
+  flex: 1;
+}
+
+.s4s-ad-btn {
+  border: .5px solid #3A82FF;
+  color: #3A82FF;
+  border-radius: .02rem;
+  font-size: .10rem;
+}
+.flex {
+  display: flex;
+}
+.flex-1 {
+  flex: 1;
 }
 </style>

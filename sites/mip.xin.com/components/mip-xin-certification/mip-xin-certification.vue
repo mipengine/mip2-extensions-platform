@@ -6,13 +6,15 @@
         <span class="car-file">优信认证</span>
         <!-- <button class="car-ask" @click="showAsk">服务咨询</button> -->
         <!-- <button class="car-ask"  on="tap:my-lightbox.open" id="btn-open" role="button" tabindex="0">服务咨询</button> -->
-        <a
+        <!-- <a
           ref="telPhone"
-          :href="'tel:' + telPhone"/>
-        <button
+          :href="'tel:' + telPhone"/> -->
+        <a
           v-if="status == 1"
+          :href="'tel:' + telPhone"
+          target="_top"
           class="car-ask"
-          @click="askPrice">服务咨询</button>
+          @click="askPrice">服务咨询</a>
       </div>
       <!-- <div class='car-set u-certified'> -->
       <div class="car-set-content">
@@ -21,7 +23,7 @@
           @click="certified('1')">
           <mip-img
             class="paramsIcon u-certified-img"
-            src="http://s3.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/icon1_09b4d50.png" />
+            src="//s3.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/icon1_09b4d50.png" />
           <div>
             <span class="u-certified-name ">30天包退</span>
           </div>
@@ -34,7 +36,7 @@
           @click="certified('2')">
           <mip-img
             class="paramsIcon u-certified-img"
-            src="http://c2.xinstatic.com/f4/20180814/1853/5b72b4b882a0e565755.png" />
+            src="//c2.xinstatic.com/f4/20180814/1853/5b72b4b882a0e565755.png" />
           <div>
             <span class="u-certified-name ">一年保修</span>
           </div>
@@ -47,7 +49,7 @@
           @click="certified('3')">
           <mip-img
             class="paramsIcon u-certified-img"
-            src="http://c2.xinstatic.com/f4/20180814/1853/5b72b4b9088da186218.png" />
+            src="//c2.xinstatic.com/f4/20180814/1853/5b72b4b9088da186218.png" />
           <div>
             <span class="u-certified-name">315项排查</span>
           </div>
@@ -60,7 +62,7 @@
           @click="certified('4')">
           <mip-img
             class="paramsIcon u-certified-img"
-            src="http://c2.xinstatic.com/f4/20180814/1853/5b72b4b9218ac500018.png" />
+            src="//c2.xinstatic.com/f4/20180814/1853/5b72b4b9218ac500018.png" />
           <div>
             <span class="u-certified-name">全国联保</span>
           </div>
@@ -80,12 +82,14 @@
         </div>
         <div class="car-certification-title">
           <span class="car-exchange-big ">重大事故车概括</span>
+          <!-- <a :href="certUrl"> -->
           <div
             class="car-certification-message"
             @click="nextPage('big')">
             <span>详情</span>
             <div class="paramsArrow car-exchange-posi"/>
           </div>
+          <!-- </a> -->
         </div>
         <div class="car-exchange-content">
           <div class="car-exchange-contentlist">
@@ -103,13 +107,14 @@
         </div>
         <div class="car-exchange-process car-certification-title">
           <span class="car-exchange-big">退车流程</span>
+          <!-- <a :href="certUrl"> -->
           <div
             class="car-certification-message"
             @click="nextPage('progress')">
             <span>详情</span>
             <div class="paramsArrow car-exchange-posi"/>
           </div>
-
+          <!-- </a>-->
         </div>
         <div class="car-exchange-step">
           <div class="car-exchange-stepbox">
@@ -138,113 +143,117 @@
         </div>
         <div class="car-exchange-process car-certification-title">
           <span class="car-exchange-big">保修部件</span>
+          <!--<a :href="certUrl"> -->
           <div
             class="car-certification-message"
             @click="nextPage('component')">
             <span>详情</span>
             <div class="paramsArrow car-exchange-posi"/>
           </div>
+          <!-- </a> -->
         </div>
         <div class="car-unprofor-content">
           <div class="car-unprofor-box">
             <mip-img
-              src="http://s3.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic1_1f2ad13.png"
+              src="//s3.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic1_1f2ad13.png"
               class="car-unprofor-font"/>
             <span class="car-unprofor-desc">发动机系统</span>
           </div>
           <div class="car-unprofor-box">
             <mip-img
-              src="http://s2.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic2_42b3bbe.png"
+              src="//s2.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic2_42b3bbe.png"
               class="car-unprofor-font"/>
             <span class="car-unprofor-desc">变速箱系统</span>
           </div>
           <div class="car-unprofor-box">
             <mip-img
-              src="http://s1.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic3_2417ea4.png"
+              src="//s1.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic3_2417ea4.png"
               class="car-unprofor-font"/>
             <span class="car-unprofor-desc">差速器系统</span>
           </div>
           <div class="car-unprofor-box">
             <mip-img
-              src="http://s3.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic4_eaee618.png"
+              src="//s3.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic4_eaee618.png"
               class="car-unprofor-font"/>
             <span class="car-unprofor-desc">分动箱系统</span>
           </div>
           <div class="car-unprofor-box">
             <mip-img
-              src="http://s2.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic5_e43ec78.png"
+              src="//s2.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic5_e43ec78.png"
               class="car-unprofor-font"/>
             <span class="car-unprofor-desc">润滑系统</span>
           </div>
           <div class="car-unprofor-box">
             <mip-img
-              src="http://s5.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic6_bd0e738.png"
+              src="//s5.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic6_bd0e738.png"
               class="car-unprofor-font"/>
             <span class="car-unprofor-desc">驱动系统</span>
           </div>
           <div class="car-unprofor-box">
             <mip-img
-              src="http://s2.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic7_6af55a2.png"
+              src="//s2.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic7_6af55a2.png"
               class="car-unprofor-font"/>
             <span class="car-unprofor-desc">转向系统</span>
           </div>
           <div class="car-unprofor-box">
             <mip-img
-              src="http://s5.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic8_ccc6464.png"
+              src="//s5.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic8_ccc6464.png"
               class="car-unprofor-font"/>
             <span class="car-unprofor-desc">制动系统</span>
           </div>
           <div class="car-unprofor-box">
             <mip-img
-              src="http://s6.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic9_7e34707.png"
+              src="//s6.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic9_7e34707.png"
               class="car-unprofor-font"/>
             <span class="car-unprofor-desc">悬挂系统</span>
           </div>
           <div class="car-unprofor-box">
             <mip-img
-              src="http://s5.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic10_02895f1.png"
+              src="//s5.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic10_02895f1.png"
               class="car-unprofor-font"/>
             <span class="car-unprofor-desc">燃油系统</span>
           </div>
           <div class="car-unprofor-box">
             <mip-img
-              src="http://s1.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic11_cbeb301.png"
+              src="//s1.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic11_cbeb301.png"
               class="car-unprofor-font"/>
             <span class="car-unprofor-desc">冷却系统</span>
           </div>
           <div class="car-unprofor-box">
             <mip-img
-              src="http://s4.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic12_93505a6.png"
+              src="//s4.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic12_93505a6.png"
               class="car-unprofor-font"/>
             <span class="car-unprofor-desc">空调系统</span>
           </div>
           <div class="car-unprofor-box">
             <mip-img
-              src="http://s2.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic13_a8877ed.png"
+              src="//s2.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic13_a8877ed.png"
               class="car-unprofor-font"/>
             <span class="car-unprofor-desc">安全系统</span>
           </div>
           <div class="car-unprofor-box">
             <mip-img
-              src="http://s1.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic14_4a7d986.png"
+              src="//s1.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic14_4a7d986.png"
               class="car-unprofor-font"/>
             <span class="car-unprofor-desc">电控系统</span>
           </div>
           <div class="car-unprofor-box">
             <mip-img
-              src="http://s2.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic15_e77f88b.png"
+              src="//s2.xinstatic.com/static/newcar-m/widget/car_detail/uxin/img/ic15_e77f88b.png"
               class="car-unprofor-font"/>
             <span class="car-unprofor-desc">电气系统</span>
           </div>
         </div>
         <div class="car-exchange-process car-certification-title">
           <span class="car-exchange-big">保修流程</span>
+          <!-- <a :href="certUrl"> -->
           <div
             class="car-certification-message"
             @click="nextPage()">
             <span>详情</span>
             <div class="paramsArrow car-exchange-posi"/>
           </div>
+          <!-- </a> -->
         </div>
         <div class="car-exchange-step">
           <div class="car-exchange-stepbox">
@@ -323,12 +332,16 @@ export default {
   data () {
     return {
       showList: '1', // 优信认证显示flag
-      telPhone: '' // 电话号码
+      telPhone: '', // 电话号码
+      certUrl: ''
       // showLoading: false,
       // showMaskBack: false //是否显示loading的背景色
     }
   },
-  mounted () {},
+  mounted () {
+    this.certUrl = config.mHost + `/car/iws/${decodeURIComponent(getLocalStorage('locationUrl'))}`
+    this.getNumberCall()
+  },
   methods: {
     // init () {
     //   if (!context) {
@@ -369,6 +382,29 @@ export default {
     showAsk () {
       this.$emit('showConsultingToast')
     },
+    getNumberCall () {
+    // this.showLoading = true;
+      let param = {
+        carid: getCarId(),
+        cityid: getCityId()
+      }
+      let that = this
+      requestFun('/ajax/common/get_tel_400', {
+        method: 'POST',
+        param: param
+      })
+        .then(res => {
+          // this.tel(res.tel);
+          that.telPhone = res.tel
+          // this.$nextTick(() => {
+          //   // this.$refs.telPhone.click()
+          //   window.location.href = 'tel:' + that.telPhone
+          // })
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
     // 优信认证切换
     certified (target) {
       this.showList = target
@@ -386,39 +422,20 @@ export default {
     },
     // 服务咨询
     askPrice () {
-      // this.showLoading = true;
-      let param = {
-        carid: getCarId(),
-        cityid: getCityId()
-      }
-      let that = this
-      requestFun('/ajax/common/get_tel_400', {
-        method: 'POST',
-        param: param
-      })
-        .then(res => {
-          // this.tel(res.tel);
-          that.telPhone = res.tel
-          this.$nextTick(() => {
-            this.$refs.telPhone.click()
-          })
-          clickPoint(
-            'tel_consulting_detail',
-            {
-              carid: this.carid,
-              type: this.isDirect,
-              '400_num': res.tel,
-              button: 1
-            },
-            null,
-            {
-              pid: pid
-            }
-          )
-        })
-        .catch(err => {
-          console.log(err)
-        })
+      this.getNumberCall()
+      clickPoint(
+        'tel_consulting_detail',
+        {
+          carid: this.carid,
+          type: this.isDirect,
+          '400_num': this.telPhone,
+          button: 1
+        },
+        null,
+        {
+          pid: pid
+        }
+      )
     },
     nextPage (key) {
       switch (key) {
@@ -431,9 +448,9 @@ export default {
             },
             () => {
               MIP.viewer.open(
-                config.mHost + `/car/iws/${getLocalStorage('locationUrl')}`,
+                config.mHost + `/car/iws/${decodeURIComponent(getLocalStorage('locationUrl'))}`,
                 {
-                  isMipLink: true
+                  isMipLink: false
                 }
               )
             },
@@ -452,9 +469,9 @@ export default {
             () => {
               MIP.viewer.open(
                 config.mHost +
-                  `/service/refund_flow/${getLocalStorage('locationUrl')}`,
+                  `/service/refund_flow/${decodeURIComponent(getLocalStorage('locationUrl'))}`,
                 {
-                  isMipLink: true
+                  isMipLink: false
                 }
               )
             },
@@ -473,9 +490,9 @@ export default {
             () => {
               MIP.viewer.open(
                 config.mHost +
-                  `/car/iws/${getLocalStorage('locationUrl')}#getzhibao`,
+                  `/car/iws/${decodeURIComponent(getLocalStorage('locationUrl'))}#getzhibao`,
                 {
-                  isMipLink: true
+                  isMipLink: false
                 }
               )
             },
@@ -494,11 +511,9 @@ export default {
             () => {
               MIP.viewer.open(
                 config.mHost +
-                  `/service/refund_flow/${getLocalStorage(
-                    'locationUrl'
-                  )}#getzhibao`,
+                  `/service/refund_flow/${decodeURIComponent(getLocalStorage('locationUrl'))}#getzhibao`,
                 {
-                  isMipLink: true
+                  isMipLink: false
                 }
               )
             },

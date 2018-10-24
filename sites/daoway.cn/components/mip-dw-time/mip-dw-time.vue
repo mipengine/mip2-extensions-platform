@@ -34,7 +34,7 @@
           @touchend="sure()">确定选择</button>
       </div>
     </mip-fixed>
-    <div
+    <!--<div
       v-show="warn.show"
       class="layer">
       <div class="layer-content zoomIn">
@@ -45,13 +45,14 @@
           class="layer-sure active-layer"
           @touchend="closeLayer">知道了</p>
       </div>
-    </div>
+    </div>-->
 
   </div>
 </template>
 
 <script>
 import base from '../../common/utils/base'
+import '../../common/utils/base.less'
 export default {
   data () {
     return {
@@ -65,7 +66,9 @@ export default {
       timeary: [],
       tab: 0,
       dis: null,
-      channel: 'baidu'
+      channel: 'mip',
+      times: {},
+      useradd: ''
     }
   },
   mounted () {
@@ -77,7 +80,7 @@ export default {
       let parm = that.parm
       let position = base.getposition()
       let communityId = position.id || position.communityId
-      let url = '/daoway/rest/service/' + parm.serviceId + '/appointable_times?includeBusyFlag=true&channel=' + that.channel + '&manualCity=' + encodeURIComponent(position.city) + '&lot=' + position.lot + '&lat=' + position.lat + '&communityId=' + communityId
+      let url = 'https://www.daoway.cn/daoway/rest/service/' + parm.serviceId + '/appointable_times?includeBusyFlag=true&channel=' + that.channel + '&manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lot || position.lng) + '&lat=' + position.lat + '&communityId=' + communityId
       if (parm.street) {
         url += '&street=' + encodeURIComponent(parm.street)
       }
@@ -93,9 +96,7 @@ export default {
       fetch(url, {
         method: 'get'
       }).then(function (res) {
-        if (res && res.status === '200') {
-          return res.json()
-        }
+        return res.json()
       }).then(function (text) {
         let datas = text.data
         for (let i = 0, len = datas.length; i < len; i++) {
@@ -140,6 +141,8 @@ export default {
   height: 60px;
   background: #fff;
   overflow-x: scroll;
+  margin-top: 44px;
+  border-top: 1px solid #f5f5f5;
 }
 
 .data {
@@ -223,5 +226,6 @@ export default {
     color: #fff;
     border: none;
     border-radius: 4px;
+    font-size: 16px;
   }
 </style>

@@ -3,7 +3,8 @@
 // const lxnhttp = 'http://127.0.0.1:8111/example/';
 
 // const lxnhttp = '/components/';
-const lxnhttp = 'http://t.daoway.cn/example/'
+const lxnhttp = 'https://www.daoway.cn/mip/'
+const component = 'html/'
 
 // const lxnhttp = 'http://test.daoway.cn/baiduapp/components/';//测试urL
 
@@ -33,21 +34,23 @@ export default ({
   // 测试
 
   htmlhref: tranObjUrlToCache({
-    index: lxnhttp + 'mip-dw-index.html',
-    serviceclass: lxnhttp + 'mip-dw-serviceclass.html',
-    order: lxnhttp + 'mip-dw-order.html',
-    my: lxnhttp + 'mip-dw-my.html',
-    detail: lxnhttp + 'mip-dw-detail.html',
-    orderdetail: lxnhttp + 'mip-dw-orderdetail.html',
-    comments: lxnhttp + 'mip-dw-comments.html',
-    reservation: lxnhttp + 'mip-dw-reservation.html',
-    time: lxnhttp + 'mip-dw-time.html',
-    xuzhi: lxnhttp + 'mip-dw-xuzhi.html',
-    technician: lxnhttp + 'example/mip-dw-technician.html',
-    position: lxnhttp + 'mip-dw-position.html',
-    vouchers: lxnhttp + 'mip-dw-vouchers.html',
-    about: lxnhttp + 'mip-dw-about.html',
-    login: lxnhttp + 'mip-dw-login.html'
+    index: lxnhttp + 'index.html',
+    serviceclass: lxnhttp + component + 'serviceclass.html',
+    order: lxnhttp + component + 'order.html',
+    my: lxnhttp + component + 'my.html',
+    detail: lxnhttp + component + 'detail.html',
+    orderdetail: lxnhttp + component + 'orderdetail.html',
+    comments: lxnhttp + component + 'comments.html',
+    reservation: lxnhttp + component + 'reservation.html',
+    time: lxnhttp + component + 'time.html',
+    xuzhi: lxnhttp + component + 'xuzhi.html',
+    technician: lxnhttp + component + 'technician.html',
+    position: lxnhttp + component + 'position.html',
+    vouchers: lxnhttp + component + 'vouchers.html',
+    about: lxnhttp + component + 'about.html',
+    search: lxnhttp + component + 'search.html',
+    searchlist: lxnhttp + component + 'searchlist.html',
+    address: lxnhttp + component + 'address.html'
 
     // community:lxnhttp + 'mip-dw-community/example/mip-dw-community.html',
     // city: lxnhttp + 'city.html',
@@ -57,9 +60,6 @@ export default ({
     // costdes: lxnhttp + 'costdes.html',
     // userguide: lxnhttp + 'userguide.html'
   }),
-  channel: 'baidu',
-  userId: '4112a2d5a7264360aeb3936a48ace9a6', // localStorage.getItem('userId'),
-  token: '6929484f51c71559b374ca8080ea2df3', // document.cookie,
   setHtmlRem: function () {
     let b = document
     let a = {}
@@ -92,7 +92,6 @@ export default ({
     a.changePage()
     // setInterval(a.changePage, 1000);
   },
-  // 拼接字符串
   setUrlParam: function (obj) {
     const params = []
 
@@ -126,6 +125,15 @@ export default ({
     // console.log(JSON.stringify(JSON.parse(data), null, 2))
     return JSON.parse(data)
   },
+  setCookie: function (name, value) { // 两个参数，一个是cookie的名子，一个是值
+    document.cookie = name + '=' + escape(value)// + ";expires=" + exp.toGMTString();
+  },
+  // 取Cookie
+  getCookie: function (name) { // 读取cookies函数
+    let arr = document.cookie.match(new RegExp('(^| )' + name + '=([^;]*)(;|$)'))
+    if (arr != null) return unescape(arr[2])
+    return null
+  },
   timeformat: function (time, format) {
     let t = new Date(time)
     let tf = function (i) {
@@ -136,22 +144,16 @@ export default ({
       switch (a) {
         case 'yyyy':
           return tf(t.getFullYear())
-
         case 'MM':
           return tf(t.getMonth() + 1)
-
         case 'mm':
           return tf(t.getMinutes())
-
         case 'dd':
           return tf(t.getDate())
-
         case 'HH':
           return tf(t.getHours())
-
         case 'ss':
           return tf(t.getSeconds())
-
         case 'day':
           let today = new Date()
           if (today.getMonth() + 1 === t.getMonth() + 1) {
@@ -166,11 +168,11 @@ export default ({
             return dayStr[t.getDay()]
           }
         case 'appDate':
-          let today1 = new Date()
-          if (today1.getMonth() + 1 === t.getMonth() + 1) {
-            if (today1.getDate() === t.getDate()) {
+          let todays = new Date()
+          if (todays.getMonth() + 1 === t.getMonth() + 1) {
+            if (todays.getDate() === t.getDate()) {
               return '今天'
-            } else if (today1.getDate() + 1 === t.getDate()) {
+            } else if (todays.getDate() + 1 === t.getDate()) {
               return '明天'
             } else {
               return tf(t.getMonth() + 1) + '-' + tf(t.getDate())
@@ -180,10 +182,6 @@ export default ({
           }
       }
     })
-  },
-  getbaiduLogMsg: function () {
-    let keys = 'mip-login-xzh:sessionId://test.daoway.com/Baidu/back'
-    return localStorage.getItem(keys)
   },
   // 使用MIP2同步数据
   mipSetGlobalData: function (newVal) {

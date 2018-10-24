@@ -1,4 +1,4 @@
-const outAldhttp = 'https://yjmtpt.xx-motor.com/xmdcwbaidu.com/example/'
+const outAldhttp = 'https://yz-alipay.fundway.net/xmdcwbaidu.com/example/'
 
 function setContainerH (dom) {
   const agent = window.navigator.userAgent
@@ -8,6 +8,10 @@ function setContainerH (dom) {
     containerH -= 56
   }
   document.querySelector(dom).style.height = containerH + 'px'
+}
+function getContainerH (dom) {
+  let containerH = window.innerHeight || document.documentElement.clientHeight
+  return containerH
 }
 function resetRem () {
   let b = document
@@ -44,5 +48,6 @@ function resetRem () {
 export default {
   resetRem: resetRem,
   setContainerH: setContainerH,
-  outAldhttp: outAldhttp
+  outAldhttp: outAldhttp,
+  getContainerH: getContainerH
 }
