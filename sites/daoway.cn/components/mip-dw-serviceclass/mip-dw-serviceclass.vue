@@ -43,7 +43,19 @@
         </mip-scrollbox>
       </div>
     </mip-fixed>
-    <div class="sc-box">
+    <div
+      v-if="searchlist.length>0"
+      class="searchlist">
+      <ul>
+        <li
+          v-for="s in searchlist"
+          :key="s"
+          @click="tapsearch(s)">{{ s }}</li>
+      </ul>
+    </div>
+    <div
+      v-if="searchlist.length<=0"
+      class="sc-box">
       <div
         v-for="i in item"
         :key="i"
@@ -86,29 +98,20 @@
         class="loding">~暂时只有这些了~</p>
     </div>
     <div
-      v-if="searchlist.length>0"
-      class="searchlist">
-      <ul>
-        <li
-          v-for="s in searchlist"
-          :key="s"
-          @click="tapsearch(s)">{{ s }}</li>
-      </ul>
-    </div>
-    <div
       v-show="warn.show"
       class="layer">
       <div class="layer-content zoomIn">
-        <p
-          class="layer-text"
-          v-text="warn.texts"/>
-        <p
-          class="layer-sure active-layer"
-          @click="closeLayer">知道了</p>
+        <div class="layer-content zoomIn">
+          <p
+            class="layer-text"
+            v-text="warn.texts"/>
+          <p
+            class="layer-sure active-layer"
+            @click="closeLayer">知道了</p>
+        </div>
       </div>
     </div>
-  </div>
-</template>
+</div></template>
 <script>
 import base from '../../common/utils/base'
 import '../../common/utils/base.less'
@@ -139,7 +142,7 @@ export default {
         texts: ''
       },
       searchtext: '',
-      searchlist: {},
+      searchlist: [],
       start: 0
     }
   },
@@ -486,6 +489,7 @@ export default {
     .sc-box {
         margin-top: 124px;
         box-sizing: border-box;
+        position: relative;
     }
 
     .sc-box-list {
@@ -653,7 +657,10 @@ export default {
         position: absolute;
         top:55px;
         left: 0;
-        z-index: 10001;
+        z-index: 20001;
+    }
+    .searchlist ul{
+      background: #fff;
     }
     .searchlist li{
         width: 98%;
