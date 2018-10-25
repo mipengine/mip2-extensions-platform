@@ -12,7 +12,7 @@
       </p>
       <p class="cal">
         <span class="h">分类：</span><span class="xsdetailcal">{{ cal }}</span>
-        <svg
+        <!-- <svg
           viewBox="25 25 50 50"
           class="circular">
           <circle
@@ -22,11 +22,11 @@
             fill="none"
             class="path"/>
         </svg>
-        <span class="xsdetailtag">西方魔幻</span>
+        <span class="xsdetailtag">西方魔幻</span> -->
       </p>
       <p class="status">
         <span class="h">状态：</span><span class="xsdetailstatus">{{ status }}</span>
-        <svg
+        <!-- <svg
           viewBox="25 25 50 50"
           class="circular">
           <circle
@@ -36,7 +36,7 @@
             fill="none"
             class="path"/>
         </svg>
-        <span class="xsdetailcode">已完结</span>
+        <span class="xsdetailcode">已完结</span> -->
       </p>
       <div class="rank_list">榜单：<span class="rank xsdetailrank">玄幻榜 NO.20</span></div>
     </div>
@@ -196,8 +196,8 @@ export default {
     p {
       font-size: 14px;
       color: #555;
-      line-height: 14px;
-      margin-bottom: 15px;
+      line-height: 16px;
+      margin-bottom: 13px;
       position: relative;
       padding-left: 42px;
       overflow: hidden;
@@ -345,20 +345,21 @@ export default {
     font-size: 14px;
     line-height: 24px;
     color: #555;
+    /* margin-bottom: 20px; */
     .content_wrapper {
-      /* padding-right: 6px; */
+      padding-right: 8px;
       overflow: hidden;
       display: -webkit-box;
       text-overflow: ellipsis;
       -webkit-box-orient: vertical;
       box-sizing: content-box;
       transition: all .3s linear;
-      text-align: justify;
+      /* text-align: justify; */
     }
     .show_more {
       position: absolute;
-      background: #fff;
-      right: 0;
+      /* background: #fff; */
+      right: -2px;
       bottom: 0;
       border: none;
       padding: 0;
