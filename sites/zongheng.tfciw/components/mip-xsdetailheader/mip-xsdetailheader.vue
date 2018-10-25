@@ -196,7 +196,7 @@ export default {
     p {
       font-size: 14px;
       color: #555;
-      line-height: 14px;
+      line-height: 16px;
       margin-bottom: 15px;
       position: relative;
       padding-left: 42px;
@@ -345,20 +345,21 @@ export default {
     font-size: 14px;
     line-height: 24px;
     color: #555;
+    margin-bottom: 20px;
     .content_wrapper {
-      /* padding-right: 6px; */
+      padding-right: 8px;
       overflow: hidden;
       display: -webkit-box;
       text-overflow: ellipsis;
       -webkit-box-orient: vertical;
       box-sizing: content-box;
       transition: all .3s linear;
-      text-align: justify;
+      /* text-align: justify; */
     }
     .show_more {
       position: absolute;
-      background: #fff;
-      right: 0;
+      /* background: #fff; */
+      right: -2px;
       bottom: 0;
       border: none;
       padding: 0;
