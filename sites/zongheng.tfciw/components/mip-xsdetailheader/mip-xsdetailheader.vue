@@ -197,7 +197,7 @@ export default {
       font-size: 14px;
       color: #555;
       line-height: 16px;
-      margin-bottom: 15px;
+      margin-bottom: 13px;
       position: relative;
       padding-left: 42px;
       overflow: hidden;
@@ -345,7 +345,7 @@ export default {
     font-size: 14px;
     line-height: 24px;
     color: #555;
-    margin-bottom: 20px;
+    /* margin-bottom: 20px; */
     .content_wrapper {
       padding-right: 8px;
       overflow: hidden;
