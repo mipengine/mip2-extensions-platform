@@ -122,7 +122,7 @@
                     <div
                       v-if="item.isAsk && item.enquiry_status == 1"
                       class="pricedetail-div-scroll"
-                      @click="askPriceOne(index)">一键询价</div>
+                      @click="askPriceOne(index,item.carid)">一键询价</div>
                     <div
                       v-if="!item.isAsk && item.enquiry_status == 1"
                       class="asked-price-scroll">已询价</div>
@@ -382,10 +382,10 @@ export default {
       }
     },
     // 一键询价
-    askPriceOne (index) {
+    askPriceOne (index, carid) {
       let param = {
         // type: "enquiry",
-        carid: getCarId(),
+        carid: carid || getCarId(),
         mobile: this.telValue,
         cityid: JSON.parse(this.cityMessage).cityid
       }

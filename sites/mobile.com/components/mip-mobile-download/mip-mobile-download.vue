@@ -8,7 +8,7 @@
       <span>安全下载</span>
     </div>
     <div class="safeScanWrapper">
-      <p class="safeScan">安全下载:使用百度手机助手下载,更快更安全</p>
+      <p class="safeScan">安全下载:使用百度手机助手下载,更快更安全.</p>
     </div>
   </div>
 </template>
@@ -198,7 +198,7 @@ export default {
         border-radius: 18.5px;
     }
     .mip-download-wrapper .safeScanWrapper{
-        display: inline-block;
+        margin: 0 auto;
         width: 275px;
         font-size: 10px;
         line-height: 20px;
@@ -207,6 +207,6 @@ export default {
     }
     .safeScanWrapper .safeScan{
         width: 100%;
-        text-align: left;
+        text-align: center;
     }
 </style>
