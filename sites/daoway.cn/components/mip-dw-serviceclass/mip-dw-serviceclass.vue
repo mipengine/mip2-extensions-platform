@@ -111,7 +111,17 @@
         </div>
       </div>
     </div>
-</div></template>
+    <mip-fixed
+      type="bottom"
+      class="mipbotm">
+      <span
+        class="botm"
+        @click="toindex">首页</span><span
+          class="botm"
+          @click="toorder">我的订单</span>
+    </mip-fixed>
+  </div>
+</template>
 <script>
 import base from '../../common/utils/base'
 import '../../common/utils/base.less'
@@ -419,6 +429,12 @@ export default {
       if (searchText) {
         MIP.viewer.open(base.htmlhref.searchlist + '?searchText=' + encodeURIComponent(searchText), {isMipLink: true})
       }
+    },
+    toindex () {
+      MIP.viewer.open(base.htmlhref.index, { isMipLink: true })
+    },
+    toorder () {
+      MIP.viewer.open(base.htmlhref.order, { isMipLink: true })
     }
   }
 }
@@ -490,6 +506,7 @@ export default {
         margin-top: 124px;
         box-sizing: border-box;
         position: relative;
+        margin-bottom: 25px;
     }
 
     .sc-box-list {
@@ -691,5 +708,21 @@ export default {
         font-size: 12px;
         display: inline-block;
         vertical-align: middle;
+    }
+  .mipbotm{
+    width: 100%;
+    background: #fff;
+    height: 40px;
+    line-height: 40px;
+    border-top: 1px solid #e5e5e5;
+    }
+    .mipbotm span:first-child{
+      border-right: 1px solid #e5e5e5;
+    }
+    .mipbotm span{
+      display: inline-block;
+      width: 49%;
+      text-align: center;
+      color: #303030;
     }
 </style>
