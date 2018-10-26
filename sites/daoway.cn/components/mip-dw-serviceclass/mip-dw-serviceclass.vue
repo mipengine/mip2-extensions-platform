@@ -15,13 +15,16 @@
     <mip-fixed
       type="top"
       class="mipfix">
-      <div class="searchdiv"><img src="https://www.daoway.cn/mip/common/images/search2.png"><input
-        v-model="searchtext"
-        type="search"
-        placeholder="搜索家政、维修、搬家、按摩、美容等万千服务"
-        @input="search"
-        @keyup.13="tapsearch(searchText)"></div>
-      <div class="sc-nav">
+      <div class="searchdiv">
+        <form action="https://www.daoway.cn/mip/t/searchlist.html">
+          <img src="https://www.daoway.cn/mip/common/images/search2.png"><input
+          v-model="searchtext"
+          type="search"
+          placeholder="搜索家政、维修、搬家、按摩、美容等万千服务"
+          @input="search">
+      </form>
+      </div>
+      <div v-if="searchlist.length<=0" class="sc-nav">
         <mip-scrollbox
           data-type="row"
           layout="fixed-height">
@@ -153,7 +156,8 @@ export default {
       },
       searchtext: '',
       searchlist: [],
-      start: 0
+      start: 0,
+      mipform:'',
     }
   },
   mounted () {
@@ -223,6 +227,10 @@ export default {
        this.morelist();
        } */
       this.morelist()
+    })
+    localStorage.removeItem('searchText');
+    window.addEventListener('show-page', (e) => {
+      localStorage.removeItem('searchText');
     })
   },
   methods: {
@@ -416,7 +424,8 @@ export default {
         return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
-          that.searchlist = text.data
+          that.searchlist = text.data;
+          localStorage.setItem('searchText',that.searchtext)
         } else {
           that.warn.show = true
           that.warn.texts = text.msg
@@ -425,9 +434,10 @@ export default {
         console.error(error)
       })
     },
-    tapsearch (searchText) {
+    tapsearch(searchText) {
       if (searchText) {
-        MIP.viewer.open(base.htmlhref.searchlist + '?searchText=' + encodeURIComponent(searchText), {isMipLink: true})
+        MIP.viewer.open(base.htmlhref.searchlist+'?searchText=' + encodeURIComponent(searchText), {isMipLink: true})
+        localStorage.removeItem('searchText')
       }
     },
     toindex () {
@@ -466,7 +476,6 @@ export default {
         height: 70px;
         padding: 5px 0;
         background: #fff;
-        margin-top: 10px;
         border-top: 1px solid #f5f5f5;
     }
     mip-scrollbox [data-inner]{
@@ -653,8 +662,10 @@ export default {
         border: 1px solid #898989;
         background: #fff;
         padding: 0 2%;
-        height: 40px;
+        height: 34px;
         border-radius: 4px;
+      margin-bottom: 10px;
+
     }
     .searchdiv img{
         width: 14px;
@@ -663,9 +674,10 @@ export default {
     }
 
     .searchdiv input{
-        width: 90%;
+        width: 93%;
         margin-left: 2%;
         font-size: 14px;
+       height: 32px;
     }
     .searchlist{
         width: 100%;
@@ -674,7 +686,7 @@ export default {
         position: absolute;
         top:55px;
         left: 0;
-        z-index: 20001;
+        z-index: 10002;
     }
     .searchlist ul{
       background: #fff;

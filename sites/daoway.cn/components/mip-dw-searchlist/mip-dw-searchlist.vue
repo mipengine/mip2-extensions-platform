@@ -5,13 +5,14 @@
       type="top">
       <div class="fix">
         <div class="inputxt">
-          <input
-            v-model="searchText"
-            :placeholder="searchText ? searchText:'搜索本地商家、上门服务'"
-            class="searchinput"
-            type="search"
-            @input="autosearch(searchText)"
-            @keyup.13="completeWords(searchText)" >
+              <img src="https://www.daoway.cn/mip/common/images/search2.png">
+              <input
+                v-model="searchText"
+                :placeholder="searchText ? searchText:'搜索本地商家、上门服务'"
+                class="searchinput"
+                type="search"
+                @input="autosearch(searchText)"
+                @keyup.13="completeWords(searchText)">
         </div>
         <div
           class="clear"
@@ -76,6 +77,20 @@
         <p>没有找到相关的服务</p>
       </div>
     </div>
+      <div
+              v-show="warn.show"
+              class="layer">
+          <div class="layer-content zoomIn">
+              <div class="layer-content zoomIn">
+                  <p
+                          class="layer-text"
+                          v-text="warn.texts"/>
+                  <p
+                          class="layer-sure active-layer"
+                          @click="closeLayer">知道了</p>
+              </div>
+          </div>
+      </div>
   </div>
 </template>
 <script>
@@ -96,7 +111,7 @@ export default {
       loding: false,
       channel: 'mip',
       nomore: false,
-      searchText: decodeURIComponent(base.getRequest(location.href).searchText),
+      searchText: localStorage.getItem('searchText') ||decodeURIComponent(base.getRequest(location.href).searchText),
       changeSearchView: true,
       autoCompleteWords: [],
       searchList: [],
@@ -107,6 +122,9 @@ export default {
   },
 
   mounted () {
+      if(!this.searchText || this.searchText === 'undefined'){
+          this.searchText = ''
+      }
     this.getsearch()
     let body = this.$element.querySelector('.wrapper')
     body.addEventListener('touchstart', (e, str) => {
@@ -122,11 +140,10 @@ export default {
   },
   methods: {
     getsearch () {
-      let that = this
-      let searchText = that.searchText
+      let that = this;
       let start = that.searchList.length
       let position = that.position
-      let url = 'https://www.daoway.cn/daoway/rest/service_items/search?start=' + start + '&size=30&manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lot || position.lng) + '&lat=' + position.lat + '&text=' + encodeURIComponent(searchText) + '&sort_by=auto&sort=desc&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/service_items/search?start=' + start + '&size=30&manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lot || position.lng) + '&lat=' + position.lat + '&text=' + (that.searchText? encodeURIComponent(that.searchText):'' )+ '&sort_by=auto&sort=desc&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -207,7 +224,11 @@ export default {
     },
     todetail (id, inDistanceScope) {
       MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id + '&inDistanceScope=' + inDistanceScope, { isMipLink: true })
-    }
+    },
+      closeLayer(){
+          this.warn.show = false
+          this.warn.texts = ''
+      }
   }
 }
 </script>
@@ -237,19 +258,21 @@ export default {
         background: #fff;
     }
     .searchinput {
-        padding-left: 6%;
-        height: 30px;
-        min-height: 30px;
-        background: #ececec;
+        padding-left: 4%;
         border-radius: 4px;
-        margin: 10px auto;
         font-size: 14px;
+        width: 90%;
+        height: 32px;
     }
 
     .inputxt {
         width: 80%;
         position: relative;
         display: inline-block;
+        border: 1px solid #898989;
+        height: 34px;
+        padding-left: 2%;
+        border-radius: 4px;
     }
 
     .searchValue {
@@ -258,6 +281,9 @@ export default {
         padding-left: 6%;
         text-align: left;
         color: #303030;
+    }
+    .fix{
+        height: 46px;
     }
 
     .fix .clear {
@@ -475,6 +501,11 @@ export default {
         margin-left: 3px;
         font-size: 12px;
         display: inline-block;
+        vertical-align: middle;
+    }
+    .inputxt img{
+        width: 14px;
+        height: auto;
         vertical-align: middle;
     }
 
