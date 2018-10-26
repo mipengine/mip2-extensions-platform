@@ -15,13 +15,18 @@
     <mip-fixed
       type="top"
       class="mipfix">
-      <div class="searchdiv"><img src="https://www.daoway.cn/mip/common/images/search2.png"><input
-        v-model="searchtext"
-        type="search"
-        placeholder="搜索家政、维修、搬家、按摩、美容等万千服务"
-        @input="search"
-        @keyup.13="tapsearch(searchText)"></div>
-      <div class="sc-nav">
+      <div class="searchdiv">
+        <form action="https://www.daoway.cn/mip/t/searchlist.html">
+          <img src="https://www.daoway.cn/mip/common/images/search2.png"><input
+            v-model="searchtext"
+            type="search"
+            placeholder="搜索家政、维修、搬家、按摩、美容等万千服务"
+            @input="search">
+        </form>
+      </div>
+      <div
+        v-if="searchlist.length<=0"
+        class="sc-nav">
         <mip-scrollbox
           data-type="row"
           layout="fixed-height">
@@ -50,7 +55,8 @@
         <li
           v-for="s in searchlist"
           :key="s"
-          @click="tapsearch(s)">{{ s }}</li>
+          @click="tapsearch(s)">{{ s }}
+        </li>
       </ul>
     </div>
     <div
@@ -66,7 +72,9 @@
           <img :src="i.pic_url">
           <div
             v-if="!i.inDistanceScope"
-            class="posimg"><img src="https://www.daoway.cn/mip/common/images/position2.png"><div>地址超出服务范围</div></div>
+            class="posimg"><img src="https://www.daoway.cn/mip/common/images/position2.png">
+            <div>地址超出服务范围</div>
+          </div>
         </div>
         <div class="scbl-right">
           <ul>
@@ -76,12 +84,14 @@
             <li
               class="sc-r-text"
               v-html="i.description"/>
-            <li class="sc-r-price">{{ i.price }}<i>{{ i.price_unit }}</i><span v-if="i.firstReduce">首单立减{{ i.firstReduce }}</span><span v-if="i.totalReduce">满{{ i.totalReduce.total }}减{{ i.totalReduce.reduce }}</span>
+            <li class="sc-r-price">{{ i.price }}<i>{{ i.price_unit }}</i><span v-if="i.firstReduce">首单立减{{ i.firstReduce }}</span><span
+              v-if="i.totalReduce">满{{ i.totalReduce.total }}减{{ i.totalReduce.reduce }}</span>
             </li>
             <li class="sc-r-home"><img
               class="sc-home"
-              src="https://www.daoway.cn/h5/image/home1.png" >{{ i.serviceTitle }}
-              <div class="sc-home-yishou"><span v-if="i.salesNum >0">已售{{ i.salesNum }}</span><span>{{ i.positiveCommentRate }}</span></div>
+              src="https://www.daoway.cn/h5/image/home1.png">{{ i.serviceTitle }}
+              <div class="sc-home-yishou"><span v-if="i.salesNum >0">已售{{ i.salesNum }}</span><span>{{ i.positiveCommentRate }}</span>
+              </div>
             </li>
             <li class="scbl-right-fixd scbl-aciy">
               <span>最快上门</span>
@@ -153,7 +163,8 @@ export default {
       },
       searchtext: '',
       searchlist: [],
-      start: 0
+      start: 0,
+      mipform: ''
     }
   },
   mounted () {
@@ -220,9 +231,13 @@ export default {
       let touch = e.touches[0]
       this.endY = touch.pageY
       /* if(this.endY >= this.startY){
-       this.morelist();
-       } */
+             this.morelist();
+             } */
       this.morelist()
+    })
+    localStorage.removeItem('searchText')
+    window.addEventListener('show-page', (e) => {
+      localStorage.removeItem('searchText')
     })
   },
   methods: {
@@ -389,7 +404,9 @@ export default {
           that.sw = false
           setTimeout(() => {
             that.loding = true
-          }, 500)
+          },
+          500
+          )
           that.getServicelist(index, category, that.tags)
         } else {
           that.loding = false
@@ -399,7 +416,7 @@ export default {
       }
     },
     todetail (id, inDistanceScope) {
-      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id + '&inDistanceScope=' + inDistanceScope, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id + '&inDistanceScope=' + inDistanceScope, {isMipLink: true})
     },
     toposition () {
       MIP.viewer.open(base.htmlhref.position, {isMipLink: true})
@@ -417,6 +434,7 @@ export default {
       }).then(function (text) {
         if (text.status === 'ok') {
           that.searchlist = text.data
+          localStorage.setItem('searchText', that.searchtext)
         } else {
           that.warn.show = true
           that.warn.texts = text.msg
@@ -428,13 +446,14 @@ export default {
     tapsearch (searchText) {
       if (searchText) {
         MIP.viewer.open(base.htmlhref.searchlist + '?searchText=' + encodeURIComponent(searchText), {isMipLink: true})
+        localStorage.removeItem('searchText')
       }
     },
     toindex () {
-      MIP.viewer.open(base.htmlhref.index, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.index, {isMipLink: true})
     },
     toorder () {
-      MIP.viewer.open(base.htmlhref.order, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.order, {isMipLink: true})
     }
   }
 }
@@ -445,8 +464,9 @@ export default {
         margin: 0;
         box-sizing: border-box;
     }
-    .wrapper{
-      position: relative;
+
+    .wrapper {
+        position: relative;
     }
 
     i {
@@ -457,22 +477,24 @@ export default {
         list-style: none
     }
 
-    .loding{
+    .loding {
         text-align: center;
         height: 30px;
     }
+
     .sc-nav {
         width: 100%;
         height: 70px;
         padding: 5px 0;
         background: #fff;
-        margin-top: 10px;
         border-top: 1px solid #f5f5f5;
     }
-    mip-scrollbox [data-inner]{
+
+    mip-scrollbox [data-inner] {
         margin-top: -37px;
     }
-    .mipfix{
+
+    .mipfix {
         background: #fff;
     }
 
@@ -483,7 +505,8 @@ export default {
         font-size: 14px;
         min-width: 46px;
     }
-    .activity{
+
+    .activity {
         border-bottom: 2px solid red;
     }
 
@@ -623,7 +646,8 @@ export default {
     .sc-r-price i {
         font-size: 12px;
     }
-    .sc-r-price span{
+
+    .sc-r-price span {
         border: 0.5px solid red;
         font-size: 10px;
         padding: 0 2px;
@@ -643,86 +667,100 @@ export default {
         margin-right: 5px;
         font-size: 12px
     }
-    .sc-r-home,.sc-r-home div,.sc-r-home span{
+
+    .sc-r-home, .sc-r-home div, .sc-r-home span {
         font-size: 12px;
         color: #898989;
     }
-    .searchdiv{
+
+    .searchdiv {
         width: 94%;
         margin: 44px 3% 0;
         border: 1px solid #898989;
         background: #fff;
         padding: 0 2%;
-        height: 40px;
+        height: 34px;
         border-radius: 4px;
+        margin-bottom: 10px;
+
     }
-    .searchdiv img{
+
+    .searchdiv img {
         width: 14px;
         height: auto;
         vertical-align: middle;
     }
 
-    .searchdiv input{
-        width: 90%;
+    .searchdiv input {
+        width: 93%;
         margin-left: 2%;
         font-size: 14px;
+        height: 32px;
     }
-    .searchlist{
+
+    .searchlist {
         width: 100%;
         height: 100%;
         background: #fff;
         position: absolute;
-        top:55px;
+        top: 55px;
         left: 0;
-        z-index: 20001;
+        z-index: 10002;
     }
-    .searchlist ul{
-      background: #fff;
+
+    .searchlist ul {
+        background: #fff;
     }
-    .searchlist li{
+
+    .searchlist li {
         width: 98%;
         margin-left: 2%;
         border-bottom: 1px solid #e5e5e5;
         line-height: 40px;
     }
-    .posimg{
+
+    .posimg {
         position: absolute;
-        top:0 ;
+        top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0,0,0,0.5);
+        background: rgba(0, 0, 0, 0.5);
         color: #fff;
         text-align: center;
         padding-top: 34%;
     }
-    .posimg img{
+
+    .posimg img {
         width: 12px;
         height: auto;
         vertical-align: middle;
     }
 
-    .posimg div{
+    .posimg div {
         width: 52px;
         margin-left: 3px;
         font-size: 12px;
         display: inline-block;
         vertical-align: middle;
     }
-  .mipbotm{
-    width: 100%;
-    background: #fff;
-    height: 40px;
-    line-height: 40px;
-    border-top: 1px solid #e5e5e5;
+
+    .mipbotm {
+        width: 100%;
+        background: #fff;
+        height: 40px;
+        line-height: 40px;
+        border-top: 1px solid #e5e5e5;
     }
-    .mipbotm span:first-child{
-      border-right: 1px solid #e5e5e5;
+
+    .mipbotm span:first-child {
+        border-right: 1px solid #e5e5e5;
     }
-    .mipbotm span{
-      display: inline-block;
-      width: 49%;
-      text-align: center;
-      color: #303030;
+
+    .mipbotm span {
+        display: inline-block;
+        width: 49%;
+        text-align: center;
+        color: #303030;
     }
 </style>
