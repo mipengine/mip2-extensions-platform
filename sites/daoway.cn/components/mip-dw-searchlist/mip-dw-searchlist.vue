@@ -3,16 +3,16 @@
     <mip-fixed
       class="fixtop"
       type="top">
-      <div class="fix">
+      <div class="fsx">
         <div class="inputxt">
-              <img src="https://www.daoway.cn/mip/common/images/search2.png">
-              <input
-                v-model="searchText"
-                :placeholder="searchText ? searchText:'搜索本地商家、上门服务'"
-                class="searchinput"
-                type="search"
-                @input="autosearch(searchText)"
-                @keyup.13="completeWords(searchText)">
+          <img src="https://www.daoway.cn/mip/common/images/search2.png">
+          <input
+            v-model="searchText"
+            :placeholder="searchText?searchText:'搜索本地商家、上门服务'"
+            class="searchinput"
+            type="search"
+            @input="autosearch(searchText)"
+            @keyup.13="completeWords(searchText)">
         </div>
         <div
           class="clear"
@@ -31,7 +31,9 @@
             <img :src="i.pic_url">
             <div
               v-if="!i.inDistanceScope"
-              class="posimg"><img src="https://www.daoway.cn/mip/common/images/position2.png"><div>地址超出服务范围</div></div>
+              class="posimg"><img src="https://www.daoway.cn/mip/common/images/position2.png">
+              <div>地址超出服务范围</div>
+            </div>
           </div>
           <div class="scbl-right">
             <ul>
@@ -41,13 +43,15 @@
               <li
                 class="sc-r-text"
                 v-html="i.description"/>
-              <li class="sc-r-price">{{ i.price }}<i>{{ i.price_unit }}</i><span v-if="i.promotion.first_reduction">首单立减{{ i.promotion.first_reduction[0].reduce }}</span><span
-                v-if="i.promotion.total_reduce">满{{ i.promotion.total_reduce[0].total }}减{{ i.promotion.total_reduce[0].reduce }}</span>
+              <li class="sc-r-price">{{ i.price }}<i>{{ i.price_unit }}</i><span
+                v-if="i.promotion.first_reduction">首单立减{{ i.promotion.first_reduction[0].reduce }}</span><span
+                  v-if="i.promotion.total_reduce">满{{ i.promotion.total_reduce[0].total }}减{{ i.promotion.total_reduce[0].reduce }}</span>
               </li>
               <li class="sc-r-home"><img
                 class="sc-home"
                 src="https://www.daoway.cn/h5/image/home1.png">{{ i.serviceTitle }}
-                <div class="sc-home-yishou"><span v-if="i.salesNum >0">已售{{ i.salesNum }}</span><span v-if="i.positiveCommentRate==='--'">暂无评价</span><span v-else>好评{{ i.positiveCommentRate }}</span>
+                <div class="sc-home-yishou"><span v-if="i.salesNum >0">已售{{ i.salesNum }}</span><span
+                  v-if="i.positiveCommentRate==='--'">暂无评价</span><span v-else>好评{{ i.positiveCommentRate }}</span>
                 </div>
               </li>
               <li class="scbl-right-fixd scbl-aciy">
@@ -67,7 +71,8 @@
             v-for="m in autoCompleteWords"
             :key="m"
             class="searchValue"
-            @click="completeWords(m)">{{ m }}</div>
+            @click="completeWords(m)">{{ m }}
+          </div>
         </div>
       </div>
       <div
@@ -77,20 +82,20 @@
         <p>没有找到相关的服务</p>
       </div>
     </div>
-      <div
-              v-show="warn.show"
-              class="layer">
-          <div class="layer-content zoomIn">
-              <div class="layer-content zoomIn">
-                  <p
-                          class="layer-text"
-                          v-text="warn.texts"/>
-                  <p
-                          class="layer-sure active-layer"
-                          @click="closeLayer">知道了</p>
-              </div>
-          </div>
+    <div
+      v-show="warn.show"
+      class="layer">
+      <div class="layer-content zoomIn">
+        <div class="layer-content zoomIn">
+          <p
+            class="layer-text"
+            v-text="warn.texts"/>
+          <p
+            class="layer-sure active-layer"
+            @click="closeLayer">知道了</p>
+        </div>
       </div>
+    </div>
   </div>
 </template>
 <script>
@@ -111,7 +116,7 @@ export default {
       loding: false,
       channel: 'mip',
       nomore: false,
-      searchText: localStorage.getItem('searchText') ||decodeURIComponent(base.getRequest(location.href).searchText),
+      searchText: localStorage.getItem('searchText') || decodeURIComponent(base.getRequest(location.href).searchText),
       changeSearchView: true,
       autoCompleteWords: [],
       searchList: [],
@@ -120,11 +125,10 @@ export default {
       sw: true
     }
   },
-
   mounted () {
-      if(!this.searchText || this.searchText === 'undefined'){
-          this.searchText = ''
-      }
+    if (!this.searchText || this.searchText === 'undefined') {
+      this.searchText = ''
+    }
     this.getsearch()
     let body = this.$element.querySelector('.wrapper')
     body.addEventListener('touchstart', (e, str) => {
@@ -140,10 +144,10 @@ export default {
   },
   methods: {
     getsearch () {
-      let that = this;
+      let that = this
       let start = that.searchList.length
       let position = that.position
-      let url = 'https://www.daoway.cn/daoway/rest/service_items/search?start=' + start + '&size=30&manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lot || position.lng) + '&lat=' + position.lat + '&text=' + (that.searchText? encodeURIComponent(that.searchText):'' )+ '&sort_by=auto&sort=desc&channel=' + that.channel
+      let url = 'https://www.daoway.cn/daoway/rest/service_items/search?start=' + start + '&size=30&manualCity=' + encodeURIComponent(position.city) + '&lot=' + (position.lot || position.lng) + '&lat=' + position.lat + '&text=' + encodeURIComponent(that.searchText) + '&sort_by=auto&sort=desc&channel=' + that.channel
       fetch(url, {
         method: 'get'
       }).then(function (res) {
@@ -215,20 +219,23 @@ export default {
           that.sw = false
           setTimeout(() => {
             that.loding = true
-          }, 500)
+          },
+          500
+          )
           that.getsearch()
-        };
+        }
+        ;
       } else {
         that.loding = false
       }
     },
     todetail (id, inDistanceScope) {
-      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id + '&inDistanceScope=' + inDistanceScope, { isMipLink: true })
+      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id + '&inDistanceScope=' + inDistanceScope, {isMipLink: true})
     },
-      closeLayer(){
-          this.warn.show = false
-          this.warn.texts = ''
-      }
+    closeLayer () {
+      this.warn.show = false
+      this.warn.texts = ''
+    }
   }
 }
 </script>
@@ -254,9 +261,11 @@ export default {
         padding-left: 4%;
         background: #fff;
     }
-    .searchdiv{
+
+    .searchdiv {
         background: #fff;
     }
+
     .searchinput {
         padding-left: 4%;
         border-radius: 4px;
@@ -282,11 +291,12 @@ export default {
         text-align: left;
         color: #303030;
     }
-    .fix{
+
+    .fsx {
         height: 46px;
     }
 
-    .fix .clear {
+    .fsx .clear {
         margin-top: 0;
         font-size: 14px;
         display: inline-block;
@@ -309,7 +319,8 @@ export default {
         width: 190px;
         height: auto;
     }
-    .noitems p{
+
+    .noitems p {
         margin-top: 20px;
         color: #898989;
     }
@@ -479,34 +490,36 @@ export default {
         font-size: 12px;
         color: #898989;
     }
-    .posimg{
+
+    .posimg {
         position: absolute;
-        top:0 ;
+        top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0,0,0,0.5);
+        background: rgba(0, 0, 0, 0.5);
         color: #fff;
         text-align: center;
         padding-top: 34%;
     }
-    .posimg img{
+
+    .posimg img {
         width: 12px;
         height: auto;
         vertical-align: middle;
     }
 
-    .posimg div{
+    .posimg div {
         width: 52px;
         margin-left: 3px;
         font-size: 12px;
         display: inline-block;
         vertical-align: middle;
     }
-    .inputxt img{
+
+    .inputxt img {
         width: 14px;
         height: auto;
         vertical-align: middle;
     }
-
 </style>
