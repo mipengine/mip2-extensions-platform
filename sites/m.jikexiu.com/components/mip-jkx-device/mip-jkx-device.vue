@@ -146,90 +146,102 @@ export default {
             .split('?')[1]
             .split('&')[0]
             .split('=')[1].split('-')[0] : 0
-      this.show = true
-      this.last = true
-      this.tab = ['品牌', '类型', '型号']
-      if (this.categoryId > 0 && this.brandId > 0) {
-        this.changeColor = 2
-      } else if (this.brandId > 0 && this.categoryId === 0) {
-        this.changeColor = 1
-      } else {
-        this.changeColor = 0
-      }
+        this.show = true
+        this.last = true
+        this.tab = ['品牌', '类型', '型号']
+        if (this.categoryId > 0 && this.brandId > 0) {
+          this.changeColor = 2
+        } else if (this.brandId > 0 && this.categoryId === 0) {
+          this.changeColor = 1
+        } else {
+          this.changeColor = 0
+        }
 
-      // this.changeColor = this.brandId > 0 ? 2 : 0
-      // const brand = function () {
-      //   let fun = {
-      //     12: '手机',
-      //     20: '跑步机',
-      //     13: '平板',
-      //     15: '笔记本',
-      //     16: '一体机',
-      //     32: '智能手表',
-      //     26: '存储器'
-      //   }
-      //   return fun[this.brandId]
-      // }
-      // this.tab[0] = brand()
+        // this.changeColor = this.brandId > 0 ? 2 : 0
+        // const brand = function () {
+        //   let fun = {
+        //     12: '手机',
+        //     20: '跑步机',
+        //     13: '平板',
+        //     15: '笔记本',
+        //     16: '一体机',
+        //     32: '智能手表',
+        //     26: '存储器'
+        //   }
+        //   return fun[this.brandId]
+        // }
+        // this.tab[0] = brand()
+        MIP.setData({
+          deviceData: {
+            show: true,
+            changeColor: this.changeColor,
+            last: true,
+            categoryId: this.categoryId,
+            brandId: this.brandId,
+            tab: this.tab
+          }
+        })
+      } else if (href.indexOf('modelName') > 0) {
+        let NAME = decodeURI(href.split('?')[1].split('=')[1])
+        request(apiUrl.getSms, 'post', {
+          ids: NAME
+        }).then(res => {
+          if (res.code === 200) {
+            this.name = res.data.device.model
+            this.name1 = res.data.sms[0].malfunctionName
+            this.price = res.data.sms[0].price
+            this.malfunctionId = res.data.sms[0].malfunctionId
+            this.deviceId = res.data.device.id
+            let per
+            if (res.data.sms[0].warrantyPeriod > 0) {
+              per = `质保${res.data.sms[0].warrantyPeriod}天`
+            } else if (res.data.sms[0].warrantyPeriod === 0) {
+              per = '不质保'
+            } else {
+              per = '终身质保'
+            }
+
+            this.period = per
+            this.price = this.price > 0 ? `￥${this.price}` : '待检测'
+            this.fault = res.data.sms[0].method
+            this.showFault = true
+            MIP.setData({
+              deviceData: {
+                show: false,
+                name: this.name,
+                name1: this.name1,
+                showTxt1: true,
+                showTxt2: true,
+                price: this.price,
+                fault: res.data.sms[0].method,
+                period: `(${per})`,
+                showFault: true
+              },
+              orderData: {
+                price: this.price > 0 ? `￥${this.price}` : '待检测',
+                device: this.name,
+                solution: this.name1,
+                malfunctionId: this.malfunctionId,
+                attributeId: this.attr,
+                attrValue: this.attrValue,
+                deviceId: this.deviceId,
+                fault: res.data.sms[0].method,
+                period: `(${per})`
+              }
+            })
+          }
+        })
+      }
+    } else {
+      // 设置登录组件的config属性中，重定向地址:redirectUri为订单页地址
       MIP.setData({
-        deviceData: {
-          show: true,
-          changeColor: this.changeColor,
-          last: true,
-          categoryId: this.categoryId,
-          brandId: this.brandId,
-          tab: this.tab
+        config: {
+          redirectUri: href
         }
       })
-    } else if (href.indexOf('modelName') > 0) {
-      let NAME = decodeURI(href.split('?')[1].split('=')[1])
-      request(apiUrl.getSms, 'post', {
-        ids: NAME
-      }).then(res => {
-        if (res.code === 200) {
-          this.name = res.data.device.model
-          this.name1 = res.data.sms[0].malfunctionName
-          this.price = res.data.sms[0].price
-          this.malfunctionId = res.data.sms[0].malfunctionId
-          this.deviceId = res.data.device.id
-          let per
-          if (res.data.sms[0].warrantyPeriod > 0) {
-            per = `质保${res.data.sms[0].warrantyPeriod}天`
-          } else if (res.data.sms[0].warrantyPeriod === 0) {
-            per = '不质保'
-          } else {
-            per = '终身质保'
-          }
-
-          this.period = per
-          this.price = this.price > 0 ? `￥${this.price}` : '待检测'
-          this.fault = res.data.sms[0].method
-          this.showFault = true
-          MIP.setData({
-            deviceData: {
-              show: false,
-              name: this.name,
-              name1: this.name1,
-              showTxt1: true,
-              showTxt2: true,
-              price: this.price,
-              fault: res.data.sms[0].method,
-              period: `(${per})`,
-              showFault: true
-            },
-            orderData: {
-              price: this.price > 0 ? `￥${this.price}` : '待检测',
-              device: this.name,
-              solution: this.name1,
-              malfunctionId: this.malfunctionId,
-              attributeId: this.attr,
-              attrValue: this.attrValue,
-              deviceId: this.deviceId,
-              fault: res.data.sms[0].method,
-              period: `(${per})`
-            }
-          })
-        }
+      // 在下一个执行时机触发事件
+      this.$nextTick(function () {
+        this.$emit('actionOrder')
       })
     }
     // } else {
