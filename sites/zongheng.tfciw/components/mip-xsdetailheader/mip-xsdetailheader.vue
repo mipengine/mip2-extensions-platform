@@ -7,26 +7,52 @@
         class="cover"
         width="122"
         height="162"/>
-      <p class="author">作者：<span>{{ author }}</span></p>
-      <p class="cal">分类：<span class="xsdetailcal">{{ cal }}</span></p>
-      <p class="status">状态：<span class="xsdetailstatus">{{ status }}</span></p>
+      <p class="author">
+        <span class="h">作者：</span><span>{{ author }}</span>
+      </p>
+      <p class="cal">
+        <span class="h">分类：</span><span class="xsdetailcal">{{ cal }}</span>
+        <!-- <svg
+          viewBox="25 25 50 50"
+          class="circular">
+          <circle
+            cx="50"
+            cy="50"
+            r="20"
+            fill="none"
+            class="path"/>
+        </svg>
+        <span class="xsdetailtag">西方魔幻</span> -->
+      </p>
+      <p class="status">
+        <span class="h">状态：</span><span class="xsdetailstatus">{{ status }}</span>
+        <!-- <svg
+          viewBox="25 25 50 50"
+          class="circular">
+          <circle
+            cx="50"
+            cy="50"
+            r="20"
+            fill="none"
+            class="path"/>
+        </svg>
+        <span class="xsdetailcode">已完结</span> -->
+      </p>
       <div class="rank_list">榜单：<span class="rank xsdetailrank">玄幻榜 NO.20</span></div>
     </div>
     <div class="btn_wrapper">
       <a
         :href="calhref"
-        class="show_cal">查看目录</a>
+        class="show_cal"
+        mip-link>查看目录</a>
       <a
         :href="readhref"
-        class="go_read">全书免费阅读</a>
+        class="go_read"
+        mip-link>全书免费阅读</a>
     </div>
     <div
       class="brief_wrapper"
       @click="showMore">
-      <!-- <mip-showmore maxheight='72' animatetime='.3' id="showmore">
-        <div>悠悠万古千万帝, 唯我独凌于众帝之上的神帝、仙王、仙帝、天帝被我如蝼蚁般捏死的不知几何。曾经有一个自诩无敌的神王，最后被我踩死了。</div>
-      </mip-showmore>
-      <div on="tap:showmore.toggle" data-closeclass="mip-showmore-open" data-closetext="收起内容" class="mip-showmore-btn">></div> -->
       <div class="content_wrapper">
         {{ content }}
       </div>
@@ -95,6 +121,24 @@ export default {
         'display': 'none'
       })
     }
+    // let oTag = this.$element.querySelector('.xsdetailcal')
+    // let newTag = this.$element.querySelector('.xsdetailtag')
+    // setTimeout(() => {
+    //   MIP.util.css(this.$element.querySelectorAll('.circular'), {
+    //     'opacity': '0'
+    //   })
+    //   MIP.util.css(this.$element.querySelector('.rank_list'), {
+    //     'opacity': '1'
+    //   })
+    //   MIP.util.css(oTag, {
+    //     'transform': `translateY(-14px)`,
+    //     'opacity': '0'
+    //   })
+    //   MIP.util.css(newTag, {
+    //     'transform': `translateX(-${oTag.clientWidth + 22}px)`,
+    //     'opacity': '1'
+    //   })
+    // }, 1000)
   },
   methods: {
     showMore () {
@@ -130,8 +174,14 @@ export default {
     font-size: 19px;
     color: #000;
     line-height: 19px;
+    max-height: 38px;
     text-align: center;
     margin: 0 0 30px 0;
+    font-weight: bold;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
   }
   .info_wrapper {
     height: 162px;
@@ -146,14 +196,115 @@ export default {
     p {
       font-size: 14px;
       color: #555;
-      line-height: 14px;
-      margin-bottom: 15px;
+      line-height: 16px;
+      margin-bottom: 13px;
+      position: relative;
+      padding-left: 42px;
+      overflow: hidden;
+      .h {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+    }
+    .xsdetailcal, .xsdetailstatus {
+      display: inline-block;
+      transition: .3s ease-in-out;
+    }
+    .xsdetailtag, .xsdetailcode {
+      opacity: 0;
+      display: inline-block;
+      transition: .3s ease-in-out;
+      display: none;
+    }
+    .circular {
+      display: none;
+      width: 14px;
+      height: 14px;
+      animation: loading-rotate 2s linear infinite;
+    }
+    .path {
+      stroke-dasharray: 90,150;
+      stroke-dashoffset: 0;
+      stroke-width: 2;
+      /* stroke: #409eff; */
+      stroke: #555;
+      stroke-linecap: round;
+      animation: loading-dash 1.5s ease-in-out infinite;
+    }
+    @keyframes loading-rotate {
+      100% {
+        transform: rotate(1turn);
+      }
+    }
+    @keyframes loading-dash {
+      0% {
+        stroke-dasharray: 1,200;
+        stroke-dashoffset: 0;
+      }
+      50% {
+        stroke-dasharray: 90,150;
+        stroke-dashoffset: -40px;
+      }
+      100% {
+        stroke-dasharray: 90,150;
+        stroke-dashoffset: -120px;
+      }
+    }
+    .xsdetailcal, .xsdetailstatus {
+      display: inline-block;
+      transition: .3s ease-in-out;
+      width: 100%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .xsdetailtag, .xsdetailcode {
+      opacity: 0;
+      display: inline-block;
+      transition: .3s ease-in-out;
+      display: none;
+    }
+    .circular {
+      width: 14px;
+      height: 14px;
+      animation: loading-rotate 2s linear infinite;
+    }
+    .path {
+      stroke-dasharray: 90,150;
+      stroke-dashoffset: 0;
+      stroke-width: 2;
+      /* stroke: #409eff; */
+      stroke: #555;
+      stroke-linecap: round;
+      animation: loading-dash 1.5s ease-in-out infinite;
+    }
+    @keyframes loading-rotate {
+      100% {
+        transform: rotate(1turn);
+      }
+    }
+    @keyframes loading-dash {
+      0% {
+        stroke-dasharray: 1,200;
+        stroke-dashoffset: 0;
+      }
+      50% {
+        stroke-dasharray: 90,150;
+        stroke-dashoffset: -40px;
+      }
+      100% {
+        stroke-dasharray: 90,150;
+        stroke-dashoffset: -120px;
+      }
     }
     .rank_list {
       height: 28px;
       line-height: 28px;
       font-size: 14px;
       color: #555;
+      opacity: 0;
+      transition: .5s linear;
       .rank {
         display: inline-block;
         padding: 0 10px;
@@ -164,21 +315,25 @@ export default {
     }
   }
   .btn_wrapper {
-    display: flex;
+    /* display: flex; */
+    font-size: 14px;
+    height: 38px;
     margin-bottom: 10px;
     a {
-      display: inline-block;
-      flex: 1;
-      text-align: center;
+      width: 48.5%;
       height: 38px;
       line-height: 38px;
       border-radius: 3px;
       box-sizing: border-box;
+      text-align: center;
       &.show_cal {
         border: 1px solid #707379;
         color: #000;
+        float: left;
       }
       &.go_read {
+        float: right;
+        border: 1px solid #EE6420;
         margin-left: 7px;
         background: #EE6420;
         color: #fff;
@@ -190,20 +345,21 @@ export default {
     font-size: 14px;
     line-height: 24px;
     color: #555;
+    /* margin-bottom: 20px; */
     .content_wrapper {
-      padding-right: 6px;
+      padding-right: 8px;
       overflow: hidden;
       display: -webkit-box;
       text-overflow: ellipsis;
       -webkit-box-orient: vertical;
       box-sizing: content-box;
       transition: all .3s linear;
-      text-align: justify;
+      /* text-align: justify; */
     }
     .show_more {
       position: absolute;
-      background: #fff;
-      right: -5px;
+      /* background: #fff; */
+      right: -2px;
       bottom: 0;
       border: none;
       padding: 0;

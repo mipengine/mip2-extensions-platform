@@ -12,8 +12,21 @@
       </script>
     </mip-map>
     <div id="test"/>
-    <mip-fixed type="top">
-      <div class="sc-nav">
+    <mip-fixed
+      type="top"
+      class="mipfix">
+      <div class="searchdiv">
+        <form action="https://www.daoway.cn/mip/t/searchlist.html">
+          <img src="https://www.daoway.cn/mip/common/images/search2.png"><input
+            v-model="searchtext"
+            type="search"
+            placeholder="搜索家政、维修、搬家、按摩、美容等万千服务"
+            @input="search">
+        </form>
+      </div>
+      <div
+        v-if="searchlist.length<=0"
+        class="sc-nav">
         <mip-scrollbox
           data-type="row"
           layout="fixed-height">
@@ -35,15 +48,33 @@
         </mip-scrollbox>
       </div>
     </mip-fixed>
-    <div class="sc-box">
+    <div
+      v-if="searchlist.length>0"
+      class="searchlist">
+      <ul>
+        <li
+          v-for="s in searchlist"
+          :key="s"
+          @click="tapsearch(s)">{{ s }}
+        </li>
+      </ul>
+    </div>
+    <div
+      v-if="searchlist.length<=0"
+      class="sc-box">
       <div
         v-for="i in item"
         :key="i"
         :id="i.id"
         class="sc-box-list"
-        @click="todetail(i.id)">
+        @click="todetail(i.id,i.inDistanceScope)">
         <div class="scbl-left">
           <img :src="i.pic_url">
+          <div
+            v-if="!i.inDistanceScope"
+            class="posimg"><img src="https://www.daoway.cn/mip/common/images/position2.png">
+            <div>地址超出服务范围</div>
+          </div>
         </div>
         <div class="scbl-right">
           <ul>
@@ -53,12 +84,14 @@
             <li
               class="sc-r-text"
               v-html="i.description"/>
-            <li class="sc-r-price">{{ i.price }}<i>{{ i.price_unit }}</i><span v-if="i.firstReduce">首单立减{{ i.firstReduce }}</span><span v-if="i.totalReduce">满{{ i.totalReduce.total }}减{{ i.totalReduce.reduce }}</span>
+            <li class="sc-r-price">{{ i.price }}<i>{{ i.price_unit }}</i><span v-if="i.firstReduce">首单立减{{ i.firstReduce }}</span><span
+              v-if="i.totalReduce">满{{ i.totalReduce.total }}减{{ i.totalReduce.reduce }}</span>
             </li>
             <li class="sc-r-home"><img
               class="sc-home"
-              src="https://www.daoway.cn/h5/image/home1.png" >{{ i.serviceTitle }}
-              <div class="sc-home-yishou"><span v-if="i.salesNum >0">已售{{ i.salesNum }}</span><span>{{ i.positiveCommentRate }}</span></div>
+              src="https://www.daoway.cn/h5/image/home1.png">{{ i.serviceTitle }}
+              <div class="sc-home-yishou"><span v-if="i.salesNum >0">已售{{ i.salesNum }}</span><span>{{ i.positiveCommentRate }}</span>
+              </div>
             </li>
             <li class="scbl-right-fixd scbl-aciy">
               <span>最快上门</span>
@@ -78,14 +111,25 @@
       v-show="warn.show"
       class="layer">
       <div class="layer-content zoomIn">
-        <p
-          class="layer-text"
-          v-text="warn.texts"/>
-        <p
-          class="layer-sure active-layer"
-          @click="closeLayer">知道了</p>
+        <div class="layer-content zoomIn">
+          <p
+            class="layer-text"
+            v-text="warn.texts"/>
+          <p
+            class="layer-sure active-layer"
+            @click="closeLayer">知道了</p>
+        </div>
       </div>
     </div>
+    <mip-fixed
+      type="bottom"
+      class="mipbotm">
+      <span
+        class="botm"
+        @click="toindex">首页</span><span
+          class="botm"
+          @click="toorder">我的订单</span>
+    </mip-fixed>
   </div>
 </template>
 <script>
@@ -102,6 +146,7 @@ export default {
       filterAry: [],
       tag: decodeURI(base.getRequest(location.href).tag),
       item: [],
+      city: base.getRequest(location.href).city,
       indx: 0,
       tags: '',
       sw: true,
@@ -115,36 +160,30 @@ export default {
         // 弹窗
         show: false,
         texts: ''
-      }
+      },
+      searchtext: '',
+      searchlist: [],
+      start: 0,
+      mipform: ''
     }
   },
   mounted () {
     let that = this
     let category = this.category
-    this.nav()
     if (this.tag === '全部') {
       // this.tags = '&tag=';
     } else {
       this.tags = '&tag=' + encodeURIComponent(this.tag)
     }
+    if (that.city) {
+      that.getcity(that.city)
+    }
+    this.nav()
     this.getServicelist(0, category, this.tags)
-    let body = this.$element.querySelector('.wrapper')
-    body.addEventListener('touchstart', (e, str) => {
-      let touch = e.touches[0]
-      this.startY = touch.pageY
-    })
-    body.addEventListener('touchmove', (e, str) => {
-      let touch = e.touches[0]
-      this.endY = touch.pageY
-      /* if(this.endY >= this.startY){
-              this.morelist();
-          } */
-      this.morelist()
-    })
     that.$on('success', (e) => {
       let that = this
       let position = localStorage.getItem('position')
-      let city = e.address.city.replace(/市$/g, '') || '北京'
+      let city = e.address.city.replace(/市$/g, '') || that.city || '北京'
       if (position) {
         that.position = base.getposition()
       } else {
@@ -167,7 +206,7 @@ export default {
         that.position = base.getposition()
       } else {
         if (e.address.city) {
-          that.city = e.address.city.replace(/市$/g, '') || '北京'
+          that.city = e.address.city.replace(/市$/g, '') || that.city || '北京'
         }
         if (e.point.lat && e.point.lng) {
           let point = {
@@ -182,8 +221,47 @@ export default {
         }
       }
     })
+
+    let body = this.$element.querySelector('.wrapper')
+    body.addEventListener('touchstart', (e, str) => {
+      let touch = e.touches[0]
+      this.startY = touch.pageY
+    })
+    body.addEventListener('touchmove', (e, str) => {
+      let touch = e.touches[0]
+      this.endY = touch.pageY
+      /* if(this.endY >= this.startY){
+             this.morelist();
+             } */
+      this.morelist()
+    })
+    localStorage.removeItem('searchText')
+    window.addEventListener('show-page', (e) => {
+      localStorage.removeItem('searchText')
+    })
   },
   methods: {
+    getcity (city) {
+      let that = this
+      let url = 'https://www.daoway.cn/daoway/rest/user/getcity?city=' + city
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        return res.json()
+      }).then(function (text) {
+        if (text.status === 'ok') {
+          // console.log(text.data.community[0])
+          that.position = text.data.community[0]
+          base.position(text.data.community[0])
+        } else {
+          console.log(text.msg)
+          that.warn.show = true
+          that.warn.texts = text.msg
+        }
+      }).catch(function (error) {
+        console.log(error)
+      })
+    },
     getCommunity (lat, lng) {
       let that = this
       let url = 'https://www.daoway.cn/daoway/rest/community/autoPosition?lot=' + lng + '&lat=' + lat
@@ -192,8 +270,6 @@ export default {
       }).then(function (res) {
         return res.json()
       }).then(function (text) {
-        that.warn.show = true
-        that.warn.texts = JSON.stringify(text)
         if (text.status === 'ok') {
           that.position = text.data[0]
           base.position(text.data[0])
@@ -219,7 +295,6 @@ export default {
         return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
-          console.log(text.data)
           let data = text.data[0]
           document.title = text.data[0].name
           let filterAry = data.tagsInfo
@@ -253,6 +328,7 @@ export default {
       }).then(function (text) {
         if (text.status === 'ok') {
           let datas = text.data.items
+          console.log(datas)
           let ary = that.ary
           if (datas.length > 0) {
             for (let i = 0; i < datas.length; i++) {
@@ -270,6 +346,7 @@ export default {
                   positiveCommentRate = '暂无评价'
                 }
               }
+
               let obj = {
                 aheadHours: data.fastestDay ? data.fastestDay : data.aheadHours + '小时',
                 description: data.description,
@@ -282,8 +359,10 @@ export default {
                 salesNum: data.salesNum,
                 serviceTitle: data.serviceTitle,
                 totalReduce: totalReduce ? totalReduce[0] : null,
-                firstReduce: firstReduce || null
+                firstReduce: firstReduce || null,
+                inDistanceScope: data.inDistanceScope
               }
+
               ary.push(obj)
             }
             that.item = ary
@@ -325,7 +404,9 @@ export default {
           that.sw = false
           setTimeout(() => {
             that.loding = true
-          }, 500)
+          },
+          500
+          )
           that.getServicelist(index, category, that.tags)
         } else {
           that.loding = false
@@ -334,15 +415,45 @@ export default {
         that.loding = false
       }
     },
-    todetail (id) {
-      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id, { isMipLink: true })
+    todetail (id, inDistanceScope) {
+      MIP.viewer.open(base.htmlhref.detail + '?detailid=' + id + '&inDistanceScope=' + inDistanceScope, {isMipLink: true})
     },
     toposition () {
       MIP.viewer.open(base.htmlhref.position, {isMipLink: true})
     },
     closeLayer () {
       this.warn.show = false
-      this.warn.texts = ''
+    },
+    search () {
+      let that = this
+      let url = 'https://www.daoway.cn/daoway/rest/services/auto_complete_words?word=' + encodeURIComponent(that.searchtext) + '&channel=' + this.channel
+      fetch(url, {
+        method: 'get'
+      }).then(function (res) {
+        return res.json()
+      }).then(function (text) {
+        if (text.status === 'ok') {
+          that.searchlist = text.data
+          localStorage.setItem('searchText', that.searchtext)
+        } else {
+          that.warn.show = true
+          that.warn.texts = text.msg
+        }
+      }).catch(function (error) {
+        console.error(error)
+      })
+    },
+    tapsearch (searchText) {
+      if (searchText) {
+        MIP.viewer.open(base.htmlhref.searchlist + '?searchText=' + encodeURIComponent(searchText), {isMipLink: true})
+        localStorage.removeItem('searchText')
+      }
+    },
+    toindex () {
+      MIP.viewer.open(base.htmlhref.index, {isMipLink: true})
+    },
+    toorder () {
+      MIP.viewer.open(base.htmlhref.order, {isMipLink: true})
     }
   }
 }
@@ -354,6 +465,10 @@ export default {
         box-sizing: border-box;
     }
 
+    .wrapper {
+        position: relative;
+    }
+
     i {
         font-style: normal
     }
@@ -362,20 +477,25 @@ export default {
         list-style: none
     }
 
-    .loding{
+    .loding {
         text-align: center;
         height: 30px;
     }
+
     .sc-nav {
         width: 100%;
         height: 70px;
         padding: 5px 0;
         background: #fff;
-        margin-top: 44px;
         border-top: 1px solid #f5f5f5;
     }
-    mip-scrollbox [data-inner]{
+
+    mip-scrollbox [data-inner] {
         margin-top: -37px;
+    }
+
+    .mipfix {
+        background: #fff;
     }
 
     .sc-list {
@@ -385,7 +505,8 @@ export default {
         font-size: 14px;
         min-width: 46px;
     }
-    .activity{
+
+    .activity {
         border-bottom: 2px solid red;
     }
 
@@ -405,8 +526,10 @@ export default {
     }
 
     .sc-box {
-        margin-top: 76px;
+        margin-top: 124px;
         box-sizing: border-box;
+        position: relative;
+        margin-bottom: 25px;
     }
 
     .sc-box-list {
@@ -431,7 +554,8 @@ export default {
     }
 
     .scbl-left {
-        width: 28%
+        width: 28%;
+        position: relative;
     }
 
     .scbl-right {
@@ -522,7 +646,8 @@ export default {
     .sc-r-price i {
         font-size: 12px;
     }
-    .sc-r-price span{
+
+    .sc-r-price span {
         border: 0.5px solid red;
         font-size: 10px;
         padding: 0 2px;
@@ -532,7 +657,6 @@ export default {
         line-height: 15px;
         margin-left: 1px;
         margin-right: 2px;
-
     }
 
     .sc-home-yishou {
@@ -543,9 +667,100 @@ export default {
         margin-right: 5px;
         font-size: 12px
     }
-    .sc-r-home,.sc-r-home div,.sc-r-home span{
+
+    .sc-r-home, .sc-r-home div, .sc-r-home span {
         font-size: 12px;
         color: #898989;
     }
 
+    .searchdiv {
+        width: 94%;
+        margin: 44px 3% 0;
+        border: 1px solid #898989;
+        background: #fff;
+        padding: 0 2%;
+        height: 34px;
+        border-radius: 4px;
+        margin-bottom: 10px;
+
+    }
+
+    .searchdiv img {
+        width: 14px;
+        height: auto;
+        vertical-align: middle;
+    }
+
+    .searchdiv input {
+        width: 93%;
+        margin-left: 2%;
+        font-size: 14px;
+        height: 32px;
+    }
+
+    .searchlist {
+        width: 100%;
+        height: 100%;
+        background: #fff;
+        position: absolute;
+        top: 55px;
+        left: 0;
+        z-index: 10002;
+    }
+
+    .searchlist ul {
+        background: #fff;
+    }
+
+    .searchlist li {
+        width: 98%;
+        margin-left: 2%;
+        border-bottom: 1px solid #e5e5e5;
+        line-height: 40px;
+    }
+
+    .posimg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        text-align: center;
+        padding-top: 34%;
+    }
+
+    .posimg img {
+        width: 12px;
+        height: auto;
+        vertical-align: middle;
+    }
+
+    .posimg div {
+        width: 52px;
+        margin-left: 3px;
+        font-size: 12px;
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .mipbotm {
+        width: 100%;
+        background: #fff;
+        height: 40px;
+        line-height: 40px;
+        border-top: 1px solid #e5e5e5;
+    }
+
+    .mipbotm span:first-child {
+        border-right: 1px solid #e5e5e5;
+    }
+
+    .mipbotm span {
+        display: inline-block;
+        width: 49%;
+        text-align: center;
+        color: #303030;
+    }
 </style>

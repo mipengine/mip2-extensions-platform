@@ -1,38 +1,38 @@
 <template>
-  <div
-    id="wrapper"
-    ref="wrapper">
+  <div 
+id="wrapper"
+       ref="wrapper">
     <div class="wra">
-      <div
-        v-for="(item,index) in headMsg"
-        :key="index"
-        :class="{wrapper1:index>0}"
-        class="wrapper"
-        @click="open(index)">
+      <div 
+v-for="(item,index) in headMsg"
+           :key="index"
+           :class="{wrapper1:index>0}"
+           class="wrapper"
+           @click="open(index)">
         <p class="title">{{ item }}</p>
-        <p
-          v-if="index==0"
-          :class="{txt:showTxt1}"
-          class="name">
+        <p 
+v-if="index==0"
+           :class="{txt:showTxt1}"
+           class="name">
           {{ index==0?name:name1 }}
         </p>
-        <p
-          v-if="index>0"
-          :class="{txt:showTxt2}"
-          class="name">
+        <p 
+v-if="index>0"
+           :class="{txt:showTxt2}"
+           class="name">
           {{ index==0?name:name1 }}
         </p>
         <p class="arrow-wrap">
-          <img
-            src="//rs.jikexiu.com/appresources/images/arrow_gray.png"
-            class="arrow"
-            alt="">
+          <img 
+src="//rs.jikexiu.com/appresources/images/arrow_gray.png"
+               class="arrow"
+               alt="">
         </p>
       </div>
       <transition name="fade">
-        <div
-          v-show="devicedata.showFault"
-          class="choose-fault flex">
+        <div 
+v-show="devicedata.showFault"
+             class="choose-fault flex">
           <div class="choose-left">
             <div class="choose-left-default">{{ fault||devicedata.fault }}</div>
             <div class="choose-left-period">{{ period||devicedata.period&&devicedata.period.split('(')[1].split(')')[0] }}</div>

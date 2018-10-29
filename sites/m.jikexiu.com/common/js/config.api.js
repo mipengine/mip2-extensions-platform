@@ -3,8 +3,8 @@
  * @time 2018-01-23
  * 项目相关接口配置文件
  */
-const baseurl = 'https://api.jikexiu.com/v1/'
-const accountUrl = 'https://account.jikexiu.com/'
+const baseurl = 'https://api_t.jikexiu.com/v1/'
+const accountUrl = 'https://account_t.jikexiu.com/'
 const apiUrl = {
   bannerList: baseurl + 'common/banner/list', //   首页轮播图接口
   login: accountUrl + 'authentication/mobile', // 登录接口

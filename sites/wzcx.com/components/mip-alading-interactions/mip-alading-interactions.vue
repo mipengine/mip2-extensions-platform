@@ -59,7 +59,7 @@
     <div v-if="!noInfo && !wrongInfo && !wrongInfo_license">
       <!-- license 驾驶证 -->
       <div v-if="isLicense" >
-        <div class="idcard">
+        <div class="card-bg idcard">
           <div class="top">
             <div class="card_num">
               {{ id_license }}
@@ -123,19 +123,24 @@
           v-if="hasLicenseIllegal"
           class="two_button">
           <div
-            class="ckwddd"
+            v-if="isShowMyOrder"
+            class="common_button first_button"
             @click="ckwddd">查看我的订单</div>
           <div
-            class="ljblwz"
+            v-if="isShowViolation"
+            class="common_button second_button"
             @click="ljblwz">立即办理违章</div>
         </div>
         <div
           v-if="!hasLicenseIllegal"
           class="two_button">
           <div
-            class="ckwddd"
+            v-if="isShowMyOrder"
+            class="common_button first_button"
             @click="ckwddd">查看我的订单</div>
-          <div class="ljblwz_no">立即办理违章</div>
+          <div
+            v-if="isShowViolation"
+            class="common_button second_button_no">立即办理违章</div>
         </div>
         <div class="cxjg">
           <div class="zfgx" />
@@ -197,13 +202,14 @@
             src="../static/img/tu.png" />
           <h1 class="noweifa">恭喜你尚无新违法记录</h1>
           <div
+            v-if="isShowViolation"
             class="chufajuedingshu"
             @click="cxwzcl">查询车辆违章</div>
         </div>
       </div>
       <!-- card 车辆 -->
       <div v-if="isCard">
-        <div class="license">
+        <div class="card-bg license">
           <div class="top">
             <p class="card_num">
               {{ id_card }}
@@ -269,19 +275,24 @@
           v-if="hasCardIllegal"
           class="two_button">
           <div
-            class="ckwddd"
+            v-if="isShowMyOrder"
+            class="common_button first_button"
             @click="ckwddd">查看我的订单</div>
           <div
-            class="ljblwz"
+            v-if="isShowViolation"
+            class="common_button second_button"
             @click="ljblwz">立即办理违章</div>
         </div>
         <div
           v-if="!hasCardIllegal"
           class="two_button">
           <div
-            class="ckwddd"
+            v-if="isShowMyOrder"
+            class="common_button first_button"
             @click="ckwddd">查看我的订单</div>
-          <div class="ljblwz_no">立即办理违章</div>
+          <div
+            v-if="isShowViolation"
+            class="common_button second_button_no">立即办理违章</div>
         </div>
         <div class="cxjg">
           <div class="zfgx" />
@@ -333,6 +344,7 @@
             src="../static/img/tu.png" />
           <h1 class="noweifa">恭喜你尚无新违法记录</h1>
           <div
+            v-if="isShowViolation"
             class="chufajuedingshu"
             @click="wycfjds">我有处罚决定书</div>
         </div>
@@ -364,7 +376,7 @@
 
 .container {
   /* width: 92%; */
-  margin: 0 0.3rem;;
+  margin: 0 .75rem;
   overflow: auto !important;
 }
 
@@ -401,14 +413,19 @@
   width: 100%;
   height: 1.9rem;
 }
-
-.idcard {
+.card-bg {
   width: 100%;
-  margin: 0.5rem auto 1rem auto;
+  margin: 1rem auto 0 auto;
   height: 9.95rem;
+}
+.idcard {
   background: url(../../static/img/idcard.png) no-repeat;
   background-size: 100% 100%;
-  /* background-image: url('http://test.xx-motor.com/wzcx.com/static/img/idcard.png'); */
+}
+
+.license {
+  background-size: 100% 100%;
+  background-image: url(../../static/img/license.png);
 }
 
 .inputagain {
@@ -425,14 +442,6 @@
 
 .weijijifen {
   margin-bottom: 0.75rem;
-}
-
-.license {
-  width: 100%;
-  margin: 0.5rem auto 1rem auto;
-  height: 9.95rem;
-  background-size: 100% 100%;
-  background-image: url(../../static/img/license.png);
 }
 
 .middle-item {
@@ -550,14 +559,14 @@
 }
 
 .two_button {
-  display: inline-block;
+  display: flex;
+  justify-content: space-between;
   width: 100%;
 }
-
-.ckwddd {
+.common_button {
+  margin-top: 1rem;
   width: 8rem;
   height: 2.2rem;
-  background: rgba(255, 255, 255, 1);
   border-radius: 0.25rem;
   float: left;
   text-align: center;
@@ -565,34 +574,18 @@
   font-family: PingFang-SC-Medium;
   color: rgba(51, 51, 51, 1);
   line-height: 2.2rem;
+}
+.first_button {
+  background: rgba(255, 255, 255, 1);
   border: #cccccc 1px solid;
 }
-
-.ljblwz {
-  width: 8rem;
-  height: 2.2rem;
-  background: rgba(79, 156, 243, 1);
-  border-radius: 0.25rem;
-  float: right;
-  text-align: center;
-  font-size: 0.9rem;
-  font-family: PingFang-SC-Medium;
-  color: rgba(255, 255, 255, 1);
-  line-height: 2.2rem;
-  font-weight: medium;
+.second_button {
+  background:#00A0E9;
+  color: #fff;
 }
-.ljblwz_no {
-  width: 8rem;
-  height: 2.2rem;
+.second_button_no {
   background: rgba(229, 229, 229, 1);
-  border-radius: 0.25rem;
-  float: right;
-  text-align: center;
-  font-size: 0.9rem;
-  font-family: PingFang-SC-Medium;
-  color: rgba(51, 51, 51, 0.2);
-  line-height: 2.2rem;
-  font-weight: medium;
+  color: rgba(51,51,51,0.3);
 }
 
 .cxjg {
@@ -600,7 +593,7 @@
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
-  margin-top: 0.5rem;
+  margin-top: .9rem;
 }
 
 .zfgx {
@@ -1068,19 +1061,18 @@ export default {
       results_license: [],
       wrongInfo: false,
       wrongInfo_license: false,
-      htmlhref: {}
+      htmlhref: {},
+      isShowMyOrder: true, // 是否展示 “查看我的订单按钮”
+      isShowViolation: true // 是否展示所有 “违章” 按钮
     }
   },
   created () {
-    // base.resetRem()
+
   },
   mounted () {
     base.resetRem()
     console.log('document', document)
-    // base.setContainerH('.root-box')
-    // let wrapper = document.querySelector('.ald-wrapper')
-    // let scroll = new BScroll(wrapper, {})
-
+    this.getControlBtn()
     // 基本数据初始化
     this.initData()
     let options = {
@@ -1304,6 +1296,23 @@ export default {
           isMipLink: false
         })
       }
+    },
+    getControlBtn () {
+      const that = this
+      fetch(
+        'https://wxcity.fundway.net/gdjmt.wx.xcx/ad/getAdsToBdald.do'
+      )
+        .then(function (res) {
+          return res.json()
+        })
+        .then(function (res) {
+          console.log('res', res)
+          if (res.code === 200 || res.code === '200') {
+            const result = JSON.parse(res.result)
+            that.isShowMyOrder = result.isShow_orderBtn
+            that.isShowViolation = result.isShow_blBtn
+          }
+        })
     }
   }
 }
