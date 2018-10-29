@@ -156,21 +156,6 @@ export default {
       } else {
         this.changeColor = 0
       }
-
-      // this.changeColor = this.brandId > 0 ? 2 : 0
-      // const brand = function () {
-      //   let fun = {
-      //     12: '手机',
-      //     20: '跑步机',
-      //     13: '平板',
-      //     15: '笔记本',
-      //     16: '一体机',
-      //     32: '智能手表',
-      //     26: '存储器'
-      //   }
-      //   return fun[this.brandId]
-      // }
-      // this.tab[0] = brand()
       MIP.setData({
         deviceData: {
           show: true,
