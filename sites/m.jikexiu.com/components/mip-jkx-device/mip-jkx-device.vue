@@ -139,16 +139,18 @@ export default {
       let fBrandId = href.split('brandId')[1]
       if (fBrandId.indexOf('&') === -1) {
         if (fBrandId.indexOf('-') >= 0) {
-          this.categoryId = Number(fBrandId.split('=')[1].split('-')[1]) || 0
-          this.brandId = Number(fBrandId.split('=')[1].split('-')[0]) || 0
+          this.categoryId = Number(fBrandId.split('=')[1].split('-')[1]) || 12
+          this.brandId = Number(fBrandId.split('=')[1].split('-')[0]) || 8
         } else {
-          this.brandId = Number(fBrandId.split('=')[1]) || 0
+          this.brandId = Number(fBrandId.split('=')[1]) || 8
         }
       } else {
         let f1BrandId = fBrandId.split('&')[0]
         if (f1BrandId.indexOf('-') >= 0) {
-          this.categoryId = Number(f1BrandId.split('=')[1].split('-')[1]) || 0
-          this.brandId = Number(f1BrandId.split('=')[1].split('-')[0]) || 0
+          this.categoryId = Number(f1BrandId.split('=')[1].split('-')[1]) ||12
+          this.brandId = Number(f1BrandId.split('=')[1].split('-')[0]) || 8
+        }else{
+          this.brandId = Number(f1BrandId.split('&')[0].split('=')[1]) || 8
         }
       }
       // this.categoryId =
