@@ -284,7 +284,6 @@ export default {
         margin-top: 6px;
         border-radius: 4px;
     }
-
     .searchValue {
         line-height: 36px;
         border-bottom: 1px solid #f5f5f5;
@@ -350,7 +349,6 @@ export default {
         margin-top: 54px;
         box-sizing: border-box;
     }
-
     .sc-box-list {
         display: flex;
         align-items: center;
