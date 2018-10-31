@@ -1050,6 +1050,7 @@ export default {
     .gimg {
         border-bottom: 1px solid #e5e5e5;
         padding-bottom: 10px;
+        position: relative;
     }
 
     .gtitname {
@@ -1066,9 +1067,11 @@ export default {
     }
 
     .gadd {
-        float: right;
+        position: absolute;
         width: 25%;
-        margin-top: 36px;
+        top: 36px;
+        right: 0;
+
     }
 
     .noquan {
