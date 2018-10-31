@@ -6,7 +6,7 @@
         <ul class="re-form">
           <li @click="toposition"><img src="https://www.daoway.cn/images/icon2.jpg"><input
             v-model="addr"
-            style="background:rgba(0,0,0,0); height: auto; text-align: left;"
+            style="background:rgba(0,0,0,0); text-align: left; vertical-align: middle"
             type="button"
             placeholder="请填写您的住址"><img
               class="re-more"
@@ -33,8 +33,21 @@
     </div>
     <div class="re-input re-input2">
       <ul class="re-form re-form2">
+        <li v-if="hasDstAddr"><span><img src="https://www.daoway.cn/images/icon5.jpg">目的地址</span>
+          <div
+            style="width: 74%"
+            @click="tohasDstAddr"><i
+              class="re-time"
+              style="color: #303030;width: 80%; overflow: hidden;text-overflow:ellipsis;
+white-space: nowrap; display: inline-block; vertical-align: middle">{{ dst_addr }}</i>
+            <img
+              class="re-more"
+              src="https://www.daoway.cn/h5/image/go_06.png">
+          </div>
+
+        </li>
         <li><span><img src="https://www.daoway.cn/images/icon5.jpg">服务时间</span>
-          <div @click ="totime"><i class="re-time">{{ formatTime }}</i><img
+          <div @click="totime"><i class="re-time">{{ formatTime }}</i><img
             class="re-more"
             src="https://www.daoway.cn/h5/image/go_06.png">
           </div>
@@ -116,6 +129,12 @@
           class="project-tit">优惠金额
           <div class="price">-{{ coupone.bill.toFixed(2) }}元</div>
         </div>
+        <div
+          v-if="feebill"
+          class="project-tit">{{ feename }}
+          <div class="price">{{ feebill }}元</div>
+        </div>
+
         <!--<div class="project-tit" style="display: none">夜间上门费
                     <div class="price">30</div>
                 </div>-->
@@ -144,7 +163,7 @@
           v-text="warn.texts"/>
         <p
           class="layer-sure active-layer"
-          @touchend="closeLayer">知道了</p>
+          @click="closeLayer">知道了</p>
       </div>
     </div>
 
@@ -203,23 +222,48 @@ export default {
       oauthCode: '',
       tradeType: '',
       returnurl: base.htmlhref.orderdetail,
-      useradd: ''
+      useradd: '',
+      hasDstAddr: false,
+      feebill: 0,
+      dst_addr: '',
+      dst_communityId: '',
+      dst_city: '',
+      dst_lot: '',
+      dst_lat: '',
+      dst_phone: '',
+      dst_contactPerson: '',
+      dst_house: '',
+      dst_street: '',
+      dynamicPricing: '',
+      feename: ''
     }
   },
   mounted () {
     let that = this
     that.position = base.getposition()
-    if (that.position.contactPerson) {
+    if (!that.position) {
+      that.position = {
+        id: '272026',
+        name: '天安门',
+        addr: '北京市东城区东长安街',
+        lot: '116.40387423499',
+        lat: '39.915167717716',
+        area: '东城区',
+        city: '北京'
+      }
+    }
+    if (that.position && that.position.contactPerson) {
       that.contactPerson = that.position.contactPerson
     } else {
       let nick = localStorage.getItem('nick')
       that.contactPerson = nick
     }
-    if (that.position.phone) {
+    if (that.position && that.position.phone) {
       that.phone = that.position.phone
     }
     if (that.orderId) {
       that.buyAgain(that.orderId)
+      that.gethtml()
     } else {
       that.gethtml()
       that.setPostion()
@@ -256,6 +300,7 @@ export default {
         that.appointTime = apptime
       }
       let useradd = JSON.parse(localStorage.getItem('useradd'))
+      let position2 = JSON.parse(localStorage.getItem('position2'))
       if (useradd) {
         this.phone = useradd.phone
         this.contactPerson = useradd.contactPerson
@@ -264,8 +309,21 @@ export default {
       } else {
         if (base.getposition()) {
           that.position = base.getposition()
-          that.gethtml()
           that.setPostion()
+        }
+      }
+      if (position2) {
+        if (that.hasDstAddr && position2) {
+          that.dst_addr = position2.addr ? (position2.city + position2.addr) : (position2.city + position2.area + position2.name + position2.doorNum)
+          that.dst_communityId = position2.communityId || position2.id
+          that.dst_city = position2.city
+          that.dst_lot = position2.lot || position2.lng
+          that.dst_lat = position2.lat
+          that.dst_phone = position2.phone
+          that.dst_contactPerson = position2.contactPerson
+          that.dst_house = position2.doorNum
+          that.dst_street = position2.street || null
+          that.extrafee()
         }
       }
     })
@@ -296,16 +354,20 @@ export default {
           let priceIds = that.param.priceId || that.priceId
           let prices = []
           if (pricesItem) {
+            console.log(111)
             for (let i = 0; i < pricesItem.length; i++) {
+              console.log(priceIds, Number(pricesItem[i].id))
               if (priceIds === Number(pricesItem[i].id)) {
                 prices.push(pricesItem[i])
               }
             }
+
             if (!prices) {
               that.warn.show = true
               that.warn.texts = '该项目已下线'
             }
           } else {
+            console.log(222)
             that.warn.show = true
             that.warn.texts = '该项目已下线'
           }
@@ -317,11 +379,13 @@ export default {
           that.appointTime = apptime || that.param.appointTime || data.nextAppointTime
           that.formatTime = base.timeformat(that.appointTime, 'MM月dd日(day) HH:mm')
           that.prices = prices
-          that.minBuyNum = prices[0].minBuyNum || 1
+          that.minBuyNum = prices ? prices[0].minBuyNum : 1
           that.quantity = that.param.quantity || that.quantity
           that.totalPrice = (prices[0].price * that.quantity).toFixed(2)
           that.alltotalPrices = Number(prices[0].price * that.quantity + (data.fixFee || 0))
           that.canChooseTechnician = data.canChooseTechnician
+          that.hasDstAddr = data.hasDstAddr
+          that.dynamicPricing = data.dynamicPricing
           that.setFixFee(data)
           that.setPostion()
         } else {
@@ -401,10 +465,11 @@ export default {
     setPostion () {
       let that = this
       let position = that.position
-      if (that.position.name) {
-        that.addr = that.position.city + that.position.area + that.position.name
+      // var position2 =JSON.parse(localStorage.getItem('position2'));
+      if (position.name) {
+        that.addr = position.city + position.area + position.name
       } else {
-        that.addr = that.position.addr
+        that.addr = position.addr
       }
       if (that.canChooseTechnician) {
         let selectedTechnical = JSON.parse(sessionStorage.getItem('tech'))
@@ -440,8 +505,8 @@ export default {
       let serviceId = that.param.serviceId || that.serviceId
       let time = base.timeformat(that.appointTime, 'yyyy-MM-dd HH:mm:ss')
       let url = 'https://www.daoway.cn/daoway/rest/service/' + serviceId + '/avalible_technician?manualCity=' + encodeURIComponent(position.city || that.city) + '&lot=' + (position.lng || position.lot || that.lot) + '&lat=' + (position.lat || that.lat) + '&street=' + encodeURIComponent(position.addr || that.street) + '&includeBusyFlag=true&priceId=' + (that.param.priceId || that.priceId) + '&quantity=' + that.quantity + '&serviceTime=' + encodeURIComponent(time) + '&channel=' + that.channel
-      if (that.doorNum) {
-        url += '&house=' + encodeURIComponent(that.doorNum)
+      if (position.doorNum) {
+        url += '&house=' + encodeURIComponent(position.doorNum)
       }
       fetch(url, {
         method: 'get'
@@ -581,7 +646,6 @@ export default {
       }).then(function (res) {
         return res.json()
       }).then(function (text) {
-        console.log(text)
         if (text.status === 'ok') {
           that.position.contactPerson = useradd.contactPerson
           that.position.doorNum = useradd.doorNum
@@ -620,6 +684,9 @@ export default {
       } else if (!reg1.test(phone)) {
         that.warn.show = true
         that.warn.texts = '请填写正确的手机号'
+      } else if (that.hasDstAddr && !that.dst_addr) {
+        that.warn.show = true
+        that.warn.texts = '目的地址不能为空'
       } else if (that.minBuyPrice > that.totalPrice) {
         let temp = (that.minBuyPrice - that.totalPrice).toFixed(2)
         that.warn.show = true
@@ -635,12 +702,12 @@ export default {
           ary.push(items)
         }
         let token = localStorage.getItem('mipToken') || base.getCookie('mipToken')
-        console.log(that.formatTime)
+        // console.log(position,that.doorNum || position.doorNum)
         let anydata = {
           'userId': that.userId,
           'serviceId': that.serviceId,
           'note': that.note || null,
-          'address': that.addr + ' ' + that.doorNum,
+          'address': that.addr + ' ' + that.doorNum || position.doorNum,
           'appointTime': base.timeformat(that.appointTime, 'yyyy-MM-dd HH:mm:ss'),
           'contactPerson': contactPerson,
           'items': ary,
@@ -648,17 +715,25 @@ export default {
           'addrLat': position.lat,
           'city': position.city,
           'communityId': position.communityId || position.id,
-          'street': position.addr,
-          'house': position.doorNum,
+          'street': position.addr || that.addr,
+          'house': position.doorNum || that.doorNum,
           'fixFee': that.realyFixFee,
           'phone': that.phone,
           'technicianId': that.selectedTechnical ? that.selectedTechnical.technicianId : '',
-          'extraFee': 0,
+          'couponId': that.coupone ? that.coupone.id : null,
+          'extraFee': that.feebill,
           'extraInfo': '',
-          'couponId': that.coupone ? that.coupone.id : null
+          'dst_address': that.dst_addr || '',
+          'dst_communityId': that.dst_communityId || '',
+          'dst_city': that.dst_city || '',
+          'dst_lot': that.dst_lot || '',
+          'dst_lat': that.dst_lat || '',
+          'dst_phone': that.dst_phone || '',
+          'dst_contactPerson': that.dst_contactPerson || '',
+          'dst_house': that.dst_house || '',
+          'dst_street': that.dst_street || ''
         }
         anydata = JSON.stringify(anydata)
-        console.log(anydata)
         let url = 'https://www.daoway.cn/daoway/rest/orders/v2?h5=true&channel=' + that.channel
         fetch(url, {
           method: 'POST',
@@ -673,7 +748,6 @@ export default {
           if (text.status === 'ok') {
             that.userAddress()
             let tobaiduorder = text.data.orderId
-            // let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + tobaiduorder)
             let redirectUrl = that.returnurl + '?orderId=' + tobaiduorder
             MIP.setData({'payConfig': {
               'fee': that.alltotalPrices,
@@ -702,13 +776,116 @@ export default {
           console.log(error)
         })
       }
+    },
+    extrafee: function () {
+      let that = this
+      let position = base.getposition()
+      let ary = []
+      for (let i = 0; i < that.prices.length; i++) {
+        let items = {}
+        let pr = that.prices[i]
+        items.priceId = pr.id
+        items.quantity = that.quantity
+        ary.push(items)
+      }
+      let datas = {
+        addr: position.addr,
+        city: position.city,
+        house: position.house,
+        lat: position.lat,
+        lot: position.lot || position.lng,
+        street: position.street,
+        contactPerson: position.contactPerson,
+        phone: that.phone,
+        appointTime: base.timeformat(that.appointTime, 'yyyy-MM-dd HH:mm:ss'),
+        canChooseTechnician: that.canChooseTechnician,
+        communityId: position.communityId || position.id,
+        couponeInfo: that.couponeInfo,
+        doorNum: that.doorNum,
+        dst_addr: that.dst_addr,
+        dst_city: that.dst_city,
+        dst_communityId: that.dst_communityId,
+        dst_contactPerson: that.dst_contactPerson,
+        dst_house: that.dst_house,
+        dst_lat: that.dst_lat,
+        dst_lot: that.dst_lot,
+        dst_phone: that.dst_phone,
+        dst_street: that.dst_street,
+        dynamicPricing: that.dynamicPricing,
+        fixFee: that.fixFee,
+        formatTime: that.formatTime,
+        hasDstAddr: that.hasDstAddr,
+        minBuyPrice: that.minBuyPrice,
+        miniUserId: that.miniUserId,
+        nextAppointTime: that.nextAppointTime,
+        noFixFeePrice: that.noFixFeePrice,
+        realyFixFee: that.realyFixFee,
+        realyTotalPrices: that.realyTotalPrices,
+        selectedTechnical: that.selectedTechnical,
+        serviceId: that.serviceId,
+        token: that.token,
+        totalPrices: that.totalPrices,
+        technicianId: that.selectedTechnical.technicianId || null,
+        address: position.addr || null,
+        addrcity: position.city || null,
+        addrLot: position.lot || position.lng || null,
+        addrLat: position.lat || null,
+        items: ary
+      }
+      if (datas.dynamicPricing) {
+        let url = 'https://www.daoway.cn/daoway/rest/orders/dynamic_extra_fee'
+        fetch(url, {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(datas)
+        }).then(function (res) {
+          return res.json()
+        }).then(function (text) {
+          if (text.status === 'ok') {
+            let datas = text.data
+            let bill = datas.bill
+            let totalPrices = that.totalPrice
+            if (bill > 0) {
+              if (that.coupone) {
+                totalPrices = (Number(totalPrices) + Number(bill) + Number(that.fixFee) - Number(that.coupone.bill))
+              } else {
+                totalPrices = (Number(totalPrices) + Number(bill) + Number(that.fixFee))
+              }
+              that.feebill = bill
+              that.feename = datas.name
+              that.alltotalPrices = totalPrices
+            } else {
+              that.feebill = 0
+              if (that.coupone) {
+                that.alltotalPrices = (Number(totalPrices) + Number(that.fixFee) - Number(that.coupone.bill))
+              } else {
+                that.alltotalPrices = (Number(totalPrices) + Number(that.fixFee))
+              }
+            }
+          } else {
+            that.warn.show = true
+            that.warn.texts = text.msg
+          }
+        }).catch(function (error) {
+          console.log(error)
+        })
+      }
+    },
+    tohasDstAddr () {
+      MIP.viewer.open(base.htmlhref.position + '?hasDstAddr=' + this.hasDstAddr, {isMipLink: true})
+      this.dst_addr = ''
+      this.feebill = 0
+      localStorage.removeItem('position2')
     }
-
   }
 }
 </script>
 
 <style scoped>
+
     * {
         padding: 0;
         margin: 0;
@@ -718,6 +895,17 @@ export default {
     input{
         border: none;
     }
+    @media (min-device-width:1078px){
+      input:focus{
+        font-size: 14px ;
+      }
+    }
+    @media (min-device-width : 320px) and (max-device-width : 1077px){
+      input:focus{
+        font-size: 14px ;
+      }
+    }
+
     i {
         font-style: normal
     }
@@ -742,7 +930,10 @@ export default {
 
     .re-form li {
         line-height: 43px;
-        font-size: 14px;
+      height: 43px;
+      overflow: hidden;
+      width: 99.5%;
+      font-size: 14px;
       color: #303030;
     }
 
@@ -772,15 +963,16 @@ export default {
         height: 40px;
         line-height: 40px;
         border-bottom: 1px solid #ececec;
-        font-size: 14px;
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
         background: #fff;
         color: #303030;
-
+        font: 14px Arial;
     }
-
+      input:focus{
+        font-size: 14px ;
+      }
     .re-form li:last-child input {
         border: none
     }
@@ -803,7 +995,7 @@ export default {
 
     .re-form2 span {
         display: inline-block;
-        width: 30%;
+        width: 26%;
         color: #212121
     }
 
@@ -858,6 +1050,7 @@ export default {
     .gimg {
         border-bottom: 1px solid #e5e5e5;
         padding-bottom: 10px;
+        position: relative;
     }
 
     .gtitname {
@@ -874,9 +1067,11 @@ export default {
     }
 
     .gadd {
-        float: right;
+        position: absolute;
         width: 25%;
-        margin-top: 36px;
+        top: 36px;
+        right: 0;
+
     }
 
     .noquan {
@@ -982,6 +1177,9 @@ export default {
 
     .act {
         color: #212121;
+    }
+    .layer-content{
+      top: 45%;
     }
 
 </style>

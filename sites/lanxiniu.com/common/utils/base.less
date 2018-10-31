@@ -194,9 +194,21 @@ input::-webkit-input-placeholder {
     background-size: 3.2rem 100%;
 }
 
+
+
+// 修改弹窗-使用百度组件
+.layerfixed{
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 25000 !important;
+    // background: red;
+}
+
 .layer {
     background-color: rgba(0, 0, 0, 0.2);
-    position: fixed !important;
+    position: absolute;
     top: 0;
     left: 0;
     width: 100% !important;
@@ -205,7 +217,7 @@ input::-webkit-input-placeholder {
 }
 
 .layer-content {
-    position: fixed;
+    position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
@@ -323,7 +335,7 @@ input::-webkit-input-placeholder {
 /* loading */
 
 .ball-clip-rotate {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 0;
     right: 0;
@@ -386,7 +398,7 @@ input::-webkit-input-placeholder {
     background-size: 100% 100%;
     width: 34px;
     height: 34px;
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 50%;
     margin: -17px 0 0 -17px;
@@ -444,7 +456,7 @@ input::-webkit-input-placeholder {
   } */
 
 .mip-loading-box {
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -624,3 +636,4 @@ input::-webkit-input-placeholder {
         -webkit-transform: translate(-50%, -50%) scale(0.7);
     }
 }
+

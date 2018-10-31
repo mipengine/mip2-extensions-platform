@@ -4,7 +4,7 @@
 
 <script>
 import { getCookie, setCookie } from '../../common/utils/cookie'
-import { getUrlParams } from '../../common/utils'
+import { getUrlParams, formatParams } from '../../common/utils'
 import { Toast } from '../../common/utils/toast'
 export default {
   data () {
@@ -26,8 +26,11 @@ export default {
       that.code = params.code
       if (that.code != null) {
         // 存在code，调起接口获取openId
+        let paramMap = {
+          'code': that.code
+        }
         let result = window.fetchJsonp(
-          '//m.chinaacc.com/m_member/baidu/wxOauth.shtm?code=' + that.code,
+          '//m.chinaacc.com/m_member/baidu/wxOauth.shtm?' + formatParams(paramMap),
           {
             jsonpCallback: 'jsonpCallback'
           }
@@ -58,10 +61,16 @@ export default {
       if (that.code == null) {
         // 不存在code，去认证页
         let url = window.location.href
+        let wxParamMap = {
+          'appid': 'wxf6ab920c859515ee',
+          'redirect_uri': url,
+          'res': '',
+          'response_type': 'code',
+          'scope': 'snsapi_base',
+          'state': '123#wechat_redirect'
+        }
         MIP.viewer.open(
-          'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxf6ab920c859515ee&redirect_uri=' +
-            url +
-            '&res&res&response_type=code&scope=snsapi_base&state=123#wechat_redirect'
+          'https://open.weixin.qq.com/connect/oauth2/authorize?' + formatParams(wxParamMap)
         )
       }
     }

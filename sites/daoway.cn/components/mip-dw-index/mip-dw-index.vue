@@ -208,7 +208,7 @@ export default {
         that.callBack()
       } else {
         if (e.address.city) {
-          that.city = e.address.city.replace(/市$/g, '')
+          that.city = e.address.city.replace(/市$/g, '') || '北京'
         }
         if (e.point.lat && e.point.lng) {
           let point = {
@@ -264,7 +264,6 @@ export default {
         return res.json()
       }).then(function (text) {
         if (text.status === 'ok') {
-          console.log(text.data[0])
           that.position = text.data[0]
           that.callBack()
           base.position(text.data[0])

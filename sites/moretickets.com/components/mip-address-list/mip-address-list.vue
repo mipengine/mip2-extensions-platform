@@ -330,6 +330,7 @@
 }
 .address-list {
   margin-top: 1rem;
+  margin-bottom: 6rem;
   background-color: #fff;
   .address-item {
     padding: 0.5rem 1rem;
@@ -587,6 +588,11 @@ export default {
             if (res.statusCode === 200) {
               me.toastmsg = ''
               me.showEditAddressFlag = false
+              if (me.location.default) {
+                me.addresses.forEach(item => {
+                  item.isDefault = false
+                })
+              }
               res.result.data &&
                 res.result.data.addressOID &&
                 me.addresses.push(res.result.data)

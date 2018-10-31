@@ -5,7 +5,7 @@
       right="0"
       class="fr">
       <div class="customer">
-        <a href="http://dbt.zoosnet.net/LR/Chatpre.aspx?id=DBT35838153&lng=cn">
+        <a href="http://dbt.zoosnet.net/LR/Chatpre.aspx?id=DBT35838153&lng=cn&e=%e7%86%8a%e6%8e%8c%e5%8f%b7&r=%e7%86%8a%e6%8e%8c%e5%8f%b7">
           <div class="customer-icon-1"/>
           <div class="customer-txt">在线</div>
         </a>
