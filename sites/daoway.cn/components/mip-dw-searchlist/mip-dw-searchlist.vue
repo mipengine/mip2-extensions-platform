@@ -13,10 +13,10 @@
             type="search"
             @input="autosearch(searchText)"
             @keyup.13="completeWords(searchText)">
+          <span
+            class="clear"
+            @click="completeWords(searchText)">搜索</span>
         </div>
-        <div
-          class="clear"
-          @click="completeWords(searchText)">搜索</div>
       </div>
     </mip-fixed>
     <div class="sc-box">
@@ -268,14 +268,14 @@ export default {
 
     .searchinput {
         padding-left: 4%;
-        border-radius: 4px;
+        border-right: 1px solid #d1d1d1;
         font-size: 14px;
-        width: 90%;
+        width: 76%;
         height: 32px;
     }
 
     .inputxt {
-        width: 80%;
+        width: 95.5%;
         position: relative;
         display: inline-block;
         border: 1px solid #898989;
@@ -303,6 +303,7 @@ export default {
         display: inline-block;
         width: 15%;
         text-align: center;
+        color: #428ffe;
     }
 
     .loding {
