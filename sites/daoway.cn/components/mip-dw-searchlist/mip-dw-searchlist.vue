@@ -281,6 +281,7 @@ export default {
         border: 1px solid #898989;
         height: 34px;
         padding-left: 2%;
+        margin-top: 6px;
         border-radius: 4px;
     }
 
