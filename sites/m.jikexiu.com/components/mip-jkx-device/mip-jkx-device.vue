@@ -79,7 +79,7 @@ export default {
       tab: [],
       changeColor: 0, // tab选择,
       changeColor1: 0, // tab选择,
-      categoryId: 12, // 型号
+      categoryId: 0, // 型号
       brandId: 8, // 品牌
       deviceId: '', // 设备id
       color: 117,
@@ -123,29 +123,46 @@ export default {
     let href = window.location.href
     // if (this.info && this.info.isLogin) {
     if (href.indexOf('brandId') >= 0) {
-      this.brandId = href
-        .split('?')[1]
-        .split('&')[0]
-        .split('=')[1]
-        .indexOf('-') >= 0 ? href
-          .split('?')[1]
-          .split('&')[0]
-          .split('=')[1]
-          .split('-')[1] : href
-          .split('?')[1]
-          .split('&')[0]
-          .split('=')[1]
-          .split('-')[0] || 0
-
-      this.categoryId =
-        href
-          .split('?')[1]
-          .split('&')[0]
-          .split('=')[1]
-          .indexOf('-') >= 0 ? href
-            .split('?')[1]
-            .split('&')[0]
-            .split('=')[1].split('-')[0] : 0
+      // this.brandId = href
+      //   .split('?')[1]
+      //   .split('&')[0]
+      //   .split('=')[1]
+      //   .indexOf('-') >= 0 ? href
+      //     .split('?')[1]
+      //     .split('&')[0]
+      //     .split('=')[1]
+      //     .split('-')[1] : href
+      //     .split('?')[1]
+      //     .split('&')[0]
+      //     .split('=')[1]
+      //     .split('-')[0] || 0
+      let fBrandId = href.split('brandId')[1]
+      if (fBrandId.indexOf('&') === -1) {
+        if (fBrandId.indexOf('-') >= 0) {
+          this.categoryId = Number(fBrandId.split('=')[1].split('-')[1]) || 12
+          this.brandId = Number(fBrandId.split('=')[1].split('-')[0]) || 8
+        } else {
+          this.brandId = Number(fBrandId.split('=')[1]) || 8
+        }
+      } else {
+        let f1BrandId = fBrandId.split('&')[0]
+        if (f1BrandId.indexOf('-') >= 0) {
+          this.categoryId = Number(f1BrandId.split('=')[1].split('-')[1]) || 12
+          this.brandId = Number(f1BrandId.split('=')[1].split('-')[0]) || 8
+        } else {
+          this.brandId = Number(f1BrandId.split('&')[0].split('=')[1]) || 8
+        }
+      }
+      // this.categoryId =
+      //   href
+      //     .split('?')[1]
+      //     .split('&')[0]
+      //     .split('=')[1]
+      //     .indexOf('-') >= 0 ? href
+      //       .split('?')[1]
+      //       .split('&')[0]
+      //       .split('=')[1].split('-')[0] : 0
+      // let fCategoryId = href
       this.show = true
       this.last = true
       this.tab = ['品牌', '类型', '型号']
