@@ -266,8 +266,6 @@ export default {
         background: #fff;
     }
 
-
-
     .inputxt {
         width: 95.5%;
         position: relative;

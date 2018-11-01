@@ -34,7 +34,7 @@ export default ({
   // 测试
 
   htmlhref: tranObjUrlToCache({
-    index: lxnhttp  + 'index.html',
+    index: lxnhttp + 'index.html',
     serviceclass: lxnhttp + component + 'serviceclass.html',
     order: lxnhttp + component + 'order.html',
     my: lxnhttp + component + 'my.html',
