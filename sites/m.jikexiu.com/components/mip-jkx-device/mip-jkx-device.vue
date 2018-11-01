@@ -12,7 +12,7 @@
         <p class="title">{{ item }}</p>
         <p
           v-if="index==0"
-          :class="{txt:showTxt1}"
+          :class="{txt:showTxt1||color1}"
           class="name">
           {{ index==0?name:name1 }}
         </p>
@@ -62,6 +62,12 @@ export default {
         return {}
       },
       type: Object
+    },
+    config: {
+      default () {
+        return {}
+      },
+      type: Object
     }
   },
   data () {
@@ -91,6 +97,7 @@ export default {
       isForm: {},
       period: '',
       fault: '',
+      color1: false,
       showFault: false
     }
   },
@@ -100,6 +107,7 @@ export default {
         this.name1 = val.name1
         this.showTxt1 = val.showTxt1
         this.showTxt2 = val.showTxt2
+        this.color1 = val.color1
         if (
           this.showTxt1 &&
           this.showTxt2 &&
@@ -116,6 +124,18 @@ export default {
       } else {
         this.name = val.name
         this.name1 = '选择故障'
+        this.showTxt1 = val.showTxt1
+        this.showTxt2 = val.showTxt2
+      }
+    },
+    info (val) {
+      if (!val.isLogin) {
+        MIP.setData({
+          config: {
+            redirectUri: window.location.href
+          }
+        })
+        this.$emit('actionOrder')
       }
     }
   },
@@ -123,19 +143,6 @@ export default {
     let href = window.location.href
     // if (this.info && this.info.isLogin) {
     if (href.indexOf('brandId') >= 0) {
-      // this.brandId = href
-      //   .split('?')[1]
-      //   .split('&')[0]
-      //   .split('=')[1]
-      //   .indexOf('-') >= 0 ? href
-      //     .split('?')[1]
-      //     .split('&')[0]
-      //     .split('=')[1]
-      //     .split('-')[1] : href
-      //     .split('?')[1]
-      //     .split('&')[0]
-      //     .split('=')[1]
-      //     .split('-')[0] || 0
       let fBrandId = href.split('brandId')[1]
       if (fBrandId.indexOf('&') === -1) {
         if (fBrandId.indexOf('-') >= 0) {
@@ -153,16 +160,6 @@ export default {
           this.brandId = Number(f1BrandId.split('&')[0].split('=')[1]) || 8
         }
       }
-      // this.categoryId =
-      //   href
-      //     .split('?')[1]
-      //     .split('&')[0]
-      //     .split('=')[1]
-      //     .indexOf('-') >= 0 ? href
-      //       .split('?')[1]
-      //       .split('&')[0]
-      //       .split('=')[1].split('-')[0] : 0
-      // let fCategoryId = href
       this.show = true
       this.last = true
       this.tab = ['品牌', '类型', '型号']
@@ -237,7 +234,7 @@ export default {
     // // 设置config属性中，重定向地址:redirectUri为订单页地址
     //   MIP.setData({
     //     config: {
-    //       redirectUri: href
+    //       redirectUri: window.location.href
     //     }
     //   })
     //   // 在下一个执行时机触发事件
