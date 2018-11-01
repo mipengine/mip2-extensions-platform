@@ -266,13 +266,7 @@ export default {
         background: #fff;
     }
 
-    .searchinput {
-        padding-left: 4%;
-        border-right: 1px solid #d1d1d1;
-        font-size: 14px;
-        width: 76%;
-        height: 32px;
-    }
+
 
     .inputxt {
         width: 95.5%;
@@ -283,6 +277,14 @@ export default {
         padding-left: 2%;
         margin-top: 6px;
         border-radius: 4px;
+    }
+    .searchinput {
+        padding-left: 4%;
+        border-right: 1px solid #d1d1d1;
+        font-size: 14px;
+        width: 76%;
+        height: 32px;
+        border-radius: 0;
     }
     .searchValue {
         line-height: 36px;
