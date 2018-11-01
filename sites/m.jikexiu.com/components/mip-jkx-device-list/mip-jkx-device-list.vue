@@ -351,19 +351,41 @@ export default {
         this.name = item.model
         MIP.setData({
           orderData: {
-            device: this.name
+            device: this.name,
+            color1: true,
+            showTxt2: false
           },
           deviceData: {
             name: this.name,
             show: false,
             showTxt1: true,
+            showTxt2: false,
             changeColor: this.changeColor,
             changeColor1: this.changeColor1,
-            showFault: false
+            showFault: false,
+            color1: true
           }
         })
         // this.show = false
         this.queryColor(item.id)
+      } else {
+        MIP.setData({
+          orderData: {
+            device: '选择型号',
+            color1: false,
+            showTxt2: false
+          },
+          deviceData: {
+            name: '选择型号',
+            show: false,
+            showTxt1: false,
+            showTxt2: false,
+            changeColor: this.changeColor,
+            changeColor1: this.changeColor1,
+            showFault: false,
+            color1: false
+          }
+        })
       }
     },
     // 获取颜色
@@ -387,14 +409,49 @@ export default {
       })
     },
     close () {
-      MIP.setData({
-        deviceData: {
-          show: false,
-          changeColor: this.changeColor,
-          changeColor1: this.changeColor1,
-          showFault: false
-        }
-      })
+      if (this.last) {
+        MIP.setData({
+          deviceData: {
+            show: false,
+            changeColor: this.changeColor,
+            changeColor1: this.changeColor1,
+            showFault: false,
+            device: this.last ? this.name : '选择故障',
+            showTxt1: !this.last,
+            showTxt2: !this.last,
+            name: this.name || '选择型号',
+            name1: this.name1
+          },
+          orderData: {
+            solution: this.name1,
+            malfunctionId: this.malfunctionId,
+            price: this.price > 0 ? `￥${this.price}` : '待检测'
+          }
+        })
+      } else {
+        MIP.setData({
+          orderData: {
+            solution: this.name1,
+            malfunctionId: this.malfunctionId,
+            price: this.price > 0 ? `￥${this.price}` : '待检测'
+            // fault: item.name,
+            // brandId: item.id,
+            // period: `(${per})`
+          },
+          deviceData: {
+            name1: this.name1,
+            show: false,
+            showTxt2: this.name1 && this.name1 !== '选择故障',
+            changeColor: this.changeColor,
+            changeColor1: this.changeColor1,
+            price: this.price > 0 ? `￥${this.price}` : '待检测'
+            // fault: item.smInfo.method,
+            // brandId: item.id,
+            // period: `(${per})`,
+            // showFault: !!item.smInfo.method
+          }
+        })
+      }
     }
   }
 }
