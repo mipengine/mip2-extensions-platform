@@ -16,7 +16,7 @@
       type="top"
       class="mipfix">
       <div class="searchdiv">
-        <form action="https://www.daoway.cn/mip/t/searchlist.html">
+        <form action="https://www.daoway.cn/mip/html/searchlist.html">
           <img src="https://www.daoway.cn/mip/common/images/search2.png"><input
             v-model="searchtext"
             type="search"
