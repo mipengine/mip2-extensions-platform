@@ -242,7 +242,7 @@ export default {
   },
   methods: {
     getcity (city) {
-      let that = this
+      let that = this;
       let url = 'https://www.daoway.cn/daoway/rest/user/getcity?city=' + city
       fetch(url, {
         method: 'get'
