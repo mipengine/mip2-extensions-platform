@@ -10,7 +10,7 @@
           <div
             v-for="(showType,index) in showTypeData"
             :key="index"
-            :class="{'active': showType.type === activeType}"
+            :class="{'active': showType.type === activeType,'opacity': isOpacity}"
             class="type-nav"
             @click="switchType(showType.type)">
             <div class="type-name">{{ showType.title }}</div>
@@ -38,85 +38,125 @@
 </template>
 
 <style scoped lang="less">
-.mip-fix-top{
-    top: 88px !important;
+*{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+.mip-fix-top {
+  top: 94px !important;
 }
 @main-color: #ff1d41;
-@boder-color:#eaeaeb;
-.box-flex(@flex){
-    -moz-box-flex: @flex;
-    -webkit-box-flex: @flex;
-    box-flex: @flex;
-    flex: @flex;
-    display: block;
+@boder-color: #eaeaeb;
+.list-type-nav-container {
+  border-bottom: 1px solid @boder-color;
+  background: #fff;
 }
-.list-type-nav-container{
-        display: flex;
-        align-items: center;
-        border-bottom: 1px solid @boder-color;
-        position: relative;
-        overflow: visible;
-        background: #fff;
-    }
-    .list-type-nav{
-        .box-flex(1);
-        overflow-x: auto;
-        overflow-y: hidden;
-        line-height: 5rem;
-        .type-nav-container{
-            min-width: 100%;
-            width: 58.5rem;
-            display: flex;
-            height: 5rem;
-            .type-nav{
-                padding: 0 1.3rem;
-                height: 100%;
-                text-align: center;
-                font-size: 1.4rem;
-                white-space: nowrap;
-                &.active{
-                    .type-name{
-                         border-bottom: 3px solid @main-color;
-                    }
-                    color: @main-color;
-                }
-            }
+.list-type-nav {
+  overflow-x: auto;
+  overflow-y: hidden;
+  line-height: 57px;
+  .type-nav-container {
+    min-width: 100%;
+    display: -webkit-box;
+    white-space: nowrap;
+    display: flex;
+    height: 60px;
+    -webkit-overflow-scrolling: touch;
+    .type-nav {
+      padding: 0 1.3rem;
+      height: 100%;
+      text-align: center;
+      font-size: 1.4rem;
+      white-space: nowrap;
+      display: inline-block;
+      flex-shrink: 0;
+      opacity: 1;
+      &.opacity{
+        opacity: 0.99;
+      }
+      &.active {
+        .type-name {
+          border-bottom: 3px solid @main-color;
         }
+        color: @main-color;
+      }
     }
+  }
+}
 </style>
 
 <script>
 export default {
   props: {
-    'prefixUrl': {
+    prefixUrl: {
       type: String,
       default: ''
     },
-    'showTypeData': {
-      type: Array,
-      default: () => []
-    },
-    'activeType': {
+    activeType: {
       type: String,
       default: '1'
     },
-    'keyword': {
+    keyword: {
       type: String,
       default: ''
     }
   },
   data () {
     return {
-      showNav: true
+      showNav: true,
+      isOpacity: false,
+      showTypeData: [
+        {
+          title: '演唱会',
+          type: '1'
+        },
+        {
+          title: '话剧歌剧',
+          type: '3'
+        },
+        {
+          title: '音乐会',
+          type: '2'
+        },
+        {
+          title: '儿童亲子',
+          type: '9'
+        },
+        {
+          title: '舞蹈芭蕾',
+          type: '5'
+        },
+        {
+          title: '展览休闲',
+          type: '7'
+        },
+        {
+          title: '曲艺杂谈',
+          type: '4'
+        },
+        {
+          title: '体育赛事',
+          type: '6'
+        }
+      ],
+      interval: null,
+      times: 0
     }
   },
   mounted () {
     let me = this
-    console.log('列表导航加载ok!')
     MIP.watch('keyword', newValue => {
       me.showNav = newValue === ''
       me.keyword = newValue
     })
+    this.interval = setInterval(function () {
+      if (me.times >= 5) {
+        clearInterval(me.interval)
+        me.isOpacity = false
+      }
+      me.times += 1
+      me.isOpacity = true
+    }, 500)
   },
   methods: {
     resetKeyword () {

@@ -9,11 +9,10 @@
         :class="{wrapper1:index>0}"
         class="wrapper"
         @click="open(index)">
-        <p
-          class="title">{{ item }}</p>
+        <p class="title">{{ item }}</p>
         <p
           v-if="index==0"
-          :class="{txt:showTxt1}"
+          :class="{txt:showTxt1||color1}"
           class="name">
           {{ index==0?name:name1 }}
         </p>
@@ -30,6 +29,19 @@
             alt="">
         </p>
       </div>
+      <transition name="fade">
+        <div
+          v-show="devicedata.showFault"
+          class="choose-fault flex">
+          <div class="choose-left">
+            <div class="choose-left-default">{{ fault||devicedata.fault }}</div>
+            <div class="choose-left-period">{{ period||devicedata.period&&devicedata.period.split('(')[1].split(')')[0] }}</div>
+          </div>
+          <div class="choose-right">
+            {{ price||devicedata.price }}
+          </div>
+        </div>
+      </transition>
     </div>
   </div>
 </template>
@@ -40,6 +52,18 @@ import apiUrl from '@/common/js/config.api'
 export default {
   props: {
     devicedata: {
+      default () {
+        return {}
+      },
+      type: Object
+    },
+    info: {
+      default () {
+        return {}
+      },
+      type: Object
+    },
+    config: {
       default () {
         return {}
       },
@@ -61,7 +85,7 @@ export default {
       tab: [],
       changeColor: 0, // tab选择,
       changeColor1: 0, // tab选择,
-      categoryId: 12, // 型号
+      categoryId: 0, // 型号
       brandId: 8, // 品牌
       deviceId: '', // 设备id
       color: 117,
@@ -70,35 +94,90 @@ export default {
       price: 0,
       malfunctionId: '', // 故障id，
       // 判断验证码是否为空,判断form组件的内容，清空
-      isForm: {
-      }
+      isForm: {},
+      period: '',
+      fault: '',
+      color1: false,
+      showFault: false
     }
   },
   watch: {
     devicedata (val) {
-      if (val.name) this.name = val.name
-      if (val.name1) this.name1 = val.name1
-      this.showTxt1 = val.showTxt1
-      this.showTxt2 = val.showTxt2
+      if (val.showFault) {
+        this.name1 = val.name1
+        this.showTxt1 = val.showTxt1
+        this.showTxt2 = val.showTxt2
+        this.color1 = val.color1
+        if (
+          this.showTxt1 &&
+          this.showTxt2 &&
+          this.name &&
+          this.name1 &&
+          this.name1 !== '选择故障'
+        ) {
+          this.fault = val.fault
+          this.price = val.price
+          this.period = val.period
+            ? val.period.split('(')[1].split(')')[0]
+            : val.period
+        }
+      } else {
+        this.name = val.name
+        this.name1 = '选择故障'
+        this.showTxt1 = val.showTxt1
+        this.showTxt2 = val.showTxt2
+      }
+    },
+    info (val) {
+      if (!val.isLogin) {
+        MIP.setData({
+          config: {
+            redirectUri: window.location.href
+          }
+        })
+        this.$emit('actionOrder')
+      }
     }
   },
-  created () {
+  mounted () {
     let href = window.location.href
-    if (href.indexOf('categoryId') > 0) {
-      this.categoryId = href.split('?')[1].split('&')[0].split('=')[1].split('-')[0]
-      this.brandId = href.split('?')[1].split('&')[0].split('=')[1].split('-')[1] || 0
+    // if (this.info && this.info.isLogin) {
+    if (href.indexOf('brandId') >= 0) {
+      let fBrandId = href.split('brandId')[1]
+      if (fBrandId.indexOf('&') === -1) {
+        if (fBrandId.indexOf('-') >= 0) {
+          this.categoryId = Number(fBrandId.split('=')[1].split('-')[1]) || 12
+          this.brandId = Number(fBrandId.split('=')[1].split('-')[0]) || 8
+        } else {
+          this.brandId = Number(fBrandId.split('=')[1]) || 8
+        }
+      } else {
+        let f1BrandId = fBrandId.split('&')[0]
+        if (f1BrandId.indexOf('-') >= 0) {
+          this.categoryId = Number(f1BrandId.split('=')[1].split('-')[1]) || 12
+          this.brandId = Number(f1BrandId.split('=')[1].split('-')[0]) || 8
+        } else {
+          this.brandId = Number(f1BrandId.split('&')[0].split('=')[1]) || 8
+        }
+      }
       this.show = true
       this.last = true
-      this.tab = ['类型', '品牌', '型号']
-      this.changeColor = this.brandId > 0 ? 2 : 0
+      this.tab = ['品牌', '类型', '型号']
+      if (this.categoryId > 0 && this.brandId > 0) {
+        this.changeColor = 2
+      } else if (this.brandId > 0 && this.categoryId === 0) {
+        this.changeColor = 1
+      } else {
+        this.changeColor = 0
+      }
       MIP.setData({
         deviceData: {
           show: true,
-          changeColor: this.brandId > 0 ? 2 : 0,
+          changeColor: this.changeColor,
           last: true,
           categoryId: this.categoryId,
           brandId: this.brandId,
-          tab: ['类型', '品牌', '型号']
+          tab: this.tab
         }
       })
     } else if (href.indexOf('modelName') > 0) {
@@ -120,6 +199,10 @@ export default {
           } else {
             per = '终身质保'
           }
+          this.period = per
+          this.price = this.price > 0 ? `￥${this.price}` : '待检测'
+          this.fault = res.data.sms[0].method
+          this.showFault = true
           MIP.setData({
             deviceData: {
               show: false,
@@ -127,7 +210,10 @@ export default {
               name1: this.name1,
               showTxt1: true,
               showTxt2: true,
-              price: this.price > 0 ? `￥${this.price}` : '待检测'
+              price: this.price,
+              fault: res.data.sms[0].method,
+              period: `(${per})`,
+              showFault: true
             },
             orderData: {
               price: this.price > 0 ? `￥${this.price}` : '待检测',
@@ -144,6 +230,18 @@ export default {
         }
       })
     }
+    // } else {
+    // // 设置config属性中，重定向地址:redirectUri为订单页地址
+    //   MIP.setData({
+    //     config: {
+    //       redirectUri: window.location.href
+    //     }
+    //   })
+    //   // 在下一个执行时机触发事件
+    //   this.$nextTick(function () {
+    //     this.$emit('actionOrder')
+    //   })
+    // }
   },
   methods: {
     open (index) {
@@ -178,14 +276,12 @@ export default {
     }
   }
 }
-
 </script>
 <style scoped lang="less">
-#wrapper{
+#wrapper {
   margin-top: -30px;
   background: #f2f2f2;
-  .wra{
-    padding: 0 10px;
+  .wra {
     background: #fff;
   }
 }
@@ -194,52 +290,84 @@ export default {
   display: flex;
   flex-direction: row;
   margin: 40px auto 0;
-  padding:5px 0;
+  // padding: 5px 0;
+  padding: 5px 10px;
   text-align: center;
-  justify-content:space-between;
+  justify-content: space-between;
   border-bottom: 1px solid #eee;
   background: #fff;
-  .title,.name{
+  .title,
+  .name {
     height: 35px;
     line-height: 35px;
     color: #333;
     font-size: 15px;
   }
-  .title{
+  .title {
     width: 30%;
     text-align: left;
     color: #666;
   }
-  .name{
+  .name {
     width: 60%;
     margin-left: 0px;
     text-align: left;
     color: #999;
   }
-  .txt{
+  .txt {
     color: #333;
   }
-  .arrow-wrap{
+  .arrow-wrap {
     position: relative;
     width: 10%;
-    .arrow{
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 0;
-    // right: 0;
-    // bottom: 0;
-    // margin: auto;
-    // content: '';
-    width: 8px;
-    height: 14px;
-    margin-top: -7px;
-    // background: url('//rs.jikexiu.com/appresources/images/arrow_gray.png') no-repeat;
-    // background-size: 100% 100%;
-  }
+    .arrow {
+      display: block;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      // right: 0;
+      // bottom: 0;
+      // margin: auto;
+      // content: '';
+      width: 8px;
+      height: 14px;
+      margin-top: -7px;
+      // background: url('//rs.jikexiu.com/appresources/images/arrow_gray.png') no-repeat;
+      // background-size: 100% 100%;
+    }
   }
 }
-.wrapper1{
+.wrapper1 {
   margin-top: 0px;
+}
+.choose-fault {
+  display: -webkit-flex;
+  display: flex;
+  justify-content: space-between;
+  height: 50px;
+  padding: 5px 10px;
+  background: #f5ebc2;
+  .choose-left {
+    .choose-left-default,
+    .choose-left-period {
+      line-height: 25px;
+      font-size: 14px;
+    }
+    .choose-left-period {
+      color: #999;
+    }
+  }
+  .choose-right {
+    line-height: 50px;
+    color: #f10215;
+    font-size: 14px;
+  }
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.5s;
+  }
+  .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0;
+  }
 }
 </style>

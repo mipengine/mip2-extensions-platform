@@ -1,7 +1,7 @@
 <template>
   <div>
     <mip-img
-      src="http://m.chinaacc.com/static/images/download-banner.png"
+      src="http://m.chinaacc.com/mip/static/images/download-banner.png"
       layout="responsive"
       width="750"
       height="270"
@@ -21,7 +21,7 @@
             v-for="(download, indexId) in downloadList"
             :key="indexId">
             <a
-              :href="'//m.chinaacc.com/mip/download/downList.shtml?courseEduId='+ download.courseEduId"
+              :href="'http://m.chinaacc.com/mip/download/downList.shtml?courseEduId='+ download.courseEduId"
               data-type="mip">
               <strong>{{ indexId+1 }}、{{ download.courseEduName }}</strong>
               <div class="dow-tag">

@@ -5,6 +5,7 @@
       id="mipLogin"
       on="isLogin:userOrder.watchLogin"/>
     <!--登录 end-->
+
     <!--订单信息-->
     <div class="ddxx clearfix">
       <div class="tit clearfix">
@@ -70,7 +71,7 @@
 
     <!--收件人信息-->
     <div
-      v-if="isShowAddress"
+      v-if="isShowAddress || hasBook > 0"
       class="sjrxx clearfix">
       <div class="tit clearfix">
         <div class="tit-left fl pr">
@@ -181,7 +182,6 @@
     <div class="yjfs clearfix">
       <a
         v-if="showInvoice == true"
-        href="javascript:void(0)"
         @click="toInvoicePage()">
         <div class="tit clearfix">
           <div class="tit-left fl pr">
@@ -216,9 +216,7 @@
             v-text="invoiceCookieTitle2"/>
         </div>
       </a>
-      <a
-        v-if="showInvoice == false"
-        href="javascript:void(0)">
+      <a v-if="showInvoice == false">
         <div class="tit clearfix">
           <div class="tit-left fl pr">
           <i class="dian abs"/>发票信息</div>

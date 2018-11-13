@@ -235,36 +235,49 @@ export default {
       }
     },
     showAsk () {
-      if (this.isBaiCheng === '1') {
-        clickPoint(
-          'bottomprice_vehicle_detail',
-          {
-            carid: getCarId(),
-            type: this.carInfo.is_zg_car // 0为非直购，1为直购
-          },
-          () => {
-            MIP.viewer.open(this.imUrl, {
-              isMipLink: false
-            })
-          },
-          {
-            pid: pid
-          }
-        )
-      } else {
-        this.$emit('showConsultingToast')
-        clickPoint(
-          'bottomprice_vehicle_detail',
-          {
-            carid: getCarId(),
-            type: this.carInfo.is_zg_car // 0为非直购，1为直购
-          },
-          null,
-          {
-            pid: pid
-          }
-        )
-      }
+      // 无论是否是海棠城市，是否是专家，我要优惠按钮点击后都执行询底价功能。 http://tlc.xin.com/browse/NCSERVER-18734
+      this.$emit('showConsultingToast')
+      clickPoint(
+        'bottomprice_vehicle_detail',
+        {
+          carid: getCarId(),
+          type: this.carInfo.is_zg_car // 0为非直购，1为直购
+        },
+        null,
+        {
+          pid: pid
+        }
+      )
+      // if (this.isBaiCheng === '1') {
+      //   clickPoint(
+      //     'bottomprice_vehicle_detail',
+      //     {
+      //       carid: getCarId(),
+      //       type: this.carInfo.is_zg_car // 0为非直购，1为直购
+      //     },
+      //     () => {
+      //       MIP.viewer.open(this.imUrl, {
+      //         isMipLink: false
+      //       })
+      //     },
+      //     {
+      //       pid: pid
+      //     }
+      //   )
+      // } else {
+      //   this.$emit('showConsultingToast')
+      //   clickPoint(
+      //     'bottomprice_vehicle_detail',
+      //     {
+      //       carid: getCarId(),
+      //       type: this.carInfo.is_zg_car // 0为非直购，1为直购
+      //     },
+      //     null,
+      //     {
+      //       pid: pid
+      //     }
+      //   )
+      // }
     },
     gotoIm () {
       if (this.source === '1') {

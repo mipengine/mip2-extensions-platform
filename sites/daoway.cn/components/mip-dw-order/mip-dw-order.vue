@@ -32,7 +32,9 @@
             <img
               class="order-home"
               src="https://www.daoway.cn/h5/image/home1.png">{{ i.service.title }}
-            <div class="quxiao">{{ i.statusDesc }}</div>
+            <div
+              :class="{nopay:i.statusDesc == '未支付取消'?'nopay':none}"
+              class="quxiao" >{{ i.statusDesc }}</div>
           </div>
           <div>
             <div
@@ -44,16 +46,16 @@
                 :src="m.picUrl"
                 class="ordernameimg">
               <div class="name">{{ m.name }}</div>
-              <div class="orderprice">{{ m.price }}元
-                <div class="num">x{{ m.quantity }}</div>
+              <div class="orderprice">{{ m.price.toFixed(2) }}元
+                <div class="num">×{{ m.quantity }}</div>
               </div>
             </div>
           </div>
           <div class="data">
             <div class="dataleft">{{ i.modifyTime }}</div>
-            <div class="dataright">共{{ i.totalQuantity }}件
+            <div class="dataright">共{{ i.totalQuantity }}份
               <div class="dr">总价:
-                <div>{{ i.totalPrice + i.fixFee }}</div>
+                <div>{{ (i.totalPrice + i.fixFee).toFixed(2) }}</div>
                 元
               </div>
             </div>
@@ -61,15 +63,14 @@
           <div class="btn">
             <div class="btnright">
               <button
+                v-if="i.button2"
+                :param="i.button2.param"
+                @click="toaction(i.button2,i.totalQuantity)">{{ i.button2.text }}</button>
+              <button
                 v-if="i.button1"
                 :param="i.button1.param"
                 class="red"
                 @click="toaction(i.button1,i.totalQuantity)">{{ i.button1.text }}</button>
-              <button
-                v-if="i.button2"
-                :param="i.button2.param"
-                class="red"
-                @click="toaction(i.button2,i.totalQuantity)">{{ i.button2.text }}</button>
             </div>
           </div>
         </div>
@@ -79,7 +80,7 @@
         <div
           v-if="noList"
           class="noorder">
-          <img src="http://www.daoway.cn/images/noorder.png">
+          <img src="https://www.daoway.cn/images/noorder.png">
           <div class="classname">还没有订单哦~</div>
           <div class="classname">快去挑选心怡的服务吧~</div>
         </div>
@@ -88,7 +89,6 @@
           class="zhexie">~暂时只有这些了~</div>
       </div>
     </div>
-
     <div
       v-show="warn.show"
       class="layer">
@@ -116,26 +116,28 @@
           data-type="mip"
           data-title="到位上门服务"
           @click="toindex"
-        ><img src="http://www.daoway.cn/mip/common/images/home2.png">首页</a>
+        ><img src="https://www.daoway.cn/mip/common/images/home2.png">首页</a>
         <a
           class="regclolr"
           data-type="mip"
           data-title="订单"
-          @click="toorder"><img src="http://www.daoway.cn/mip/common/images/order.png">订单</a>
+          @click="toorder"><img src="https://www.daoway.cn/mip/common/images/order.png">订单</a>
         <a
           data-type="mip"
           data-title="我的"
-          @click="tomy"><img src="http://www.daoway.cn/mip/common/images/my2.png">我的</a>
+          @click="tomy"><img src="https://www.daoway.cn/mip/common/images/my2.png">我的</a>
       </div>
     </mip-fixed>
   </div>
 </template>
 <script>
 import base from '../../common/utils/base'
-/* import login from '../../common/utils/login' */
 import '../../common/utils/base.less'
 
 export default {
+  prerenderAllowed () {
+    return true
+  },
   props: {
     payConfig: {
       type: Object,
@@ -176,31 +178,31 @@ export default {
         {
           id: 'ALL',
           name: '全部',
-          image: 'http://www.daoway.cn/mip/common/images/dingdanye_03.png',
+          image: 'https://www.daoway.cn/mip/common/images/dingdanye_03.png',
           count: 0,
           items: []
         }, {
           id: 'PENDING_PAY',
           name: '待付款',
-          image: 'http://www.daoway.cn/mip/common/images/dingdanye_12.png',
+          image: 'https://www.daoway.cn/mip/common/images/dingdanye_12.png',
           count: 0,
           items: []
         }, {
           id: 'ONGOING2',
           name: '进行中',
-          image: 'http://www.daoway.cn/mip/common/images/dingdanye_07.png',
+          image: 'https://www.daoway.cn/mip/common/images/dingdanye_07.png',
           count: 0,
           items: []
         }, {
           id: 'COMPLETED',
           name: '已完成',
-          image: 'http://www.daoway.cn/mip/common/images/dingdanye_05.png',
+          image: 'https://www.daoway.cn/mip/common/images/dingdanye_05.png',
           count: 0,
           items: []
         }, {
           id: 'PENDING_COMMENT',
           name: '待评价',
-          image: 'http://www.daoway.cn/mip/common/images/dingdanye_09.png',
+          image: 'https://www.daoway.cn/mip/common/images/dingdanye_09.png',
           count: 0,
           items: []
         }
@@ -212,17 +214,19 @@ export default {
       token: localStorage.getItem('mipToken'),
       sw: true,
       loding: false,
-      channel: 'baidu',
+      channel: 'mip',
       oauthCode: '',
       tradeType: '',
-      returnurl: base.htmlhref.orderdetail
+      returnurl: base.htmlhref.orderdetail,
+      startY: '',
+      endY: ''
     }
   },
   mounted () {
     let that = this
     if (this.token && this.userId) {
       this.getOrderList(0)
-      window.addEventListener('scroll', this.morelist)
+      // window.addEventListener('scroll', this.morelist);
       if (MIP.util.platform.isWechatApp()) { // 在微信里
         let wxcode = base.getRequest(location.href).code
         if (wxcode) {
@@ -235,6 +239,18 @@ export default {
         that.oauthCode = ''
         that.tradeType = 'MWEB'
       }
+      let body = this.$element.querySelector('.wrapper')
+      body.addEventListener('touchstart', (e, str) => {
+        let touch = e.touches[0]
+        this.startY = touch.pageY
+      })
+      body.addEventListener('touchmove', (e, str) => {
+        let touch = e.touches[0]
+        this.endY = touch.pageY
+        // if(this.endY >= this.startY){
+        this.morelist()
+        // }
+      })
     } else {
       that.$element.customElement.addEventAction('customLogin', event => {
         console.log(event)
@@ -244,9 +260,14 @@ export default {
         localStorage.setItem('mipUserId', event.userInfo.userId)
         localStorage.setItem('mipToken', event.userInfo.token)
         localStorage.setItem('nick', event.userInfo.nick)
+        base.setCookie('mipUserId', event.userInfo.userId)
+        base.setCookie('mipToken', event.userInfo.token)
         that.getOrderList(0)
       })
     }
+    window.addEventListener('show-page', (e) => {
+      MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
+    })
   },
   methods: {
     wxpay (url) {
@@ -272,178 +293,184 @@ export default {
         status = '&status=' + filter
       }
       let start = orderitem.items.length
-      let url = '/daoway/rest/orders/bought_by/' + that.userId + '?channel=' + that.channel + '&start=' + start + '&size=30' + status
+      let url = 'https://www.daoway.cn/daoway/rest/orders/bought_by/' + that.userId + '?channel=' + that.channel + '&start=' + start + '&size=30' + status
       fetch(url, {
         method: 'get',
         credentials: 'include'
       }).then(function (res) {
         return res.json()
       }).then(function (text) {
-        let len = text.data.length
-        if (len === 0) {
-          if (start === 0) {
-            orderitem.loading = 'noList'
-            // 没有评论
-            that.index = index
-            that.filter = filter
-            that.noList = true
-            that.noMoreList = false
+        if (text.status === 'ok') {
+          let len = text.data.length
+          if (len === 0) {
+            if (start === 0) {
+              orderitem.loading = 'noList'
+              // 没有评论
+              that.index = index
+              that.filter = filter
+              that.noList = true
+              that.noMoreList = false
+            } else {
+              orderitem.loading = 'noMoreList'
+              that.index = index
+              that.filter = filter
+              that.noList = false
+              that.noMoreList = true
+            }
+            that.loding = false
           } else {
-            orderitem.loading = 'noMoreList'
+            for (let i = 0; i < len; i++) {
+              let item = text.data[i]
+              let statusId = item.statusId
+              switch (statusId) {
+                case '5':
+                case '4':
+                case '3':
+                  item.className = 'gray'
+                  break
+                case '11':
+                case '12':
+                  item.className = 'green'
+                  break
+                default: item.className = ''
+              }
+              switch (statusId) {
+                case '9':
+                  item.button1 = {
+                    text: '立即支付',
+                    action: 'pay',
+                    param: {
+                      orderid: item.orderId,
+                      coupon: item.coupon,
+                      fixFee: item.fixFee,
+                      totalPrice: item.totalPrice,
+                      couponId: item.couponId
+                    }
+                  }
+                  item.button2 = {
+                    text: '取消订单',
+                    action: 'cancelBtn',
+                    param: item.orderId
+                  }
+                  break
+                case '0':
+                  item.button1 = null
+                  item.button2 = {
+                    text: '取消订单',
+                    action: 'cancelBtn',
+                    param: item.orderId
+                  }
+                  break
+                case '1':
+                case '10':
+                  item.button1 = {
+                    text: '确认订单',
+                    action: 'confirmBtn',
+                    param: item.orderId
+                  }
+                  /* var appendBill = item.appendBill;
+                   if (appendBill == 0) {
+                   item.button2 = {
+                   text: "补差价",
+                   action: 'fn',
+                   param: item.orderId
+                   };
+                   } else {
+                   item.button2 = null;
+                   } */
+                  item.button2 = null
+                  break
+                case '2':
+                case '6':
+                  item.button1 = {
+                    text: '再来一单',
+                    action: 'buyAgain',
+                    param: {
+                      orderId: item.orderId,
+                      serviceId: item.service.id
+                    }
+                  }
+                  /* item.button2 = {
+                   text: "评价",
+                   action: 'addComment',
+                   param: {
+                   orderId: item.orderId,
+                   title: item.service.title,
+                   imgurl: item.servImgUrl
+                   }
+                   }; */
+                  break
+                case '7':
+                case '4':
+                case '3':
+                case '5':
+                case '8':
+                  item.button1 = {
+                    text: '再来一单',
+                    action: 'buyAgain',
+                    param: {
+                      orderId: item.orderId,
+                      serviceId: item.service.id
+                    }
+                  }
+                  item.button2 = null
+                  break
+                /* case "11":
+                 item.button1 = {
+                 text: "联系商家",
+                 action: 'phoneCall',
+                 param: item.seller.phone
+                 };
+                 item.button2 = null;
+                 break;
+                 case "12":
+                 item.button1 = {
+                 text: "联系商家",
+                 action: 'phoneCall',
+                 param: item.seller.phone
+                 };
+                 item.button2 = null;
+                 break; */
+              }
+              item.modifyTime = base.timeformat(item.modifyTime, 'yyyy-MM-dd HH:mm')
+              let tempItems = item.items
+              item.totalQuantity = 0
+              for (let t = 0, l = tempItems.length; t < l; t++) {
+                item.totalQuantity += tempItems[t].quantity
+              }
+            }
+            orderitem.items = orderitem.items.concat(text.data)
+            for (let c = 0; c < 5; c++) {
+              let ct = orderitems[c]
+              let id = ct.id
+
+              switch (id) {
+                case 'ALL':
+                  ct.count = text.total
+                  break
+                case 'ONGOING2':
+                  ct.count = text.onging
+                  break
+                // case 'NEW':
+                //  ct.count = result.new;
+                //  break;
+                case 'PENDING_PAY':
+                  ct.count = text.pending_pay
+                  break
+                case 'PENDING_COMMENT':
+                  ct.count = text.pending_comment
+                  break
+              }
+            }
             that.index = index
             that.filter = filter
-            that.noList = false
-            that.noMoreList = true
+            that.sw = true
+            that.orderitems = orderitems
           }
-          return
+        } else {
+          this.token = ''
+          this.userId = ''
         }
-        for (let i = 0; i < len; i++) {
-          let item = text.data[i]
-          let statusId = item.statusId
-          switch (statusId) {
-            case '5':
-            case '4':
-            case '3':
-              item.className = 'gray'
-              break
-            case '11':
-            case '12':
-              item.className = 'green'
-              break
-            default: item.className = ''
-          }
-          switch (statusId) {
-            case '9':
-              item.button1 = {
-                text: '立即支付',
-                action: 'pay',
-                param: {
-                  orderid: item.orderId,
-                  coupon: item.coupon,
-                  fixFee: item.fixFee,
-                  totalPrice: item.totalPrice,
-                  couponId: item.couponId
-                }
-              }
-              item.button2 = {
-                text: '取消订单',
-                action: 'cancelBtn',
-                param: item.orderId
-              }
-              break
-            case '0':
-              item.button1 = null
-              item.button2 = {
-                text: '取消订单',
-                action: 'cancelBtn',
-                param: item.orderId
-              }
-              break
-            case '1':
-            case '10':
-              item.button1 = {
-                text: '确认订单',
-                action: 'confirmBtn',
-                param: item.orderId
-              }
-              /* var appendBill = item.appendBill;
-                                 if (appendBill == 0) {
-                                 item.button2 = {
-                                 text: "补差价",
-                                 action: 'fn',
-                                 param: item.orderId
-                                 };
-                                 } else {
-                                 item.button2 = null;
-                                 } */
-              item.button2 = null
-              break
-            case '2':
-            case '6':
-              item.button1 = {
-                text: '再次购买',
-                action: 'buyAgain',
-                param: {
-                  orderId: item.orderId,
-                  serviceId: item.service.id
-                }
-              }
-              /* item.button2 = {
-                                    text: "评价",
-                                    action: 'addComment',
-                                    param: {
-                                        orderId: item.orderId,
-                                        title: item.service.title,
-                                        imgurl: item.servImgUrl
-                                    }
-                                }; */
-              break
-            case '7':
-            case '4':
-            case '3':
-            case '5':
-            case '8':
-              item.button1 = {
-                text: '再次购买',
-                action: 'buyAgain',
-                param: {
-                  orderId: item.orderId,
-                  serviceId: item.service.id
-                }
-              }
-              item.button2 = null
-              break
-                           /* case "11":
-                                item.button1 = {
-                                    text: "联系商家",
-                                    action: 'phoneCall',
-                                    param: item.seller.phone
-                                };
-                                item.button2 = null;
-                                break;
-                            case "12":
-                                item.button1 = {
-                                    text: "联系商家",
-                                    action: 'phoneCall',
-                                    param: item.seller.phone
-                                };
-                                item.button2 = null;
-                                break; */
-          }
-          item.modifyTime = base.timeformat(item.modifyTime, 'yyyy-MM-dd HH:mm')
-          let tempItems = item.items
-          item.totalQuantity = 0
-          for (let t = 0, l = tempItems.length; t < l; t++) {
-            item.totalQuantity += tempItems[t].quantity
-          }
-        }
-        orderitem.items = orderitem.items.concat(text.data)
-        for (let c = 0; c < 5; c++) {
-          let ct = orderitems[c]
-          let id = ct.id
-
-          switch (id) {
-            case 'ALL':
-              ct.count = text.total
-              break
-            case 'ONGOING2':
-              ct.count = text.onging
-              break
-              // case 'NEW':
-              //  ct.count = result.new;
-              //  break;
-            case 'PENDING_PAY':
-              ct.count = text.pending_pay
-              break
-            case 'PENDING_COMMENT':
-              ct.count = text.pending_comment
-              break
-          }
-        }
-        that.index = index
-        that.filter = filter
-        that.sw = true
-        that.orderitems = orderitems
       }).catch(function (error) {
         console.log(error)
       })
@@ -461,28 +488,27 @@ export default {
         that.noList = true
         that.noMoreList = false
         that.index = index
-        that.loding = false
       } else {
         if (start === 0) {
           that.noList = false
           that.noMoreList = false
           that.getOrderList(index)
-          that.loding = false
         } else {
           // 从原有记录里加载
           that.filter = filter
           that.noList = false
           that.noMoreList = false
           that.index = index
-          that.loding = false
         }
       }
+      that.loding = false
+      window.scrollTo(0, 0)
     },
     // 完成订单
     toaction: function (param, quantity) {
       let that = this
       let payparam = param.param
-      if (param.text === '再次购买') {
+      if (param.text === '再来一单') {
         if (MIP.util.platform.isWechatApp()) {
           let appid = 'wx0290cc2004b61c97'
           let loginUrl = encodeURIComponent(base.htmlhref.reservation + '?orderId=' + encodeURIComponent(param.param.orderId)) + '&serviceId=' + param.param.serviceId + '&quantity=' + quantity
@@ -497,7 +523,7 @@ export default {
         that.param = param
       } else if (param.text === '取消订单') {
         that.warn.show = true
-        that.warn.texts = '确定取消订单？'
+        that.warn.texts = '确定要取消此订单吗？'
         that.param = param
       } else if (param.text === '立即支付') {
         // let redirectUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment?id=1581486019780982&redirect=' + encodeURIComponent(that.returnurl + '?orderId=' + payparam.orderid)
@@ -538,7 +564,7 @@ export default {
     },
     closesure (orderId, action) {
       let that = this
-      let url = '/daoway/rest/order/' + orderId + '/' + action + '?channel=' + that.channel + '&userId=' + that.userId
+      let url = 'https://www.daoway.cn/daoway/rest/order/' + orderId + '/' + action + '?channel=' + that.channel + '&userId=' + that.userId
       fetch(url, {
         method: 'POST',
         credentials: 'include',
@@ -572,7 +598,7 @@ export default {
       if (MIP.util.platform.isWechatApp()) { // 在微信里
         this.wxpay(base.htmlhref.orderdetail + '?orderId=' + id)
       } else {
-        MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + id, { isMipLink: false })
+        MIP.viewer.open(base.htmlhref.orderdetail + '?orderId=' + id, { isMipLink: true })
       }
     },
     /* goLoginPage: function () {
@@ -593,26 +619,30 @@ export default {
               that.sw = false
               setTimeout(() => {
                 that.loding = true
-              }, 10)
+              }, 500)
               that.getOrderList(index)
-            }
+            };
           } else {
             // 暂时只有这些了
             that.noList = false
             that.noMoreList = true
             that.loding = false
           }
+        } else {
+          that.loding = false
         }
+      } else {
+        that.loding = false
       }
     },
     toindex () {
-      MIP.viewer.open(base.htmlhref.index, {isMipLink: false})
+      MIP.viewer.open(base.htmlhref.index, {isMipLink: true})
     },
     toorder () {
-      MIP.viewer.open(base.htmlhref.order, {isMipLink: false})
+      MIP.viewer.open(base.htmlhref.order, {isMipLink: true})
     },
     tomy () {
-      MIP.viewer.open(base.htmlhref.my, {isMipLink: false})
+      MIP.viewer.open(base.htmlhref.my, {isMipLink: true})
     }
   }
 
@@ -632,7 +662,9 @@ export default {
     li, ol {
         list-style: none
     }
+
     .theclose{width: 90%; margin: 0 auto}
+
     .layer p.active-layer{
         width: 50%;
         float: left;
@@ -642,11 +674,23 @@ export default {
     .zhexie{
         text-align: center;
         margin-bottom: 10px;
+        line-height: 30px;
     }
     .layer p:first-child{
         border-radius: 0;
         border-right: 1px solid #ededed;
+
     }
+    .layer p.layer-text{
+      border-radius: 10px 10px 0 0;
+    }
+    .theclose p:first-child{
+      border-radius: 0 0 0 10px;
+    }
+    .theclose p:last-child{
+      border-radius: 0 0  10px 0;
+    }
+
     .regclolr{
         color:#f64e4e ;
     }
@@ -717,17 +761,18 @@ export default {
       width: 100%;
       background: #fff;
       border-top: 1px solid #ededed;
+      padding:5px 0 1px;
     }
     .bottomnav a{
-      line-height: 23px;
+      line-height: 20px;
       display: inline-block;
       width: 32%;
       text-align: center;
       font-size: 12px;
-      margin-top: 5px;
+      margin-top: 1px;
     }
     .bottomnav a img{
-      width: 25px;
+      width: 20px;
       height: auto;
       display: block;
       text-align: center;
@@ -745,6 +790,7 @@ export default {
         height: 40px;
         line-height: 40px;
         margin: 0 2%;
+        color: #303030;
     }
 
     .homeimg {
@@ -784,11 +830,13 @@ export default {
         vertical-align: top;
         margin-top: 15px;
         margin-left: 5px;
+      color: #303030;
     }
 
     .orderprice {
         float: right;
         margin-top: 13px;
+      color: #303030;
     }
 
     .num {
@@ -891,5 +939,8 @@ export default {
     width: 22px;
     height:auto;
   }
+    .ordertit .nopay{
+      color: #898989;
+    }
 
 </style>

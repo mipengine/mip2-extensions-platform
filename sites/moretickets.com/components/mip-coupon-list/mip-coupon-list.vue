@@ -63,15 +63,24 @@
         ng-if="!cp.usable"
         ng-repeat="cp in allCoupons"/>
     </div>
-    <div
-      v-if="toastmsg"
-      class="toast-msg">
-      {{ toastmsg }}
-    </div>
+    <mip-fixed
+      v-show="toastmsg"
+      type="top"
+      class="toast-wrap">
+      <div
+        v-if="toastmsg"
+        class="toast-msg">
+        {{ toastmsg }}
+      </div>
+    </mip-fixed>
   </div>
 </template>
 
 <style scoped lang="less">
+*{
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
 @main-color: #ff1d41;
 @dark-font: #323038;
 @normal-font: #494949;
@@ -109,18 +118,21 @@
     font-size: @size;
   }
 }
+.toast-wrap{
+  top: 200px !important;
+  text-align: center;
+}
 .toast-msg {
-  width: 180px;
+  width: auto;
+  max-width: 70%;
   padding: 15px 10px;
+  display: inline-block;
   line-height: 20px;
   color: #fff;
   background-color: rgba(0, 0, 0, 0.65);
-  position: absolute;
   border-radius: 5px;
-  left: 50%;
-  top: 100px;
-  transform: translateX(-50%) translateY(-50%);
-  z-index: 1000;
+  font-size:1.4rem;
+  box-sizing: border-box;
 }
 .coupon-item-component {
   .layout {

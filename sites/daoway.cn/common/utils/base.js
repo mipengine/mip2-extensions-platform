@@ -3,7 +3,7 @@
 // const lxnhttp = 'http://127.0.0.1:8111/example/';
 
 // const lxnhttp = '/components/';
-const lxnhttp = 'http://www.daoway.cn/mip/'
+const lxnhttp = 'https://www.daoway.cn/mip/'
 const component = 'html/'
 
 // const lxnhttp = 'http://test.daoway.cn/baiduapp/components/';//测试urL
@@ -47,7 +47,10 @@ export default ({
     technician: lxnhttp + component + 'technician.html',
     position: lxnhttp + component + 'position.html',
     vouchers: lxnhttp + component + 'vouchers.html',
-    about: lxnhttp + component + 'about.html'
+    about: lxnhttp + component + 'about.html',
+    search: lxnhttp + component + 'search.html',
+    searchlist: lxnhttp + component + 'searchlist.html',
+    address: lxnhttp + component + 'address.html'
 
     // community:lxnhttp + 'mip-dw-community/example/mip-dw-community.html',
     // city: lxnhttp + 'city.html',
@@ -57,6 +60,38 @@ export default ({
     // costdes: lxnhttp + 'costdes.html',
     // userguide: lxnhttp + 'userguide.html'
   }),
+  setHtmlRem: function () {
+    let b = document
+    let a = {}
+    a.Html = b.getElementsByTagName('html')[0]
+    let htmls = b.getElementsByTagName('html')
+
+    a.widthProportion = function () {
+      console.log('宽度:' + b.body.clientWidth)
+      //   b.body &&
+      let c = (b.body.clientWidth || a.Html.offsetWidth) / 750
+      return c > 1 ? 1 : c < 0.4 ? 0.4 : c
+    }
+    a.changePage = function () {
+      let length = htmls.length
+      let remValue = a.widthProportion() * 100
+      let rem = sessionStorage.getItem('rem')
+      // MIP.viewer.page.isRootPage  技术服务开始页初始化session
+      if (rem !== null && !MIP.viewer.page.isRootPage) {
+        for (let i = 0; i < length; i++) {
+          htmls[i].setAttribute('style', 'font-size:' + rem + 'px!important;height:100% !important')
+        }
+      } else {
+        for (let j = 0; j < length; j++) {
+          htmls[j].setAttribute('style', 'font-size:' + remValue + 'px!important;height:100% !important')
+        }
+        sessionStorage.setItem('rem', remValue)
+      }
+    }
+
+    a.changePage()
+    // setInterval(a.changePage, 1000);
+  },
   setUrlParam: function (obj) {
     const params = []
 
@@ -89,6 +124,15 @@ export default ({
     let data = sessionStorage.getItem('dwdata')
     // console.log(JSON.stringify(JSON.parse(data), null, 2))
     return JSON.parse(data)
+  },
+  setCookie: function (name, value) { // 两个参数，一个是cookie的名子，一个是值
+    document.cookie = name + '=' + escape(value)// + ";expires=" + exp.toGMTString();
+  },
+  // 取Cookie
+  getCookie: function (name) { // 读取cookies函数
+    let arr = document.cookie.match(new RegExp('(^| )' + name + '=([^;]*)(;|$)'))
+    if (arr != null) return unescape(arr[2])
+    return null
   },
   timeformat: function (time, format) {
     let t = new Date(time)
