@@ -90,18 +90,16 @@ export default {
     const curconsteId = String(curconste.id)
     const cardlist = localStorage.getItem('cardlist') || ''
     let defcd = ''
+    let cardck = ''
     that.scard = [curconsteId]
     that.card = that.scard
     if (cardlist) {
-      const cardck = cardlist.split(',')
+      cardck = cardlist.split(',')
       that.card = cardck
       if (!that.in_array(curconsteId, cardck)) {
         that.card = [curconsteId].concat(cardck)
       }
-      defcd = localStorage.getItem('default_card') || ''
-    }
-    if (!defcd || !that.in_array(defcd, that.card)) {
-      defcd = that.card[0]
+      defcd = localStorage.getItem('default_card') || that.card[0]
     }
     that.renderSelectFloat(1)
     that.otherXZ()
