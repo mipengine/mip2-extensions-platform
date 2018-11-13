@@ -68,7 +68,8 @@ export default {
         'xz': ['../static/public/images/prot_icon/xz/a/[id].png'],
         'sx': ['../static/public/images/prot_icon/sx/a/[id].png']
       },
-      rem: (MIP.viewport.getWidth() > 640 ? 640 : MIP.viewport.getWidth()) / 10
+      rem: (MIP.viewport.getWidth() > 640 ? 640 : MIP.viewport.getWidth()) / 10,
+      marginLeft: [0.7, 4.2, 0, 4.6, 1, 4.8, 0.8, 4.8, 2.8]
     }
   },
   created () {
@@ -402,7 +403,7 @@ export default {
       const s = h * this.rem / (span.length / 2) - 5
       for (let i = 0; i < span.length; i++) {
         const t = s * Math.floor(i / 2) + Math.random() * 10 + (i % 2 * 16)
-        const l = parseInt(span[i].style.marginLeft) + (20 - Math.random() * 20)
+        const l = this.marginLeft[i] * this.rem + (20 - Math.random() * 20)
         span[i].setAttribute('style', 'margin-top: ' + t + 'px; margin-left: ' + l + 'px')
       }
     }
