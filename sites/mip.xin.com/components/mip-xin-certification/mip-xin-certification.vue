@@ -3,7 +3,7 @@
     <!-- <mip-xin-loading v-if="showLoading" :show-mask="showMaskBack"></mip-xin-loading> -->
     <div class="certificationContent">
       <div class="bdline">
-        <span class="car-file">优信认证</span>
+        <span class="car-file">认证服务</span>
         <!-- <button class="car-ask" @click="showAsk">服务咨询</button> -->
         <!-- <button class="car-ask"  on="tap:my-lightbox.open" id="btn-open" role="button" tabindex="0">服务咨询</button> -->
         <!-- <a
@@ -293,7 +293,7 @@
           <span class="car-exchange-subtitle">随时随地保修，让出行更自由</span>
         </div>
         <div>
-          <span class="car-warranty-content">在全国300+城市，为每一台优信认证车辆随时随地提供专业优质的保修服务，让每一位优信认证车主畅行无忧。</span>
+          <span class="car-warranty-content">在全国300+城市，为每一台优信金牌认证车辆随时随地提供专业优质的保修服务，让每一位优信认证车主畅行无忧。</span>
         </div>
       </div>
 
@@ -438,6 +438,7 @@ export default {
       )
     },
     nextPage (key) {
+      let auth = decodeURIComponent(getLocalStorage('locationUrl')) ? '&xinauth=1' : '?xinauth=1'
       switch (key) {
         case 'big':
           clickPoint(
@@ -448,7 +449,7 @@ export default {
             },
             () => {
               MIP.viewer.open(
-                config.mHost + `/car/iws/${decodeURIComponent(getLocalStorage('locationUrl'))}`,
+                config.mHost + `/car/iws/${decodeURIComponent(getLocalStorage('locationUrl'))}${auth}`,
                 {
                   isMipLink: false
                 }
@@ -469,7 +470,7 @@ export default {
             () => {
               MIP.viewer.open(
                 config.mHost +
-                  `/service/refund_flow/${decodeURIComponent(getLocalStorage('locationUrl'))}`,
+                  `/service/refund_flow/${decodeURIComponent(getLocalStorage('locationUrl'))}${auth}`,
                 {
                   isMipLink: false
                 }
@@ -490,7 +491,7 @@ export default {
             () => {
               MIP.viewer.open(
                 config.mHost +
-                  `/car/iws/${decodeURIComponent(getLocalStorage('locationUrl'))}#getzhibao`,
+                  `/car/iws/${decodeURIComponent(getLocalStorage('locationUrl'))}${auth}#getzhibao`,
                 {
                   isMipLink: false
                 }
@@ -511,7 +512,7 @@ export default {
             () => {
               MIP.viewer.open(
                 config.mHost +
-                  `/service/refund_flow/${decodeURIComponent(getLocalStorage('locationUrl'))}#getzhibao`,
+                  `/service/refund_flow/${decodeURIComponent(getLocalStorage('locationUrl'))}${auth}#getzhibao`,
                 {
                   isMipLink: false
                 }
