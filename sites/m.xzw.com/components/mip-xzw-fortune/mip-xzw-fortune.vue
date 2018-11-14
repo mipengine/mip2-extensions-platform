@@ -214,7 +214,7 @@ export default {
           const birthAstro = document.getElementById('birth_astro')
           const birth = birthAstro.querySelectorAll('span')
           birth[0].innerHTML = val.join('')
-          const a = that.getConste(month[0] + '.' + day[0])
+          const a = that.getConste(year[0] + '-' + month[0] + '-' + day[0])
           const url = that.get_urlroute('fortune/' + a.a)
           location.href = url
         }
