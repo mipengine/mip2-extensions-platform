@@ -232,7 +232,6 @@ export default {
       return false
     },
     getConste: function (d) {
-      // 获取卡片默认id
       const D = [[9, 19], [10, 18], [11, 20], [0, 19], [1, 20], [2, 21], [3, 22], [4, 22], [5, 22], [6, 23], [7, 22], [8, 21]]
       if (typeof (d) === 'string') {
         const a = d.match(/(\d{4})-(\d{1, 2})-(\d{1, 2})/i) || d.match(/(\d{1, 2})-(\d{1, 2})/i)
