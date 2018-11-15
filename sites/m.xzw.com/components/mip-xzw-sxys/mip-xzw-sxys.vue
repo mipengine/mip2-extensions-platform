@@ -5,45 +5,6 @@ export default {
     function $ (string) {
       return (document.querySelectorAll(string))[0]
     }
-    const monthtabString = 'swiper_month_tab'
-    const myswiper = new Swiper('#' + monthtabString, {
-      slidesPerView: 5.6
-    })
-    // 月份点击事件
-    const monthObj = document.getElementById('month')
-    const monthtabObj = document.getElementById(monthtabString)
-    const M = monthObj.querySelectorAll('.month_cont')
-    const Li = monthtabObj.querySelectorAll('li')
-    for (let i = 0; i < Li.length; i++) {
-      Li[i].addEventListener('click', function () {
-        let month = i + 1
-        renderMonth(month)
-        const _hash = hash.replace(/mon=(\d+)/, 'mon=' + month)
-        window.history.pushState(null, null, _hash)
-      })
-    }
-    // 更改月份显示
-    function renderMonth (month) {
-      if (!month) { month = 1 }
-      for (let i = 0; i < Li.length; i++) {
-        M[i].classList.add('none')
-        Li[i].classList.remove('cur')
-      }
-      Li[month - 1].classList.add('cur')
-      M[month - 1].classList.remove('none')
-      myswiper.slideTo(month - 1, 0)
-    }
-    // 初始化月份显示
-    let hash = window.location.hash
-    if (!hash) hash = '#mon=1'
-    const url = window.location.href.split('#mon=')
-    if (url[1]) {
-      if (url[1].trim() >= 1 && url[1].trim() <= 12) {
-        renderMonth(url[1].trim())
-      }
-    } else {
-      renderMonth(1)
-    }
     // 显示更多
     const w = MIP.viewport.getWidth() > 640 ? 640 : MIP.viewport.getWidth()
     const _rem = w / 10
@@ -123,6 +84,46 @@ export default {
       } else {
         return dom.currentStyle[property]
       }
+    }
+    const monthtabString = 'swiper_month_tab'
+    const myswiper = new Swiper('#' + monthtabString, {
+      slidesPerView: 5.6
+    })
+    // 月份点击事件
+    const monthObj = document.getElementById('month')
+    const monthtabObj = document.getElementById(monthtabString)
+    const M = monthObj.querySelectorAll('.month_cont')
+    const Li = monthtabObj.querySelectorAll('li')
+    if (Li.length <= 0) { return false }
+    for (let i = 0; i < Li.length; i++) {
+      Li[i].addEventListener('click', function () {
+        let month = i + 1
+        renderMonth(month)
+        const _hash = hash.replace(/mon=(\d+)/, 'mon=' + month)
+        window.history.pushState(null, null, _hash)
+      })
+    }
+    // 更改月份显示
+    function renderMonth (month) {
+      if (!month) { month = 1 }
+      for (let i = 0; i < Li.length; i++) {
+        M[i].classList.add('none')
+        Li[i].classList.remove('cur')
+      }
+      Li[month - 1].classList.add('cur')
+      M[month - 1].classList.remove('none')
+      myswiper.slideTo(month - 1, 0)
+    }
+    // 初始化月份显示
+    let hash = window.location.hash
+    if (!hash) hash = '#mon=1'
+    const url = window.location.href.split('#mon=')
+    if (url[1]) {
+      if (url[1].trim() >= 1 && url[1].trim() <= 12) {
+        renderMonth(url[1].trim())
+      }
+    } else {
+      renderMonth(1)
     }
   }
 }
