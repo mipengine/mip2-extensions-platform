@@ -6,8 +6,7 @@
 
 <script>
 import xzh from 'xzh-sdk'
-import { formatParams } from '../../common/utils'
-import {getLocalUrl} from '../../common/utils'
+import { formatParams, getLocalUrl } from '../../common/utils'
 
 let context = null
 
