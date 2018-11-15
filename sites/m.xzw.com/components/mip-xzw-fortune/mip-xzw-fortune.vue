@@ -165,7 +165,6 @@ export default {
         }
       })
       myswiperM.slideTo(C.length - 1, 300, false)
-      console.log(myswiperM)
     }
     const M = document.getElementById('more_fortune')
     if (M) {
