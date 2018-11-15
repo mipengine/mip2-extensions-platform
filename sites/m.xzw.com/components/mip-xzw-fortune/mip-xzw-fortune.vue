@@ -320,7 +320,7 @@ export default {
       const otherLi = otherastro.querySelectorAll('li')
       for (let i = 0; i < ysdata.length; i++) {
         const I = otherLi[i].querySelectorAll('i')
-        I[0].style.width = parseInt(ysdata.star) * 10 + 'px'
+        I[0].style.width = parseInt(ysdata[i].star) * 10 + 'px'
       }
     },
     otherXZ: function () {
