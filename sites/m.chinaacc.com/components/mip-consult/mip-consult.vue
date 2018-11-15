@@ -23,6 +23,10 @@ export default {
         let paramMap = {
           'redirectUrl': url
         }
+        // 去除参数
+        // console.log('1:' + url)
+        url = url.split('#')[0]
+        // console.log('2:' + url)
         context = Promise.resolve()
           .then(() => {
             return window.fetchJsonp(
