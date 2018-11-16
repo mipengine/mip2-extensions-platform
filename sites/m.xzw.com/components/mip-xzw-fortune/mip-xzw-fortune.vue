@@ -213,7 +213,7 @@ export default {
           const birthAstro = document.getElementById('birth_astro')
           const birth = birthAstro.querySelectorAll('span')
           birth[0].innerHTML = val.join('')
-          const a = that.getConste(month[0], day[0])
+          const a = that.getConste([month[0], day[0]])
           const url = that.get_urlroute('fortune/' + a.a)
           location.href = url
         }
@@ -326,8 +326,11 @@ export default {
       const otherastro = document.getElementById('otherastro_swiper')
       if (otherastro) {
         const otherLi = otherastro.querySelectorAll('li')
-        for (let i = 0; i < this.card.length; i++) {
-          const index = this.card[i] - 1
+        for (let i = 0; i < otherLi.length; i++) {
+          otherLi[i].style.display = 'block'
+        }
+        for (let j = 0; j < this.card.length; j++) {
+          const index = this.card[j] - 1
           otherLi[index].style.display = 'none'
         }
         this.LB.update()
@@ -369,6 +372,7 @@ export default {
       this.setDefcard(id)
       this.otherXZ()
       this.setpAddicon()
+      this.LB.update()
     },
     cardHandle: function (id) {
       const that = this
@@ -384,9 +388,10 @@ export default {
         that.xz[id - 1][5] = 0
         that.CB.removeSlide(i)
         that.CB.update()
-        that.LB.update()
         that.removeStorage(id)
         that.setpAddicon()
+        that.otherXZ()
+        that.LB.update()
       })
     },
     showMonth: function (B, C, s) {
