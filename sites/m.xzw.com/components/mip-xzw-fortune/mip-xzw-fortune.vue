@@ -371,8 +371,8 @@ export default {
       this.addStarCard(this.ysdata, key + 1)
       this.setDefcard(id)
       this.otherXZ()
-      this.setpAddicon()
       this.LB.update()
+      this.setpAddicon()
     },
     cardHandle: function (id) {
       const that = this
