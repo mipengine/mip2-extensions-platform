@@ -6,7 +6,7 @@
 
 <script>
 import xzh from 'xzh-sdk'
-import { formatParams } from '../../common/utils'
+import { formatParams, getLocalUrl } from '../../common/utils'
 
 let context = null
 
@@ -17,7 +17,8 @@ export default {
   methods: {
     init () {
       if (!context) {
-        let url = window.location.href
+        let url = getLocalUrl()
+        console.log(url)
         let paramMap = {
           'redirectUrl': url
         }
