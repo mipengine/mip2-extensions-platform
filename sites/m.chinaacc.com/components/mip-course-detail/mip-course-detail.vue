@@ -79,7 +79,9 @@
               name="bzCourse"
               type="checkbox">
           </div>
-          <p class="ts">选中即同意<a href="http://m.chinaacc.com/wangxiao/gonggao/li1803063216.shtml">延期保障协议</a></p>
+          <p class="ts">选中即同意<a
+            href="http://m.chinaacc.com/wangxiao/gonggao/li1803063216.shtml"
+            data-type="mip">延期保障协议</a></p>
         </div>
       </div>
       <div
