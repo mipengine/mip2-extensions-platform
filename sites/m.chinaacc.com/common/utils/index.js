@@ -118,3 +118,12 @@ export const checkLogin = (flag) => {
   }
   return flag
 }
+
+export const getLocalUrl = () => {
+  let url = window.location.href
+  console.log('1:' + url)
+  url = url.split('/mip')[1]
+  url = url.split('#')[0]
+  console.log('2:' + url)
+  return 'https://m.chinaacc.com/mip' + url
+}
