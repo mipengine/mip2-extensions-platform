@@ -4,7 +4,7 @@
     <div class="course-head">
       <div class="course-audition">
         <a
-          :href="'http://m.chinaacc.com/mip/shitingList/' + courseType + '/c' + productId + '.shtml'"
+          :href="'/mip/shitingList/' + courseType + '/c' + productId + '.shtml'"
           data-type="mip">
           <mip-img
             :src="'http://m.chinaacc.com/mip/static/images/course/'+ productId +'.jpg'"
@@ -252,8 +252,9 @@
             'cr-item-yellow':corrCourseItem.showColor === 5}"
           class="cr-item">
           <a
-            :href="'http://m.chinaacc.com/mip/kecheng/?cId=' + corrCourseItem.productId + '&type=' + courseType + '.shtml'"
-            class="cr-head">
+            :href="'/mip/kecheng/index.html?cId=' + corrCourseItem.productId + '&type=' + courseType "
+            class="cr-head"
+            data-type="mip">
             <strong>{{ corrCourseItem.eduSubjectName }}</strong>
             <p>{{ corrCourseItem.selCourseTitle }}</p>
           </a>
