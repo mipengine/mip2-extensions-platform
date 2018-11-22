@@ -6,7 +6,7 @@
       <!-- <a class="yy" href="https://author.baidu.com/home/1601150861293373" target="_slef">选购课程</a> -->
       <a
         class="yy"
-        href="/mip/shitingList/index.shtml"
+        href="https://m.baidu.com/wishwing/c/m.chinaacc.com/mip/shitingList/index.shtml"
         data-type="mip">选购课程</a>
       <a
         class="yy"
@@ -14,7 +14,7 @@
         target="_blank">去看书</a>
       <a
         class="see"
-        href="/mip/payment/allOrder.html"
+        href="https://m.baidu.com/wishwing/c/m.chinaacc.com/mip/payment/allOrder.html"
         data-type="mip">查看我的订单</a>
     </div>
   </div>
