@@ -350,26 +350,22 @@ export default {
       }).then(function (text) {
         if (text.status === 'ok') {
           let data = text.data
-          let pricesItem = data.prices
-          let priceIds = that.param.priceId || that.priceId
+          let pricesItem = data.prices;
+          let priceIds = that.param.priceId || that.priceId;
           let prices = []
           if (pricesItem) {
-            console.log(111)
             for (let i = 0; i < pricesItem.length; i++) {
-              console.log(priceIds, Number(pricesItem[i].id))
               if (priceIds === Number(pricesItem[i].id)) {
                 prices.push(pricesItem[i])
               }
             }
-
-            if (!prices) {
+            if (!prices || prices.length <1) {
               that.warn.show = true
-              that.warn.texts = '该项目已下线'
+              that.warn.texts = '该项目已下线或超出服务范围'
             }
           } else {
-            console.log(222)
             that.warn.show = true
-            that.warn.texts = '该项目已下线'
+            that.warn.texts = '该项目已下线或超出服务范围'
           }
           let apptime = Number(sessionStorage.getItem('apptime'))
           that.serviceId = data.id
@@ -378,7 +374,7 @@ export default {
           that.nextAppointTime = data.nextAppointTime
           that.appointTime = apptime || that.param.appointTime || data.nextAppointTime
           that.formatTime = base.timeformat(that.appointTime, 'MM月dd日(day) HH:mm')
-          that.prices = prices
+          that.prices = prices;
           that.minBuyNum = prices ? prices[0].minBuyNum : 1
           that.quantity = that.param.quantity || that.quantity
           that.totalPrice = (prices[0].price * that.quantity).toFixed(2)
