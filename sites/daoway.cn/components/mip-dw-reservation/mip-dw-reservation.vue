@@ -374,7 +374,7 @@ export default {
           that.nextAppointTime = data.nextAppointTime
           that.appointTime = apptime || that.param.appointTime || data.nextAppointTime
           that.formatTime = base.timeformat(that.appointTime, 'MM月dd日(day) HH:mm')
-          that.prices = prices;
+          that.prices = prices
           that.minBuyNum = prices ? prices[0].minBuyNum : 1
           that.quantity = that.param.quantity || that.quantity
           that.totalPrice = (prices[0].price * that.quantity).toFixed(2)
