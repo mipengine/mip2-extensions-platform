@@ -350,8 +350,8 @@ export default {
       }).then(function (text) {
         if (text.status === 'ok') {
           let data = text.data
-          let pricesItem = data.prices;
-          let priceIds = that.param.priceId || that.priceId;
+          let pricesItem = data.prices
+          let priceIds = that.param.priceId || that.priceId
           let prices = []
           if (pricesItem) {
             for (let i = 0; i < pricesItem.length; i++) {
@@ -359,7 +359,7 @@ export default {
                 prices.push(pricesItem[i])
               }
             }
-            if (!prices || prices.length <1) {
+            if (!prices || prices.length === 0) {
               that.warn.show = true
               that.warn.texts = '该项目已下线或超出服务范围'
             }
