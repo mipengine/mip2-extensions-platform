@@ -156,7 +156,6 @@ export default {
       if (orderBookList != null) {
         orderBookList = orderBookList.replace(/"/g, '')
       }
-
       // 订单详情接口
       let setting = {
         buy_book_list: orderBookList,
