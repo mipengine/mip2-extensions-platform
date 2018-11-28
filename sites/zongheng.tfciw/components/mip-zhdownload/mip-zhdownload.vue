@@ -73,7 +73,7 @@ export default {
       this.show = false
     },
     _jumpDownload () {
-      window.top.location.href = this.linkHref
+      window.location.href = this.linkHref
     }
   }
 }
