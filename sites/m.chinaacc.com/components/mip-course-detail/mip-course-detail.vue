@@ -4,7 +4,7 @@
     <div class="course-head">
       <div class="course-audition">
         <a
-          :href="'/mip/shitingList/' + courseType + '/c' + productId + '.shtml'"
+          :href="'http://m.chinaacc.com/mip/shitingList/' + courseType + '/c' + productId + '.shtml'"
           data-type="mip">
           <mip-img
             :src="'http://m.chinaacc.com/mip/static/images/course/'+ productId +'.jpg'"
