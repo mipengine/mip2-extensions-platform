@@ -179,7 +179,7 @@ export default {
           cps360: '',
           cpsyiqifa: '',
           detailIDs: '',
-          payMoney: that.order.payMoney + '',
+          payMoney: Number(that.order.payMoney) + Number(that.postMoney) + '',
           v_why: '',
           isManual: ''
         }
