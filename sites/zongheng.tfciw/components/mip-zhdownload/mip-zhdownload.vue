@@ -103,11 +103,16 @@ export default {
       }
 
       &.word_wrapper {
+        width: 100%;
+        padding-right: 192px;
         height: 55px;
         left: 42px;
         line-height: 55px;
         font-size: 16px;
         color: #31323E;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
       }
 
       .downloadImgUrl {
