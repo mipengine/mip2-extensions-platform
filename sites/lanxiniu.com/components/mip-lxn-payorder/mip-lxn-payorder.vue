@@ -847,6 +847,7 @@ export default {
     },
     // 确认下单
     sureOrder () {
+      this.inputBlur()
       this.checkData()
       //   let islogin = this.userlogin.isLogin
       //   let sessionId = this.userlogin.sessionId
@@ -1266,6 +1267,14 @@ export default {
     },
     closeTips () {
       this.commewai.show = false
+    },
+    // 输入框 失去焦点
+    inputBlur () {
+      console.log('调用清除')
+      let inputs = this.$element.querySelectorAll('input:focus')
+      Array.prototype.slice.call(inputs).forEach(ele => {
+        ele.blur()
+      })
     }
   }
 }
