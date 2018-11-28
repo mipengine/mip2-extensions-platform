@@ -4,7 +4,7 @@
     type="bottom">
     <div
       class="bot_bar"
-      data-stats-baidu-obj="%7B%22type%22%3A%22load%22%2C%22data%22%3A%5B%22_setCustomVar%22%2C1%2C%22downloadbarinview%22%2C%221%22%2C2%5D%7D">
+      data-stats-baidu-obj="%7b%22type%22%3a%22load%22%2c%22data%22%3a%5b%22_setCustomVar%22%2c1%2c%22downloadbar%22%2c%22firstinview%22%5d%7d">
       <div
         class="close_btn"
         data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22downloadbar%22%2C%22close%22%5D%7D"
@@ -28,6 +28,7 @@
         data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22downloadbar%22%2C%22gotodownload%22%5D%7D"
         @click="_jumpDownload" />
     </div>
+    <slot/>
   </mip-fixed>
 </template>
 

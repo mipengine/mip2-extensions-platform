@@ -862,7 +862,7 @@
     <!-- 615 新加容器xiaoshuo-read包住原来主区域用于触发控制条 -->
     <div id="mip-reader-warp">
         <div class="reader mip-shell-xiaoshuo-container" on="click:xiaoshuo-shell.showShellFooter">
-            <h2 class="title">第一章 小二上酒</h2>
+            <h2 class="title" data-stats-baidu-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22_trackEvent%22%2C%22downloadbar%22%2C%22close%22%5D%7D">第一章 小二上酒</h2>
             <div class="zhdown-inner">
                 <mip-html-os os="android" class="mip-html-os">
                     <a class="zhdown-innerlnk" href="http://www.xmkanshu.com/app/android?fr=bdgfh&mip=1&bkid=189169121&crid=1&ld=1"
@@ -903,11 +903,6 @@
         </div>
         <!-- 615 新加控制条 -->
     </div>
-    <div>
-        <mip-zhdownload androidhref="http://www.xmkanshu.com/app/android?fr=bdgfh&mip=1&bkid=189169121&crid=1&ld=1"
-            ioshref="https://www.apple.com/cn/itunes/" title="离线免费看全文，离线免费看全文，离线免费看全文">
-        </mip-zhdownload>
-    </div>
     <!-- 翻页 -->
     <div class="navigator">
         <!-- 指向上下页的mip url，所有mip链接我没加目标标题，记得补上 -->
@@ -946,25 +941,29 @@
             }]}
     </script>
     </mip-shell-xiaoshuo>
-    <mip-stats-baidu>
-        <script type="application/json">
-            {
-                "token": "02890d4a309827eb62bc3335b2b28f7f"
-            }
-        </script>
-    </mip-stats-baidu>
+    <div>
+        <mip-zhdownload androidhref="http://www.xmkanshu.com/app/android?fr=bdgfh&mip=1&bkid=189169121&crid=1&ld=1" ioshref="https://www.apple.com/cn/itunes/"
+            title="离线免费看全文，离线免费看全文，离线免费看全文">
+            <mip-stats-baidu>
+                <script type="application/json">
+                      {
+                        "token": "02890d4a309827eb62bc3335b2b28f7f"
+                      }
+                    </script>
+            </mip-stats-baidu>
+        </mip-zhdownload>
+    </div>
     <!-- 组件引入 -->
     <!-- 709修改，mip.js地址为2.0 -->
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-stats-baidu/mip-stats-baidu.js"></script>
     <script src="https://c.mipcdn.com/static/v1/mip-semi-fixed/mip-semi-fixed.js"></script>
-    <script src="https://c.mipcdn.com/static/v1/mip-stats-baidu/mip-stats-baidu.js"></script>
-    <!-- <script src="https://c.mipcdn.com/static/v1/mip-stats-sa/mip-stats-sa.js"></script> -->
     <!-- <script src="https://c.mipcdn.com/static/v1/mip-html-os/mip-html-os.js"></script> -->
-
+    <!-- <script src="https://hm.baidu.com/hm.js?02890d4a309827eb62bc3335b2b28f7f"></script> -->
     <!-- 615新增 -->
     <script src="https://c.mipcdn.com/static/v2/mip-shell-xiaoshuo/mip-shell-xiaoshuo.js"></script>
-    <!--凤巢-->
     <script src="/mip-zhdownload/mip-zhdownload.js"></script>
+    <!--凤巢-->
 </body>
 
 </html>
