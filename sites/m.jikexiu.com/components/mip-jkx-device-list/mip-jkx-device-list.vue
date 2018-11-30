@@ -133,7 +133,7 @@ export default {
       // }, { passive: false })
       if (val.last) {
         this.last = val.last
-        this.tab = ['类型', '品牌', '型号']
+        this.tab = ['品牌', '类型', '型号']
         this.changeColor = 0
         this.queryBrand()
       } else {
@@ -168,7 +168,7 @@ export default {
   methods: {
     changeTab (index) {
       if (this.last) {
-        if (index === 0) this.tab = ['类型', '品牌', '型号']
+        if (index === 0) this.tab = ['品牌', '类型', '型号']
         this.changeColor = index
       } else {
         if (index === 0) this.tab = ['分类', '故障']
@@ -181,8 +181,49 @@ export default {
       request(apiUrl.categoryList).then(res => {
         if (res.code === 200) {
           this.data1 = res.data.list
+          let brand = []
+          // let len = this.data1.length
+          // 整理收集品牌
+          res.data.list.forEach((val, ind) => {
+            brand = [...brand, ...val.brandList]
+          })
+          // 去除手机相同品牌
+          brand.forEach((v, i) => {
+            brand.forEach((V, I) => {
+              brand[i].brandList = []
+
+              if (i !== I && v.id === V.id) {
+                brand.splice(I, 1)
+              }
+            })
+          })
+          // 调整顺序，删掉其它品牌
+          brand.forEach((v, i) => {
+            if (v.name === '苹果') {
+              brand.unshift(v)
+              brand.splice(i + 1, 1)
+            }
+            if (v.name === '其他品牌') {
+              brand.splice(i, 1)
+            }
+          })
+          // 品牌下的类型
+          let cI = 0
+          res.data.list.forEach((v, i) => {
+            v.brandList.forEach((V, I) => {
+              brand.forEach((val, ind) => {
+                if (V.name === val.name) {
+                  val.brandList.push(v)
+                }
+                if (Number(val.id) === Number(this.brandId)) {
+                  cI = ind
+                }
+              })
+            })
+          })
+          this.data1 = brand
           if (this.changeColor === 1 && this.data1.length > 0) {
-            this.data2 = this.data1[0].brandList
+            this.data2 = this.data1[cI].brandList
           } else {
             this.data2 = this.data1[0].brandList
           }
@@ -247,7 +288,8 @@ export default {
       this.brandsIndex1 = index
       this.changeColor = 1
       this.changeColor1 = 1
-      this.categoryId = item.id
+      // this.categoryId = item.id
+      this.brandId = item.id
       if (this.last) {
         this.tab[0] = item.name
         this.data2 = this.data1[index].brandList
@@ -259,7 +301,8 @@ export default {
     chooseBrands (item, index) {
       this.brandsIndex2 = index
       this.changeColor = 2
-      this.brandId = item.id
+      // this.brandId = item.id
+      this.categoryId = item.id
       this.queryBrand()
       if (!this.last) {
         this.tab[1] = item.title
@@ -308,19 +351,41 @@ export default {
         this.name = item.model
         MIP.setData({
           orderData: {
-            device: this.name
+            device: this.name,
+            color1: true,
+            showTxt2: false
           },
           deviceData: {
             name: this.name,
             show: false,
             showTxt1: true,
+            showTxt2: false,
             changeColor: this.changeColor,
             changeColor1: this.changeColor1,
-            showFault: false
+            showFault: false,
+            color1: true
           }
         })
         // this.show = false
         this.queryColor(item.id)
+      } else {
+        MIP.setData({
+          orderData: {
+            device: '选择型号',
+            color1: false,
+            showTxt2: false
+          },
+          deviceData: {
+            name: '选择型号',
+            show: false,
+            showTxt1: false,
+            showTxt2: false,
+            changeColor: this.changeColor,
+            changeColor1: this.changeColor1,
+            showFault: false,
+            color1: false
+          }
+        })
       }
     },
     // 获取颜色
@@ -344,14 +409,49 @@ export default {
       })
     },
     close () {
-      MIP.setData({
-        deviceData: {
-          show: false,
-          changeColor: this.changeColor,
-          changeColor1: this.changeColor1,
-          showFault: false
-        }
-      })
+      if (this.last) {
+        MIP.setData({
+          deviceData: {
+            show: false,
+            changeColor: this.changeColor,
+            changeColor1: this.changeColor1,
+            showFault: false,
+            device: this.last ? this.name : '选择故障',
+            showTxt1: !this.last,
+            showTxt2: !this.last,
+            name: this.name || '选择型号',
+            name1: this.name1
+          },
+          orderData: {
+            solution: this.name1,
+            malfunctionId: this.malfunctionId,
+            price: this.price > 0 ? `￥${this.price}` : '待检测'
+          }
+        })
+      } else {
+        MIP.setData({
+          orderData: {
+            solution: this.name1,
+            malfunctionId: this.malfunctionId,
+            price: this.price > 0 ? `￥${this.price}` : '待检测'
+            // fault: item.name,
+            // brandId: item.id,
+            // period: `(${per})`
+          },
+          deviceData: {
+            name1: this.name1,
+            show: false,
+            showTxt2: this.name1 && this.name1 !== '选择故障',
+            changeColor: this.changeColor,
+            changeColor1: this.changeColor1,
+            price: this.price > 0 ? `￥${this.price}` : '待检测'
+            // fault: item.smInfo.method,
+            // brandId: item.id,
+            // period: `(${per})`,
+            // showFault: !!item.smInfo.method
+          }
+        })
+      }
     }
   }
 }

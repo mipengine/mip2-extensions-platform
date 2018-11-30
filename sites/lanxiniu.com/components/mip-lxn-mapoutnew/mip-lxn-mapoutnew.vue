@@ -58,18 +58,23 @@
     <p
       class="btn-sure btn"
       @click="moveoutSure">确定</p>
-    <div
+
+    <mip-fixed
       v-show="warn.show"
-      class="layer">
-      <div class="layer-content zoomIn">
-        <p
-          class="layer-text"
-          v-text="warn.texts"/>
-        <p
-          class="layer-sure active-layer"
-          @touchend="closeLayer">知道了</p>
+      class="layerfixed">
+      <div
+        v-show="warn.show"
+        class="layer">
+        <div class="layer-content zoomIn">
+          <p
+            class="layer-text"
+            v-text="warn.texts"/>
+          <p
+            class="layer-sure active-layer"
+            @touchend="closeLayer">知道了</p>
+        </div>
       </div>
-    </div>
+    </mip-fixed>
 
   </div>
 
