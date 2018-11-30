@@ -42,7 +42,7 @@ export default {
     for (let i = 0; i < num; i++) {
       const X = that.CXD[i]
       const CX_URL = X[2][Math.floor(Math.random() * X[2].length)]
-      str += '<' + sb + '><a href="' + CX_URL + '" target="_blank"><em><img src="/static/public/images/tool/vip/' + X[1] + '"></em><span>' + X[0] + '</span></a></' + sb + '>'
+      str += '<' + sb + '><a href="' + CX_URL + '" target="_blank"><em><img src="https://mip.xzw.com/static/public/images/tool/vip/' + X[1] + '"></em><span>' + X[0] + '</span></a></' + sb + '>'
     }
     A[0].innerHTML += str
     setpIconQueue(max)
