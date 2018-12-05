@@ -13,10 +13,10 @@
             type="search"
             @input="autosearch(searchText)"
             @keyup.13="completeWords(searchText)">
+          <span
+            class="clear"
+            @click="completeWords(searchText)">搜索</span>
         </div>
-        <div
-          class="clear"
-          @click="completeWords(searchText)">搜索</div>
       </div>
     </mip-fixed>
     <div class="sc-box">
@@ -261,30 +261,26 @@ export default {
         padding-left: 4%;
         background: #fff;
     }
-
+    .inputxt{
+        width: 95.5%;
+        position: relative;
+        border-radius: 4px;
+        display: block;
+        border: 1px solid #898989;
+        height: 34px;
+        padding-left: 2%;
+        margin-top: 7px;
+    }
     .searchdiv {
         background: #fff;
     }
 
     .searchinput {
         padding-left: 4%;
-        border-radius: 4px;
         font-size: 14px;
-        width: 90%;
+        width: 75%;
         height: 32px;
     }
-
-    .inputxt {
-        width: 80%;
-        position: relative;
-        display: inline-block;
-        border: 1px solid #898989;
-        height: 34px;
-        padding-left: 2%;
-        margin-top: 6px;
-        border-radius: 4px;
-    }
-
     .searchValue {
         line-height: 36px;
         border-bottom: 1px solid #f5f5f5;
@@ -294,15 +290,19 @@ export default {
     }
 
     .fsx {
-        height: 46px;
+        height: 42px;
     }
 
     .fsx .clear {
         margin-top: 0;
         font-size: 14px;
         display: inline-block;
-        width: 15%;
+        width: 16%;
         text-align: center;
+        color: #428ffe;
+        height: 32px;
+        border-left: 1px solid #d1d1d1;
+        line-height: 32px;
     }
 
     .loding {
@@ -349,7 +349,6 @@ export default {
         margin-top: 54px;
         box-sizing: border-box;
     }
-
     .sc-box-list {
         display: flex;
         align-items: center;
