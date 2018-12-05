@@ -263,6 +263,7 @@ export default {
     }
     if (that.orderId) {
       that.buyAgain(that.orderId)
+      that.gethtml()
     } else {
       that.gethtml()
       that.setPostion()
@@ -353,22 +354,18 @@ export default {
           let priceIds = that.param.priceId || that.priceId
           let prices = []
           if (pricesItem) {
-            console.log(111)
             for (let i = 0; i < pricesItem.length; i++) {
-              console.log(priceIds, Number(pricesItem[i].id))
               if (priceIds === Number(pricesItem[i].id)) {
                 prices.push(pricesItem[i])
               }
             }
-
-            if (!prices) {
+            if (!prices || prices.length === 0) {
               that.warn.show = true
-              that.warn.texts = '该项目已下线'
+              that.warn.texts = '该项目已下线或超出服务范围'
             }
           } else {
-            console.log(222)
             that.warn.show = true
-            that.warn.texts = '该项目已下线'
+            that.warn.texts = '该项目已下线或超出服务范围'
           }
           let apptime = Number(sessionStorage.getItem('apptime'))
           that.serviceId = data.id
@@ -1049,6 +1046,7 @@ export default {
     .gimg {
         border-bottom: 1px solid #e5e5e5;
         padding-bottom: 10px;
+        position: relative;
     }
 
     .gtitname {
@@ -1065,9 +1063,11 @@ export default {
     }
 
     .gadd {
-        float: right;
+        position: absolute;
         width: 25%;
-        margin-top: 36px;
+        top: 36px;
+        right: 0;
+
     }
 
     .noquan {

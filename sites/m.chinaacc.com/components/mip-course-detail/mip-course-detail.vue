@@ -79,7 +79,9 @@
               name="bzCourse"
               type="checkbox">
           </div>
-          <p class="ts">选中即同意<a href="http://m.chinaacc.com/wangxiao/gonggao/li1803063216.shtml">延期保障协议</a></p>
+          <p class="ts">选中即同意<a
+            href="http://m.chinaacc.com/wangxiao/gonggao/li1803063216.shtml"
+            data-type="mip">延期保障协议</a></p>
         </div>
       </div>
       <div
@@ -250,8 +252,9 @@
             'cr-item-yellow':corrCourseItem.showColor === 5}"
           class="cr-item">
           <a
-            :href="'http://m.chinaacc.com/mip/kecheng/?cId=' + corrCourseItem.productId + '&type=' + courseType + '.shtml'"
-            class="cr-head">
+            :href="'/mip/kecheng/index.html?cId=' + corrCourseItem.productId + '&type=' + courseType "
+            class="cr-head"
+            data-type="mip">
             <strong>{{ corrCourseItem.eduSubjectName }}</strong>
             <p>{{ corrCourseItem.selCourseTitle }}</p>
           </a>
