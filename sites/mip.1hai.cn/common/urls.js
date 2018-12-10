@@ -1,10 +1,10 @@
 // const urls = "https://mip.1hai.com";
-const urls = "http://frontdemo.1hai.com/mip/";
-// const urls = "http://127.0.0.1:8111/mip/";
+// const urls = "http://frontdemo.1hai.com/mip/";
+const urls = "http://127.0.0.1:8111/mip/";
 
 // const baseUrl = "https://appmini.1hai.cn/Baidu/"; // prod
-const baseUrl = 'https://unifytest.1hai.cn/BaiduDemo/'; // demo
-// const baseUrl = "https://unifytest.1hai.cn/mdev/"; // dev
+// const baseUrl = 'https://unifytest.1hai.cn/BaiduDemo/'; // demo
+const baseUrl = "https://unifytest.1hai.cn/mdev/"; // dev
 
 const transformObjUrlToCache = urls => {
   let result = {};
