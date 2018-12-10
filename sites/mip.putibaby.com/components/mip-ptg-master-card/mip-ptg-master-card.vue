@@ -364,10 +364,15 @@
               @click="handleUpdateTime">
               <a>预约视频面试</a>
             </td>
-
+            <td
+              v-if="data.info.can_online_interview"
+              class="td2"
+              @click="handleZjqd(data.info)">
+              <a>在线签约</a>
+            </td>
             <td
               v-else
-              class="td2"
+              class="td3"
               @click="handleOrderList">
               <a>{{ data.info.order_desc_str }}-查看预约</a>
             </td>
@@ -688,7 +693,7 @@ body{
     margin: 0px;
 }
 .serverCard .price p span:nth-of-type(1){
-    text-decoration:line-through;
+    /*text-decoration:line-through;*/
     color: #C32218;
 }
 .serverCard .price p span:nth-of-type(2){
@@ -744,8 +749,12 @@ body{
 .pingjiacard .pingjia tbody tr:first-child{
   padding:10px 0px 10px 10px;
 }
-.pingjiacard .pingjia tbody tr:nth-of-type(1) td,
-.pingjiacard .pingjia tbody tr:nth-of-type(2) td,
+.pingjiacard .pingjia tbody tr:nth-of-type(1) td
+{
+  line-height:30px;
+  border-bottom: 1px solid #eee;
+}
+.pingjiacard .pingjia tbody tr:nth-of-type(2) td
 {
   line-height:30px;
   border-bottom: 1px solid #eee;
@@ -874,16 +883,16 @@ td.secondCol {
 .td1{
     cursor: pointer;
     background-color: #fff;
-    width: 25%;
+    width: 18%;
 }
 .td-fav{
-  width: 25%;
+  width: 18%;
 }
 .td2{
     cursor: pointer;
     background-color: #adcd41;
-    font-size: 15px;
-    width: 50%;
+    font-size: 14px;
+    width: 32%;
 }
 .td2 a{
     color:white !important;
@@ -893,6 +902,15 @@ td.secondCol {
     /*width:25px;*/
     /*height:25px;*/
     margin:0 auto;
+}
+.td3{
+    cursor: pointer;
+    background-color: #adcd41;
+    font-size: 14px;
+    width: 64%;
+}
+.td3 a{
+    color:white !important;
 }
 
 .fav_p{
@@ -1050,6 +1068,15 @@ API.reportVisit = function (zw, city, fn) {
     },
     fn)
 }
+API.zjqd = function (masterId, masterType, fn) {
+  API.wrapRet_(
+    'https://mip.putibaby.com/api/zjqd', {
+      'master_id': masterId,
+      'master_type': masterType
+    },
+    fn)
+}
+
 export default {
 
   props: {
@@ -1142,7 +1169,21 @@ export default {
     window.addEventListener('hide-page', () => {
 
     })
-
+    this.$element.customElement.addEventAction('echo', function (event, str) {
+      console.log(event)
+    })
+    this.$element.customElement.addEventAction('dook', function (event, str) {
+      // console.log(event);
+      if (event.from) {
+        console.log(event.from)
+        event.from.bind(self)(event.data, true)
+        // var eval_str = 'this.' + event.handler + '(event_order)'
+      }
+    })
+    this.$element.customElement.addEventAction('docancel', function (event, str) {
+      console.log(event)
+      console.log(str)
+    })
     this.$element.customElement.addEventAction('logindone', event => {
       // 这里可以输出登录之后的数据
 
@@ -1223,6 +1264,8 @@ export default {
           this.$emit('login2')
         } else if (cmd === 'update_time') {
           this.$emit('login3')
+        } else {
+          this.$emit('login1')
         }
         return false
       }
@@ -1236,6 +1279,8 @@ export default {
         } else if (cmd === 'update_time') {
           to = 'https://mip.putibaby.com/update_time_mip?mcode=' + this.data.codeid
           window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(to)), {})
+        } else {
+          window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/submit_ph?to=' + encodeURIComponent(window.location.href)), {})
         }
 
         return false
@@ -1263,6 +1308,43 @@ export default {
         window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/update_time_mip?mcode=' + self.data.codeid), {})
       })
     },
+    handleZjqd (info, skip) {
+      console.log('handleZjqd')
+      // console.log(info)
+      var self = this
+      var city = this.city || ''
+      API.reportVisit(7, city, function (isOk, res) {
+        if (isOk) {
+          console.log(res)
+        } else {
+          console.log(res)
+        }
+      })
+
+      if (!self.checkLogin_()) { return }
+
+      if (skip) {
+        API.zjqd(info.id, 'yuesao', function (isOk, data) {
+          if (isOk) {
+            window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {})
+            // self.reload_()
+          } else {
+            console.warn(data)
+            self.show_alert(data)
+          }
+        })
+      } else {
+        var ele = document.getElementById('ptgconfirm')
+        // console.log(ele);
+        MIP.viewer.eventAction.execute('doshow', ele, {
+          el_id: 'mastercard',
+          title: '提示消息',
+          msg: '确定签约?',
+          from: this.handleZjqd,
+          data: info })
+      }
+    },
+
     handleOrderList () {
       console.log('handleOrderList')
       if (!this.checkLogin_('order_list')) { return }
