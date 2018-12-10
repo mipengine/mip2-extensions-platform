@@ -354,22 +354,18 @@ export default {
           let priceIds = that.param.priceId || that.priceId
           let prices = []
           if (pricesItem) {
-            console.log(111)
             for (let i = 0; i < pricesItem.length; i++) {
-              console.log(priceIds, Number(pricesItem[i].id))
               if (priceIds === Number(pricesItem[i].id)) {
                 prices.push(pricesItem[i])
               }
             }
-
-            if (!prices) {
+            if (!prices || prices.length === 0) {
               that.warn.show = true
-              that.warn.texts = '该项目已下线'
+              that.warn.texts = '该项目已下线或超出服务范围'
             }
           } else {
-            console.log(222)
             that.warn.show = true
-            that.warn.texts = '该项目已下线'
+            that.warn.texts = '该项目已下线或超出服务范围'
           }
           let apptime = Number(sessionStorage.getItem('apptime'))
           that.serviceId = data.id

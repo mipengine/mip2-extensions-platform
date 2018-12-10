@@ -4,7 +4,7 @@
 
 <script>
 import { getCookie, setCookie } from '../../common/utils/cookie'
-import { getUrlParams, formatParams } from '../../common/utils'
+import { getUrlParams, formatParams, getLocalUrl } from '../../common/utils'
 import { Toast } from '../../common/utils/toast'
 export default {
   data () {
@@ -60,7 +60,7 @@ export default {
       }
       if (that.code == null) {
         // 不存在code，去认证页
-        let url = window.location.href
+        let url = getLocalUrl()
         let wxParamMap = {
           'appid': 'wxf6ab920c859515ee',
           'redirect_uri': url,
