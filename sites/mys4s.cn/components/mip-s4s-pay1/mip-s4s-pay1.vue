@@ -871,7 +871,7 @@ export default {
         'city_code': this.illegal.Locationid
       }).then((xhr, res) => {
         if (res.code === 0) {
-          this.ownFree = res.data.CooperFee ? Number((res.data.CooperFee / 100).toFixed(2)) : 0
+          this.ownFree = res.data.CooperFee ? Number(res.data.CooperFee / 100) : 0
           this.illegal.FreeRuleObject.drive_no = res.data.NeedJszNo// 驾驶证号
           this.illegal.FreeRuleObject.drive_file_number = res.data.NeedJszFileNo// 驾驶证档案编号
           this.illegal.FreeRuleObject.drive_bar_code = res.data.NeedJszBarCode// 驾驶证条形码
