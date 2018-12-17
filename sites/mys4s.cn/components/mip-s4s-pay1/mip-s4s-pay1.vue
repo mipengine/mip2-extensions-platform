@@ -35,7 +35,7 @@
           placeholder="请输入驾驶证号码" >
       </div>
       <div
-        v-if="illegal&&(illegal.car_no||illegal.CarNo).substring(0, 1) === '豫'"
+        v-if="illegal&&(illegal.car_no||illegal.CarNo || '').substring(0, 1) === '豫'"
         class="s4s-group">
         <span class="s4s-group-tit">中文姓名</span>
         <input
@@ -729,12 +729,13 @@ export default {
           return
         }
       }
-      if ((this.illegal.car_no || this.illegal.CarNo).substring(0, 1) === '豫') {
+      if ((this.illegal.car_no || this.illegal.CarNo || '').substring(0, 1) === '豫') {
         if (!this.name) {
           util.toast('请输入姓名')
           return
         }
       }
+
       if (
         this.illegal.FreeRuleObject &&
         this.illegal.FreeRuleObject.drive_file_number === 1
@@ -796,13 +797,13 @@ export default {
         let totalPrice = Number(
           price +
             Math.round(this.ownFree * 100) +
-            Math.round(this.lateFree * 100)
+            this.lateFree * 100
         )
         let param = {
           source: 'xzapp',
           fine: price + '', // 罚金
           lateFree: (this.lateFree ? Math.round(this.lateFree * 100) : 0) + '',
-          ownFree: Math.round(this.ownFree * 100) + '', // 服务费
+          ownFree: this.ownFree * 100 + '', // 服务费
           totalPrice: totalPrice + '', // 总金额
           vio_time: this.date, // 文章时间：格式：2017-12-13
           carno: this.illegal.car_no || this.illegal.CarNo || '',
@@ -819,14 +820,14 @@ export default {
           drive_file_number: this.drive_file_number || '',
           name: this.name
         }
-        if (
-          !window.localStorage.getItem(
-            'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
-          )
-        ) {
-          util.toast('未授权百度账号')
-          return
-        }
+        // if (
+        //   !window.localStorage.getItem(
+        //     'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
+        //   )
+        // ) {
+        //   util.toast('未授权百度账号')
+        //   return
+        // }
         util.fetchData('v3/violation/web/order/create', param).then(res => {
           if (res.code === 0) {
             MIP.setData({
@@ -865,22 +866,41 @@ export default {
     },
     getVipFee () {
       let self = this
-      util
-        .fetchData('v3/violation/fee', {
-          vio_id: this.illegal.ViolationId,
-          car_no: this.illegal.car_no || this.illegal.CarNo,
-          fine: Number(this.price * 100) + ''
-        })
-        .then(res => {
-          if (res.code === 0) {
-            self.lateFree = res.data.LateFree
-              ? Number((res.data.LateFree / 100).toFixed(2))
-              : 0
-            self.ownFree = res.data.OwnFree
-              ? Number((res.data.OwnFree / 100).toFixed(2))
-              : 0
-          }
-        })
+      util.fetchData('v3/violation/submit_rule', {
+        'vio_id': this.illegal.ViolationId,
+        'car_no': this.illegal.CarNo,
+        'city_code': this.illegal.Locationid
+      }).then((res) => {
+        if (res.code === 0) {
+          self.ownFree = res.data.CooperFee ? (res.data.CooperFee * 0.01) : 0
+          self.illegal.FreeRuleObject.drive_no = res.data.NeedJszNo// 驾驶证号
+          self.illegal.FreeRuleObject.drive_file_number = res.data.NeedJszFileNo// 驾驶证档案编号
+          self.illegal.FreeRuleObject.drive_bar_code = res.data.NeedJszBarCode// 驾驶证条形码
+
+          self.illegal.FreeRuleObject.drive_licence = res.data.NeedXszFront // 行驶证正面
+          self.illegal.FreeRuleObject.travel_licence = res.data.NeedXszBack// 行驶证反面
+
+          self.illegal.FreeRuleObject.jsz_drive_licence = res.data.NeedJszFront// 驾驶证正面
+          self.illegal.FreeRuleObject.jsz_travel_licence = res.data.NeedJszBack// 驾驶证反面
+        }
+      })
+      // let self = this
+      // util
+      //   .fetchData('v3/violation/fee', {
+      //     vio_id: this.illegal.ViolationId,
+      //     car_no: this.illegal.car_no || this.illegal.CarNo,
+      //     fine: Number(this.price * 100) + ''
+      //   })
+      //   .then(res => {
+      //     if (res.code === 0) {
+      //       self.lateFree = res.data.LateFree
+      //         ? Number((res.data.LateFree / 100).toFixed(2))
+      //         : 0
+      //       self.ownFree = res.data.OwnFree
+      //         ? Number((res.data.OwnFree / 100).toFixed(2))
+      //         : 0
+      //     }
+      //   })
     }
   }
 }

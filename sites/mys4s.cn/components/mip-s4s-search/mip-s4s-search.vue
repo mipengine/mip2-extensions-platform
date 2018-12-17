@@ -1,7 +1,21 @@
 <template>
   <div
     id="s4s"
+    :style="shownactive?'padding-top:.4rem':''"
     class="s4s-page">
+    <mip-fixed type="top">
+      <div
+        v-if="shownactive"
+        class="s4s-nation-active"
+        @click="showNation">
+        <mip-img
+          src="https://s4s-html.oss-cn-shanghai.aliyuncs.com/xcar/static/img/laba.png"
+          width="15"
+          height="15"
+          style="margin-right:4px;" />
+        <span>国庆期间电子眼违章延时处理通知 >></span>
+      </div>
+    </mip-fixed>
     <!-- <mip-img
       src="https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/xiongzhang/banner.png"
       styel="width:100%;" /> -->
@@ -84,7 +98,9 @@
         </div>
       </div>
     </div>
-    <div class=" s4s-car-info s4s-illegal-body">
+    <div
+      class=" s4s-car-info s4s-illegal-body"
+      style="margin-top:0">
       <h2
         class="s4s-car-name"
         style="display:flex;justify-content: space-between;">输入行驶证信息 <mip-img
@@ -266,6 +282,20 @@
         style="color:#FE7000;font-weight:bold"
         href="tel:400000119">400-000-1199</a></p>
     </div>
+    <!-- 国庆活动 -->
+    <div
+      v-if="showNations && shownactive"
+      class="captcha">
+      <div class="s4s-mask" />
+      <div class="nation-container">
+        <img
+          src="https://s4s-html.oss-cn-shanghai.aliyuncs.com/xcar/static/img/close_active.png"
+          mode="aspectFill"
+          class="nation-img"
+          @click="closeNation">
+      </div>
+    </div>
+    <!-- 国庆活动 -->
   </div>
 </template>
 
@@ -417,7 +447,9 @@ export default {
         '学',
         '港',
         '澳'
-      ]
+      ],
+      shownactive: true,
+      showNations: true
     }
   },
   watch: {
@@ -474,6 +506,12 @@ export default {
     }
   },
   mounted () {
+    let now = new Date().getTime()
+    let endtime = new Date('2018/10/08').getTime()
+    console.log(now, endtime)
+    if (now > endtime) {
+      this.shownactive = false
+    }
     this.$on('customLogin', event => {
       // event.userInfo;
       // event.sessionId;
@@ -501,6 +539,12 @@ export default {
     this.load(this.page, true)
   },
   methods: {
+    showNation () {
+      this.showNations = true
+    },
+    closeNation () {
+      this.showNations = false
+    },
     load (page, refresh) {
       if (this.loading) {
         return
@@ -1054,4 +1098,50 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
 .flex-1 {
   flex: 1;
 }
+/* 国庆活动 */
+.captcha{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 11;
+  }
+  .captcha .s4s-mask{
+    z-index:0;
+  }
+  .s4s-nation-active{
+      display: flex;
+      color: #5B5E6A;
+      font-size: .12rem;
+      background: #FFF1DB;
+      width: 100vw;
+      height: .40rem;
+      align-items: center;
+      padding: 0 .15rem;
+  }
+  /* .s4s-nation-active img{
+      width: .14rem;
+      height: .14rem;
+      margin-right: .06rem;
+  } */
+  .nation-container{
+      width: 3.1rem;
+      height: 3.6rem;
+      background: url(https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/vio/nation-notice.png) no-repeat;
+      background-size: 100% 100%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translateY(-50%) translateX(-50%);
+  }
+  .nation-img{
+      width: .42rem;
+      height: .42rem;
+      position: absolute;
+      bottom: -.92rem;
+      left: 50%;
+      transform: translateX(-50%);
+  }
+  /* 国庆活动 */
 </style>

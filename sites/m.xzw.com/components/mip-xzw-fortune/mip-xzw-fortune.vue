@@ -65,8 +65,8 @@ export default {
       scard: [],
       otherLi: '',
       ico: {
-        'xz': ['../static/public/images/prot_icon/xz/a/[id].png'],
-        'sx': ['../static/public/images/prot_icon/sx/a/[id].png']
+        'xz': ['https://mip.xzw.com/static/public/images/prot_icon/xz/a/[id].png'],
+        'sx': ['https://mip.xzw.com/static/public/images/prot_icon/sx/a/[id].png']
       },
       rem: (MIP.viewport.getWidth() > 640 ? 640 : MIP.viewport.getWidth()) / 10,
       marginLeft: [0.7, 4.2, 0, 4.6, 1, 4.8, 0.8, 4.8, 2.8]
