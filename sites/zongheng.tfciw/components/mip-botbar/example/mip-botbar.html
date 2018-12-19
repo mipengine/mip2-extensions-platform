@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html mip>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
+    <title>第一章 小二上酒_雪中悍刀行-熊猫看书</title>
+    <!-- mip.css地址，709修改 -->
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/mag-design/2.0.2/mag-design.min.css">
+    <link rel="canonical" href="http://www.xmkanshu.com/book/mip/read?bkid=189169121&crid=1&fr=bdgfh&mip=1">
+    <meta name="apple-itunes-app" content="app-id=327313778, app-argument=pandareader://action/readbook">
+    <link rel="manifest" href="https://img.xmkanshu.com/u/201805/07/manifest.json">
+    <script type="application/ld+json">
+       {
+           "mipShellConfig": {
+               "currentPage": {
+                   "chapter": 1,
+                   "page": 1,
+                   "isLastPage": false,
+                   "chapterName": "%E7%AC%AC%E4%B8%80%E7%AB%A0+%E5%B0%8F%E4%BA%8C%E4%B8%8A%E9%85%92"
+               },
+               "previousPage": {
+                   "url": "",
+                   "chapter": "",
+                   "page": ""               },
+               "nextPage": {
+                   "url": "http://www.xmkanshu.com/book/mip/read?bkid=189169121&crid=1&fr=bdgfh&mip=1&pg=2",
+                   "chapter": 1,
+                   "page": 2               }
+           }
+       }
+    </script>
+    <style mip-custom>
+        #test {
+            width: 100vw;
+            height: 100vh;
+            background: red;
+            color: #fff;
+            font-size: 50px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 9999;
+
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* 709增加 */
+
+        html {
+            font-size: 60px;
+        }
+
+        @media screen and (max-width: 320px) {
+            html {
+                font-size: 48px !important
+            }
+        }
+
+        @media screen and (max-width: 360px) {
+            html {
+                font-size: 54px !important
+            }
+        }
+
+        ul {
+            list-style: none
+        }
+
+        /* /709增加,css结束 */
+
+        .top_box {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 5;
+        }
+
+        .top_box .box {
+            margin: 0.11rem 0.18rem 0 0.19rem;
+            border: 1px solid #ececec;
+            display: -webkit-box;
+            height: 1.72rem;
+        }
+
+        .top_box .box_left {
+            -webkit-box-flex: 1;
+            display: -webkit-box;
+            background: #fff;
+            position: relative;
+        }
+
+        .box_left .img-box {
+            width: 1rem;
+            height: 1.34rem;
+            margin: 0.18rem 0 0 0.35rem;
+        }
+
+        .box_left .img-box img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .box_left .left-msg {
+            -webkit-box-flex: 1;
+            margin: 0.32rem 0 0 0.2rem;
+        }
+
+        .box_left .left-msg-tit {
+            font-size: 0.26rem;
+            color: #333;
+            line-height: 0.3rem;
+            font-family: PingFangSC-Regular;
+        }
+
+        .box_left .left-msg-price {
+            font-size: 0.24rem;
+            padding: 0.14rem 0 0.08rem;
+            color: #00bf99;
+            line-height: 0.28rem;
+        }
+
+        .box_left .left-msg-price .free-price {
+            text-decoration: line-through;
+        }
+
+        .box_left .left-msg-per {
+            display: -webkit-box;
+        }
+
+        .box_left .left-msg-per .progress {
+            margin: 0.2rem 0 0;
+            height: 0.1rem;
+            width: 1.42rem;
+            background: #e6e6e6;
+            border-radius: 50px;
+        }
+
+        .box_left .left-msg-per .a_gray {
+            background: #00bf99;
+            height: 0.09rem;
+            border-radius: 50px;
+            float: left;
+        }
+
+        .box_left .left-msg-per .per-num {
+            font-size: 0.24rem;
+            color: #aaa;
+            line-height: 0.46rem;
+            padding-left: 0.2rem;
+        }
+
+        .top_box .box_right {
+            height: 1.72rem;
+            background: #00bf99;
+            border-left: 1px dashed #fff;
+            width: 50px;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        .top_box .box_right_text {
+            width: 20px;
+            text-align: center;
+            margin: 0 auto;
+            color: #fff;
+            font-size: 0.26rem;
+            padding-top: 0.1rem;
+            line-height: 0.38rem;
+        }
+
+        .top_box .del {
+            color: #cccccc;
+            width: 0.18rem;
+            height: 0.18rem;
+            right: 0.16rem;
+            top: 0.16rem;
+            position: absolute;
+        }
+
+        .top_box .del:before {
+            content: '';
+            position: absolute;
+            top: 0.09rem;
+            width: 0.18rem;
+            height: 1px;
+            background-color: currentColor;
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+        }
+
+        .top_box .del:after {
+            content: '';
+            position: absolute;
+            top: 0.09rem;
+            width: 0.18rem;
+            height: 1px;
+            background-color: currentColor;
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+        }
+
+        .blank {
+            height: 2.24rem;
+        }
+
+        /* -0615 reader -style  */
+
+        /* 注，原有.header字号有修改，下面三行 */
+
+        .reader,
+        .hot-link {
+            padding: .6rem 0.32rem 0.8rem;
+            color: #535353;
+            line-height: 1.7;
+        }
+
+        .reader .title {
+            font-size: 24px;
+            color: #333;
+            line-height: 0.75rem;
+            padding-left: 0.06rem;
+            padding-bottom: 0.2rem;
+        }
+
+        .reader p {
+            font-size: 16px;
+            text-indent: 2em;
+            margin: .2em;
+            word-break: break-all;
+        }
+
+        @font-face {
+            font-family: "mag-icon";
+            src: url("https://c.mipcdn.com/static/mag-design/2.0.2/fonts/mag-icon.eot?t=1515560671046");
+            /* IE9*/
+            src: url("https://c.mipcdn.com/static/mag-design/2.0.2/fonts/mag-icon.eot") format("embedded-opentype"), url("https://c.mipcdn.com/static/mag-design/2.0.2/fonts/mag-icon.woff") format("woff"), url("https://c.mipcdn.com/static/mag-design/2.0.2/fonts/mag-icon.ttf?t=1515560671046") format("truetype"), url("https://c.mipcdn.com/static/mag-design/2.0.2/fonts/mag-icon.svg?t=1515560671046#mag-icon") format("svg");
+            /* iOS 4.1- */
+        }
+
+        .icon {
+            display: inline-block;
+            font-family: mag-icon;
+            font-style: normal;
+            font-weight: 400;
+            text-decoration: none;
+            text-transform: none;
+            line-height: 1;
+        }
+
+        i.icon {
+            line-height: 1;
+            vertical-align: middle
+        }
+
+        .icon-menulist:before {
+            content: "\e681"
+        }
+
+        .icon-night:before {
+            content: "\e67b"
+        }
+
+        .icon-day:before {
+            content: "\e67e"
+        }
+
+        .icon-font:before {
+            content: "\e67d"
+        }
+
+        .gap-top-small {
+            margin-top: .1rem;
+        }
+
+        /* 默认 */
+
+        .mip-xiaoshuo-read-control-nav li {
+            text-align: center;
+        }
+
+        .mip-xiaoshuo-read-control-nav .icon-xiaoshuo {
+            font-size: 20px;
+        }
+
+        /* 0615 reader -style end */
+
+        .hot-tit {
+            font-size: .34rem;
+            line-height: 1;
+            color: #333;
+            font-weight: 600;
+            font-family: PingFangSC-Medium;
+            padding-bottom: 0.27rem;
+        }
+
+        .hot-tit em {
+            width: 0.1rem;
+            height: 0.3rem;
+            border-radius: 0.025rem;
+            background: #ae7920;
+            display: inline-block;
+            margin-right: 0.15rem;
+            margin-top: 0.03rem;
+            float: left;
+        }
+
+        .hot-link .links {
+            border-bottom: 1px dashed #ccc;
+            font-size: 0.28rem;
+            color: #888;
+            line-height: 0.65rem;
+        }
+
+        .hot-link .links:last-child {
+            border-bottom: 0 none;
+        }
+
+        .hot-link .links a {
+            text-decoration: none;
+            color: #3473b8;
+        }
+
+        .bside {
+            padding: 0;
+            font-size: 16px;
+        }
+
+        .bside .olnk {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .bside .olnk:first-child {
+            line-height: 0;
+        }
+
+        .navigator {
+            padding: 0 0.23rem 0;
+            display: -webkit-box;
+            -webkit-box-pack: center;
+            padding-bottom: 30px
+        }
+
+        .navigator>a,
+        .navigator>div {
+            color: #ae7920;
+            font-size: 0.30rem;
+            -webkit-box-flex: 1.8;
+            height: 0.64rem;
+            text-align: center;
+            line-height: 0.64rem;
+            width: 0;
+            position: relative;
+            border-radius: 0.1rem;
+            display: block
+        }
+
+        .navigator>a:before,
+        .navigator>div:before {
+            content: '';
+            box-sizing: border-box;
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            left: 0;
+            top: 0;
+            border: 1px solid #c9c9c9;
+            border-radius: 0.2rem;
+            -webkit-transform: scale(0.5);
+            -webkit-transform-origin: 0 0;
+            transform: scale(0.5);
+            transform-origin: 0 0;
+        }
+
+        .navigator>:nth-child(-n+2) {
+            margin-right: .2rem;
+            -webkit-box-flex: 1
+        }
+
+        .navigator>:nth-child(3) {
+            background: #98c1d6;
+            color: #fff;
+        }
+
+        .navigator>:nth-child(3):before {
+            border: 0px;
+        }
+
+        #zh_mini_pop {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            -webkit-transform: translate3d(-50%, -50%, 0);
+            transform: translate3d(-50%, -50%, 0);
+            background-color: #000;
+            opacity: 0.8;
+            border-radius: 3px;
+            z-index: 2;
+            color: #fff;
+            text-align: center;
+            font-size: 14px;
+            padding: 10px 20px
+        }
+
+        /* changetapp */
+
+        .t_spacd {
+            height: 96px;
+        }
+
+        #topRanger {
+            height: 96px;
+        }
+
+        .box2_bg {
+            margin: 10px 10px 0px 10px;
+            height: 86px;
+            display: -webkit-box;
+            background: url("https://img.xmkanshu.com/operateimg/novel/0a/0a9958d07a5f57964e523ac6dee6a7b3.png") left center no-repeat;
+            background-size: 7px 86px;
+            padding-left: 6px;
+        }
+
+        .Day {
+            font-size: 12px;
+            color: #aaa;
+            line-height: 23px;
+            padding-left: 10px;
+        }
+
+        .progress {
+            margin: 10px 0px 0px 0px;
+            height: 5px;
+            width: 71px;
+            border-radius: 50px;
+        }
+
+        .A_Gray {
+            background: #00bf99;
+            float: left;
+            height: 4px;
+            border-radius: 50px;
+            width: 0%
+        }
+
+        .box_rigt_bg {
+            height: 86px;
+            background: #00bf99;
+            border-left: 1px dashed #fff;
+            width: 50px;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        .apd_l {
+            -webkit-box-flex: 1;
+            display: -webkit-box;
+            background: #fff;
+            position: relative;
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        .apd_r {
+            -webkit-box-flex: 1;
+            margin: 16px 0 0 10px;
+        }
+
+        .apd_rgreen {
+            width: 20px;
+            text-align: center;
+            margin: 0 auto;
+            font-size: 15px;
+            color: #fff;
+            padding-top: 5px;
+            line-height: 19px;
+        }
+
+        .apd_rtit {
+            font-size: 14px;
+            color: #333;
+            line-height: 15px;
+        }
+
+        .apd_close {
+            width: 7px;
+            height: 7px;
+            position: absolute;
+            right: 68px;
+            top: 14px;
+            z-index: 6;
+        }
+
+        .apd_rmonel {
+            font-size: 12px;
+            padding: 7px 0 4px;
+            color: #00bf99;
+            line-height: 14px;
+        }
+
+        #free_price {
+            text-decoration: line-through
+        }
+
+        .apd_cover {
+            width: 50px;
+            height: 70px;
+            margin: 8px 0 0 12px;
+        }
+
+        .apd_flex {
+            display: -webkit-box;
+        }
+
+        .apd_prog {
+            width: 98%;
+            height: 5px;
+            float: left;
+            background: #00bf99;
+            height: 4px;
+            border-radius: 50px;
+        }
+
+        /* bot */
+
+        .apd_bot {
+            height: 50px;
+            width: 100%;
+            background: #fff;
+        }
+
+        .apd_botin {
+            display: -webkit-box;
+        }
+
+        .apd_bot_l {
+            -webkit-box-flex: 1;
+            padding-left: 18px;
+            line-height: 50px;
+        }
+
+        .apd_bot_pr1 {
+            font-size: 20px;
+            color: #00bf99;
+            padding-right: 5px;
+        }
+
+        .apd_bot_pr2 {
+            font-size: 13px;
+            color: #aaa;
+            text-decoration: line-through;
+            vertical-align: top
+        }
+
+        .apd_bot_r {
+            background: #00bf99;
+            font-size: 16px;
+            color: #fff;
+            text-align: center;
+            line-height: 50px;
+            padding: 0 27px;
+        }
+
+        .botspace {
+            height: 52px;
+        }
+
+        /* lightbox */
+
+        .install-info {
+            background: #f5f5f5;
+            z-index: 103;
+            width: 100%;
+            height: 100vh;
+            font-size: 14px;
+            display: block
+        }
+
+        .install-wp {
+            padding: 70px 30px 10px;
+        }
+
+        .install-info .close {
+            background-image: url(https://img.xmkanshu.com/u/201805/07/142155707.png);
+            background-repeat: no-repeat;
+            background-size: 20px;
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            right: 20px;
+            top: 20px;
+        }
+
+        .install-info .ipflag {
+            background-image: url(https://img.xmkanshu.com/u/201805/07/142320747.png);
+            background-repeat: no-repeat;
+            background-size: 220px;
+            width: 220px;
+            height: 40px;
+            margin: auto;
+            line-height: 30px;
+            color: #fff;
+            text-align: center;
+        }
+
+        .freeexp {
+            padding: 10px 0;
+            text-align: center;
+            color: #888;
+        }
+
+        .freeexp .txtball {
+            line-height: 20px;
+            height: 20px;
+            width: 20px;
+            background: #c0c6ca;
+            border-radius: 10px;
+            overflow: hidden;
+            ;
+            color: #fff;
+            text-align: center;
+            display: inline-block;
+            vertical-align: middle;
+            margin: 0 5px;
+        }
+
+        .ipbgs_book {
+            text-align: center;
+            position: relative;
+        }
+
+        .ipbgs_cover img {
+            width: 120px;
+            height: 160px;
+        }
+
+        .ipbgs_book .dl2_freebag {
+            position: absolute;
+            left: 50%;
+            top: -20px;
+            margin-left: -132px;
+        }
+
+        .ipbgs_book .dl2_freebag img {
+            width: 130px;
+        }
+
+        .ipbgs_bookname {
+            line-height: 40px;
+            color: #888;
+            text-align: center;
+        }
+
+        .booksite .ipbgs_down a {
+            display: auto;
+            -webkit-box-flex: 1;
+            line-height: 40px;
+            border-radius: none;
+            text-align: center;
+            background: none;
+            color: #333;
+            overflow: hidden;
+        }
+
+        .ipbgs_down {
+            line-height: 40px;
+            height: 40px;
+            text-align: center;
+        }
+
+        .ipbgs_down a {
+            color: #333;
+        }
+
+        .install-info .receive-btn,
+        .booksite .bookbutton a.receive-btn {
+            background: #df3d3d;
+            height: 40px;
+            display: block;
+            text-decoration: none;
+            line-height: 40px;
+            text-align: center;
+            color: #fff;
+            border-radius: 5px;
+            font-size: 18px;
+            margin: 10px 20px;
+        }
+
+        .install-info .receive-btn.hover {
+            background: #fb8881
+        }
+
+        .install-info .tip-three {
+            color: #aaa;
+            text-align: center;
+            font-size: 12px;
+            margin-top: 14px
+        }
+
+        #clipbox {
+            position: absolute;
+            left: -9999px;
+            top: -9999px;
+        }
+
+        #rbpic {
+            width: 70px;
+            height: 76px;
+            margin-right: 10px;
+        }
+
+        #rbpic mip-img {
+            width: 100%;
+            display: block;
+        }
+
+        .bottomBtn {
+            background: #00bf99;
+            font-size: 18px;
+            color: #fff;
+            border-radius: 25px;
+            height: 38px;
+            line-height: 38px;
+            display: inline-block;
+            padding: 0 20px;
+            box-shadow: 0px 2px 5px rgba(101, 101, 101, 0.7);
+            font-family: 'Microsoft YaHei';
+            margin: 10px auto
+        }
+
+        #wolegebot {
+            text-align: center
+        }
+
+        /* 0807导量 依赖样式 下面appdl之间部分 */
+
+        /* appdl */
+
+        mip-appdl .mip-appdl-box {
+            background: #fff;
+            opacity: 0.96;
+            background: #FFFFFF;
+            height: 54px;
+        }
+
+        mip-appdl .mip-appdl-textbox {
+            font-family: PingFangSC-Regular;
+            font-size: 17px;
+            color: #000000;
+            line-height: 17px;
+        }
+
+        mip-appdl .mip-appdl-textbox p:nth-child(2) {
+            color: #999;
+            font-size: 12px;
+            margin: 4px 0;
+        }
+
+        mip-appdl .mip-appdl-imgbox {
+            width: 38px;
+            height: 38px;
+            top: 8px
+        }
+
+        mip-appdl .mip-appdl-downbtn {
+            position: absolute;
+            width: 90%;
+            right: 0;
+            top: 0;
+            height: 54px;
+            border: none
+        }
+
+        mip-appdl .mip-appdl-downbtn>a {
+            position: absolute;
+            width: 100%;
+            right: 0;
+            top: 0;
+            height: 54px;
+            text-indent: -9999px
+        }
+
+        mip-appdl .mip-appdl-downbtn>a:after {
+            border: 1px solid #3388FF;
+            border-radius: 2px;
+            width: 57px;
+            height: 28px;
+            color: #3388FF;
+            line-height: 28px;
+            content: '打开';
+            position: absolute;
+            right: 17px;
+            top: 12px;
+            text-indent: 0
+        }
+
+        mip-appdl .mip-appdl-textbox {
+            top: 9px;
+            left: 75px;
+        }
+
+        mip-appdl .mip-appdl-closebutton {
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8BAMAAADI0sRBAAAAA3NCSVQICAjb4U/gAAAALVBMVEX////7+/v39/fz8/Pv7+/n5+fj4+Pf39/b29vX19fS0tLOzs7KysrGxsbCwsK5mjKFAAAAD3RSTlMA///////////////////ljZ6mAAAACXBIWXMAAAsSAAALEgHS3X78AAAAHHRFWHRTb2Z0d2FyZQBBZG9iZSBGaXJld29ya3MgQ1M26LyyjAAAAcdJREFUOI2Nlb1OAkEQgPcAMRqKTWwgWlxJop2x5wEsfACL08YGEh7AQq1sSCBRK0gIMbGh0tjRATEns+3lSHgAH8Nb9m5n7m6Pu2kY7svs/OzODGPF5egCYHnOzdC6m4KUjxsTrQwhkped1MBjNMWtNsQl7v80QWFlE1qeJTF8EXyfogBdTfcNFH40vjZhiLyX0p6lfIb42EhhFRa/bcbgqIJlUFhs8UEWdrf4cquLt43+7vfUb0tidRm/rIMxhwf20fXKrkbmWpXOG5FJZC605gapnSRtXDyHk6wjoz5G4ZDbWvOqSkcbB7dWmuqAB0zqY5LChNbMlRWixkHoZcQwtkZCHRHKnO0R7LL6H6c1XrIa+QeD8q0Ve9FxvOasscnGwiFhp3FQxUY2FoOSY41imEbu27U1axLnS5q3eLKGwQE9/DKnVfPt+gZ83qRVw5qLR2kYHIHmE3JjnnLr2xh8F+9bOMqreGC6axx8LV5UMA+7neu3FhjPkpp8axVI2mh1ge/cxT4VzqFS+qRLnjFdLyxsq0CP5XRoTn/nTYec2cLOjPiq4FzLmYqmmfpdfCLnzfPkNnhnbAd/TS+r3Zsob48x0xb8BxLc3yR3WIBWAAAAAElFTkSuQmCC)
+        }
+
+        .zhdown-bot mip-appdl .mip-appdl-closebutton {
+            display: none
+        }
+
+        .zhdown-bot mip-appdl .mip-appdl-imgbox {
+            left: 14px
+        }
+
+        .zhdown-bot mip-appdl .mip-appdl-textbox {
+            top: 9px;
+            left: 60px;
+        }
+
+        .zhdown-bot mip-appdl .mip-appdl-downbtn {
+            width: 100%;
+        }
+
+        .zhdown-innerlnk {
+            display: block;
+            margin: -5px auto 16px auto
+        }
+
+        .zhdown-innerlnk>* {
+            vertical-align: middle;
+        }
+
+        .zhdown-innerlnk>span {
+            display: inline-block;
+            margin: 0 6px
+        }
+
+        /* appdl end */
+
+        html body mip-appdl .mip-appdl-textbox p {
+            font-size: 17px;
+            padding: 0;
+            margin: 0
+        }
+
+        .zhdown-innerlnk>span {
+            font-size: 14px;
+            color: #999
+        }
+    </style>
+
+</head>
+<div></div>
+
+<body>
+    <!-- 615 新加容器xiaoshuo-read包住原来主区域用于触发控制条 -->
+    <div id="mip-reader-warp">
+        <div class="reader mip-shell-xiaoshuo-container" on="click:xiaoshuo-shell.showShellFooter">
+            <h2 class="title">第一章 小二上酒</h2>
+            <div class="zhdown-inner">
+                <mip-html-os os="android" class="mip-html-os">
+                    <a class="zhdown-innerlnk" href="http://www.xmkanshu.com/app/android?fr=bdgfh&mip=1&bkid=189169121&crid=1&ld=1" data-stats-sa-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22track%22%2C%22clickDiver%22%2C%7B%22platform%22%3A%2210000%22%2C%22channel%22%3A%22bdgfh%22%2C%22page_path%22%3A%22%5C%2Fbook%5C%2Fmip%5C%2Fread%22%2C%22book_id%22%3A%22189169121%22%2C%22diver_type%22%3A%22chapterNameDown%22%2C%22page_module%22%3A%22readPage%22%2C%22diver_style%22%3A%221%22%2C%22click_invoke%22%3A%224%22%7D%5D%7D">
+                        <mip-img src="//img.xmkanshu.com/operateimg/novel/55/558c64914884316a24fb6abc51ca2470.png" width="14"
+                            height="14" alt=""></mip-img>
+                        <span>熊猫看书</span>
+                        <mip-img src="//img.xmkanshu.com/u/201808/07/145944197.png" width="60" height="16" alt=""></mip-img>
+                    </a>
+                </mip-html-os>
+                <mip-html-os os="ios" class="mip-html-os">
+                    <a class="zhdown-innerlnk" href="https://book.xmkanshu.com/app?actionkey=PandaReader%253A%252F%252Fpdaction_giftlead%257B%2523%2523PR01%2523%2523EBTEGTEWEMLNTULIVZPHVUXQCRCJAW%257D&bkid=189169121&crid=1&dl=1&ld=1&fr=bdgfh&opensource=h5&mip=1"
+                        data-stats-sa-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22track%22%2C%22clickDiver%22%2C%7B%22platform%22%3A%2210000%22%2C%22channel%22%3A%22bdgfh%22%2C%22page_path%22%3A%22%5C%2Fbook%5C%2Fmip%5C%2Fread%22%2C%22book_id%22%3A%22189169121%22%2C%22diver_type%22%3A%22chapterNameDown%22%2C%22page_module%22%3A%22readPage%22%2C%22diver_style%22%3A%221%22%2C%22click_invoke%22%3A%224%22%7D%5D%7D">
+                        <mip-img src="//img.xmkanshu.com/operateimg/novel/55/558c64914884316a24fb6abc51ca2470.png" width="14"
+                            height="14" alt=""></mip-img>
+                        <span>熊猫看书</span>
+                        <mip-img src="//img.xmkanshu.com/u/201808/07/145944197.png" width="60" height="16" alt=""></mip-img>
+                    </a>
+                </mip-html-os>
+            </div>
+            <p>（每一个钟头上传一章，直到传完二十章！红票和收藏别忘了～）</p>
+            <p>北凉王府龙盘虎踞于清凉山，千门万户，极土木之盛。</p>
+            <p>作为王朝硕果仅存的异姓王，在庙堂和江湖都是毁誉参半的北凉王徐骁作为一名功勋武臣，可谓得到了皇帝宝座以外所有的东西，在西北三州，他就是当之无愧的主宰，只手遮天，翻云覆雨。</p>
+            <p>难怪朝廷中与这位异姓王政见不合的大人们私下都会文绉绉骂一声徐蛮子，而一些居心叵测的，更诛心地丢了顶“二皇帝”的帽子。</p>
+            <p>今天王府很热闹，位高权重的北凉王亲自开了中门，摆开辉煌仪仗，迎接一位仙风道骨的老者，府中下人们只听说是来自道教圣地龙虎山的神仙，相中了痴痴傻傻的小王爷，要收作闭关弟子，这可是天大的福缘，北凉王府都解释成傻人有傻福。</p>
+            <p>可不是，小王爷自打出生起便没哭过，读书识字一窍不通，六岁才会说话，名字倒是威武气派，徐龙象，传闻还是龙虎山的老神仙当年给取的，说好十二年后再来收徒，这不就如约而至了。</p>
+            <p>王府内一处院落，龙虎山师祖一级的道门老祖宗捻着一缕雪白胡须，眉头紧皱，背负一柄不常见的小钟馗式桃木剑，配合他的相貌，确实当得出尘二字，谁看都要由衷赞一声世外高人呐。</p>
+            <p>但此番收徒显然遇到了不小的阻碍，倒不是王府方面有异议，而是他的未来徒弟犟脾气上来了，蹲在一株梨树下，用屁股对付他这个天下道统中论地位能排前三甲的便宜师傅，至于武功嘛，咳咳，前三十总该有的吧。</p>
+            <p>连堂堂大柱国北凉王都得蹲在那里好言相劝，循循善诱里透着股诱拐，“儿子，去龙虎山学成一身本事，以后谁再敢说你傻，你就揍他，三品以下的文官武将，打死都不怕，爹给你撑腰。”</p>
+            <p>“儿啊，你力气大，不学武捞个天下十大高手当当就太可惜了。学成归来，爹就给你一个上骑都尉当当，骑五花马，披重甲，多气派。”</p>
+            <p>小王爷完全不搭理，死死盯着地面，瞧得津津有味。</p>
+            <p>“黄蛮儿，你不是喜欢吃糖葫芦吗，那龙虎山遍地的野山楂，你随便摘随便啃。赵天师，是不是？”</p>
+            <p>老神仙硬挤出一抹笑容，连连点头称是。收徒弟收到这份上，也忒寒碜了，说出去还不被全天下笑话。</p>
+            <p>可哪怕位于堂堂超一品官职、在十二郡一言九鼎的大柱国口干舌燥了，少年还是没什么反应，估计是不耐烦了嫌老爹说得呱噪，翘起屁股，噗一下来了个响屁，还不忘扭头对老爹咧嘴一笑。</p>
+            <p>把北凉王给气得抬手作势要打，可抬着手僵持一会儿，就作罢。一来是不舍得打，二来是打了没意义。</p>
+            <p>这儿子可真对得</p>
+            <p>（本章未完，请翻页）</p>
+        </div>
+        <!-- 615 新加控制条 -->
+    </div>
+
+    <div class="hot-link">
+        <div class="hot-tit">
+            <em></em>
+            热门推荐
+        </div>
+        <mip-html-os os="android" class="mip-html-os">
+            <div class="links">
+                小叔每晚来我房间，我无法拒绝，最后......
+                <a data-stats-sa-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22track%22%2C%22clickDiver%22%2C%7B%22platform%22%3A%2210000%22%2C%22channel%22%3A%22bdgfh%22%2C%22page_path%22%3A%22%5C%2Fbook%5C%2Fmip%5C%2Fread%22%2C%22book_id%22%3A%22189169121%22%2C%22diver_type%22%3A%22readPageCentrHotRecmd%22%2C%22page_module%22%3A%22readPage%22%2C%22diver_style%22%3A%221%22%2C%22click_invoke%22%3A%222%22%7D%5D%7D"
+                    href="http://www.xmkanshu.com/app/android?fr=bdgfh&mip=1&bkid=189169121&crid=1&ld=1">点击阅读></a>
+            </div>
+        </mip-html-os>
+        <mip-html-os os="ios" class="mip-html-os">
+            <div class="links">
+                小叔每晚来我房间，我无法拒绝，最后......
+                <a data-stats-sa-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22track%22%2C%22clickDiver%22%2C%7B%22platform%22%3A%2210000%22%2C%22channel%22%3A%22bdgfh%22%2C%22page_path%22%3A%22%5C%2Fbook%5C%2Fmip%5C%2Fread%22%2C%22book_id%22%3A%22189169121%22%2C%22diver_type%22%3A%22readPageCentrHotRecmd%22%2C%22page_module%22%3A%22readPage%22%2C%22diver_style%22%3A%221%22%2C%22click_invoke%22%3A%222%22%7D%5D%7D"
+                    href="https://book.xmkanshu.com/app?actionkey=PandaReader%253A%252F%252Fpdaction_giftlead%257B%2523%2523PR01%2523%2523EBTEGTEWEMLNGUUTLDWOXFVRZUYPSD%257D&bkid=189169121&crid=1&dl=1&ld=1&fr=bdgfh&opensource=h5">点击阅读></a>
+            </div>
+        </mip-html-os>
+        <mip-html-os os="android" class="mip-html-os">
+            <div class="links">
+                客户端内领免费版
+                <a data-stats-sa-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22track%22%2C%22clickDiver%22%2C%7B%22platform%22%3A%2210000%22%2C%22channel%22%3A%22bdgfh%22%2C%22page_path%22%3A%22%5C%2Fbook%5C%2Fmip%5C%2Fread%22%2C%22book_id%22%3A%22189169121%22%2C%22diver_type%22%3A%22readPageCentrHotRecmd%22%2C%22page_module%22%3A%22readPage%22%2C%22diver_style%22%3A%221%22%2C%22click_invoke%22%3A%222%22%7D%5D%7D"
+                    href="http://www.xmkanshu.com/app/android?fr=bdgfh&mip=1&bkid=189169121&crid=1&ld=1">点击阅读></a>
+            </div>
+        </mip-html-os>
+        <mip-html-os os="ios" class="mip-html-os">
+            <div class="links">
+                客户端内领免费版
+                <a data-stats-sa-obj="%7B%22type%22%3A%22click%22%2C%22data%22%3A%5B%22track%22%2C%22clickDiver%22%2C%7B%22platform%22%3A%2210000%22%2C%22channel%22%3A%22bdgfh%22%2C%22page_path%22%3A%22%5C%2Fbook%5C%2Fmip%5C%2Fread%22%2C%22book_id%22%3A%22189169121%22%2C%22diver_type%22%3A%22readPageCentrHotRecmd%22%2C%22page_module%22%3A%22readPage%22%2C%22diver_style%22%3A%221%22%2C%22click_invoke%22%3A%222%22%7D%5D%7D"
+                    href="https://book.xmkanshu.com/app?actionkey=PandaReader%253A%252F%252Fpdaction_giftlead%257B%2523%2523PR01%2523%2523EBTEGTEWEMLNGUUTLDWOXFVRZUYPSD%257D&bkid=189169121&crid=1&dl=1&ld=1&fr=bdgfh&opensource=h5">点击阅读></a>
+            </div>
+        </mip-html-os>
+
+    </div>
+    <div>
+        <mip-botbar                       logoimgsrc="https://img.xmkanshu.com/operateimg/novel/55/558c64914884316a24fb6abc51ca2470.png" androidhref="http://www.xmkanshu.com/app/android?fr=bdgfh&mip=1&bkid=189169121&crid=1&ld=1"
+            ioshref="#iosHref" title="熊猫看书" brief="整本小说不收钱">
+        </mip-botbar>
+    </div>
+    <!-- 翻页 -->
+    <div class="navigator">
+        <!-- 指向上下页的mip url，所有mip链接我没加目标标题，记得补上 -->
+        <a href="/index?bkid=189169121&fr=bdgfh&mip=1" class="button">上一页</a>
+        <div on="click:xiaoshuo-shell.showShellCatalog" class="button click-cursor">目录</div>
+        <a data-type="mip" data-title="第一章 小二上酒_雪中悍刀行-熊猫看书" href="/book/mip/read?bkid=189169121&crid=1&fr=bdgfh&mip=1&pg=2" class="button next"
+            mip-link replace>下一页</a>
+    </div>
+    <!-- mip xiaoshuo shell json -->
+    <mip-shell-xiaoshuo mip-shell="" id="xiaoshuo-shell">
+        <script type="application/json">
+        {
+            "routes": [{
+                "pattern": "/.*/",
+                "meta": {
+                    "header": {
+                        "show": true,
+                        "title": "雪中悍刀行"
+                    },
+                    "footer": {
+                        "actionGroup": [
+                            {"name": "catalog", "text": "目录"},
+                            {"name": "darkmode", "text": "夜间模式", "text2": "白天模式"},
+                            {"name": "settings", "text": "更多设置"}
+                        ],
+                        "hrefButton": {
+                            "previous": "上一页",
+                            "next": "下一页",
+                            "previous-href": "",
+                            "next-href": "http://www.xmkanshu.com/book/mip/read?bkid=189169121&crid=1&fr=bdgfh&mip=1&pg=2"
+                        }
+                    },
+                    "catalog": [{"name":"第一章 小二上酒","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=1&fr=bdgfh&mip=1"},{"name":"第二章 白狐儿脸","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=2&fr=bdgfh&mip=1"},{"name":"第三章 两个酒窝","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=3&fr=bdgfh&mip=1"},{"name":"第四章 去那座山摘山楂","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=4&fr=bdgfh&mip=1"},{"name":"第五章 天下第一美人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=5&fr=bdgfh&mip=1"},{"name":"第六章 走一个","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=6&fr=bdgfh&mip=1"},{"name":"第七章 武媚娘望城头","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=7&fr=bdgfh&mip=1"},{"name":"第八章 东魁","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=8&fr=bdgfh&mip=1"},{"name":"第九章 雪中刀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=9&fr=bdgfh&mip=1"},{"name":"第十章 温酒敲钟再观景","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=10&fr=bdgfh&mip=1"},{"name":"第十一章 胭脂探花","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=11&fr=bdgfh&mip=1"},{"name":"第十二章 湖中有老魁","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=12&fr=bdgfh&mip=1"},{"name":"第十三章 带刀老魁，背匣老黄","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=13&fr=bdgfh&mip=1"},{"name":"第十四章 劣马黄酒六千里","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=14&fr=bdgfh&mip=1"},{"name":"第十五章 山上有个骑牛的","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=15&fr=bdgfh&mip=1"},{"name":"第十六章 最好真好","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=16&fr=bdgfh&mip=1"},{"name":"第十七章 说与山鬼听","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=17&fr=bdgfh&mip=1"},{"name":"第十八章 那些坛黄酒","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=18&fr=bdgfh&mip=1"},{"name":"第十九章 练刀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=19&fr=bdgfh&mip=1"},{"name":"第二十章 杀人赏雪","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=20&fr=bdgfh&mip=1"},{"name":"第二十一章 好大的大国手","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=21&fr=bdgfh&mip=1"},{"name":"第二十二章 山上老道","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=22&fr=bdgfh&mip=1"},{"name":"第二十三章 小狗小泥人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=23&fr=bdgfh&mip=1"},{"name":"第二十四章 搬山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=24&fr=bdgfh&mip=1"},{"name":"第二十五章 山下女子是老虎","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=25&fr=bdgfh&mip=1"},{"name":"第二十六章 公主何苦为难公主","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=26&fr=bdgfh&mip=1"},{"name":"第二十七章 最是能杀人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=27&fr=bdgfh&mip=1"},{"name":"第二十八章 大字誓杀贴","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=28&fr=bdgfh&mip=1"},{"name":"第二十九章 懂不懂","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=29&fr=bdgfh&mip=1"},{"name":"第三十章 气疯天下人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=30&fr=bdgfh&mip=1"},{"name":"第三十一章 大黄庭","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=31&fr=bdgfh&mip=1"},{"name":"第三十二章 一肩挑道","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=32&fr=bdgfh&mip=1"},{"name":"第三十三章 山不在高","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=33&fr=bdgfh&mip=1"},{"name":"第三十四章 伸手低头秀色皆是禅","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=34&fr=bdgfh&mip=1"},{"name":"第三十五章 半斤红妆","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=35&fr=bdgfh&mip=1"},{"name":"第三十六章 北谢南李","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=36&fr=bdgfh&mip=1"},{"name":"第三十七章 老牛嫩草","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=37&fr=bdgfh&mip=1"},{"name":"第三十八章 你是禅","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=38&fr=bdgfh&mip=1"},{"name":"第三十九章 糖葫芦和头颅","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=39&fr=bdgfh&mip=1"},{"name":"第四十章 煌煌北凉镇灵歌","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=40&fr=bdgfh&mip=1"},{"name":"第四十一章 大亭镇压老妖怪","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=41&fr=bdgfh&mip=1"},{"name":"第四十二章 阴间换刀，阳间喝酒","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=42&fr=bdgfh&mip=1"},{"name":"第四十三章 人屠","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=43&fr=bdgfh&mip=1"},{"name":"第四十四章 读书用心所为何","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=44&fr=bdgfh&mip=1"},{"name":"第四十五章 那山山楂，这湖莲花（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=45&fr=bdgfh&mip=1"},{"name":"第四十六章 那山山楂，这湖莲花（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=46&fr=bdgfh&mip=1"},{"name":"第四十七章 那山山楂，这湖莲花（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=47&fr=bdgfh&mip=1"},{"name":"第四十八章 老卒和桑椹","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=48&fr=bdgfh&mip=1"},{"name":"第四十九章 呵呵姑娘","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=49&fr=bdgfh&mip=1"},{"name":"第五十章 斗鸡眼老头儿","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=50&fr=bdgfh&mip=1"},{"name":"第五十一章 借绣冬，给走狗","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=51&fr=bdgfh&mip=1"},{"name":"第五十二章 白马出凉州","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=52&fr=bdgfh&mip=1"},{"name":"第五十三章 王旗鱼龙鼓","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=53&fr=bdgfh&mip=1"},{"name":"第五十四章 白衣送行","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=54&fr=bdgfh&mip=1"},{"name":"第五十五章 一剑便是百万师","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=55&fr=bdgfh&mip=1"},{"name":"第五十六章 陆地神仙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=56&fr=bdgfh&mip=1"},{"name":"第五十七章 大雨小道立红甲","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=57&fr=bdgfh&mip=1"},{"name":"第五十八章 水珠对水甲","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=58&fr=bdgfh&mip=1"},{"name":"第五十九章 小伞大龙卷","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=59&fr=bdgfh&mip=1"},{"name":"第六十章 慢刀作画","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=60&fr=bdgfh&mip=1"},{"name":"第六十一章 天师府上小天师（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=61&fr=bdgfh&mip=1"},{"name":"第六十二章 天师府上小天师（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=62&fr=bdgfh&mip=1"},{"name":"第六十三章 天师府上小天师（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=63&fr=bdgfh&mip=1"},{"name":"第六十四章 两鹅换来大黄门","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=64&fr=bdgfh&mip=1"},{"name":"第六十五章 三碗再三碗","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=65&fr=bdgfh&mip=1"},{"name":"第六十六章 当赏不当赏","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=66&fr=bdgfh&mip=1"},{"name":"第六十七章 笑死了","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=67&fr=bdgfh&mip=1"},{"name":"第六十八章 打劫的","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=68&fr=bdgfh&mip=1"},{"name":"第六十九章 有紫气东来","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=69&fr=bdgfh&mip=1"},{"name":"第七十章 还是打劫的","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=70&fr=bdgfh&mip=1"},{"name":"第七十一章 青羊宫上看神仙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=71&fr=bdgfh&mip=1"},{"name":"第七十二章 青羊宫里杀神仙（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=72&fr=bdgfh&mip=1"},{"name":"第七十三章 青羊宫内杀神仙（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=73&fr=bdgfh&mip=1"},{"name":"第七十四章 青羊宫里杀神仙（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=74&fr=bdgfh&mip=1"},{"name":"第七十五章 青城王低头","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=75&fr=bdgfh&mip=1"},{"name":"第七十六章 覆甲婢女","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=76&fr=bdgfh&mip=1"},{"name":"第七十七章 先手五十","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=77&fr=bdgfh&mip=1"},{"name":"第七十八章 大凉龙雀美人鼓","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=78&fr=bdgfh&mip=1"},{"name":"第七十九章 右菩萨左金刚","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=79&fr=bdgfh&mip=1"},{"name":"第八十章 知道","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=80&fr=bdgfh&mip=1"},{"name":"第八十一章 一步入天象","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=81&fr=bdgfh&mip=1"},{"name":"第八十二章 龙王爷一竿拦江","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=82&fr=bdgfh&mip=1"},{"name":"第八十三章 救人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=83&fr=bdgfh&mip=1"},{"name":"第八十四章 几笑一飞剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=84&fr=bdgfh&mip=1"},{"name":"第八十五章 鲤鱼跃龙门","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=85&fr=bdgfh&mip=1"},{"name":"第八十六章 教你练字不许学","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=86&fr=bdgfh&mip=1"},{"name":"第八十七章 上山入城进宫（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=87&fr=bdgfh&mip=1"},{"name":"第八十八章 上山入城进宫","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=88&fr=bdgfh&mip=1"},{"name":"第八十九章 破甲","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=89&fr=bdgfh&mip=1"},{"name":"第九十章 坐鼋观剑（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=90&fr=bdgfh&mip=1"},{"name":"第九十一章 坐鼋观剑（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=91&fr=bdgfh&mip=1"},{"name":"第九十二章 坐鼋观剑（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=92&fr=bdgfh&mip=1"},{"name":"第九十三章 可敢一战","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=93&fr=bdgfh&mip=1"},{"name":"第九十四章 死战","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=94&fr=bdgfh&mip=1"},{"name":"第九十五章 各怀心思","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=95&fr=bdgfh&mip=1"},{"name":"第九十六章 一脚踏黄龙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=96&fr=bdgfh&mip=1"},{"name":"第九十七章 登船的跳船的都可恶","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=97&fr=bdgfh&mip=1"},{"name":"第九十八章 去襄樊","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=98&fr=bdgfh&mip=1"},{"name":"第九十九章 大醮大潮","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=99&fr=bdgfh&mip=1"},{"name":"第一百章 观音身后万鬼夜行","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=100&fr=bdgfh&mip=1"},{"name":"第一百零一章 白衣观世音","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=101&fr=bdgfh&mip=1"},{"name":"明天更新","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=102&fr=bdgfh&mip=1"},{"name":"第一百零二章 自在不自在","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=103&fr=bdgfh&mip=1"},{"name":"第一百零三章 咫尺风雷（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=104&fr=bdgfh&mip=1"},{"name":"第一百零四章 咫尺风雷（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=105&fr=bdgfh&mip=1"},{"name":"第一百零五章 咫尺风雷（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=106&fr=bdgfh&mip=1"},{"name":"第一百零六章 他乡遇故知","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=107&fr=bdgfh&mip=1"},{"name":"第一百零七章 一声公子一顿酒肉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=108&fr=bdgfh&mip=1"},{"name":"第一百零八章 今天不读书","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=109&fr=bdgfh&mip=1"},{"name":"第一百零九章 勾心荒唐","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=110&fr=bdgfh&mip=1"},{"name":"第一百一十章 心安处即吾乡","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=111&fr=bdgfh&mip=1"},{"name":"第一百一十一章 不共戴天","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=112&fr=bdgfh&mip=1"},{"name":"第一百一十二章 无禅多情有道","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=113&fr=bdgfh&mip=1"},{"name":"第一百一十三章 永子十局一段事","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=114&fr=bdgfh&mip=1"},{"name":"第一百一十四章 笔下游青蛇","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=115&fr=bdgfh&mip=1"},{"name":"第一百一十五章 老流氓落子十二","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=116&fr=bdgfh&mip=1"},{"name":"第一百一十六章 好地方","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=117&fr=bdgfh&mip=1"},{"name":"第一百一十七章 风水","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=118&fr=bdgfh&mip=1"},{"name":"第一百一十八章 酸菜和十一","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=119&fr=bdgfh&mip=1"},{"name":"第一百一十九章 头颅","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=120&fr=bdgfh&mip=1"},{"name":"第一百二十章 酣畅","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=121&fr=bdgfh&mip=1"},{"name":"第一百二十一章 第一刀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=122&fr=bdgfh&mip=1"},{"name":"第一百二十二章 卸甲与狞笑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=123&fr=bdgfh&mip=1"},{"name":"第一百二十三章 一刺","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=124&fr=bdgfh&mip=1"},{"name":"第一百二十四章 九刀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=125&fr=bdgfh&mip=1"},{"name":"第一百二十五章 对峙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=126&fr=bdgfh&mip=1"},{"name":"第一百二十六章 收刀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=127&fr=bdgfh&mip=1"},{"name":"第一百二十七章 魔头","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=128&fr=bdgfh&mip=1"},{"name":"第一百二十八章 皇后","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=129&fr=bdgfh&mip=1"},{"name":"第一百二十九章 春神谣","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=130&fr=bdgfh&mip=1"},{"name":"第一百三十章 八叉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=131&fr=bdgfh&mip=1"},{"name":"第一百三十一章 上柱国老供奉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=132&fr=bdgfh&mip=1"},{"name":"第一百三十二章 火候","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=133&fr=bdgfh&mip=1"},{"name":"第一百三十三章 登楼","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=134&fr=bdgfh&mip=1"},{"name":"第一百三十四章 曹官子","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=135&fr=bdgfh&mip=1"},{"name":"第一百三十五章 楼上肺腑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=136&fr=bdgfh&mip=1"},{"name":"第一百三十六章 一袖如何两青蛇","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=137&fr=bdgfh&mip=1"},{"name":"第一百三十七章 让你不练剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=138&fr=bdgfh&mip=1"},{"name":"第一百三十八章 我在山上，你到江南","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=139&fr=bdgfh&mip=1"},{"name":"第一百三十九章 喝喝喝","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=140&fr=bdgfh&mip=1"},{"name":"第一百四十章 祸端","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=141&fr=bdgfh&mip=1"},{"name":"第一百四十一章 马踏中门","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=142&fr=bdgfh&mip=1"},{"name":"第一百四十二章 先生卖我几斤仁义道理","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=143&fr=bdgfh&mip=1"},{"name":"第一百四十三章 亭中谈心","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=144&fr=bdgfh&mip=1"},{"name":"第一百四十四章 铜钱","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=145&fr=bdgfh&mip=1"},{"name":"第一百四十五章 活水","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=146&fr=bdgfh&mip=1"},{"name":"第一百四十六章 死当谥文正","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=147&fr=bdgfh&mip=1"},{"name":"第一百四十七章 这世道不痛","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=148&fr=bdgfh&mip=1"},{"name":"第一百四十八章 曲水谈王霸","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=149&fr=bdgfh&mip=1"},{"name":"第一百四十九章 亭前青衣","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=150&fr=bdgfh&mip=1"},{"name":"第一百五十章 要走了吗","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=151&fr=bdgfh&mip=1"},{"name":"第一百五十一章 青衣杀白衣","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=152&fr=bdgfh&mip=1"},{"name":"第一百五十二章 我来画龙你点睛","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=153&fr=bdgfh&mip=1"},{"name":"第一百五十三章 权衡","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=154&fr=bdgfh&mip=1"},{"name":"第一百五十四章 来世认酒窝","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=155&fr=bdgfh&mip=1"},{"name":"第一百五十五章 一个字","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=156&fr=bdgfh&mip=1"},{"name":"第一百五十六章 铜钱加铜钱","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=157&fr=bdgfh&mip=1"},{"name":"第一百五十七章 亲家，出京，赚亏","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=158&fr=bdgfh&mip=1"},{"name":"第一百五十八章 恶谶","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=159&fr=bdgfh&mip=1"},{"name":"第一百五十九章 江西龙虎江东轩辕","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=160&fr=bdgfh&mip=1"},{"name":"第一百六十章 贫道十年一钓","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=161&fr=bdgfh&mip=1"},{"name":"第一百六十一章 有天人出窍而来","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=162&fr=bdgfh&mip=1"},{"name":"临时通知一下","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=163&fr=bdgfh&mip=1"},{"name":"通知","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=164&fr=bdgfh&mip=1"},{"name":"第一百六十二章 梦中斩龙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=165&fr=bdgfh&mip=1"},{"name":"第一百六十三章 呵呵不呵呵","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=166&fr=bdgfh&mip=1"},{"name":"第一百六十四章 江湖飘总挨刀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=167&fr=bdgfh&mip=1"},{"name":"第一百六十五章 狭路相逢","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=168&fr=bdgfh&mip=1"},{"name":"第一百六十六章 书生和砧板","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=169&fr=bdgfh&mip=1"},{"name":"第一百六十七章 可怜","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=170&fr=bdgfh&mip=1"},{"name":"第一百六十八章 可爱","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=171&fr=bdgfh&mip=1"},{"name":"第一百六十九章 可恼","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=172&fr=bdgfh&mip=1"},{"name":"第一百七十章 可恨可敬","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=173&fr=bdgfh&mip=1"},{"name":"第一百七十一章 哥","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=174&fr=bdgfh&mip=1"},{"name":"第一百七十二章 殿下姓徐","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=175&fr=bdgfh&mip=1"},{"name":"第一百七十三章 歌谣","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=176&fr=bdgfh&mip=1"},{"name":"第一百七十四章 急急如律令","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=177&fr=bdgfh&mip=1"},{"name":"第一百七十五章 步步长生莲","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=178&fr=bdgfh&mip=1"},{"name":"第一百七十六章 山上人上山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=179&fr=bdgfh&mip=1"},{"name":"第一百七十七章 坐山观虎斗","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=180&fr=bdgfh&mip=1"},{"name":"第一百七十八章 指玄对指玄","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=181&fr=bdgfh&mip=1"},{"name":"第一百七十九章 天象对天象","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=182&fr=bdgfh&mip=1"},{"name":"第一百八十章 当归","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=183&fr=bdgfh&mip=1"},{"name":"第一百八十一章 请老祖宗赴死","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=184&fr=bdgfh&mip=1"},{"name":"第一百八十二章 儒圣","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=185&fr=bdgfh&mip=1"},{"name":"第一百八十三章 剑仙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=186&fr=bdgfh&mip=1"},{"name":"第一百八十四章 还了个放屁","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=187&fr=bdgfh&mip=1"},{"name":"第一百八十五章 锦囊","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=188&fr=bdgfh&mip=1"},{"name":"第一百八十六章 四大天师","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=189&fr=bdgfh&mip=1"},{"name":"第一百八十七章 江湖险恶啊","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=190&fr=bdgfh&mip=1"},{"name":"第一百八十八章 赌气","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=191&fr=bdgfh&mip=1"},{"name":"第一百八十九章 离别","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=192&fr=bdgfh&mip=1"},{"name":"第一百九十章 等红衣","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=193&fr=bdgfh&mip=1"},{"name":"第一百九十一章 风紧不扯呼了","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=194&fr=bdgfh&mip=1"},{"name":"第一百九十二章 两座江湖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=195&fr=bdgfh&mip=1"},{"name":"第一百九十三章 女侠","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=196&fr=bdgfh&mip=1"},{"name":"第一百九十四章 二姐","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=197&fr=bdgfh&mip=1"},{"name":"第一百九十五章 丧家犬也有乡愁","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=198&fr=bdgfh&mip=1"},{"name":"第一百九十六章 壶酒双碗，端酒借剑一千九","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=199&fr=bdgfh&mip=1"},{"name":"第一百九十七章 新人牵驴入城，旧人乘剑入海","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=200&fr=bdgfh&mip=1"},{"name":"第一百九十八章 邓太阿弹指有六","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=201&fr=bdgfh&mip=1"},{"name":"第一百九十九章 仙人骑鹤下江南","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=202&fr=bdgfh&mip=1"},{"name":"第两百章 登仙？","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=203&fr=bdgfh&mip=1"},{"name":"第二百零一章  雷池和道理","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=204&fr=bdgfh&mip=1"},{"name":"第两百零二章 东游西归","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=205&fr=bdgfh&mip=1"},{"name":"第二百零三章 飞升","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=206&fr=bdgfh&mip=1"},{"name":"第二百零四章 观潮抛剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=207&fr=bdgfh&mip=1"},{"name":"第二百零五章 按马头","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=208&fr=bdgfh&mip=1"},{"name":"第二百零六章 碗里来碗里去","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=209&fr=bdgfh&mip=1"},{"name":"第二百零七章 要教你满城尽悬北凉刀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=210&fr=bdgfh&mip=1"},{"name":"第二百零八章 这座江湖老去","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=211&fr=bdgfh&mip=1"},{"name":"第二百零九章 一块肉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=212&fr=bdgfh&mip=1"},{"name":"第二百一十章 说书人酌酒闭目而谈","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=213&fr=bdgfh&mip=1"},{"name":"第一章 新的江湖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=214&fr=bdgfh&mip=1"},{"name":"第二章 刀和糖葫芦","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=215&fr=bdgfh&mip=1"},{"name":"第三章 貂覆额","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=216&fr=bdgfh&mip=1"},{"name":"第四章 面首三百","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=217&fr=bdgfh&mip=1"},{"name":"第五章 算计来算计去","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=218&fr=bdgfh&mip=1"},{"name":"第六章 最坏的最好的江湖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=219&fr=bdgfh&mip=1"},{"name":"第七章 与江湖讲道理","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=220&fr=bdgfh&mip=1"},{"name":"第八章 高手","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=221&fr=bdgfh&mip=1"},{"name":"第九章 小娘去不去","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=222&fr=bdgfh&mip=1"},{"name":"第十章 春雷不动幽州动","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=223&fr=bdgfh&mip=1"},{"name":"第十一章 家务事","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=224&fr=bdgfh&mip=1"},{"name":"第十二章 少江南老凉莽","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=225&fr=bdgfh&mip=1"},{"name":"第十三章 青梅涩","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=226&fr=bdgfh&mip=1"},{"name":"第十四章 一样米养江湖百样人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=227&fr=bdgfh&mip=1"},{"name":"第十五章 一线金刚驭飞剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=228&fr=bdgfh&mip=1"},{"name":"第十六章 东西南北","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=229&fr=bdgfh&mip=1"},{"name":"第十七章 公公","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=230&fr=bdgfh&mip=1"},{"name":"第十八章 将军甲凉王袍枇杷树","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=231&fr=bdgfh&mip=1"},{"name":"第十九章 可好","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=232&fr=bdgfh&mip=1"},{"name":"第二十章 抢秘笈也是学问","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=233&fr=bdgfh&mip=1"},{"name":"第二十一章 前辈晚辈","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=234&fr=bdgfh&mip=1"},{"name":"第二十二章 没有你们的天下十人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=235&fr=bdgfh&mip=1"},{"name":"第二十三章 有女口衔骊珠","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=236&fr=bdgfh&mip=1"},{"name":"第二十四章 魔头","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=237&fr=bdgfh&mip=1"},{"name":"第二十五章 与南雁一起北归","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=238&fr=bdgfh&mip=1"},{"name":"第二十六章 人情世故秤上放","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=239&fr=bdgfh&mip=1"},{"name":"第二十七章 茶与血","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=240&fr=bdgfh&mip=1"},{"name":"第二十八章 起火得长安","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=241&fr=bdgfh&mip=1"},{"name":"第二十九章 烧纸不易死人易","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=242&fr=bdgfh&mip=1"},{"name":"第三十章 清明洒黄纸","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=243&fr=bdgfh&mip=1"},{"name":"第三十一章 留下","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=244&fr=bdgfh&mip=1"},{"name":"第三十二章 给不给","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=245&fr=bdgfh&mip=1"},{"name":"第三十三章 鸭头绿","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=246&fr=bdgfh&mip=1"},{"name":"第三十四章 乱世小歌谣","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=247&fr=bdgfh&mip=1"},{"name":"第三十五章 都去死好了","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=248&fr=bdgfh&mip=1"},{"name":"第三十六章 两颗头颅两行泪","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=249&fr=bdgfh&mip=1"},{"name":"第三十七章 跪不跪","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=250&fr=bdgfh&mip=1"},{"name":"第三十八章 谁家儿郎刀在鞘","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=251&fr=bdgfh&mip=1"},{"name":"第三十九章 下酒菜","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=252&fr=bdgfh&mip=1"},{"name":"第四十章 卖剑作画睡青楼","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=253&fr=bdgfh&mip=1"},{"name":"第四十一章 别死在他乡","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=254&fr=bdgfh&mip=1"},{"name":"第四十二章 何地不心凉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=255&fr=bdgfh&mip=1"},{"name":"第四十三章 如意","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=256&fr=bdgfh&mip=1"},{"name":"第四十四章 北凉以北，徐骁以后","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=257&fr=bdgfh&mip=1"},{"name":"第四十五章 好鸟","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=258&fr=bdgfh&mip=1"},{"name":"第四十六章 眉头","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=259&fr=bdgfh&mip=1"},{"name":"第四十七章 与北凉王说北凉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=260&fr=bdgfh&mip=1"},{"name":"第四十八章 风雨来风流去剑气近","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=261&fr=bdgfh&mip=1"},{"name":"第四十九章 董胖子","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=262&fr=bdgfh&mip=1"},{"name":"第五十章 王见王","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=263&fr=bdgfh&mip=1"},{"name":"第五十一章 数风流人物","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=264&fr=bdgfh&mip=1"},{"name":"第五十二章 起手撼昆仑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=265&fr=bdgfh&mip=1"},{"name":"第五十三章 你是佛陀，我入金刚","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=266&fr=bdgfh&mip=1"},{"name":"第五十四章 该死","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=267&fr=bdgfh&mip=1"},{"name":"第五十五章 当下忧郁啊","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=268&fr=bdgfh&mip=1"},{"name":"第五十六章 姑娘请自重","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=269&fr=bdgfh&mip=1"},{"name":"第五十七章 雀骑鹰","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=270&fr=bdgfh&mip=1"},{"name":"第五十八章 小拓跋","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=271&fr=bdgfh&mip=1"},{"name":"第五十九章 下马","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=272&fr=bdgfh&mip=1"},{"name":"第六十章 笑话","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=273&fr=bdgfh&mip=1"},{"name":"第六十一章 以发系发","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=274&fr=bdgfh&mip=1"},{"name":"第六十二章 一袖刀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=275&fr=bdgfh&mip=1"},{"name":"第六十三章 借气三千斩头颅","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=276&fr=bdgfh&mip=1"},{"name":"第六十四章 游猎","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=277&fr=bdgfh&mip=1"},{"name":"第六十五章 不要脸的喜欢","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=278&fr=bdgfh&mip=1"},{"name":"第六十六章 一日千里","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=279&fr=bdgfh&mip=1"},{"name":"第六十七章 聚散","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=280&fr=bdgfh&mip=1"},{"name":"第六十八章 高手风范","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=281&fr=bdgfh&mip=1"},{"name":"第六十九章 江山代有新人换旧人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=282&fr=bdgfh&mip=1"},{"name":"第七十章 谷雨大雨","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=283&fr=bdgfh&mip=1"},{"name":"第七十一章 想拎酒而回","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=284&fr=bdgfh&mip=1"},{"name":"第七十二章 无名诗","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=285&fr=bdgfh&mip=1"},{"name":"第七十三章 金戈铁马入梦来","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=286&fr=bdgfh&mip=1"},{"name":"第七十四章 算命","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=287&fr=bdgfh&mip=1"},{"name":"第七十五章 大雨撑小伞，指玄对金刚","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=288&fr=bdgfh&mip=1"},{"name":"第七十六章 巷中互杀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=289&fr=bdgfh&mip=1"},{"name":"第七十七章 女国手曲指斩长生","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=290&fr=bdgfh&mip=1"},{"name":"第七十八章 雨停收春秋","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=291&fr=bdgfh&mip=1"},{"name":"第七十九章 开门开剑匣","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=292&fr=bdgfh&mip=1"},{"name":"第八十章 羊皮裘去时开山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=293&fr=bdgfh&mip=1"},{"name":"第八十一章 指点江山一人少一人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=294&fr=bdgfh&mip=1"},{"name":"第八十二章 揽雀收覆水","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=295&fr=bdgfh&mip=1"},{"name":"第八十三章 这么高","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=296&fr=bdgfh&mip=1"},{"name":"第八十四章 斩旗斥剑来","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=297&fr=bdgfh&mip=1"},{"name":"第八十五章 戾气","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=298&fr=bdgfh&mip=1"},{"name":"第八十六章 一气六百甲","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=299&fr=bdgfh&mip=1"},{"name":"第八十七章 父子和忠佞","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=300&fr=bdgfh&mip=1"},{"name":"第八十八章 风情胸间来","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=301&fr=bdgfh&mip=1"},{"name":"第八十九章 小娘子入怀来","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=302&fr=bdgfh&mip=1"},{"name":"第九十章 山中相厌城外相欢","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=303&fr=bdgfh&mip=1"},{"name":"第九十一章  吃红薯","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=304&fr=bdgfh&mip=1"},{"name":"第九十二章 一袭龙袍七八分","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=305&fr=bdgfh&mip=1"},{"name":"第九十三章 吴家九剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=306&fr=bdgfh&mip=1"},{"name":"第九十四章 媪相小宦官","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=307&fr=bdgfh&mip=1"},{"name":"第九十五章 满城皆敌","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=308&fr=bdgfh&mip=1"},{"name":"第九十六章 一步不得入","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=309&fr=bdgfh&mip=1"},{"name":"第九十七章 有人血衣拖刀入城","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=310&fr=bdgfh&mip=1"},{"name":"第九十八章 猩红叠猩红","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=311&fr=bdgfh&mip=1"},{"name":"第九十九章 孤城白首","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=312&fr=bdgfh&mip=1"},{"name":"第一百章 魔头洛阳","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=313&fr=bdgfh&mip=1"},{"name":"第一百零一章 雨中第四魔头来，雨停第三剑仙在","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=314&fr=bdgfh&mip=1"},{"name":"第一百零二章 扶摇而上","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=315&fr=bdgfh&mip=1"},{"name":"第一百零三章 买秘笈送黄酒","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=316&fr=bdgfh&mip=1"},{"name":"第一百零四章 仙人抚我顶","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=317&fr=bdgfh&mip=1"},{"name":"第一百零五章 女子种桂","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=318&fr=bdgfh&mip=1"},{"name":"第一百零六章 疼","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=319&fr=bdgfh&mip=1"},{"name":"第一百零七章 挥手","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=320&fr=bdgfh&mip=1"},{"name":"第一百零八章 双双入城","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=321&fr=bdgfh&mip=1"},{"name":"第一百零九章 魔头坐佛上","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=322&fr=bdgfh&mip=1"},{"name":"第一百一十章 问答","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=323&fr=bdgfh&mip=1"},{"name":"第一百一十一章 愁啊","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=324&fr=bdgfh&mip=1"},{"name":"第一百一十二章 新故两人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=325&fr=bdgfh&mip=1"},{"name":"第一百一十三章 钓起一湖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=326&fr=bdgfh&mip=1"},{"name":"第一百一十四章 白衣僧掠白虹","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=327&fr=bdgfh&mip=1"},{"name":"第一百一十五章 人屠次子再系发","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=328&fr=bdgfh&mip=1"},{"name":"第一百一十六章 大雪龙骑夏日出","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=329&fr=bdgfh&mip=1"},{"name":"第一百一十七章 九问","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=330&fr=bdgfh&mip=1"},{"name":"雪中vip订阅群","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=331&fr=bdgfh&mip=1"},{"name":"第一百一十八章 黑白买太平","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=332&fr=bdgfh&mip=1"},{"name":"第一百一十九章 大河之上彩衣截白衣","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=333&fr=bdgfh&mip=1"},{"name":"第一百二十章 双手合十，黄河逆行","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=334&fr=bdgfh&mip=1"},{"name":"第一百二十一章 弹剑如弹琴","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=335&fr=bdgfh&mip=1"},{"name":"第一百二十二章 大秦皇帝镇国符","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=336&fr=bdgfh&mip=1"},{"name":"第一百二十三章 那一剑穿心","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=337&fr=bdgfh&mip=1"},{"name":"第一百二十四章 她在笑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=338&fr=bdgfh&mip=1"},{"name":"第一百二十五章 书声","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=339&fr=bdgfh&mip=1"},{"name":"第一百二十六章 雷声","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=340&fr=bdgfh&mip=1"},{"name":"第一百二十七章 吵声佛声","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=341&fr=bdgfh&mip=1"},{"name":"第一百二十八章 菩萨过河","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=342&fr=bdgfh&mip=1"},{"name":"第一百二十九章 师父和草鞋","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=343&fr=bdgfh&mip=1"},{"name":"第一百三十章 不见狼烟","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=344&fr=bdgfh&mip=1"},{"name":"第一百三十一章 死战","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=345&fr=bdgfh&mip=1"},{"name":"第一百三十二章 换刀换马","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=346&fr=bdgfh&mip=1"},{"name":"第一百三十三章 两截柳枝","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=347&fr=bdgfh&mip=1"},{"name":"第一百三十四章 书生飞剑侠客行","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=348&fr=bdgfh&mip=1"},{"name":"第一百三十五章 一颗大好头颅","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=349&fr=bdgfh&mip=1"},{"name":"第一百三十六章 南归，过河，拽山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=350&fr=bdgfh&mip=1"},{"name":"第一百三十七章 父子","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=351&fr=bdgfh&mip=1"},{"name":"第一百三十八章 一灯笼蝶","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=352&fr=bdgfh&mip=1"},{"name":"第一百三十九章 一青绣鞋","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=353&fr=bdgfh&mip=1"},{"name":"第一百四十章 一盒奇巧","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=354&fr=bdgfh&mip=1"},{"name":"第一百四十一章 女子刹那","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=355&fr=bdgfh&mip=1"},{"name":"第一百四十二章 你斩溪水我养意","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=356&fr=bdgfh&mip=1"},{"name":"第一百四十三章 刀归鞘刀出鞘","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=357&fr=bdgfh&mip=1"},{"name":"第一百四十四章 新桃换旧符，六年换一刀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=358&fr=bdgfh&mip=1"},{"name":"第一百四十五章 好一场惺惺相惜","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=359&fr=bdgfh&mip=1"},{"name":"第一百四十六章 年轻白发点兵一十二","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=360&fr=bdgfh&mip=1"},{"name":"第一四十七章 柿子橘子","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=361&fr=bdgfh&mip=1"},{"name":"第一百四十八章 是谁先见他白头","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=362&fr=bdgfh&mip=1"},{"name":"第一百四十九章 三足鼎立","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=363&fr=bdgfh&mip=1"},{"name":"求保底月票!","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=364&fr=bdgfh&mip=1"},{"name":"第一百五十章 一更别我二更回","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=365&fr=bdgfh&mip=1"},{"name":"第一百五十一章 小娘不知羞","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=366&fr=bdgfh&mip=1"},{"name":"第一百五十二章 上桌","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=367&fr=bdgfh&mip=1"},{"name":"第一百五十三章 书生和书生","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=368&fr=bdgfh&mip=1"},{"name":"第一！","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=369&fr=bdgfh&mip=1"},{"name":"第一百五十四章 隔壁桌上北凉王","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=370&fr=bdgfh&mip=1"},{"name":"第一百五十五章 这个人叫李义山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=371&fr=bdgfh&mip=1"},{"name":"第一百五十六章 早来的冬雷震震下山去","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=372&fr=bdgfh&mip=1"},{"name":"孤身赴北莽_第一百五十七章 截杀截杀截杀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=373&fr=bdgfh&mip=1"},{"name":"第一百五十八章 北凉饮尽两杯绿蚁酒","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=374&fr=bdgfh&mip=1"},{"name":"第一百五十九章 第三杯儒圣梅子酒","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=375&fr=bdgfh&mip=1"},{"name":"第一百六十章 禁中夜半，人屠披甲","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=376&fr=bdgfh&mip=1"},{"name":"第一百六十一章 两敕","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=377&fr=bdgfh&mip=1"},{"name":"第一百六十二章 我以春秋斩春秋，死结以死解","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=378&fr=bdgfh&mip=1"},{"name":"第一百六十三章 菩萨生青丝","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=379&fr=bdgfh&mip=1"},{"name":"第一百六十四章 与曹长卿坐地论江山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=380&fr=bdgfh&mip=1"},{"name":"第一百六十五章 事后黄三甲","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=381&fr=bdgfh&mip=1"},{"name":"第一百六十六章 风起凤飞，柳环卖花声","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=382&fr=bdgfh&mip=1"},{"name":"第一百六十七章 亭中三言两语定江湖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=383&fr=bdgfh&mip=1"},{"name":"第一百六十八章 娃娃亲","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=384&fr=bdgfh&mip=1"},{"name":"第一百六十九章 师妹气死师兄","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=385&fr=bdgfh&mip=1"},{"name":"第一百七十章 一剑刺死你","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=386&fr=bdgfh&mip=1"},{"name":"第一百七十一章 摘刀撕面","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=387&fr=bdgfh&mip=1"},{"name":"第一百七十二章 参见世子殿下","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=388&fr=bdgfh&mip=1"},{"name":"第一百七十三章 两份谋略两颗头颅，贺新凉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=389&fr=bdgfh&mip=1"},{"name":"第一章 倒酒七十一颗","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=390&fr=bdgfh&mip=1"},{"name":"第二章 上下清凉山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=391&fr=bdgfh&mip=1"},{"name":"第三章 天大的买卖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=392&fr=bdgfh&mip=1"},{"name":"第四章 六王入京","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=393&fr=bdgfh&mip=1"},{"name":"第五章 木剑温小二，一揖还一揖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=394&fr=bdgfh&mip=1"},{"name":"第六章 六百声恭送","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=395&fr=bdgfh&mip=1"},{"name":"第七章 槐树上有一只鬼","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=396&fr=bdgfh&mip=1"},{"name":"第八章 问剑答剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=397&fr=bdgfh&mip=1"},{"name":"第九章 李淳罡两愿天下剑士","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=398&fr=bdgfh&mip=1"},{"name":"第十章 佩凉刀上朝","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=399&fr=bdgfh&mip=1"},{"name":"月底之事六七八九","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=400&fr=bdgfh&mip=1"},{"name":"第十一章 庙堂丹墀之上七不跪","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=401&fr=bdgfh&mip=1"},{"name":"第十二章 鼠吃粮","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=402&fr=bdgfh&mip=1"},{"name":"第十三章 万人挡我，一口唾沫","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=403&fr=bdgfh&mip=1"},{"name":"第十四章 来一壶北凉酒","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=404&fr=bdgfh&mip=1"},{"name":"第十五章 一个福字，三说徐凤年","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=405&fr=bdgfh&mip=1"},{"name":"第十六章 一人想赠剑春秋，一人折剑出江湖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=406&fr=bdgfh&mip=1"},{"name":"第十七章 吃剑的老祖宗","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=407&fr=bdgfh&mip=1"},{"name":"第十八章 挥手和弯腰","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=408&fr=bdgfh&mip=1"},{"name":"通知","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=409&fr=bdgfh&mip=1"},{"name":"更新通知+求保底月票","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=410&fr=bdgfh&mip=1"},{"name":"第十九章 教你一剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=411&fr=bdgfh&mip=1"},{"name":"第二十章 火烧云下","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=412&fr=bdgfh&mip=1"},{"name":"第二十一章 系裙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=413&fr=bdgfh&mip=1"},{"name":"第二十二章 家狗姓赵野狗姓徐，姓赵又如何？","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=414&fr=bdgfh&mip=1"},{"name":"第二十三章 桌上皇帝两字","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=415&fr=bdgfh&mip=1"},{"name":"第二十四章 新老庙中新老谋士","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=416&fr=bdgfh&mip=1"},{"name":"第二十五章 一剑直过十八门，西楚观礼太安城","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=417&fr=bdgfh&mip=1"},{"name":"第二十六章 那一年西楚亡了国","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=418&fr=bdgfh&mip=1"},{"name":"第二十七章 要债太安城，大袖飘摇","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=419&fr=bdgfh&mip=1"},{"name":"第二十八章 大好河山骑驴瞧","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=420&fr=bdgfh&mip=1"},{"name":"第二十九章 故知来和去","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=421&fr=bdgfh&mip=1"},{"name":"第三十章 我见真武之前斩恶龙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=422&fr=bdgfh&mip=1"},{"name":"第三十一章 真武见我","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=423&fr=bdgfh&mip=1"},{"name":"第三十二章 多事之冬","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=424&fr=bdgfh&mip=1"},{"name":"第三十三章 说到做到","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=425&fr=bdgfh&mip=1"},{"name":"第三十四章 马蹄南下","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=426&fr=bdgfh&mip=1"},{"name":"第三十五章 神仙和凡人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=427&fr=bdgfh&mip=1"},{"name":"第三十六章 天上剑仙三百万，遇我一柄北凉刀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=428&fr=bdgfh&mip=1"},{"name":"第三十七章 江湖又巍巍乎千百剑来","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=429&fr=bdgfh&mip=1"},{"name":"第三十八章 我以黑剑杀白雪","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=430&fr=bdgfh&mip=1"},{"name":"第三十九章 赤脚","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=431&fr=bdgfh&mip=1"},{"name":"第四十章 何谓天下第十","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=432&fr=bdgfh&mip=1"},{"name":"第四十一章 杯中龙卷","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=433&fr=bdgfh&mip=1"},{"name":"第四十二章 卖炭爷孙卖炭妞","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=434&fr=bdgfh&mip=1"},{"name":"第四十三章 一骑当先，一夫当关","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=435&fr=bdgfh&mip=1"},{"name":"第四十四章 白衣战黑衣，白头杀白头","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=436&fr=bdgfh&mip=1"},{"name":"第四十五章 雪中","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=437&fr=bdgfh&mip=1"},{"name":"第四十六章 过河卒子","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=438&fr=bdgfh&mip=1"},{"name":"第四十七章 雪停且捧雪","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=439&fr=bdgfh&mip=1"},{"name":"第四十八章 送炭之后齐卸甲","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=440&fr=bdgfh&mip=1"},{"name":"第四十九章 白日见鬼","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=441&fr=bdgfh&mip=1"},{"name":"第五十章 急着投胎","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=442&fr=bdgfh&mip=1"},{"name":"第五十一章 酒里有杀气","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=443&fr=bdgfh&mip=1"},{"name":"第五十二章 两锭银，买一春秋名将送一铮铮文臣","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=444&fr=bdgfh&mip=1"},{"name":"第五十三章 魔高一丈","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=445&fr=bdgfh&mip=1"},{"name":"第五十四章 乌鸦嘴","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=446&fr=bdgfh&mip=1"},{"name":"第五十五章 丑八怪","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=447&fr=bdgfh&mip=1"},{"name":"第五十六章 西佛东魔，白衣逐鹿","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=448&fr=bdgfh&mip=1"},{"name":"第五十七章 两顾之争","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=449&fr=bdgfh&mip=1"},{"name":"第五十八章 九十之争","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=450&fr=bdgfh&mip=1"},{"name":"第五十九章 剑仙晚到一百年","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=451&fr=bdgfh&mip=1"},{"name":"第六十章 两不负","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=452&fr=bdgfh&mip=1"},{"name":"第六十一章 晚来天欲雪","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=453&fr=bdgfh&mip=1"},{"name":"第六十二章 三人禾","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=454&fr=bdgfh&mip=1"},{"name":"第六十三章 风雪归人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=455&fr=bdgfh&mip=1"},{"name":"第六十四章 好","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=456&fr=bdgfh&mip=1"},{"name":"第六十五章 胃口","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=457&fr=bdgfh&mip=1"},{"name":"第六十六章 长短术","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=458&fr=bdgfh&mip=1"},{"name":"第六十七章 庙堂未乱江湖乱","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=459&fr=bdgfh&mip=1"},{"name":"第六十八章 守不住寡的江湖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=460&fr=bdgfh&mip=1"},{"name":"第六十九章 起雾","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=461&fr=bdgfh&mip=1"},{"name":"第七十章 怎么简单怎么杀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=462&fr=bdgfh&mip=1"},{"name":"第七十一章 大雪坪上欠剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=463&fr=bdgfh&mip=1"},{"name":"第七十二章 替天行道，一字三请","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=464&fr=bdgfh&mip=1"},{"name":"第七十三章 你请神仙我请真武","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=465&fr=bdgfh&mip=1"},{"name":"第七十四章 少年侠气死江湖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=466&fr=bdgfh&mip=1"},{"name":"第七十五章 必死之地必死之人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=467&fr=bdgfh&mip=1"},{"name":"第七十六章 雨伞","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=468&fr=bdgfh&mip=1"},{"name":"第七十七章 猫鼠捕杀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=469&fr=bdgfh&mip=1"},{"name":"第七十八章 一波未平一波又起","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=470&fr=bdgfh&mip=1"},{"name":"第七十九章 马背十四剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=471&fr=bdgfh&mip=1"},{"name":"第八十章 洛阳还剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=472&fr=bdgfh&mip=1"},{"name":"第八十一章 女子何至于如此霸气","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=473&fr=bdgfh&mip=1"},{"name":"第八十二章 天地之间一线剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=474&fr=bdgfh&mip=1"},{"name":"第八十三章 最后一趟江湖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=475&fr=bdgfh&mip=1"},{"name":"第八十四章 大王","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=476&fr=bdgfh&mip=1"},{"name":"第八十五章 王仙芝前来收官","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=477&fr=bdgfh&mip=1"},{"name":"第八十六章 天下名剑共主","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=478&fr=bdgfh&mip=1"},{"name":"第八十七章 去洛阳","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=479&fr=bdgfh&mip=1"},{"name":"第八十八章 王仙芝退去一千丈","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=480&fr=bdgfh&mip=1"},{"name":"第八十九章 腐草为萤","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=481&fr=bdgfh&mip=1"},{"name":"第九十章 逍遥游","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=482&fr=bdgfh&mip=1"},{"name":"第九十一章 事未了拂衣去","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=483&fr=bdgfh&mip=1"},{"name":"第九十二章 女侠和钱囊","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=484&fr=bdgfh&mip=1"},{"name":"第九十三章 白龙鱼服","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=485&fr=bdgfh&mip=1"},{"name":"本月更新。","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=486&fr=bdgfh&mip=1"},{"name":"码字间隙聊几句","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=487&fr=bdgfh&mip=1"},{"name":"九十四章 武当桃符","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=488&fr=bdgfh&mip=1"},{"name":"第九十五章 狗刨江湖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=489&fr=bdgfh&mip=1"},{"name":"第九十六章 英雄总要迟暮","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=490&fr=bdgfh&mip=1"},{"name":"第九十七章 到此一游","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=491&fr=bdgfh&mip=1"},{"name":"第九十八章 灯笼","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=492&fr=bdgfh&mip=1"},{"name":"第九十九章 书生的意气，先生的背影","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=493&fr=bdgfh&mip=1"},{"name":"第一百章 父子并行","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=494&fr=bdgfh&mip=1"},{"name":"第一百零一章 几百顶貂帽","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=495&fr=bdgfh&mip=1"},{"name":"第一百零二章 要官不成","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=496&fr=bdgfh&mip=1"},{"name":"第一百零三章 阴风阴雨","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=497&fr=bdgfh&mip=1"},{"name":"第一百零四章 好鸟好世道","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=498&fr=bdgfh&mip=1"},{"name":"第一百零五章 卖官鬻爵","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=499&fr=bdgfh&mip=1"},{"name":"第一百零六章 姓徐的","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=500&fr=bdgfh&mip=1"},{"name":"第一百零七章 鹰隼游曳","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=501&fr=bdgfh&mip=1"},{"name":"第一百零八章 念来念去都是情","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=502&fr=bdgfh&mip=1"},{"name":"第一百零九章 斫琴","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=503&fr=bdgfh&mip=1"},{"name":"第一百一十章 笼络","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=504&fr=bdgfh&mip=1"},{"name":"第一百一十一章 捞网漏鱼","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=505&fr=bdgfh&mip=1"},{"name":"第一百一十二章  风起梧桐院","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=506&fr=bdgfh&mip=1"},{"name":"第一百一十三章 骤然富贵","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=507&fr=bdgfh&mip=1"},{"name":"第一百一十四章 暗流","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=508&fr=bdgfh&mip=1"},{"name":"第一百一十五章 家贼","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=509&fr=bdgfh&mip=1"},{"name":"第一百一十六章 北凉织造","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=510&fr=bdgfh&mip=1"},{"name":"第一百一十七章 孤家寡人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=511&fr=bdgfh&mip=1"},{"name":"第一百一十八章 徐家年年有余","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=512&fr=bdgfh&mip=1"},{"name":"第一百一十九章 大奸大恶褚禄山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=513&fr=bdgfh&mip=1"},{"name":"第一百二十章 密信自京城来","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=514&fr=bdgfh&mip=1"},{"name":"第一百二十一章  开门不见山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=515&fr=bdgfh&mip=1"},{"name":"第一百二十二章 输赢","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=516&fr=bdgfh&mip=1"},{"name":"第一百二十三章 退路","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=517&fr=bdgfh&mip=1"},{"name":"第一百二十四章 为北凉披甲，因世子卸甲","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=518&fr=bdgfh&mip=1"},{"name":"第一百二十五章 火上浇油和雪上加霜","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=519&fr=bdgfh&mip=1"},{"name":"第一百二十六章 水落石出的密信","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=520&fr=bdgfh&mip=1"},{"name":"第一百二十七章 怜子如何不丈夫","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=521&fr=bdgfh&mip=1"},{"name":"第一百二十八章 与人言一二三","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=522&fr=bdgfh&mip=1"},{"name":"第一百二十九章 怎么杀一品高手","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=523&fr=bdgfh&mip=1"},{"name":"第一百三十章 扛刀入北凉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=524&fr=bdgfh&mip=1"},{"name":"第一百三十一章 上乘剑术","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=525&fr=bdgfh&mip=1"},{"name":"第一百三十二章 过河","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=526&fr=bdgfh&mip=1"},{"name":"第一百三十三章 豆腐北凉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=527&fr=bdgfh&mip=1"},{"name":"第一百三十四章 抛人皮","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=528&fr=bdgfh&mip=1"},{"name":"第一百三十五章 抛过河","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=529&fr=bdgfh&mip=1"},{"name":"第一百三十六章 北上南下","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=530&fr=bdgfh&mip=1"},{"name":"第一百三十七章  胭脂评胭脂","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=531&fr=bdgfh&mip=1"},{"name":"贺新凉_第一百三十八章 两百岁说百年江湖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=532&fr=bdgfh&mip=1"},{"name":"第一百三十九章 神仙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=533&fr=bdgfh&mip=1"},{"name":"第一百四十章 以北","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=534&fr=bdgfh&mip=1"},{"name":"第一百四十一章 以南","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=535&fr=bdgfh&mip=1"},{"name":"第一百四十二章 北凉鼓响","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=536&fr=bdgfh&mip=1"},{"name":"第一百四十三章 帝王相逢风雪中","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=537&fr=bdgfh&mip=1"},{"name":"第一百四十四章 睡了","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=538&fr=bdgfh&mip=1"},{"name":"第一百四十五章 惊蛰","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=539&fr=bdgfh&mip=1"},{"name":"第一百四十六章 太安城两笑两白衣","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=540&fr=bdgfh&mip=1"},{"name":"第一百四十七章  龟孙子老王八","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=541&fr=bdgfh&mip=1"},{"name":"第一百四十八章 麻衣如雪","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=542&fr=bdgfh&mip=1"},{"name":"第一百四十九章 待客之礼","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=543&fr=bdgfh&mip=1"},{"name":"第一百五十章 神仙打架","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=544&fr=bdgfh&mip=1"},{"name":"第一百五十一章 你方唱罢","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=545&fr=bdgfh&mip=1"},{"name":"第一百五十二章 大王小鬼齐登场","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=546&fr=bdgfh&mip=1"},{"name":"第一百五十三章 三国","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=547&fr=bdgfh&mip=1"},{"name":"第一百五十四章 西游","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=548&fr=bdgfh&mip=1"},{"name":"第一百五十五章 红楼","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=549&fr=bdgfh&mip=1"},{"name":"第一百五十六章 水浒","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=550&fr=bdgfh&mip=1"},{"name":"第一百五十七章 天高任鸟飞","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=551&fr=bdgfh&mip=1"},{"name":"第一百五十八章 北凉要跟北莽离阳讲道理","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=552&fr=bdgfh&mip=1"},{"name":"第一百五十九章 脚下有山河","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=553&fr=bdgfh&mip=1"},{"name":"第一百六十章 天下大乱","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=554&fr=bdgfh&mip=1"},{"name":"第一百六十一章 一钱之约","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=555&fr=bdgfh&mip=1"},{"name":"第一百六十二章 炉火纯青","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=556&fr=bdgfh&mip=1"},{"name":"第一百六十三章  春秋是块田，田边有老农","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=557&fr=bdgfh&mip=1"},{"name":"第一百六十四章  祥符之春，匹夫之勇，国士之风","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=558&fr=bdgfh&mip=1"},{"name":"第一百六十五章 百足之虫，夫妻之间，强弩之末","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=559&fr=bdgfh&mip=1"},{"name":"第一百六十六章 回望和回神","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=560&fr=bdgfh&mip=1"},{"name":"第一百六十七章 跟天下百姓要了一壶酒","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=561&fr=bdgfh&mip=1"},{"name":"第一百六十八章 封山四百年","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=562&fr=bdgfh&mip=1"},{"name":"第一百六十九章 我在陆地观沧海","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=563&fr=bdgfh&mip=1"},{"name":"第一百七十章 提前一战","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=564&fr=bdgfh&mip=1"},{"name":"第一百七十一章 九楼之上","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=565&fr=bdgfh&mip=1"},{"name":"第一百七十二章 天人相见","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=566&fr=bdgfh&mip=1"},{"name":"第一百七十三章 老卒","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=567&fr=bdgfh&mip=1"},{"name":"第一章 家事国事天下事","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=568&fr=bdgfh&mip=1"},{"name":"第二章 风声雨声读书声","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=569&fr=bdgfh&mip=1"},{"name":"第三章 天下分合，我有何忧","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=570&fr=bdgfh&mip=1"},{"name":"第四章 天下第二第三","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=571&fr=bdgfh&mip=1"},{"name":"第五章 勿念勿等","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=572&fr=bdgfh&mip=1"},{"name":"共逐鹿_第六章 新天下新江湖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=573&fr=bdgfh&mip=1"},{"name":"第七章 真像","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=574&fr=bdgfh&mip=1"},{"name":"第八章 抢人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=575&fr=bdgfh&mip=1"},{"name":"第九章 战马昵称，铁锈叮咚","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=576&fr=bdgfh&mip=1"},{"name":"第十章 变故","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=577&fr=bdgfh&mip=1"},{"name":"第十一章 心安，高手","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=578&fr=bdgfh&mip=1"},{"name":"第十二章 求死之人杀等死之人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=579&fr=bdgfh&mip=1"},{"name":"第十三章 立足之地","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=580&fr=bdgfh&mip=1"},{"name":"第十四章 高树露的体魄","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=581&fr=bdgfh&mip=1"},{"name":"第十五章 小试牛刀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=582&fr=bdgfh&mip=1"},{"name":"第十六章 吕祖遗言","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=583&fr=bdgfh&mip=1"},{"name":"第十七章 既然气数已尽，那就气吞万里","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=584&fr=bdgfh&mip=1"},{"name":"第十八章 东西一线上的拦路石","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=585&fr=bdgfh&mip=1"},{"name":"第十九章 第一颗石子，紫衣拦江","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=586&fr=bdgfh&mip=1"},{"name":"第二十章 垂死一剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=587&fr=bdgfh&mip=1"},{"name":"第二十一章 道士下山挑山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=588&fr=bdgfh&mip=1"},{"name":"第二十二章 一截江即一剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=589&fr=bdgfh&mip=1"},{"name":"第二十三章 人留剑返山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=590&fr=bdgfh&mip=1"},{"name":"第二十四章 一苇下江，敬香落剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=591&fr=bdgfh&mip=1"},{"name":"第二十五章 呵，一夫当关","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=592&fr=bdgfh&mip=1"},{"name":"第二十六章 走春秋看春秋","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=593&fr=bdgfh&mip=1"},{"name":"第二十七章 无生离，唯死别","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=594&fr=bdgfh&mip=1"},{"name":"第二十八章 春秋之尾，草席之旁","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=595&fr=bdgfh&mip=1"},{"name":"第二十九章 书上之人，当死则死","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=596&fr=bdgfh&mip=1"},{"name":"第三十章 来了和该死了","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=597&fr=bdgfh&mip=1"},{"name":"第三十一章 千年未有大气象","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=598&fr=bdgfh&mip=1"},{"name":"第三十二章 扛起天地","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=599&fr=bdgfh&mip=1"},{"name":"第三十三章 剑鞘即冢！谁可匹敌？","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=600&fr=bdgfh&mip=1"},{"name":"第三十四章 老匹夫的一步","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=601&fr=bdgfh&mip=1"},{"name":"第三十五章 十分之争，将死之人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=602&fr=bdgfh&mip=1"},{"name":"第三十六章 武无第二","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=603&fr=bdgfh&mip=1"},{"name":"第三十七章 也无第一也无一字","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=604&fr=bdgfh&mip=1"},{"name":"第三十八章 下龙虎下徽山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=605&fr=bdgfh&mip=1"},{"name":"第三十九章 新武帝（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=606&fr=bdgfh&mip=1"},{"name":"第四十章 新无敌（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=607&fr=bdgfh&mip=1"},{"name":"第四十一章 雾滴（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=608&fr=bdgfh&mip=1"},{"name":"第四十二章 一张帘子一字请","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=609&fr=bdgfh&mip=1"},{"name":"第四十三章 人至即剑至","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=610&fr=bdgfh&mip=1"},{"name":"第四十四章 九十年意气咄咄逼人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=611&fr=bdgfh&mip=1"},{"name":"第四十五章 新狼烟旧余晖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=612&fr=bdgfh&mip=1"},{"name":"第四十六章 鱼龙混杂","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=613&fr=bdgfh&mip=1"},{"name":"第四十七章 家门口坐田边","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=614&fr=bdgfh&mip=1"},{"name":"第四十八章 读书种子","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=615&fr=bdgfh&mip=1"},{"name":"第四十九章 武林新木","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=616&fr=bdgfh&mip=1"},{"name":"第五十章 灯火","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=617&fr=bdgfh&mip=1"},{"name":"说两件事情。","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=618&fr=bdgfh&mip=1"},{"name":"第五十一章 庙堂老梁，北凉青壮","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=619&fr=bdgfh&mip=1"},{"name":"第五十二章 北凉大马","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=620&fr=bdgfh&mip=1"},{"name":"第五十三章 秋风秋雨","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=621&fr=bdgfh&mip=1"},{"name":"第五十四章 陆地朝仙图","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=622&fr=bdgfh&mip=1"},{"name":"第五十五章 坐看云起","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=623&fr=bdgfh&mip=1"},{"name":"第五十六章 秋愁煞人更杀人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=624&fr=bdgfh&mip=1"},{"name":"第五十七章 骄兵南下","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=625&fr=bdgfh&mip=1"},{"name":"第五十八章 轻重之争","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=626&fr=bdgfh&mip=1"},{"name":"第五十九章 封侯虎","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=627&fr=bdgfh&mip=1"},{"name":"第六十章 半寸舌","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=628&fr=bdgfh&mip=1"},{"name":"第六十一章 泪水","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=629&fr=bdgfh&mip=1"},{"name":"第六十二章 师徒和师徒","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=630&fr=bdgfh&mip=1"},{"name":"第六十三章 得道","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=631&fr=bdgfh&mip=1"},{"name":"第六十四章  北边画灰","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=632&fr=bdgfh&mip=1"},{"name":"第六十五章 蜀蛟","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=633&fr=bdgfh&mip=1"},{"name":"第六十六章 碗中蛟龙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=634&fr=bdgfh&mip=1"},{"name":"第六十七章 隐相","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=635&fr=bdgfh&mip=1"},{"name":"第六十八章 背影","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=636&fr=bdgfh&mip=1"},{"name":"第六十九章 谋国之士","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=637&fr=bdgfh&mip=1"},{"name":"第七十章 不外乎人情","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=638&fr=bdgfh&mip=1"},{"name":"第七十一章 三十万碑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=639&fr=bdgfh&mip=1"},{"name":"第七十二章 北望","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=640&fr=bdgfh&mip=1"},{"name":"第七十三章 庙堂之高","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=641&fr=bdgfh&mip=1"},{"name":"第七十四章 北凉亲家","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=642&fr=bdgfh&mip=1"},{"name":"第七十五章 打趴下","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=643&fr=bdgfh&mip=1"},{"name":"第七十六章 井中月","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=644&fr=bdgfh&mip=1"},{"name":"第七十七章 兄弟二人，北凉袍泽","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=645&fr=bdgfh&mip=1"},{"name":"第七十八章 吴家百骑赴凉州","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=646&fr=bdgfh&mip=1"},{"name":"第七十九章 北凉添枪","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=647&fr=bdgfh&mip=1"},{"name":"第八十章 树叶红了","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=648&fr=bdgfh&mip=1"},{"name":"第八十一章 待客隋斜谷","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=649&fr=bdgfh&mip=1"},{"name":"第八十二章 紫金身，百年一剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=650&fr=bdgfh&mip=1"},{"name":"第八十三章 霜杀百草（一）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=651&fr=bdgfh&mip=1"},{"name":"第八十四章 霜杀百草（二）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=652&fr=bdgfh&mip=1"},{"name":"第八十五章 霜杀百草（三）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=653&fr=bdgfh&mip=1"},{"name":"第八十六章 霜杀百草（四）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=654&fr=bdgfh&mip=1"},{"name":"第八十七章 西蜀南诏，东西南北","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=655&fr=bdgfh&mip=1"},{"name":"第八十八章 少侠和魔头","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=656&fr=bdgfh&mip=1"},{"name":"第八十九章 陈芝豹","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=657&fr=bdgfh&mip=1"},{"name":"第九十章 青灯","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=658&fr=bdgfh&mip=1"},{"name":"第九十一章 知了","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=659&fr=bdgfh&mip=1"},{"name":"第九十二章 大白猫，小地瓜","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=660&fr=bdgfh&mip=1"},{"name":"第九十三章 江湖登高","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=661&fr=bdgfh&mip=1"},{"name":"第九十四章 江湖之远","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=662&fr=bdgfh&mip=1"},{"name":"第九十五章 一问一答","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=663&fr=bdgfh&mip=1"},{"name":"第九十六章 等蟒袍","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=664&fr=bdgfh&mip=1"},{"name":"第九十七章 为他人作嫁衣裳","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=665&fr=bdgfh&mip=1"},{"name":"第九十八章 刀与剑，共出塞","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=666&fr=bdgfh&mip=1"},{"name":"第九十九章 大王巡山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=667&fr=bdgfh&mip=1"},{"name":"第一百章 边刀未起家刀落","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=668&fr=bdgfh&mip=1"},{"name":"第一百零一章 入冬本该人加衣","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=669&fr=bdgfh&mip=1"},{"name":"第一百零二章 明年春发花","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=670&fr=bdgfh&mip=1"},{"name":"第一百零三章 大军开拔和狭路相逢","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=671&fr=bdgfh&mip=1"},{"name":"第一百零四章 旧账","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=672&fr=bdgfh&mip=1"},{"name":"第一百零五章 互杀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=673&fr=bdgfh&mip=1"},{"name":"第一百零六章 男儿死尽时","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=674&fr=bdgfh&mip=1"},{"name":"第一百零七章 星空下","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=675&fr=bdgfh&mip=1"},{"name":"第一百零八章 大战在即","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=676&fr=bdgfh&mip=1"},{"name":"第一百零九章 一张书页","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=677&fr=bdgfh&mip=1"},{"name":"第一百一十章 不用讲理","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=678&fr=bdgfh&mip=1"},{"name":"第一百一十一章 天无雪","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=679&fr=bdgfh&mip=1"},{"name":"第一百一十二章 刀出鞘","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=680&fr=bdgfh&mip=1"},{"name":"第一百一十三章 地满血","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=681&fr=bdgfh&mip=1"},{"name":"第一百一十四章 一口缸","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=682&fr=bdgfh&mip=1"},{"name":"第一百一十五章 天亮","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=683&fr=bdgfh&mip=1"},{"name":"第一百一十六章 离阳失其鹿（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=684&fr=bdgfh&mip=1"},{"name":"第一百一十七章 离阳失其鹿（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=685&fr=bdgfh&mip=1"},{"name":"第一百一十八章 离阳失其鹿（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=686&fr=bdgfh&mip=1"},{"name":"第一百一十九章 在等在念（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=687&fr=bdgfh&mip=1"},{"name":"第一百二十章 在等在念，愿闻奇楠","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=688&fr=bdgfh&mip=1"},{"name":"第一百二十一章 坐井观天","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=689&fr=bdgfh&mip=1"},{"name":"第一百二十二章 狭路相逢","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=690&fr=bdgfh&mip=1"},{"name":"第一百二十三章 紫气东来","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=691&fr=bdgfh&mip=1"},{"name":"第一百二十四章 陆地滚青雷","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=692&fr=bdgfh&mip=1"},{"name":"第一百二十五章 仙人落子","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=693&fr=bdgfh&mip=1"},{"name":"第一百二十六章 一剑生佛","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=694&fr=bdgfh&mip=1"},{"name":"第一百二十七章 数百飞剑截紫气","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=695&fr=bdgfh&mip=1"},{"name":"第一百二十八章 大仗之前有大仗","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=696&fr=bdgfh&mip=1"},{"name":"第一百二十九章 一万把凉刀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=697&fr=bdgfh&mip=1"},{"name":"第一百三十章 龙抬头，开天眼","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=698&fr=bdgfh&mip=1"},{"name":"第一百三十一章 最强手，扛天雷","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=699&fr=bdgfh&mip=1"},{"name":"第一百三十二章 八方雷动","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=700&fr=bdgfh&mip=1"},{"name":"第一百三十三章 大真人齐玄帧","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=701&fr=bdgfh&mip=1"},{"name":"第一百三十四章 有人养龙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=702&fr=bdgfh&mip=1"},{"name":"第一百三十五章 真龙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=703&fr=bdgfh&mip=1"},{"name":"第一百三十六章 斩龙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=704&fr=bdgfh&mip=1"},{"name":"第一百三十七章 蟒吞龙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=705&fr=bdgfh&mip=1"},{"name":"第一百三十八章 兄弟","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=706&fr=bdgfh&mip=1"},{"name":"第一百三十九章 天下动静（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=707&fr=bdgfh&mip=1"},{"name":"第一百四十章 天下动静，除夕（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=708&fr=bdgfh&mip=1"},{"name":"第一百四十一章 天下动静，迎新（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=709&fr=bdgfh&mip=1"},{"name":"第一百四十二章 狼烟升起前","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=710&fr=bdgfh&mip=1"},{"name":"第一百四十三章 西北遍地起狼烟，京城人人得太平","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=711&fr=bdgfh&mip=1"},{"name":"第一百四十四章 天下姓什么","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=712&fr=bdgfh&mip=1"},{"name":"第一百四十五章 从前有座山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=713&fr=bdgfh&mip=1"},{"name":"第一百四十六章 山中无虎","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=714&fr=bdgfh&mip=1"},{"name":"第一百四十七章 长枪所指","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=715&fr=bdgfh&mip=1"},{"name":"第一百四十八章 富贵还乡","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=716&fr=bdgfh&mip=1"},{"name":"第一百四十九章 春秋十三甲","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=717&fr=bdgfh&mip=1"},{"name":"第一百五十章 满园风雷","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=718&fr=bdgfh&mip=1"},{"name":"第一百五十一章 一杯雪一头颅","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=719&fr=bdgfh&mip=1"},{"name":"第一百五十二章 一院六人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=720&fr=bdgfh&mip=1"},{"name":"第一百五十三章 死在更南，死于更北","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=721&fr=bdgfh&mip=1"},{"name":"第一百五十四章 草蛇灰线","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=722&fr=bdgfh&mip=1"},{"name":"第一百五十五章 抔土","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=723&fr=bdgfh&mip=1"},{"name":"第一百五十六章 古谣","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=724&fr=bdgfh&mip=1"},{"name":"第一百五十七章 死尽尽死","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=725&fr=bdgfh&mip=1"},{"name":"第一百五十八章 风过卧弓城","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=726&fr=bdgfh&mip=1"},{"name":"第一百五十九章 就在那里！","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=727&fr=bdgfh&mip=1"},{"name":"第一百六十章 天下不平事，总有拔刀郎","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=728&fr=bdgfh&mip=1"},{"name":"第一百六十一章 镇灵歌","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=729&fr=bdgfh&mip=1"},{"name":"第一百六十二章 等待和希望","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=730&fr=bdgfh&mip=1"},{"name":"第一百六十三章 蝉，螳螂，黄雀，弹弓","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=731&fr=bdgfh&mip=1"},{"name":"第一百六十四章 骨灰","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=732&fr=bdgfh&mip=1"},{"name":"第一百六十五章 读书人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=733&fr=bdgfh&mip=1"},{"name":"第一百六十六章 春风翻过页页书","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=734&fr=bdgfh&mip=1"},{"name":"第一百六十七章 女子心思","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=735&fr=bdgfh&mip=1"},{"name":"第一百六十八章 珠帘，铁甲（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=736&fr=bdgfh&mip=1"},{"name":"第一百六十九章 珠帘，铁甲（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=737&fr=bdgfh&mip=1"},{"name":"第一百七十章 珠帘，铁甲（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=738&fr=bdgfh&mip=1"},{"name":"第一百七十一章 葫芦口筑京观","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=739&fr=bdgfh&mip=1"},{"name":"第一百七十二章 几人不思徐","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=740&fr=bdgfh&mip=1"},{"name":"第一百七十三章 褚禄山的问题","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=741&fr=bdgfh&mip=1"},{"name":"第一百七十四章 今年清明无苦雨","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=742&fr=bdgfh&mip=1"},{"name":"第一百七十五章 能饮一杯无","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=743&fr=bdgfh&mip=1"},{"name":"第一百七十六章 蜀王入凉，道士进山，凉王出山。","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=744&fr=bdgfh&mip=1"},{"name":"第一百七十七章 平起平坐，狼顾中原","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=745&fr=bdgfh&mip=1"},{"name":"第一百七十八章 一口喝出百年风流","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=746&fr=bdgfh&mip=1"},{"name":"第一百七十九章 想不想坐那张椅子","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=747&fr=bdgfh&mip=1"},{"name":"第一百八十章 辽东虎","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=748&fr=bdgfh&mip=1"},{"name":"第一百八十一章 西北狼","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=749&fr=bdgfh&mip=1"},{"name":"第一百八十二章 两国之战，两人之战（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=750&fr=bdgfh&mip=1"},{"name":"第一百八十三章 两人之战，两国之战（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=751&fr=bdgfh&mip=1"},{"name":"第一百八十四章 两人之战，两国之战（三）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=752&fr=bdgfh&mip=1"},{"name":"第一百八十五章 两人之战，两国之战（四）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=753&fr=bdgfh&mip=1"},{"name":"第一百八十六章 两人之战，两国之战（五）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=754&fr=bdgfh&mip=1"},{"name":"第一百八十七章 两人之战，两国之战（六）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=755&fr=bdgfh&mip=1"},{"name":"第一百八十八章 两人之战，两国之战（七）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=756&fr=bdgfh&mip=1"},{"name":"第一百八十九章 两人之战，两国之战（八）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=757&fr=bdgfh&mip=1"},{"name":"第一百九十章 两人之战，两国之战（九）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=758&fr=bdgfh&mip=1"},{"name":"第一百九十一章 两人之战，两国之战（十）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=759&fr=bdgfh&mip=1"},{"name":"第一百九十二章 慢慢来","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=760&fr=bdgfh&mip=1"},{"name":"第一百九十三章 新旧江湖，先后两诗","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=761&fr=bdgfh&mip=1"},{"name":"第一百九十四章 一桩买卖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=762&fr=bdgfh&mip=1"},{"name":"第一百九十五章 中原何曾少豪气","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=763&fr=bdgfh&mip=1"},{"name":"第一百九十六章 无风也无雨","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=764&fr=bdgfh&mip=1"},{"name":"第一百九十七章 风起西北陇上（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=765&fr=bdgfh&mip=1"},{"name":"第一百九十八章 风起西北陇上（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=766&fr=bdgfh&mip=1"},{"name":"第一百九十九章 六两三","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=767&fr=bdgfh&mip=1"},{"name":"第两百章 大风起时，岂能不落人头（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=768&fr=bdgfh&mip=1"},{"name":"第二百零一章 大风起时，岂能不落人头（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=769&fr=bdgfh&mip=1"},{"name":"第二百零二章 大风起时，岂能不落人头（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=770&fr=bdgfh&mip=1"},{"name":"第二百零三章 江湖再见沙场见","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=771&fr=bdgfh&mip=1"},{"name":"第两百零四章 南北共分天下","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=772&fr=bdgfh&mip=1"},{"name":"第两百零五章 上山下山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=773&fr=bdgfh&mip=1"},{"name":"第两百零六章 当下又忧郁","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=774&fr=bdgfh&mip=1"},{"name":"第两百零七章 欠债不还钱，说与山鬼听","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=775&fr=bdgfh&mip=1"},{"name":"第两百零八章 有朋远方来，岂能无礼","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=776&fr=bdgfh&mip=1"},{"name":"第两百零九章 我从山中来，山风翻我书","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=777&fr=bdgfh&mip=1"},{"name":"第两百一十章  拔剑再说","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=778&fr=bdgfh&mip=1"},{"name":"第两百一十一章 你们这一剑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=779&fr=bdgfh&mip=1"},{"name":"第两百一十二章 天下共看一人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=780&fr=bdgfh&mip=1"},{"name":"第两百一十三章 此地起佛国，他处下大雨","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=781&fr=bdgfh&mip=1"},{"name":"第两百一十四章 两次两年","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=782&fr=bdgfh&mip=1"},{"name":"第两百一十五章 于无声处听惊雷","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=783&fr=bdgfh&mip=1"},{"name":"第两百一十六章 那些壮阔之下的（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=784&fr=bdgfh&mip=1"},{"name":"第两百一十七章 那些壮阔之下的（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=785&fr=bdgfh&mip=1"},{"name":"第两百一十八章 那些壮阔之下的（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=786&fr=bdgfh&mip=1"},{"name":"第两百一十九章 北凉四战（一）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=787&fr=bdgfh&mip=1"},{"name":"第两百二十章 北凉四战（二）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=788&fr=bdgfh&mip=1"},{"name":"第两百二十一章 北凉四战（三）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=789&fr=bdgfh&mip=1"},{"name":"第两百二十二章 北凉四战（四）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=790&fr=bdgfh&mip=1"},{"name":"第二百二十三章 北凉四战（五）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=791&fr=bdgfh&mip=1"},{"name":"第两百二十四章 北凉四战（六）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=792&fr=bdgfh&mip=1"},{"name":"第两百二十五章 北凉四战（七）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=793&fr=bdgfh&mip=1"},{"name":"第两百二十六章 北凉四战（八）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=794&fr=bdgfh&mip=1"},{"name":"第两百二十七章 大珠小珠落玉盘（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=795&fr=bdgfh&mip=1"},{"name":"第两百二十八章 大珠小珠落玉盘（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=796&fr=bdgfh&mip=1"},{"name":"第两百二十九章 昔年徐家如今北凉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=797&fr=bdgfh&mip=1"},{"name":"第两百三十章 痛痛快快","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=798&fr=bdgfh&mip=1"},{"name":"第两百三十一章 转折点","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=799&fr=bdgfh&mip=1"},{"name":"第两百三十二章 两个消息","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=800&fr=bdgfh&mip=1"},{"name":"第两百三十三章 百无一用是（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=801&fr=bdgfh&mip=1"},{"name":"第两百三十四章 百无一用是（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=802&fr=bdgfh&mip=1"},{"name":"第两百三十五章 百无一用是（三）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=803&fr=bdgfh&mip=1"},{"name":"第两百三十六章 百无一用是（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=804&fr=bdgfh&mip=1"},{"name":"第两百三十七章 又是圣旨到，又见太安城","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=805&fr=bdgfh&mip=1"},{"name":"第两百三十八章 噤若寒蝉（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=806&fr=bdgfh&mip=1"},{"name":"第两百三十九章 噤若寒蝉（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=807&fr=bdgfh&mip=1"},{"name":"第两百四十章 噤若寒蝉（三）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=808&fr=bdgfh&mip=1"},{"name":"第两百四十一章 噤若寒蝉（四）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=809&fr=bdgfh&mip=1"},{"name":"第两百四十二章 噤若寒蝉（五）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=810&fr=bdgfh&mip=1"},{"name":"第两百四十三章 噤若寒蝉（六）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=811&fr=bdgfh&mip=1"},{"name":"第两百四十四章 噤若寒蝉（七）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=812&fr=bdgfh&mip=1"},{"name":"第两百四十五章 噤若寒蝉（八）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=813&fr=bdgfh&mip=1"},{"name":"第两百四十六章 噤若寒蝉（九）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=814&fr=bdgfh&mip=1"},{"name":"第两百四十七章 噤若寒蝉（十）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=815&fr=bdgfh&mip=1"},{"name":"第两百四十八章 赵家三千甲","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=816&fr=bdgfh&mip=1"},{"name":"第两百四十九章 新旧先后","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=817&fr=bdgfh&mip=1"},{"name":"第两百五十章 一位位仙人在前","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=818&fr=bdgfh&mip=1"},{"name":"第两百五十一章 太安城又下雨","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=819&fr=bdgfh&mip=1"},{"name":"第两百五十二章 站着坐着跪着躺着","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=820&fr=bdgfh&mip=1"},{"name":"第两百五十二章 日出东方","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=821&fr=bdgfh&mip=1"},{"name":"第两百五十三章 入门","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=822&fr=bdgfh&mip=1"},{"name":"两百五十四章 大胆吕洞玄","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=823&fr=bdgfh&mip=1"},{"name":"第两百五十五章 长绳悬空","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=824&fr=bdgfh&mip=1"},{"name":"第两百五十六章 且放心","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=825&fr=bdgfh&mip=1"},{"name":"第两百五十七章 事了拂衣（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=826&fr=bdgfh&mip=1"},{"name":"第两百五十八章 事了拂衣（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=827&fr=bdgfh&mip=1"},{"name":"第两百五十九章 事了拂衣（三）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=828&fr=bdgfh&mip=1"},{"name":"第两百六十章 事了拂衣（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=829&fr=bdgfh&mip=1"},{"name":"第两百六十一章 回凉州","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=830&fr=bdgfh&mip=1"},{"name":"第两百六十二章 有个店小二","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=831&fr=bdgfh&mip=1"},{"name":"第两百六十三章 大江南大江北","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=832&fr=bdgfh&mip=1"},{"name":"第两百六十四章 侠客行（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=833&fr=bdgfh&mip=1"},{"name":"第两百六十五章 侠客行（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=834&fr=bdgfh&mip=1"},{"name":"第两百六十六章 侠客行（三）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=835&fr=bdgfh&mip=1"},{"name":"第两百六十七章 侠客行（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=836&fr=bdgfh&mip=1"},{"name":"第两百六十八章 领命","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=837&fr=bdgfh&mip=1"},{"name":"第两百六十九章 楼外日头正暖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=838&fr=bdgfh&mip=1"},{"name":"第两百七十章 君只见独不见","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=839&fr=bdgfh&mip=1"},{"name":"第两百七十一章 一个倾国一个倾城","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=840&fr=bdgfh&mip=1"},{"name":"第两百七十二章 青梅竹马的将军和寡妇","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=841&fr=bdgfh&mip=1"},{"name":"第两百七十三章 为天下雪中送炭","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=842&fr=bdgfh&mip=1"},{"name":"第两百七十四章 守岁","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=843&fr=bdgfh&mip=1"},{"name":"第两百七十五章 腰佩双刀，绣冬春雷","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=844&fr=bdgfh&mip=1"},{"name":"第两百七十六章 死结和理由","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=845&fr=bdgfh&mip=1"},{"name":"第两百七十七章 北凉一声声不答应","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=846&fr=bdgfh&mip=1"},{"name":"第两百七十八章 铁骑风雪下江南（一）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=847&fr=bdgfh&mip=1"},{"name":"第两百七十九章 铁骑风雪下江南（二）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=848&fr=bdgfh&mip=1"},{"name":"第两百八十章 铁骑风雪下江南（三）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=849&fr=bdgfh&mip=1"},{"name":"第两百八十一章 铁骑风雪下江南（四）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=850&fr=bdgfh&mip=1"},{"name":"第两百八十二章 风雪铁骑下江南（五）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=851&fr=bdgfh&mip=1"},{"name":"第两百八十三章 风雪铁骑下江南（六）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=852&fr=bdgfh&mip=1"},{"name":"第两百八十四章 风雪铁骑下江南（七）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=853&fr=bdgfh&mip=1"},{"name":"第两百八十五章 风雪铁骑下江南（八）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=854&fr=bdgfh&mip=1"},{"name":"第两百八十六章 风雪铁骑下江南（九）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=855&fr=bdgfh&mip=1"},{"name":"第两百八十七章 风雪铁骑下江南（十）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=856&fr=bdgfh&mip=1"},{"name":"第两百八十八章 天上大风","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=857&fr=bdgfh&mip=1"},{"name":"第两百八十九章 中原和北凉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=858&fr=bdgfh&mip=1"},{"name":"第两百九十章 南渡北归时","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=859&fr=bdgfh&mip=1"},{"name":"第两百九十一章 当年小年还少年","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=860&fr=bdgfh&mip=1"},{"name":"第两百九十二章 你在哪里，我在这里","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=861&fr=bdgfh&mip=1"},{"name":"第两百九十三章 安身之地无处安心","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=862&fr=bdgfh&mip=1"},{"name":"第两百九十四章 在不在","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=863&fr=bdgfh&mip=1"},{"name":"第两百九十五章  灯火阑珊处，独坐城头人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=864&fr=bdgfh&mip=1"},{"name":"第两百九十六章 我徐凤年在","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=865&fr=bdgfh&mip=1"},{"name":"第两百九十七章 大龙吐珠，天上人间","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=866&fr=bdgfh&mip=1"},{"name":"第两百九十八章 人间天上，原来如此","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=867&fr=bdgfh&mip=1"},{"name":"第两百九十九章 西楚霸王（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=868&fr=bdgfh&mip=1"},{"name":"第三百章 西楚霸王（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=869&fr=bdgfh&mip=1"},{"name":"第三百零一章 西楚霸王（三）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=870&fr=bdgfh&mip=1"},{"name":"第三百零二章 西楚霸王（四）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=871&fr=bdgfh&mip=1"},{"name":"第三百零三章 西楚霸王（五）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=872&fr=bdgfh&mip=1"},{"name":"第三百零四章 西楚霸王（六）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=873&fr=bdgfh&mip=1"},{"name":"第三百零五章 春雨已至秋风将起","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=874&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百零六章 两人扶龙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=875&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百零七章 敬酒一百万杯","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=876&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百零八章 野花","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=877&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百零九章 野草","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=878&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百一十章 君子","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=879&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百十一章 各取头颅","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=880&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百十二章 有始有终","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=881&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百十三章 秋风未起人先死","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=882&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百十四章 收尸","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=883&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百十五章 一桩娃娃亲","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=884&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百一十六章 袍泽","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=885&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百一十七章 中原宗师，尽至关外","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=886&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百一十八章 满甲营已满甲","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=887&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百一十九章 北凉扛纛之人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=888&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百二十章 再见如初见","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=889&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百二十一章 十八停之后","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=890&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百二十二章 三人皆无言","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=891&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百二十三章 一杆梅子酒，白衣返北凉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=892&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百二十四章 满院莲","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=893&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百二十五章 不姓徐，名知报","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=894&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百二十六章 秋风扶起春风","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=895&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百二十七章 将军迟暮","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=896&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百二十八章 中原乱","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=897&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百二十九章 刺史府邸的年轻人们","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=898&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百三十章 风景旧曾谙","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=899&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百三十一章 以一换五百","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=900&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百三十二章 满架刀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=901&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百三十三章 秋天的阳光里","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=902&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百三十四章 衮衮诸公，滚滚黄沙（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=903&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百三十五章 衮衮诸公，滚滚黄沙（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=904&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百三十六章 衮衮诸公，滚滚黄沙（三）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=905&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百三十七章 衮衮诸公，滚滚黄沙（四）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=906&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百三十八章 衮衮诸公，滚滚黄沙（五）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=907&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百三十九章 衮衮诸公，滚滚黄沙（六）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=908&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百三十九章 衮衮诸公，滚滚黄沙（七）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=909&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百四十章 衮衮诸公，滚滚黄沙（八）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=910&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百四十一章  有人与国同龄","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=911&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百四十二章 风雨如晦，既见君子","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=912&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百四十三章 面北背南","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=913&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百四十四章 不曾下雨","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=914&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百四十五章 一条广陵江","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=915&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百四十六章 北凉北凉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=916&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百四十七章 公子黄花，江湖依旧","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=917&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百四十八章 鱼龙齐聚","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=918&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百四十九章 敬酒罚酒","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=919&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百五十章 有杀气","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=920&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百五十一章 死时有酒有笑意","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=921&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百五十二章 喝绿蚁酒是要收银子的","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=922&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百五十三章 有人求死有人求活","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=923&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百五十四章 真正的血腥","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=924&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百五十五章 不愿老此江湖","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=925&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百五十六章 处处杀气","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=926&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百五十七章 姑娘好刀法","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=927&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百五十八章 如今江湖亦有痴人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=928&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百五十九章 剑开云海","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=929&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百六十章 剑气满北凉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=930&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百六十一章 如花","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=931&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百六十二章 磨刀","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=932&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百六十三章 立地成佛","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=933&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百六十四章 解签","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=934&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百六十五章 四签皆中","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=935&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百六十六章 春风远去","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=936&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百六十七章 来者不善","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=937&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百六十八章 金刚不败","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=938&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百六十九章 一气呵成","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=939&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百七十章 头签","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=940&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百七十一章 儒家有圣人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=941&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百七十二章 子曰","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=942&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百七十三章 初代儒圣","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=943&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百七十四章 文武之争","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=944&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百七十五章 天门洞开","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=945&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百七十六章 生死之间见生死","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=946&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百七十七章 举世皆敌","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=947&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百七十八章 武当山上无宗师","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=948&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百七十九章 天下共分徐家","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=949&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百八十章 北凉悲凉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=950&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百八十一章 北凉铁骑的脊梁","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=951&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百八十二章 大戟横江","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=952&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百八十三章 老子儿子","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=953&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百八十四章 西楚双璧（上）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=954&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百八十五章 西楚双璧（中）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=955&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百八十六章  西楚双璧（三）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=956&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百八十七章 西楚双璧（下）","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=957&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百八十八章 流州铁骑","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=958&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百八十九章 好一场纸上谈兵","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=959&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百九十章 大好头颅","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=960&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百九十一章 禄球儿","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=961&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百九十二章 无我这般幸运人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=962&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百九十三章 人生最难死无憾","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=963&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百九十四章 生气歌","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=964&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百九十五章 牵马","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=965&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百九十六章 李义山","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=966&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百九十七章 手摘天雷返人间","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=967&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百九十八章 北凉无枭雄","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=968&fr=bdgfh&mip=1"},{"name":"共逐鹿_第三百九十九章 屠龙和赝品","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=969&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百章 快哉快哉","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=970&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百零一章 没有木剑的温华","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=971&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百零二章 唯死战而已","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=972&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百零三章 流州收官之战","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=973&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百零四章 大雁南飞，铁蹄向北","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=974&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百零五章 拒马","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=975&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百零六章 铁骑皆入流州","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=976&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百零七章 豪赌","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=977&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百零八章 雷霆雨露皆是天意","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=978&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百零九章 风过无声，马蹄将至","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=979&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百一十章 不堪言","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=980&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百一十一章 北莽压境拒北城","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=981&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百一十二章 天人拦仙人","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=982&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百一十三章 谪仙如雨落","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=983&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百一十四章 北凉不敢一战","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=984&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百一十五章 波澜壮阔","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=985&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百一十六章 天道镇压","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=986&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百一十七章 请取头颅","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=987&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百一十八章 北莽陆地神仙何在","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=988&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百一十九章 十二神仙联袂登场","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=989&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百二十章 苍天在上","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=990&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百二十一章 衣衫如雪徐凤年","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=991&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百二十二章 驰来北马多骄气","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=992&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百二十三章 中原宗师，慷慨而至，浩然而死！","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=993&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百二十四章 且待我伸伸懒腰","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=994&fr=bdgfh&mip=1"},{"name":"共逐鹿_第四百二十五章 让你终是求不得","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=995&fr=bdgfh&mip=1"},{"name":"共逐鹿_收官章一 无他无中原","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=996&fr=bdgfh&mip=1"},{"name":"共逐鹿_收官章二 雪中的江湖，有人有始有终","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=997&fr=bdgfh&mip=1"},{"name":"共逐鹿_最终章 小二上酒","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=998&fr=bdgfh&mip=1"},{"name":"番外篇_番外第一章","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=999&fr=bdgfh&mip=1"},{"name":"番外篇_番外第二章","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=1000&fr=bdgfh&mip=1"},{"name":"番外篇_番外第三章","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=1001&fr=bdgfh&mip=1"},{"name":"番外篇_番外第四章","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=1002&fr=bdgfh&mip=1"},{"name":"番外篇_番外第五章","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=1003&fr=bdgfh&mip=1"},{"name":"番外篇_番外第六章","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=1004&fr=bdgfh&mip=1"},{"name":"番外篇_番外第七章","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=1005&fr=bdgfh&mip=1"},{"name":"番外篇_番外第八章","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=1006&fr=bdgfh&mip=1"},{"name":"番外篇_番外第九章","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=1007&fr=bdgfh&mip=1"},{"name":"番外篇_番外第十章","link":"http:\/\/www.xmkanshu.com\/book\/mip\/read?bkid=189169121&crid=1008&fr=bdgfh&mip=1"}]
+            }
+            }]}
+    </script>
+    </mip-shell-xiaoshuo>
+    <mip-stats-baidu>
+        <script type="application/json">
+            {
+                "token": "02890d4a309827eb62bc3335b2b28f7f"
+            }
+        </script>
+    </mip-stats-baidu>
+    <!-- 组件引入 -->
+    <!-- 709修改，mip.js地址为2.0 -->
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="https://c.mipcdn.com/static/v1/mip-semi-fixed/mip-semi-fixed.js"></script>
+    <!-- <script src="https://c.mipcdn.com/static/v1/mip-stats-sa/mip-stats-sa.js"></script> -->
+    <!-- <script src="https://c.mipcdn.com/static/v1/mip-html-os/mip-html-os.js"></script> -->
+
+    <!-- 615新增 -->
+    <script src="https://c.mipcdn.com/static/v2/mip-shell-xiaoshuo/mip-shell-xiaoshuo.js"></script>
+    <!--凤巢-->
+    <script src="/mip-botbar/mip-botbar.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-stats-baidu/mip-stats-baidu.js"></script>
+</body>
+</html>

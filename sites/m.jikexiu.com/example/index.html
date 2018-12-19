@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html mip>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,minimum-scale=1,user-scalable=no" />
+  <!-- <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1"> -->
+  <title>极客修_值得信赖的手机维修平台</title>
+  <meta name="keywords" content="极客修,苹果iPhone维修,华为手机维修,小米手机维修,手机上门维修,ipad维修,MacBook Air维修,iMac维修,智能设备维修预约" />
+  <meta name="description" content="极客修是值得信赖的、专业的上门维修平台,平台通过整合线上线下资源向国内用户提供方便快捷、安全可靠的优质手机上门维修服务,上门修手机客服电话:4008-112-112" />
+  <link rel="canonical" href="https://m.jikexiu.com/app/quick/index">
+  <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+  <link rel="icon" href="https://m.jikexiu.com/h5/favicon.ico" type="image/x-icon">
+  <style mip-custom>
+    /* 自定义样式 */
+
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            background: #eeeff2;
+        }
+
+        li,
+        ol {
+            list-style: none;
+        }
+
+        h2 {
+            margin: 50px auto;
+            text-align: center;
+        }
+        /* 修改mip默认样式*/
+
+        .mip-fill-content {
+            display: -webkit-flex;
+            display: flex;
+            width: 100%;
+            flex-direction: row;
+            flex-wrap: wrap;
+            padding-bottom: 10px;
+            background: #fff;
+        }
+
+        .mip-fill-content div {
+            width: 25%;
+        }
+
+        .mip-fill-content div>li {
+            width: 100%;
+        }
+
+        .mip-fill-content div li .mip-layout-container {
+            display: block;
+            width: 30px;
+            height: 30px;
+            margin: 10px auto;
+        }
+
+        .mip-fill-content div li>p {
+            text-align: center;
+            color: #333;
+        }
+
+        .mip-fill-content div .navList .mip-layout-container {
+            display: block;
+            width: 38px;
+            height: 38px;
+            margin: 10px auto;
+        }
+
+        .mip-carousel-indicator-wrapper {
+            text-align: center;
+            position: relative;
+            top: -20px;
+            z-index: 999;
+        }
+        /* 维修手机数量*/
+
+        .repaireNum {
+            margin-bottom: 10px;
+        }
+
+        .add {
+            margin: 10px 0;
+        }
+        /*公司图片服务展示*/
+
+        .imgList {
+            padding: 0 10px 10px;
+            background: #fff;
+        }
+
+        .gcs_pic {
+            padding-top: 10px;
+            width: 100%;
+        }
+
+        .imgSection {
+            display: -webkit-flex;
+            display: flex;
+            flex-wrap: wrap;
+            flex-direction: row;
+        }
+
+        .imgSection .list {
+            position: relative;
+            width: 49%;
+            margin-top: 5px;
+            text-align: center;
+        }
+
+        .imgSection .list1 {
+            margin-right: 2%;
+        }
+
+        .imgSection .list p {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            max-height: 999999px;
+            text-align: center;
+            background: rgba(0, 0, 0, .3);
+            line-height: 30px;
+            font-size: 13px !important;
+            color: #ffffff;
+        }
+
+        #nav1 {
+            margin-top: -3px;
+        }
+        /*维修细节展示*/
+
+        #newAdd {
+            width: 100%;
+            background: #ffffff;
+            margin-top: 10px;
+        }
+
+        #newAdd .newAdd_title {
+            display: -webkit-flex;
+            display: flex;
+            width: 100%;
+            height: 20px;
+            padding: 8px 0;
+            border-bottom: 1px solid #e9ebee;
+        }
+
+        #newAdd .newAdd_title .newAdd_title_img {
+            display: block;
+            width: 20px;
+            height: 15px;
+            margin-left: 10px;
+        }
+
+        #newAdd .newAdd_title .newAdd_title_text {
+            font-size: 15px;
+            line-height: 17px;
+            color: #f10214;
+            margin-left: 10px;
+        }
+
+        #newAdd .newAdd_content {
+            width: 100%;
+            padding: 10px 0;
+        }
+
+        #newAdd ul {
+            display: -webkit-flex;
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 10px;
+        }
+
+        #newAdd .newAdd_content_list1 {
+            width: 57.9%;
+            margin-right: 2.1%;
+        }
+
+        #newAdd ul li {
+            flex-direction: row;
+            /* border: 1px solid #e9ebee; */
+            margin-bottom: 5px;
+        }
+
+        #newAdd .newAdd_content_list2 {
+            width: 40%;
+        }
+
+        #newAdd .newAdd_content_desc_title {
+            width: 100%;
+            margin: 5px 0;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        #newAdd .newAdd_content_desc_content {
+            text-align: center;
+            font-size: 10px;
+            color: #999999;
+            margin: 0 12px;
+        }
+
+        #newAdd .newAdd_content_list3 {
+            width: 42.3%;
+            margin-right: 2.1%;
+        }
+
+        #newAdd .newAdd_content_list4 {
+            width: 55.6%;
+        }
+
+        #newAdd ul li img {
+            display: block;
+            width: 100%;
+            height: 90px;
+        }
+        /*各区块头部标题样式*/
+
+        .header {
+            margin-top: 10px;
+            padding: 10px 20px;
+        }
+
+        .logo {
+            visibility: visible;
+            content: '';
+            width: 15px;
+            height: 20px;
+            background: url("https://rs.jikexiu.com/appresources/images2016/landing/img14.png") no-repeat;
+            background-size: 100% 100%;
+            vertical-align: middle;
+        }
+
+        .title {
+            height: 20px;
+            margin-left: 10px;
+            line-height: 20px;
+            color: #f10215;
+        }
+
+        .logo1 {
+            visibility: visible;
+            content: '';
+            width: 15px;
+            height: 15px;
+            background: url("https://rs.jikexiu.com/appresources/images2016/landing/icon_comment1.png") no-repeat;
+            background-size: 100% 100%;
+            vertical-align: middle;
+        }
+
+        .flex {
+            display: -webkit-flex;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            background: #fff;
+        }
+
+        .header-content {
+            display: -webkit-flex;
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            width: 100%;
+            background: #fff;
+        }
+        /*评价列表区块*/
+
+        #appraise {
+            width: 100%;
+            background: #fff;
+        }
+
+        #appraise .header {
+            width: 80%;
+            padding: 10px 0;
+            margin: 10px auto 0;
+            justify-content: center;
+        }
+        /*常见问答*/
+
+        #question {
+            padding: 0 10px;
+            padding-bottom: 80px;
+            background: #fff;
+        }
+
+        .question-section {
+            border-top: 1px solid #e9ebee;
+        }
+
+        .question-section .question-title {
+            position: relative;
+            padding: 12px 15px 12px 0;
+            color: #333;
+            font-size: 14px;
+        }
+
+        .question-section .show-more,
+        .question-section .show-less {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            width: 12px;
+            height: 7px;
+            background: url('https://rs.jikexiu.com/appresources/images/arrow_gray_dow.png') no-repeat;
+            background-size: 100% 100%;
+            /* display: block; */
+            -webkit-transition: all 0.2s ease-in;
+            -moz-transform: all 0.2s ease-in;
+            -o-transition: all 0.2s ease-in;
+            -ms-transform: all 0.2s ease-in;
+            transform: all 0.2s ease-in;
+        }
+
+        .question-section .show-more {
+            -webkit-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            transform: rotate(180deg);
+        }
+
+        .question-section .mip-accordion-content {
+            padding: 5px 20px;
+            color: #666;
+            font-size: 12px;
+        }
+        /*底部悬浮*/
+
+        mip-fixed[type=bottom] {
+            height: 50px;
+        }
+
+        .fixed_btn {
+            display: -webkit-flex;
+            display: flex;
+            overflow: hidden;
+            width: 100%;
+            background-color: #fff;
+            padding: 0 4%;
+            text-align: center;
+        }
+
+        .fixed_btn span {
+            margin-top: 6px;
+            background-color: #F10215;
+            overflow: hidden;
+            border-radius: 4px;
+            border: 1px solid #f10215;
+            height: 38px;
+            display: inline-block;
+            width: 43.5%;
+            line-height: 38px;
+        }
+
+        .fixed_btn span:first-child {
+            margin-right: 3%;
+            background-color: #fff;
+        }
+
+        a:visited {
+            text-decoration: none;
+            color: #333;
+        }
+
+        a:link {
+            text-decoration: none;
+        }
+
+        .ask_btn,
+        .fast_order {
+            padding-left: 28px;
+            color: #F10215;
+            font-size: 16px;
+            background: url('//rs.jikexiu.com/appresources/images2016/landing/tell1.png') no-repeat left center;
+            background-size: auto 90%;
+        }
+
+        .fast_order:visited {
+            color: #fff!important;
+        }
+
+        a:visited {
+            text-decoration: none;
+            color: #333;
+        }
+
+        a:link {
+            text-decoration: none;
+        }
+
+        .fast_order {
+            color: #fff;
+            background: url(//rs.jikexiu.com/appresources/images2016/landing/tool.png) no-repeat left center;
+            background-size: auto 90%;
+        }
+
+        .alert {
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+  <!--mip-shell配置-->
+  <mip-shell-inservice mip-shell class="mip-element mip-layout-container">
+    <script type="application/json">
+      {
+        "routes": [{
+          "pattern": "./index.html",
+          "meta": {
+            "header": {
+              "show": true,
+              "xiongzhang": true,
+              "title": "极客修",
+              "logo": "./common/icon/logo.png"
+            },
+            "view": {
+              "isIndex": true
+            }
+          }
+        }, {
+          "pattern": "./order.html",
+          "meta": {
+            "header": {
+              "show": true,
+              "xiongzhang": true,
+              "title": "维修预约",
+              "logo": "./common/icon/logo.png"
+            },
+            "view": {
+              "isIndex": false
+            }
+          }
+        }, {
+          "pattern": "./success.html",
+          "meta": {
+            "header": {
+              "show": true,
+              "xiongzhang": true,
+              "title": "极客修",
+              "logo": "./common/icon/logo.png"
+            },
+            "view": {
+              "isIndex": false
+            }
+          }
+        }],
+        "isId": "1569451338865056"
+      }
+
+    </script>
+  </mip-shell-inservice>
+  <mip-data>
+    <script type="application/json">
+      {
+        "alertMsg": {
+          "isError": false,
+          "errorTitle": ""
+        },
+
+        "#info": {},
+        "config": {
+          appid: '1569451338865056',
+          clientId: 'dsAkhUrPV9EGA2aId4iv8E9ob8cam6bG',
+          id: 'info',
+          autologin: false,
+          endpoint: 'https://api_t.jikexiu.com/v1/auth2/mip/union',
+          isGlobal: false,
+          "redirectUri": ''
+        }
+      }
+
+    </script>
+  </mip-data>
+  <mip-inservice-login id="log" m-bind:config="config" on="login:example.customLogin">
+  </mip-inservice-login>
+  <!--极客修顶部banner轮播图组件-->
+  <mip-jkx-banner></mip-jkx-banner>
+  <!--导航一-->
+  <mip-list synchronous-data id="nav1">
+    <script type="application/json">
+      {
+        "items": [{
+          "name": "免费上门",
+          "alias": "https://rs.jikexiu.com/appresources/images2016/landing/icon_mian.png"
+        }, {
+          "name": "修好付费",
+          "alias": "https://rs.jikexiu.com/appresources/images2016/landing/icon_pay.png"
+        }, {
+          "name": "全国连锁",
+          "alias": "https://rs.jikexiu.com/appresources/images2016/landing/icon_shop.png"
+        }, {
+          "name": "180天保修",
+          "alias": "https://rs.jikexiu.com/appresources/images2016/landing/icon_bao.png"
+        }]
+      }
+
+    </script>
+    <template type="mip-mustache">
+      <li>
+        <mip-img layout="container" width="1" height="1" src="{{alias}}" alt="{{name}}">
+        </mip-img>
+        <p>{{ name }}</p>
+      </li>
+    </template>
+  </mip-list>
+  <!--极客修维修手机数量组件-->
+  <mip-repaire-phone class="repaireNum"></mip-repaire-phone>
+  <mip-jkx-brand-list m-bind:info="info" id="example" on="actionOrder:log.login"></mip-jkx-brand-list>
+  <!--极客修热门手机维修组件-->
+  <mip-hot-repaire m-bind:info="info" id="example" on="actionOrder:log.login"></mip-hot-repaire>
+  <!--极客修服务列表-->
+  <mip-jkx-server-list m-bind:info="info" id="example" on="actionOrder:log.login"></mip-jkx-server-list>
+  <div class="add">
+    <mip-img layout="responsive" width="375" height="55" src="https://rs.jikexiu.com/resources/Nimages/landing/tips.png">
+    </mip-img>
+  </div>
+  <!--极客修服务优势-->
+  <div class="imgList">
+    <div class="gcs_pic">
+      <mip-img layout="responsive" width="375" height="121" src="//rs.jikexiu.com/appresources/images2016/landing/gcs_180423.png">
+      </mip-img>
+      <div class="imgSection">
+        <div class="list list1">
+          <mip-img layout="responsive" width="169" height="99" src="https://rs.jikexiu.com/resources/Nimages/landing/img_01.png">
+          </mip-img>
+          <p class="bot">专业团队 持证上岗</p>
+        </div>
+        <div class="list">
+          <mip-img layout="responsive" width="169" height="99" src="https://rs.jikexiu.com/resources/Nimages/landing/img_02.png">
+          </mip-img>
+          <p class="bot">在线报价 无隐形消费</p>
+        </div>
+        <div class="list list1">
+          <mip-img layout="responsive" width="169" height="99" src="https://rs.jikexiu.com/resources/Nimages/landing/img_03.png">
+          </mip-img>
+          <p class="bot">透明维修 杜绝偷换配件</p>
+        </div>
+        <div class="list">
+          <mip-img layout="responsive" width="169" height="99" src="https://rs.jikexiu.com/resources/Nimages/landing/img_04.png">
+          </mip-img>
+          <p class="bot">一处维修 全国联保</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--极客修维修细节-->
+  <div id="newAdd">
+    <div class="newAdd_title">
+      <mip-img layout="responsive" width="20" height="15" class="newAdd_title_img" src="//rs.jikexiu.com/resources/Nimages/landing/icon_monitor.png">
+      </mip-img>
+      <p class="newAdd_title_text">维修细节</p>
+    </div>
+    <div class="newAdd_content">
+      <ul>
+        <li class="newAdd_content_list1">
+          <mip-img layout="responsive" width="402" height="187" class="newAdd_title_img" src="https://rs.jikexiu.com/resources/Nimages/landing/newAdd_detail1.png">
+          </mip-img>
+          <p class="newAdd_content_desc">
+          </p>
+          <p class="newAdd_content_desc_title">极客修专用配件</p>
+          <p class="newAdd_content_desc_content">保证每个零件真材实料，给您出厂体验</p>
+          <p></p>
+        </li>
+        <li class="newAdd_content_list2">
+          <mip-img layout="responsive" width="274" height="187" class="newAdd_title_img" src="https://rs.jikexiu.com/resources/Nimages/landing/newAdd_detail2.png">
+          </mip-img>
+          <p class="newAdd_content_desc">
+          </p>
+          <p class="newAdd_content_desc_title">技术专业可靠</p>
+          <p class="newAdd_content_desc_content">芯片级维修技术，平均维修经验三年以上</p>
+          <p></p>
+        </li>
+        <li class="newAdd_content_list3">
+          <mip-img layout="responsive" width="320" height="187" class="newAdd_title_img" src="https://rs.jikexiu.com/resources/Nimages/landing/newAdd_detail3.png">
+          </mip-img>
+
+          <p class="newAdd_content_desc">
+          </p>
+          <p class="newAdd_content_desc_title">流程化规范操作</p>
+          <p class="newAdd_content_desc_content">规范每一步操作细节，透明服务更贴心</p>
+          <p></p>
+        </li>
+        <li class="newAdd_content_list4">
+          <mip-img layout="responsive" width="198" height="90" class="newAdd_title_img" src="https://rs.jikexiu.com/resources/Nimages/landing/newAdd_detail4.png">
+          </mip-img>
+          <p class="newAdd_content_desc">
+          </p>
+          <p class="newAdd_content_desc_title">维修监控录像</p>
+          <p class="newAdd_content_desc_content">维修过程可录像，维修细节一目了然</p>
+          <p></p>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <!-- <div id="appraise">
+        <div class="header flex">
+            <div class="logo logo1"></div>
+            <div class="title">用户评价</div>
+        </div> -->
+  <!--极客修用户评价组件-->
+  <!-- <mip-appraise-list></mip-appraise-list>
+    </div> -->
+  <div class="header flex">
+    <div class="header-content">
+      <div class="logo"></div>
+      <div class="title">常见问答</div>
+    </div>
+
+  </div>
+  <!--极客修常见问答-->
+  <mip-accordion sessions-key="mip_1" animatetime='0.24' type="manual" id="question">
+    <section class="question-section">
+      <p class="question-title">1、哪些城市支持手机上门维修？<span class="show-more"></span>
+        <span class="show-less"></span></p>
+      <p class="mip-accordion-content">目前支持上门的分别为：北京、上海、广州、深圳、重庆、成都、天津、南京、武汉、郑州、西安、长沙、东莞、佛山、惠州、昆明、玉溪、贵阳、合肥、苏州、无锡、常州、徐州、杭州、宁波、济南、青岛、南昌、
+        延安、兰州、福州、厦门、海口、银川、大连、太原、南宁、石家庄、邢台、呼和浩特、南通、沧州、孝感、哈尔滨、沈阳等城市。</p>
+    </section>
+    <section class="question-section">
+      <p class="question-title">2、不支持手机上门维修的城市想要维修怎么办？<span class="show-more"></span>
+        <span class="show-less"></span></p>
+      <p class="mip-accordion-content">邮寄到距离最近的维修中心，极客修负责双向邮寄费用。</p>
+    </section>
+    <section class="question-section">
+      <p class="question-title">3、手机上门维修收上门费吗？<span class="show-more"></span>
+        <span class="show-less"></span></p>
+      <p class="mip-accordion-content">上门手机维修，免收上门费。</p>
+    </section>
+    <section class="question-section">
+      <p class="question-title">4、手机维修后更换的配件保修期是多久？<span class="show-more"></span>
+        <span class="show-less"></span></p>
+      <p class="mip-accordion-content">屏幕180天，电池180天，苹果内存扩容30天，主板30天，其余配件终身保修。</p>
+    </section>
+    <section class="question-section">
+      <p class="question-title">5、在线预约之后的服务流程是怎样的?<span class="show-more"></span>
+        <span class="show-less"></span></p>
+      <p class="mip-accordion-content">工作时间(8:00-22:00)将有来自工程师或区号023的座机与您联系，并在要求时间内上门进行维修，维修完成后在线支付。</p>
+    </section>
+    <section class="question-section">
+      <p class="question-title">6、外屏碎和内屏碎有什么区别？<span class="show-more"></span>
+        <span class="show-less"></span></p>
+      <p class="mip-accordion-content">如果屏幕碎了，但图像可以正常显示，表示只是外屏碎。如果图片显示不正常或者完全无法显示，则内屏已碎。</p>
+    </section>
+    <section class="question-section">
+      <p class="question-title">7、外屏碎，但手机触摸和图像显示正常，不维修可以吗？<span class="show-more"></span>
+        <span class="show-less"></span></p>
+      <p class="mip-accordion-content">手机外屏是保护内屏的屏障，外屏碎裂后，汗液或水渍直接 穿过外屏玻璃，或者一次微小的跌落或撞击，都会对手机屏幕总成造成无可挽回的损伤，强烈建议及时更换屏幕。</p>
+    </section>
+    <section class="question-section">
+      <p class="question-title">8、能提供单独更换苹果手机外屏玻璃服务吗？<span class="show-more"></span>
+        <span class="show-less"></span></p>
+      <p class="mip-accordion-content">不提供。单换iPhone手机外屏玻璃，会造成液晶屏漏液或者触摸不灵敏，经过温度变化出现不牢靠的现象，故障率高、体验差。</p>
+    </section>
+    <section class="question-section question-section1">
+      <p class="question-title">9、下单时需要支付费用吗？<span class="show-more"></span>
+        <span class="show-less"></span></p>
+      <p class="mip-accordion-content">您只需在维修完成后支付。</p>
+    </section>
+  </mip-accordion>
+  <mip-fixed type="top">
+    <mip-jkx-alert m-bind:alertmsg="alertMsg"></mip-jkx-alert>
+  </mip-fixed>
+  <!--底部悬浮按钮-->
+  <mip-fixed type="bottom">
+    <mip-jkx-order-btn m-bind:info="info" id="example" on="actionOrder:log.login"></mip-jkx-order-btn>
+  </mip-fixed>
+  <!--百度统计-->
+  <mip-stats-baidu>
+    <script type="application/json">
+      {
+        "token": "575a1ed5bb3b8b9bebe1c9ee9a1b572b",
+        "_setCustomVar": [1, "login", "1", 2],
+        "_setAutoPageview": [true]
+      }
+
+    </script>
+  </mip-stats-baidu>
+  <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+  <script src="https://c.mipcdn.com/static/v2/mip-shell-inservice/mip-shell-inservice.js"></script>
+  <script src="https://c.mipcdn.com/static/v2/mip-inservice-login/mip-inservice-login.js"></script>
+  <script src="https://c.mipcdn.com/static/v2/mip-script/mip-script.js"></script>
+  <script src="/mip-jkx-alert/mip-jkx-alert.js"></script>
+  <script src="https://c.mipcdn.com/static/v1/mip-fixed/mip-fixed.js"></script>
+  <script src="https://c.mipcdn.com/static/v1/mip-stats-baidu/mip-stats-baidu.js"></script>
+  <script src="https://c.mipcdn.com/static/v1/mip-list/mip-list.js"></script>
+  <script src="https://c.mipcdn.com/static/v1/mip-mustache/mip-mustache.js"></script>
+  <script src="https://c.mipcdn.com/static/v1/mip-link/mip-link.js"></script>
+  <script src="/mip-repaire-phone/mip-repaire-phone.js"></script>
+  <script src="/mip-hot-repaire/mip-hot-repaire.js"></script>
+  <script src="https://c.mipcdn.com/static/v1/mip-accordion/mip-accordion.js"></script>
+  <script src="/mip-appraise-list/mip-appraise-list.js"></script>
+  <script src="/mip-jkx-banner/mip-jkx-banner.js"></script>
+  <script src="/mip-jkx-server-list/mip-jkx-server-list.js"></script>
+  <script src="/mip-jkx-order-btn/mip-jkx-order-btn.js"></script>
+  <script src="/mip-jkx-brand-list/mip-jkx-brand-list.js"></script>
+  <!-- https://c.mipcdn.com/extensions/platform/v2/m.jikexiu.com -->
+</body>
+
+</html>

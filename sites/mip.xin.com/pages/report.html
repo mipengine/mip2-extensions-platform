@@ -1,0 +1,66 @@
+<!DOCTYPE html >
+<html mip style="font-size: 50px;">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+    <title>
+        <%-title%>
+    </title>
+    <link rel="canonical" href="https://www.xin.com/">
+    <link rel="shortcut icon" href="//m.xin.com/favicon.ico">
+    <link rel="stylesheet" href="https://bos.nj.bpc.baidu.com/assets/mip/projects/mip.css">
+    <style mip-custom>
+    </style>
+</head>
+
+<body>
+    <mip-shell-inservice mip-shell>
+        <script type="application/json">
+               
+                {   
+                    "isId": "1578861028762702",
+                    "routes": [
+                        {
+                            "pattern": "*",
+                            "meta": {
+                                "header": {
+                                    "show": true,
+                                    "xiongzhang": true,
+                                    "title": "优信二手车"
+                                },
+                                "view": {
+                                    "isIndex": false
+                                }
+                            }
+                        }
+    
+                    ]
+                }
+            
+            </script>
+    </mip-shell-inservice>
+    <mip-data>
+        <script type="application/json">
+            {
+                "query": <%-JSON.stringify(query)%>,
+                "ajaxToken": "<%=ajaxToken%>"
+            }
+        </script>
+    </mip-data>
+    <div>
+        <mip-xin-item m-bind:query="query" m-bind:token="ajaxToken"></mip-xin-item>
+    </div>
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip.xin.com/mip-fixed/mip-fixed.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-shell-inservice/mip-shell-inservice.js"></script>
+
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-item/mip-xin-item.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-switch/mip-xin-switch.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-tab/mip-xin-tab.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-flawcount/mip-xin-flawcount.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-button/mip-xin-button.js"></script>
+
+</body>
+
+</html>

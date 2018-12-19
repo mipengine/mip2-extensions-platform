@@ -1,18 +1,16 @@
 {
   "name": "mipengine.org",
   "version": "0.0.1",
-  "description": "Components for mipengine.org",
+  "description": "mipengine.org",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
-    "lint": "npm run lint:js && npm run lint:style",
-    "lint:js": "eslint {**/*,**}.{vue,js,md}",
-    "lint:style": "stylelint {**/*,**}.{vue,css,less,md}",
-    "fix": "npm run fix:js && npm run fix:style",
-    "fix:js": "eslint {**/*,**}.{vue,js,md} --fix",
-    "fix:style": "stylelint {**/*,**}.{vue,css,less,md} --fix"
+    "lint": "npm run lint:js",
+    "lint:js": "eslint --ext .vue,.js .",
+    "fix": "npm run fix:js",
+    "fix:js": "eslint --ext .vue,.js . --fix"
   },
-  "author": "chenqiushi",
+  "author": "yourname",
   "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",
@@ -22,9 +20,6 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
-    "eslint-plugin-vue": "^4.5.0",
-    "eslint-plugin-markdown": "^1.0.0-beta.6",
-    "stylelint": "^9.3.0",
-    "stylelint-config-standard": "^18.2.0"
+    "eslint-plugin-vue": "^4.5.0"
   }
 }

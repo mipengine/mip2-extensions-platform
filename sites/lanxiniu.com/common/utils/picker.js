@@ -469,26 +469,29 @@ export default ({
       // iscroll初始化
       scrollInit: function (index, num) {
         let self = this
-        if (index === 1) {
+
+        if (self.options.pickerType === 'time') {
           let date = new Date()
           let hour = date.getHours() + 1
-          if (hour > 22) {
-            num = 0
-          } else {
-            num = hour
+          if (index === 0) {
+            if (hour > 23) {
+              num = 1
+            }
           }
-
-        //   let hourItem = document.getElementById('picker-wrapper1').getElementsByClassName('sethours')
-        //   let hourItemSet = Array.prototype.slice.call(hourItem)
-        //   for (let i = 0; i < hour; i++) {
-        //     hourItemSet[i].style.display = 'none'
-        //   }
+          if (index === 1) {
+            if (hour > 23) {
+              num = 9
+            } else {
+              num = hour
+            }
+          }
         }
 
         // 每个选项对的高度
         let wrapperList = document.querySelector('#picker-wrapper0').childNodes[0]
         let itemHeight = wrapperList.childNodes[0].clientHeight
         let id = '#picker-wrapper' + index
+
         self.scrollArray[index] = new Scroll(id, {
           // 步长（每次滚动固定距离）
           step: itemHeight,
@@ -498,12 +501,12 @@ export default ({
 
           // 滚动结束回调函数
           callback: function (params) {
+            let currentIndex = params.index // 当前第几个位置  从 0 开始
             let num = params.index + 2
             let node = params.node[num]
             self.setItemList(node, index)
 
             if (self.options.pickerType === 'time') {
-              // 当前天数选择大于 当前年月的天数
               let days = self.textArray[0].value
               let hours = self.textArray[1].value
               let now = new Date()
@@ -511,28 +514,68 @@ export default ({
               let month = (new Date(now.getTime()).getMonth()) + 1
               let date = new Date(now.getTime()).getDate()
               let hour = new Date(now.getTime()).getHours() + 1
+              let minnuteNow = +new Date().getMinutes()
+              let show = '今天 ' + month + '月' + date + '日'
+
               let value = year + '-' + month + '-' + date
               if (self.options.type === 5 && params.node.length === 12) {
-                if (value === days) {
-                  let moveLen = hour * itemHeight
-                  setTimeout(function () {
-                    self.textArray[1].value = ' ' + hour
-                    self.scrollArray[1].scrollTo(0, moveLen, 500)
-                  }, 0)
+                if (currentIndex === 0) {
+                  if (hour > 23) {
+                    setTimeout(() => {
+                      self.textArray[0].value = show
+                      self.scrollArray[0].scrollTo(0, itemHeight, 500)
+                      let moveLen = 9 * itemHeight
+                      self.textArray[1].value = ' 9'
+                      self.scrollArray[1].scrollTo(0, moveLen, 500)
+                    }, 0)
+                  } else {
+                    let moveLen = hour * itemHeight
+                    setTimeout(() => {
+                      self.textArray[1].value = ' ' + hour
+                      self.scrollArray[1].scrollTo(0, moveLen, 500)
+                    }, 0)
+
+                    if (minnuteNow > 30) {
+                      setTimeout(() => {
+                        self.textArray[2].value = ':30'
+                        self.scrollArray[2].scrollTo(0, itemHeight, 500)
+                      }, 0)
+                    }
+                  }
                 } else {
-                  let moveLen = 0
-                  setTimeout(function () {
-                    self.textArray[1].value = ' 0'
+                  let moveLen = 9 * itemHeight
+                  setTimeout(() => {
+                    self.textArray[1].value = ' 9'
                     self.scrollArray[1].scrollTo(0, moveLen, 500)
                   }, 0)
                 }
               } else if (self.options.type === 5 && params.node.length === 28) {
                 if (value === days && hours < hour) {
+                  if (hour > 23) {
+                    hour = 23
+                  }
                   let moveLen = hour * itemHeight
-                  setTimeout(function () {
+                  setTimeout(() => {
                     self.textArray[1].value = ' ' + hour
                     self.scrollArray[1].scrollTo(0, moveLen, 500)
                   }, 0)
+
+                  if (minnuteNow > 30) {
+                    setTimeout(() => {
+                      self.textArray[2].value = ':30'
+                      self.scrollArray[2].scrollTo(0, itemHeight, 500)
+                    }, 0)
+                  }
+                }
+              } else {
+                if (value === days && +hours === hour) {
+                  if (minnuteNow > 30) {
+                    setTimeout(() => {
+                      self.textArray[2].value = ':30'
+                      self.scrollArray[2].scrollTo(0, itemHeight, 500)
+                    })
+                  }
+                } else {
                 }
               }
             }
@@ -743,7 +786,7 @@ export default ({
         let mipElement = self.mipElement
         let picker = mipElement.querySelector('.picker')
         let pickerMask = mipElement.querySelector('.picker-mask')
-        console.log('测试')
+
         setTimeout(function () {
           mipElement.removeChild(picker)
           mipElement.removeChild(pickerMask)
@@ -1046,15 +1089,20 @@ export default ({
           let month = (new Date(now.getTime() + oneDay * j).getMonth()) + 1
           let date = new Date(now.getTime() + oneDay * j).getDate()
           let day = new Date(now.getTime() + oneDay * j).getDay()
-          //   let hours = new Date().getHours()
-          //   if(hours > 22){
-
-          //   }
+          let hours = new Date().getHours() + 1
           let value = year + '-' + month + '-' + date
           let show = month + '月' + date + '日'
           if (j === 0) {
             show = '今天' + show
             self.setDefaultItem(index, value)
+            if (hours > 23) {
+              let m = 1
+              let years = new Date(now.getTime() + oneDay * m).getFullYear()
+              let months = (new Date(now.getTime() + oneDay * m).getMonth()) + 1
+              let dates = new Date(now.getTime() + oneDay * m).getDate()
+              let values = years + '-' + months + '-' + dates
+              self.setDefaultItem(index, values)
+            }
           } else if (j === 1) {
             show = '明天' + show
           } else if (j === 2) {
@@ -1109,7 +1157,13 @@ export default ({
             list += '<li  data-value=" ' + count + '"  class="sethours">' + count + unit + '</li>'
           }
           let date = new Date()
-          let hour = ' ' + (date.getHours() + 1)
+          let hourNow = date.getHours() + 1
+          let hour = null
+          if (hourNow > 23) {
+            hour = ' ' + 0
+          } else {
+            hour = ' ' + hourNow
+          }
           self.setDefaultItem(index, hour)
         }
 
@@ -1123,17 +1177,25 @@ export default ({
       },
       getMinuteList: function (index, defaultValue) {
         let self = this
+        let minnuteNow = +new Date().getMinutes()
+        let strVal = ':00'
+        let defaults = 0
         let list = '<li></li><li></li>'
         list += '<li data-value=":00">00</li>'
         list += '<li data-value=":30">30</li>'
 
         list += '<li></li><li></li>'
-        self.setDefaultItem(index, ':00')
+        if (minnuteNow > 30) {
+          strVal = ':30'
+          defaults = 1
+        }
+        self.setDefaultItem(index, strVal)
+
         document.querySelector(
           '#picker-wrapper' + index
         ).childNodes[0].innerHTML = list
         setTimeout(function () {
-          self.scrollInit(index, 0)
+          self.scrollInit(index, defaults)
         }, 0)
       }
 

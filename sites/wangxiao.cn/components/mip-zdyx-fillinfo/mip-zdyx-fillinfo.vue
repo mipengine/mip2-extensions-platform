@@ -7,19 +7,6 @@
         type="text"
         placeholder="请输入手机号">
     </div>
-    <div class="form-group form-group-imgcode">
-      <div class="form-group-left">
-        <span>手机验证码</span>
-        <input
-          v-model="phoneCodeNumber"
-          class="phone-code"
-          type="text"
-          placeholder="">
-      </div>
-      <span
-        class="phoncode-btn"
-        @click="getPhoneCode">{{ phonCodeBtnText }}</span>
-    </div>
     <div
       v-if="showImgCode"
       class="form-group form-group-imgcode">
@@ -39,6 +26,19 @@
           width="90"
           height="40"/>
       </div>
+    </div>
+    <div class="form-group form-group-imgcode">
+      <div class="form-group-left">
+        <span>手机验证码</span>
+        <input
+          v-model="phoneCodeNumber"
+          class="phone-code"
+          type="text"
+          placeholder="">
+      </div>
+      <span
+        class="phoncode-btn"
+        @click="getPhoneCode">{{ phoneCodeBtnText }}</span>
     </div>
     <div
       class="btn"
@@ -69,9 +69,10 @@ export default {
       phoneNumber: '',
       phoneCodeNumber: '',
       imgCode: '',
-      phonCodeBtnText: '获取验证码',
+      phoneCodeBtnText: '获取验证码',
+      iscomit: false,
       getingPhoneCode: false,
-      imgCodeUrl: 'https://api.wangxiao.cn/app/Validate.ashx?validatekey='
+      imgCodeUrl: 'https://mip.wangxiao.cn/baiduUser/getImageCode?token=' + base.getToken()
     }
   },
   computed: {},
@@ -85,7 +86,8 @@ export default {
     }
   },
   mounted () {
-    this.imgCodeUrl = this.imgCodeUrl + base.getQueryString('validatekey')
+    base.setToken(base.getQueryString('token'))
+    this.imgCodeUrl = this.imgCodeUrl + '&v=' + Math.random()
   },
   methods: {
     getImgCode () {
@@ -94,6 +96,11 @@ export default {
     },
     getPhoneCode () {
       let _this = this
+      if (_this.showImgCode && _this.imgCode === '') {
+        _this.errorMessage = '请输入图形验证码'
+        _this.showErrorMessage = true
+        return
+      }
       let uPattern = /^1[0-9][0-9]\d{8}$/
       if (uPattern.test(_this.phoneNumber) && !_this.getingPhoneCode) {
         fetch(base.api.sendMessage, {
@@ -103,26 +110,30 @@ export default {
             'Content-Type': 'application/json'
           },
           body: JSON.stringify({
-            phone: _this.phoneNumber
+            phone: _this.phoneNumber,
+            imageCode: _this.imgCode,
+            token: base.getQueryString('token') || base.getToken()
           })
         })
           .then(function (response) {
-            if (response.status !== 200) {
-              console.log(`返回的响应码${response.status}`)
-              return
-            }
             // 获得后台实际返回的内容
             response.json().then(function (data) {
-              _this.getingPhoneCode = true
-              _this.phonCodeBtnText = 60
-              let timer = setInterval(() => {
-                if (_this.phonCodeBtnText === 0) {
-                  _this.phonCodeBtnText = '获取验证码'
-                  clearInterval(timer)
-                  _this.getingPhoneCode = false
-                }
-                _this.phonCodeBtnText = --_this.phonCodeBtnText
-              }, 1000)
+              if (data.code === '000000') {
+                _this.getingPhoneCode = true
+                _this.phoneCodeBtnText = 60
+                let timer = setInterval(() => {
+                  if (_this.phoneCodeBtnText === 0) {
+                    _this.phoneCodeBtnText = '获取验证码'
+                    clearInterval(timer)
+                    _this.getingPhoneCode = false
+                  } else {
+                    _this.phoneCodeBtnText = --_this.phoneCodeBtnText
+                  }
+                }, 1000)
+              } else {
+                _this.errorMessage = data.message
+                _this.showErrorMessage = true
+              }
             })
           })
           .catch(function (err) {
@@ -155,10 +166,10 @@ export default {
         _this.showErrorMessage = true
         return
       }
-      if (_this.showImgCode && _this.imgCode === '') {
-        _this.errorMessage = '请输入图形验证码'
-        _this.showErrorMessage = true
+      if (_this.iscomit) {
         return
+      } else {
+        _this.iscomit = true
       }
       fetch(base.api.compareMessageCode, {
         method: 'POST',
@@ -169,23 +180,48 @@ export default {
         body: JSON.stringify({
           code: _this.phoneCodeNumber,
           phone: _this.phoneNumber,
-          imgCode: _this.imgCode
+          goodsId: base.getQueryString('goodsId') || '',
+          token: base.getQueryString('token') || base.getToken()
         })
       })
         .then(function (response) {
-          if (response.status !== 200) {
-            console.log(`返回的响应码${response.status}`)
-            return
-          }
           // 获得后台实际返回的内容
           response.json().then(function (data) {
             if (data.code === '100000') {
               _this.errorMessage = data.message
               _this.showErrorMessage = true
+            } else {
+              fetch(base.api.placeOrder, {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  goodsId: base.getQueryString('goodsId') || '',
+                  token: base.getQueryString('token') || base.getToken()
+                })
+              })
+                .then(function (response) {
+                  _this.iscomit = false
+                  // 获得后台实际返回的内容
+                  response.json().then(function (response) {
+                    if (response.data.orderId) {
+                      MIP.viewer.open('https://mip.wangxiao.cn/order/pay?orderId=' + response.data.orderId, {isMipLink: false})
+                    } else {
+                      _this.errorMessage = '下单失败，请重新下单！'
+                      _this.showErrorMessage = true
+                      setTimeout(() => {
+                        MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.wangxiao.cn/course/detail?id=' + base.getQueryString('goodsId')))
+                      }, 2000)
+                    }
+                  })
+                })
             }
           })
         })
         .catch(function (err) {
+          _this.iscomit = false
           console.log('Fetch Error :-S', err)
         })
     }
@@ -194,31 +230,37 @@ export default {
 </script>
 <style lang='less' scoped>
 .fillinfo-content {
-  padding: 4rem;
+  padding: 4rem 2rem;
+  margin-top: 3.5rem;
   .errorMessage {
     position: absolute;
     left: 50%;
     top: 35%;
-    margin-left: -50px;
-    margin-top: -50px;
     color: #fff;
     background: #999;
     padding: 1rem;
     border-radius: 6px;
+    text-align: center;
+    max-width: 18rem;
+    transform: translate(-50%,-50%);
   }
   .form-group {
     display: flex;
     border-bottom: 1px solid #f1f1f1;
     font-size: 1.6rem;
     color: #666;
-    padding: 0.8rem;
+    padding: 0.6rem;
     > span {
       line-height: 4rem;
+      font-size: 1.5rem;
+      color: #333;
     }
     .form-group-left {
       display: flex;
       > span {
         line-height: 4rem;
+        font-size: 1.5rem;
+        color: #333;
       }
       input {
         width: 12rem;
@@ -226,16 +268,22 @@ export default {
       }
     }
     .phoncode-btn {
-      width: 9rem;
+      width: 8.5rem;
+      color: #ff6a4c;
       text-align: center;
-      border: 1px solid;
-      border-radius: 6px;
+      border: 1px solid #ff6a4c;
+      border-radius: 1.3rem;
       cursor: pointer;
+      padding: 0;
+      font-size: 1.3rem;
+      height: 2.4rem;
+      line-height: 2.4rem;
     }
   }
   .form-group-imgcode {
     display: flex;
     justify-content: space-between;
+    align-items: center;
   }
   input {
     border: none;
@@ -245,11 +293,15 @@ export default {
     border-radius: 0;
     padding: 1rem;
   }
+  input::-webkit-input-placeholder {
+    color: #ccc;
+    font-size: 1.4rem;
+  }
   .btn {
     font-size: 1.6rem;
-    height: 5rem;
-    line-height: 5rem;
-    margin-top: 2rem;
+    height: 4.4rem;
+    line-height: 4.4rem;
+    margin-top: 2.7rem;
     background: linear-gradient(to right, #ff8f53, #ff5e59);
     text-align: center;
     color: #fff;
