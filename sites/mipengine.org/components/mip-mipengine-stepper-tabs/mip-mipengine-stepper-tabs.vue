@@ -15,7 +15,7 @@
         >
           <div :class="{'step-num': true, 'step-done': index <= selected}">
             <span class="num">{{ index + 1 }}</span>
-            <span class="icon-pass"><i class="iconfont icon-info" /></span>
+            <span class="icon-pass"><i class="iconfont icon-info"/></span>
           </div>
           <span class="step-name">{{ item.name }}</span>
         </a>
