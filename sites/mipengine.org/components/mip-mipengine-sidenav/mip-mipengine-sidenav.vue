@@ -26,8 +26,8 @@
 </style>
 
 <script>
-import SidenavChapter from './sidenav-chapter'
-import SidenavMenu from './sidenav-menu'
+import SidenavChapter from './mip-sidenav-chapter'
+import SidenavMenu from './mip-sidenav-menu'
 
 export default {
   name: 'MipSidenav',
