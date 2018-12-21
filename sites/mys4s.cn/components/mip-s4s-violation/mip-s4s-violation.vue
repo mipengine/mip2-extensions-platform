@@ -195,7 +195,7 @@ export default {
 
     if (!this.globalData.car_no && this.getQueryString('carno')) {
       console.log('url模式')
-      this.globalData.car_no = this.getQueryString('carno').slice(1, 10)
+      this.globalData.car_no = this.getQueryString('carno').slice(1)
       this.globalData.provice = this.getQueryString('carno').slice(0, 1)
       this.globalData.vin = this.getQueryString('vin')
       this.globalData.engine = this.getQueryString('engine')
