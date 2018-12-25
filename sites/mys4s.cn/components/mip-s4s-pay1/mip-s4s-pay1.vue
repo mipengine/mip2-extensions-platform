@@ -868,7 +868,7 @@ export default {
       let self = this
       util.fetchData('v3/violation/submit_rule', {
         'vio_id': this.illegal.ViolationId,
-        'car_no': this.illegal.CarNo,
+        'car_no': this.illegal.car_no || this.illegal.CarNo,
         'city_code': this.illegal.Locationid
       }).then((res) => {
         if (res.code === 0) {
