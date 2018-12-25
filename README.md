@@ -80,8 +80,12 @@ $ cd cafe.com
 
 5.**调用组件脚本**
 
-```javascript
+```
 // 页面中引用
 <script src="https://c.mipcdn.com/extensions/platform/v2/{站点项目名}/{组件名}/{组件名}.js"></script>
+
+# 例如 test.a.com 下的 mip-example 组件
+
+<script src="https://c.mipcdn.com/extensions/platform/v2/test.a.com/mip-example/mip-example.js"></script>
 ```
 
