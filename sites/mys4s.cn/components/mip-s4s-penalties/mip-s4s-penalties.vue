@@ -1,22 +1,7 @@
 <template>
   <div
     id="s4s2"
-    :style="shownactive?'padding-top:.4rem':''"
-
     class="s4s-page">
-    <mip-fixed type="top">
-      <div
-        v-if="shownactive"
-        class="s4s-nation-active"
-        @click="showNation">
-        <mip-img
-          src="https://s4s-html.oss-cn-shanghai.aliyuncs.com/xcar/static/img/laba.png"
-          width="15"
-          height="15"
-          style="margin-right:4px;" />
-        <span>国庆期间电子眼违章延时处理通知 >></span>
-      </div>
-    </mip-fixed>
     <div class="s4s-body" >
       <div style="display:none">
         <canvas
@@ -47,6 +32,22 @@
           <span
             class="s4s-btn btn-border"
             @click="ready" >确定</span>
+        </div>
+        <div
+          v-if="showCaptcha"
+          class="s4s-order-input">
+          <input
+            v-model="captchValue"
+            type="text"
+            maxlength="4"
+            style="flex:auto"
+            placeholder="请输入验证码" >
+          <mip-img
+            :src="captchUrl"
+            width="420"
+            height="50"
+            style="flex:1"
+            @click="getCaptcha" />
         </div>
         <p class="s4s-order-text">处罚决定书编号、车牌号和处罚人为办单依据，请咨询核对！</p>
       </div>
@@ -335,9 +336,6 @@
         </div>
       </div>
     </div>
-    <a
-      ref="opens"
-      href=""/>
     <mip-fixed type="top">
       <div
         v-if="openShow"
@@ -382,20 +380,6 @@
         </div>
       </div>
     </mip-fixed>
-    <!-- 国庆活动 -->
-    <div
-      v-if="showNations && shownactive"
-      class="captcha">
-      <div class="s4s-mask" />
-      <div class="nation-container">
-        <img
-          src="https://s4s-html.oss-cn-shanghai.aliyuncs.com/xcar/static/img/close_active.png"
-          mode="aspectFill"
-          class="nation-img"
-          @click="closeNation">
-      </div>
-    </div>
-    <!-- 国庆活动 -->
   </div>
 </template>
 
@@ -487,8 +471,13 @@ export default {
       data: [],
       page: 0,
       loading: false,
-      shownactive: true,
-      showNations: true
+
+      captchKey: '',
+      captchUrl: '',
+      captchValue: '',
+      showCaptcha: true,
+      needCaptcha: true,
+      isCaptchaTrue: true
     }
   },
   computed: {
@@ -530,12 +519,8 @@ export default {
     }
   },
   mounted () {
-    let now = new Date().getTime()
-    let endtime = new Date('2018/10/08').getTime()
-    console.log(now, endtime)
-    if (now > endtime) {
-      this.shownactive = false
-    }
+    this.getCaptcha()
+
     const s4s = document.getElementById('s4s2')
     s4s.addEventListener('scroll', () => {
       if (s4s.scrollHeight - s4s.scrollTop <= s4s.clientHeight + 200 && !this.loading) {
@@ -545,12 +530,6 @@ export default {
     this.load(this.page, true)
   },
   methods: {
-    showNation () {
-      this.showNations = true
-    },
-    closeNation () {
-      this.showNations = false
-    },
     load (page, refresh) {
       if (this.loading) {
         return
@@ -576,11 +555,10 @@ export default {
     },
     gotoNews ({id, Type}) {
       if (Type === 1) {
-        this.$refs.opens.href = `https://mys4s.cn/static/xcar/index.html#/News/${id}?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xfrom=baidu_jisu_vio`
+        MIP.viewer.open(`https://mys4s.cn/static/xcar/index.html#/News/${id}?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xform=baidu_jisu_vio`)
       } if (Type === 2) {
-        this.$refs.opens.href = `https://mys4s.cn/static/xcar/index.html#/Evaluation?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xfrom=baidu_jisu_vio`
+        MIP.viewer.open(`https://mys4s.cn/static/xcar/index.html#/Evaluation?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xform=baidu_jisu_vio`)
       }
-      this.$refs.opens.click()
     },
     // 罚单
     openTicket () {
@@ -731,9 +709,22 @@ export default {
         // access_token: '3b2P0oarLbtrU/IkydUON5pfdQhGW4fWzFgFqOZZDi8=',
         document: this.orderNumber.replace(/\s/g, '')
       }
+      if (this.needCaptcha) {
+        param.cap_value = this.captchValue
+        param.cap_key = this.captchKey
+      }
       util
         .fetchData('v3/violation/web/ticket_query', param)
         .then(res => {
+          if (res.code === 90027) {
+            util.toast(res.msg || '需要填写验证码')
+            this.getCaptcha()
+            this.isCaptchaTrue = false
+            this.error = '请输入正确的验证码'
+            this.showCaptcha = true
+            this.needCaptcha = true
+            return
+          }
           if (res.code === 0) {
             this.selectOrderNumber = this.orderNumber
             // this.$store.state.orderNumber = this.selectOrderNumber
@@ -780,6 +771,24 @@ export default {
           this.showForm1 = false
           util.toast(e)
           // 测试
+        })
+    },
+    getCaptcha () {
+      util
+        .fetchData('v3/captcha', {
+          width: 180,
+          height: 80,
+          cap_len: 4,
+          dot_count: 80,
+          skew: 1
+        }).then((res) => {
+          if (res.code === 0) {
+            this.captchKey = res.data.key
+            this.captchValue = ''
+            this.captchUrl = res.data.image
+          } else {
+            util.toast(res.msg)
+          }
         })
     },
     // 常见问题
@@ -1323,51 +1332,4 @@ input {
 .flex-1 {
   flex: 1;
 }
-
-/* 国庆活动 */
-.captcha{
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 11;
-  }
-  .captcha .s4s-mask{
-    z-index:0;
-  }
-  .s4s-nation-active{
-      display: flex;
-      color: #5B5E6A;
-      font-size: .12rem;
-      background: #FFF1DB;
-      width: 100vw;
-      height: .40rem;
-      align-items: center;
-      padding: 0 .15rem;
-  }
-  /* .s4s-nation-active img{
-      width: .14rem;
-      height: .14rem;
-      margin-right: .06rem;
-  } */
-  .nation-container{
-      width: 3.1rem;
-      height: 3.6rem;
-      background: url(https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/vio/nation-notice.png) no-repeat;
-      background-size: 100% 100%;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translateY(-50%) translateX(-50%);
-  }
-  .nation-img{
-      width: .42rem;
-      height: .42rem;
-      position: absolute;
-      bottom: -.92rem;
-      left: 50%;
-      transform: translateX(-50%);
-  }
-  /* 国庆活动 */
 </style>
