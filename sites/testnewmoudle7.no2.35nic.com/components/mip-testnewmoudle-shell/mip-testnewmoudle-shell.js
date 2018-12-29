@@ -2,11 +2,11 @@
     @file 移动站点模板shell
  * @author 1450052652@qq.com
 */
-import './mip-shell-yisence.less'
+import './mip-testnewmoudle-shell.less'
 import Header from './feature/header'
 import Footer from './feature/footer'
 import Sidebar from './feature/sidebar'
-export default class MIPShellYisence extends window.MIP.builtinComponents.MIPShell {
+export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.MIPShell {
   processShellConfig (shellConfig) {
     // 强制修改 HTML 中的按钮配置
     shellConfig.routes.forEach(route => {
@@ -41,8 +41,8 @@ export default class MIPShellYisence extends window.MIP.builtinComponents.MIPShe
     this.$sidebar.innerHTML = this.renderSidebar()
     this.$sidebarWrapper.appendChild(this.$sidebar)
     super.renderOtherParts()
-    document.getElementsByTagName('mip-shell-yisence')[0].appendChild(this.$footerWrapper)
-    document.getElementsByTagName('mip-shell-yisence')[0].appendChild(this.$sidebarWrapper)
+    document.getElementsByTagName('mip-testnewmoudle-shell')[0].appendChild(this.$footerWrapper)
+    document.getElementsByTagName('mip-testnewmoudle-shell')[0].appendChild(this.$sidebarWrapper)
     this._initAllObjects()
   }
   _initAllObjects () {
