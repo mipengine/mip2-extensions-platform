@@ -2,7 +2,6 @@
  * @file: moblie left menu
  * @author: 1450052652@qq.com
  */
-
 export default class Sidebar {
   constructor (rootEl) {
     this.sidebar = document.querySelector('.mip-shell-sidebar-wrapper')
