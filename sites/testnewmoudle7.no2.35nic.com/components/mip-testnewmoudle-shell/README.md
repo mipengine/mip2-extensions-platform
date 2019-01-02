@@ -1,18 +1,18 @@
-# mip-shell-main
+# mip-testnewmoudle-shell
 
-标题|mip-shell-main
+标题|mip-testnewmoudle-shell
 ----|----
 类型|定制
 支持布局|responsive,fixed-height,fill,container,fixed
-所需脚本| [https://c.mipcdn.com/extensions/platform/v2/testnewmoudle7.no2.35nic.com/mip-shell-main/mip-shell-main.js](https://c.mipcdn.com/extensions/platform/v2/testnewmoudle7.no2.35nic.com/mip-shell-main/mip-shell-main.js)
+所需脚本| [https://c.mipcdn.com/extensions/platform/v2/testnewmoudle7.no2.35nic.com/mip-testnewmoudle-shell/mip-testnewmoudle-shell.js](https://c.mipcdn.com/extensions/platform/v2/testnewmoudle7.no2.35nic.com/mip-testnewmoudle-shell/mip-testnewmoudle-shell.js)
 
-## 说明 mip-shell-main
+## 说明 mip-testnewmoudle-shell
 
 组件功能说明 实现移动端站点头部，左侧菜单，底部菜单
 
 ## 示例
 ```html
- <mip-shell-main mip-shell>
+ <mip-testnewmoudle-shell mip-shell>
           <script type="application/json">
     {
       "routes": [
@@ -53,7 +53,7 @@
       ]
     }
     </script>
-    </mip-shell-main>
+    </mip-testnewmoudle-shell>
 
 示例说明  
 
