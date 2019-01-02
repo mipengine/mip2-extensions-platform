@@ -24,7 +24,11 @@
     </div>
 
     <div class="s4s-pay-body">
+
       <div class="s4s-title">违章详情</div>
+      <p
+        v-if="DzyNotice"
+        style="font-size:.13rem;color:#FD2900">{{ DzyNotice.Content }}</p>
       <div
         v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_no == 1"
         class="s4s-group">
@@ -312,6 +316,7 @@ export default {
   },
   data () {
     return {
+      DzyNotice: null,
       id: 0,
       carno: '',
       date: '',
@@ -392,8 +397,23 @@ export default {
       this.globalData.OccTime && this.globalData.OccTime.substring(0, 10)
     this.getNotify()
     this.getVipFee()
+    this.getNotice()
   },
   methods: {
+    getNotice () {
+      util.fetchData('v3/violation/view/notice').then(res => {
+        console.log(res)
+        if (res.code === 0 && res.data) {
+          if (res.data.DzyHave) {
+            this.DzyNotice = res.data.DzyNotice
+          }
+        } else {
+          this.DzyNotice = null
+        }
+      }).catch((e) => {
+        this.DzyNotice = null
+      })
+    },
     closeMake () {
       this.detail = false
     },
