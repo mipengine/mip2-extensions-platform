@@ -171,6 +171,11 @@
       class="s4s-btn"
       style="margin-top:0;width:calc( 100% - .3rem )"
       @click="formSubmit"> 查询违章 </button>
+    <div style="font-size:.13rem;line-height:.19rem;color:#989898;bottom: 20px;width:100%;margin-left: .15rem;">
+      <p>本服务由齐车大圣提供，客服电话：<a
+        style="color:#FE7000;font-weight:bold"
+        href="tel:400000119">400-000-1199</a></p>
+    </div>
     <div>
       <div
         v-if="data.length"
@@ -257,12 +262,7 @@
         </div>
       </div>
     </mip-fixed>
-    <div style="text-align:center;font-size:.13rem;line-height:.19rem;color:#989898;bottom: 20px;width:100%;margin:.3rem auto;">
-      <p>本服务由齐车大圣提供</p>
-      <p>客服电话：<a
-        style="color:#FE7000;font-weight:bold"
-        href="tel:400000119">400-000-1199</a></p>
-    </div>
+
   </div>
 </template>
 
