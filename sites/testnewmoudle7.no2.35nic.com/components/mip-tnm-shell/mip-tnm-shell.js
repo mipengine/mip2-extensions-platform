@@ -23,7 +23,7 @@ export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.
     this.$footerWrapper.appendChild(this.$footer)
     this.$sidebarWrapper = document.createElement('mip-sidebar') // 左侧菜单
     this.$sidebarWrapper.setAttribute('id', 'sidebar')
-    this.$sidebarWrapper.className = 'leftsidebar'
+    this.$sidebarWrapper.className = 'left-sidebar'
     this.$sidebarWrapper.setAttribute('display', 'nodisplay')
     this.$sidebarWrapper.classList.add('mip-shell-sidebar-wrapper')
     this.$sidebar = document.createElement('div')

@@ -10,7 +10,8 @@ const apiUrl = {
   footermenuUrl: baseurl + 'open_webapi/MofineApi.asmx/GetBottomMenu?editionId=1&intTop=5', // 底部菜单接口
   sidebarmenuUrl: baseurl + 'open_webapi/MofineApi.asmx/GetQuickMenu?editionId=1&intTop=10', // 左侧菜单接口
   nmsorttitleUrl: baseurl + 'open_webapi/MofineApi.asmx/GetSysNMSortList?menuIndexVar=travle_activity&editionId=1&parentId=0', // 分类标题接口
-  lanUrl: baseurl + 'open_webapi/MofineApi.asmx/GetLanguageEdition' // 语言接口
+  lanUrl: baseurl + 'open_webapi/MofineApi.asmx/GetLanguageEdition', // 语言接口
+  newsmoduleUrl: baseurl + 'open_webapi/MofineApi.asmx/GetPageModuleList?moduleElement=news_toptitle&editionId=1'// 新闻页面模块
 }
 
 export default apiUrl

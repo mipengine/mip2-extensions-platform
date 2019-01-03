@@ -26,6 +26,10 @@
               class="desc"
               v-html="item.newsInfos"/>
             <div class="topic">{{ item.newsTopic }}</div>
+            <a
+              :href="newstopurl"
+              :data-title="newstoptit"
+              class="link">{{ newstoptit }}</a>
           </div>
         </a>
       </mip-carousel>
@@ -34,38 +38,61 @@
 </template>
 
 <style scoped>
-.index_news_box{
-    padding: 40px 10px 0px 10px;
-    position: relative;
+.index_news_box {
+  padding: 40px 10px 0px 10px;
+  position: relative;
 }
-.i_n_text{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    color: #e1eaec;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    text-align: center;
+.i_n_text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  color: #e1eaec;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  text-align: center;
 }
-.topic{
-    font-size: 24px;
-    line-height: 30px;
-    color: inherit;
-    margin: 0;
-    font-weight: 300;
-    margin-bottom: 15px;
+.topic {
+  font-size: 24px;
+  line-height: 30px;
+  color: inherit;
+  margin: 0;
+  font-weight: 300;
+  margin-bottom: 15px;
 }
-.desc{
-    background: rgba(0,0,0,0.4);
-    color: inherit;
-    font-size: 14px;
-    display: inline-block;
-    white-space: nowrap;
+.desc {
+  background: rgba(0,0,0,0.4);
+  color: inherit;
+  font-size: 14px;
+  display: inline-block;
+  white-space: nowrap;
+}
+.link {
+  display: inline-block;
+  color: #4b5052;
+  background: #e7ebec;
+  line-height: 30px;
+  min-height: 30px;
+  border: none;
+  margin: 0;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 14px;
+  padding: 0 12px;
 }
 </style>
 <script>
 import apiUrl from '../../common/js/config.api'
 export default {
+  props: {
+    newstoptit: {
+      type: String,
+      default: ''
+    },
+    newstopurl: {
+      type: String,
+      default: ''
+    }
+  },
   data () {
     return {
       banner_list: [],
@@ -91,6 +118,16 @@ export default {
       } else {
         this.banner_list[0].thePageUrl = this.banner_list[0].thePageUrl === '' ? 'javascript:void(0)' : this.banner_list[0].thePageUrl
       }
+    })
+    fetch(apiUrl.newsmoduleUrl).then(response => {
+      if (response.ok) {
+        return response.json()
+      } else {
+        throw new Error('newsmoduleUrl went wrong!')
+      }
+    }).then(newsmo => {
+      this.newstoptit = newsmo.data.items[0].moduleTitle
+      this.newstopurl = newsmo.data.items[0].moduleLink
     })
   }
 }

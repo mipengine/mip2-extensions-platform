@@ -28,7 +28,7 @@ export default class Footer {
         const footerEle = self.footer.querySelector('.mip-shell-footer')
         const footermenuEle = document.createElement('a')
         footermenuEle.setAttribute('data-type', 'mip')
-        footermenuEle.className = array[index].nmIndexVar + ' flex_subitem'
+        footermenuEle.className = array[index].nmIndexVar + ' flex-subitem'
         const botticon = array[index].wapMenuIcon.split('|')
         footermenuEle.style.backgroundImage = 'url(' + botticon[0] + ')'
         const footerUrl = array[index].wapModuleVar

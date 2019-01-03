@@ -29,28 +29,30 @@ export default class Header {
       homeEle.setAttribute('data-type', 'mip')
       iconEle.className = 'icon-home'
       homeEle.className = 'back-home'
-      titEle.className = 'toptit'
+      titEle.className = 'top-tit'
       homeEle.href = homeUrl
       headEle.appendChild(homeEle)
-      const toptitEle = this.header.querySelector('.toptit')
+      const toptitEle = this.header.querySelector('.top-tit')
       const toptitEleparent = toptitEle.parentNode
 
       toptitEle.setAttribute('on', 'tap:mip-toggle-sorttit.toggle')
       const toggleSortEle = document.createElement('mip-toggle')
       toggleSortEle.setAttribute('id', 'mip-toggle-sorttit')
+      toggleSortEle.className = 'mip-toggle-title'
       toggleSortEle.setAttribute('hidetimeout', '500')
       toggleSortEle.setAttribute('enterclass', 'sort-toggle-enter')
       toptitEleparent.insertBefore(toggleSortEle, toptitEle) // 在第一个子节点toptitEle之前插入toggleSortEle，父节点是toptitEleparent
 
       const arrsorttit = nmsortlist.data.items
       if (arrsorttit.length > 0) {
-        toptitEle.className += ' hadsorttit'
+        toptitEle.className += ' had-sort-tit'
       }
 
       arrsorttit.forEach(function (value, index, array) {
         const sortBoxItemEle = document.createElement('a')
-        sortBoxItemEle.className = 'sortBoxItem'
+        sortBoxItemEle.className = 'sort-box-item'
         sortBoxItemEle.setAttribute('data-title', array[index].sortName)
+        sortBoxItemEle.setAttribute('href', array[index].sortLink)
         sortBoxItemEle.innerHTML = array[index].sortName
         toggleSortEle.appendChild(sortBoxItemEle)
       })

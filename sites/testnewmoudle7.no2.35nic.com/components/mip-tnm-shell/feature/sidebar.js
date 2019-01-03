@@ -20,7 +20,7 @@ export default class Sidebar {
       const sidebarEle = this.sidebar.querySelector('.mip-shell-sidebar')
       const sidebarnavEle = document.createElement('nav')
       sidebarnavEle.setAttribute('id', 'menu')
-      sidebarnavEle.className = 'quickmenu'
+      sidebarnavEle.className = 'quick-menu'
       sidebarEle.appendChild(sidebarnavEle)
       const sidebarulEle = document.createElement('ul')
       sidebarulEle.className = 'list'
@@ -34,7 +34,7 @@ export default class Sidebar {
         const sidebarliEle = document.createElement('li')
         sidebarulEle.appendChild(sidebarliEle)
         const sidebaritemEle = document.createElement('a')
-        sidebaritemEle.className = array[index].nmIndexVar + ' leftsideitem'
+        sidebaritemEle.className = array[index].nmIndexVar + ' left-side-item'
         sidebaritemEle.innerHTML = array[index].nmShowTopic
         const lefticon = array[index].wapMenuIcon.split('|')
         sidebaritemEle.style.backgroundImage = 'url(' + lefticon[0] + ')'
