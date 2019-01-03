@@ -11,7 +11,7 @@ mip-tnm-shell 实现移动端站点头部，左侧菜单，底部菜单
 ## 示例
 ```html
  <mip-tnm-shell mip-shell="">
-            <script type="application/json">
+    <script type="application/json">
     {
       "routes": [
         {
@@ -35,7 +35,6 @@ mip-tnm-shell 实现移动端站点头部，左侧菜单，底部菜单
               "show": true,
               "title": "其他页面",
               "nmlinkUrl":["/index.html","/single.html","/news.html","/products.html","/downs.html","/videos.html","/gbook.html","/jobs.html","/alinks.html","/search.html","/customform.html","javascript:void(0);","javascript:void(0);","/search.html","tel:","contactus.html","mailto:","sms:"]
-             
             }
           }
         }
