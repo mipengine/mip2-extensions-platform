@@ -15,7 +15,7 @@
 ### 基本用法
 
 ```html
-<mip-cy-top-nav navTitle="春雨医生"></mip-cy-top-nav>
+<mip-cy-top-nav nav-title="春雨医生"></mip-cy-top-nav>
 ```
 
 ## 属性
