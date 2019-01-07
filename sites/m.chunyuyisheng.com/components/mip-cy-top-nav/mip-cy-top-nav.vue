@@ -1,7 +1,7 @@
 <template>
   <div class="mip-cy-top-nav">
     <mip-fixed type="top">
-      <div class="my-mip-fixed">
+      <div class="my-flex">
         <a href="https://author.baidu.com/home/1558933722224921">
           <div class="mip-cy-top-nav-logo">春雨医生</div>
         </a>
@@ -36,7 +36,7 @@
 .mip-cy-top-nav {
   line-height: .44rem;
 
-  .my-mip-fixed {
+  .my-flex {
     display: flex;
     padding: 0 .15rem;
     align-items: center;
