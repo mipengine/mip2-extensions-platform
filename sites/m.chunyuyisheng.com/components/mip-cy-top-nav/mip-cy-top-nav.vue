@@ -17,16 +17,16 @@
       <slot>
         <a
           class="item item-quick-ask"
-          href="/mip/create_free_problem_page/">快速提问</a>
+          href="https://m.chunyuyisheng.com/mip/create_free_problem_page/">快速提问</a>
         <a
           class="item item-find-doctor"
-          href="/mip/clinics/">找医生</a>
+          href="https://m.chunyuyisheng.com/mip/clinics/">找医生</a>
         <a
           class="item item-home"
           href="https://author.baidu.com/home/1558933722224921">首页</a>
         <a
           class="item item-user-center"
-          href="/mip/my_all_services_page/">咨询记录</a>
+          href="https://m.chunyuyisheng.com/mip/my_all_services_page/">咨询记录</a>
       </slot>
     </div>
   </div>
