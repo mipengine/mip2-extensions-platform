@@ -52,8 +52,7 @@ export default {
       if (type === 'click') {
         that.send()
         if (href) {
-          window.location.href = href
-          window.parent.location.href = href // 在iframe里面
+          MIP.viewer.open(href)
         }
       }
     },
