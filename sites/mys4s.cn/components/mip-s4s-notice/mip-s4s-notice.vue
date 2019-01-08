@@ -45,7 +45,6 @@ export default {
   mounted () {
     if (this.notice) {
       this.absolute = false
-      console.log(this.absolute)
     }
     this.getCommonNotice()
   },
@@ -53,14 +52,10 @@ export default {
     handleTapNotice () {
       if (this.noticeData.Type === 1) {
       // h5
-        window.location.href = this.noticeData.Link
+        MIP.viewer.open(this.noticeData.Link)
       } else if (this.noticeData.Type === 3) {
       // tanchuang
-        // this.$showModal({
-        //   title: this.noticeData.Title,
-        //   content: this.noticeData.Alert,
-        //   confirmText: '我知道了'
-        // })
+        util.toast(this.noticeData.Alert)
       }
     },
     handleCloseNotice () {
@@ -71,7 +66,6 @@ export default {
         app: 'vio',
         channel: 'xzapp'
       }).then((res) => {
-        console.log(res)
         if (res.code === 0 && res.data) {
           res.data.forEach((item) => {
             if (item.Tab === 'index' && item.Notify && item.Notify.Alert && item.Notify.Title) {
@@ -79,7 +73,6 @@ export default {
                 this.noticeData = item.Notify
                 this.showNotice = true
               }, 1000)
-              console.log(item.Notify, 'item.Notifyitem.Notify')
             }
           })
         }
@@ -97,7 +90,6 @@ export default {
   font-size: 15px;
   display: flex;
   white-space: nowrap;
-  z-index: 999;
   z-index: 99999;
   transition: top 1800ms;
   padding-left: 15px;
