@@ -36,16 +36,13 @@ export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.
     this._initAllObjects()
   }
   _initAllObjects () {
-    let configMeta = this.currentPageMeta
     const isIndex = this.currentPageMeta.view.isIndex
-
     this.header = new Header(this.$el);
     (!isIndex) && this.header.setCustomHeader(apiUrl.homeUrl, apiUrl.nmsorttitleUrl)
     this.footer = new Footer(this.$el)
-    this.footer.setCustomFooter(apiUrl.footermenuUrl, configMeta.header.nmlinkUrl)
+    this.footer.setCustomFooter(apiUrl.footermenuUrl)
     this.sidebar = new Sidebar(this.$el)
-    this.sidebar.setCustomSidebar(apiUrl.sidebarmenuUrl,
-      configMeta.header.nmlinkUrl, apiUrl.lanUrl)
+    this.sidebar.setCustomSidebar(apiUrl.sidebarmenuUrl, apiUrl.lanUrl)
   }
   renderFooter () {
     return ''
@@ -56,12 +53,10 @@ export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.
   updateOtherParts () {
     this.$footer.innerHTML = this.renderFooter()
     this.$sidebar.innerHTML = this.renderSidebar()
-    let configMeta = this.currentPageMeta
     const isIndex = this.currentPageMeta.view.isIndex;
     (!isIndex) && this.header.setCustomHeader(apiUrl.homeUrl, apiUrl.nmsorttitleUrl)
-    this.footer.setCustomFooter(apiUrl.footermenuUrl, configMeta.header.nmlinkUrl)
-    this.sidebar.setCustomSidebar(apiUrl.sidebarmenuUrl, configMeta.header.nmlinkUrl,
-      apiUrl.lanUrl)
+    this.footer.setCustomFooter(apiUrl.footermenuUrl)
+    this.sidebar.setCustomSidebar(apiUrl.sidebarmenuUrl, apiUrl.lanUrl)
   }
   handleShellCustomButton (buttonName) {
   }

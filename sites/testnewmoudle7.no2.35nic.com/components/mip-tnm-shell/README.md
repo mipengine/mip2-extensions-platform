@@ -20,8 +20,7 @@ mip-tnm-shell 实现移动端站点头部，左侧菜单，底部菜单
             "header": {
               "show": true,
               "title": "我的首页",
-              "logo": "https://gss0.bdstatic.com/5bd1bjqh_Q23odCf/static/wiseindex/img/favicon64.ico",
-               "nmlinkUrl":["/index.html","/single.html","/news.html","/products.html","/downs.html","/videos.html","/gbook.html","/jobs.html","/alinks.html","/search.html","/customform.html","javascript:void(0);","javascript:void(0);","/search.html","tel:","contactus.html","mailto:","sms:"]
+              "logo": "https://gss0.bdstatic.com/5bd1bjqh_Q23odCf/static/wiseindex/img/favicon64.ico"
             },
             "view": {
               "isIndex": true
@@ -33,8 +32,7 @@ mip-tnm-shell 实现移动端站点头部，左侧菜单，底部菜单
           "meta": {
             "header": {
               "show": true,
-              "title": "其他页面",
-              "nmlinkUrl":["/index.html","/single.html","/news.html","/products.html","/downs.html","/videos.html","/gbook.html","/jobs.html","/alinks.html","/search.html","/customform.html","javascript:void(0);","javascript:void(0);","/search.html","tel:","contactus.html","mailto:","sms:"]
+              "title": "其他页面"
             }
           }
         }
@@ -58,8 +56,7 @@ Shell 配置的基本结构如下：
             "header": {
               "show": true,
               "title": "我的首页",
-              "logo": "",
-              "nmlinkUrl":[]
+              "logo": ""
             },
             "view": {
               "isIndex": true
@@ -71,8 +68,7 @@ Shell 配置的基本结构如下：
           "meta": {
             "header": {
               "show": true,
-              "title": "其他页面",
-             "nmlinkUrl":[]
+              "title": "其他页面"
             }
           }
         }
@@ -80,7 +76,6 @@ Shell 配置的基本结构如下：
     }
  这里有几个注意点：
 
-       nmlinkUrl 根据类型判断链接页面
        接口返回的数据格式需要是如下格式：
        status：0 表示请求成功。
        items：[] 是需要渲染的数序。

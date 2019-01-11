@@ -2,12 +2,18 @@
  * @file: moblie left menu
  * @author: 1450052652@qq.com
  */
+/**
+ * 函数描述setCustomSidebar
+ *
+ * @param {string} sidebarmenuUrl 左侧菜单接口
+ * @param {string} lanUrl 语言选择接口
+ */
 export default class Sidebar {
   constructor (rootEl) {
     this.sidebar = document.querySelector('.mip-shell-sidebar-wrapper')
   }
 
-  setCustomSidebar (sidebarmenuUrl, nmlinkUrl, lanUrl) {
+  setCustomSidebar (sidebarmenuUrl, lanUrl) {
     // 左侧菜单
     fetch(sidebarmenuUrl).then(response => {
       if (response.ok) {
@@ -34,71 +40,148 @@ export default class Sidebar {
         const sidebarliEle = document.createElement('li')
         sidebarulEle.appendChild(sidebarliEle)
         const sidebaritemEle = document.createElement('a')
+        sidebaritemEle.setAttribute('data-type', 'mip')
+        sidebaritemEle.setAttribute('data-title', array[index].nmShowTopic)
         sidebaritemEle.className = array[index].nmIndexVar + ' left-side-item'
         sidebaritemEle.innerHTML = array[index].nmShowTopic
         const lefticon = array[index].wapMenuIcon.split('|')
         sidebaritemEle.style.backgroundImage = 'url(' + lefticon[0] + ')'
         sidebarliEle.appendChild(sidebaritemEle)
         const sidebarUrl = array[index].wapModuleVar
-        switch (sidebarUrl) {
-          case 0:
-            sidebaritemEle.href = nmlinkUrl[0] // 首页
-            break
-          case 1:
-            sidebaritemEle.href = nmlinkUrl[1] // 单页图文
-            break
-          case 2:
-            sidebaritemEle.href = nmlinkUrl[2] // 新闻
-            break
-          case 3:
-            sidebaritemEle.href = nmlinkUrl[3] // 产品
-            break
-          case 4:
-            sidebaritemEle.href = nmlinkUrl[4] // 下载
-            break
-          case 5:
-            sidebaritemEle.href = nmlinkUrl[5] // 视频
-            break
-          case 6:
-            sidebaritemEle.href = nmlinkUrl[6] // 留言
-            break
-          case 7:
-            sidebaritemEle.href = nmlinkUrl[7] // 招聘
-            break
-          case 8:
-            sidebaritemEle.href = nmlinkUrl[8] // 友情链接
-            break
-          case 9:
-            sidebaritemEle.href = nmlinkUrl[9] // 搜索列表
-            break
-          case 10:
-            sidebaritemEle.href = nmlinkUrl[10] // 自定义表单
-            break
-          case 99:
-            sidebaritemEle.href = nmlinkUrl[11] // 其他情况
-            break
-          case 100:
-            sidebaritemEle.href = nmlinkUrl[12] // 菜单
-            break
-          case 101:
-            sidebaritemEle.href = nmlinkUrl[13] // 搜索
-            break
-          case 102:
-            sidebaritemEle.href = nmlinkUrl[14] + array[index].nmPIndexVar // 电话
-            break
-          case 103:
-            sidebaritemEle.href = nmlinkUrl[15] // 联系
-            break
-          case 104:
-            sidebaritemEle.href = nmlinkUrl[16] + array[index].nmPIndexVar // 邮箱
-            break
-          case 105:
-            sidebaritemEle.href = nmlinkUrl[17] + array[index].nmPIndexVar // 短信
-            break
-          default:
-            sidebaritemEle.href = nmlinkUrl[11] // 其他情况
-            break
-        }
+        const hadsorturl = 'https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetSysNMSortList?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&parentId='
+        // 判断是否有分类
+        fetch(hadsorturl).then(response => {
+          if (response.ok) {
+            return response.json()
+          } else {
+            throw new Error('hadsortlist went wrong!')
+          }
+        }).then(hadsortlist => {
+          // 有分类
+          const path = '/mip/templates/default'
+          if (hadsortlist.data.items.length > 0) {
+            switch (sidebarUrl) {
+              case 0:
+                sidebaritemEle.href = path + '/index.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 首页
+                break
+              case 1:
+                sidebaritemEle.href = path + '/single.html?id=' + array[index].nmMenuId + '&infoName=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 单页图文
+                break
+              case 2:
+                sidebaritemEle.href = path + '/news_sort.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&intSta=0&intNum=&sortId=' // 新闻
+                break
+              case 3:
+                sidebaritemEle.href = path + '/products_sort.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&intSta=0&intNum=&sortId=' // 产品
+                break
+              case 4:
+                sidebaritemEle.href = path + '/downs_sort.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&intSta=0&intNum=&sortId=' // 下载
+                break
+              case 5:
+                sidebaritemEle.href = path + '/videos_sort.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&intSta=0&intNum=&sortId=' // 视频
+                break
+              case 6:
+                sidebaritemEle.href = path + '/gbook.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 留言
+                break
+              case 7:
+                sidebaritemEle.href = path + '/jobs_sort.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&jobsStatus=1&intSta=0&intNum=&sortId=' // 招聘
+                break
+              case 8:
+                sidebaritemEle.href = path + '/alinks.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&alinksIsShow=0' // 友情链接
+                break
+              case 9:
+                sidebaritemEle.href = path + '/search.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 搜索列表
+                break
+              case 10:
+                sidebaritemEle.href = path + '/customform.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 自定义表单
+                break
+              case 99:
+                sidebaritemEle.href = 'javascript:void(0);' // 其他情况
+                break
+              case 100:
+                sidebaritemEle.href = 'javascript:void(0);' // 菜单
+                break
+              case 101:
+                sidebaritemEle.href = path + '/search.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 搜索
+                break
+              case 102:
+                sidebaritemEle.href = 'tel:' + array[index].nmPIndexVar // 电话
+                break
+              case 103:
+                sidebaritemEle.href = path + '/contactus.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 联系
+                break
+              case 104:
+                sidebaritemEle.href = 'mailto:' + array[index].nmPIndexVar // 邮箱
+                break
+              case 105:
+                sidebaritemEle.href = 'sms:' + array[index].nmPIndexVar // 短信
+                break
+              default:
+                sidebaritemEle.href = 'javascript:void(0);' // 其他情况
+                break
+            }
+          } else {
+            // 无分类
+            switch (sidebarUrl) {
+              case 0:
+                sidebaritemEle.href = path + '/index.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 首页
+                break
+              case 1:
+                sidebaritemEle.href = path + '/single.html?id=' + array[index].nmMenuId + '&infoName=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 单页图文
+                break
+              case 2:
+                sidebaritemEle.href = path + '/news.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&intSta=0&intNum=&sortId=' // 新闻
+                break
+              case 3:
+                sidebaritemEle.href = path + '/products.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&intSta=0&intNum=&sortId=' // 产品
+                break
+              case 4:
+                sidebaritemEle.href = path + '/downs.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&intSta=0&intNum=&sortId=' // 下载
+                break
+              case 5:
+                sidebaritemEle.href = path + '/videos.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&intSta=0&intNum=&sortId=' // 视频
+                break
+              case 6:
+                sidebaritemEle.href = path + '/gbook.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 留言
+                break
+              case 7:
+                sidebaritemEle.href = path + '/jobs.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&jobsStatus=1&intSta=0&intNum=&sortId=' // 招聘
+                break
+              case 8:
+                sidebaritemEle.href = path + '/alinks.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&alinksIsShow=0' // 友情链接
+                break
+              case 9:
+                sidebaritemEle.href = path + '/search.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 搜索列表
+                break
+              case 10:
+                sidebaritemEle.href = path + '/customform.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 自定义表单
+                break
+              case 99:
+                sidebaritemEle.href = 'javascript:void(0);' // 其他情况
+                break
+              case 100:
+                sidebaritemEle.href = 'javascript:void(0);' // 菜单
+                break
+              case 101:
+                sidebaritemEle.href = path + '/search.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 搜索
+                break
+              case 102:
+                sidebaritemEle.href = 'tel:' + array[index].nmPIndexVar // 电话
+                break
+              case 103:
+                sidebaritemEle.href = path + '/contactus.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 联系
+                break
+              case 104:
+                sidebaritemEle.href = 'mailto:' + array[index].nmPIndexVar // 邮箱
+                break
+              case 105:
+                sidebaritemEle.href = 'sms:' + array[index].nmPIndexVar // 短信
+                break
+              default:
+                sidebaritemEle.href = 'javascript:void(0);' // 其他情况
+                break
+            }
+          }
+        })
       })
 
       // 语言版本
