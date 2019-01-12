@@ -3,6 +3,7 @@
  * @time 2018-01-23
  * 项目相关接口配置文件
  */
+
 import { getUrlParams } from './getparam'
 const baseurl = 'https://testnewmoudle7.no2.35nic.com/'
 const apiUrl = {
@@ -22,6 +23,7 @@ const apiUrl = {
   videossortlistUrl: baseurl + 'open_webapi/MofineApi.asmx/GetTempVideosList?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&intSta=' + getUrlParams().intSta + '&intNum=' + getUrlParams().intNum + '&sortId=' + getUrlParams().sortId + '', // 视频分类列表数据接口
   downssortlistUrl: baseurl + 'open_webapi/MofineApi.asmx/GetTempDownloadList?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&intSta=' + getUrlParams().intSta + '&intNum=' + getUrlParams().intNum + '&sortId=' + getUrlParams().sortId + '', // 下载分类列表数据接口
   jobsortlistUrl: baseurl + 'open_webapi/MofineApi.asmx/GetJobsList?jobsStatus=' + getUrlParams().jobsStatus + '&editionId=' + getUrlParams().editionId + '&intSta=' + getUrlParams().intSta + '&intNum=' + getUrlParams().intNum + '&sortId=' + getUrlParams().sortId + ''// 招聘分类列表数据接口
+
 }
 
 export default apiUrl

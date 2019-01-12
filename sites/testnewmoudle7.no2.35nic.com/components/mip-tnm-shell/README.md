@@ -20,7 +20,11 @@ mip-tnm-shell 实现移动端站点头部，左侧菜单，底部菜单
             "header": {
               "show": true,
               "title": "我的首页",
+
               "logo": "https://gss0.bdstatic.com/5bd1bjqh_Q23odCf/static/wiseindex/img/favicon64.ico"
+
+             
+              
             },
             "view": {
               "isIndex": true
@@ -57,6 +61,7 @@ Shell 配置的基本结构如下：
               "show": true,
               "title": "我的首页",
               "logo": ""
+
             },
             "view": {
               "isIndex": true
@@ -69,6 +74,7 @@ Shell 配置的基本结构如下：
             "header": {
               "show": true,
               "title": "其他页面"
+
             }
           }
         }
