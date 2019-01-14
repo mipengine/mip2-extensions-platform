@@ -25,10 +25,7 @@ mip-tnm-shell 实现移动端站点头部，左侧菜单，底部菜单
               "lanUrl":"https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetLanguageEdition",
               "sidebarmenuUrl":"https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetQuickMenu?editionId=1&intTop=12",
               "footermenuUrl":"https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetBottomMenu?editionId=1&intTop=5",
-              "nmsorttitleUrl":"https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetSysNMSortList?menuIndexVar=" 
-
-             
-              
+              "nmsorttitleUrl":"https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetSysNMSortList?menuIndexVar="
             },
             "view": {
               "isIndex": true
@@ -75,7 +72,6 @@ Shell 配置的基本结构如下：
               "sidebarmenuUrl":"",
               "footermenuUrl":"",
               "nmsorttitleUrl":""
-
             },
             "view": {
               "isIndex": true
@@ -93,7 +89,6 @@ Shell 配置的基本结构如下：
               "sidebarmenuUrl":"",
               "footermenuUrl":"",
               "nmsorttitleUrl":""
-
             }
           }
         }
