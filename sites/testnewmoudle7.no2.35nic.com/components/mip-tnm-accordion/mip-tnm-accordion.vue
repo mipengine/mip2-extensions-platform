@@ -138,15 +138,22 @@
 }
 </style>
 <script>
-import apiUrl from '../../common/js/config.api'
 export default {
+  props: {
+    src: {
+      type: String,
+      default () {
+        return ''
+      }
+    }
+  },
   data () {
     return {
       job_list: []
     }
   },
   mounted () {
-    fetch(apiUrl.jobslistUrl).then(response => {
+    fetch(this.src).then(response => {
       if (response.ok) {
         return response.json()
       } else {

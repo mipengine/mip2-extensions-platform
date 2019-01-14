@@ -8,12 +8,13 @@
  * @param {string} sidebarmenuUrl 左侧菜单接口
  * @param {string} lanUrl 语言选择接口
  */
+import { getUrlParams } from '../../../common/js/getparam'
 export default class Sidebar {
   constructor (rootEl) {
     this.sidebar = document.querySelector('.mip-shell-sidebar-wrapper')
   }
 
-  setCustomSidebar (sidebarmenuUrl, lanUrl) {
+  setCustomSidebar (sidebarmenuUrl, lanUrl, nmsorttitleUrl) {
     // 左侧菜单
     fetch(sidebarmenuUrl).then(response => {
       if (response.ok) {
@@ -48,7 +49,7 @@ export default class Sidebar {
         sidebaritemEle.style.backgroundImage = 'url(' + lefticon[0] + ')'
         sidebarliEle.appendChild(sidebaritemEle)
         const sidebarUrl = array[index].wapModuleVar
-        const hadsorturl = 'https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetSysNMSortList?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&parentId='
+        const hadsorturl = nmsorttitleUrl + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&parentId=' + getUrlParams().parentId
         // 判断是否有分类
         fetch(hadsorturl).then(response => {
           if (response.ok) {

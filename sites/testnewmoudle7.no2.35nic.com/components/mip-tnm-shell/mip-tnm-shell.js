@@ -6,7 +6,6 @@ import './mip-tnm-shell.less'
 import Header from './feature/header'
 import Footer from './feature/footer'
 import Sidebar from './feature/sidebar'
-import apiUrl from '../../common/js/config.api'
 export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.MIPShell {
   processShellConfig (shellConfig) {
   }
@@ -36,13 +35,15 @@ export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.
     this._initAllObjects()
   }
   _initAllObjects () {
+    let configMeta = this.currentPageMeta
+    console.log(configMeta.header.nmsorttitleUrl)
     const isIndex = this.currentPageMeta.view.isIndex
     this.header = new Header(this.$el);
-    (!isIndex) && this.header.setCustomHeader(apiUrl.homeUrl, apiUrl.nmsorttitleUrl)
+    (!isIndex) && this.header.setCustomHeader(configMeta.header.homeUrl, configMeta.header.nmsorttitleUrl)
     this.footer = new Footer(this.$el)
-    this.footer.setCustomFooter(apiUrl.footermenuUrl)
+    this.footer.setCustomFooter(configMeta.header.footermenuUrl, configMeta.header.nmsorttitleUrl)
     this.sidebar = new Sidebar(this.$el)
-    this.sidebar.setCustomSidebar(apiUrl.sidebarmenuUrl, apiUrl.lanUrl)
+    this.sidebar.setCustomSidebar(configMeta.header.sidebarmenuUrl, configMeta.header.lanUrl, configMeta.header.nmsorttitleUrl)
   }
   renderFooter () {
     return ''
@@ -51,12 +52,13 @@ export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.
     return ''
   }
   updateOtherParts () {
+    let configMeta = this.currentPageMeta
     this.$footer.innerHTML = this.renderFooter()
     this.$sidebar.innerHTML = this.renderSidebar()
     const isIndex = this.currentPageMeta.view.isIndex;
-    (!isIndex) && this.header.setCustomHeader(apiUrl.homeUrl, apiUrl.nmsorttitleUrl)
-    this.footer.setCustomFooter(apiUrl.footermenuUrl)
-    this.sidebar.setCustomSidebar(apiUrl.sidebarmenuUrl, apiUrl.lanUrl)
+    (!isIndex) && this.header.setCustomHeader(configMeta.header.homeUrl, configMeta.header.nmsorttitleUrl)
+    this.footer.setCustomFooter(configMeta.header.footermenuUrl, configMeta.header.nmsorttitleUrl)
+    this.sidebar.setCustomSidebar(configMeta.header.sidebarmenuUrl, configMeta.header.lanUrl, configMeta.header.nmsorttitleUrl)
   }
   handleShellCustomButton (buttonName) {
   }

@@ -15,7 +15,9 @@ export default class Header {
   }
   // 首页链接 栏目链接
   setCustomHeader (homeUrl, nmsorttitleUrl) {
-    fetch(nmsorttitleUrl).then(response => {
+    console.log(nmsorttitleUrl)
+    // const nmsorttitleUrl="https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetSysNMSortList?menuIndexVar=" + getUrlParams().menuIndexVar + "&editionId=" + getUrlParams().editionId + "&parentId=" + getUrlParams().parentId
+    fetch(nmsorttitleUrl + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&parentId=' + getUrlParams().parentId).then(response => {
       if (response.ok) {
         return response.json()
       } else {

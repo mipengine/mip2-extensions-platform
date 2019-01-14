@@ -9,28 +9,31 @@
 ## 说明 mip-tnm-accordion
 
 组件功能说明  根据接口实现招聘信息折叠节点
-			
-## 示例 
+
+## 示例
 ```html
-  <mip-tnm-accordion></mip-tnm-accordion>
+  <mip-tnm-accordion src=""></mip-tnm-accordion>
 ````
 
 示例说明
-1.无分类招聘接口
-jobslistUrl:baseurl+'/open_webapi/MofineApi.asmx/GetJobsList?jobsStatus='+getUrlParams().jobsStatus+'&editionId='+getUrlParams().editionId+'&intSta='+getUrlParams().intSta+'&intNum='+getUrlParams().intNum+'&sortId='+getUrlParams().sortId+''
-2.根据地址栏获取参数得到的接口返回的数据格式需要是如下格式：
-       status：0 表示请求成功。
-       items：[] 是需要渲染的数序。
-       isEnd：表示是否是最后一页，非必须。
-       {
-            status: 0,
-            data: {
-                items: [],
-                isEnd: 1
-            }
-       }
-3.访问地址需要地址栏参数:?jobsStatus=1&editionId=1&intSta=0&intNum=2&sortId=
+1.根据src属性得到URL异步请求无分类招聘接口渲染列表数据
 
 ## 属性
 
-属性说明
+### src
+
+属性说明: 招聘列表接口
+必选项:是
+类型:字符串
+接口数据返回格式如下:
+ status：0 表示请求成功。
+ items：[] 是需要渲染的数序。
+ isEnd：表示是否是最后一页，非必须。
+ {
+      status: 0,
+      data: {
+          items: [],
+          isEnd: 1
+      }
+ }
+

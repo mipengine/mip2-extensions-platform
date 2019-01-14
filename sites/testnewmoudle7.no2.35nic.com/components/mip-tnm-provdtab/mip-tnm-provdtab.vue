@@ -1,23 +1,26 @@
 <template>
   <div>
-    <div :is="currentView"/>
+    <div
+      :is="currentView"
+      :src="src"
+      :modulesrc="modulesrc"/>
     <div class="tab-tit">
       <a
         href="javascript:void(0)"
         class="tit-link current"
-        @click="tabChange(protabitem1,$event)">
+        @click="tabChange(protabitem1,$event)" >
         {{ pro_list[0] }}
       </a>
       <a
         href="javascript:void(0)"
         class="tit-link"
-        @click="tabChange(protabitem2,$event)">
+        @click="tabChange(protabitem2,$event)" >
         {{ pro_list[1] }}
       </a>
       <a
         href="javascript:void(0)"
         class="tit-link"
-        @click="tabChange(protabitem3,$event)">
+        @click="tabChange(protabitem3,$event)" >
         {{ pro_list[2] }}
       </a>
     </div>
@@ -50,7 +53,6 @@
 }
 </style>
 <script>
-import apiUrl from '../../common/js/config.api'
 import protabitem1 from './mip-tnm-protabitem1'
 import protabitem2 from './mip-tnm-protabitem2'
 import protabitem3 from './mip-tnm-protabitem3'
@@ -59,6 +61,20 @@ export default {
     protabitem1,
     protabitem2,
     protabitem3
+  },
+  props: {
+    src: {
+      type: String,
+      default () {
+        return ''
+      }
+    },
+    modulesrc: {
+      type: String,
+      default () {
+        return ''
+      }
+    }
   },
   data () {
     return {
@@ -70,7 +86,7 @@ export default {
     }
   },
   mounted () {
-    fetch(apiUrl.provdtabUrl).then(response => {
+    fetch(this.src).then(response => {
       if (response.ok) {
         return response.json()
       } else {

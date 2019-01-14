@@ -148,8 +148,21 @@
 }
 </style>
 <script>
-import apiUrl from '../../common/js/config.api'
 export default {
+  props: {
+    sortsrc: {
+      type: String,
+      default () {
+        return ''
+      }
+    },
+    src: {
+      type: String,
+      default () {
+        return ''
+      }
+    }
+  },
   data () {
     return {
       sort_list: [],
@@ -159,7 +172,7 @@ export default {
     }
   },
   mounted () {
-    fetch(apiUrl.prosorttitleUrl).then(response => {
+    fetch(this.sortsrc).then(response => {
       if (response.ok) {
         return response.json()
       } else {
@@ -172,7 +185,7 @@ export default {
       for (let index = 0; index < this.sort_list.length; index++) {
         (function (i) {
           let that = self
-          fetch(apiUrl.downssortlistUrl + '0_' + that.sort_list[i].mnSortId).then(response => {
+          fetch(that.src + '0_' + that.sort_list[i].mnSortId).then(response => {
             if (response.ok) {
               return response.json()
             } else {
@@ -201,7 +214,7 @@ export default {
         })(index)
       }
       // 无分类的输出推荐产品
-      fetch(apiUrl.downssortlistUrl + '0').then(response => {
+      fetch(this.src + '0').then(response => {
         if (response.ok) {
           return response.json()
         } else {

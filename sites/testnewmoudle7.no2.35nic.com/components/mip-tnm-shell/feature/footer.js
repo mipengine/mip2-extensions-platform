@@ -8,12 +8,13 @@
  * @param {string} footermenuUrl 首页链接
  *
  */
+import { getUrlParams } from '../../../common/js/getparam'
 export default class Footer {
   constructor (rootEl) {
     this.footer = document.querySelector('.mip-shell-footer-wrapper')
   }
   // 首页链接 栏目链接
-  setCustomFooter (footermenuUrl) {
+  setCustomFooter (footermenuUrl, nmsorttitleUrl) {
     fetch(footermenuUrl).then(response => {
       if (response.ok) {
         return response.json()
@@ -34,7 +35,7 @@ export default class Footer {
         const footerUrl = array[index].wapModuleVar
         footermenuEle.innerHTML = array[index].nmShowTopic
         footerEle.appendChild(footermenuEle)
-        const hadsorturl = 'https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetSysNMSortList?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&parentId='
+        const hadsorturl = nmsorttitleUrl + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&parentId=' + getUrlParams().parentId
         // 判断是否有分类
         fetch(hadsorturl).then(response => {
           if (response.ok) {

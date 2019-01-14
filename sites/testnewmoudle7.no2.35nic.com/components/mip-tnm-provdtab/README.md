@@ -10,9 +10,25 @@ mip-tnm-provdtab 根据接口实现首页产品切换
 
 ### 基本用法
 ```html
- <mip-tnm-provdtab></mip-tnm-provdtab>
+ <mip-tnm-provdtab src=""></mip-tnm-provdtab>
 ````
-
+示例说明
+1.根据src属性得到URL异步请求接口实现首页产品切换
 ## 属性
 
-属性说明
+### src
+
+属性说明:产品列表接口
+必选项:是
+类型:字符串
+接口数据返回格式如下:
+status：0 表示请求成功。
+items：[] 是需要渲染的数序。
+isEnd：表示是否是最后一页，非必须。
+{
+    status: 0,
+    data: {
+        items: [],
+        isEnd: 1
+    }
+}

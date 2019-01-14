@@ -40,8 +40,21 @@
 }
 </style>
 <script>
-import apiUrl from '../../common/js/config.api'
 export default {
+  props: {
+    src: {
+      type: String,
+      default () {
+        return ''
+      }
+    },
+    modulesrc: {
+      type: String,
+      default () {
+        return ''
+      }
+    }
+  },
   data () {
     return {
       pro_list: [],
@@ -49,7 +62,7 @@ export default {
     }
   },
   mounted () {
-    fetch(apiUrl.provdtabUrl).then(response => {
+    fetch(this.src).then(response => {
       if (response.ok) {
         return response.json()
       } else {
@@ -58,7 +71,7 @@ export default {
     }).then(proinfos => {
       this.pro_list = proinfos.data.items[1]
     })
-    fetch(apiUrl.promoduleUrl).then(response => {
+    fetch(this.modulesrc).then(response => {
       if (response.ok) {
         return response.json()
       } else {

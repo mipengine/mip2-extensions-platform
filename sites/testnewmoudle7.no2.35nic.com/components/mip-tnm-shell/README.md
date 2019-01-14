@@ -10,8 +10,8 @@ mip-tnm-shell 实现移动端站点头部，左侧菜单，底部菜单
 
 ## 示例
 ```html
- <mip-tnm-shell mip-shell="">
-    <script type="application/json">
+    <mip-tnm-shell mip-shell="">
+            <script type="application/json">
     {
       "routes": [
         {
@@ -20,7 +20,12 @@ mip-tnm-shell 实现移动端站点头部，左侧菜单，底部菜单
             "header": {
               "show": true,
               "title": "我的首页",
-              "logo": "https://gss0.bdstatic.com/5bd1bjqh_Q23odCf/static/wiseindex/img/favicon64.ico"
+              "logo": "https://gss0.bdstatic.com/5bd1bjqh_Q23odCf/static/wiseindex/img/favicon64.ico",
+              "homeUrl":"https://testnewmoudle7.no2.35nic.com/mip/templates/default/index.html",
+              "lanUrl":"https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetLanguageEdition",
+              "sidebarmenuUrl":"https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetQuickMenu?editionId=1&intTop=12",
+              "footermenuUrl":"https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetBottomMenu?editionId=1&intTop=5",
+              "nmsorttitleUrl":"https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetSysNMSortList?menuIndexVar=" 
             },
             "view": {
               "isIndex": true
@@ -32,7 +37,12 @@ mip-tnm-shell 实现移动端站点头部，左侧菜单，底部菜单
           "meta": {
             "header": {
               "show": true,
-              "title": "其他页面"
+              "title": "其他页面",
+               "homeUrl":"https://testnewmoudle7.no2.35nic.com/mip/templates/default/index.html",
+              "lanUrl":"https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetLanguageEdition",
+              "sidebarmenuUrl":"https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetQuickMenu?editionId=1&intTop=12",
+              "footermenuUrl":"https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetBottomMenu?editionId=1&intTop=5",
+              "nmsorttitleUrl":"https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetSysNMSortList?menuIndexVar="
             }
           }
         }
@@ -56,7 +66,12 @@ Shell 配置的基本结构如下：
             "header": {
               "show": true,
               "title": "我的首页",
-              "logo": ""
+              "logo": "",
+              "homeUrl":"",
+              "lanUrl":"",
+              "sidebarmenuUrl":"",
+              "footermenuUrl":"",
+              "nmsorttitleUrl":""
             },
             "view": {
               "isIndex": true
@@ -68,14 +83,23 @@ Shell 配置的基本结构如下：
           "meta": {
             "header": {
               "show": true,
-              "title": "其他页面"
+              "title": "其他页面",
+              "homeUrl":"",
+              "lanUrl":"",
+              "sidebarmenuUrl":"",
+              "footermenuUrl":"",
+              "nmsorttitleUrl":""
             }
           }
         }
       ]
     }
  这里有几个注意点：
-
+1.homeUrl:首页链接
+2.lanUrl： 语言接口
+3.sidebarmenuUrl：左侧菜单接口
+4.footermenuUrl：底部菜单接口
+5.nmsorttitleUrl：分类标题接口
        接口返回的数据格式需要是如下格式：
        status：0 表示请求成功。
        items：[] 是需要渲染的数序。
