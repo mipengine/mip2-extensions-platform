@@ -5,16 +5,19 @@
 /**
  * 函数描述setCustomFooter
  *
- * @param {string} footermenuUrl 首页链接
- * @param {string} nmlinkUrl 各个页面链接
+ * @param {string} homeUrl 首页页面链接
+ * @param {string} nmsorttitleUrl 标题分类接口
  */
+import { getUrlParams } from '../../../common/js/getparam'
 export default class Header {
   constructor (rootEl) {
     this.header = document.querySelector('.mip-shell-header-wrapper')
   }
   // 首页链接 栏目链接
   setCustomHeader (homeUrl, nmsorttitleUrl) {
-    fetch(nmsorttitleUrl).then(response => {
+    console.log(nmsorttitleUrl)
+    // const nmsorttitleUrl="https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetSysNMSortList?menuIndexVar=" + getUrlParams().menuIndexVar + "&editionId=" + getUrlParams().editionId + "&parentId=" + getUrlParams().parentId
+    fetch(nmsorttitleUrl + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&parentId=' + getUrlParams().parentId).then(response => {
       if (response.ok) {
         return response.json()
       } else {
@@ -52,7 +55,7 @@ export default class Header {
         const sortBoxItemEle = document.createElement('a')
         sortBoxItemEle.className = 'sort-box-item'
         sortBoxItemEle.setAttribute('data-title', array[index].sortName)
-        sortBoxItemEle.setAttribute('href', array[index].sortLink)
+        sortBoxItemEle.setAttribute('href', '/mip/templates/default/products.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=' + array[index].mnSortId + '&intSta=0&intNum=' + getUrlParams().intNum)
         sortBoxItemEle.innerHTML = array[index].sortName
         toggleSortEle.appendChild(sortBoxItemEle)
       })

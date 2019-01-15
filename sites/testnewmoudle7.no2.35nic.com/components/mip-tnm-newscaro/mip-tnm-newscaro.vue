@@ -81,7 +81,6 @@
 }
 </style>
 <script>
-import apiUrl from '../../common/js/config.api'
 export default {
   props: {
     newstoptit: {
@@ -91,6 +90,18 @@ export default {
     newstopurl: {
       type: String,
       default: ''
+    },
+    modulesrc: {
+      type: String,
+      default () {
+        return ''
+      }
+    },
+    src: {
+      type: String,
+      default () {
+        return ''
+      }
     }
   },
   data () {
@@ -100,7 +111,7 @@ export default {
     }
   },
   mounted () {
-    fetch(apiUrl.bannerList).then(response => {
+    fetch(this.src).then(response => {
       if (response.ok) {
         return response.json()
       } else {
@@ -119,7 +130,7 @@ export default {
         this.banner_list[0].thePageUrl = this.banner_list[0].thePageUrl === '' ? 'javascript:void(0)' : this.banner_list[0].thePageUrl
       }
     })
-    fetch(apiUrl.newsmoduleUrl).then(response => {
+    fetch(this.modulesrc).then(response => {
       if (response.ok) {
         return response.json()
       } else {

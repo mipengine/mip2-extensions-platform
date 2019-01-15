@@ -1,6 +1,6 @@
 # mip-tnm-newscaro
 
-mip-tnm-newscaro 根据接口实现首页轮播图
+mip-tnm-newscaro 根据接口实现首页新闻轮播图
 
 标题|内容
 ----|----
@@ -12,9 +12,42 @@ mip-tnm-newscaro 根据接口实现首页轮播图
 
 ### 基本用法
 ```html
- <mip-tnm-newscaro></mip-tnm-newscaro>
+ <mip-tnm-newscaro src="" modulesrc=""></mip-tnm-newscaro>
 ````
+示例说明
+1.根据src属性得到URL异步请求接口实现首页新闻轮播图
 
 ## 属性
 
-属性说明
+### src
+
+属性说明:新闻列表接口
+必选项:是
+类型:字符串
+接口数据返回格式如下:
+status：0 表示请求成功。
+items：[] 是需要渲染的数序。
+isEnd：表示是否是最后一页，非必须。
+{
+    status: 0,
+    data: {
+        items: [],
+        isEnd: 1
+    }
+}
+### modulesrc
+
+属性说明:页面模块接口
+必选项:是
+类型:字符串
+接口数据返回格式如下:
+status：0 表示请求成功。
+items：[] 是需要渲染的数序。
+isEnd：表示是否是最后一页，非必须。
+{
+    status: 0,
+    data: {
+        items: [],
+        isEnd: 1
+    }
+}
