@@ -193,6 +193,7 @@
 }
 </style>
 <script>
+import { getUrlParams } from '../../common/js/getparam'
 export default {
   props: {
     sortsrc: {
@@ -248,7 +249,7 @@ export default {
             if (that.item_list.length > 0) {
               that.item_list.forEach(element => {
                 if (element.thePageUrl === '' || element.thePageUrl === null) {
-                  element.thePageUrl = '/mip/templates/default/jobs_view.html?id=' + element.jobsId + '&editionId=' + element.editionId + '&sortId=&selType='
+                  element.thePageUrl = '/mip/templates/default/jobs_view.html?id=' + element.jobsId + '&editionId=' + element.editionId + '&sortId=&selType=&menuIndexVar=' + getUrlParams().menuIndexVar
                 }
               })
             }
@@ -277,7 +278,7 @@ export default {
         if (this.item_list.length > 0) {
           this.item_list.forEach(element => {
             if (element.thePageUrl === '' || element.thePageUrl === null) {
-              element.thePageUrl = '/mip/templates/default/jobs_view.html?id=' + element.jobsId + '&editionId=' + element.editionId + '&sortId=&selType='
+              element.thePageUrl = '/mip/templates/default/jobs_view.html?id=' + element.jobsId + '&editionId=' + element.editionId + '&sortId=&selType=&menuIndexVar=' + getUrlParams().menuIndexVar
             }
           })
         }
