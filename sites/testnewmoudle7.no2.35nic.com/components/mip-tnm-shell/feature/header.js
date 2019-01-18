@@ -56,16 +56,18 @@ export default class Header {
         let url = window.location.href.toString()
         let x = url.split('/')
         let y = x[x.length - 1].split('.')[0]
-        if (y.indexOf('mip-tnm-shell') > -1) {
+        if (y.indexOf('downs') > -1) {
           sortBoxItemEle.setAttribute('href', '/mip/templates/default/downs.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=0_' + array[index].mnSortId + '&intSta=0&intNum=' + getUrlParams().intNum)
         } else if (y.indexOf('products') > -1) {
           sortBoxItemEle.setAttribute('href', '/mip/templates/default/products.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=0_' + array[index].mnSortId + '&intSta=0&intNum=' + getUrlParams().intNum)
         } else if (y.indexOf('news') > -1) {
           sortBoxItemEle.setAttribute('href', '/mip/templates/default/news.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=0_' + array[index].mnSortId + '&intSta=0&intNum=' + getUrlParams().intNum)
         } else if (y.indexOf('jobs') > -1) {
-          sortBoxItemEle.setAttribute('href', '/mip/templates/default/jobs.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=0_' + array[index].mnSortId + '&intSta=0&intNum=' + getUrlParams().intNum)
+          sortBoxItemEle.setAttribute('href', '/mip/templates/default/jobs.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=0_' + array[index].mnSortId + '&jobsStatus=1&intSta=0&intNum=' + getUrlParams().intNum)
         } else if (y.indexOf('videos') > -1) {
           sortBoxItemEle.setAttribute('href', '/mip/templates/default/videos.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=0_' + array[index].mnSortId + '&intSta=0&intNum=' + getUrlParams().intNum)
+        } else {
+          sortBoxItemEle.setAttribute('href', '')
         }
         sortBoxItemEle.innerHTML = array[index].sortName
         toggleSortEle.appendChild(sortBoxItemEle)

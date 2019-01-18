@@ -138,6 +138,7 @@
 }
 </style>
 <script>
+import { getUrlParams } from '../../common/js/getparam'
 export default {
   props: {
     src: {
@@ -164,7 +165,7 @@ export default {
       if (this.job_list.length > 0) {
         this.job_list.forEach(element => {
           if (element.thePageUrl === '' || element.thePageUrl == null) {
-            element.thePageUrl = '/mip/templates/default/jobs_view.html?id=' + element.jobsId + '&editionId=' + element.editionId + '&sortId=&selType='
+            element.thePageUrl = '/mip/templates/default/jobs_view.html?id=' + element.jobsId + '&editionId=' + element.editionId + '&sortId=&selType=&menuIndexVar=' + getUrlParams().menuIndexVar
           }
         })
       }
