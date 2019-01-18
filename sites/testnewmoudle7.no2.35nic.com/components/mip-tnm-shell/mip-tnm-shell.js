@@ -66,14 +66,10 @@ export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.
     super.bindRootEvents()
   }
   beforeSwitchPage (options) {
-  // 固定动画切换方向为前进方向
-    options.isForward = true
     document.querySelector('#sidebar').setAttribute('open', '')
     document.querySelector('#sidebar').style.display = 'none'
   }
   afterSwitchPage (options) {
-  // 固定动画切换方向为前进方向
-    options.isForward = true
     document.querySelector('#sidebar').setAttribute('open', '')
     document.querySelector('#sidebar').style.display = 'none'
   }
