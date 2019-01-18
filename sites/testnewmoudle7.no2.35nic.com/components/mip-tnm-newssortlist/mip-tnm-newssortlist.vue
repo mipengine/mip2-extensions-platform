@@ -224,7 +224,7 @@ export default {
         if (response.ok) {
           return response.json()
         } else {
-          throw new Error('no sort product list went wrong!')
+          throw new Error('no sort news list went wrong!')
         }
       }).then(noprosort => {
         let nosobj = {}

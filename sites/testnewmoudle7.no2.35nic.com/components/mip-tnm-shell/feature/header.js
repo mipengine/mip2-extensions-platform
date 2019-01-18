@@ -63,7 +63,7 @@ export default class Header {
         } else if (y.indexOf('news') > -1) {
           sortBoxItemEle.setAttribute('href', '/mip/templates/default/news.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=0_' + array[index].mnSortId + '&intSta=0&intNum=' + getUrlParams().intNum)
         } else if (y.indexOf('jobs') > -1) {
-          sortBoxItemEle.setAttribute('href', '/mip/templates/default/jobs.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=0_' + array[index].mnSortId + '&intSta=0&intNum=' + getUrlParams().intNum)
+          sortBoxItemEle.setAttribute('href', '/mip/templates/default/jobs.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=0_' + array[index].mnSortId + '&jobsStatus=1&intSta=0&intNum=' + getUrlParams().intNum)
         } else if (y.indexOf('videos') > -1) {
           sortBoxItemEle.setAttribute('href', '/mip/templates/default/videos.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=0_' + array[index].mnSortId + '&intSta=0&intNum=' + getUrlParams().intNum)
         } else {

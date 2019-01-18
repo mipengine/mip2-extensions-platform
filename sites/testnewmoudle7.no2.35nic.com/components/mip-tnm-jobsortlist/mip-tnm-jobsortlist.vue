@@ -104,6 +104,7 @@
   color: #000000;
   font-size: 17px;
   font-weight: 300;
+  margin: 0;
 }
 
 .lists.jobs section h4 i {
@@ -179,6 +180,7 @@
   font-weight: 300;
   line-height: 40px;
   text-align: center;
+  padding: 0;
 }
 .clearfix:after{
   content:"\200B";
