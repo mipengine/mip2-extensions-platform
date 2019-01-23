@@ -1,5 +1,5 @@
 export default class MIP5ikangCommon extends MIP.CustomElement {
-  build() {
+  build () {
     let loadRelativeJs = function (el, url, callback) {
       let billboardJs = document.createElement('script')
       billboardJs.setAttribute('type', 'text/javascript')

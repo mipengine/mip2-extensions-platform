@@ -1,5 +1,5 @@
 export default class MIP5ikangAd extends MIP.CustomElement {
-  build() {
+  build () {
     let loadIkAd = function (elem) {
       let config = elem.getAttribute('config')
       let div = document.createElement('div')
