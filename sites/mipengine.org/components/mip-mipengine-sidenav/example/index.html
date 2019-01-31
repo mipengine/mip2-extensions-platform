@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>MIP page</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <style mip-custom>
+    /* 自定义样式 */
+    .wrapper {
+      margin-left: 100px;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <mip-mipengine-sidenav m-bind:menu="menu" m-bind:chapters="chapters" m-bind:url="url">
+      </mip-mipengine-sidenav>
+      <mip-data>
+        <script type="application/json">
+          {
+            "menu": [{
+              "name": "简介",
+              "path": "docs/guide/basic",
+              "children": [{
+                "name": "新手指南",
+                "path": "docs/guide/basic/newbie.md",
+                "url": "/guide/basic/newbie.html"
+              }, {
+                "name": "完整的例子",
+                "path": "docs/guide/basic/demo.md",
+                "url": "/guide/basic/demo.html"
+              }, {
+                "name": "什么是 MIP",
+                "path": "docs/guide/basic/what-is-mip.md",
+                "url": "/guide/basic/what-is-mip.html"
+              }, {
+                "name": "MIP 加速原理",
+                "path": "docs/guide/basic/principle-of-mip.md",
+                "url": "/guide/basic/principle-of-mip.html"
+              }, {
+                "name": "MIP 内容声明",
+                "path": "docs/guide/basic/announcement.md",
+                "url": "/guide/basic/announcement.html"
+              }]
+            }, {
+              "name": "开发规范",
+              "path": "docs/guide/mip-standard",
+              "children": [{
+                "name": "MIP-HTML 规范",
+                "path": "docs/guide/mip-standard/mip-html-spec.md",
+                "url": "/guide/mip-standard/mip-html-spec.html"
+              }, {
+                "name": "MIP-Cache 规范",
+                "path": "docs/guide/mip-standard/mip-cache-spec.md",
+                "url": "/guide/mip-standard/mip-cache-spec.html"
+              }, {
+                "name": "MIP 校验规则",
+                "path": "docs/guide/mip-standard/mip-validate.md",
+                "url": "/guide/mip-standard/mip-validate.html"
+              }, {
+                "name": "Canonical 使用规范",
+                "path": "docs/guide/mip-standard/mip-canonical.md",
+                "url": "/guide/mip-standard/mip-canonical.html"
+              }, {
+                "name": "组件开发规范",
+                "path": "docs/guide/mip-standard/mip-components-spec.md",
+                "url": "/guide/mip-standard/mip-components-spec.html"
+              }]
+            }, {
+              "name": "MIP 组件机制",
+              "path": "docs/guide/component",
+              "children": [{
+                "name": "MIP 组件化介绍",
+                "path": "docs/guide/component/introduction.md",
+                "url": "/guide/component/introduction.html"
+              }, {
+                "name": "MIP 组件和 Vue 的关系",
+                "path": "docs/guide/component/relationship-between-mip-component-and-vue.md",
+                "url": "/guide/component/relationship-between-mip-component-and-vue.html"
+              }, {
+                "name": "MIP 2.0 组件实例的生命周期和回调钩子",
+                "path": "docs/guide/component/instance-life-cycle.md",
+                "url": "/guide/component/instance-life-cycle.html"
+              }, {
+                "name": "MIP-HTML 语法和对应 MIP 组件开发介绍",
+                "path": "docs/guide/component/syntax.md",
+                "url": "/guide/component/syntax.html"
+              }, {
+                "name": "插槽",
+                "path": "docs/guide/component/slots.md",
+                "url": "/guide/component/slots.html"
+              }, {
+                "name": "组件布局",
+                "path": "docs/guide/component/layout.md",
+                "url": "/guide/component/layout.html"
+              }, {
+                "name": "沙盒机制",
+                "path": "docs/guide/component/sandbox.md",
+                "url": "/guide/component/sandbox.html"
+              }, {
+                "name": "事件通信",
+                "path": "docs/guide/component/actions-and-events.md",
+                "url": "/guide/component/actions-and-events.html"
+              }]
+            }, {
+              "name": "MIP 组件开发",
+              "path": "docs/guide/mip-cli",
+              "children": [{
+                "name": "mip2 命令行工具",
+                "path": "docs/guide/mip-cli/cli-usage.md",
+                "url": "/guide/mip-cli/cli-usage.html"
+              }, {
+                "name": "使用 mip-cli 快速开始",
+                "path": "docs/guide/mip-cli/start-writing-first-mip.md",
+                "url": "/guide/mip-cli/start-writing-first-mip.html"
+              }, {
+                "name": "MIP 组件开发",
+                "path": "docs/guide/mip-cli/component-development.md",
+                "url": "/guide/mip-cli/component-development.html"
+              }, {
+                "name": "组件调试",
+                "path": "docs/guide/mip-cli/component-testing.md",
+                "url": "/guide/mip-cli/component-testing.html"
+              }, {
+                "name": "组件部署",
+                "path": "docs/guide/mip-cli/component-deploy.md",
+                "url": "/guide/mip-cli/component-deploy.html"
+              }, {
+                "name": "提交组件到官方组件仓库",
+                "path": "docs/guide/mip-cli/contribute-to-official-repo.md",
+                "url": "/guide/mip-cli/contribute-to-official-repo.html"
+              }, {
+                "name": "提交站长组件",
+                "path": "docs/guide/mip-cli/contribute-to-site-extensions-repo.md",
+                "url": "/guide/mip-cli/contribute-to-site-extensions-repo.html"
+              }, {
+                "name": "mip2 CLI 用户自定义扩展",
+                "path": "docs/guide/mip-cli/cli-user-plugin.md",
+                "url": "/guide/mip-cli/cli-user-plugin.html"
+              }]
+            }, {
+              "name": "进阶教程",
+              "path": "docs/guide/mip-advanced",
+              "children": [{
+                "name": "MIP 组件间通信",
+                "path": "docs/guide/mip-advanced/components-event.md",
+                "url": "/guide/mip-advanced/components-event.html"
+              }, {
+                "name": "MIP 中与服务端通信",
+                "path": "docs/guide/mip-advanced/data-from-server.md",
+                "url": "/guide/mip-advanced/data-from-server.html"
+              }, {
+                "name": "Promise 在 MIP 中的使用",
+                "path": "docs/guide/mip-advanced/promise.md",
+                "url": "/guide/mip-advanced/promise.html"
+              }, {
+                "name": "MIP 加速原理",
+                "path": "docs/guide/mip-advanced/mip-speed-principle.md",
+                "url": "/guide/mip-advanced/mip-speed-principle.html"
+              }, {
+                "name": "MIP Access 原理剖析",
+                "path": "docs/guide/mip-advanced/access-principle.md",
+                "url": "/guide/mip-advanced/access-principle.html"
+              }, {
+                "name": "离线可用在 MIP 中的实现",
+                "path": "docs/guide/mip-advanced/mip-offline.md",
+                "url": "/guide/mip-advanced/mip-offline.html"
+              }]
+            }, {
+              "name": "MIP 源码解析",
+              "path": "docs/guide/mip-source-interpretation",
+              "children": [{
+                "name": "MIP 模块简介",
+                "path": "docs/guide/mip-source-interpretation/introduction.md",
+                "url": "/guide/mip-source-interpretation/introduction.html"
+              }, {
+                "name": "MIP 基础模块",
+                "path": "docs/guide/mip-source-interpretation/basic.md",
+                "url": "/guide/mip-source-interpretation/basic.html"
+              }, {
+                "name": "MIP 组件机制详解",
+                "path": "docs/guide/mip-source-interpretation/components.md",
+                "url": "/guide/mip-source-interpretation/components.html"
+              }, {
+                "name": "layout 布局规范",
+                "path": "docs/guide/mip-source-interpretation/layout.md",
+                "url": "/guide/mip-source-interpretation/layout.html"
+              }, {
+                "name": "naboo 动画库",
+                "path": "docs/guide/mip-source-interpretation/naboo-animation.md",
+                "url": "/guide/mip-source-interpretation/naboo-animation.html"
+              }, {
+                "name": "gesture 手势集合",
+                "path": "docs/guide/mip-source-interpretation/gesture-sets.md",
+                "url": "/guide/mip-source-interpretation/gesture-sets.html"
+              }, {
+                "name": "hash 通信机制",
+                "path": "docs/guide/mip-source-interpretation/hash.md",
+                "url": "/guide/mip-source-interpretation/hash.html"
+              }, {
+                "name": "platform 识别",
+                "path": "docs/guide/mip-source-interpretation/platform.md",
+                "url": "/guide/mip-source-interpretation/platform.html"
+              }]
+            }, {
+              "name": "可交互 MIP",
+              "path": "docs/guide/interactive-mip",
+              "children": [{
+                "name": "mip-data 设置数据",
+                "path": "docs/guide/interactive-mip/mip-data.md",
+                "url": "/guide/interactive-mip/mip-data.html"
+              }, {
+                "name": "mip-bind 绑定数据",
+                "path": "docs/guide/interactive-mip/mip-bind.md",
+                "url": "/guide/interactive-mip/mip-bind.html"
+              }, {
+                "name": "Class 与 Style 绑定",
+                "path": "docs/guide/interactive-mip/class-style-binding.md",
+                "url": "/guide/interactive-mip/class-style-binding.html"
+              }, {
+                "name": "MIP.setData 修改数据",
+                "path": "docs/guide/interactive-mip/set-data.md",
+                "url": "/guide/interactive-mip/set-data.html"
+              }, {
+                "name": "MIP.watch 观察数据",
+                "path": "docs/guide/interactive-mip/watch.md",
+                "url": "/guide/interactive-mip/watch.html"
+              }, {
+                "name": "全局共享数据",
+                "path": "docs/guide/interactive-mip/global-data.md",
+                "url": "/guide/interactive-mip/global-data.html"
+              }, {
+                "name": "mip-script 自定义 JS",
+                "path": "docs/guide/interactive-mip/mip-script.md",
+                "url": "/guide/interactive-mip/mip-script.html"
+              }, {
+                "name": "可交互 MIP - 概况",
+                "path": "docs/guide/interactive-mip/introduction.md",
+                "url": "/guide/interactive-mip/introduction.html"
+              }]
+            }, {
+              "name": "全站 MIP",
+              "path": "docs/guide/all-sites-mip",
+              "children": [{
+                "name": "全站 MIP 介绍",
+                "path": "docs/guide/all-sites-mip/introduction.md",
+                "url": "/guide/all-sites-mip/introduction.html"
+              }, {
+                "name": "MIP 页面编写规范",
+                "path": "docs/guide/all-sites-mip/structure.md",
+                "url": "/guide/all-sites-mip/structure.html"
+              }, {
+                "name": "页面切换方案",
+                "path": "docs/guide/all-sites-mip/switch-page.md",
+                "url": "/guide/all-sites-mip/switch-page.html"
+              }, {
+                "name": "Page API",
+                "path": "docs/guide/all-sites-mip/page-api.md",
+                "url": "/guide/all-sites-mip/page-api.html"
+              }, {
+                "name": "MIP Shell",
+                "path": "docs/guide/all-sites-mip/mip-shell.md",
+                "url": "/guide/all-sites-mip/mip-shell.html"
+              }, {
+                "name": "MIP Viewer",
+                "path": "docs/guide/all-sites-mip/viewer.md",
+                "url": "/guide/all-sites-mip/viewer.html"
+              }, {
+                "name": "MIP 快捷样式",
+                "path": "docs/guide/all-sites-mip/style.md",
+                "url": "/guide/all-sites-mip/style.html"
+              }]
+            }, {
+              "name": "MIP 搜索生效",
+              "path": "docs/guide/mip-in-search",
+              "children": [{
+                "name": "搜索识别 MIP 页",
+                "path": "docs/guide/mip-in-search/introduction.md",
+                "url": "/guide/mip-in-search/introduction.html"
+              }, {
+                "name": "MIP 搜索生效流程",
+                "path": "docs/guide/mip-in-search/process.md",
+                "url": "/guide/mip-in-search/process.html"
+              }, {
+                "name": "MIP-Cache",
+                "path": "docs/guide/mip-in-search/mip-cache.md",
+                "url": "/guide/mip-in-search/mip-cache.html"
+              }, {
+                "name": "类原生的 MIP 页面体验",
+                "path": "docs/guide/mip-in-search/native-like-mip.md",
+                "url": "/guide/mip-in-search/native-like-mip.html"
+              }]
+            }],
+            "chapters": [{
+              "level": 1,
+              "hash": "#新手指南",
+              "text": "新手指南",
+              "children": [{
+                "level": 2,
+                "hash": "#1-创建-html-文件",
+                "text": "1. 创建 HTML 文件",
+                "children": [{
+                  "level": 3,
+                  "hash": "#测试3",
+                  "text": "测试3长长长长长长长长长长长长长长长长",
+                  "children": [{
+                    "level": 4,
+                    "hash": "#测试4-1",
+                    "text": "测试4-1长长长长长长长长长长长长长",
+                  },{
+                    "level": 4,
+                    "hash": "#测试4-2",
+                    "text": "测试4-2长长长长长长长长长长长长长",
+                    "children": [{
+                      "level": 5,
+                      "hash": "#测试5-1",
+                      "text": "测试5-1长长长长长长长长长长长长长"
+                    }]
+                  }]
+                },{
+                  "level": 3,
+                  "hash": "#测试31",
+                  "text": "测试31",
+                },{
+                  "level": 3,
+                  "hash": "#测试32",
+                  "text": "测试32",
+                }]
+              }, {
+                "level": 2,
+                "hash": "#2-添加-mip-运行环境",
+                "text": "2. 添加 MIP 运行环境"
+              }, {
+                "level": 2,
+                "hash": "#3-添加-mip-关联标签",
+                "text": "3. 添加 MIP 关联标签"
+              }, {
+                "level": 2,
+                "hash": "#4-添加样式",
+                "text": "4. 添加样式"
+              }, {
+                "level": 2,
+                "hash": "#5-替换禁用-html-标签",
+                "text": "5. 替换禁用 HTML 标签"
+              }, {
+                "level": 2,
+                "hash": "#6-使用-mip-组件",
+                "text": "6. 使用 MIP 组件"
+              }, {
+                "level": 2,
+                "hash": "#7-预览",
+                "text": "7. 预览"
+              }, {
+                "level": 2,
+                "hash": "#8-起飞",
+                "text": "8. 起飞"
+              }]
+            }],
+            'url': "/guide/mip-standard/mip-html-spec.html"
+          }
+
+        </script>
+      </mip-data>
+    </div>
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="/mip-mipengine-sidenav/mip-mipengine-sidenav.js"></script>
+  </body>
+</html>

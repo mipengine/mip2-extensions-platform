@@ -16,6 +16,9 @@
         <div class="s4s-title">
           罚单信息
         </div>
+        <p
+          v-if="XcdNotice"
+          style="font-size:.13rem;color:#FD2900">{{ XcdNotice.Content }}</p>
         <div
           v-if="payForm.name"
           class="s4s-group">
@@ -44,7 +47,7 @@
             placeholder="请输入手机号码接收订单状态" >
 
         </div>
-        <div class="s4s-group">
+        <!-- <div class="s4s-group">
           <span class="s4s-group-tit" >验证码</span>
           <input
             v-model="code"
@@ -62,7 +65,7 @@
             class="code-btn"
             on="tap:info.login"
             @click="sendcode">获取验证码</span>
-        </div>
+        </div> -->
         <!-- <div class="s4s-group" v-else>
                         <span class="s4s-group-tit">手机号码</span>
                         <span class="s4s-group-txt">{{this.phone ? this.phone : (this.user.Tel || '-')}}</span>
@@ -220,7 +223,8 @@ export default {
       canQuick: false,
       quickFee: 0,
       showQ: false,
-      quick: false
+      quick: false,
+      XcdNotice: null
     }
   },
   watch: {
@@ -282,8 +286,22 @@ export default {
     }
 
     this.getFee()
+    this.getNotice()
   },
   methods: {
+    getNotice () {
+      util.fetchData('v3/violation/view/notice').then((res) => {
+        if (res.code === 0 && res.data) {
+          if (res.data.XcdHave) {
+            this.XcdNotice = res.data.XcdNotice
+          }
+        } else {
+          this.XcdNotice = null
+        }
+      }).catch((e) => {
+        this.XcdNotice = null
+      })
+    },
     closeMake () {
       this.showQ = false
     },
@@ -388,10 +406,10 @@ export default {
           return
         }
       }
-      if (!this.isTrueCode) {
-        util.toast('手机号码未验证')
-        return
-      }
+      // if (!this.isTrueCode) {
+      //   util.toast('手机号码未验证')
+      //   return
+      // }
       // let carno = this.provice + this.carno
       let price = Number(this.payForm.money * 100)
       let totalPrice =
