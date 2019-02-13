@@ -18,7 +18,7 @@ class Header {
     iconEle.className = 'icon-home'
     homeEle.className = 'back-home'
     homeEle.href = homeUrl
-    if (homeUrl !== locationHerf) {
+    if (homeUrl.split('?')[0] !== locationHerf.split('?')[0]) {
       headEle.appendChild(homeEle)
     }
   }
