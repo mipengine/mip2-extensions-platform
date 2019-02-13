@@ -15,8 +15,6 @@ export default class Header {
   }
   // 首页链接 栏目链接
   setCustomHeader (homeUrl, nmsorttitleUrl) {
-    console.log(nmsorttitleUrl)
-    // const nmsorttitleUrl="https://testnewmoudle7.no2.35nic.com/open_webapi/MofineApi.asmx/GetSysNMSortList?menuIndexVar=" + getUrlParams().menuIndexVar + "&editionId=" + getUrlParams().editionId + "&parentId=" + getUrlParams().parentId
     fetch(nmsorttitleUrl + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&parentId=' + getUrlParams().parentId).then(response => {
       if (response.ok) {
         return response.json()
@@ -55,7 +53,22 @@ export default class Header {
         const sortBoxItemEle = document.createElement('a')
         sortBoxItemEle.className = 'sort-box-item'
         sortBoxItemEle.setAttribute('data-title', array[index].sortName)
-        sortBoxItemEle.setAttribute('href', '/mip/templates/default/products.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=' + array[index].mnSortId + '&intSta=0&intNum=' + getUrlParams().intNum)
+        let url = window.location.href.toString()
+        let x = url.split('/')
+        let y = x[x.length - 1].split('.')[0]
+        if (y.indexOf('downs') > -1) {
+          sortBoxItemEle.setAttribute('href', '/mip/templates/default/downs.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=0_' + array[index].mnSortId + '&intSta=0&intNum=' + getUrlParams().intNum)
+        } else if (y.indexOf('products') > -1) {
+          sortBoxItemEle.setAttribute('href', '/mip/templates/default/products.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=0_' + array[index].mnSortId + '&intSta=0&intNum=' + getUrlParams().intNum)
+        } else if (y.indexOf('news') > -1) {
+          sortBoxItemEle.setAttribute('href', '/mip/templates/default/news.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=0_' + array[index].mnSortId + '&intSta=0&intNum=' + getUrlParams().intNum)
+        } else if (y.indexOf('jobs') > -1) {
+          sortBoxItemEle.setAttribute('href', '/mip/templates/default/jobs.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=0_' + array[index].mnSortId + '&jobsStatus=1&intSta=0&intNum=' + getUrlParams().intNum)
+        } else if (y.indexOf('videos') > -1) {
+          sortBoxItemEle.setAttribute('href', '/mip/templates/default/videos.html?menuIndexVar=' + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&sortId=0_' + array[index].mnSortId + '&intSta=0&intNum=' + getUrlParams().intNum)
+        } else {
+          sortBoxItemEle.setAttribute('href', '')
+        }
         sortBoxItemEle.innerHTML = array[index].sortName
         toggleSortEle.appendChild(sortBoxItemEle)
       })

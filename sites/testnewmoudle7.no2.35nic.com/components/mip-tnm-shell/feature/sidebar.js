@@ -8,7 +8,6 @@
  * @param {string} sidebarmenuUrl 左侧菜单接口
  * @param {string} lanUrl 语言选择接口
  */
-import { getUrlParams } from '../../../common/js/getparam'
 export default class Sidebar {
   constructor (rootEl) {
     this.sidebar = document.querySelector('.mip-shell-sidebar-wrapper')
@@ -36,7 +35,7 @@ export default class Sidebar {
       sidebarmenuliEle.className = 'divider'
       sidebarmenuliEle.innerHTML = '菜单'
       sidebarulEle.appendChild(sidebarmenuliEle)
-
+      console.log(arrleft)
       arrleft.forEach(function (value, index, array) {
         const sidebarliEle = document.createElement('li')
         sidebarulEle.appendChild(sidebarliEle)
@@ -49,7 +48,7 @@ export default class Sidebar {
         sidebaritemEle.style.backgroundImage = 'url(' + lefticon[0] + ')'
         sidebarliEle.appendChild(sidebaritemEle)
         const sidebarUrl = array[index].wapModuleVar
-        const hadsorturl = nmsorttitleUrl + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&parentId=' + getUrlParams().parentId
+        const hadsorturl = nmsorttitleUrl + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&parentId=0'
         // 判断是否有分类
         fetch(hadsorturl).then(response => {
           if (response.ok) {

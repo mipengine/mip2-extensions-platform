@@ -36,7 +36,6 @@ export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.
   }
   _initAllObjects () {
     let configMeta = this.currentPageMeta
-    console.log(configMeta.header.nmsorttitleUrl)
     const isIndex = this.currentPageMeta.view.isIndex
     this.header = new Header(this.$el);
     (!isIndex) && this.header.setCustomHeader(configMeta.header.homeUrl, configMeta.header.nmsorttitleUrl)
@@ -61,8 +60,17 @@ export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.
     this.sidebar.setCustomSidebar(configMeta.header.sidebarmenuUrl, configMeta.header.lanUrl, configMeta.header.nmsorttitleUrl)
   }
   handleShellCustomButton (buttonName) {
+
   }
   bindRootEvents () {
     super.bindRootEvents()
+  }
+  beforeSwitchPage (options) {
+    document.querySelector('#sidebar').setAttribute('open', '')
+    document.querySelector('#sidebar').style.display = 'none'
+  }
+  afterSwitchPage (options) {
+    document.querySelector('#sidebar').setAttribute('open', '')
+    document.querySelector('#sidebar').style.display = 'none'
   }
 }

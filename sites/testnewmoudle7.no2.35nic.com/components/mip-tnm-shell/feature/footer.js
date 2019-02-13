@@ -8,7 +8,6 @@
  * @param {string} footermenuUrl 首页链接
  *
  */
-import { getUrlParams } from '../../../common/js/getparam'
 export default class Footer {
   constructor (rootEl) {
     this.footer = document.querySelector('.mip-shell-footer-wrapper')
@@ -35,7 +34,7 @@ export default class Footer {
         const footerUrl = array[index].wapModuleVar
         footermenuEle.innerHTML = array[index].nmShowTopic
         footerEle.appendChild(footermenuEle)
-        const hadsorturl = nmsorttitleUrl + getUrlParams().menuIndexVar + '&editionId=' + getUrlParams().editionId + '&parentId=' + getUrlParams().parentId
+        const hadsorturl = nmsorttitleUrl + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&parentId=0'
         // 判断是否有分类
         fetch(hadsorturl).then(response => {
           if (response.ok) {

@@ -104,6 +104,7 @@
   color: #000000;
   font-size: 17px;
   font-weight: 300;
+  margin: 0;
 }
 
 .lists.jobs section h4 i {
@@ -179,6 +180,7 @@
   font-weight: 300;
   line-height: 40px;
   text-align: center;
+  padding: 0;
 }
 .clearfix:after{
   content:"\200B";
@@ -191,6 +193,7 @@
 }
 </style>
 <script>
+import { getUrlParams } from '../../common/js/getparam'
 export default {
   props: {
     sortsrc: {
@@ -246,7 +249,7 @@ export default {
             if (that.item_list.length > 0) {
               that.item_list.forEach(element => {
                 if (element.thePageUrl === '' || element.thePageUrl === null) {
-                  element.thePageUrl = '/mip/templates/default/jobs_view.html?id=' + element.jobsId + '&editionId=' + element.editionId + '&sortId=&selType='
+                  element.thePageUrl = '/mip/templates/default/jobs_view.html?id=' + element.jobsId + '&editionId=' + element.editionId + '&sortId=&selType=&menuIndexVar=' + getUrlParams().menuIndexVar
                 }
               })
             }
@@ -275,7 +278,7 @@ export default {
         if (this.item_list.length > 0) {
           this.item_list.forEach(element => {
             if (element.thePageUrl === '' || element.thePageUrl === null) {
-              element.thePageUrl = '/mip/templates/default/jobs_view.html?id=' + element.jobsId + '&editionId=' + element.editionId + '&sortId=&selType='
+              element.thePageUrl = '/mip/templates/default/jobs_view.html?id=' + element.jobsId + '&editionId=' + element.editionId + '&sortId=&selType=&menuIndexVar=' + getUrlParams().menuIndexVar
             }
           })
         }

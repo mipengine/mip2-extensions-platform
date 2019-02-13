@@ -1,5 +1,5 @@
 <template>
-  <div class="lists product">
+  <div class="lists videos">
     <a
       v-for="noitem in nosort_item_data"
       :key="noitem.sortProd"
@@ -147,7 +147,7 @@ export default {
             if (that.item_list.length > 0) {
               that.item_list.forEach(element => {
                 if (element.thePageUrl === '' || element.thePageUrl === null) {
-                  element.thePageUrl = '/mip/templates/default/videos_view.html?id=' + element.productId + '&menuIndexVar=' + element.menuIndexVar + '&editionId=' + element.editionId + '&sortId=&selType='
+                  element.thePageUrl = '/mip/templates/default/videos_view.html?id=' + element.videoId + '&menuIndexVar=' + element.menuIndexVar + '&editionId=' + element.editionId + '&sortId=&selType='
                 }
               })
             }
@@ -162,7 +162,7 @@ export default {
         if (response.ok) {
           return response.json()
         } else {
-          throw new Error('no sort product list went wrong!')
+          throw new Error('no sort videos list went wrong!')
         }
       }).then(noprosort => {
         let nosobj = {}
@@ -176,7 +176,7 @@ export default {
         if (this.item_list.length > 0) {
           this.item_list.forEach(element => {
             if (element.thePageUrl === '' || element.thePageUrl === null) {
-              element.thePageUrl = '/mip/templates/default/videos_view.html?id=' + element.productId + '&menuIndexVar=' + element.menuIndexVar + '&editionId=' + element.editionId + '&sortId=&selType='
+              element.thePageUrl = '/mip/templates/default/videos_view.html?id=' + element.videoId + '&menuIndexVar=' + element.menuIndexVar + '&editionId=' + element.editionId + '&sortId=&selType='
             }
           })
         }
