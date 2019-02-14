@@ -12,13 +12,13 @@ class Header {
     const headEle = this.header.querySelector('.mip-shell-header')
     const homeEle = document.createElement('a')
     const iconEle = document.createElement('i')
-    const locationHerf = window.location.href
+    const locationHref = window.location.href
     homeEle.appendChild(iconEle)
     homeEle.setAttribute('data-type', 'mip')
     iconEle.className = 'icon-home'
     homeEle.className = 'back-home'
     homeEle.href = homeUrl
-    if (homeUrl.split('?')[0] !== locationHerf.split('?')[0]) {
+    if (homeUrl.split('?')[0] !== locationHref.split('?')[0]) {
       headEle.appendChild(homeEle)
     }
   }
