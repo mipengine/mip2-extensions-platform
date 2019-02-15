@@ -36,5 +36,8 @@
     "execa": "^0.11.0",
     "husky": "^1.0.0-rc.8",
     "mip2": "^1.5.2"
+  },
+  "dependencies": {
+    "mip-cli-plugin-site": "^1.0.0"
   }
 }
