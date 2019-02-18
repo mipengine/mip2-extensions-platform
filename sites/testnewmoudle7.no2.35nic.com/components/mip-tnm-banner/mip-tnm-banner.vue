@@ -14,6 +14,7 @@
         autoplay
         defer="5000"
         layout="responsive"
+        indicator
         indicator-id="mip-carousel-example">
         <div
           v-for="item in banner_list"
