@@ -14,9 +14,6 @@
 
 示例说明
 
-```
-// 代码示例
-```
 <mip-add-script base-url="http://127.0.0.1:8111/components/mip-add-script/example/mip-base.js"></mip-add-script>
 
 ## 属性
