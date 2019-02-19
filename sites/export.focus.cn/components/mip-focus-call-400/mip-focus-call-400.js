@@ -38,20 +38,18 @@ export default class MIPFocusCall400 extends MIP.CustomElement {
     this.addEventAction('call', (event, str) => {
       fetch(`${url}?pid=${pid}&number=${phone}&cityId=${cityId}`, {
         method: 'GET',
-        credentials: "include"
+        credentials: 'include'
       }).then(res => {
         return res.json()
       }).then(data => {
         if (data.data && data.code === 200) {
-          window.location.href = `tel:${data.data}`;
+          window.location.href = `tel:${data.data}`
         } else {
           return Promise.reject(data)
         }
       }).catch(err => {
         if (android) {
-          let target = event.target || event.srcElement;
-          // 通过类名来判断事件发生的元素是否包含在lightbox中
-          // 所以插槽中用来触发点击事件的元素必须设置一个类名
+          let target = event.target || event.srcElement
           if (target && target.className) {
             let ele = this.element.querySelector(`.lightbox-wrap .${target.className}`)
             if (!ele) {
@@ -59,8 +57,9 @@ export default class MIPFocusCall400 extends MIP.CustomElement {
             }
           }
         } else {
-          window.location.href = `tel:${host},${extension}`;
+          window.location.href = `tel:${host},${extension}`
         }
+        console.log(err)
       })
     })
   }
