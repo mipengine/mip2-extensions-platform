@@ -1,75 +1,61 @@
 <template>
   <div v-show="devicedata.show">
-    <div
-      ref="mask"
-      class="mask">
-      <div
-        class="mask-wrapper"
-        @click.self="close">
+    <div ref="mask"
+         class="mask">
+      <div class="mask-wrapper"
+           @click.self="close">
         <div class="mask-content">
           <div class="head">
-            <span
-              class="close"
-              @click.self="close" />
-            <p
-              v-for="(item,index) in tab"
-              :key="index"
-              :class="{active:(last?changeColor:changeColor1) == index}"
-              @click="changeTab(index)">{{ item }}</p>
+            <span class="close"
+                  @click.self="close" />
+            <p v-for="(item,index) in tab"
+               :key="index"
+               :class="{active:(last?changeColor:changeColor1) == index}"
+               @click="changeTab(index)">{{ item }}</p>
           </div>
           <div class="content-wrapper">
             <div v-show="last">
-              <div
-                v-show="changeColor==0"
-                class="content">
-                <div
-                  v-for="(item,index) in data1"
-                  :key="index"
-                  :class="{act:brandsIndex1==index}"
-                  class="brandsList"
-                  @click="choosetype(item,index)">{{ item.name||item.model }}</div>
+              <div v-show="changeColor==0"
+                   class="content">
+                <div v-for="(item,index) in data1"
+                     :key="index"
+                     :class="{act:brandsIndex1==index}"
+                     class="brandsList"
+                     @click="choosetype(item,index)">{{ item.name||item.model }}</div>
               </div>
-              <div
-                v-show="changeColor==1"
-                class="content">
-                <div
-                  v-for="(item,index) in data2"
-                  :key="index"
-                  :class="{act:brandsIndex2==index}"
-                  class="brandsList"
-                  @click="chooseBrands(item,index)">{{ item.name||item.model }}</div>
+              <div v-show="changeColor==1"
+                   class="content">
+                <div v-for="(item,index) in data2"
+                     :key="index"
+                     :class="{act:brandsIndex2==index}"
+                     class="brandsList"
+                     @click="chooseBrands(item,index)">{{ item.name||item.model }}</div>
               </div>
-              <div
-                v-show="changeColor==2"
-                class="content">
-                <div
-                  v-for="(item,index) in data3"
-                  :key="index"
-                  :class="{act:brandsIndex3==index}"
-                  class="brandsList"
-                  @click="chooseModel(item,index)">{{ item.name||item.model }}</div>
+              <div v-show="changeColor==2"
+                   class="content">
+                <div v-for="(item,index) in data3"
+                     :key="index"
+                     :class="{act:brandsIndex3==index}"
+                     class="brandsList"
+                     @click="chooseModel(item,index)">{{ item.name||item.model }}</div>
               </div>
             </div>
             <div v-show="!last">
-              <div
-                v-show="changeColor1==0"
-                class="content">
-                <div
-                  v-for="(item,index) in data4"
-                  :key="index"
-                  :class="{act:brandsIndex1==index}"
-                  class="brandsList"
-                  @click="choosetype(item,index)">{{ item.name||item.model }}</div>
+              <div v-show="changeColor1==0"
+                   class="content">
+                <div v-for="(item,index) in data4"
+                     :key="index"
+                     :class="{act:brandsIndex1==index}"
+                     class="brandsList"
+                     @click="choosetype(item,index)">{{ item.name||item.model }}</div>
               </div>
-              <div
-                v-show="changeColor1==1"
-                class="content">
-                <div
-                  v-for="(item,index) in data5"
-                  :key="index"
-                  :class="{act:brandsIndex2==index}"
-                  class="brandsList"
-                  @click="chooseBrands(item,index)">{{ item.name||item.model }}
+              <div v-show="changeColor1==1"
+                   class="content">
+                <div v-for="(item,index) in data5"
+                     :key="index"
+                     :class="{act:brandsIndex2==index}"
+                     class="brandsList"
+                     @click="chooseBrands(item,index)">{{ item.name||item.model }}
                   <p>{{ item.price>=0?`￥${item.price}`:'待检测' }}</p>
                 </div>
               </div>
@@ -82,19 +68,19 @@
 
 </template>
 <script>
-import request from '@/common/js/fetch'
-import apiUrl from '@/common/js/config.api'
-const viewport = MIP.viewport
+import request from "@/common/js/fetch";
+import apiUrl from "@/common/js/config.api";
+const viewport = MIP.viewport;
 export default {
   props: {
     devicedata: {
-      default () {
-        return {}
+      default() {
+        return {};
       },
       type: Object
     }
   },
-  data () {
+  data() {
     return {
       last: true,
       tab: [],
@@ -112,220 +98,224 @@ export default {
       brandsIndex3: 0,
       categoryId: 12, // 型号
       brandId: 8, // 品牌
-      deviceId: '', // 设备id
-      name: '', // 显示内容
+      deviceId: "", // 设备id
+      name: "", // 显示内容
       color: 117,
       attr: 1,
       attrValue: 2162,
       price: 0,
-      malfunctionId: '', // 故障id，
+      malfunctionId: "", // 故障id，
       // 判断验证码是否为空,判断form组件的内容，清空
       isForm: {}
-    }
+    };
   },
   watch: {
-    devicedata (val) {
-      document.body.style.overflow = val.show ? 'hidden' : 'scroll'
+    devicedata(val) {
+      document.body.style.overflow = val.show ? "hidden" : "scroll";
       // window.addEventListener('touchmove', function (e) {
       //   if (val.show) {
       //     e.preventDefault()
       //   }
       // }, { passive: false })
       if (val.last) {
-        this.last = val.last
-        this.tab = ['品牌', '类型', '型号']
-        this.changeColor = 0
-        this.queryBrand()
+        this.last = val.last;
+        this.tab = ["品牌", "类型", "型号"];
+        this.changeColor = 0;
+        this.queryBrand();
       } else {
-        this.last = val.last
-        this.tab = ['分类', '故障']
-        this.changeColor1 = 0
-        this.queryBrand()
+        this.last = val.last;
+        this.tab = ["分类", "故障"];
+        this.changeColor1 = 0;
+        this.queryBrand();
       }
     }
   },
-  mounted () {
-    this.$refs.mask.style.height = viewport.getHeight() + 'px'
+  mounted() {
+    this.$refs.mask.style.height = viewport.getHeight() + "px";
   },
-  created () {
-    document.body.style.overflow = this.devicedata.show ? 'hidden' : 'scroll'
+  created() {
+    document.body.style.overflow = this.devicedata.show ? "hidden" : "scroll";
     // if (this.devicedata.show) {
     //   window.addEventListener('touchmove', function (e) {
     //     e.preventDefault()
     //   }, { passive: false })
     // }
     if ((this.devicedata.tab || []).length > 2) {
-      this.tab = this.devicedata.tab
-      this.last = this.devicedata.last
-      this.changeColor = this.devicedata.changeColor
-      this.changeColor1 = this.devicedata.changeColor1
-      this.categoryId = this.devicedata.categoryId
-      this.brandId = this.devicedata.brandId
+      this.tab = this.devicedata.tab;
+      this.last = this.devicedata.last;
+      this.changeColor = this.devicedata.changeColor;
+      this.changeColor1 = this.devicedata.changeColor1;
+      this.categoryId = this.devicedata.categoryId;
+      this.brandId = this.devicedata.brandId;
     } else if (this.devicedata.price > 0) {
     }
-    this.queryBrand()
+    this.queryBrand();
   },
   methods: {
-    changeTab (index) {
+    changeTab(index) {
       if (this.last) {
-        if (index === 0) this.tab = ['品牌', '类型', '型号']
-        this.changeColor = index
+        if (index === 0) this.tab = ["品牌", "类型", "型号"];
+        this.changeColor = index;
       } else {
-        if (index === 0) this.tab = ['分类', '故障']
-        this.changeColor1 = index
+        if (index === 0) this.tab = ["分类", "故障"];
+        this.changeColor1 = index;
       }
-      this.queryBrand()
+      this.queryBrand();
     },
     // 获取分类：
-    getSort () {
+    getSort() {
       request(apiUrl.categoryList).then(res => {
         if (res.code === 200) {
-          this.data1 = res.data.list
-          let brand = []
+          this.data1 = res.data.list;
+          let brand = [];
           // let len = this.data1.length
           // 整理收集品牌
           res.data.list.forEach((val, ind) => {
-            brand = [...brand, ...val.brandList]
-          })
+            brand = [...brand, ...val.brandList];
+          });
           // 去除手机相同品牌
           brand.forEach((v, i) => {
             brand.forEach((V, I) => {
-              brand[i].brandList = []
+              brand[i].brandList = [];
 
               if (i !== I && v.id === V.id) {
-                brand.splice(I, 1)
+                brand.splice(I, 1);
               }
-            })
-          })
+            });
+          });
           // 调整顺序，删掉其它品牌
           brand.forEach((v, i) => {
-            if (v.name === '苹果') {
-              brand.unshift(v)
-              brand.splice(i + 1, 1)
+            if (v.name === "苹果") {
+              brand.unshift(v);
+              brand.splice(i + 1, 1);
             }
-            if (v.name === '其他品牌') {
-              brand.splice(i, 1)
+            if (v.name === "其他品牌") {
+              brand.splice(i, 1);
             }
-          })
+          });
           // 品牌下的类型
-          let cI = 0
+          let cI = 0;
           res.data.list.forEach((v, i) => {
             v.brandList.forEach((V, I) => {
               brand.forEach((val, ind) => {
                 if (V.name === val.name) {
-                  val.brandList.push(v)
+                  val.brandList.push(v);
                 }
                 if (Number(val.id) === Number(this.brandId)) {
-                  cI = ind
+                  cI = ind;
                 }
-              })
-            })
-          })
-          this.data1 = brand
+              });
+            });
+          });
+          this.data1 = brand;
           if (this.changeColor === 1 && this.data1.length > 0) {
-            this.data2 = this.data1[cI].brandList
+            this.data2 = this.data1[cI].brandList;
           } else {
-            this.data2 = this.data1[0].brandList
+            this.data2 = this.data1[0].brandList;
           }
         }
-      })
+      });
     },
     // 获取设备列表
-    getDevice () {
+    getDevice() {
       MIP.setData({
         loading: true
-      })
+      });
       request(
         `${apiUrl.deviceList}?categoryId=${this.categoryId}&brandId=${
           this.brandId
         }`
       ).then(res => {
         if (res.code === 200) {
-          this.data3 = res.data.list
+          this.data3 = res.data.list;
           MIP.setData({
             loading: false
-          })
+          });
         }
-      })
+      });
     },
     // 获取设备故障
-    getMalfunction () {
+    getMalfunction() {
       // let options = {deviceId: this.color, attributeIds: this.attr, attributeValues: this.attrValue}
       request(
         `${apiUrl.getMalfunction}?deviceId=${this.color}&attributeIds=${
           this.attr
         }&attributeValues=${this.attrValue}`
       ).then(res => {
-        if (res.code === 200) this.data4 = res.data.list
-      })
+        if (res.code === 200) this.data4 = res.data.list;
+      });
     },
-    queryBrand () {
+    queryBrand() {
       if (this.last) {
         if (this.changeColor === 0) {
-          this.getSort()
+          this.getSort();
         }
         if (this.changeColor === 1) {
           if (this.data1.length > 0) {
-            this.data2 = this.data1[0].brandList
+            this.data2 = this.data1[0].brandList;
           } else {
-            this.getSort()
+            this.getSort();
           }
         }
         if (this.changeColor === 2) {
-          this.getDevice()
+          this.getDevice();
         }
       } else {
         if (this.changeColor1 === 0) {
-          this.getMalfunction()
+          this.getMalfunction();
         }
         if (this.changeColor1 === 1) {
-          this.data5 = this.data4[0].children
+          this.data5 = this.data4[0].children;
         }
       }
     },
     // 选择
-    choosetype (item, index) {
-      this.brandsIndex1 = index
-      this.changeColor = 1
-      this.changeColor1 = 1
+    choosetype(item, index) {
+      this.brandsIndex1 = index;
+      this.changeColor = 1;
+      this.changeColor1 = 1;
       // this.categoryId = item.id
-      this.brandId = item.id
+      this.brandId = item.id;
       if (this.last) {
-        this.tab[0] = item.name
-        this.data2 = this.data1[index].brandList
+        this.tab[0] = item.name;
+        this.data2 = this.data1[index].brandList;
       } else {
-        this.tab[0] = item.name
-        this.data5 = this.data4[index].children
+        this.tab[0] = item.name;
+        this.data5 = this.data4[index].children;
       }
     },
-    chooseBrands (item, index) {
-      this.brandsIndex2 = index
-      this.changeColor = 2
+    chooseBrands(item, index) {
+      this.brandsIndex2 = index;
+      this.changeColor = 2;
       // this.brandId = item.id
-      this.categoryId = item.id
-      this.queryBrand()
+      this.categoryId = item.id;
+      this.queryBrand();
       if (!this.last) {
-        this.tab[1] = item.title
-        this.name1 = item.name
-        this.show = false
-        this.price = item.price
-        this.malfunctionId = this.data4[this.brandsIndex1].children[index].id
-        let per = ''
+        this.tab[1] = item.title;
+        this.name1 = item.name;
+        this.show = false;
+        this.price = item.price;
+        this.malfunctionId = this.data4[this.brandsIndex1].children[index].id;
+        this.solutionId = this.data4[this.brandsIndex1].children[
+          index
+        ].smInfo.solutionId;
+        let per = "";
         if (item.smInfo.warrantyPeriod > 0) {
-          per = `质保${item.smInfo.warrantyPeriod}天`
+          per = `质保${item.smInfo.warrantyPeriod}天`;
         } else if (item.smInfo.warrantyPeriod === 0) {
-          per = '不保修'
+          per = "不保修";
         } else {
-          per = '终身质保'
+          per = "终身质保";
         }
         MIP.setData({
           orderData: {
             solution: this.name1,
             malfunctionId: this.malfunctionId,
-            price: this.price > 0 ? `￥${this.price}` : '待检测',
+            price: this.price > 0 ? `￥${this.price}` : "待检测",
             fault: item.name,
             brandId: item.id,
-            period: `(${per})`
+            period: `(${per})`,
+            solutionId: this.solutionId
           },
           deviceData: {
             name1: this.name1,
@@ -333,22 +323,23 @@ export default {
             showTxt2: true,
             changeColor: this.changeColor,
             changeColor1: this.changeColor1,
-            price: this.price > 0 ? `￥${this.price}` : '待检测',
+            price: this.price > 0 ? `￥${this.price}` : "待检测",
             fault: item.smInfo.method,
             brandId: item.id,
             period: `(${per})`,
-            showFault: !!item.smInfo.method
+            showFault: !!item.smInfo.method,
+            solutionId: this.solutionId
           }
-        })
+        });
       } else {
-        this.tab[1] = item.name
+        this.tab[1] = item.name;
       }
     },
-    chooseModel (item, index) {
-      this.brandsIndex3 = index
-      this.changeColor = 2
+    chooseModel(item, index) {
+      this.brandsIndex3 = index;
+      this.changeColor = 2;
       if (this.last) {
-        this.name = item.model
+        this.name = item.model;
         MIP.setData({
           orderData: {
             device: this.name,
@@ -365,18 +356,18 @@ export default {
             showFault: false,
             color1: true
           }
-        })
+        });
         // this.show = false
-        this.queryColor(item.id)
+        this.queryColor(item.id);
       } else {
         MIP.setData({
           orderData: {
-            device: '选择型号',
+            device: "选择型号",
             color1: false,
             showTxt2: false
           },
           deviceData: {
-            name: '选择型号',
+            name: "选择型号",
             show: false,
             showTxt1: false,
             showTxt2: false,
@@ -385,17 +376,17 @@ export default {
             showFault: false,
             color1: false
           }
-        })
+        });
       }
     },
     // 获取颜色
-    queryColor (id) {
-      this.deviceId = id
-      request(apiUrl.getUserOrderList, 'post', { deviceId: id }).then(res => {
+    queryColor(id) {
+      this.deviceId = id;
+      request(apiUrl.getUserOrderList, "post", { deviceId: id }).then(res => {
         if (res.code === 200) {
-          this.color = res.data.list[0].deviceId
-          this.attr = res.data.list[0].attributeId
-          this.attrValue = res.data.list[0].id
+          this.color = res.data.list[0].deviceId;
+          this.attr = res.data.list[0].attributeId;
+          this.attrValue = res.data.list[0].id;
           MIP.setData({
             orderData: {
               deviceId: this.color,
@@ -404,11 +395,11 @@ export default {
               changeColor: this.changeColor,
               changeColor1: this.changeColor1
             }
-          })
+          });
         }
-      })
+      });
     },
-    close () {
+    close() {
       if (this.last) {
         MIP.setData({
           deviceData: {
@@ -416,24 +407,24 @@ export default {
             changeColor: this.changeColor,
             changeColor1: this.changeColor1,
             showFault: false,
-            device: this.last ? this.name : '选择故障',
+            device: this.last ? this.name : "选择故障",
             showTxt1: !this.last,
             showTxt2: !this.last,
-            name: this.name || '选择型号',
+            name: this.name || "选择型号",
             name1: this.name1
           },
           orderData: {
             solution: this.name1,
             malfunctionId: this.malfunctionId,
-            price: this.price > 0 ? `￥${this.price}` : '待检测'
+            price: this.price > 0 ? `￥${this.price}` : "待检测"
           }
-        })
+        });
       } else {
         MIP.setData({
           orderData: {
             solution: this.name1,
             malfunctionId: this.malfunctionId,
-            price: this.price > 0 ? `￥${this.price}` : '待检测'
+            price: this.price > 0 ? `￥${this.price}` : "待检测"
             // fault: item.name,
             // brandId: item.id,
             // period: `(${per})`
@@ -441,20 +432,20 @@ export default {
           deviceData: {
             name1: this.name1,
             show: false,
-            showTxt2: this.name1 && this.name1 !== '选择故障',
+            showTxt2: this.name1 && this.name1 !== "选择故障",
             changeColor: this.changeColor,
             changeColor1: this.changeColor1,
-            price: this.price > 0 ? `￥${this.price}` : '待检测'
+            price: this.price > 0 ? `￥${this.price}` : "待检测"
             // fault: item.smInfo.method,
             // brandId: item.id,
             // period: `(${per})`,
             // showFault: !!item.smInfo.method
           }
-        })
+        });
       }
     }
   }
-}
+};
 </script>
 <style lang="less" scoped>
 .mask {
@@ -493,7 +484,7 @@ export default {
         display: block;
         width: 20px;
         height: 20px;
-        background: url('../../common/icon/close.png') no-repeat center center;
+        background: url("../../common/icon/close.png") no-repeat center center;
         background-size: 100% 100%;
       }
       p {
@@ -509,7 +500,7 @@ export default {
         color: #e94609;
       }
       .active:after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: -10px;
         left: 0;
@@ -550,7 +541,7 @@ export default {
           position: relative;
         }
         .act:after {
-          content: '';
+          content: "";
           position: absolute;
           top: 50%;
           right: 20px;
