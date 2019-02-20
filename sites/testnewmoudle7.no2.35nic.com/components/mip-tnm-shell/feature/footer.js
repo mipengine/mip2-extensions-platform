@@ -23,7 +23,6 @@ export default class Footer {
     }).then(bottommenu => {
       const self = this
       const arrbott = bottommenu.data.items
-      // console.log(arrbott)
       // 获取栏目所有分类
       fetch(allnmsortUrl).then(response => {
         if (response.ok) {
@@ -44,7 +43,7 @@ export default class Footer {
           const footerUrl = array[index].wapModuleVar
           footermenuEle.innerHTML = array[index].nmShowTopic
           footerEle.appendChild(footermenuEle)
-          const path = '/mip/templates/default'
+          const path = 'https://' + document.domain + '/mip/templates/default'
           allnmsort.forEach(function (allvalue, allindex, allarray) {
             const exti = allnmsort.findIndex(items => items.menuIndexVar === array[index].nmIndexVar)
             if (exti > 0) {
@@ -172,25 +171,6 @@ export default class Footer {
             }
           })
         })
-
-        // const hadsorturl = nmsorttitleUrl + array[index].nmIndexVar + '&editionId=' + array[index].editionId + '&parentId=0'
-        // // 判断是否有分类
-        // fetch(hadsorturl).then(response => {
-        //   if (response.ok) {
-        //     return response.json()
-        //   } else {
-        //     throw new Error('hadsortlist went wrong!')
-        //   }
-        // }).then(hadsortlist => {
-        //   const path = '/mip/templates/default'
-        //   // 有分类
-        //   if (hadsortlist.data.items.length > 0) {
-        //
-        //   } else {
-        //     // 无分类
-        //
-        //   }
-        // })
       })
     })
   }

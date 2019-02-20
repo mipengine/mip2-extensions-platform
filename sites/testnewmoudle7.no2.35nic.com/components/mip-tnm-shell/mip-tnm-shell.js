@@ -65,14 +65,17 @@ export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.
   bindRootEvents () {
     super.bindRootEvents()
   }
+
   beforeSwitchPage (options) {
-    document.querySelector('#sidebar').setAttribute('open', '')
+    document.querySelector('#sidebar').removeAttribute('open')
     document.querySelector('#sidebar').style.display = 'none'
-    location.reload()
+    document.querySelector('#sidebar').setAttribute('aria-hidden', 'true')
+    document.querySelector('#MIP-SIDEBAR-MASK').style.display = 'none'
   }
   afterSwitchPage (options) {
-    document.querySelector('#sidebar').setAttribute('open', '')
+    document.querySelector('#sidebar').removeAttribute('open')
     document.querySelector('#sidebar').style.display = 'none'
-    location.reload()
+    document.querySelector('#sidebar').setAttribute('aria-hidden', 'true')
+    document.querySelector('#MIP-SIDEBAR-MASK').style.display = 'none'
   }
 }
