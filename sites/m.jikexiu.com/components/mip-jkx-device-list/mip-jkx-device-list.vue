@@ -296,9 +296,7 @@ export default {
         this.show = false;
         this.price = item.price;
         this.malfunctionId = this.data4[this.brandsIndex1].children[index].id;
-        this.solutionId = this.data4[this.brandsIndex1].children[
-          index
-        ].smInfo.solutionId;
+        this.solutionId = this.data4[this.brandsIndex1].children[index].smInfo.solutionId;
         let per = "";
         if (item.smInfo.warrantyPeriod > 0) {
           per = `质保${item.smInfo.warrantyPeriod}天`;
