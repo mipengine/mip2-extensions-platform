@@ -20,7 +20,7 @@ export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.
     this.$footer.innerHTML = this.renderFooter()
 
     this.$footerWrapper.appendChild(this.$footer)
-    this.$sidebarWrapper = document.createElement('mip-sidebar') // 左侧菜单
+    this.$sidebarWrapper = document.createElement('mip-sidebar')
     this.$sidebarWrapper.setAttribute('id', 'sidebar')
     this.$sidebarWrapper.className = 'left-sidebar'
     this.$sidebarWrapper.setAttribute('display', 'nodisplay')
@@ -40,9 +40,9 @@ export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.
     this.header = new Header(this.$el);
     (!isIndex) && this.header.setCustomHeader(configMeta.header.homeUrl, configMeta.header.nmsorttitleUrl)
     this.footer = new Footer(this.$el)
-    this.footer.setCustomFooter(configMeta.header.footermenuUrl, configMeta.header.nmsorttitleUrl)
+    this.footer.setCustomFooter(configMeta.header.footermenuUrl, configMeta.header.nmsorttitleUrl, configMeta.header.allnmsortUrl)
     this.sidebar = new Sidebar(this.$el)
-    this.sidebar.setCustomSidebar(configMeta.header.sidebarmenuUrl, configMeta.header.lanUrl, configMeta.header.nmsorttitleUrl)
+    this.sidebar.setCustomSidebar(configMeta.header.sidebarmenuUrl, configMeta.header.lanUrl, configMeta.header.nmsorttitleUrl, configMeta.header.allnmsortUrl)
   }
   renderFooter () {
     return ''
@@ -56,8 +56,8 @@ export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.
     this.$sidebar.innerHTML = this.renderSidebar()
     const isIndex = this.currentPageMeta.view.isIndex;
     (!isIndex) && this.header.setCustomHeader(configMeta.header.homeUrl, configMeta.header.nmsorttitleUrl)
-    this.footer.setCustomFooter(configMeta.header.footermenuUrl, configMeta.header.nmsorttitleUrl)
-    this.sidebar.setCustomSidebar(configMeta.header.sidebarmenuUrl, configMeta.header.lanUrl, configMeta.header.nmsorttitleUrl)
+    this.footer.setCustomFooter(configMeta.header.footermenuUrl, configMeta.header.nmsorttitleUrl, configMeta.header.allnmsortUrl)
+    this.sidebar.setCustomSidebar(configMeta.header.sidebarmenuUrl, configMeta.header.lanUrl, configMeta.header.nmsorttitleUrl, configMeta.header.allnmsortUrl)
   }
   handleShellCustomButton (buttonName) {
 
@@ -65,12 +65,17 @@ export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.
   bindRootEvents () {
     super.bindRootEvents()
   }
+
   beforeSwitchPage (options) {
-    document.querySelector('#sidebar').setAttribute('open', '')
+    document.querySelector('#sidebar').removeAttribute('open')
     document.querySelector('#sidebar').style.display = 'none'
+    document.querySelector('#sidebar').setAttribute('aria-hidden', 'true')
+    document.querySelector('#MIP-SIDEBAR-MASK').style.display = 'none'
   }
   afterSwitchPage (options) {
-    document.querySelector('#sidebar').setAttribute('open', '')
+    document.querySelector('#sidebar').removeAttribute('open')
     document.querySelector('#sidebar').style.display = 'none'
+    document.querySelector('#sidebar').setAttribute('aria-hidden', 'true')
+    document.querySelector('#MIP-SIDEBAR-MASK').style.display = 'none'
   }
 }
