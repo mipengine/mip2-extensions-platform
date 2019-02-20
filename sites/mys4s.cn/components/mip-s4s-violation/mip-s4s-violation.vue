@@ -379,6 +379,7 @@ export default {
         param.key = this.captchKey
         param.value = this.captchValue.join('')
       }
+      util.toast('正在查询，请稍后...')
       // car_no车牌号，vin车架号，engion发动机，{car_no: 陕KC1166 vin: LSVNJ49J472028756 engine: 020297
       util
         .fetchData('v3/violation/web/query', param)
