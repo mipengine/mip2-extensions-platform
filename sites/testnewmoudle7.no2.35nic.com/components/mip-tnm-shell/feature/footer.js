@@ -46,7 +46,7 @@ export default class Footer {
           const path = 'https://' + document.domain + '/mip/templates/default'
           allnmsort.forEach(function (allvalue, allindex, allarray) {
             const exti = allnmsort.findIndex(items => items.menuIndexVar === array[index].nmIndexVar)
-            if (exti > 0) {
+            if (exti >= 0) {
               switch (footerUrl) {
                 case 0:
                   footermenuEle.href = path + '/index.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 首页
