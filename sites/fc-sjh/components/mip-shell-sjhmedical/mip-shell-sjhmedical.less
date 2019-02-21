@@ -2,17 +2,20 @@
  * file: 商家号医疗通用样式文件
  * author: lijia19@baidu.com
  */
-
+.mip-shell-header-wrapper {
+  border-bottom: 1px solid #f1f1f1;
+}
 .mip-shell-header {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: bold;
   background: #fff;
-  border-bottom: 1px solid #f1f1f1;
+  .back-button {
+    display: none !important;
+  }
   .back-home {
     position: absolute;
-    left: 100%;
-    margin-left: -44px;
     display: flex;
+    top: 0;
     align-items: center;
     justify-content: center;
     width: 44px;
@@ -21,8 +24,7 @@
       width: 20px;
       height: 20px;
       background-size: 100%;
-      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAD0AAAA9CAYAAAAeYmHpAAAAAXNSR0IArs4c6QAABMJJREFUaAXtml2IVVUUx6cmy28LxdJEYzIlP0KjEsVUlFFQIn2RxKcw8SVErJQQXyKil4jooaQQBQX1QUSMZFBhkILUfFBLUCOt8CNL/EhNa7Lf/zIL9mz3uXNn33PumXvnLvizz15rr4//3vecs885t6GhcvIgqRaBr8BP4DY4A/aAheABUFMyETbHwb0iOIZtAqgJWQELrWoxwma7xbjl1cx6EMXvKJGskbZ2G34Dq438ixSs89ZIxLQ631+oBuK6GK0Gd0ES0avY3gD6JTwK9HO+BkLj76BfBbqtDKYyXYlDxZvuEPamAIOn0R0u4rsbm+J3K5lBNb8BI+e3/2H7CPQCSfIwho+B72v9X7FNT3KupF733vXgX2DF+e0f2BaAUuUVBsrHj6O+8qwDypuLDCPrfhAqznSt2J+MqG4EPgeLxN6H7YmIuGW5zMP7EjByftuG7T3QCGJFvu8DxfLjq38RNIPM5SEyfAh0joYKke48mA3SkjkEugBC+VTHB0B1ZSKjiPotCCU33V7sQzPIrpgtRXJ/g21k2nn1oHClSNJ/sK0FWT40KPa7QLlskt1W9b0KypZHiPApcIP7x2exTwWVkmkkOgf8Oqz/CTbd/qLkGbyOAgsWandifywqenlOyrkLhGqS7nswGnRJljL6BkgK+je2N7sUMZvBKwmrrWqozuvol5SSti+DNiYEscCnsE8uJViFxjxPntPA6vPbL7GJV1DGov0R+E5ufwv2/kHvfJUDSL8VuLW6xz9gG+OXOAlF0tZPzjfB675TN+wva6/VJWzHl7E9ZzX35uAkMKPfHsf2rA2ugnYcNZ4APg/1teK6IzWsAKEB0m0AfUC1iWr+AoR4LReZgwGjfs6LZaxyeY36bwGXfKs4XfGUGqBzo1ZEK+uS1rWrg8KMiZf4KpwJ3W2Ml9o27Wd14Iv0tSLioqcxk3u5vYGwCvJo66TzmPU8ctZXOo9ZzyNnfaXzmPU8ctZXOo9ZzyNnZu+LE8gMQT8f6P3b8PYx52n1NuZrUNgXt+szbdx9qR2nnXAKAVuAvkVZDr+VTWM0Nk2xrbblK2xJreO2aSXVc+1m4MYu5XgTPmk9x1eUtD6wHYkgbJOi79WPg3LlPtKm8APrqq7ksaJXUK3gJS/Az/S3g+/An0Af2vVz1sP+U8AXjZsJ9Jo3VsSxw1OWAklhs2utBpYjn+NssdTeBfpbRi8QEunfAhrn+un4M1COiIsbszABaZOeQBL386q+Pc0tsep5jNN4t0jFGl+if2iYT1qxU1/pHcR0i347VEkR3RrPX7G2FRnfmSlz0jqX/wJG+hzHXf2YpvG/ODEUSzEVO1asnkKb9jZ0FlX1cyrTqus87YpovPxcUcyZrqKc47RJN3nF6LYTIyE/P3ZM3IJP2qSHeZX87vVL7V4KDBwe0EWp0ibd16tCV94YCfn5sWPiFnzSJh1dSCUd66QrOdt55qqvdJ6zX8ncPXaltTXrUZK00tqk16yIdGhv3FhDjH0uBb56O9HhKSTF/suRkye/rGo6rJX2n2gi6wy6dcfTpMBXy69/ymcxszOCU9G5MquVPkDqRq20Nvd6TfMO0NvL0DmOOkqSLpSdBYv1C8UVH/FaC5pB2//MrXSuIXWYzAAAAABJRU5ErkJggg==);
-
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADsAAAA7CAYAAADFJfKzAAAABGdBTUEAALGPC/xhBQAABI9JREFUaAXtmluIVVUYx8fxfk/zkkNgXiLKUvJKSAUqaKCk+OBD9JKQ9mBEvthD9NKDPRmID15QURG0qAkRNIy8QKRGRKFlWqKWUjojZRdNU3//w+xh+/Htce8965w5e+Z88D/7rG9/t/9ea6+z1pqpq6uMPEiat8FRcAVcBV+B1WAU6DSyFCZ/gTsJuIF+JegGCisDqXwnSCJp9XuxHVZEtpMp+nQGohHxX/F5vkiEX6dYDc2IQPy6Ef0LYDZ4H9wC8fv6Lt07oB5UrQylskZgi1dbk9J8YOVZFBeA5/M5+gbrUA3tmRRxHnhFH0b/cBtFaqbek+D7O3qNhKoQzaBvgZvAEv0f3bugO0gjb2L0H7BxbqN7D/QEHSYjyfwpsMWpfQnMAlllGg4/AS/ml+gfARWXOWQUIa+o/ehHtKOiQfjuSoitxcjidsTO5KohqaGpIWqJaiivAqEWB8uI9Y+TR3nXgd6gbKJJ5giwJNU+B54BoeUpAp4EXs5v0D8WOqHiLQBNwEv6MfohoFzSj8BbgJf7GvqXQyXuRaA1CYmuo18RKlGKOC9hI3Ie6a3o+4PcMg7P48AL/iP6p3NHzu/4KK5fA6+m79FPzBN6CU5/JATdgX5AnqCBfDQxrQUe4X/RL0+bpy+GGxIC/Y3+lbSBKmC3iBzNwCP9AfrBbdWgme27BGfpH2/LuYPujSbvF8Aj/DP6KV5dU1Emzbbruacer1bpQWE68dCy0pLWocFs0Cqaxbwlmt5ZvbtFkbkU+huwhLWZaF3RveEYaBYeC4omoyj4M2AJq+dLcozP+M2DtPX7WlSpp/APQZyTVnglucZn/Eae3UpLqKq5TDCcxK+/noL9zfylakrOX8gFx3WAyHYZqZHtrF1d69laz3aCJ1Abxp2gEz0K3byeDXU66CXsUJ22R5WQJ0jyIngSaLHeHVwEP4A9QEctFZH4uljfQx5PziKedlA2h22fwEYPI5QMIpDN8ZCCW2UIsto1bXJi21y2/RE+dq2OKrNUjGwfSjsELJG0bR1+D8lM714Hl2w53tnN5H3u3tyl1hk+PwGngf58oqPa+UDvcVwm0dgN5gHZBRV7dtOeYayDbNuDOkxfBTQpebIMpd1TK8ZKzzilbiB2to7SOxuKrN7TsybJn7QngvvJGAwugXiBOgB84H6OCffLTnahKVaFv5pQjKde4Pi/5hmm0JWd7FZTrCaprLILh3jv7ssaoMXeJeutoHLGr5tuHLeZdpqm9ZmRximtTUiyDSbpt6adpml99M4GO6APRVYzrf3bSnMadsamybTVHOrocqlCkfWS693LKp5PsI1JOclmJVp2+yKQDdWzXWs/W4SeDTa8a2SDPcoqC9Slelb7Wf22xWc8bXy1tswiSdu3LDGSbHVykbUeu8BR7NJv+KmWL2qEhDbnWUWnHCFriGJpv1yvYXwga0UFtNe/HmjfXjrvOc81egqhrtXSs1fhNlpEIxnOl+1Ai/dQZMdHwTNc+wXMr1OSRtBKND4xRTXp32hCzNJXiHMrCpryqnpGprRty0wddhmUhm5keBdftkS17VjAHgAAAABJRU5ErkJggg==)
     }
   }
 }
