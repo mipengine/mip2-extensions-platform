@@ -59,7 +59,7 @@ export default class Sidebar {
           const path = 'https://' + document.domain + '/mip/templates/default'
           allnmsort.forEach(function (allvalue, allindex, allarray) {
             const exti = allnmsort.findIndex(items => items.menuIndexVar === array[index].nmIndexVar)
-            if (exti > 0) {
+            if (exti >= 0) {
               switch (sidebarUrl) {
                 case 0:
                   sidebaritemEle.href = path + '/index.html?menuIndexVar=' + array[index].nmIndexVar + '&editionId=' + array[index].editionId // 首页
