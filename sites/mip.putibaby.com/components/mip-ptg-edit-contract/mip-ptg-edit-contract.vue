@@ -5,7 +5,19 @@
       class="root"
       method="get"
       url="https://www.mipengine.org?we=123">
+      <a
+        :href="to_jijin_intro"
+        mip-link>
+        <div class="jijin">
+          <mip-img
+            src="i/jijin/banner12.png"
+            layout="responsive"
+            width="375"
+            height="150"
+            class="jijin_img"/>
 
+        </div>
+      </a>
       <div class="yifang">
         <mip-img
           :src="master.header.small"
@@ -229,6 +241,12 @@
           <div class="right">
             <p>{{ contract_master_price }}</p> 元
           </div>
+          <div
+            v-if="!buy_dalibao && !in_m_expired"
+            class="price_tag">（市场价）</div>
+          <div
+            v-else
+            class="price_tag">（会员价）</div>
         </div>
         <div class="line"/>
         <div class="row">
@@ -236,6 +254,12 @@
           <div class="right">
             <p>{{ contract_price }}</p> 元
           </div>
+          <div
+            v-if="!buy_dalibao && !in_m_expired"
+            class="price_tag">（市场价）</div>
+          <div
+            v-else
+            class="price_tag">（会员价）</div>
         </div>
         <div class="line"/>
         <div class="row">
@@ -323,6 +347,66 @@
             src="i/contract_jt.png"/>
         </div>
       </div>
+
+      <div
+        v-if="((!in_m_expired && !rea)) || (rea && buy_dalibao)"
+        class="other_info_">
+        <div class="sub_head">
+          <p>服务升级</p>
+        </div>
+
+        <div class="row">
+          <div class="left">金果会员服务</div>
+          <div class="extra_text">
+            <p>
+              <span class="extra_i_">2880元
+              </span>
+            </p>
+          </div>
+          <input
+            :checked="buy_dalibao"
+            :disabled="rea"
+            type="checkbox"
+            class="checkbox_"
+            @change="contract_dalibao_" >
+          <div
+            :class="{'checked_' : buy_dalibao , 'unchecked_' : !buy_dalibao }"
+            @click="dalibaoChecked"/>
+        </div>
+
+        <div class="line"/>
+        <a
+          :href="to_jinguo_detail"
+          mip-link>
+          <div class="row">
+            <div class="left">金果会员特权</div>
+            <div
+              class="extra_text"/>
+            <mip-img
+              layout="responsive"
+              width="16"
+              height="16"
+              class="jt"
+              src="i/contract_jt.png"/>
+          </div>
+        </a>
+        <div class="line"/>
+        <a
+          :href="to_jinguo_protocol"
+          mip-link>
+          <div class="row">
+            <div class="left_">《金果会员服务详情》</div>
+            <div
+              class="extra_text"/>
+            <mip-img
+              layout="responsive"
+              width="16"
+              height="16"
+              class="jt"
+              src="i/contract_jt.png"/>
+          </div>
+        </a>
+      </div>
       <div
         v-show="err"
         class="err">
@@ -362,7 +446,20 @@ p {
   color: #666;
   font-size: 14px;
 }
+.jijin {
+  width: 100%;
 
+  margin: 0 auto;
+  position: relative;
+  background-color: #fff;
+  margin-bottom: 10px;
+}
+.jijin_img {
+
+  width: 100%;
+height: 100%;
+
+}
 .yifang {
   width: 100%;
   height: 88px;
@@ -473,6 +570,12 @@ p {
   width: 100%;
   margin: 10px auto 0;
 }
+.other_info_ {
+  background: #fff;
+  position: relative;
+  width: 100%;
+  /*margin: 10px auto 0;*/
+}
 
 .row {
   overflow: hidden;
@@ -506,7 +609,15 @@ p {
   color: #666;
   left: 15px;
 }
+.row .left_ {
+  position: absolute;
+  display: inline-block;
 
+  float: left;
+  clear: left;
+  color: #666;
+  left: 10px;
+}
 .left_address {
   width: 80px;
   float: left;
@@ -523,9 +634,9 @@ p {
 }
 
 .contract_info {
-  margin-bottom: 13px;
+  /*margin-bottom: 13px;*/
   position: relative;
-  height: 100px;
+  /*height: 100px;*/
 }
 
 .sub_head {
@@ -581,6 +692,7 @@ p {
 
 .submit {
   margin: 0 auto;
+  margin-top: 25px;
 }
 
 .btn {
@@ -698,7 +810,13 @@ p {
   width: 13px;
   text-align: center;
 }
-
+.extra_i_ {
+  display: inline-block;
+  margin: 0 3px;
+  position: relative;
+  width: 65px;
+  text-align: center;
+}
 .radio {
   display: inline-block;
 }
@@ -913,7 +1031,29 @@ p {
   z-index: 22;
 
 }
+.checked_ {
+  background-image: url('/i/balance_checked.png');
+  background-size: 22px 22px;
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  top: 11px;
+ right:15px;
+  z-index: 22;
 
+}
+
+.unchecked_ {
+   background-image: url('/i/balance_unchecked.png');
+  background-size: 22px 22px;
+  width: 22px;
+  height: 22px;
+  position: absolute;
+  top: 11px;
+  right:15px;
+  z-index: 22;
+
+}
 .err {
   color: #f00;
   position: relative;
@@ -954,6 +1094,17 @@ p {
   position: absolute;
   left: 15px;
 }
+.checkbox_ {
+ float:right;
+margin-right:18px;
+margin-top:16px;
+}
+.price_tag{
+display:absolute;
+margin-left:215px;
+font-size:12px;
+color:#f00;
+}
 </style>
 
 <script>
@@ -993,7 +1144,7 @@ API.wrapRet_ = function (api, opts, fn) {
 }
 API.ajaxContract = function (orderId, readonly, fn) {
   API.wrapRet_(
-    'https://mip.putibaby.com/api/ajax_contract', {
+    'https://mip.putibaby.com/api/ajax_contract_new', {
       'id': orderId,
       'readonly': readonly ? 1 : 0
     }, fn)
@@ -1070,9 +1221,12 @@ export default {
   },
   data () {
     var pdata = JSON.parse(this.dataJsonstr)
-
+    console.log('data', pdata)
     var toContractExtra
     var toContractSkillReq
+    var toJinguoDetail
+    var toJinguoProtocol
+    var toJijinIntro
     if (pdata.readonly !== '1') {
       toContractSkillReq = 'edit_contract_skill_req_mip?id=' + pdata.id
       toContractExtra = 'edit_contract_extra_mip?id=' + pdata.id
@@ -1080,7 +1234,9 @@ export default {
       toContractSkillReq = 'edit_contract_skill_req_mip?id=' + pdata.id + '&readonly=1'
       toContractExtra = 'edit_contract_extra_mip?id=' + pdata.id + '&readonly=1'
     }
-
+    toJinguoDetail = 'jinguo_detail'
+    toJinguoProtocol = 'jinguo_protocol?mcode=' + pdata.mcode
+    toJijinIntro = 'jijin_intro'
     return {
       isLogin: false,
       isUnion: false,
@@ -1117,8 +1273,13 @@ export default {
       contract_deposit_min: 0,
       to_contract_skill_req: toContractSkillReq,
       to_contract_extra: toContractExtra,
+      to_jinguo_detail: toJinguoDetail,
+      to_jinguo_protocol: toJinguoProtocol,
+      to_jijin_intro: toJijinIntro,
       err_message: '',
-      ret: 1
+      ret: 1,
+
+      buy_dalibao: true
     }
   },
   computed: {
@@ -1145,11 +1306,19 @@ export default {
     function setData (ajaxData) {
       var pdata = ajaxData
       var data = pdata.order
-
+      // console.log('222',pdata);
       // var masterPrice = data.master.price_26day // 月嫂价格
       var masterPrice = data.contract_is_offer_allday_service
         ? data.master.yuesao_allday_price
         : data.master.yuesao_daytime_price
+
+      var buyDalibao = pdata.order.dalibao_id
+      if (data.in_m_expired && !(pdata.readonly)) {
+        masterPrice = data.contract_is_offer_allday_service
+          ? data.master.member_yuesao_allday_price
+          : data.master.member_yuesao_daytime_price
+        buyDalibao = -1
+      }
       masterPrice = masterPrice / 100
 
       var price = Math.round(masterPrice / 26 * data.contract_shanghu_length) // 通过月嫂价格和上户时长计算的总金额
@@ -1165,6 +1334,9 @@ export default {
       }
       var toContractExtra
       var toContractSkillReq
+      var toJinguoDetail
+      var toJinguoProtocol
+      var toJijinIntro
       if (pdata.readonly !== '1' && pdata.readonly !== 1) {
         toContractSkillReq = 'edit_contract_skill_req_mip?id=' + pdata.order.id
         toContractExtra = 'edit_contract_extra_mip?id=' + pdata.order.id
@@ -1172,6 +1344,9 @@ export default {
         toContractSkillReq = 'edit_contract_skill_req_mip?id=' + pdata.order.id + '&readonly=1'
         toContractExtra = 'edit_contract_extra_mip?id=' + pdata.order.id + '&readonly=1'
       }
+      toJinguoDetail = 'jinguo_detail'
+      toJinguoProtocol = 'jinguo_protocol?mcode=' + pdata.order.mcode
+      toJijinIntro = 'jijin_intro'
       var showz
       if (data.contract_mama_id_card_list[0] === '') {
         showz = false
@@ -1226,9 +1401,16 @@ export default {
       self.contract_deposit_min = data.contract_deposit_min
       self.to_contract_skill_req = toContractSkillReq
       self.to_contract_extra = toContractExtra
+      self.to_jinguo_detail = toJinguoDetail
+      self.to_jinguo_protocol = toJinguoProtocol
+      self.to_jijin_intro = toJijinIntro
       self.err_message = ''
 
       self.ajaxLoaded = true
+
+      self.buy_dalibao = buyDalibao !== -1
+      self.in_m_expired = data.in_m_expired
+      self.mcode = data.mcode
     }
 
     this.$element.customElement.addEventAction('logindone', function (event, str) {
@@ -1293,7 +1475,11 @@ export default {
       if (this.readonly !== '1' && this.readonly !== 1) {
         this.contract_is_offer_allday_service = 'true'
         this.contract_is_offer_allday_ser = true
-        this.contract_master_price = this.master.yuesao_allday_price / 100
+        if (this.buy_dalibao) {
+          this.contract_master_price = this.master.member_yuesao_allday_price / 100
+        } else {
+          this.contract_master_price = this.master.yuesao_allday_price / 100
+        }
         this.saveIt_()
       }
     },
@@ -1301,17 +1487,37 @@ export default {
       if (this.readonly !== '1' && this.readonly !== 1) {
         this.contract_is_offer_allday_service = 'false'
         this.contract_is_offer_allday_ser = false
-        this.contract_master_price = this.master.yuesao_daytime_price / 100
+        if (this.buy_dalibao) {
+          this.contract_master_price = this.master.member_yuesao_daytime_price / 100
+        } else {
+          this.contract_master_price = this.master.yuesao_daytime_price / 100
+        }
         this.saveIt_()
       }
+    },
+    dalibaoChecked () {
+      if (this.rea) {
+        return
+      }
+      this.buy_dalibao = !this.buy_dalibao
+      this.contract_is_offer_allday_service_change_()
+      this.saveIt_()
     },
     contract_is_offer_allday_service_change_ () {
       if (this.contract_is_offer_allday_service === 'true') {
         this.contract_is_offer_allday_ser = true
-        this.contract_master_price = this.master.yuesao_allday_price / 100
+        if (this.buy_dalibao) {
+          this.contract_master_price = this.master.member_yuesao_allday_price / 100
+        } else {
+          this.contract_master_price = this.master.yuesao_allday_price / 100
+        }
       } else {
         this.contract_is_offer_allday_ser = false
-        this.contract_master_price = this.master.yuesao_daytime_price / 100
+        if (this.buy_dalibao) {
+          this.contract_master_price = this.master.member_yuesao_daytime_price / 100
+        } else {
+          this.contract_master_price = this.master.yuesao_daytime_price / 100
+        }
       }
       this.saveIt_()
     },
@@ -1341,12 +1547,12 @@ export default {
       this.saveIt_()
     },
     contract_shanghu_length_change_ () {
-      var djb = 0.12 // 定金比默认值
+      var djb = 0.15 // 定金比默认值
       // 定金比分段函数
       if (this.contract_shanghu_length <= 25 && this.contract_shanghu_length >= 16) {
-        djb = 0.2
+        djb = 0.25
       } else if (this.contract_shanghu_length <= 15 && this.contract_shanghu_length >= 10) {
-        djb = 0.3
+        djb = 0.4
       } else if (this.contract_shanghu_length <= 9 && this.contract_shanghu_length >= 0) {
         djb = 1.0
       }
@@ -1362,6 +1568,14 @@ export default {
       if (this.ret !== 2) {
         // return
       }
+      this.saveIt_()
+    },
+    contract_dalibao_ (event) {
+      if (this.rea) {
+        return
+      }
+      this.buy_dalibao = event.target.checked
+      this.contract_is_offer_allday_service_change_()
       this.saveIt_()
     },
 
@@ -1406,10 +1620,12 @@ export default {
       obj.pics = []
       obj.mama_id = this.order.mama.id
 
+      obj.contract_buy_dalibao = this.buy_dalibao ? 0 : -1
+
       this._data.ts = new Date()
       localStorage.State = JSON.stringify(this._data)
       API.wrapRet_(
-        'https://mip.putibaby.com/api/set_contract', obj,
+        'https://mip.putibaby.com/api/set_contract_new', obj,
         function (isOk, res) {
           if (isOk) {
           }
@@ -1531,7 +1747,7 @@ export default {
       }
       if (skip) {
         API.wrapRet_(
-          'https://mip.putibaby.com/api/submit_contract', {
+          'https://mip.putibaby.com/api/submit_contract_new', {
             'id': this.order.id
           },
           function (isOk, res) {
