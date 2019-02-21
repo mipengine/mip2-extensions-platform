@@ -291,8 +291,7 @@ export default {
           lng: this.orderdata.lng || '',
           ___user_id: this.info.userInfo.openid || '',
           //  维修方案故障ID 数组
-          'solutionMalfunctionList[0].malfunctionId': this.orderdata
-            .malfunctionId,
+          'solutionMalfunctionList[0].malfunctionId': this.orderdata.malfunctionId,
           'orderAttributeValueList[0].attributeId': this.orderdata.attributeId,
           'solutionMalfunctionList[0].solutionId': this.orderdata.solutionId,
           'orderAttributeValueList[0].valueId': this.orderdata.attrValue
