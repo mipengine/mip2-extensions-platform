@@ -70,12 +70,16 @@ export default class MIPTestnewmoudleShell extends window.MIP.builtinComponents.
     document.querySelector('#sidebar').removeAttribute('open')
     document.querySelector('#sidebar').style.display = 'none'
     document.querySelector('#sidebar').setAttribute('aria-hidden', 'true')
-    document.querySelector('#MIP-SIDEBAR-MASK').style.display = 'none'
+    if (document.querySelector('#MIP-SIDEBAR-MASK')) {
+      document.querySelector('#MIP-SIDEBAR-MASK').style.display = 'none'
+    }
   }
   afterSwitchPage (options) {
     document.querySelector('#sidebar').removeAttribute('open')
     document.querySelector('#sidebar').style.display = 'none'
     document.querySelector('#sidebar').setAttribute('aria-hidden', 'true')
-    document.querySelector('#MIP-SIDEBAR-MASK').style.display = 'none'
+    if (document.querySelector('#MIP-SIDEBAR-MASK')) {
+      document.querySelector('#MIP-SIDEBAR-MASK').style.display = 'none'
+    }
   }
 }
