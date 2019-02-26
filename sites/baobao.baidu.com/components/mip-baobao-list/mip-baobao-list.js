@@ -138,7 +138,7 @@ export default class MIPList extends CustomElement {
         this.updateDataSet(data.data)
 
         this.renderTemplate(data.data)
-        this.button.innerHTML = '点击查看更多'
+        this.button.innerHTML = '更多回答'
 
         if (data.data.isEnd) {
           this.isEnd = data.isEnd
