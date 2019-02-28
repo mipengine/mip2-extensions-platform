@@ -3,7 +3,7 @@
  * @author chenyongle(cehnyongle@baidu.com)
  */
 
-import arrowimg from "@/static/arrow_down.png"
+import arrowimg from '@/static/arrow_down.png'
 import './mip-xsdetailheader.less'
 const {CustomElement, util} = MIP
 const css = util.css
@@ -123,4 +123,3 @@ export default class MipXsdetailheader extends CustomElement {
     }, false)
   }
 }
-
