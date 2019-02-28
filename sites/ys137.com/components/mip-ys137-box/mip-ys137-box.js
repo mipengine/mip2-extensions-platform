@@ -1,7 +1,7 @@
 import './index.less'
 
 export default class MIPYs137Box extends MIP.CustomElement {
-  init () {
+  connectedCallback () {
     this.myinit()
   }
   myinit () {
