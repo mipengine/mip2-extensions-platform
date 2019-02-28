@@ -7,19 +7,18 @@ export default class MIPYs137Box extends MIP.CustomElement {
   myinit () {
     const element = this.element
     const action = element.getAttribute('action')
-    switch (action)
-    {
-      case 'show' :
-        break;
-      case 'hide' :
+    switch (action) {
+      case 'show':
+        break
+      case 'hide':
         element.style.display = 'none'
-        break;
-      case 'remove' :
+        break
+      case 'remove':
         element.remove()
-        break;
+        break
       default:
         element.remove()
-        break;
+        break
     }
   }
 }
