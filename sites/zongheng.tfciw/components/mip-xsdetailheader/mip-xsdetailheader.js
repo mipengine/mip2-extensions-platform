@@ -13,14 +13,14 @@ export default class MipXsdetailheader extends CustomElement {
     let wrapper = document.createElement('div')
     wrapper.classList.add('wrapper')
     let ele = this.element
-    let title = ele.getAttribute('title')
-    let author = ele.getAttribute('author')
-    let cal = ele.getAttribute('cal')
-    let status = ele.getAttribute('status')
-    let imgsrc = ele.getAttribute('imgsrc')
-    let content = ele.getAttribute('content')
-    let calhref = ele.getAttribute('calhref')
-    let readhref = ele.getAttribute('readhref')
+    let title = ele.getAttribute('title') || ''
+    let author = ele.getAttribute('author') || ''
+    let cal = ele.getAttribute('cal') || ''
+    let status = ele.getAttribute('status') || ''
+    let imgsrc = ele.getAttribute('imgsrc') || ''
+    let content = ele.getAttribute('content') || ''
+    let calhref = ele.getAttribute('calhref') || ''
+    let readhref = ele.getAttribute('readhref') || ''
     wrapper.innerHTML = `
       <p class="title">${title}</p>
       <div class="info_wrapper">
