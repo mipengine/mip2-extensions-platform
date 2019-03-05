@@ -52,7 +52,13 @@ https://c.mipcdn.com/extensions/platform/v2/test.a.com/mip-example/mip-example.j
 
 2.**开发**
 
-我们进入 `sites` 目录，如果是第一次提交一个站点的组件，运行命令
+进入仓库目录，先安装依赖，这一步将在本地安装 `eslint` 等工具辅助检查代码规范。不符合规范的组件将无法提交合入。
+
+```
+$ npm install
+```
+
+进入 `sites` 目录，如果是第一次提交一个站点的组件，运行命令
 
 ```
 $ mip2 init
