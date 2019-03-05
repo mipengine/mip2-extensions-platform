@@ -7,32 +7,32 @@ export default class MIPJtStockTool extends MIP.CustomElement {
       // 股票卖出手续费计算
       document.getElementById('TradeType').onchange = function () {
         change()
-      };
+      }
       document.getElementById('tool_btn01').onclick = function () {
         calcTradeFee()
-      };
+      }
       document.getElementById('reset').onclick = function () {
         resetForm()
-      };
+      }
     } else if (name === 'gpsyl') {
       // 股票收益率计算器
       document.getElementById('calc_gpsyl').onclick = function () {
         calcRatio()
-      };
+      }
       document.getElementById('reset_gpsyl').onclick = function () {
         resetForm()
-      };
+      }
     } else if (name === 'gpsy') {
       // 股票收益计算器
       document.getElementById('stock_stockType').onchange = function () {
         changeRateStock()
-      };
+      }
       document.getElementById('calc_gpsy').onclick = function () {
         execStock()
-      };
-      document.getElementById('reset_gpsy').onclick = function() {
+      }
+      document.getElementById('reset_gpsy').onclick = function () {
         resetForm()
-      };
+      }
     }
 
     // 股票印花税
@@ -71,7 +71,7 @@ export default class MIPJtStockTool extends MIP.CustomElement {
     function checkData () {
       if (!checkFN3($('edprice'), '请在股票价格中输入正数', false)) return false
       if (!checkFN3($('edone'), '请在企业每股税后利润中输入正数', false)) return false
-        return true
+      return true
     }
     function calcRatio () {
       if (!checkData()) {
@@ -103,7 +103,7 @@ export default class MIPJtStockTool extends MIP.CustomElement {
       }
     }
     function change () {
-      let label = $('Lab3');
+      let label = $('Lab3')
       switch ($('TradeType').value) {
         case '1':
         // 上A
@@ -134,11 +134,11 @@ export default class MIPJtStockTool extends MIP.CustomElement {
         case '4':
         // 深B
         {
-          label.innerHTML = '交易规费：';
-          $('Lab4').innerHTML = '结算费：';
+          label.innerHTML = '交易规费：'
+          $('Lab4').innerHTML = '结算费：'
           $('lb_txt4').style.display = 'block'
           $('Lab4').style.display = 'block'
-          break;
+          break
         }
       }
       $('txt1').value = '计算得出'
@@ -155,7 +155,7 @@ export default class MIPJtStockTool extends MIP.CustomElement {
 
       let obj = {}
 
-      obj.r1 = tradesum * STOCK_RATE // 印花税        	
+      obj.r1 = tradesum * STOCK_RATE // 印花税
       obj.r2 = tradesum * traderate // 佣金
       switch (iType) {
         case 1:
@@ -174,7 +174,7 @@ export default class MIPJtStockTool extends MIP.CustomElement {
         // 深A
         {
           obj.r3 = tradesum * 0.0001875 // 监督管理费和经手费
-          if (obj.r2 < 5) {// aiai,佣金最低为￥5.0
+          if (obj.r2 < 5) { // aiai,佣金最低为￥5.0
             obj.r2 = 5
           }
           break
@@ -225,11 +225,10 @@ export default class MIPJtStockTool extends MIP.CustomElement {
         disptext = overerrormsg
       }
       if (!result) {
-        dispMessage(CheckCtl, disptext);
-          return false
+        dispMessage(CheckCtl, disptext)
+        return false
       }
       return true
-
     }
     // 功能：校验一个合法的大于等于0的浮点数
     // 入口参数：
@@ -248,13 +247,13 @@ export default class MIPJtStockTool extends MIP.CustomElement {
         result = false
         disptext = overerrormsg
       } else {
-        let limitcount = floatcount ? floatcount : 2
+        let limitcount = floatcount || 2
         let array = s.split('.')
         let count
         if (array[1] === null || array[1] === undefined) {
           count = -1
         } else {
-          var str = array[1].toString()
+          let str = array[1].toString()
           count = str.length
         }
         if (count > limitcount) {
@@ -274,10 +273,10 @@ export default class MIPJtStockTool extends MIP.CustomElement {
       if (checkFn(CheckCtl, disptext, page, floatcount)) {
         if ((parseFloat(CheckCtl.value) === 0) && (!IsCanZero)) {
           dispMessage(CheckCtl, disptext)
-            return false
-          } else {
-            return true
-          }
+          return false
+        } else {
+          return true
+        }
       } else {
         return false
       }
@@ -295,7 +294,7 @@ export default class MIPJtStockTool extends MIP.CustomElement {
     // eg. Round(132.123456) 为 132.12
     // eg. Round(132.123456,4) 为 132.1234
     // eg. Round(132.123456,0) 为 132
-    function round(i, digit) {
+    function round (i, digit) {
       let p
       if (digit === 0) {
         p = 1
@@ -430,7 +429,7 @@ export default class MIPJtStockTool extends MIP.CustomElement {
       }
       if (checkNumber(sellPrice) === false) {
         strAlert = '--请输入卖出价格，且必须为数字'
-        alert(strAlert);
+        alert(strAlert)
         return
       }
 
@@ -465,7 +464,6 @@ export default class MIPJtStockTool extends MIP.CustomElement {
     function formatFloat (src, pos) {
       return Math.round(src * Math.pow(10, pos)) / Math.pow(10, pos)
     }
-
   }
-
 }
+
