@@ -466,4 +466,3 @@ export default class MIPJtStockTool extends MIP.CustomElement {
     }
   }
 }
-
