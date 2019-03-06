@@ -16,16 +16,16 @@
 
 ```
 // 代码示例
+<mip-iask-shunt groupa="http://127.0.0.1:8111/components/mip-iask-shunt/example/testa.html" groupb="http://127.0.0.1:8111/components/mip-iask-shunt/example/testb.html"></mip-iask-shunt>
 ```
 
-## 属性
+## 属性 groupa 跳转的目标页面A
 
-### 属性1
+### 属性1 groupb 跳转的目标页面B
 
 **说明**：
 
-**必选项**：
+**必选项**：是
 
-**单位**：
 
-**默认值**：
+
