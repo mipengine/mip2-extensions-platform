@@ -2,10 +2,10 @@ import './index.less'
 
 export default class MIPYs137Box extends MIP.CustomElement {
   connectedCallback () {
-    var referrer = MIP.sandbox.window.document.referrer;
-    var referrer_check = this.element.getAttribute('referrer')
-    if (referrer_check) {
-      if (referrer.indexOf(referrer_check) != -1) {
+    let referrer = MIP.sandbox.window.document.referrer
+    let referrerCheck = this.element.getAttribute('referrer')
+    if (referrerCheck) {
+      if (referrer.indexOf(referrerCheck) !== -1) {
         this.createBaidustats()
       }
     } else {
@@ -13,10 +13,10 @@ export default class MIPYs137Box extends MIP.CustomElement {
     }
   }
   createBaidustats () {
-    var token = this.element.getAttribute('token')
+    let token = this.element.getAttribute('token')
     if (token) {
-      var ele = document.createElement('mip-stats-baidu')
-      ele.setAttribute('token',token);
+      let ele = document.createElement('mip-stats-baidu')
+      ele.setAttribute('token', token)
       this.element.appendChild(ele)
     }
   }
