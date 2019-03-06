@@ -8,7 +8,7 @@
 
 ## 说明
 
-组件功能说明
+AB分流测试组件
 
 ## 示例
 
@@ -16,16 +16,17 @@
 
 ```
 // 代码示例
-<mip-iask-shunt groupa="http://127.0.0.1:8111/components/mip-iask-shunt/example/testa.html" groupb="http://127.0.0.1:8111/components/mip-iask-shunt/example/testb.html"></mip-iask-shunt>
+<mip-iask-shunt groupa="https://m.iask.sina.com.cn/mib/1/a.html" groupb="https://m.iask.sina.com.cn/mib/1/b.html"></mip-iask-shunt>
 ```
 
-## 属性 groupa 跳转的目标页面A
-
-### 属性1 groupb 跳转的目标页面B
-
+## 属性
+groupa
+### 属性1
+groupb
 **说明**：
+groupa ab测试跳转的a页面，groupb ab测试跳转的b页面
+**必选项**：
+是
+**单位**：
 
-**必选项**：是
-
-
-
+**默认值**：
