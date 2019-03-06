@@ -29,19 +29,19 @@ export default class MIPJtStockParity extends MIP.CustomElement {
                 if (i % 2 === 1) {
                   quoteHtmlStr += 'bj_gray'
                 }
-                quoteHtmlStr += '>'+ 
-                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].astockCode + '.html">' + data.data[i].astockCode + '</a></td>' + 
-                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].astockCode + '.html" class="' + data.data[i].astockQuoCode + '_q63">--</a></td>' + 
-                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].astockCode + '.html" class="' + data.data[i].astockQuoCode + '_q80">--</a></td>' + 
-                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/hkstock/m_' + data.data[i].hstockCode + '.html">' + data.data[i].hstockCode + '</a></td>' + 
-                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/hkstock/m_' + data.data[i].hstockCode + '.html" class="' + data.data[i].hstockQuoCode + '_q63">--</a></td>' + 
-                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/hkstock/m_' + data.data[i].hstockCode + '.html" class="' + data.data[i].hstockQuoCode + '_q80">--</a></td>' + 
-                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/hkstock/m_' + data.data[i].hstockCode + '.html" class="' + data.data[i].hstockQuoCode + '_bj">--</a></td>' + 
-                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/hkstock/m_' + data.data[i].hstockCode + '.html" class="' + data.data[i].hstockQuoCode + '_yj">--</a></td>' + 
+                quoteHtmlStr += '>' +
+                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].astockCode + '.html">' + data.data[i].astockCode + '</a></td>' +
+                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].astockCode + '.html" class="' + data.data[i].astockQuoCode + '_q63">--</a></td>' +
+                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].astockCode + '.html" class="' + data.data[i].astockQuoCode + '_q80">--</a></td>' +
+                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/hkstock/m_' + data.data[i].hstockCode + '.html">' + data.data[i].hstockCode + '</a></td>' +
+                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/hkstock/m_' + data.data[i].hstockCode + '.html" class="' + data.data[i].hstockQuoCode + '_q63">--</a></td>' +
+                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/hkstock/m_' + data.data[i].hstockCode + '.html" class="' + data.data[i].hstockQuoCode + '_q80">--</a></td>' +
+                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/hkstock/m_' + data.data[i].hstockCode + '.html" class="' + data.data[i].hstockQuoCode + '_bj">--</a></td>' +
+                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/hkstock/m_' + data.data[i].hstockCode + '.html" class="' + data.data[i].hstockQuoCode + '_yj">--</a></td>' +
                   '</tr>'
-                codes += data.data[i].astockQuoCode + 
-                  ',' + 
-                  data.data[i].hstockQuoCode + 
+                codes += data.data[i].astockQuoCode +
+                  ',' +
+                  data.data[i].hstockQuoCode +
                   ','
               }
             } else {
@@ -55,17 +55,17 @@ export default class MIPJtStockParity extends MIP.CustomElement {
                 if (i % 2 === 1) {
                   quoteHtmlStr += 'bj_gray'
                 }
-                quoteHtmlStr += '>' + 
-                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].astockCode + '.html" class="' + data.data[i].astockQuoCode + '_q63">--</a></td>' + 
-                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].astockCode + '.html" class="' + data.data[i].astockQuoCode + '_q80">--</a></td>' + 
-                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].bstockCode + '.html"><p class="blue">' + data.data[i].bstockName + '</p><p>' + data.data[i].bstockCode + '</p></a></td>' + 
-                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].bstockCode + '.html" class="' + data.data[i].bstockQuoCode + '_q63">--</a></td>' + 
-                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].bstockCode + '.html" class="' + data.data[i].bstockQuoCode + '_q80">--</a></td>' + 
-                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].bstockCode + '.html" class="' + data.data[i].bstockQuoCode + '_bj">--</a></td>' + 
+                quoteHtmlStr += '>' +
+                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].astockCode + '.html" class="' + data.data[i].astockQuoCode + '_q63">--</a></td>' +
+                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].astockCode + '.html" class="' + data.data[i].astockQuoCode + '_q80">--</a></td>' +
+                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].bstockCode + '.html"><p class="blue">' + data.data[i].bstockName + '</p><p>' + data.data[i].bstockCode + '</p></a></td>' +
+                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].bstockCode + '.html" class="' + data.data[i].bstockQuoCode + '_q63">--</a></td>' +
+                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].bstockCode + '.html" class="' + data.data[i].bstockQuoCode + '_q80">--</a></td>' +
+                  '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' + data.data[i].bstockCode + '.html" class="' + data.data[i].bstockQuoCode + '_bj">--</a></td>' +
                   '</tr>'
-                codes += data.data[i].astockQuoCode + 
-                  ',' + 
-                  data.data[i].bstockQuoCode + 
+                codes += data.data[i].astockQuoCode +
+                  ',' +
+                  data.data[i].bstockQuoCode +
                   ','
               }
             }
