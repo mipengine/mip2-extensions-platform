@@ -15,17 +15,20 @@
   <script type="application/json">
     {
       "action_status": "remove",
-      "show":false
+      "show":false,
+      "token":''
     }
   </script>
 </mip-data>
+
+
     <div>
-      <mip-ys137-box m-bind:action="action_status">
-          显示
+      <mip-ys137-box referrer='/mip/' token="007d6d55afbabb854832b18e17ca2aa4">
       </mip-ys137-box>
     </div>
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
-    
+    <script src="https://c.mipcdn.com/static/v2/mip-stats-baidu/mip-stats-baidu.js" ></script>
+
     <script src="/mip-ys137-box/mip-ys137-box.js"></script>
   </body>
 </html>
