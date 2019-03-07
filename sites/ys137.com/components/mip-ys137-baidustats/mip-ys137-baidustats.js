@@ -10,9 +10,9 @@ export default class MIPYs137Box extends MIP.CustomElement {
   }
   refIsexisted (referrer, referrerCheck) {
     if (referrerCheck) {
-      let checkArr = new Array()
+      let checkArr = []
       let trueValue = true
-      if (referrerCheck.substr(0,1) === '!') {
+      if (referrerCheck.substr(0, 1) === '!') {
         trueValue = false
         referrerCheck = referrerCheck.substring(1)
       }
@@ -21,8 +21,7 @@ export default class MIPYs137Box extends MIP.CustomElement {
       } else {
         checkArr.push(referrerCheck)
       }
-      
-      for (let i=0; i<checkArr.length; i++) {
+      for (let i = 0; i < checkArr.length; i++) {
         if (referrer.indexOf(checkArr[i]) !== -1) {
           return trueValue
         }
