@@ -5,10 +5,7 @@ export default class MIPYs137Box extends MIP.CustomElement {
     let referrer = MIP.sandbox.window.document.referrer
     let referrerCheck = this.element.getAttribute('referrer')
     if (this.refIsexisted(referrer, referrerCheck) === true) {
-      console.log('true')
       this.createBaidustats()
-    } else {
-      console.log('false')
     }
   }
   refIsexisted (referrer, referrerCheck) {
