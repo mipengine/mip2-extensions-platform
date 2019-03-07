@@ -2,8 +2,8 @@ import './index.less'
 
 export default class MIPIaskShunt extends MIP.CustomElement {
   build () {
-    var urla = this.element.getAttribute("groupa");
-	var urlb = this.element.getAttribute("groupb");
+    var urla = this.element.getAttribute('groupa');
+	var urlb = this.element.getAttribute('groupb');
 	
 	var c = {
             group: [urla, urlb]
