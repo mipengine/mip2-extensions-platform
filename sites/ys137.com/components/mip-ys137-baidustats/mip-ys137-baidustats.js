@@ -17,7 +17,7 @@ export default class MIPYs137Box extends MIP.CustomElement {
       let trueValue = true
       if (referrerCheck.substr(0,1) === '!') {
         trueValue = false
-        referrerCheck=referrerCheck.substring(1)
+        referrerCheck = referrerCheck.substring(1)
       }
       if (referrerCheck.indexOf('|') !== -1) {
         checkArr = referrerCheck.split('|')
