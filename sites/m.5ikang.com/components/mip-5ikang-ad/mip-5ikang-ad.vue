@@ -6,7 +6,6 @@
 </template>
 
 <script>
-import Visitor from '../../common/utils/visitorLog'
 import pageLog from '../../common/utils/pageLog'
 import jsonp from 'jsonp'
 const { getData } = MIP
@@ -33,18 +32,9 @@ export default {
     }
   },
   mounted () {
-    this.tongji()
     this.adRender()
   },
   methods: {
-    tongji () {
-      // 设置放着标识cookie
-      Visitor.setClientId()
-      let ks = getData('ks')
-      let pid = getData('pid')
-      // 发送网站统计
-      pageLog.sendPv(ks, pid)
-    },
     adRender () {
       const {config} = this
       if (config === 'no' || config === '') {
