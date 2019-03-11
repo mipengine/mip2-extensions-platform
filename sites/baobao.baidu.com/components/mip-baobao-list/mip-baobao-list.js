@@ -22,7 +22,7 @@ export default class MIPList extends CustomElement {
       this.element.getAttribute('rnName') || 'rn'
     this.rn = this.element.getAttribute('rn') || 1
     this.timeout = this.element.getAttribute('timeout') || 5000
-    this.src = this.element.getAttribute('src') || ''
+    this.src = this.element.getAttribute('load-src') || ''
     this.endText = this.element.getAttribute('end-text') ||
       this.element.getAttribute('endText') || '已经加载完毕'
   }
@@ -138,7 +138,7 @@ export default class MIPList extends CustomElement {
         this.updateDataSet(data.data)
 
         this.renderTemplate(data.data)
-        this.button.innerHTML = '点击查看更多'
+        this.button.innerHTML = '更多回答'
 
         if (data.data.isEnd) {
           this.isEnd = data.isEnd
