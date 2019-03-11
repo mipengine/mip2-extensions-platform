@@ -1,6 +1,5 @@
 import './index.less'
 let {
-  CustomElement,
   util
 } = MIP
 let { platform } = util
@@ -170,7 +169,7 @@ function scopeOk (scope) {
     dp: dpOk,
     ua: uaOk,
     os: osOk,
-    referrer: referrerOk,
+    referrer: referrerOk
   }
   if (!scope) {
     console.warn('require scope param')
@@ -194,7 +193,6 @@ function scopeOk (scope) {
   console.log('all right')
   return true
 }
-
 export default class MIPYs137Box extends MIP.CustomElement {
   connectedCallback () {
     const element = this.element
