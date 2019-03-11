@@ -14,7 +14,8 @@
         autoplay
         defer="5000"
         layout="responsive"
-        indicator-id="mip-carousel-example">
+        indicator
+        indicatorid="mip-carousel-example">
         <div
           v-for="item in banner_list"
           :key="item.infoId"

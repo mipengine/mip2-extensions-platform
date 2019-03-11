@@ -1547,12 +1547,12 @@ export default {
       this.saveIt_()
     },
     contract_shanghu_length_change_ () {
-      var djb = 0.12 // 定金比默认值
+      var djb = 0.15 // 定金比默认值
       // 定金比分段函数
       if (this.contract_shanghu_length <= 25 && this.contract_shanghu_length >= 16) {
-        djb = 0.2
+        djb = 0.25
       } else if (this.contract_shanghu_length <= 15 && this.contract_shanghu_length >= 10) {
-        djb = 0.3
+        djb = 0.4
       } else if (this.contract_shanghu_length <= 9 && this.contract_shanghu_length >= 0) {
         djb = 1.0
       }
