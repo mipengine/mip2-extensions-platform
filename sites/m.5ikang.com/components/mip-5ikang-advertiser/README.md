@@ -27,7 +27,3 @@
 类型：字符串
 取值范围：无
 单位：无
-
-## 注意事项
-
-配合<mip-5ikang-config></mip-5ikang-config> 使用
