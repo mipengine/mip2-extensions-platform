@@ -11,7 +11,7 @@ export default class MIPJtStockQuote extends MIP.CustomElement {
     let bg = this.element.getAttribute('bg')
 
     if (document.getElementById('reLoad')) { // 刷新行情
-      document.getElementById('reLoad').addEventListener('onclick', loadQuote)
+      document.getElementById('reLoad').addEventListener('click', loadQuote)
     }
     // 获取数据
     loadQuote()
