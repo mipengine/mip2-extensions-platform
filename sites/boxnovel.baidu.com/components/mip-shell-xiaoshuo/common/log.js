@@ -161,7 +161,7 @@ export function sendRootLog () {
 /**
  * 无限下拉 ABtest pv统计打点
  *
- *
+ * @param {string} type 类型
  */
 export function sendReadTypePvTcLog (type) {
   // 非sf下不走打点函数
