@@ -80,7 +80,7 @@ export default class MIPJtStockSortquote extends MIP.CustomElement {
               } else {
                 html += '<dl class="clearfix mglr30">' +
                   '<dd class="w26"><a href="https://m.cngold.org/stock/m_' +
-                  quote.q68 + '.html" title="' +
+                  quote.q68.split('_')[0] + '.html" title="' +
                   quote.q67 + '" class="blue mc">' +
                   quote.q67 + '</a></dd>'
               }
