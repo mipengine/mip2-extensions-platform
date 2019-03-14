@@ -83,12 +83,6 @@ const getKeyword = () => {
     if (descContent) {
       descContent = descContent.replace(/<script.*?>.*?<\/script>/ig, '')
       descContent = descContent.replace(/<\/?[^>]*>/g, '')
-      descContent = descContent.replace('就诊经历', '')
-      descContent = descContent.replace('患处详情', '')
-      descContent = descContent.replace('用药经历', '')
-      descContent = descContent.replace('过往病史', '')
-      descContent = descContent.replace('过敏史', '')
-      descContent = descContent.replace('问题详情', '')
       descContent = descContent.replace(/&nbsp/g, '')
       descContent = descContent.replace(/\s/g, '')
       descContent = descContent.replace(/\r\n/g, '')
