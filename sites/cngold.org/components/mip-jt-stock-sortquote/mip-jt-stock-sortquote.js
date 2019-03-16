@@ -71,11 +71,19 @@ export default class MIPJtStockSortquote extends MIP.CustomElement {
                 '<p>' + quote.q67 + '</p><em>' +
                 quote.q68 + '</em></a></dd>'
             } else {
-              html += '<dl class="clearfix mglr30">' +
-                '<dd class="w26"><a href="https://m.cngold.org/stock/m_' +
-                quote.q68 + '.html" title="' +
-                quote.q67 + '" class="blue mc">' +
-                quote.q67 + '</a></dd>'
+              if (categoryId === '442') { // 沪深指数
+                html += '<dl class="clearfix mglr30">' +
+                  '<dd class="w26"><a href="https://m.cngold.org/stock/m_zs' +
+                  quote.q68 + '.html" title="' +
+                  quote.q67 + '" class="blue mc">' +
+                  quote.q67 + '</a></dd>'
+              } else {
+                html += '<dl class="clearfix mglr30">' +
+                  '<dd class="w26"><a href="https://m.cngold.org/stock/m_' +
+                  quote.q68.split('_')[0] + '.html" title="' +
+                  quote.q67 + '" class="blue mc">' +
+                  quote.q67 + '</a></dd>'
+              }
             }
 
             for (let j = 0; j < idArray.length; j++) {
@@ -124,8 +132,11 @@ export default class MIPJtStockSortquote extends MIP.CustomElement {
         if (data.data) {
           for (let i = 0; i < data.data.length; i++) {
             let quote = data.data[i].quote
-
-            stockHtmlStr += '<a href="https://m.cngold.org/stock/m_zs' + quote.q68 + '.html" class="blue '
+            if (categoryId === '442') { // 沪深指数
+              stockHtmlStr += '<a href="https://m.cngold.org/stock/m_zs' + quote.q68 + '.html" class="blue '
+            } else {
+              stockHtmlStr += '<a href="https://m.cngold.org/stock/m_' + quote.q68 + '.html" class="blue '
+            }
             if (i % 2 === 1) {
               stockHtmlStr += 'bj_gray'
               quoteHtmlStr += '<tr class="bj_gray">'
@@ -160,8 +171,14 @@ export default class MIPJtStockSortquote extends MIP.CustomElement {
                   valueStr = parseFloat(jsonData[type]).toFixed(2)
                 }
               }
-              quoteHtmlStr += '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_zs' +
-                quote.q68 + '.html" class="' + textColor + '">' + valueStr + '</a></td>'
+
+              if (categoryId === '442') { // 沪深指数
+                quoteHtmlStr += '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_zs' +
+                  quote.q68 + '.html" class="' + textColor + '">' + valueStr + '</a></td>'
+              } else {
+                quoteHtmlStr += '<td align="center" valign="middle" class="sjhq_td1"><a href="https://m.cngold.org/stock/m_' +
+                  quote.q68 + '.html" class="' + textColor + '">' + valueStr + '</a></td>'
+              }
             }
             quoteHtmlStr += '</tr>'
           }
