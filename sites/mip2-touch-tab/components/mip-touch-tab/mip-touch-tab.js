@@ -1,7 +1,7 @@
 import './index.less'
 
 export default class MIPTouchTab extends MIP.CustomElement {
-  build (){
+  build () {
     let len = this.element.getAttribute('data-len') || 2
     let nb = this.element.getAttribute('nb') || 0
     let lang = this.element.getAttribute('lang') || 0.5
@@ -19,8 +19,8 @@ export default class MIPTouchTab extends MIP.CustomElement {
     this.moveX = 0
     this.cliW = 0
     this.pages({
-      wrap: 'touch-wrap', // .wrap的id
-      wrap2: 'touch-wrap2', // .wrap2的id
+      wrap: 'touch-wrap', // .wrap的id必须
+      wrap2: 'touch-wrap2', // .wrap2的id必须
       len: len, // 一共有几页
       n: nb, // 页面一打开默认在第几页？第一页就是0
       lang: lang // 每次的滑动距离
@@ -28,15 +28,15 @@ export default class MIPTouchTab extends MIP.CustomElement {
     this.element.querySelectorAll('.icons-node')[0].classList.add('icon-active')
   }
   // 重新设置div宽度
-  setwidth (box2){
+  setwidth (box2) {
     let nodenum = box2.children.length
     box2.style.width = nodenum + '00%'
   }
   // 获取当前div的宽度
-  cliWith (box2){
+  cliWith (box2) {
     this.cliW = box2.clientWidth
   }
-  pages (obj){
+  pages (obj) {
     let box = this.element.querySelector('#' + obj.wrap)
     let box2 = this.element.querySelector('#' + obj.wrap2)
     let len = obj.len
