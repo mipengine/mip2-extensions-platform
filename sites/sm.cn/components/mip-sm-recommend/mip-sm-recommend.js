@@ -9,13 +9,13 @@ let {
   util
 } = MIP
 
-function json2urlParams(jsonObj) {
+function json2urlParams (jsonObj) {
   if (!util.fn.isPlainObject(jsonObj)) {
     return false
   }
   return Object.keys(jsonObj).map(function (key) {
-    return encodeURIComponent(key) + "=" + encodeURIComponent(jsonObj[key])
-  }).join("&")
+    return encodeURIComponent(key) + '=' + encodeURIComponent(jsonObj[key])
+  }).join('&')
 }
 
 export default class MipSmRecommend extends CustomElement {
@@ -29,25 +29,25 @@ export default class MipSmRecommend extends CustomElement {
       return false
     }
 
-    var xhr = new XMLHttpRequest()
+    let xhr = new XMLHttpRequest()
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 304 || (xhr.status >= 200 && xhr.status < 300)) {
           if (xhr.responseText) {
             let wordList = util.jsonParse(xhr.responseText)
             let wordsJson = wordList.items.words
-            let listHtml = "<div><p>大家还在搜</p><ul>"
+            let listHtml = '<div><p>大家还在搜</p><ul>'
             Object.keys(wordsJson).map((key) => {
               let item = wordsJson[key]
               let queryUrl = paramsJson.zm_path + encodeURIComponent(item.show_word)
               let searchParams = json2urlParams(paramsJson.zm_search)
               let linkUrl = searchParams ? queryUrl + '&' + searchParams : queryUrl
-              listHtml += "<li><a href='" + linkUrl + "'>" + item.show_word + "</a></li>"
+              listHtml += '<li><a href="' + linkUrl + '">' + item.show_word + '</a></li>'
             })
-            listHtml += "</ul></div>"
+            listHtml += '</ul></div>'
             let createElement = MIP.util.dom.create(listHtml)
             MIP.util.dom.insert(element, createElement)
-          }else {
+          } else {
             console.log('responseText error', xhr.responseText)
           }
         } else {
