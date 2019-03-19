@@ -17,7 +17,17 @@
 示例说明
 
 ```
-<mip-sm-recommend params={"recommend_api":"https://fe.sm.cn/mip_update/test.php?wd=query&from=mip","zm_path":"http://zm10.sm-tc.cn/rec/redirect/?src=http://m.sa.sm.cn/s?q=","zm_search":{"alg_bu":"exp3","rec_type":"xxx","from":"wh30010"}}>
+<mip-sm-recommend>
+    <script type="application/json">
+    {
+        recommendAPI: 'https://fe.sm.cn/mip_update/test.php?wd=query&from=mip',
+        zmPath: 'http://zm10.sm-tc.cn/rec/redirect/?src=http://m.sa.sm.cn/s?q=',
+        zmSearch: {
+            algBu: 'exp3',
+            from: 'wh30010'
+        }
+    }
+    </script>
 </mip-sm-recommend>
 ```
 
@@ -33,7 +43,7 @@
 
 **默认值**：无
 
-### recommend_api
+### recommendAPI
 
 **说明**：获取推荐词接口
 
@@ -43,7 +53,7 @@
 
 **默认值**：无
 
-### zm_path
+### zmPath
 
 **说明**：点击推荐词所需的跳转路径(不含query词)
 
@@ -53,7 +63,7 @@
 
 **默认值**：无
 
-### zm_search
+### zmSearch
 
 **说明**：点击推荐词所需的跳转参数
 

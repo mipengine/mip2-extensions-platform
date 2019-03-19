@@ -4,10 +4,11 @@
  * @time 2019.03.17
  */
 import './mip-sm-recommend.less'
-let {
+const {
   CustomElement,
   util
 } = MIP
+const { fetchJsonp } = window
 
 function json2urlParams (jsonObj) {
   if (!util.fn.isPlainObject(jsonObj)) {
@@ -18,44 +19,52 @@ function json2urlParams (jsonObj) {
   }).join('&')
 }
 
+/**
+ * 从组件中的 type 为 "application/json" 的 script 标签中获取 JSON 数据
+ *
+ * @param   {HTMLElement}  element  mip-sm-recommend 的 DOM 元素
+ * @returns {Object}
+ */
+function getParams (element) {
+  let result = {}
+  try {
+    let content = element.querySelector('script[type="application/json"]').textContent
+    if (content) {
+      result = util.jsonParse(content)
+    }
+  } catch (e) {
+    console.warn(element, e.message)
+  }
+  return result
+}
+
 export default class MipSmRecommend extends CustomElement {
   connectedCallback () {
     const element = this.element
-    const recommendParams = element.getAttribute('params')
-    const paramsJson = util.jsonParse(recommendParams)
+    const paramsJson = getParams(element)
     const keys = Object.keys(paramsJson)
     if (!util.fn.isPlainObject(paramsJson) || keys.length === 0) {
-      console.error('require params is json')
+      console.warn('require params is json')
       return false
     }
-
-    let xhr = new XMLHttpRequest()
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 304 || (xhr.status >= 200 && xhr.status < 300)) {
-          if (xhr.responseText) {
-            let wordList = util.jsonParse(xhr.responseText)
-            let wordsJson = wordList.items.words
-            let listHtml = '<div><p>大家还在搜</p><ul>'
-            Object.keys(wordsJson).map((key) => {
-              let item = wordsJson[key]
-              let queryUrl = paramsJson.zm_path + encodeURIComponent(item.show_word)
-              let searchParams = json2urlParams(paramsJson.zm_search)
-              let linkUrl = searchParams ? queryUrl + '&' + searchParams : queryUrl
-              listHtml += '<li><a href="' + linkUrl + '">' + item.show_word + '</a></li>'
-            })
-            listHtml += '</ul></div>'
-            let createElement = MIP.util.dom.create(listHtml)
-            MIP.util.dom.insert(element, createElement)
-          } else {
-            console.log('responseText error', xhr.responseText)
-          }
-        } else {
-          console.log('xhr error ', xhr.status)
-        }
-      }
-    }
-    xhr.open('get', paramsJson.recommend_api)
-    xhr.send(null)
+    fetch(paramsJson.recommendAPI)
+    .then(res => res.json())
+    .then(data => {
+      let wordsJson = data.items.words
+      let listHtml = '<div><p>大家还在搜</p><ul>'
+      Object.keys(wordsJson).map((key) => {
+        let item = wordsJson[key]
+        let queryUrl = paramsJson.zmPath + encodeURIComponent(item.show_word)
+        let searchParams = json2urlParams(paramsJson.zmSearch)
+        let linkUrl = searchParams ? queryUrl + '&' + searchParams : queryUrl
+        listHtml += '<li><a href="' + linkUrl + '">' + item.show_word + '</a></li>'
+      })
+      listHtml += '</ul></div>'
+      let createElement = MIP.util.dom.create(listHtml)
+      MIP.util.dom.insert(element, createElement)
+    })
+    .catch(error => {
+      console.warn('error ', error.message)
+    })
   }
 }
