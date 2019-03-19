@@ -8,7 +8,6 @@ const {
   CustomElement,
   util
 } = MIP
-const { fetchJsonp } = window
 
 function json2urlParams (jsonObj) {
   if (!util.fn.isPlainObject(jsonObj)) {
@@ -23,7 +22,7 @@ function json2urlParams (jsonObj) {
  * 从组件中的 type 为 "application/json" 的 script 标签中获取 JSON 数据
  *
  * @param   {HTMLElement}  element  mip-sm-recommend 的 DOM 元素
- * @returns {Object}
+ * @returns {Object} json
  */
 function getParams (element) {
   let result = {}
@@ -48,23 +47,23 @@ export default class MipSmRecommend extends CustomElement {
       return false
     }
     fetch(paramsJson.recommendAPI)
-    .then(res => res.json())
-    .then(data => {
-      let wordsJson = data.items.words
-      let listHtml = '<div><p>大家还在搜</p><ul>'
-      Object.keys(wordsJson).map((key) => {
-        let item = wordsJson[key]
-        let queryUrl = paramsJson.zmPath + encodeURIComponent(item.show_word)
-        let searchParams = json2urlParams(paramsJson.zmSearch)
-        let linkUrl = searchParams ? queryUrl + '&' + searchParams : queryUrl
-        listHtml += '<li><a href="' + linkUrl + '">' + item.show_word + '</a></li>'
+      .then(res => res.json())
+      .then(data => {
+        let wordsJson = data.items.words
+        let listHtml = '<div><p>大家还在搜</p><ul>'
+        Object.keys(wordsJson).map((key) => {
+          let item = wordsJson[key]
+          let queryUrl = paramsJson.zmPath + encodeURIComponent(item.show_word)
+          let searchParams = json2urlParams(paramsJson.zmSearch)
+          let linkUrl = searchParams ? queryUrl + '&' + searchParams : queryUrl
+          listHtml += '<li><a href="' + linkUrl + '">' + item.show_word + '</a></li>'
+        })
+        listHtml += '</ul></div>'
+        let createElement = MIP.util.dom.create(listHtml)
+        MIP.util.dom.insert(element, createElement)
       })
-      listHtml += '</ul></div>'
-      let createElement = MIP.util.dom.create(listHtml)
-      MIP.util.dom.insert(element, createElement)
-    })
-    .catch(error => {
-      console.warn('error ', error.message)
-    })
+      .catch(error => {
+        console.warn('error ', error.message)
+      })
   }
 }
