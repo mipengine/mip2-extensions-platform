@@ -1,8 +1,8 @@
 import './index.less'
 
 export default class MIPIdongdongAddress extends MIP.CustomElement {
-  build () {    
-    let u = navigator.userAgent;
+  build () {
+    let u = navigator.userAgent
     let isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1
     let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
     let obj = this.element.querySelector('#btns a')
