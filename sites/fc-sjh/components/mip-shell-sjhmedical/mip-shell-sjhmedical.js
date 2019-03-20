@@ -12,7 +12,9 @@ export default class MipShellSjhmedical extends MIP.builtinComponents.MipShell {
   constructor (...args) {
     super(...args)
     this.alwaysUseTitleInShellConfig = true
-    this.transitionContainsHeader = false
+    if (!this.isSmartProgram()) {
+      this.transitionContainsHeader = false
+    }
   }
 
   // 基类方法：绑定页面可被外界调用的事件。
@@ -57,6 +59,9 @@ export default class MipShellSjhmedical extends MIP.builtinComponents.MipShell {
     this.shellConfig = shellConfig
     shellConfig.routes.forEach(routerConfig => {
       routerConfig.meta.header.bouncy = false
+      if (this.isSmartProgram()) {
+        routerConfig.meta.header.show = false
+      }
     })
   }
 
@@ -71,6 +76,9 @@ export default class MipShellSjhmedical extends MIP.builtinComponents.MipShell {
   // matchIndex是用来标识它符合了哪个路由，根据不同的路由修改不同的配置
   processShellConfigInLeaf (shellConfig, matchIndex) {
     shellConfig.routes[matchIndex].meta.header.bouncy = false
+    if (this.isSmartProgram()) {
+      shellConfig.routes[matchIndex].meta.header.show = false
+    }
   }
 
   /**
@@ -86,5 +94,12 @@ export default class MipShellSjhmedical extends MIP.builtinComponents.MipShell {
       element = element.parentNode
     }
     return null
+  }
+  /**
+   * 判断是否在小程序中
+   * */
+  isSmartProgram () {
+    const userAgent = (window.navigator && window.navigator.userAgent) || ''
+    return userAgent.indexOf('swan-baiduboxapp') !== -1
   }
 }

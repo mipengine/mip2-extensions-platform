@@ -1,7 +1,7 @@
 {
-  "name": "m.5ikang.com",
+  "name": "sm.cn",
   "version": "0.0.1",
-  "description": "mip",
+  "description": "A MIP project",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
@@ -10,10 +10,8 @@
     "fix": "npm run fix:js",
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
-  "author": "5ikang",
-  "dependencies": {
-    "jsonp": "^0.2.1"
-  },
+  "author": "郑大伟 (zhengdawei.zdw@alibaba-inc.com)",
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
@@ -22,7 +20,6 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
-    "eslint-plugin-vue": "^4.5.0",
-    "jsonp": "^0.2.1"
+    "eslint-plugin-vue": "^4.5.0"
   }
 }
