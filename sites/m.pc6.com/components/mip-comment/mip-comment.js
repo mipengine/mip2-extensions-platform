@@ -11,9 +11,11 @@ import MIPCommon from '../mip-common/mip-common'
 
 
 export default class MIPComment extends CustomElement {
-  data = {
-    id: this.element.getAttribute('cid'),
-    url: this.element.getAttribute('url')
+  data(){
+    return {
+      id: this.element.getAttribute('cid'),
+      url: this.element.getAttribute('url')
+    }
   }
   build() {
     let wrapper = dom.create(`
@@ -33,7 +35,7 @@ export default class MIPComment extends CustomElement {
     <input id="verify" class="button disable" type="button" value="提交跟贴" hidefocus="true"/>
     <span id="cancel" class="button">取消</span>
     </fieldset>
-    <input type="hidden" id="app-id" value="${this.data.id}" />
+    <input type="hidden" id="app-id" value="${this.data().id}" />
     </mip-form>
     </section>
     `)
@@ -100,7 +102,7 @@ export default class MIPComment extends CustomElement {
     let ul = document.getElementById("comment-list")
     let oli = ul.getElementsByTagName('li')
     let p = Math.floor(oli.length / 5 + 1);
-    fetch(`${this.data.url}/sajax.asp?action=0&id=${this.data.id}&page=${p}&CommentTpye=0`, {
+    fetch(`${this.data.url}/sajax.asp?action=0&id=${this.data().id}&page=${p}&CommentTpye=0`, {
       'method': 'GET'
     }).then((responseText) => {
       return responseText.text()
@@ -145,11 +147,11 @@ export default class MIPComment extends CustomElement {
       if (classIn == 1) {
         MIPCommon.cAlert('您评论写的太短啦！')
         return false;
-      } else if (MIPCommon.getCookie('oldTime' + this.data.id) == 1) {
+      } else if (MIPCommon.getCookie('oldTime' + this.data().id) == 1) {
         MIPCommon.cAlert('您评论次数太频繁啦！')
         return false;
       }
-      fetch(`${this.data.url}/ajax.asp?type=POST&content=${content}&SoftID=${this.data.id}&Action=2&CommentTpye=0`, {
+      fetch(`${this.data().url}/ajax.asp?type=POST&content=${content}&SoftID=${this.data().id}&Action=2&CommentTpye=0`, {
         'method': 'GET'
       }).then((responseText) => {
         return responseText.text()
@@ -161,7 +163,7 @@ export default class MIPComment extends CustomElement {
         css(cbutton, { display: 'block' })
         css(clist, { display: 'block' })
         document.getElementsByClassName('w-text')[0].getElementsByTagName('textarea')[0].value = ''
-        MIPCommon.setCookie('oldTime' + this.data.id, '1')
+        MIPCommon.setCookie('oldTime' + this.data().id, '1')
       })
     }
   }
