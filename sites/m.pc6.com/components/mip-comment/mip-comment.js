@@ -102,7 +102,7 @@ export default class MIPComment extends CustomElement {
     let ul = document.getElementById("comment-list")
     let oli = ul.getElementsByTagName('li')
     let p = Math.floor(oli.length / 5 + 1);
-    fetch(`${this.data.url}/sajax.asp?action=0&id=${this.data().id}&page=${p}&CommentTpye=0`, {
+    fetch(`${this.data().url}/sajax.asp?action=0&id=${this.data().id}&page=${p}&CommentTpye=0`, {
       'method': 'GET'
     }).then((responseText) => {
       return responseText.text()
