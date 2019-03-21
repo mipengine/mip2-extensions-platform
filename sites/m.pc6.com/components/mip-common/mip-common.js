@@ -18,12 +18,12 @@ export default class MIPCommon {
    *读取cookies
    */
   static getCookie (name) {
-    let reg = new RegExp("(^| )" + name + "=([^;]*)(;|$)")
+    let reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
     let arr = document.cookie.match(reg)
     if (arr) {
-        return parseInt(unescape(arr[2]))
+      return parseInt(unescape(arr[2]))
     } else {
-        return null;
+      return null
     }
   }
   /*
