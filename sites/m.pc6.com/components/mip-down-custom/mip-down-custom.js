@@ -10,13 +10,15 @@ const { platform, dom, css } = util
 
 export default class MIPDownCustom extends CustomElement {
   data () {
-    url: this.element.getAttribute('url'),
-    webInfoId: document.getElementById('down-href').getAttribute('downid'),
-    webInfoCid: document.getElementById('down-href').getAttribute('cid'),
-    webInfoRid: document.getElementById('down-href').getAttribute('rid'),
-    is_ordered: document.getElementById('down-href').getAttribute('is_ordered'),
-    ordered_num: document.getElementById('down-href').getAttribute('ordered_num'),
-    assid: parseInt(document.getElementById('Associate').innerHTML, 10)
+    return {
+      url: this.element.getAttribute('url'),
+      webInfoId: document.getElementById('down-href').getAttribute('downid'),
+      webInfoCid: document.getElementById('down-href').getAttribute('cid'),
+      webInfoRid: document.getElementById('down-href').getAttribute('rid'),
+      is_ordered: document.getElementById('down-href').getAttribute('is_ordered'),
+      ordered_num: document.getElementById('down-href').getAttribute('ordered_num'),
+      assid: parseInt(document.getElementById('Associate').innerHTML, 10)
+    }
   }
   build () {
     let plat_Android = document.getElementById('plat_Android')
