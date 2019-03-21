@@ -84,11 +84,7 @@ export default class MIPComment extends CustomElement {
     let verify = document.getElementById('verify')
     textarea.onkeyup = function () {
       let len = this.value.length
-      let reg = /[\x00-\xff]/g
-      let zh = this.value.match(rrege).length
-      console.log(zh,len)
-      let tlen = Math.ceil((len + zh) / 2)
-      if (tlen < 5) {
+      if (len < 5) {
         verify.classList.add('disable')
       } else {
         verify.classList.remove('disable')
