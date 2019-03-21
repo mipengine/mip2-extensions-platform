@@ -10,7 +10,9 @@ const { platform, dom, css } = util
 
 export default class MIPDownCustom extends CustomElement {
   data () {
-    return {
+    let platAndroid = document.getElementById('plat_Android')
+    let platiPhone = document.getElementById('plat_iPhone')
+    let dataJson = {
       url: this.element.getAttribute('url'),
       webInfoId: document.getElementById('down-href').getAttribute('downid'),
       webInfoCid: document.getElementById('down-href').getAttribute('cid'),
@@ -19,28 +21,27 @@ export default class MIPDownCustom extends CustomElement {
       ordered_num: document.getElementById('down-href').getAttribute('ordered_num'),
       assid: parseInt(document.getElementById('Associate').innerHTML, 10)
     }
+    if (platAndroid) {
+      dataJson.platAndroidId = platAndroid.getAttribute('platid')
+      dataJson.platAndroidAddress = platAndroid.getAttribute('Address')
+      dataJson.platAndroidResSystem = platAndroid.getAttribute('ResSystem')
+      dataJson.platAndroidResName = platAndroid.getAttribute('ResName')
+      dataJson.platAndroidResVer = platAndroid.getAttribute('ResVer')
+      dataJson.platAndroidCid = platAndroid.getAttribute('cid')
+      dataJson.platAndroidRid = platAndroid.getAttribute('rid')
+    }
+    if (platiPhone) {
+      dataJson.platIPhoneId = platiPhone.getAttribute('platid')
+      dataJson.platIPhoneAddress = platiPhone.getAttribute('Address')
+      dataJson.platIPhoneResSystem = platiPhone.getAttribute('ResSystem')
+      dataJson.platIPhoneResName = platiPhone.getAttribute('ResName')
+      dataJson.platIPhoneResVer = platiPhone.getAttribute('ResVer')
+      dataJson.platIPhoneCid = platiPhone.getAttribute('cid')
+      dataJson.platIPhoneRid = platiPhone.getAttribute('rid')
+    }
+    return dataJson
   }
   build () {
-    let plat_Android = document.getElementById('plat_Android')
-    let plat_iPhone = document.getElementById('plat_iPhone')
-    if (plat_Android) {
-      this.data().platAndroidId = plat_Android.getAttribute('platid')
-      this.data().platAndroidAddress = plat_Android.getAttribute('Address')
-      this.data().platAndroidResSystem = plat_Android.getAttribute('ResSystem')
-      this.data().platAndroidResName = plat_Android.getAttribute('ResName')
-      this.data().platAndroidResVer = plat_Android.getAttribute('ResVer')
-      this.data().platAndroidCid = plat_Android.getAttribute('cid')
-      this.data().platAndroidRid = plat_Android.getAttribute('rid')
-    }
-    if (plat_iPhone) {
-      this.data().platIPhoneId = plat_iPhone.getAttribute('platid')
-      this.data().platIPhoneAddress = plat_iPhone.getAttribute('Address')
-      this.data().platIPhoneResSystem = plat_iPhone.getAttribute('ResSystem')
-      this.data().platIPhoneResName = plat_iPhone.getAttribute('ResName')
-      this.data().platIPhoneResVer = plat_iPhone.getAttribute('ResVer')
-      this.data().platIPhoneCid = plat_iPhone.getAttribute('cid')
-      this.data().platIPhoneRid = plat_iPhone.getAttribute('rid')
-    }
     // 猜你喜欢
     if (document.getElementById('guess_carousel').getElementsByTagName('li').length) {
       let guess_li = document.getElementById('guess_carousel').getElementsByTagName('li')[0]
@@ -51,11 +52,11 @@ export default class MIPDownCustom extends CustomElement {
     // 移除空内容
     this.emptyRemove()
     // 相同厂商
-    this.sliceLi('tcsyy',8)
+    this.sliceLi('tcsyy', 8)
     // H5在线玩
-    this.sliceLi('h5online',8)
+    this.sliceLi('h5online', 8)
     // 相关下载
-    this.sliceLi('rela_down',8)
+    this.sliceLi('rela_down', 8)
     // 区分cid
     this.difDo()
     // 修改下载链接
@@ -74,13 +75,13 @@ export default class MIPDownCustom extends CustomElement {
    */
   sliceLi (obj,pageNum) {
     if (document.getElementById(obj)) {
-      let obj_li = document.getElementById(obj).getElementsByClassName('hide')[0].getElementsByTagName('li')
-      if (obj_li.length) {
+      let objLi = document.getElementById(obj).getElementsByClassName('hide')[0].getElementsByTagName('li')
+      if (objLi.length) {
         // 增加点
         let dot = document.getElementById(obj).getElementsByClassName('mip-carousel-indicatorDot')[0]
         let dotHtml = ''
-        for(let i = 0; i < Math.ceil(obj_li.length / pageNum); i++){
-          if(i === 0){
+        for (let i = 0; i < Math.ceil(objLi.length / pageNum); i++) {
+          if(i === 0) {
             dotHtml += '<div class="mip-carousel-activeitem mip-carousel-indecator-item"></div>'
           }
           else{
@@ -88,21 +89,21 @@ export default class MIPDownCustom extends CustomElement {
           }
         }
         dot.innerHTML = dotHtml
-        let obj_carousel = document.getElementById(obj).getElementsByTagName('mip-carousel')[0]
-        let obj_html = '<div class="tags-box-ul cfix">'
-        for (let i = 0; i < obj_li.length; i++) {
-          if (obj_li[i].getElementsByTagName('img').length) {
-            obj_li[i].getElementsByTagName('mip-img')[0].removeChild(obj_li[i].getElementsByTagName('img')[0])
+        let objCarousel = document.getElementById(obj).getElementsByTagName('mip-carousel')[0]
+        let objHtml = '<div class="tags-box-ul cfix">'
+        for (let i = 0; i < objLi.length; i++) {
+          if (objLi[i].getElementsByTagName('img').length) {
+            objLi[i].getElementsByTagName('mip-img')[0].removeChild(objLi[i].getElementsByTagName('img')[0])
           }
-          obj_html += obj_li[i].outerHTML;
+          objHtml += objLi[i].outerHTML;
           if ((i + 1) % 8 === 0) {
-            obj_html += '</div>'
+            objHtml += '</div>'
           }
-          if ((i + 1) % 8 === 0 && i + 1 < obj_li.length) {
-            obj_html += '<div class="tags-box-ul cfix">'
+          if ((i + 1) % 8 === 0 && i + 1 < objLi.length) {
+            objHtml += '<div class="tags-box-ul cfix">'
           }
         }
-        obj_carousel.innerHTML = obj_html
+        objCarousel.innerHTML = objHtml
         document.getElementById(obj).removeChild(document.getElementById(obj).getElementsByClassName('hide')[0])
       } else {
         this.element.removeChild(document.getElementById(obj))
@@ -132,8 +133,8 @@ export default class MIPDownCustom extends CustomElement {
       let aiArr = [a, i]
       let aiJson = { num: 0 }
       let newsUrl = `${this.data().url}/pc.html`;
-      let body_ca = document.getElementsByClassName('ca')
-      let body_dif = document.getElementsByClassName('dif')
+      let bodyCa = document.getElementsByClassName('ca')
+      let bodyDif = document.getElementsByClassName('dif')
       let xgwz = document.getElementsByClassName('xgwz')[0].getElementsByClassName('d_title')[0]
       let cataName = document.getElementById('cataName')
       idArr.map((v, i) => {
@@ -172,8 +173,8 @@ export default class MIPDownCustom extends CustomElement {
         cataName.setAttribute('href', `${this.data().url}/ruanj.html`)
       }
       // 动态增加标题
-      for (let i = 0; i < body_ca.length; i++) {
-        body_ca[i].innerHTML = caName
+      for (let i = 0; i < bodyCa.length; i++) {
+        bodyCa[i].innerHTML = caName
       }
       // 文章动态增加链接
       if (document.getElementsByClassName('xgwz')[0].getElementsByTagName('li').length) {
@@ -181,8 +182,8 @@ export default class MIPDownCustom extends CustomElement {
         xgwz.appendChild(span)
       }
       // 动态显示不同内容
-      for (let i = 0; i < body_dif.length; i++) {
-        css(body_dif[i].getElementsByTagName('div')[caIndex], { display: 'block' })
+      for (let i = 0; i < bodyDif.length; i++) {
+        css(bodyDif[i].getElementsByTagName('div')[caIndex], { display: 'block' })
       }
       if (num === 0) {
         document.body.setAttribute('show', 0)
@@ -215,12 +216,12 @@ export default class MIPDownCustom extends CustomElement {
    */
   downHref () {
     if (document.getElementById('btns').getElementsByTagName('a').length) {
-      let btns_a = document.getElementById('btns').getElementsByTagName('a')[0]
+      let btnsA = document.getElementById('btns').getElementsByTagName('a')[0]
       let ResSystem = document.getElementById('ResSystem')
       let dnb = document.getElementsByClassName('dnb')
       let name = document.getElementById('info').getElementsByClassName('name')[0]
       if (this.data().assid > 0) {
-        btns_a.setAttribute('href', `${this.data().url}/down.asp?id=${this.data().assid}`)
+        btnsA.setAttribute('href', `${this.data().url}/down.asp?id=${this.data().assid}`)
       }
       let platAddress, platId, platResName, platResVer, platResSystem
       if (platform.isAndroid() && void 0 !== this.data().platAndroidAddress) {
@@ -241,9 +242,9 @@ export default class MIPDownCustom extends CustomElement {
         let ftp = platAddress.indexOf('ftp:')
         let https = platAddress.indexOf('https:')
         if (http >= 0 || ftp >= 0 || https >= 0) {
-          btns_a.setAttribute('href', platAddress)
+          btnsA.setAttribute('href', platAddress)
         } else {
-          btns_a.setAttribute('href', 'http://download.pc6.com/down/' + platId + '/')
+          btnsA.setAttribute('href', 'http://download.pc6.com/down/' + platId + '/')
         }
         let k = ',110974,110451,121665,115094,55819,49251,62433,140386,'.indexOf(',' + this.data().webInfoId + ',')
         ResSystem.innerHTML = platResSystem
@@ -376,17 +377,17 @@ export default class MIPDownCustom extends CustomElement {
    */
   downAlert () {
     if (document.getElementById('btns').getElementsByTagName('a').length) {
-      let btns_a = document.getElementById('btns').getElementsByTagName('a')[0]
+      let btnsA = document.getElementById('btns').getElementsByTagName('a')[0]
       //是否有下载地址
       let isDown = document.getElementById("btns").getElementsByTagName('a')[0].getAttribute("isDown")
       if ((platform.isIos() && void 0 === this.data().platAndroidAddress && isDown == 0) || (platform.isAndroid() && void 0 === this.data().platIPhoneAddress && isDown == 0)) {
-        btns_a.classList.add('noDown')
-        btns_a.innerHTML = '暂无下载'
-        btns_a.setAttribute('href', 'javascript:void(0)')
+        btnsA.classList.add('noDown')
+        btnsA.innerHTML = '暂无下载'
+        btnsA.setAttribute('href', 'javascript:void(0)')
       } else if (!platform.isAndroid() && !platform.isIos() && isDown == 0) {
-        btns_a.classList.add('noDown')
-        btns_a.innerHTML = '暂无下载'
-        btns_a.setAttribute('href', 'javascript:void(0)')
+        btnsA.classList.add('noDown')
+        btnsA.innerHTML = '暂无下载'
+        btnsA.setAttribute('href', 'javascript:void(0)')
       }
       // 增加群
       let qqqun;
@@ -458,9 +459,9 @@ export default class MIPDownCustom extends CustomElement {
    */
   yuyue () {
     if(document.getElementById('nobtn')) {return false;}//关闭时无预约
-    let is_ordered = this.data().is_ordered;
-    if (typeof(is_ordered) !== 'undefined') {
-      if (parseInt(is_ordered) === 1) {
+    let isOrdered = this.data().is_ordered;
+    if (typeof(isOrdered) !== 'undefined') {
+      if (parseInt(isOrdered) === 1) {
         this.addyuyue(this.data().ordered_num);
       }
     } else {
