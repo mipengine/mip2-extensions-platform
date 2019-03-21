@@ -83,8 +83,7 @@ export default class MIPDownCustom extends CustomElement {
         for (let i = 0; i < Math.ceil(objLi.length / pageNum); i++) {
           if (i === 0) {
             dotHtml += '<div class="mip-carousel-activeitem mip-carousel-indecator-item"></div>'
-          }
-          else {
+          } else {
             dotHtml += '<div class="mip-carousel-indecator-item"></div>'
           }
         }
@@ -274,7 +273,7 @@ export default class MIPDownCustom extends CustomElement {
         pid = this.data().platAndroidId
       }
     } else if (platform.isIos()) {
-      curPlatform = 1;
+      curPlatform = 1
       if (void 0 !== this.data().platIPhoneAddress) {
         rCid = this.data().platIPhoneCid
         rRid = this.data().platIPhoneRid
@@ -293,7 +292,7 @@ export default class MIPDownCustom extends CustomElement {
       } else {
         kKeys = kKeys.join(',')
       }
-      fetch(this.data().url + '/ajax.asp?action=998&k_keys=' + kKeys + '&id=' + this.data().webInfoId + '&platform=' + curPlatform + '&pid=' + pid + '&cid=' + ((typeof(this.data().webInfoCid) !== 'undefined') ? this.data().webInfoCid : 0) + '&rid=' + ((typeof(this.data().webInfoRid) !== 'undefined') ? this.data().webInfoRid : 0) + '&rcid=' + rCid + '&rrid=' + rRid, {
+      fetch(this.data().url + '/ajax.asp?action=998&k_keys=' + kKeys + '&id=' + this.data().webInfoId + '&platform=' + curPlatform + '&pid=' + pid + '&cid=' + ((typeof (this.data().webInfoCid) !== 'undefined') ? this.data().webInfoCid : 0) + '&rid=' + ((typeof (this.data().webInfoRid) !== 'undefined') ? this.data().webInfoRid : 0) + '&rcid=' + rCid + '&rrid=' + rRid, {
         'method': 'GET'
       }).then((responseText) => {
         return responseText.json()
@@ -456,7 +455,7 @@ export default class MIPDownCustom extends CustomElement {
   yuyue () {
     if (document.getElementById('nobtn')) { return false }
     let isOrdered = this.data().is_ordered
-    if (typeof(isOrdered) !== 'undefined') {
+    if (typeof (isOrdered) !== 'undefined') {
       if (parseInt(isOrdered) === 1) {
         this.addyuyue(this.data().ordered_num)
       }
@@ -493,7 +492,7 @@ export default class MIPDownCustom extends CustomElement {
     info.getElementsByTagName('p')[0].getElementsByTagName('span')[1].innerText = document.getElementById('ResSystem').innerText
     info.getElementsByTagName('p')[1].getElementsByTagName('span')[1].setAttribute('id', '')
     info.getElementsByTagName('p')[1].getElementsByTagName('span')[1].innerText = oNum + '人已预约'
-    let isyuyue = true;
+    let isyuyue = true
     let yuyueBtn = document.getElementById('yuyue')
     yuyueBtn.onclick = () => {
       if (isyuyue) {
@@ -508,7 +507,7 @@ export default class MIPDownCustom extends CustomElement {
         yAlertHtml += '<div class="yAlert_b">'
         yAlertHtml += '<div class="yAlert_bs">确定</div>'
         yAlertHtml += '<div class="yAlert_br">取消</div>'
-        yAlertHtml += '</div>';
+        yAlertHtml += '</div>'
         let hyAlertBg = dom.create(`<div class="yAlert_bg"></div>`)
         let hyAlert = dom.create(`<div class="yAlert">${yAlertHtml}</div>`)
         this.element.appendChild(hyAlertBg)
@@ -516,7 +515,6 @@ export default class MIPDownCustom extends CustomElement {
         let yAlertC = document.getElementsByClassName('yAlert_c')[0]
         let yAlertBg = document.getElementsByClassName('yAlert_bg')[0]
         let yAlertBr = document.getElementsByClassName('yAlert_br')[0]
-        //点击关闭
         yAlertC.onclick = () => {
           document.getElementsByClassName('yAlert')[0].parentNode.removeChild(document.getElementsByClassName('yAlert')[0])
           document.getElementsByClassName('yAlert_bg')[0].parentNode.removeChild(document.getElementsByClassName('yAlert_bg')[0])
@@ -532,7 +530,7 @@ export default class MIPDownCustom extends CustomElement {
         let yAlertBs = document.getElementsByClassName('yAlert_bs')[0]
         yAlertBs.onclick = () => {
           let phone = document.getElementById('yPhone')
-          let pVal = phone.value;
+          let pVal = phone.value
           let reg = (/^1[3|4|5|8][0-9]\d{4,8}$/).test(pVal)
           if (!pVal) {
             MIPCommon.cAlert('手机号码不能为空~！')
