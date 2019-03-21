@@ -2,14 +2,14 @@
  * @file 下载自定义 pc6
  * @author fl
  */
+import MIPCommon from '../mip-common/mip-common'
 import './index.less'
 import '../mip-common/index.less'
 const { CustomElement, util } = MIP
 const { platform, dom, css } = util
-import MIPCommon from '../mip-common/mip-common'
 
 export default class MIPDownCustom extends CustomElement {
-  data = {
+  data () {
     url: this.element.getAttribute('url'),
     webInfoId: document.getElementById('down-href').getAttribute('downid'),
     webInfoCid: document.getElementById('down-href').getAttribute('cid'),
@@ -18,26 +18,26 @@ export default class MIPDownCustom extends CustomElement {
     ordered_num: document.getElementById('down-href').getAttribute('ordered_num'),
     assid: parseInt(document.getElementById('Associate').innerHTML, 10)
   }
-  build() {
+  build () {
     let plat_Android = document.getElementById('plat_Android')
     let plat_iPhone = document.getElementById('plat_iPhone')
     if (plat_Android) {
-      this.data.platAndroidId = plat_Android.getAttribute('platid')
-      this.data.platAndroidAddress = plat_Android.getAttribute('Address')
-      this.data.platAndroidResSystem = plat_Android.getAttribute('ResSystem')
-      this.data.platAndroidResName = plat_Android.getAttribute('ResName')
-      this.data.platAndroidResVer = plat_Android.getAttribute('ResVer')
-      this.data.platAndroidCid = plat_Android.getAttribute('cid')
-      this.data.platAndroidRid = plat_Android.getAttribute('rid')
+      this.data().platAndroidId = plat_Android.getAttribute('platid')
+      this.data().platAndroidAddress = plat_Android.getAttribute('Address')
+      this.data().platAndroidResSystem = plat_Android.getAttribute('ResSystem')
+      this.data().platAndroidResName = plat_Android.getAttribute('ResName')
+      this.data().platAndroidResVer = plat_Android.getAttribute('ResVer')
+      this.data().platAndroidCid = plat_Android.getAttribute('cid')
+      this.data().platAndroidRid = plat_Android.getAttribute('rid')
     }
     if (plat_iPhone) {
-      this.data.platIPhoneId = plat_iPhone.getAttribute('platid')
-      this.data.platIPhoneAddress = plat_iPhone.getAttribute('Address')
-      this.data.platIPhoneResSystem = plat_iPhone.getAttribute('ResSystem')
-      this.data.platIPhoneResName = plat_iPhone.getAttribute('ResName')
-      this.data.platIPhoneResVer = plat_iPhone.getAttribute('ResVer')
-      this.data.platIPhoneCid = plat_iPhone.getAttribute('cid')
-      this.data.platIPhoneRid = plat_iPhone.getAttribute('rid')
+      this.data().platIPhoneId = plat_iPhone.getAttribute('platid')
+      this.data().platIPhoneAddress = plat_iPhone.getAttribute('Address')
+      this.data().platIPhoneResSystem = plat_iPhone.getAttribute('ResSystem')
+      this.data().platIPhoneResName = plat_iPhone.getAttribute('ResName')
+      this.data().platIPhoneResVer = plat_iPhone.getAttribute('ResVer')
+      this.data().platIPhoneCid = plat_iPhone.getAttribute('cid')
+      this.data().platIPhoneRid = plat_iPhone.getAttribute('rid')
     }
     // 猜你喜欢
     if (document.getElementById('guess_carousel').getElementsByTagName('li').length) {
@@ -70,15 +70,15 @@ export default class MIPDownCustom extends CustomElement {
    * @param {object} [obj] [id对象]
    * @param {number} [pageNum] [一页显示个数]
    */
-  sliceLi(obj,pageNum) {
+  sliceLi (obj,pageNum) {
     if (document.getElementById(obj)) {
       let obj_li = document.getElementById(obj).getElementsByClassName('hide')[0].getElementsByTagName('li')
       if (obj_li.length) {
         // 增加点
         let dot = document.getElementById(obj).getElementsByClassName('mip-carousel-indicatorDot')[0]
         let dotHtml = ''
-        for(var i = 0; i < Math.ceil(obj_li.length / pageNum); i++){
-          if(i == 0){
+        for(let i = 0; i < Math.ceil(obj_li.length / pageNum); i++){
+          if(i === 0){
             dotHtml += '<div class="mip-carousel-activeitem mip-carousel-indecator-item"></div>'
           }
           else{
@@ -87,16 +87,16 @@ export default class MIPDownCustom extends CustomElement {
         }
         dot.innerHTML = dotHtml
         let obj_carousel = document.getElementById(obj).getElementsByTagName('mip-carousel')[0]
-        let obj_html = '<div class="tags-box-ul cfix">';
+        let obj_html = '<div class="tags-box-ul cfix">'
         for (let i = 0; i < obj_li.length; i++) {
           if (obj_li[i].getElementsByTagName('img').length) {
             obj_li[i].getElementsByTagName('mip-img')[0].removeChild(obj_li[i].getElementsByTagName('img')[0])
           }
           obj_html += obj_li[i].outerHTML;
-          if ((i + 1) % 8 == 0) {
+          if ((i + 1) % 8 === 0) {
             obj_html += '</div>'
           }
-          if ((i + 1) % 8 == 0 && i + 1 < obj_li.length) {
+          if ((i + 1) % 8 === 0 && i + 1 < obj_li.length) {
             obj_html += '<div class="tags-box-ul cfix">'
           }
         }
@@ -110,7 +110,7 @@ export default class MIPDownCustom extends CustomElement {
   /*
    * 区分cid
    */
-  difDo() {
+  difDo () {
     let id = this.element.getAttribute('cid')
     let ang = [634, 695, 594, 696, 697, 712, 598, 592, 596, 593, 595, 637, 713, 638, 636, 842]
     let anr = [588, 589, 584, 582, 583, 585, 586, 587, 590, 600, 703, 704, 708, 709, 875, 876,
@@ -129,7 +129,7 @@ export default class MIPDownCustom extends CustomElement {
       let idArr = [ang, anr, ig, ir]
       let aiArr = [a, i]
       let aiJson = { num: 0 }
-      let newsUrl = `${this.data.url}/pc.html`;
+      let newsUrl = `${this.data().url}/pc.html`;
       let body_ca = document.getElementsByClassName('ca')
       let body_dif = document.getElementsByClassName('dif')
       let xgwz = document.getElementsByClassName('xgwz')[0].getElementsByClassName('d_title')[0]
@@ -152,22 +152,22 @@ export default class MIPDownCustom extends CustomElement {
       })
       if (caIndex === 0 || caIndex === 2) {
         caName = '手游'
-        newsUrl = `${this.data.url}/article.html`
+        newsUrl = `${this.data().url}/article.html`
       } else if (caIndex === 1 || caIndex === 3) {
         caName = '软件'
-        newsUrl = `${this.data.url}/jiaocheng.html`
+        newsUrl = `${this.data().url}/jiaocheng.html`
       }
       // 动态修改导头部标题
       if (aiJson.num) {
         cataName.innerHTML = '手游'
-        if (aiJson.index == 0) {
-          cataName.setAttribute('href', `${this.data.url}/wangyou.html`)
+        if (parseInt(aiJson.index) === 0) {
+          cataName.setAttribute('href', `${this.data().url}/wangyou.html`)
         } else {
-          cataName.setAttribute('href', `${this.data.url}/youxi.html`)
+          cataName.setAttribute('href', `${this.data().url}/youxi.html`)
         }
       } else {
         cataName.innerHTML = '软件'
-        cataName.setAttribute('href', `${this.data.url}/ruanj.html`)
+        cataName.setAttribute('href', `${this.data().url}/ruanj.html`)
       }
       // 动态增加标题
       for (let i = 0; i < body_ca.length; i++) {
@@ -194,45 +194,45 @@ export default class MIPDownCustom extends CustomElement {
   /*
    * 移除空内容
    */
-  emptyRemove() {
+  emptyRemove () {
     // 历史版本
-    if (document.getElementsByClassName('historyver')[0].getElementsByTagName('p').length == 0) {
+    if (document.getElementsByClassName('historyver')[0].getElementsByTagName('p').length === 0) {
       this.element.removeChild(document.getElementsByClassName('historyver')[0])
     }
     // 相关文章
-    if (document.getElementsByClassName('xgwz')[0].getElementsByTagName('li').length == 0) {
+    if (document.getElementsByClassName('xgwz')[0].getElementsByTagName('li').length === 0) {
       this.element.removeChild(document.getElementsByClassName('xgwz')[0])
     }
     // 相关视频
-    if (document.getElementsByClassName('xgsp')[0].getElementsByTagName('li').length == 0) {
+    if (document.getElementsByClassName('xgsp')[0].getElementsByTagName('li').length === 0) {
       this.element.removeChild(document.getElementsByClassName('xgsp')[0])
     }
   }
   /*
    * 修改下载链接
    */
-  downHref() {
+  downHref () {
     if (document.getElementById('btns').getElementsByTagName('a').length) {
       let btns_a = document.getElementById('btns').getElementsByTagName('a')[0]
       let ResSystem = document.getElementById('ResSystem')
       let dnb = document.getElementsByClassName('dnb')
       let name = document.getElementById('info').getElementsByClassName('name')[0]
-      if (this.data.assid > 0) {
-        btns_a.setAttribute('href', `${this.data.url}/down.asp?id=${this.data.assid}`)
+      if (this.data().assid > 0) {
+        btns_a.setAttribute('href', `${this.data().url}/down.asp?id=${this.data().assid}`)
       }
       let platAddress, platId, platResName, platResVer, platResSystem
-      if (platform.isAndroid() && void 0 !== this.data.platAndroidAddress) {
-        platAddress = this.data.platAndroidAddress
-        platId = this.data.platAndroidId
-        platResName = this.data.platAndroidResName
-        platResVer = this.data.platAndroidResVer
-        platResSystem = this.data.platAndroidResSystem
-      } else if (platform.isIos() && void 0 !== this.data.platIPhoneAddress) {
-        platAddress = this.data.platIPhoneAddress
-        platId = this.data.platIPhoneId
-        platResName = this.data.platIPhoneResName
-        platResVer = this.data.platIPhoneResVer
-        platResSystem = this.data.platIPhoneResSystem
+      if (platform.isAndroid() && void 0 !== this.data().platAndroidAddress) {
+        platAddress = this.data().platAndroidAddress
+        platId = this.data().platAndroidId
+        platResName = this.data().platAndroidResName
+        platResVer = this.data().platAndroidResVer
+        platResSystem = this.data().platAndroidResSystem
+      } else if (platform.isIos() && void 0 !== this.data().platIPhoneAddress) {
+        platAddress = this.data().platIPhoneAddress
+        platId = this.data().platIPhoneId
+        platResName = this.data().platIPhoneResName
+        platResVer = this.data().platIPhoneResVer
+        platResSystem = this.data().platIPhoneResSystem
       }
       if (platAddress) {
         let http = platAddress.indexOf('http:')
@@ -243,7 +243,7 @@ export default class MIPDownCustom extends CustomElement {
         } else {
           btns_a.setAttribute('href', 'http://download.pc6.com/down/' + platId + '/')
         }
-        let k = ',110974,110451,121665,115094,55819,49251,62433,140386,'.indexOf(',' + this.data.webInfoId + ',')
+        let k = ',110974,110451,121665,115094,55819,49251,62433,140386,'.indexOf(',' + this.data().webInfoId + ',')
         ResSystem.innerHTML = platResSystem
         if (k < 0) {
           if (dnb.length < 1) {
@@ -256,7 +256,7 @@ export default class MIPDownCustom extends CustomElement {
   /*
    * 精品推荐
    */
-  bestRec() {
+  bestRec () {
     let k_keys = [], // K关键词
       cur_platform = 2, // 平台类型
       pid = 0, // 关联平台资源ID
@@ -265,17 +265,17 @@ export default class MIPDownCustom extends CustomElement {
     // 平台类型
     if (platform.isAndroid()) {
       cur_platform = 0;
-      if (void 0 !== this.data.platAndroidAddress) {
-        r_cid = this.data.platAndroidCid;
-        r_rid = this.data.platAndroidRid;
-        pid = this.data.platAndroidId;
+      if (void 0 !== this.data().platAndroidAddress) {
+        r_cid = this.data().platAndroidCid;
+        r_rid = this.data().platAndroidRid;
+        pid = this.data().platAndroidId;
       }
     } else if (platform.isIos()) {
       cur_platform = 1;
-      if (void 0 !== this.data.platIPhoneAddress) {
-        r_cid = this.data.platIPhoneCid;
-        r_rid = this.data.platIPhoneRid;
-        pid = this.data.platIPhoneId;
+      if (void 0 !== this.data().platIPhoneAddress) {
+        r_cid = this.data().platIPhoneCid;
+        r_rid = this.data().platIPhoneRid;
+        pid = this.data().platIPhoneId;
       }
     }
     // 只处理android和iphone
@@ -290,7 +290,7 @@ export default class MIPDownCustom extends CustomElement {
       } else {
         k_keys = k_keys.join(",");
       }
-      fetch(this.data.url + '/ajax.asp?action=998&k_keys=' + k_keys + '&id=' + this.data.webInfoId + '&platform=' + cur_platform + '&pid=' + pid + '&cid=' + ((typeof(this.data.webInfoCid) !== "undefined") ? this.data.webInfoCid : 0) + '&rid=' + ((typeof(this.data.webInfoRid) !== "undefined") ? this.data.webInfoRid : 0) + '&rcid=' + r_cid + '&rrid=' + r_rid, {
+      fetch(this.data().url + '/ajax.asp?action=998&k_keys=' + k_keys + '&id=' + this.data().webInfoId + '&platform=' + cur_platform + '&pid=' + pid + '&cid=' + ((typeof(this.data().webInfoCid) !== "undefined") ? this.data().webInfoCid : 0) + '&rid=' + ((typeof(this.data().webInfoRid) !== "undefined") ? this.data().webInfoRid : 0) + '&rcid=' + r_cid + '&rrid=' + r_rid, {
         'method': 'GET'
       }).then((responseText) => {
         return responseText.json()
@@ -304,11 +304,11 @@ export default class MIPDownCustom extends CustomElement {
           let r = ''
           if (0 === cur_platform) {
             for (let k = 0; k < n.length; ++k) {
-              r += '<li><a href="' + this.data.url + '/down.asp?id=' + n[k].ID + '"><mip-img src="' + n[k].SmallImg + '" data-stats-cnzz-obj="{\'type\':\'click\',\'data\':[\'_trackEvent\',\'tuijian\',\'tuijian' + (k + 1) + '\',\'' + n[k].ResName + '\']}"></mip-img><p>' + n[k].ResName + '</p></a></li>'
+              r += '<li><a href="' + this.data().url + '/down.asp?id=' + n[k].ID + '"><mip-img src="' + n[k].SmallImg + '" data-stats-cnzz-obj="{\'type\':\'click\',\'data\':[\'_trackEvent\',\'tuijian\',\'tuijian' + (k + 1) + '\',\'' + n[k].ResName + '\']}"></mip-img><p>' + n[k].ResName + '</p></a></li>'
             }
           } else if (1 === cur_platform) {
             for (let b = 0; b < n.length; ++b) {
-              r += '<li><a href="' + this.data.url + '/mipd/' + n[b].ID + '.html" target="_blank"><mip-img src="' + n[b].SmallImg + '" data-stats-cnzz-obj="{\'type\':\'click\',\'data\':[\'_trackEvent\',\'tuijian\',\'tuijian' + (b + 1) + '\',\'' + n[b].ResName + '\']}"></mip-img><p>' + n[b].ResName + '</p></a></li>'
+              r += '<li><a href="' + this.data().url + '/mipd/' + n[b].ID + '.html" target="_blank"><mip-img src="' + n[b].SmallImg + '" data-stats-cnzz-obj="{\'type\':\'click\',\'data\':[\'_trackEvent\',\'tuijian\',\'tuijian' + (b + 1) + '\',\'' + n[b].ResName + '\']}"></mip-img><p>' + n[b].ResName + '</p></a></li>'
             }
           }
           document.getElementsByClassName('tjyxph')[0].getElementsByTagName('ul')[0].innerHTML = r
@@ -319,7 +319,7 @@ export default class MIPDownCustom extends CustomElement {
   /*
    * 排行榜
    */
-  rank(caIndex) {
+  rank (caIndex) {
     if (document.getElementsByClassName('rank').length) {
       let rank = document.getElementsByClassName('rank')[0]
       let list = rank.getElementsByClassName('tab-content')
@@ -357,7 +357,7 @@ export default class MIPDownCustom extends CustomElement {
             }
           }
           num = num + 4
-          if (num == li.length) {
+          if (parseInt(num) === li.length) {
             lookmore.parentNode.removeChild(lookmore)
           }
           for (let j = 0; j < li.length; j++) {
@@ -372,12 +372,12 @@ export default class MIPDownCustom extends CustomElement {
   /*
    *下载后弹框
    */
-  downAlert() {
+  downAlert () {
     if (document.getElementById('btns').getElementsByTagName('a').length) {
       let btns_a = document.getElementById('btns').getElementsByTagName('a')[0]
       //是否有下载地址
       let isDown = document.getElementById("btns").getElementsByTagName('a')[0].getAttribute("isDown")
-      if ((platform.isIos() && void 0 === this.data.platAndroidAddress && isDown == 0) || (platform.isAndroid() && void 0 === this.data.platIPhoneAddress && isDown == 0)) {
+      if ((platform.isIos() && void 0 === this.data().platAndroidAddress && isDown == 0) || (platform.isAndroid() && void 0 === this.data().platIPhoneAddress && isDown == 0)) {
         btns_a.classList.add('noDown')
         btns_a.innerHTML = '暂无下载'
         btns_a.setAttribute('href', 'javascript:void(0)')
@@ -393,7 +393,7 @@ export default class MIPDownCustom extends CustomElement {
       } else if (platform.isIos()) {
         qqqun = '<p id="qqqun"><a target="_blank" href="mqqapi://card/show_pslcard?src_type=internal&version=1&uin=429173108&card_type=group&source=qrcode"><mip-img border="0" src="https://thumb.jfcdns.com/up/2017-1/201713916104315314.png" alt="王者荣耀交流群②" title="王者荣耀交流群②"></mip-img></a></p>';
       }
-      if (this.data.webInfoId == 180382 || this.data.webInfoId == 189245 || this.data.webInfoId == 180065) {
+      if (parseInt(this.data().webInfoId) === 180382 || parseInt(this.data().webInfoId) === 189245 || parseInt(this.data().webInfoId) === 180065) {
         document.getElementById('qun').innerHTML = qqqun
       } else {
         qqqun = ''
@@ -403,7 +403,7 @@ export default class MIPDownCustom extends CustomElement {
         let html
         downBtn.onclick = () => {
           html = '<div class="m-click-show"><div class="m-show-cont"><strong class="g-show-title">下载此 APP 的<span>还下载了</span>这些</strong><b class="m-close-btn">+</b>';
-          if (qqqun != '') {
+          if (qqqun !== '') {
             html += qqqun + '<ul class="m-show-ul">';
           } else {
             html += '<ul class="m-show-ul">';
@@ -419,11 +419,11 @@ export default class MIPDownCustom extends CustomElement {
               this.element.appendChild(htmlnode)
               let li = document.getElementsByClassName('m-show-ul')[0].getElementsByTagName('li')
               if (li.length > 8) {
-                for (var i = 9; i < 11; i++) {
+                for (let i = 9; i < 11; i++) {
                   document.getElementsByClassName('m-show-ul')[0].removeChild(document.getElementsByClassName('m-show-ul')[0].getElementsByTagName('li')[i])
                 }
               }
-              for (var i = 0; i < li.length; i++) {
+              for (let i = 0; i < li.length; i++) {
                 let li_a = li[i].getElementsByTagName('a')[0]
                 if (li_a.getElementsByTagName('span').length == 0) {
                   let li_span = dom.create(`<span class="down">下载</span>`)
@@ -454,23 +454,23 @@ export default class MIPDownCustom extends CustomElement {
   /*
    *预约
    */
-  yuyue() {
+  yuyue () {
     if(document.getElementById('nobtn')) {return false;}//关闭时无预约
-    let is_ordered = this.data.is_ordered;
-    if (typeof(is_ordered) != 'undefined') {
-      if (is_ordered == 1) {
-        this.addyuyue(this.data.ordered_num);
+    let is_ordered = this.data().is_ordered;
+    if (typeof(is_ordered) !== 'undefined') {
+      if (parseInt(is_ordered) === 1) {
+        this.addyuyue(this.data().ordered_num);
       }
     } else {
-      fetch(`${this.data.url}/ajax.asp?action=989&id=${this.data.webInfoId}`, {
+      fetch(`${this.data().url}/ajax.asp?action=989&id=${this.data().webInfoId}`, {
         'method': 'GET'
       }).then((responseText) => {
         return responseText.json()
       }).then((responseRes) => {
-        var res = responseRes.content;
-        var flag = res[0].is_ordered;
-        var oNum = res[0].ordered_num;
-        if (flag == 1) {
+        let res = responseRes.content;
+        let flag = res[0].is_ordered;
+        let oNum = res[0].ordered_num;
+        if (parseInt(flag) === 1) {
           this.addyuyue(oNum);
         }
       })
@@ -479,7 +479,7 @@ export default class MIPDownCustom extends CustomElement {
   /*
    *预约增加
    */
-  addyuyue(oNum) {
+  addyuyue (oNum) {
     let btns = document.getElementById('btns')
     let noDown = document.getElementsByClassName('noDown')
     let info = document.getElementById('info')
@@ -535,9 +535,9 @@ export default class MIPDownCustom extends CustomElement {
         //点击确定
         let yAlert_bs = document.getElementsByClassName('yAlert_bs')[0]
         yAlert_bs.onclick = () => {
-          var phone = document.getElementById('yPhone')
-          var pVal = phone.value;
-          var reg = (/^1[3|4|5|8][0-9]\d{4,8}$/).test(pVal);
+          let phone = document.getElementById('yPhone')
+          let pVal = phone.value;
+          let reg = (/^1[3|4|5|8][0-9]\d{4,8}$/).test(pVal);
           if (!pVal) {
             MIPCommon.cAlert('手机号码不能为空~！');
           } else if (!reg) {
@@ -546,12 +546,12 @@ export default class MIPDownCustom extends CustomElement {
           } else {
             let catalog_name = document.getElementById('info').getElementsByClassName('cata')[0].innerText
             let resource_name = document.getElementById('info').getElementsByClassName('name')[0].getElementsByTagName('h1')[0].innerText
-            fetch(this.data.url + '/ajax.asp?action=988&resource_name=' + resource_name + '&phone=' + pVal + '&resource_id=' + this.data.webInfoId + '&catalog_id=' + this.data.webInfoCid + '&catalog_name=' + catalog_name + '&url=' + window.location.href, {
+            fetch(this.data().url + '/ajax.asp?action=988&resource_name=' + resource_name + '&phone=' + pVal + '&resource_id=' + this.data().webInfoId + '&catalog_id=' + this.data().webInfoCid + '&catalog_name=' + catalog_name + '&url=' + window.location.href, {
               'method': 'GET'
             }).then((responseText) => {
               return responseText.json()
             }).then((responseRes) => {
-              if (responseRes.code == 0) {
+              if (parseInt(responseRes.code) === 0) {
                 MIPCommon.cAlert('预约成功！');
                 document.getElementById('yuyue').getElementsByTagName('span')[0].innerText = '预约成功'
                 document.getElementById('yuyue').getElementsByTagName('span')[0].classList.add('suBtn')
