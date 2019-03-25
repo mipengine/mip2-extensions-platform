@@ -1,12 +1,12 @@
 # mip-comment
 
-页面逻辑脚本集合
+移动端评价模块样式以及逻辑
 
 标题|内容
 ----|----
 类型|通用
 支持布局|responsive, fixed-height, fill, container, fixed
-所需脚本| [https://c.mipcdn.com/extensions/platform/v2/mpc6.com/mip-comment/mip-comment.js](https://c.mipcdn.com/extensions/platform/v2/mpc6.com/mip-comment/mip-comment.js)
+所需脚本| [https://c.mipcdn.com/extensions/platform/v2/m.pc6.com/mip-comment/mip-comment.js](https://c.mipcdn.com/extensions/platform/v2/m.pc6.com/mip-comment/mip-comment.js)
 
 ## 示例
 

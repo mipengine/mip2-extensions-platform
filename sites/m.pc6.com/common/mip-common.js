@@ -49,4 +49,31 @@ export default class MIPCommon {
       }
     }, 3000)
   }
+  /*
+   *自定义统计
+   */
+  static statCustom () {
+    let dateTime = document.getElementById('down-href').getAttribute('dateTime')
+    let username = document.getElementById('down-href').getAttribute('username')
+    let n = document.querySelector('script[type="application/json"]')
+    if (n) {
+      let a = jsonParse(n.textContent.toString().replace(/[\s\b\t]/g, ''))
+      if (dateTime !== void 0 && username !== '' && a) {
+        let r = ''
+        if (a[0][username]) {
+          if (a[0][username].xtime) {
+            let o = new Date(a[0][username].xtime)
+            let s = new Date(dateTime)
+            if (o.getTime() < s.getTime()) {
+              r = a[0][username].hmToken
+            }
+          } else { r = a[0][username].hmToken }
+          if (r !== '') {
+            let stat = dom.create(`<mip-stats-baidu token="${r}"></mip-stats-baidu>`)
+            this.element.appendChild(stat)
+          }
+        }
+      }
+    }
+  }
 }

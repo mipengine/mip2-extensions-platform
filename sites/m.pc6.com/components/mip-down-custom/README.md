@@ -1,12 +1,12 @@
 # mip-down-custom
 
-页面逻辑脚本集合
+m.pc6.com移动端页面逻辑合集（预约下载、排行榜、ID区分显示等）
 
 标题|内容
 ----|----
 类型|通用
 支持布局|responsive, fixed-height, fill, container, fixed
-所需脚本| [https://c.mipcdn.com/extensions/platform/v2/mpc6.com/mip-down-custom/mip-down-custom.js](https://c.mipcdn.com/extensions/platform/v2/mpc6.com/mip-down-custom/mip-down-custom.js)
+所需脚本| [https://c.mipcdn.com/extensions/platform/v2/m.pc6.com/mip-down-custom/mip-down-custom.js](https://c.mipcdn.com/extensions/platform/v2/m.pc6.com/mip-down-custom/mip-down-custom.js)
 
 ## 示例
 

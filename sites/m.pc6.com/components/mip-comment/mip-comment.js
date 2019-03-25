@@ -3,8 +3,8 @@
  * @author fl
  */
 import './index.less'
-import '../mip-common/index.less'
-import MIPCommon from '../mip-common/mip-common'
+import '../../common/mip-common.less'
+import MIPCommon from '../../common/mip-common'
 const { CustomElement, util } = MIP
 const { jsonParse, dom, css } = util
 
@@ -18,23 +18,22 @@ export default class MIPComment extends CustomElement {
   build () {
     let wrapper = dom.create(`
     <section class="cont p10" id="comment">
-    <div class="d_title"><em>网友评论</em></div>
-    <div id="view-comment" class="reviews">
-    <div class="post">
-    <header>
-    <span class="fb">我要跟贴</span></header>
-    <ul id="comment-list"></ul>
-    <footer class="button-status-complete"><input type="button" value="更多评论" class="button"></footer>
-    </div>
-    </div>
-    <mip-form method="post" url="https://m.pc6.com/" id="submit" class="post">
-    <fieldset class="w-text"><textarea id="cTextarea"></textarea></fieldset>
-    <fieldset class="w-button">
-    <input id="verify" class="button disable" type="button" value="提交跟贴" hidefocus="true"/>
-    <span id="cancel" class="button">取消</span>
-    </fieldset>
-    <input type="hidden" id="app-id" value="${this.data().id}" />
-    </mip-form>
+      <div class="d_title"><em>网友评论</em></div>
+      <div id="view-comment" class="reviews">
+        <div class="post">
+          <header><span class="fb">我要跟贴</span></header>
+          <ul id="comment-list"></ul>
+          <footer class="button-status-complete"><input type="button" value="更多评论" class="button"></footer>
+        </div>
+      </div>
+      <mip-form method="post" url="https://m.pc6.com/" id="submit" class="post">
+        <fieldset class="w-text"><textarea id="cTextarea"></textarea></fieldset>
+        <fieldset class="w-button">
+          <input id="verify" class="button disable" type="button" value="提交跟贴" hidefocus="true"/>
+          <span id="cancel" class="button">取消</span>
+        </fieldset>
+        <input type="hidden" id="app-id" value="${this.data().id}" />
+      </mip-form>
     </section>
     `)
     this.element.appendChild(wrapper)
@@ -99,7 +98,7 @@ export default class MIPComment extends CustomElement {
     let oli = ul.getElementsByTagName('li')
     let p = Math.floor(oli.length / 5 + 1)
     fetch(`${this.data().url}/sajax.asp?action=0&id=${this.data().id}&page=${p}&CommentTpye=0`, {
-      'method': 'GET'
+      method: 'GET'
     }).then((responseText) => {
       return responseText.text()
     }).then((responseRes) => {
@@ -148,7 +147,7 @@ export default class MIPComment extends CustomElement {
         return false
       }
       fetch(`${this.data().url}/ajax.asp?type=POST&content=${content}&SoftID=${this.data().id}&Action=2&CommentTpye=0`, {
-        'method': 'GET'
+        method: 'GET'
       }).then((responseText) => {
         return responseText.text()
       }).then((responseRes) => {

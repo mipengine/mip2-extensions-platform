@@ -2,9 +2,9 @@
  * @file 下载自定义 pc6
  * @author fl
  */
-import MIPCommon from '../mip-common/mip-common'
+import MIPCommon from '../../common/mip-common'
 import './index.less'
-import '../mip-common/index.less'
+import '../../common/mip-common.less'
 const { CustomElement, util } = MIP
 const { platform, dom, css } = util
 
@@ -67,6 +67,8 @@ export default class MIPDownCustom extends CustomElement {
     this.downAlert()
     // 预约
     this.yuyue()
+    //自定义下载
+    MIPCommon.statCustom()
   }
   /*
    * li分组
