@@ -13,6 +13,7 @@ export default class MIPDownCustom extends CustomElement {
     let platAndroid = document.getElementById('plat_Android')
     let platiPhone = document.getElementById('plat_iPhone')
     let dataJson = {
+      id: this.element.getAttribute('cid'),
       url: this.element.getAttribute('url'),
       webInfoId: document.getElementById('down-href').getAttribute('downid'),
       webInfoCid: document.getElementById('down-href').getAttribute('cid'),
@@ -51,149 +52,22 @@ export default class MIPDownCustom extends CustomElement {
     }
     // 移除空内容
     this.emptyRemove()
-    // 相同厂商
-    this.sliceLi('tcsyy', 8)
-    // H5在线玩
-    this.sliceLi('h5online', 8)
-    // 相关下载
-    this.sliceLi('rela_down', 8)
-    // 区分cid
-    this.difDo()
+    // 文章动态增加链接
+    MIPCommon.alterNewUrl(document.getElementsByClassName('xgwz')[0].getElementsByClassName('d_title')[0], this.data().id, ['手游', '软件'], this.data().url)
+    // 修改头部标题
+    MIPCommon.alterTit(this.data().id, ['手游', '软件'], this.data().url)
     // 修改下载链接
     this.downHref()
     // 获取精品推荐
     this.bestRec()
-    // 下载
+    // 下载弹窗
     this.downAlert()
     // 预约
     this.yuyue()
-    // 自定义下载
+    // 自定义统计
     MIPCommon.statCustom()
-  }
-  /*
-   * li分组
-   * @param {object} [obj] [id对象]
-   * @param {number} [pageNum] [一页显示个数]
-   */
-  sliceLi (obj, pageNum) {
-    if (document.getElementById(obj)) {
-      let objLi = document.getElementById(obj).getElementsByClassName('hide')[0].getElementsByTagName('li')
-      if (objLi.length) {
-        // 增加点
-        let dot = document.getElementById(obj).getElementsByClassName('mip-carousel-indicatorDot')[0]
-        let dotHtml = ''
-        for (let i = 0; i < Math.ceil(objLi.length / pageNum); i++) {
-          if (i === 0) {
-            dotHtml += '<div class="mip-carousel-activeitem mip-carousel-indecator-item"></div>'
-          } else {
-            dotHtml += '<div class="mip-carousel-indecator-item"></div>'
-          }
-        }
-        dot.innerHTML = dotHtml
-        let objCarousel = document.getElementById(obj).getElementsByTagName('mip-carousel')[0]
-        let objHtml = '<div class="tags-box-ul cfix">'
-        for (let i = 0; i < objLi.length; i++) {
-          if (objLi[i].getElementsByTagName('img').length) {
-            objLi[i].getElementsByTagName('mip-img')[0].removeChild(objLi[i].getElementsByTagName('img')[0])
-          }
-          objHtml += objLi[i].outerHTML
-          if ((i + 1) % 8 === 0) {
-            objHtml += '</div>'
-          }
-          if ((i + 1) % 8 === 0 && i + 1 < objLi.length) {
-            objHtml += '<div class="tags-box-ul cfix">'
-          }
-        }
-        objCarousel.innerHTML = objHtml
-        document.getElementById(obj).removeChild(document.getElementById(obj).getElementsByClassName('hide')[0])
-      } else {
-        this.element.removeChild(document.getElementById(obj))
-      }
-    }
-  }
-  /*
-   * 区分cid
-   */
-  difDo () {
-    let id = this.element.getAttribute('cid')
-    let ang = [634, 695, 594, 696, 697, 712, 598, 592, 596, 593, 595, 637, 713, 638, 636, 842]
-    let anr = [588, 589, 584, 582, 583, 585, 586, 587, 590, 600, 703, 704, 708, 709, 875, 876,
-      877, 878, 879, 880, 881, 628, 705, 706, 627, 599
-    ]
-    let ig = [797, 798, 799, 800, 801, 802, 803, 804, 805, 806, 807, 808, 809, 810]
-    let ir = [776, 777, 778, 779, 780, 781, 782, 783, 784, 785, 786, 787, 788, 789, 790, 791,
-      792, 793, 794, 795
-    ]
-    let a = [631, 632, 633, 634, 636, 694, 695, 696, 697, 700, 727, 728, 729, 730, 731, 732, 733, 734, 735, 797, 798, 799, 800, 801, 806]
-    let i = [830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 840, 841, 813, 814, 815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 802, 803, 804, 805, 807, 808, 809, 810, 758, 759, 760, 761, 762, 763, 764, 765, 766, 767, 768, 769, 770, 771, 673, 672, 674, 675, 676, 677, 678, 679, 680, 681, 682, 683, 684, 685, 686, 687, 688, 689, 690, 618, 619, 620, 621, 622, 623, 624, 625, 591, 592, 593, 594, 595, 596, 597, 598, 637, 638, 711, 712, 713, 714, 842, 465, 466, 467, 468, 469, 470, 471, 472, 473, 476, 477, 386, 387, 388, 389, 390, 391, 414, 415, 416, 417, 571, 572, 573, 574, 422, 285, 282, 284, 286, 287, 288, 535, 616, 508, 384, 299, 304, 345, 478, 479, 480, 482, 506, 298, 561, 562, 629, 557]
-    if (id) {
-      let num = 0
-      let caIndex
-      let caName = ''
-      let idArr = [ang, anr, ig, ir]
-      let aiArr = [a, i]
-      let aiJson = { num: 0 }
-      let newsUrl = `${this.data().url}/pc.html`
-      let bodyCa = document.getElementsByClassName('ca')
-      let bodyDif = document.getElementsByClassName('dif')
-      let xgwz = document.getElementsByClassName('xgwz')[0].getElementsByClassName('d_title')[0]
-      let cataName = document.getElementById('cataName')
-      idArr.map((v, i) => {
-        v.map((sv) => {
-          if (id.indexOf(sv) > -1) {
-            caIndex = i
-            num++
-          }
-        })
-      })
-      aiArr.map((v, i) => {
-        v.map((sv) => {
-          if (id.indexOf(sv) > -1) {
-            aiJson.num++
-            aiJson.index = i
-          }
-        })
-      })
-      if (caIndex === 0 || caIndex === 2) {
-        caName = '手游'
-        newsUrl = `${this.data().url}/article.html`
-      } else if (caIndex === 1 || caIndex === 3) {
-        caName = '软件'
-        newsUrl = `${this.data().url}/jiaocheng.html`
-      }
-      // 动态修改导头部标题
-      if (aiJson.num) {
-        cataName.innerHTML = '手游'
-        if (parseInt(aiJson.index) === 0) {
-          cataName.setAttribute('href', `${this.data().url}/wangyou.html`)
-        } else {
-          cataName.setAttribute('href', `${this.data().url}/youxi.html`)
-        }
-      } else {
-        cataName.innerHTML = '软件'
-        cataName.setAttribute('href', `${this.data().url}/ruanj.html`)
-      }
-      // 动态增加标题
-      for (let i = 0; i < bodyCa.length; i++) {
-        bodyCa[i].innerHTML = caName
-      }
-      // 文章动态增加链接
-      if (document.getElementsByClassName('xgwz')[0].getElementsByTagName('li').length) {
-        let span = dom.create(`<span><a href="${newsUrl}">更多+</a></span>`)
-        xgwz.appendChild(span)
-      }
-      // 动态显示不同内容
-      for (let i = 0; i < bodyDif.length; i++) {
-        css(bodyDif[i].getElementsByTagName('div')[caIndex], { display: 'block' })
-      }
-      if (num === 0) {
-        document.body.setAttribute('show', 0)
-        this.element.removeChild(document.getElementsByClassName('hot_gamerec')[0])
-        this.element.removeChild(document.getElementsByClassName('rank')[0])
-      } else {
-        this.rank(caIndex)
-      }
-    }
+    // 排行榜
+    MIPCommon.rank(this.data().id)
   }
   /*
    * 移除空内容
@@ -318,57 +192,6 @@ export default class MIPDownCustom extends CustomElement {
           document.getElementsByClassName('tjyxph')[0].getElementsByTagName('ul')[0].innerHTML = r
         }
       })
-    }
-  }
-  /*
-   * 排行榜
-   */
-  rank (caIndex) {
-    if (document.getElementsByClassName('rank').length) {
-      let rank = document.getElementsByClassName('rank')[0]
-      let list = rank.getElementsByClassName('tab-content')
-      let titleLi = rank.getElementsByClassName('tab-panel')[0].getElementsByTagName('li')
-      // 默认样式
-      for (let i = 0; i < list.length; i++) {
-        css(list[i], { display: 'none' })
-        let li = list[i].getElementsByClassName('list')[0].getElementsByTagName('div')[caIndex].getElementsByTagName('li')
-        for (let j = 0; j < li.length; j++) {
-          if (j > 3) {
-            css(li[j], { display: 'none' })
-          }
-        }
-      }
-      css(list[1], { display: 'block' })
-      for (let i = 0; i < titleLi.length; i++) {
-        let index = i
-        titleLi[i].onclick = function () {
-          for (let j = 0; j < titleLi.length; j++) {
-            titleLi[j].setAttribute('class', '')
-            css(list[j], { display: 'none' })
-          }
-          this.setAttribute('class', 'active')
-          css(list[index], { display: 'block' })
-        }
-        let lookmore = list[i].getElementsByClassName('lookmore')[0]
-        let li = list[i].getElementsByClassName('list')[0].getElementsByTagName('div')[caIndex].getElementsByTagName('li')
-        lookmore.onclick = () => {
-          let num = 0
-          for (let j = 0; j < li.length; j++) {
-            if (css(li[j], 'display') !== 'none') {
-              num++
-            }
-          }
-          num = num + 4
-          if (parseInt(num) === li.length) {
-            lookmore.parentNode.removeChild(lookmore)
-          }
-          for (let j = 0; j < li.length; j++) {
-            if (j < num) {
-              css(li[j], { display: 'block' })
-            }
-          }
-        }
-      }
     }
   }
   /*

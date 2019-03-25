@@ -1,0 +1,60 @@
+mip-scroll-custom {
+  .tags-box-ul {
+    padding: 0 8px;
+    &:after{
+      content:'';
+      clear: both;
+      height:0;
+    }
+    li {
+      width: 25%;
+      float: left;
+      margin-top: 8px;
+      margin-bottom: 10px;
+      list-style: none;
+      a {
+        display: block;
+        width: 66px;
+        text-align: center;
+        margin: 0 auto;
+      }
+      mip-img {
+        position: relative !important;
+        width: 65px;
+        height: 65px;
+        img {
+          width: 65px;
+          height: 65px;
+          border-radius: 5px;
+        }
+      }
+      span {
+        font-size: 14px;
+        line-height: 30px;
+        height: 30px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        color: #000;
+        text-align: center;
+        word-break: break-all;
+        display: block;
+      }
+      em {
+        border-radius: 20px;
+        border: #65bb0a 1px solid;
+        line-height: 25px;
+        color: #65bb0a;
+        display: block;
+        font-style: normal;
+      }
+    }
+  }
+  .mip-carousel-indicatorDot .mip-carousel-indecator-item {
+    width: 12px;
+    height: 12px;
+  }
+  .mip-carousel-indicatorDot .mip-carousel-activeitem {
+    background-color: #02AFF3;
+  }
+}
