@@ -3,7 +3,7 @@
  * @author fl
  */
 const { util } = MIP
-const { dom } = util
+const { jsonParse, dom } = util
 
 export default class MIPCommon {
   /*

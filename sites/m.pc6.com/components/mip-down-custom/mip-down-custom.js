@@ -67,7 +67,7 @@ export default class MIPDownCustom extends CustomElement {
     this.downAlert()
     // 预约
     this.yuyue()
-    //自定义下载
+    // 自定义下载
     MIPCommon.statCustom()
   }
   /*
