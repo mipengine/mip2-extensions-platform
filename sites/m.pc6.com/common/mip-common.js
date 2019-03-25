@@ -216,7 +216,7 @@ export default class MIPCommon {
           } else { r = a[0][username].hmToken }
           if (r !== '') {
             let stat = dom.create(`<mip-stats-baidu token="${r}"></mip-stats-baidu>`)
-            this.element.appendChild(stat)
+            document.body.appendChild(stat)
           }
         }
       }

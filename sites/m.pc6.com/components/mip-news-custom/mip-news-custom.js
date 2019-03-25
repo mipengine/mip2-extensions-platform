@@ -20,6 +20,8 @@ export default class MIPNewsCustom extends CustomElement {
     this.emptyRemove()
     // 排行榜
     MIPCommon.rank(this.data().id)
+    // 自定义统计
+    MIPCommon.statCustom()
   }
   /*
    *当前分类
