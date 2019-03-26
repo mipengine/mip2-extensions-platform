@@ -9,7 +9,7 @@ export default class MIPCommon {
   /*
    *设置cookies
    */
-  static setCookie(name, value) {
+  static setCookie (name, value) {
     let d = new Date()
     d.setTime(d.getTime() + 60 * 2000)
     document.cookie = name + '=' + escape(value) + ';expires=' + d.toGMTString()
@@ -17,7 +17,7 @@ export default class MIPCommon {
   /*
    *读取cookies
    */
-  static getCookie(name) {
+  static getCookie (name) {
     let reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
     let arr = document.cookie.match(reg)
     if (arr) {
@@ -29,7 +29,7 @@ export default class MIPCommon {
   /*
    *时间函数
    */
-  static time(d) {
+  static time (d) {
     let result = ''
     result += [d.getFullYear(), d.getMonth() + 1, d.getDate()].join('/')
     return result.replace(/(-|:)(\d[^\d])/g, '$1' + '0$2')
@@ -37,7 +37,7 @@ export default class MIPCommon {
   /*
    *提示
    */
-  static cAlert(msg) {
+  static cAlert (msg) {
     if (document.getElementById('alert_tips')) {
       document.getElementById('alert_tips').parentNode.removeChild(document.getElementById('alert_tips'))
     }
@@ -52,7 +52,7 @@ export default class MIPCommon {
   /*
    *查找是否在数组中
    */
-  static inArray(str, arr) {
+  static inArray (str, arr) {
     if (str && arr) {
       let aiJson = { num: 0 }
       arr.map((v, i) => {
@@ -94,9 +94,9 @@ export default class MIPCommon {
         xgwz.appendChild(span)
       }
       // 动态增加标题
-      let body_ca = document.getElementsByClassName('ca')
-      for (let i = 0; i < body_ca.length; i++) {
-        body_ca[i].innerHTML = caName
+      let bodyCa = document.getElementsByClassName('ca')
+      for (let i = 0; i < bodyCa.length; i++) {
+        bodyCa[i].innerHTML = caName
       }
       // 动态显示不同内容
       let bodyDif = document.getElementsByClassName('dif')
@@ -105,14 +105,14 @@ export default class MIPCommon {
       }
     }
   }
-   /*
+  /*
    * 修改头部标题
    */
   static alterTit (id, caNameArr, url) {
     if (id) {
-      let wy_arr = [631, 632, 633, 634, 636, 694, 695, 696, 697, 700, 727, 728, 729, 730, 731, 732, 733, 734, 735, 797, 798, 799, 800, 801, 806];
-      let dj_arr = [830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 840, 841, 813, 814, 815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 802, 803, 804, 805, 807, 808, 809, 810, 758, 759, 760, 761, 762, 763, 764, 765, 766, 767, 768, 769, 770, 771, 673, 672, 674, 675, 676, 677, 678, 679, 680, 681, 682, 683, 684, 685, 686, 687, 688, 689, 690, 618, 619, 620, 621, 622, 623, 624, 625, 591, 592, 593, 594, 595, 596, 597, 598, 637, 638, 711, 712, 713, 714, 842, 465, 466, 467, 468, 469, 470, 471, 472, 473, 476, 477, 386, 387, 388, 389, 390, 391, 414, 415, 416, 417, 571, 572, 573, 574, 422, 285, 282, 284, 286, 287, 288, 535, 616, 508, 384, 299, 304, 345, 478, 479, 480, 482, 506, 298, 561, 562, 629, 557];
-      let aiJson = MIPCommon.inArray(id, [wy_arr, dj_arr])
+      let wyArr = [631, 632, 633, 634, 636, 694, 695, 696, 697, 700, 727, 728, 729, 730, 731, 732, 733, 734, 735, 797, 798, 799, 800, 801, 806]
+      let djArr = [830, 831, 832, 833, 834, 835, 836, 837, 838, 839, 840, 841, 813, 814, 815, 816, 817, 818, 819, 820, 821, 822, 823, 824, 825, 826, 827, 828, 802, 803, 804, 805, 807, 808, 809, 810, 758, 759, 760, 761, 762, 763, 764, 765, 766, 767, 768, 769, 770, 771, 673, 672, 674, 675, 676, 677, 678, 679, 680, 681, 682, 683, 684, 685, 686, 687, 688, 689, 690, 618, 619, 620, 621, 622, 623, 624, 625, 591, 592, 593, 594, 595, 596, 597, 598, 637, 638, 711, 712, 713, 714, 842, 465, 466, 467, 468, 469, 470, 471, 472, 473, 476, 477, 386, 387, 388, 389, 390, 391, 414, 415, 416, 417, 571, 572, 573, 574, 422, 285, 282, 284, 286, 287, 288, 535, 616, 508, 384, 299, 304, 345, 478, 479, 480, 482, 506, 298, 561, 562, 629, 557]
+      let aiJson = MIPCommon.inArray(id, [wyArr, djArr])
       let cataName = document.getElementById('cataName')
       if (aiJson.num) {
         cataName.innerHTML = caNameArr[0]
@@ -125,7 +125,7 @@ export default class MIPCommon {
         cataName.innerHTML = caNameArr[1]
         cataName.setAttribute('href', `${url}/ruanj.html`)
       }
-    } 
+    }
   }
   /*
    * 排行榜
@@ -198,7 +198,7 @@ export default class MIPCommon {
   /*
    *自定义统计
    */
-  static statCustom() {
+  static statCustom () {
     let dateTime = document.getElementById('down-href').getAttribute('dateTime')
     let username = document.getElementById('down-href').getAttribute('username')
     let n = document.querySelector('script[type="application/json"]')

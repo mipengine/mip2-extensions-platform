@@ -2,7 +2,6 @@ import MIPCommon from '../../common/mip-common'
 import './index.less'
 import '../../common/mip-common.less'
 const { CustomElement, util } = MIP
-const { platform, dom, css } = util
 
 export default class MIPNewsCustom extends CustomElement {
   data () {
@@ -38,10 +37,10 @@ export default class MIPNewsCustom extends CustomElement {
     } else if (cataid === 10022 || cataid === 10024 || cataid === 120276 || cataid === 120255 || cataid === 120267 || cataid === 120280 || cataid === 120281) {
       catalogname.innerHTML = '手机评测'
       catalogname.setAttribute('href', `${this.data().url}/pingce.html`)
-    } else if (cataid === 120269) { 
+    } else if (cataid === 120269) {
       catalogname.innerHTML = 'IOS新闻'
       catalogname.setAttribute('href', `${this.data().url}/news.html`)
-    } else if (cataid === 120270) { 
+    } else if (cataid === 120270) {
       catalogname.innerHTML = '使用技巧'
       catalogname.setAttribute('href', `${this.data().url}/syjq.html`)
     } else if (cataid === 120271) {
