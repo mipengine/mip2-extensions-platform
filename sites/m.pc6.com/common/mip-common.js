@@ -143,8 +143,12 @@ export default class MIPCommon {
       let aiJson = this.inArray(id, [ang, anr, ig, ir])
       if (aiJson.num === 0) {
         document.body.setAttribute('show', 0)
-        this.element.removeChild(document.getElementsByClassName('hot_gamerec')[0])
-        this.element.removeChild(document.getElementsByClassName('rank')[0])
+        if (document.getElementsByClassName('hot_gamerec').length) {
+          document.getElementsByClassName('hot_gamerec')[0].parentNode.removeChild(document.getElementsByClassName('hot_gamerec')[0])
+        }
+        if (document.getElementsByClassName('rank').length) {
+          document.getElementsByClassName('rank')[0].parentNode.removeChild(document.getElementsByClassName('rank')[0])
+        }
       } else {
         if (document.getElementsByClassName('rank').length) {
           let rank = document.getElementsByClassName('rank')[0]

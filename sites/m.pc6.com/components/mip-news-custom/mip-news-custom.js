@@ -1,7 +1,8 @@
 import MIPCommon from '../../common/mip-common'
 import './index.less'
 import '../../common/mip-common.less'
-const { CustomElement } = MIP
+const { CustomElement, util } = MIP
+const { dom, css } = util
 
 export default class MIPNewsCustom extends CustomElement {
   data () {
@@ -13,6 +14,8 @@ export default class MIPNewsCustom extends CustomElement {
   build () {
     // 文章动态增加链接
     MIPCommon.alterNewUrl(document.getElementsByClassName('xgwz')[0].getElementsByClassName('dtit')[0], this.data().id, ['手游', '应用'], this.data().url)
+    // 文章分页效果
+    this.newsPage()
     // 当前分类
     this.setCate()
     // 移除空内容
@@ -61,18 +64,56 @@ export default class MIPNewsCustom extends CustomElement {
     }
   }
   /*
+  * 文章分页效果
+   */
+  newsPage () {
+    let pageObj = document.getElementById('cms_showpage')
+    if (pageObj) {
+      let li = pageObj.getElementsByTagName('ul')[0].getElementsByTagName('li')
+      if (li.length > 10) {
+        let htmlnode = dom.create('<span id="morefy">更多页数+</span>')
+        pageObj.appendChild(htmlnode)
+        for (let i = 0; i < li.length; i++) {
+          if (i >= 10) {
+            css(li[i], { display: 'none' })
+          } else {
+            css(li[i], { display: 'block' })
+          }
+        }
+        let morefy = document.getElementById('morefy')
+        morefy.onclick = () => {
+          let num = 0
+          for (let j = 0; j < li.length; j++) {
+            if (css(li[j], 'display') !== 'none') {
+              num++
+            }
+          }
+          num = num + 5
+          if (parseInt(num) >= li.length) {
+            morefy.parentNode.removeChild(morefy)
+          }
+          for (let j = 0; j < li.length; j++) {
+            if (j < num) {
+              css(li[j], { display: 'block' })
+            }
+          }
+        }
+      }
+    }
+  }
+  /*
   * 移出空内容
    */
   emptyRemove () {
     // 历史版本
     if (document.getElementsByClassName('historyver')[0].getElementsByTagName('p').length === 0) {
-      document.removeChild(document.getElementsByClassName('historyver')[0])
+      this.element.removeChild(document.getElementsByClassName('historyver')[0])
     } else if (document.getElementsByClassName('historyver')[0].getElementsByTagName('p').length <= 3) {
       document.getElementsByClassName('historyver')[0].removeChild(document.getElementsByClassName('historyver')[0].getElementsByClassName('lookmore')[0])
     }
     // 相关文章
     if (document.getElementsByClassName('xgwz')[0].getElementsByTagName('li').length === 0) {
-      document.removeChild(document.getElementsByClassName('xgwz')[0])
+      this.element.removeChild(document.getElementsByClassName('xgwz')[0])
     } else {
       // 修改下一页链接
       if (document.getElementById('newsnext')) {
@@ -81,7 +122,7 @@ export default class MIPNewsCustom extends CustomElement {
     }
     // 热门推荐
     if (document.getElementsByClassName('tjyxph')[0].getElementsByClassName('dcatetory')[0].getElementsByTagName('a').length === 0) {
-      document.removeChild(document.getElementsByClassName('tjyxph')[0])
+      this.element.removeChild(document.getElementsByClassName('tjyxph')[0])
     }
   }
 }
