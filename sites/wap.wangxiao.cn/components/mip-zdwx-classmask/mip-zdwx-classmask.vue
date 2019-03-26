@@ -94,44 +94,4 @@ export default {
     }
   }
 };
-
-// $(function() {
-//   $.ajax({
-//     url: "https://api.wangxiao.cn/app/ad.ashx",
-//     data: {
-//       AdTypeId: "20181205190706638",
-//       sign: "jz2"
-//     },
-//     dataType: "jsonp",
-//     success: function(data) {
-//       if (data.State == 1) {
-//         if (data.Data instanceof Array) {
-//           $(".mask").css("display", "flex");
-//           if (data.Data[0].kf) {
-//             $(".maskLink")
-//               .removeAttr("href")
-//               .addClass("zixun");
-//           } else {
-//             $(".maskLink").attr("href", data.Data[0].href);
-//           }
-//           $(".maskLink img").attr("src", data.Data[0].img);
-//         }
-//       } else {
-//         // 失败
-//       }
-//     }
-//   });
-// });
-// $(".maskBox").on("click", ".maskLink.zixun", function() {
-//   window.NTKF.im_openInPageChat(NTKF_PARAM.settingid);
-// });
-// $(".mask").on("click", function(e) {
-//   e.stopPropagation();
-//   $(this).hide();
-// });
-// $(".maskClose").on("click", function() {
-//   $(this)
-//     .parents(".mask")
-//     .hide();
-// });
 </script>
