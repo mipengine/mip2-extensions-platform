@@ -1,5 +1,7 @@
 <template>
-  <div class="section">
+  <div
+    v-if="isShow"
+    class="section">
     <h3 class="section-hd">
       <span
         :title-head="titleHead">{{ titleHead }}</span>
@@ -10,7 +12,7 @@
     </h3>
     <ul class="mip-reletive-list">
       <li
-        v-for="(item, key) in model.data"
+        v-for="(item, key) in model"
         :key="key"
         :search="search">
         <a :href="'https://m.5ikang.com/ask/' + item.id + '.html'">{{ item.title }}</a>
@@ -107,8 +109,9 @@ export default {
   },
   data () {
     return {
-      model: {},
-      isMore: false
+      model: [],
+      isMore: false,
+      isShow: false
     }
   },
   mounted () {
@@ -124,10 +127,18 @@ export default {
       }).then(res => {
         return res.text()
       }).then(res => {
-        this.model = JSON.parse(res)
-
-        if (this.model.data && this.model.data.length > 5) {
-          this.isMore = true
+        let result = JSON.parse(res)
+        if (result.code === 200) {
+          this.model = result.data || []
+          let length = this.model.length
+          if (length !== 0) {
+            this.isShow = true
+          }
+          if (length >= 5) {
+            this.isMore = true
+          }
+        } else {
+          this.isShow = false
         }
       })
     }
