@@ -1,7 +1,7 @@
 import MIPCommon from '../../common/mip-common'
 import './index.less'
 import '../../common/mip-common.less'
-const { CustomElement, util } = MIP
+const { CustomElement } = MIP
 
 export default class MIPNewsCustom extends CustomElement {
   data () {
