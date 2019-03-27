@@ -3,7 +3,6 @@ import './index.less'
 export default class MIPIdongdongAddress extends MIP.CustomElement {
   build () {
     let platform = MIP.util.platform
-    let u = navigator.userAgent
     let obj = this.element.querySelector('#btns a')
     let isDown = obj.getAttribute('isdown')
     let xgIphone = this.element.querySelector('#plat_iPhone') !== null
