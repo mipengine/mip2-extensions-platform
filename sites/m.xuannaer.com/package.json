@@ -1,7 +1,7 @@
 {
   "name": "m.xuannaer.com",
   "version": "0.0.1",
-  "description": "a touch project",
+  "description": "touch project",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
