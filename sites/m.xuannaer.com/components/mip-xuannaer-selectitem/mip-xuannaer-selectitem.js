@@ -86,7 +86,7 @@ function isEmpty (value) {
   return (!value || value === '')
 }
 
-export default class MIPSelectItem extends MIP.CustomElement {
+export default class MipXuannaerSelectitem extends MIP.CustomElement {
   build () {
     this.targetDom = {}
     this.modal = ''
