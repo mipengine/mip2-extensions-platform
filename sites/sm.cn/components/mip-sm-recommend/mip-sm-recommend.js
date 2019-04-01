@@ -5,7 +5,7 @@
  */
 import './mip-sm-recommend.less'
 const {
-  CustomElement,
+  CustomElement
 } = MIP
 
 export default class MipSmRecommend extends CustomElement {
@@ -19,7 +19,7 @@ export default class MipSmRecommend extends CustomElement {
       console.warn('query error')
       return false
     }
-    fetch (recommendAPI)
+    fetch(recommendAPI)
       .then(res => res.json())
       .then(data => {
         let wordsJson = data.items.words
