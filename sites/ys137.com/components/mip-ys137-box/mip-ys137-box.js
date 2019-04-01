@@ -146,16 +146,16 @@ function osOk (sourceOsArr) {
 function referrerOk (sourceOsArr) {
   let referrer = MIP.sandbox.window.document.referrer
   // 有不带"!"的os, 则以不带"!"os作为最终判断依据, 判断符为“||”
-  // sourceOsArr[0]为带"!"的os合集
+  // sourceOsArr[0]为不带"!"的合集
   if (sourceOsArr && sourceOsArr[0].length > 0) {
     return sourceOsArr[0].some(item => {
       return (referrer.indexOf(item) !== -1)
     })
   }
   // 带有"!"的os合集，判断符为“&&”
-  // sourceOsArr[1]为带"!"的os合集
+  // sourceOsArr[1]为带"!"的合集
   return sourceOsArr[1].every(item => {
-    return (referrer.substr(1).indexOf(item) === -1)
+    return (referrer.indexOf(item.substr(1)) === -1)
   })
 }
 /**
