@@ -25,7 +25,7 @@ export default class MIPXuannaerTouchTab extends MIP.CustomElement {
       n: nb, // 页面一打开默认在第几页？第一页就是0
       lang: lang // 每次的滑动距离
     })
-    this.element.querySelectorAll('.icons-node').classList.add('icon-active')
+    this.element.querySelector('.icons-node').classList.add('icon-active')
   }
   // 重新设置div宽度
   setwidth (box2) {
