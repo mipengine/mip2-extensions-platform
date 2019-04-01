@@ -1,6 +1,6 @@
 import './index.less'
 
-export default class MIPTouchTab extends MIP.CustomElement {
+export default class MIPXuannaerTouchTab extends MIP.CustomElement {
   build () {
     let len = this.element.getAttribute('data-len') || 2
     let nb = this.element.getAttribute('nb') || 0
@@ -25,7 +25,7 @@ export default class MIPTouchTab extends MIP.CustomElement {
       n: nb, // 页面一打开默认在第几页？第一页就是0
       lang: lang // 每次的滑动距离
     })
-    this.element.querySelectorAll('.icons-node')[0].classList.add('icon-active')
+    this.element.querySelectorAll('.icons-node').classList.add('icon-active')
   }
   // 重新设置div宽度
   setwidth (box2) {
@@ -62,11 +62,19 @@ export default class MIPTouchTab extends MIP.CustomElement {
     box.addEventListener('touchend', (event) => {
       // touchEnd
       // 位移小于+-50的不翻页
-      if (this.moveX < -50) n++
-      if (this.moveX > 50) n--
+      if (this.moveX < -50) {
+        n++
+      }
+      if (this.moveX > 50) {
+        n--
+      }
       // 最后&最前页控制
-      if (n < 0) n = 0
-      if (n > len - 1) n = len - 1
+      if (n < 0) {
+        n = 0
+      }
+      if (n > len - 1) {
+        n = len - 1
+      }
       // 重定位
       box2.style.transform = 'translateX(' + (-n * 50) + '%)' // 根据百分比位置移动页面
       this.element.querySelector('.icon-active').classList.remove('icon-active')
