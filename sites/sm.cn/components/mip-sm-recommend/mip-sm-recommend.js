@@ -6,13 +6,12 @@
 import './mip-sm-recommend.less'
 const {
   CustomElement,
-  util
 } = MIP
 
 export default class MipSmRecommend extends CustomElement {
   connectedCallback () {
     let element = this.element
-    let title = element.getAttribute('title')
+    let title = element.getAttribute('title') || (document.querySelector('title') && document.querySelector('title').textContent)
     let query = location.hash ? location.hash.split('#')[1] : title
     let recommendAPI = 'https://mip.m.sm.cn/rec/recword?wd=' + query + '&from=mip'
 
@@ -20,8 +19,7 @@ export default class MipSmRecommend extends CustomElement {
       console.warn('query error')
       return false
     }
-    
-    fetch(recommendAPI)
+    fetch (recommendAPI)
       .then(res => res.json())
       .then(data => {
         let wordsJson = data.items.words
