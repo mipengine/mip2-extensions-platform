@@ -9,54 +9,27 @@ const {
   util
 } = MIP
 
-function json2urlParams (jsonObj) {
-  if (!util.fn.isPlainObject(jsonObj)) {
-    return false
-  }
-  return Object.keys(jsonObj).map(function (key) {
-    return encodeURIComponent(key) + '=' + encodeURIComponent(jsonObj[key])
-  }).join('&')
-}
-
-/**
- * 从组件中的 type 为 "application/json" 的 script 标签中获取 JSON 数据
- *
- * @param   {HTMLElement}  element  mip-sm-recommend 的 DOM 元素
- * @returns {Object} json
- */
-function getParams (element) {
-  let result = {}
-  try {
-    let content = element.querySelector('script[type="application/json"]').textContent
-    if (content) {
-      result = util.jsonParse(content)
-    }
-  } catch (e) {
-    console.warn(element, e.message)
-  }
-  return result
-}
-
 export default class MipSmRecommend extends CustomElement {
   connectedCallback () {
-    const element = this.element
-    const paramsJson = getParams(element)
-    const keys = Object.keys(paramsJson)
-    if (!util.fn.isPlainObject(paramsJson) || keys.length === 0) {
-      console.warn('require params is json')
+    let element = this.element
+    let title = element.getAttribute('title')
+    let query = location.hash ? location.hash.split('#')[1] : title
+    let recommendAPI = 'https://mip.m.sm.cn/rec/recword?wd=' + query + '&from=mip'
+
+    if (!query) {
+      console.warn('query error')
       return false
     }
-    fetch(paramsJson.recommendAPI)
+    
+    fetch(recommendAPI)
       .then(res => res.json())
       .then(data => {
         let wordsJson = data.items.words
         let listHtml = '<div><p>大家还在搜</p><ul>'
         Object.keys(wordsJson).map((key) => {
           let item = wordsJson[key]
-          let queryUrl = paramsJson.zmPath + encodeURIComponent(item.show_word)
-          let searchParams = json2urlParams(paramsJson.zmSearch)
-          let linkUrl = searchParams ? queryUrl + '&' + searchParams : queryUrl
-          listHtml += '<li><a href="' + linkUrl + '">' + item.show_word + '</a></li>'
+          let queryUrl = 'https://mip.m.sm.cn/rec/redirect/?src=http://m.sa.sm.cn/s?q=' + encodeURIComponent(item.show_word) + '&from=wh30010'
+          listHtml += '<li><a href="' + queryUrl + '">' + item.show_word + '</a></li>'
         })
         listHtml += '</ul></div>'
         let createElement = MIP.util.dom.create(listHtml)
