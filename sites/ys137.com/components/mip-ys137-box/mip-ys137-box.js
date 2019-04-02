@@ -195,7 +195,7 @@ export default class MIPYs137Box extends MIP.CustomElement {
     const scope = element.getAttribute('scope')
     const isOk = scopeOk(scope) // 检测scope是否合规
     const targetId = element.getAttribute('targetId')
-    const targetDom = targetId !== '' ? querySelector('#' + targetId) : null
+    const targetDom = targetId !== '' ? document.querySelector('#' + targetId) : null
     if (!isOk) {
       // 检测不合规时将内容清空
       if (targetDom !== null) {
