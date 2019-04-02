@@ -184,11 +184,9 @@ function scopeOk (scope) {
     // 将value值拆分为带有!与不带有!组
     const value = splitScopeValue(param)
     if (!checkFuns[key] || !checkFuns[key](value)) {
-      console.warn(key + ' error')
       return false
     }
   }
-  console.log('all right check')
   return true
 }
 export default class MIPYs137Box extends MIP.CustomElement {
