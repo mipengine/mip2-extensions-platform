@@ -1,7 +1,7 @@
 import './index.less'
 
-const {util} = MIP
-const {fetchJsonp} = window
+const { util } = MIP
+const { fetchJsonp } = window
 
 /**
  * Make height transiton for element that has unknown height.
@@ -37,14 +37,12 @@ function heightAni (opt) {
     if (opt.tarHeight !== undefined) {
       tarHeight = opt.tarHeight
     } else {
-      element.style.transition = 'height 0s'
-      element.style.height = 'auto'
+      util.css(element, {transition: 'height 0s', height: 'auto'})
       tarHeight = getComputedStyle(element).height
     }
 
     setTimeout(() => {
-      element.style.transition = 'height 0s'
-      element.style.height = 'auto'
+      util.css(element, {transition: 'height 0s', height: 'auto'})
     }, transitionTime * 1000)
   } else if (type === 'fold') {
     tarHeight = opt.tarHeight || 0
@@ -54,8 +52,7 @@ function heightAni (opt) {
 
   // 开始动画
   setTimeout(() => {
-    element.style.transition = 'height ' + transitionTime + 's'
-    element.style.height = tarHeight
+    util.css(element, {transition: `height ${transitionTime}s`, height: tarHeight})
   }, 10)
 
   // 动画结束后，执行 callback
@@ -67,19 +64,11 @@ function hasClass (elements, cName) {
 }
 
 function addClass (elements, cName) {
-  if (!hasClass(elements, cName)) {
-    elements.className += ' ' + cName
-  } else {
-    console.error('未找到' + cName + '的class')
-  }
+  elements.classList.add(cName)
 }
 
 function removeClass (elements, cName) {
-  if (hasClass(elements, cName)) {
-    elements.className = elements.className.replace(new RegExp('(\\s|^)' + cName + '(\\s|$)'), ' ')
-  } else {
-    console.error('未找到' + cName + '的class')
-  }
+  elements.classList.remove(cName)
 }
 
 function isEmpty (value) {
@@ -389,7 +378,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
           break
       }
       switchBtn.setAttribute('type', type)
-      MIP.setData({areaType: type})
+      MIP.setData({ areaType: type })
     })
   }
 
@@ -445,7 +434,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
       html += `<div class="more-item" value="${itemValue}" data-li="area-li"><span class="more-item-bgc"></span>${values}${areaUnits.unit}</div>`
     }
     element.querySelector('.area_list').innerHTML = html
-    MIP.setData({areaOtherUnit: this.unitStringHandle(areaOtherUnits.unit), areaUnit: areaUnits.unit})
+    MIP.setData({ areaOtherUnit: this.unitStringHandle(areaOtherUnits.unit), areaUnit: areaUnits.unit })
   }
 
   /**
