@@ -59,9 +59,6 @@ function heightAni (opt) {
   setTimeout(cbFun, transitionTime * 1000)
 }
 
-function hasClass (elements, cName) {
-  return !!elements.className.match(new RegExp('(\\s|^)' + cName + '(\\s|$)'))
-}
 
 function addClass (elements, cName) {
   elements.classList.add(cName)
