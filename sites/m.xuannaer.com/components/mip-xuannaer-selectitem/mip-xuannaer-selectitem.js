@@ -59,7 +59,6 @@ function heightAni (opt) {
   setTimeout(cbFun, transitionTime * 1000)
 }
 
-
 function addClass (elements, cName) {
   elements.classList.add(cName)
 }
