@@ -1,5 +1,5 @@
 /**
- * @file 评论
+ * @file 评论模块
  * @author fl
  */
 import './index.less'
@@ -8,7 +8,7 @@ import MIPCommon from '../../common/mip-common'
 const { CustomElement, util } = MIP
 const { jsonParse, dom, css } = util
 
-export default class MIPComment extends CustomElement {
+export default class MIPMpc6Comment extends CustomElement {
   data () {
     return {
       id: this.element.getAttribute('cid'),

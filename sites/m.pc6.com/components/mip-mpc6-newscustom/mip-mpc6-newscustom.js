@@ -4,7 +4,7 @@ import '../../common/mip-common.less'
 const { CustomElement, util } = MIP
 const { dom, css } = util
 
-export default class MIPNewsCustom extends CustomElement {
+export default class MIPMpc6NewsCustom extends CustomElement {
   data () {
     return {
       id: this.element.getAttribute('cid'),

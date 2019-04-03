@@ -1,4 +1,4 @@
-# mip-news-custom
+# mip-mpc6-newscustom
 
 m.pc6.com移动端文章页面逻辑合集（动态设置文章分类等）
 
@@ -6,14 +6,14 @@ m.pc6.com移动端文章页面逻辑合集（动态设置文章分类等）
 ----|----
 类型|
 支持布局|
-所需脚本| [https://c.mipcdn.com/extensions/platform/v2/m.pc6.com/mip-news-custom/mip-news-custom.js](https://c.mipcdn.com/extensions/platform/v2/m.pc6.com/mip-news-custom/mip-news-custom.js)
+所需脚本| [https://c.mipcdn.com/extensions/platform/v2/m.pc6.com/mip-mpc6-newscustom/mip-mpc6-newscustom.js](https://c.mipcdn.com/extensions/platform/v2/m.pc6.com/mip-mpc6-newscustom/mip-mpc6-newscustom.js)
 
 ## 示例
 
 ### 基本使用
 
 ```html
-<mip-news-custom cid="{$catalogid}" url="https://m.pc6.com"></mip-news-custom>
+<mip-mpc6-newscustom cid="{$catalogid}" url="https://m.pc6.com"></mip-mpc6-newscustom>
 ```
 
 ## 属性

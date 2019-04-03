@@ -1,10 +1,10 @@
-# mip-scroll-custom
+# mip-mpc6-scrollcustom
 
 标题|内容
 ----|----
 类型|
 支持布局|
-所需脚本| [https://c.mipcdn.com/extensions/platform/v2/m.pc6.com/mip-scroll-custom/mip-scroll-custom.js](https://c.mipcdn.com/extensions/platform/v2/m.pc6.com/mip-scroll-custom/mip-scroll-custom.js)
+所需脚本| [https://c.mipcdn.com/extensions/platform/v2/m.pc6.com/mip-mpc6-scrollcustom/mip-mpc6-scrollcustom.js](https://c.mipcdn.com/extensions/platform/v2/m.pc6.com/mip-mpc6-scrollcustom/mip-mpc6-scrollcustom.js)
 
 ## 示例
 
@@ -13,7 +13,7 @@
 ```html
 
 <div id="tcsyy">
-    <mip-scroll-custom sWidth="750" sHeight="290" sIndicatorId="tcsyy_carousel" sLayout="fixed-height" sNum="8" sParentId="tcsyy">
+    <mip-mpc6-scrollcustom sWidth="750" sHeight="290" sIndicatorId="tcsyy_carousel" sLayout="fixed-height" sNum="8" sParentId="tcsyy">
       <div class="mip-hide">
         <li><a href="https://m.pc6.com/s/180268" target="_blank"><mip-img src="https://thumb1.jfcdns.com/thumb/up/2015-10/2015102491743_100_100.png" class="mip-element mip-layout-container mip-img-loaded" mip-firstscreen-element=""><img class="mip-fill-content mip-replaced-content" src="https://thumb1.jfcdns.com/thumb/up/2015-10/2015102491743_100_100.png"></mip-img><span>王者荣耀</span><em>下载</em></a></li>
         <li><a href="https://m.pc6.com/s/73891" target="_blank"><mip-img src="https://thumb12.jfcdns.com/thumb/2017-10/bce59f2a2b4b463e_100_100.jpeg" class="mip-element mip-layout-container mip-img-loaded" mip-firstscreen-element=""><img class="mip-fill-content mip-replaced-content" src="https://thumb12.jfcdns.com/thumb/2017-10/bce59f2a2b4b463e_100_100.jpeg"></mip-img><span>腾讯欢乐斗地主</span><em>下载</em></a></li>
@@ -48,7 +48,7 @@
         <li><a href="https://m.pc6.com/s/590259" target="_blank"><mip-img src="https://thumb10.jfcdns.com/thumb/2018-07/bce5b3981adc8669_100_100.jpeg" class="mip-element mip-layout-container"></mip-img><span>尼山萨满</span><em>下载</em></a></li>
         <li><a href="https://m.pc6.com/s/222947" target="_blank"><mip-img src="https://thumb.jfcdns.com/thumb/up/2016-2/2016217135938_100_100.png" class="mip-element mip-layout-container"></mip-img><span>皇室战争</span><em>下载</em></a></li>
       </div>
-    </mip-scroll-custom>
+    </mip-mpc6-scrollcustom>
   </div>
 ```
 

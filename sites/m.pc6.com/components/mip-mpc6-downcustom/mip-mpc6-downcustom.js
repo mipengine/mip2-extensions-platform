@@ -8,7 +8,7 @@ import '../../common/mip-common.less'
 const { CustomElement, util } = MIP
 const { platform, dom, css } = util
 
-export default class MIPDownCustom extends CustomElement {
+export default class MIPMpc6DownCustom extends CustomElement {
   data () {
     let platAndroid = document.getElementById('plat_Android')
     let platiPhone = document.getElementById('plat_iPhone')
@@ -44,16 +44,20 @@ export default class MIPDownCustom extends CustomElement {
   }
   build () {
     // 猜你喜欢
-    if (document.getElementById('guess_carousel').getElementsByTagName('li').length) {
-      let guessLi = document.getElementById('guess_carousel').getElementsByTagName('li')[0]
-      guessLi.classList.add('mip-carousel-activeitem')
-    } else {
-      this.element.removeChild(document.getElementsByClassName('guess')[0])
+    if (document.getElementById('guess_carousel')) {
+      if (document.getElementById('guess_carousel').getElementsByTagName('li').length) {
+        let guessLi = document.getElementById('guess_carousel').getElementsByTagName('li')[0]
+        guessLi.classList.add('mip-carousel-activeitem')
+      } else {
+        this.element.removeChild(document.getElementsByClassName('guess')[0])
+      }
     }
     // 移除空内容
     this.emptyRemove()
     // 文章动态增加链接
-    MIPCommon.alterNewUrl(document.getElementsByClassName('xgwz')[0].getElementsByClassName('d_title')[0], this.data().id, ['手游', '软件'], this.data().url)
+    if (document.getElementsByClassName('xgwz').length) {
+      MIPCommon.alterNewUrl(document.getElementsByClassName('xgwz')[0].getElementsByClassName('d_title')[0], this.data().id, ['手游', '软件'], this.data().url)
+    }
     // 修改头部标题
     MIPCommon.alterTit(this.data().id, ['手游', '软件'], this.data().url)
     // 修改下载链接
@@ -74,15 +78,15 @@ export default class MIPDownCustom extends CustomElement {
    */
   emptyRemove () {
     // 历史版本
-    if (document.getElementsByClassName('historyver')[0].getElementsByTagName('p').length === 0) {
+    if (document.getElementsByClassName('historyver').length && document.getElementsByClassName('historyver')[0].getElementsByTagName('p').length === 0) {
       this.element.removeChild(document.getElementsByClassName('historyver')[0])
     }
     // 相关文章
-    if (document.getElementsByClassName('xgwz')[0].getElementsByTagName('li').length === 0) {
+    if (document.getElementsByClassName('xgwz').length && document.getElementsByClassName('xgwz')[0].getElementsByTagName('li').length === 0) {
       this.element.removeChild(document.getElementsByClassName('xgwz')[0])
     }
     // 相关视频
-    if (document.getElementsByClassName('xgsp')[0].getElementsByTagName('li').length === 0) {
+    if (document.getElementsByClassName('xgsp').length && document.getElementsByClassName('xgsp')[0].getElementsByTagName('li').length === 0) {
       this.element.removeChild(document.getElementsByClassName('xgsp')[0])
     }
   }

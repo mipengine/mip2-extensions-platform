@@ -6,7 +6,7 @@ import './index.less'
 const { CustomElement, util } = MIP
 const { dom } = util
 
-export default class MIPScrollCustom extends CustomElement {
+export default class MIPMpc6ScrollCustom extends CustomElement {
   build () {
     let num = this.element.getAttribute('sNum') ? parseInt(this.element.getAttribute('sNum')) : 8
     let width = this.element.getAttribute('sWidth') ? this.element.getAttribute('sWidth') : 750
