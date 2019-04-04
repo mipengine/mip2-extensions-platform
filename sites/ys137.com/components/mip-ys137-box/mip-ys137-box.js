@@ -172,13 +172,11 @@ function scopeOk (scope) {
     referrer: referrerOk
   }
   if (!scope) {
-    console.warn('require scope param')
     return false
   }
   const scopeJson = util.jsonParse(scope)
   const keys = Object.keys(scopeJson)
   if (!util.fn.isPlainObject(scopeJson) || keys.length === 0) {
-    console.error('require scope param is json')
     return false
   }
   for (const key of keys) {
@@ -190,7 +188,7 @@ function scopeOk (scope) {
       return false
     }
   }
-  console.log('all right')
+  console.log('all right check')
   return true
 }
 export default class MIPYs137Box extends MIP.CustomElement {
@@ -198,8 +196,8 @@ export default class MIPYs137Box extends MIP.CustomElement {
     const element = this.element
     const scope = element.getAttribute('scope')
     const isOk = scopeOk(scope) // 检测scope是否合规
-    const id = element.getAttribute('targetId')
-    const targetDom = id !== '' ? document.documentElement.querySelector('#' + id) : null
+    const targetId = element.getAttribute('targetId')
+    const targetDom = targetId !== '' ? document.documentElement.querySelector('#' + targetId) : null
     if (!isOk) {
       // 检测不合规时将内容清空
       if (targetDom !== null) {
