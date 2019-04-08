@@ -17,7 +17,8 @@
             class="mip-news-cover"
             layout="responsive"
             width="50"
-            height="46"/>
+            height="46"
+          />
         </div>
       </div>
     </div>
@@ -52,10 +53,10 @@
   flex-direction: column;
   flex: 5;
   box-sizing: border-box;
-  height: 43/@scale+rem;
+  height: 43rem / @scale;
   overflow: hidden;
 }
-.mip-news-item{
+.mip-news-item {
   display: flex;
 }
 .mip-news-title {
@@ -65,7 +66,7 @@
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
-  font-size: 14/@scale+rem;
+  font-size: 14rem / @scale;
 }
 .mip-news-cover {
   flex: 1;
@@ -79,12 +80,13 @@ export default {
   props: {
     informationhot: {
       type: Array,
-      default: function () { return [] }
+      default: function () {
+        return []
+      }
     }
   },
   data () {
-    return {
-    }
+    return {}
   },
   created () {
     console.log(this.informationhot)
@@ -95,13 +97,14 @@ export default {
     /* 底部滚动图 */
     setInterval(() => {
       let firstNode = $(this.$refs.Tnews)[0].firstChild
-      $(this.$refs.Tnews).stop(true).animate({marginTop: '-3.46667rem'}, 500, () => {
-        $(this.$refs.Tnews).css({marginTop: '0px'})
-        $(this.$refs.Tnews).append(firstNode)
-      })
+      $(this.$refs.Tnews)
+        .stop(true)
+        .animate({ marginTop: '-1.573rem' }, 500, () => {
+          $(this.$refs.Tnews).css({ marginTop: '0px' })
+          $(this.$refs.Tnews).append(firstNode)
+        })
     }, 3000)
   },
-  methods: {
-  }
+  methods: {}
 }
 </script>
