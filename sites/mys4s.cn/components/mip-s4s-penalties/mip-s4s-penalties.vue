@@ -33,6 +33,22 @@
             class="s4s-btn btn-border"
             @click="ready" >确定</span>
         </div>
+        <div
+          v-if="showCaptcha"
+          class="s4s-order-input">
+          <input
+            v-model="captchValue"
+            type="text"
+            maxlength="4"
+            style="flex:auto"
+            placeholder="请输入验证码" >
+          <mip-img
+            :src="captchUrl"
+            width="420"
+            height="50"
+            style="flex:1"
+            @click="getCaptcha" />
+        </div>
         <p class="s4s-order-text">处罚决定书编号、车牌号和处罚人为办单依据，请咨询核对！</p>
       </div>
       <div
@@ -454,7 +470,14 @@ export default {
       height: '',
       data: [],
       page: 0,
-      loading: false
+      loading: false,
+
+      captchKey: '',
+      captchUrl: '',
+      captchValue: '',
+      showCaptcha: true,
+      needCaptcha: true,
+      isCaptchaTrue: true
     }
   },
   computed: {
@@ -496,6 +519,8 @@ export default {
     }
   },
   mounted () {
+    this.getCaptcha()
+
     const s4s = document.getElementById('s4s2')
     s4s.addEventListener('scroll', () => {
       if (s4s.scrollHeight - s4s.scrollTop <= s4s.clientHeight + 200 && !this.loading) {
@@ -684,9 +709,22 @@ export default {
         // access_token: '3b2P0oarLbtrU/IkydUON5pfdQhGW4fWzFgFqOZZDi8=',
         document: this.orderNumber.replace(/\s/g, '')
       }
+      if (this.needCaptcha) {
+        param.cap_value = this.captchValue
+        param.cap_key = this.captchKey
+      }
       util
         .fetchData('v3/violation/web/ticket_query', param)
         .then(res => {
+          if (res.code === 90027) {
+            util.toast(res.msg || '需要填写验证码')
+            this.getCaptcha()
+            this.isCaptchaTrue = false
+            this.error = '请输入正确的验证码'
+            this.showCaptcha = true
+            this.needCaptcha = true
+            return
+          }
           if (res.code === 0) {
             this.selectOrderNumber = this.orderNumber
             // this.$store.state.orderNumber = this.selectOrderNumber
@@ -733,6 +771,24 @@ export default {
           this.showForm1 = false
           util.toast(e)
           // 测试
+        })
+    },
+    getCaptcha () {
+      util
+        .fetchData('v3/captcha', {
+          width: 180,
+          height: 80,
+          cap_len: 4,
+          dot_count: 80,
+          skew: 1
+        }).then((res) => {
+          if (res.code === 0) {
+            this.captchKey = res.data.key
+            this.captchValue = ''
+            this.captchUrl = res.data.image
+          } else {
+            util.toast(res.msg)
+          }
         })
     },
     // 常见问题

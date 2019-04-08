@@ -273,7 +273,7 @@ export default {
 	data () {
 		return {
 			getAllData: {
-				threshold: 3500, // 起征点，
+				threshold: 5000, // 起征点，
 				lowst: {
 					socialLowst: 2,
 					accumulationLowst: 2
@@ -553,27 +553,27 @@ export default {
 			let taxableIncome = XSum - insure - threshold;
 			let A = taxableIncome;
 			A = A.toFixed(2);
-			if (A <= 1500) {
+			if (A <= 3000) {
 				R = 0.03;
 				Q = 0;
-			} else if (A > 1500 && A <= 4500) {
+			} else if (A > 3000 && A <= 12000) {
 				R = 0.1;
-				Q = 105;
-			} else if (A > 4500 && A <= 9000) {
+				Q = 210;
+			} else if (A > 12000 && A <= 25000) {
 				R = 0.2;
-				Q = 555;
-			} else if (A > 9000 && A <= 35000) {
+				Q = 1410;
+			} else if (A > 25000 && A <= 35000) {
 				R = 0.25;
-				Q = 1005;
+				Q = 2660;
 			} else if (A > 35000 && A <= 55000) {
 				R = 0.3;
-				Q = 2755;
+				Q = 4410;
 			} else if (A > 55000 && A <= 80000) {
 				R = 0.35;
-				Q = 5505;
+				Q = 7160;
 			} else {
 				R = 0.45;
-				Q = 13505;
+				Q = 15160;
 			}
 			let tax = taxableIncome * R - Q;
 			tax < 0 ? tax = 0 : '';
@@ -593,18 +593,18 @@ export default {
 			let wage = taxwage;
 			let zero = 0;
 			// 第一段
-			if (wage < hold) { 
+			if (wage <= hold) { 
 				return {
 					realIncome: (wage + insure).toFixed(2),
 					tax: zero.toFixed(2),
 					taxableIncome: zero.toFixed(2),
-					taxR:0,
+					taxR:3,
 					taxQ:0,
 				}; 
 			}
 			// 第二段
-			wage = (taxwage - 3500 * 0.03) / (1 - 0.03);
-			if (wage > hold && wage <= hold + 1500) {
+			wage = (taxwage - hold * 0.03) / (1 - 0.03);
+			if (wage > hold && wage <= hold + 3000) {
 				return {
 					realIncome: (wage + insure).toFixed(2),
 					tax: (wage - taxwage).toFixed(2),
@@ -614,69 +614,69 @@ export default {
 				};
 			}
 			// 第三段
-			wage = (taxwage - 105 - 3500 * 0.1) / (1 - 0.1);
-			if (wage > hold + 1500 && wage <= hold + 4500) {
+			wage = (taxwage - 210 - hold * 0.1) / (1 - 0.1);
+			if (wage > hold + 3000 && wage <= hold + 12000) {
 				return {
 					realIncome: (wage + insure).toFixed(2),
 					tax: (wage - taxwage).toFixed(2),
 					taxableIncome: (wage + insure - hold).toFixed(2),
 					taxR:10,
-					taxQ:105
+					taxQ:210
 				};
 			}
 			// 第四段
-			wage = (taxwage - 555 - 3500 * 0.2) / (1 - 0.2);
-			if (wage > hold + 4500 && wage <= hold + 9000) {
+			wage = (taxwage - 1410 - hold * 0.2) / (1 - 0.2);
+			if (wage > hold + 12000 && wage <= hold + 25000) {
 				return {
 					realIncome: (wage + insure).toFixed(2),
 					tax: (wage - taxwage).toFixed(2),
 					taxableIncome: (wage + insure - hold).toFixed(2),
 					taxR:20,
-					taxQ:555,
+					taxQ:1410,
 				};
 			}
 			// 第五段
-			wage = (taxwage - 1005 - 3500 * 0.25) / (1 - 0.25);
-			if (wage > hold + 9000 && wage <= hold + 35000) {
+			wage = (taxwage - 2660 - hold * 0.25) / (1 - 0.25);
+			if (wage > hold + 25000 && wage <= hold + 35000) {
 				return {
 					realIncome: (wage + insure).toFixed(2),
 					tax: (wage - taxwage).toFixed(2),
 					taxableIncome: (wage + insure - hold).toFixed(2),
 					taxR:25,
-					taxQ:1005,
+					taxQ:2660,
 				};
 			}
 			// 第六段
-			wage = (taxwage - 2755 - 3500 * 0.3) / (1 - 0.3);
+			wage = (taxwage - 4410 - hold * 0.3) / (1 - 0.3);
 			if (wage > hold + 35000 && wage <= hold + 55000) {
 				return {
 					realIncome: (wage + insure).toFixed(2),
 					tax: (wage - taxwage).toFixed(2),
 					taxableIncome: (wage + insure - hold).toFixed(2),
 					taxR:30,
-					taxQ:2755,
+					taxQ:4410,
 				};
 			}
 			// 第七段
-			wage = (taxwage - 5505 - 3500 * 0.35) / (1 - 0.35);
+			wage = (taxwage - 7160 - hold * 0.35) / (1 - 0.35);
 			if (wage > hold + 55000 && wage <= hold + 80000) {
 				return {
 					realIncome: (wage + insure).toFixed(2),
 					tax: (wage - taxwage).toFixed(2),
 					taxableIncome: (wage + insure - hold).toFixed(2),
 					taxR:35,
-					taxQ:5505
+					taxQ:7160
 				};
 			}
 			// 第八段
-			wage = (taxwage - 13505 - 3500 * 0.45) / (1 - 0.1);
+			wage = (taxwage - 15160 - hold * 0.45) / (1 - 0.45);
 			if (wage > hold + 80000) {
 				return {
 					realIncome: (wage + insure).toFixed(2),
 					tax: (wage - taxwage).toFixed(2),
 					taxableIncome: (wage + insure - hold).toFixed(2),
 					taxR:45,
-					taxQ:13505
+					taxQ:15160
 				};
 			}
 		},

@@ -4,7 +4,7 @@
 ----|----|
 类型| 通用 |
 支持布局 | 
-所需脚本| [https://c.mipcdn.com/extensions/platform/v2/mipProject/mip-safe-download/mip-safe-download.js](https://c.mipcdn.com/extensions/platform/v2/mipProject/mip-safe-download/mip-safe-download.js)
+所需脚本| [https://c.mipcdn.com/extensions/platform/v2/mobile.com/mip-mobile-download/mip-mobile-download.js](https://c.mipcdn.com/extensions/platform/v2/mobile.com/mip-mobile-download/mip-mobile-download.js)
 
 ## 说明
 提供通用的手助安全包下载按钮展现逻辑

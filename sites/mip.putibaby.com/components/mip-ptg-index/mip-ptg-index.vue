@@ -48,16 +48,17 @@
         class="bottom_left"
         href="tel:4006188835">
         <mip-img
-          src="https://mip.putibaby.com/i/index_phone.png"
-          width="132px"
-          height="22px"
+          src="https://mip.putibaby.com/i/index_phone_2.png"
+          width="70px"
+          height="36px"
           class="bottom_left_img"/>
       </a>
+      <div class="line"/>
       <a @click="handleOrderList">
         <mip-img
-          src="https://mip.putibaby.com/i/ind_person.png"
-          width="38px"
-          height="25px"
+          src="https://mip.putibaby.com/i/ind_person_2.png"
+          width="40px"
+          height="36.5px"
           class="bottom_right_img"/>
       </a>
     </mip-fixed>
@@ -66,6 +67,13 @@
 </template>
 
 <style scoped>
+  .line{
+    width:1px;
+    height:22px;
+    border-right:solid 1px #e5e5e5;
+    float:left;
+    margin-top:13px;
+  }
   .wrapper {
     margin: 0 auto;
     text-align: center;
@@ -171,28 +179,29 @@
 
   .bottom {
     bottom: 0;
-    height: 45px;
-    line-height: 45px;
+    height: 49px;
+    line-height: 49px;
     background-color: #fff;
     width: 100%;
     z-index: 9999;
   }
 
   .bottom_left {
-    width: 80%;
-    height: 45px;
+    width: 50%;
+    height: 49px;
     text-align: center;
     display: inline-block;
     color: black;
     padding-left: 0;
+    float:left;
   }
 
   .bottom_left_img {
-    vertical-align: -6px;
+    margin-top: 6px;
   }
 
   .bottom_right_img {
-    vertical-align: -6px;
+    margin-top: 6px;
   }
   .clear_float{
   clear:both;

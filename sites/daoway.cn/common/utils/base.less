@@ -642,3 +642,38 @@ input::-webkit-input-placeholder {
         -webkit-transform: translate(-50%, -50%) scale(0.7);
     }
 }
+
+
+.fade{
+    animation: myfirst 3s infinite linear;
+    -moz-animation: myfirst 3s infinite linear;	/* Firefox */
+    -webkit-animation: myfirst 3s infinite linear;	/* Safari 和 Chrome */
+    -o-animation: myfirst 3s infinite linear;
+}
+@keyframes myfirst
+{
+    0%   {opacity: 0;}
+    20%   {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+@-moz-keyframes myfirst /* Firefox */
+{
+    0%   {opacity: 0;}
+    20%   {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+@-webkit-keyframes myfirst /* Safari 和 Chrome */
+{
+    0%   {opacity: 0;}
+    20%   {opacity: 1;}
+    100% {opacity: 0;}
+}
+
+@-o-keyframes myfirst /* Opera */
+{
+    0%   {opacity: 0;}
+    20%   {opacity: 1;}
+    100% {opacity: 0;}
+}

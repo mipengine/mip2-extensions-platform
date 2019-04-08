@@ -192,7 +192,20 @@
         <p
           class="layer-sure active-layer"
           on="tap:log.login"
-          @click="closeLayer2">知道了,马上登录</p>
+          @click="closeLayer2">知道了，马上登录</p>
+      </div>
+    </div>
+
+    <div
+      v-show="warn3.show"
+      class="layer">
+      <div
+        class="layer-content zoomIn fade"
+        style="width:26%;left: 35%;">
+        <p
+          style="text-align: center;color: #fff; background:rgba(0,0,0,0.9); font-weight: normal; border-radius:10px"
+          class="layer-text"
+          v-text="warn3.texts"/>
       </div>
     </div>
 
@@ -274,7 +287,13 @@ export default {
         show: false,
         texts: ''
       },
+      noshow: true,
       warn2: {
+        // 弹窗
+        show: false,
+        texts: ''
+      },
+      warn3: {
         // 弹窗
         show: false,
         texts: ''
@@ -305,7 +324,8 @@ export default {
       token: localStorage.getItem('mipToken') || base.getCookie('mipToken'),
       startY: '',
       endY: '',
-      param: {}
+      param: {},
+      inDistanceScope: base.getRequest(location.href).inDistanceScope
     }
   },
   /* created () {
@@ -314,11 +334,17 @@ export default {
   mounted () {
     sessionStorage.removeItem('tech')
     localStorage.removeItem('technician')
+    let position = base.getposition()
+    console.log(this.inDistanceScope)
+    if (this.inDistanceScope === 'false') {
+      this.warn.show = true
+      this.warn.texts = '抱歉！您的地址“' + position.name + '”已超出该商家设定的服务范围。该商家可能暂时无法为您提供服务'
+    }
     this.detailstr()
     if (!this.userId && !this.token) {
       this.$on('customLogin', event => {
-        this.warn.show = false
-        this.warn.texts = ''
+        /* that.warn3.show = false
+        that.warn3.texts = '' */
         this.userId = event.userInfo.userId
         this.token = event.userInfo.token
         base.setCookie('mipUserId', event.userInfo.userId)
@@ -343,6 +369,12 @@ export default {
       }
       // }
     })
+
+    /* let position = base.getposition()
+    if (!position) {
+      let point = JSON.parse(localStorage.getItem('point'))
+      this.getCommunity(point.lat, point.lng)
+    } */
   },
   methods: {
     detailstr () {
@@ -492,19 +524,6 @@ export default {
         } else {
           that.warn2.show = true
           that.warn2.texts = '请先登录再继续下单'
-          /* that.$on('customLogin', event => {
-            this.userId = event.userInfo.userId;
-            this.token = event.userInfo.token ;
-            base.setCookie('mipUserId',event.userInfo.userId);
-            base.setCookie('mipToken',event.userInfo.token);
-            localStorage.setItem('mipUserId', event.userInfo.userId);
-            localStorage.setItem('mipToken', event.userInfo.token);
-            localStorage.setItem('nick', event.userInfo.nick);
-          }) */
-          /*
-          this.$nextTick(function () {
-            this.$emit('actionName');
-          }); */
         }
       }
     },
@@ -513,6 +532,8 @@ export default {
       that.warn2.show = false
       that.warn2.texts = ''
       that.$on('customLogin', event => {
+        that.warn3.show = true
+        that.warn3.texts = '登录成功'
         that.userId = event.userInfo.userId
         that.token = event.userInfo.token
         base.setCookie('mipUserId', event.userInfo.userId)
@@ -520,12 +541,17 @@ export default {
         localStorage.setItem('mipUserId', event.userInfo.userId)
         localStorage.setItem('mipToken', event.userInfo.token)
         localStorage.setItem('nick', event.userInfo.nick)
+        setTimeout(() => {
+          that.warn3.show = false
+          that.warn3.texts = ''
+        }, 1000)
       })
     }
   }
 }
 </script>
 <style scoped>
+
     * {
         padding: 0;
         margin: 0;

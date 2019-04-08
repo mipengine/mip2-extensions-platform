@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>MIP page</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <style mip-custom>
+     /*通用*/
+    ul, ol, li { list-style: none; }
+		.bg_f5f5f5{background:#f5f5f5;}
+		.mt20{margin-top:.2rem;}
+		.fl{float:left;}
+		.fr{float:right;}
+		.pdlr30{padding-left:.3rem;padding-right:.3rem;}
+		section{background:#fff;}
+		.clearfix:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden;}
+		.clearfix{zoom:1;}
+		.index_tit{ height: 1rem; line-height: 1rem; padding: 0 .3rem; border-bottom: 1px solid #f0f0f0;}
+		.index_tit i.icon{ float: left; width: .06rem; height: .3rem; background-position: 0 -4.85rem; margin: .36rem .16rem 0 0;}
+		.index_tit h2{ float: left; font-size: .36rem; font-weight: normal;}
+		.index_tit p a{ font-size:.28rem; color:#2f74e9; margin-right:.4rem}
+		.index_tit p a:last-child{ margin-right:0}
+		.view_more{ height: .88rem; line-height: .88rem; border-top: 1px solid #f0f0f0;}
+		.view_more a{ display: block; font-size: .3rem; color: #999; text-align: center;}
+		.view_more i{  margin-left: .2rem; background-position:0 -5.32rem; width:.14rem; height:.2rem; display:inline-block}
+		.view_more i.down{ height:.22rem;transform: rotateZ(90deg);-webkit-transform: rotateZ(90deg);}
+		.view_more i.up{transform: rotateZ(-90deg);-webkit-transform: rotateZ(-90deg);}
+		.red{color: #ff0000;}
+		.green{color: #009800;}
+		.gray{color: #999}
+		.tab_list{ font-size: .32rem;}
+		.tab_list dl{ height: .9rem; line-height: .9rem; overflow: hidden; font-family: "Microsoft Yahei";border-bottom: 1px solid #ececec;}
+		.tab_list dl.tab_head{ color: #333; font-family: .28rem "Microsoft Yahei";border-bottom: none; height:.8rem; line-height:.8rem; background: #f9f9f9; width:100%}
+		.tab_list dd { float: left; text-align: center; word-wrap: break-word; overflow: hidden; }
+		.tab_list dd.w18{ width: 18%;}
+		.tab_list dd.w22{ width: 22%;}
+		.tab_list dd.w26{ width: 26%;}
+		.tab_list dd.w28 {width: 28%; }
+		.tab_list dd.w30{ width: 30%;}
+		.tab_list dd.red{color:#ff0000}
+		.tab_list dd.green{color:#14a814}
+		.tab_list dd a{ color: #2f74e9;}
+		.tab_list dd a.black{ color:#333}
+		.tab_list dl dd.first{line-height: .5rem;}
+		.tab_list dl dd.first em{font: .26rem "Arial";color: #999;}
+		.tab_list dl dd.first p{height: .5rem;overflow: hidden;}
+		.tab_list dl:last-child {border-bottom: none;}
+		.tab_list1 dd{ width: 18%;}
+		.tab_list3 dd{ width: 20%;}
+		
+		
+		/*行情*/
+		.bg_green{background: #2bb02b;}
+		.bg_red{background: #e42e2e;}
+		.hq_con{color: #fff;}
+		.hq_dl{font-size: .26rem;}
+		.hq_dl dt{padding:.35rem 0 .3rem 0}
+		.hq_dl dt span{}
+		.hq_dl dt span.tit{font-size: .3rem;}
+		.hq_dl dt span.tit a{color:#fff}
+		.hq_dl dt span.new{}
+		.hq_dl dt span.new i{background-position: 0 0;width: .22rem;height: .19rem;display: inline-block;margin-right: .08rem;}
+		.hq_dd1 span.zxj{font-size: .76rem;max-width: 4.15rem;height: 1rem;overflow: hidden;word-wrap: break-word;}
+		.hq_dd1 span.dw{margin-top: .3rem;margin-right: .25rem;}
+		.hq_dd1 span.zh{font-size: .24rem;width: 1rem;height: .4rem;border: solid 1px #fff;text-align: center;line-height: .4rem;border-radius: .03rem;margin-top: .3rem;}
+		.hq_dd2 span.kpzt{margin-right: .15rem;}
+		.hq_dd2 span.zde{margin-right: .15rem;font-size: .34rem;}
+		.hq_dd2 span.zdf{font-size: .34rem;}
+		.hq_ul{font-size: .26rem;margin-top: .3rem;}
+		.hq_ul li{float:left;width: 3.45rem;margin-bottom: .2rem;}
+		.hq_ul li span{width: 1.7rem;float: left;}
+		.hq_ul li:nth-child(2n) span:nth-child(2){text-align: right;}
+
+
+		
+		/*调整*/
+		#sp{display:none;}
+		
+    </style>
+  </head>
+  <body>
+<mip-jt-resize></mip-jt-resize>
+
+<!--基本用法：只获取数据，eg：沪深港通-->
+<mip-jt-stock-quote codes='JO_97602,JO_886,JO_222068,JO_96858,JO_6355' ids='q67,q63,q80,q1,q3'></mip-jt-stock-quote>
+<section class="mt20">
+	<div class="index_tit clearfix">
+		<i class="icon"></i>
+		<h2><a href="https://m.cngold.org/stock/m_quote_hsgt.html" title="沪深港通">沪深港通</a></h2>
+		<p class="aLinks fr">
+			<a href="https://m.cngold.org/stock/m_quote_shabbj.html" title="上证AB股比价">上证AB股比价</a>
+			<a href="https://m.cngold.org/stock/m_quote_szabbj.html" title="深证AB股比价">深证AB股比价</a>
+		</p>
+	</div>
+	<div class="tab_list tab_list1">
+		<dl class="tab_head clearfix">
+			<dd class="w26">名称</dd>
+			<dd>最新价</dd>
+			<dd>涨跌幅</dd>
+			<dd>开盘价</dd>
+			<dd>最高价</dd>
+		</dl>
+		<div id="hsgt">
+			<dl class="clearfix mglr30">
+				<dd class="w26">
+					<a href="" class="blue mc" id="JO_97602_q67"></a>
+				</dd>
+				<dd id="JO_97602_q63"></dd>
+				<dd id="JO_97602_q80"></dd>
+				<dd id="JO_97602_q1"></dd>
+				<dd id="JO_97602_q3"></dd>
+			</dl>
+			<dl class="clearfix mglr30">
+				<dd class="w26">
+					<a href="" class="blue mc" id="JO_886_q67"></a>
+				</dd>
+				<dd id="JO_886_q63"></dd>
+				<dd id="JO_886_q80"></dd>
+				<dd id="JO_886_q1"></dd>
+				<dd id="JO_886_q3"></dd>
+			</dl>
+			<dl class="clearfix mglr30">
+				<dd class="w26">
+					<a href="" class="blue mc" id="JO_222068_q67"></a>
+				</dd>
+				<dd id="JO_222068_q63"></dd>
+				<dd id="JO_222068_q80"></dd>
+				<dd id="JO_222068_q1"></dd>
+				<dd id="JO_222068_q3"></dd>
+			</dl>
+			<dl class="clearfix mglr30">
+				<dd class="w26">
+					<a href="" class="blue mc" id="JO_96858_q67"></a>
+				</dd>
+				<dd id="JO_96858_q63"></dd>
+				<dd id="JO_96858_q80"></dd>
+				<dd id="JO_96858_q1"></dd>
+				<dd id="JO_96858_q3"></dd>
+			</dl>
+			<dl class="clearfix mglr30">
+				<dd class="w26">
+					<a href="" class="blue mc" id="JO_6355_q67"></a>
+				</dd>
+				<dd id="JO_6355_q63"></dd>
+				<dd id="JO_6355_q80"></dd>
+				<dd id="JO_6355_q1"></dd>
+				<dd id="JO_6355_q3"></dd>
+			</dl>
+		</div>
+		<div class="view_more"><a href="https://m.cngold.org/stock/m_quote_hsgt.html" title="查看更多沪深港通">查看更多沪深港通<i class="icon"></i></a></div>  
+	</div>
+</section>
+
+<!--需要背景-->
+<mip-jt-stock-quote codes='JO_939' ids='q63,q80,q70,q1,q2,q3,q4,q60,q61,q59' bg='1'></mip-jt-stock-quote>
+<section id="showBg" class="hq_con bg_green pdlr30">
+	<dl class="hq_dl">
+		<dt class="clearfix">
+			<span class="tit"><a href="https://m.cngold.org/stock/m_200012.html">南玻B(200012)</a></span>
+			<span class="fr new" id="reLoad"><i class="icon"></i>刷新</span>
+		</dt>
+		<dd class="clearfix hq_dd1">
+			<span class="zxj fl" id="JO_939_q63">--</span>
+		</dd>
+		<dd class="clearfix hq_dd2">
+			<span class="zde" id="JO_939_q70">--</span>
+			<span class="zdf" id="JO_939_q80" >--</span>
+			
+			<span class="fr time" id="JO_939_q59">--</span>
+			<span id="sp" class="fr kpzt">已收盘</span>
+		</dd>
+	</dl>
+	
+	<ul class="hq_ul clearfix">
+		<li class="clearfix">
+			<span class="tit">最高</span>
+			<span class="con" id="JO_939_q3">--</span>
+		</li>
+		<li class="clearfix">
+			<span class="tit">最低</span>
+			<span class="con" id="JO_939_q4">--</span>
+		</li>
+		<li class="clearfix">
+			<span class="tit">今开</span>
+			<span class="con" id="JO_939_q1">--</span>
+		</li>
+		<li class="clearfix">
+			<span class="tit">昨收</span>
+			<span class="con" id="JO_939_q2">--</span>
+		</li>
+		<li class="clearfix">
+			<span class="tit">成交额</span>
+			<span class="con" id="JO_939_q61"></span>
+		</li>
+		<li class="clearfix">
+			<span class="tit">成交量</span>
+			<span class="con" id="JO_939_q60">--</span>
+		</li>
+	</ul>	
+</section>
+
+
+<script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+<script src="https://mipcache.bdstatic.com/extensions/platform/v1/mip-jt-resize/mip-jt-resize.js"></script>
+<script src="/mip-jt-stock-quote/mip-jt-stock-quote.js"></script>
+
+  </body>
+</html>
