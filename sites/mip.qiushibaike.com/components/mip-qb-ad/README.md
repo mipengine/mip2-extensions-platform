@@ -53,9 +53,9 @@
 ```html
 <div id="sogou_wap_搜狗id"></div>
 <script>
-	var sogou_div = document.getElementById("sogou_wap_搜狗id"); 
-	window.sogou_un = window.sogou_un || [];
-	window.sogou_un.push({id: "搜狗id",ele:sogou_div});
+	  var sogou_div = document.getElementById("sogou_wap_搜狗id"); 
+	  window.sogou_un = window.sogou_un || [];
+	  window.sogou_un.push({id: "搜狗id",ele:sogou_div});
 </script>
 <script async="async" src="//theta.sogoucdn.com/wap/js/aw.js"></script>
 ```
@@ -77,9 +77,9 @@
 ```html
 <div id="sogou_wap_搜狗id"></div>
 <script>
-	var sogou_div = document.getElementById("sogou_wap_搜狗id"); 
-	window.sogou_un = window.sogou_un || [];
-	window.sogou_un.push({id: "搜狗id",ele:sogou_div,w:20,h:5});
+	  var sogou_div = document.getElementById("sogou_wap_搜狗id"); 
+	  window.sogou_un = window.sogou_un || [];
+	  window.sogou_un.push({id: "搜狗id",ele:sogou_div,w:20,h:5});
 </script>
 <script async="async" src="//theta.sogoucdn.com/wap/js/aw.js"></script>
 ```
