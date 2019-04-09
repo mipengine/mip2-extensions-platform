@@ -1,31 +1,19 @@
 # mip-muzhi-scriptadd
 
-标题|内容
+标题|拇指医生业务组件
 ----|----
-类型|
-支持布局|
+类型|通用
+支持布局|无
 所需脚本| [https://c.mipcdn.com/extensions/platform/v2/muzhi.baidu.com/mip-muzhi-scriptadd/mip-muzhi-scriptadd.js](https://c.mipcdn.com/extensions/platform/v2/muzhi.baidu.com/mip-muzhi-scriptadd/mip-muzhi-scriptadd.js)
 
 ## 说明
 
-组件功能说明
+拇指医生业务组件，用于插入特定脚本
 
 ## 示例
 
 示例说明
-
 ```
-// 代码示例
+<mip-muzhi-scriptadd></mip-muzhi-scriptadd>
 ```
-
-## 属性
-
-### 属性1
-
-**说明**：
-
-**必选项**：
-
-**单位**：
-
-**默认值**：
+      
