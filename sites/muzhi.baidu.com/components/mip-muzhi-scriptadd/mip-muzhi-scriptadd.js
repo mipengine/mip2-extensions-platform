@@ -4,14 +4,14 @@
  */
 
 const { util } = MIP
-const codeLink = 'https://ss0.bdstatic.com/5aAHeD3nKgkZitOb8IqT0jB-xx1xbK/static/mip-qb/open-baidu-app.js'
-const originUrl = util.getOriginalUrl()
+const CODE_LINK = 'https://ss0.bdstatic.com/5aAHeD3nKgkZitOb8IqT0jB-xx1xbK/static/mip-qb/open-baidu-app.js'
+const ORIGIN_URL = util.getOriginalUrl()
 
 export default class MIPMuzhiScriptadd extends MIP.CustomElement {
   build () {
-    if (/^https:\/\/muzhi\.baidu\.com/.test(originUrl)) {
+    if (/^https:\/\/muzhi\.baidu\.com/.test(ORIGIN_URL)) {
       let script = document.createElement('script')
-      script.src = codeLink
+      script.src = CODE_LINK
       this.element.appendChild(script)
     }
   }
