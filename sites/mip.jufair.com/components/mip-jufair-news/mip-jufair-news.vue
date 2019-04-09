@@ -25,7 +25,7 @@
   </div>
 </template>
 
-<style lang="less">
+<style lang="less" scoped>
 @scale: 375/10;
 
 /* 聚展头条 */
