@@ -17,58 +17,25 @@
 示例说明
 
 ```
-<mip-sm-recommend>
-    <script type="application/json">
-    {
-        recommendAPI: 'https://fe.sm.cn/mip_update/test.php?wd=query&from=mip',
-        zmPath: 'http://zm10.sm-tc.cn/rec/redirect/?src=http://m.sa.sm.cn/s?q=',
-        zmSearch: {
-            algBu: 'exp3',
-            from: 'wh30010'
-        }
-    }
-    </script>
+<mip-sm-recommend title='西红柿炒鸡蛋有什么营养价值?'>
+   
 </mip-sm-recommend>
 ```
 
 ## 属性
 
-### params
+### title
 
-**说明**：params中指定推荐词请求接口，以及推荐词跳转所需参数
-
-**必选项**：是
-
-**单位**：json
-
-**默认值**：无
-
-### recommendAPI
-
-**说明**：获取推荐词接口
+**说明**：页面内容标题
 
 **必选项**：是
 
-**单位**：string
+**类型**：字符串
+
+**单位**：无
 
 **默认值**：无
 
-### zmPath
+## 注意事项
 
-**说明**：点击推荐词所需的跳转路径(不含query词)
-
-**必选项**：是
-
-**单位**：string
-
-**默认值**：无
-
-### zmSearch
-
-**说明**：点击推荐词所需的跳转参数
-
-**必选项**：是
-
-**单位**：json
-
-**默认值**：无
+- title 是页面中内容标题，**不是**`<title>`标签中的文本
