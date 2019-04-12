@@ -8,26 +8,28 @@ const { jsonParse, dom, css } = util
 export default class MIPCommon {
   /*
    *设置cookies
+   *@param {String} [name] [cookie key]
+   *@param {String} [value] [cookie 值]
    */
   static setCookie (name, value) {
     let d = new Date()
     d.setTime(d.getTime() + 60 * 2000)
-    document.cookie = name + '=' + escape(value) + ';expires=' + d.toGMTString()
+    document.cookie = name + '=' + encodeURIComponent(value) + ';expires=' + d.toGMTString()
   }
   /*
    *读取cookies
+   *@param {String} [name] [cookie key]
    */
   static getCookie (name) {
     let reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
     let arr = document.cookie.match(reg)
     if (arr) {
-      return parseInt(unescape(arr[2]))
-    } else {
-      return null
+      return parseInt(decodeURIComponent(arr[2]), 10)
     }
   }
   /*
-   *时间函数
+   *时间格式转换
+   *@param {Time} [d] [时间戳]
    */
   static time (d) {
     let result = ''
@@ -36,6 +38,7 @@ export default class MIPCommon {
   }
   /*
    *提示
+   *@param {String} [msg] [提示语]
    */
   static cAlert (msg) {
     if (document.getElementById('alert_tips')) {
@@ -51,6 +54,8 @@ export default class MIPCommon {
   }
   /*
    *查找是否在数组中
+   *@param {String} [str] [字符串]
+   *@param {Array} [arr] [数组]
    */
   static inArray (str, arr) {
     if (str && arr) {
@@ -72,6 +77,10 @@ export default class MIPCommon {
   }
   /*
    * 文章动态增加链接 / 动态显示不同内容
+   * @param {Object} [xgwz] [外围]
+   * @param {Number} [id] [文章分类id]
+   * @param {Array} [caNameArr] [分类名数组]
+   * @param {String} [url] [分类url]
    */
   static alterNewUrl (xgwz, id, caNameArr, url) {
     if (id) {
@@ -107,6 +116,9 @@ export default class MIPCommon {
   }
   /*
    * 修改头部标题
+   * @param {Number} [id] [分类id]
+   * @param {Array} [caNameArr] [分类名数组]
+   * @param {String} [url] [分类url]
    */
   static alterTit (id, caNameArr, url) {
     if (id) {
@@ -129,6 +141,7 @@ export default class MIPCommon {
   }
   /*
    * 排行榜
+   * @param {Number} [id] [分类id]
    */
   static rank (id) {
     if (id) {
@@ -149,52 +162,59 @@ export default class MIPCommon {
         if (document.getElementsByClassName('rank').length) {
           document.getElementsByClassName('rank')[0].parentNode.removeChild(document.getElementsByClassName('rank')[0])
         }
-      } else {
-        if (document.getElementsByClassName('rank').length) {
-          let rank = document.getElementsByClassName('rank')[0]
-          let list = rank.getElementsByClassName('tab-content')
-          let titleLi = rank.getElementsByClassName('tab-panel')[0].getElementsByTagName('li')
-          // 默认样式
-          for (let i = 0; i < list.length; i++) {
-            css(list[i], { display: 'none' })
-            let li = list[i].getElementsByClassName('list')[0].getElementsByTagName('div')[aiJson.index].getElementsByTagName('li')
-            for (let j = 0; j < li.length; j++) {
-              if (j > 3) {
-                css(li[j], { display: 'none' })
-              }
+        return false
+      }
+      if (document.getElementsByClassName('rank').length) {
+        let rank = document.getElementsByClassName('rank')[0]
+        let list = rank.getElementsByClassName('tab-content')
+        let titleLi = rank.getElementsByClassName('tab-panel')[0].getElementsByTagName('li')
+        // 默认样式
+        for (let i = 0; i < list.length; i++) {
+          css(list[i], { display: 'none' })
+          let li = list[i].getElementsByClassName('list')[0].getElementsByTagName('div')[aiJson.index].getElementsByTagName('li')
+          for (let j = 0; j < li.length; j++) {
+            if (j > 3) {
+              css(li[j], { display: 'none' })
             }
           }
-          css(list[1], { display: 'block' })
-          for (let i = 0; i < titleLi.length; i++) {
-            let index = i
-            titleLi[i].onclick = function () {
-              for (let j = 0; j < titleLi.length; j++) {
-                titleLi[j].setAttribute('class', '')
-                css(list[j], { display: 'none' })
-              }
-              this.setAttribute('class', 'active')
-              css(list[index], { display: 'block' })
+        }
+        css(list[1], { display: 'block' })
+        for (let i = 0; i < titleLi.length; i++) {
+          let index = i
+          titleLi[i].onclick = function () {
+            for (let j = 0; j < titleLi.length; j++) {
+              titleLi[j].setAttribute('class', '')
+              css(list[j], { display: 'none' })
             }
-            let lookmore = list[i].getElementsByClassName('lookmore')[0]
-            let li = list[i].getElementsByClassName('list')[0].getElementsByTagName('div')[aiJson.index].getElementsByTagName('li')
-            lookmore.onclick = () => {
-              let num = 0
-              for (let j = 0; j < li.length; j++) {
-                if (css(li[j], 'display') !== 'none') {
-                  num++
-                }
-              }
-              num = num + 4
-              if (parseInt(num) === li.length) {
-                lookmore.parentNode.removeChild(lookmore)
-              }
-              for (let j = 0; j < li.length; j++) {
-                if (j < num) {
-                  css(li[j], { display: 'block' })
-                }
-              }
-            }
+            this.setAttribute('class', 'active')
+            css(list[index], { display: 'block' })
           }
+          this.rankMore(i)
+        }
+      }
+    }
+  }
+  /*
+   * 排行榜显示更多
+   * @param {Number} [i] [下标]
+   */
+  static rankMore (i) {
+    let lookmore = list[i].getElementsByClassName('lookmore')[0]
+    let li = list[i].getElementsByClassName('list')[0].getElementsByTagName('div')[aiJson.index].getElementsByTagName('li')
+    lookmore.onclick = () => {
+      let num = 0
+      for (let j = 0; j < li.length; j++) {
+        if (css(li[j], 'display') !== 'none') {
+          num++
+        }
+      }
+      num = num + 4
+      if (parseInt(num) === li.length) {
+        lookmore.parentNode.removeChild(lookmore)
+      }
+      for (let j = 0; j < li.length; j++) {
+        if (j < num) {
+          css(li[j], { display: 'block' })
         }
       }
     }
@@ -203,24 +223,29 @@ export default class MIPCommon {
    *自定义统计
    */
   static statCustom () {
-    let dateTime = document.getElementById('down-href').getAttribute('dateTime')
-    let username = document.getElementById('down-href').getAttribute('username')
-    let n = document.querySelector('script[type="application/json"]')
-    if (n) {
-      let a = jsonParse(n.textContent.toString().replace(/[\s\b\t]/g, ''))
-      if (dateTime !== void 0 && username !== '' && a) {
-        let r = ''
-        if (a[0][username]) {
-          if (a[0][username].xtime) {
-            let o = new Date(a[0][username].xtime)
-            let s = new Date(dateTime)
-            if (o.getTime() < s.getTime()) {
+    let downHref = document.getElementById('down-href')
+    if (downHref) {
+      let dateTime = downHref.getAttribute('dateTime')
+      let username = downHref.getAttribute('username')
+      let n = document.querySelector('script[type="application/json"]')
+      if (n) {
+        let a = jsonParse(n.textContent.toString().replace(/[\s\b\t]/g, ''))
+        if (dateTime !== void 0 && username !== '' && a) {
+          let r = ''
+          if (a[0][username]) {
+            if (a[0][username].xtime) {
+              let o = new Date(a[0][username].xtime)
+              let s = new Date(dateTime)
+              if (o.getTime() < s.getTime()) {
+                r = a[0][username].hmToken
+              }
+            } else {
               r = a[0][username].hmToken
             }
-          } else { r = a[0][username].hmToken }
-          if (r !== '') {
-            let stat = dom.create(`<mip-stats-baidu token="${r}"></mip-stats-baidu>`)
-            document.body.appendChild(stat)
+            if (r !== '') {
+              let stat = dom.create(`<mip-stats-baidu token="${r}"></mip-stats-baidu>`)
+              document.body.appendChild(stat)
+            }
           }
         }
       }
