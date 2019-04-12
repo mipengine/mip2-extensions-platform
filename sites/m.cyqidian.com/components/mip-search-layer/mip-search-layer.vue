@@ -7,19 +7,19 @@
       />
       <div class="cymip-search">
         <mip-form
-          url="/"
+          url="/xm"
           method="get"
           class="search-form"
         >
           <input
             type="text"
             class="search-input"
-            name="key"
+            name="name"
             value
             placeholder="输入您想要找的项目"
           >
           <input
-            type="button"
+            type="submit"
             class="search-button"
             name
             value="搜索"
