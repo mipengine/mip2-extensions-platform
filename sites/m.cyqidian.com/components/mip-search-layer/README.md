@@ -22,5 +22,13 @@ mip-search-layer 组件说明
 
 ## 属性
 
+### items
+
+说明：热门搜索数据
+必选项：否
+类型：Array
+默认值：[]
+示例：[{action:'https://xxxx',name:'火锅'}]
+
 ## 注意事项
 
