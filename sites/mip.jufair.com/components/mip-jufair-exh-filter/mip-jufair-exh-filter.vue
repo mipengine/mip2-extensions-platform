@@ -37,6 +37,7 @@
         </div>
       </div>
       <div
+        v-if="visible"
         :style="{visibility: visible ? 'visible' : 'hidden', height: clientHeight}"
         class="filter-container">
         <div class="box box-first">
