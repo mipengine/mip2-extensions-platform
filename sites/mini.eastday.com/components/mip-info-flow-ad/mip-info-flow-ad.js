@@ -1,4 +1,4 @@
-// import './index.less'
+import './index.less'
 
 export default class MIPInformationFlow extends MIP.CustomElement {
   build () {
@@ -260,7 +260,7 @@ function informationFlowDOM (dom) {
           break
         case 2:
           if (gg.threeup.type === 'baidu') {
-            tempDom += `<div class="info-flow-ad info-flow-ad-${idx + 1}-${ADCount} detail-ad-box" data-pgnum="2" data-tjidx="1" data-adid="${gg.threefirst.id}" data-adtype="baidu">
+            tempDom += `<div class="info-flow-ad info-flow-ad-${idx + 1}-${ADCount} detail-ad-box" data-pgnum="2" data-tjidx="1" data-adid="${gg.threeup.id}" data-adtype="baidu">
                 <mip-ad type="baidu-wm-ext" domain="sh996.dftoutiao.com" token="${gg.threeup.id}"><div id="${gg.threeup.id}"></div></mip-ad>
               </div>`
           } else if (gg.threeup.type === 'dsp') {
@@ -271,7 +271,7 @@ function informationFlowDOM (dom) {
           break
         case 4:
           if (gg.threemiddle.type === 'baidu') {
-            tempDom += `<div class="info-flow-ad info-flow-ad-${idx + 1}-${ADCount} detail-ad-box" data-pgnum="3" data-tjidx="1" data-adid="${gg.threefirst.id}" data-adtype="baidu">
+            tempDom += `<div class="info-flow-ad info-flow-ad-${idx + 1}-${ADCount} detail-ad-box" data-pgnum="3" data-tjidx="1" data-adid="${gg.threemiddle.id}" data-adtype="baidu">
                 <mip-ad type="baidu-wm-ext" domain="sh996.dftoutiao.com" token="${gg.threemiddle.id}"><div id="${gg.threemiddle.id}"></div></mip-ad>
               </div>`
           } else if (gg.threemiddle.type === 'dsp') {
@@ -282,7 +282,7 @@ function informationFlowDOM (dom) {
           break
         case 7:
           if (gg.threedown.type === 'baidu') {
-            tempDom += `<div class="info-flow-ad info-flow-ad-${idx + 1}-${ADCount} detail-ad-box" data-pgnum="4" data-tjidx="1" data-adid="${gg.threefirst.id}" data-adtype="baidu">
+            tempDom += `<div class="info-flow-ad info-flow-ad-${idx + 1}-${ADCount} detail-ad-box" data-pgnum="4" data-tjidx="1" data-adid="${gg.threedown.id}" data-adtype="baidu">
                 <mip-ad type="baidu-wm-ext" domain="sh996.dftoutiao.com" token="${gg.threedown.id}"><div id="${gg.threedown.id}"></div></mip-ad>
               </div>`
           } else if (gg.threedown.type === 'dsp') {
@@ -297,7 +297,7 @@ function informationFlowDOM (dom) {
       }
       ADCount++
     } else if (idx > 0 && /^2$|^4$|^7$/gi.test(index)) {
-      tempDom += `<div class="info-flow-ad info-flow-ad-${idx + 1}-${ADCount} detail-ad-box" data-pgnum="${idx + 1}" data-tjidx="${ADCount}" data-adid="${gg.threefirst.id}" data-adtype="baidu">
+      tempDom += `<div class="info-flow-ad info-flow-ad-${idx + 1}-${ADCount} detail-ad-box" data-pgnum="${idx + 1}" data-tjidx="${ADCount}" data-adid="${informationAD[(idx * 3) + ADCount - 1]}" data-adtype="baidu">
           <mip-ad type="baidu-wm-ext" domain="sh996.dftoutiao.com" token="${informationAD[(idx * 3) + ADCount - 1]}"><div id="${informationAD[(idx * 3) + ADCount - 1]}"></div></mip-ad>
         </div>`
       ADCount++
