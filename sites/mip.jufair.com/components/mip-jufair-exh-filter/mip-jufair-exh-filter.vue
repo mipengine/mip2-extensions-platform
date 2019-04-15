@@ -10,7 +10,7 @@
           @click="() => {
             filterdata = industrydata
             index = 0
-            urlType = 'countryName'
+            urlType = 'secondIndustryName'
             if(type == 'region'){
               visible = true;
               type = 'industry'
@@ -26,7 +26,7 @@
           @click="()=> {
             filterdata = regiondata
             index = 0
-            urlType = 'secondIndustryName'
+            urlType = 'countryName'
             if(type == 'industry'){
               visible = true;
               type = 'region'
