@@ -10,6 +10,7 @@
           @click="() => {
             filterdata = industrydata
             index = 0
+            urlType = ''
             if(type == 'region'){
               visible = true;
               type = 'industry'
@@ -25,6 +26,7 @@
           @click="()=> {
             filterdata = regiondata
             index = 0
+            urlType = 'secondIndustryName'
             if(type == 'industry'){
               visible = true;
               type = 'region'
@@ -60,7 +62,7 @@
               v-for="item2 in filterdata[index].children"
               :key="item2.label"
               :title="item2.label + '展会'"
-              :href="Url(url,item2.pid,item2.id, 'countryName')">
+              :href="Url(url,item2.pid,item2.id, urlType)">
               <li>
                 {{ item2.label }}
               </li>
@@ -228,7 +230,8 @@ export default {
       clientHeight: '300px',
       filterdata: this.industrydata,
       index: 0,
-      type: 'industry'
+      type: 'industry',
+      urlType: 'secondIndustryName'
     }
   },
   mounted () {
