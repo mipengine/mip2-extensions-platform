@@ -477,7 +477,6 @@ function unionShowLog (options) {
 // DSP 广告上报方法，只有第一屏会有DSP广告，所以逻辑是按照第一屏展现之后开始上报逻辑，之后的信息流没有DSP广告，不做上报处理
 function DSPLogFN () {
   let DSPADDOM = document.querySelectorAll('.dsp-ad-box')
-  console.log(DSPADDOM)
 
   for (let index = 0; index < DSPADDOM.length; index++) {
     showFN(DSPADDOM[index])
