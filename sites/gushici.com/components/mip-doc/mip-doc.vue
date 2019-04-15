@@ -1,59 +1,79 @@
 <template>
   <div>
-    <div class="panel doc-panel" v-if="isload">
-      <div class="load-box"><div class="loading"></div></div>
+    <div
+      v-if="isload"
+      class="panel doc-panel">
+      <div class="load-box"><div class="loading"/></div>
     </div>
-    <div 
-      class="panel doc-panel" 
+    <div
+      v-if="typeof part.title!='undefined'&&part.arr.length>0"
       :class="isopen?'open':''"
-      v-if="typeof part.title!='undefined'&&part.arr.length>0">     
-      <div class="more" v-if="part.hasmore" @click="_more">展开阅读全文<i></i></div>
-      <div class="doc-box" :class="isopen?'':'box-mask'">
-        <div class="doc-title" v-text="part.title"></div>
+      class="panel doc-panel">
+      <div
+        v-if="part.hasmore"
+        class="more"
+        @click="_more">展开阅读全文<i/></div>
+      <div
+        :class="isopen?'':'box-mask'"
+        class="doc-box">
+        <div
+          class="doc-title"
+          v-text="part.title"/>
         <div
           v-for="(item, index) in part.arr"
           :key="index">
-          <p class="doc-sub" v-if="typeof item.sub!='undefined'" v-text="item.sub"></p>
+          <p
+            v-if="typeof item.sub!='undefined'"
+            class="doc-sub"
+            v-text="item.sub"/>
           <p
             v-for="(d, i) in item.arr"
             :key="i"
-            v-html="d"></p>
+            v-html="d"/>
         </div>
-        <i v-if="part.hasmore" v-show="isopen" class="close" @click="_more"></i>
-        <div class="doc-tip" v-if="part.tip!=''" v-html="part.tip"></div>
+        <i
+          v-if="part.hasmore"
+          v-show="isopen"
+          class="close"
+          @click="_more"/>
+        <div
+          v-if="part.tip!=''"
+          class="doc-tip"
+          v-html="part.tip"/>
       </div>
     </div>
   </div>
-  
+
 </template>
 
 <script>
 import './index.less'
-import ajax from '../../common/ajax.js'
 export default{
-  props:{
-    part:{
+  props: {
+    part: {
       type: Object,
-      default:{}
+      default: function () {
+        return {}
+      }
     }
   },
-  data(){
-    return{
-      isload:true,
-      isopen:false
+  data () {
+    return {
+      isload: true,
+      isopen: false
     }
   },
-  created(){
+  created () {
 
   },
-  mounted(){
+  mounted () {
     this.isload = false
   },
-  updated(){
-    
+  updated () {
+
   },
-  methods:{
-    _more(){
+  methods: {
+    _more () {
       this.isopen = !this.isopen
     }
   }

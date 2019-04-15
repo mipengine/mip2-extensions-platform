@@ -1,12 +1,12 @@
 <template>
   <div class="tagbox">
-    <a 
+    <a
       v-for="(item, i) in arr"
       :key="i"
       :href="'https://mip.gushici.com/p_t_'+item.id+'.html'"
       mip-link>
-        <span v-text="item.name"></span>
-      </a>
+      <span v-text="item.name"/>
+    </a>
   </div>
 </template>
 
@@ -14,28 +14,25 @@
 import './index.less'
 import ajax from '../../common/ajax.js'
 export default{
-  props:{
-    url:{
+  props: {
+    url: {
       type: String,
-      default:''
+      default: ''
     }
   },
-  data(){
-    return{
-      arr:[]
+  data () {
+    return {
+      arr: []
     }
   },
-  created(){
+  created () {
     this.init()
   },
-  mounted(){
-
-  },
-  methods:{
-    init(){
+  methods: {
+    init () {
       let t = this
-      ajax.get(this.url,{},function(res) {
-        t.arr = res.list        
+      ajax.get(this.url, {}, function (res) {
+        t.arr = res.list
       })
     }
   }

@@ -1,18 +1,22 @@
 <template>
   <div class="poem-list">
-    <div class="load-box" v-if="arr.length==0&&!isempty"><div class="loading"></div></div>
-    <div v-else-if="isempty" class="panel">
-      <div class="nodata"> 
-        <p>抱歉，暂无收录数据</p> 
+    <div
+      v-if="arr.length===0&&!isempty"
+      class="load-box"><div class="loading"/></div>
+    <div
+      v-else-if="isempty"
+      class="panel">
+      <div class="nodata">
+        <p>抱歉，暂无收录数据</p>
       </div>
     </div>
     <mip-auth-item
-      v-else
       v-for="(item, index) in arr"
+      v-else
       :key="index"
       :item="item"
       :index="index"
-      v-on:filter="_childfilter" />
+      @filter="_childfilter" />
   </div>
 </template>
 
@@ -21,99 +25,99 @@ import './index.less'
 import MipAuthItem from './mip-auths-item'
 import ajax from '../../common/ajax.js'
 export default{
-  components:{
+  components: {
     MipAuthItem
   },
-  props:{
-    page:{
+  props: {
+    page: {
       type: Number,
       default: 1
     },
-    url:{
+    url: {
       type: String,
       default: ''
     },
-    key:{
+    key: {
       type: String,
-      default:''
+      default: ''
     }
   },
-  data(){
+  data () {
     return {
-      arr:[],
-      pagesize:0,
-      paging:[],
-      query:{},
-      isempty:false
+      arr: [],
+      pagesize: 0,
+      paging: [],
+      query: {},
+      isempty: false
     }
   },
-  created(){
+  created () {
     // 无携带ID的情况 直接获取
-    if(location.pathname.indexOf('_')==-1){
-      this._getlist(this.url,this.page)
+    if (location.pathname.indexOf('_') === -1) {
+      this._getlist(this.url, this.page)
     }
   },
-  mounted(){
-    let t = this;
+  mounted () {
+    let t = this
     // 作者列表
-    this.$on('paging',function(pg) {
-      if(typeof pg=='undefined'){
+    this.$on('paging', function (pg) {
+      if (typeof pg === 'undefined') {
         // 无指定页码，则再当前页码上加一
         t.page++
-      }else{
+      } else {
         t.page = pg
       }
-      MIP.setData({page:t.page})
-      t._getlist(t.url,t.page)
+      MIP.setData({page: t.page})
+      t._getlist(t.url, t.page)
       MIP.viewport.setScrollTop(0)
     })
     // 监听筛选组件 接口执行完成触发
-    this.$on('filter',function(q) {
+    this.$on('filter', function (q) {
       t._filter(q)
     })
   },
-  updated(){
-    if(this.key=='like'){
+  updated () {
+    if (this.key === 'like') {
       this.arr = this.list
     }
   },
-  methods:{
-    _filter(q){
+  methods: {
+    _filter (q) {
       let t = this
       let query = {
-        page:1
+        page: 1
       }
-      MIP.setData({page:1,pagesize:0})
-      if(q.key=='themes'){
+      MIP.setData({page: 1, pagesize: 0})
+      if (q.key === 'themes') {
         query.theme = q.val
-      }else if(q.key=='tags'){
+      } else if (q.key === 'tags') {
         query.tag = q.val
-      }else if(q.key=='poetry_type'){
+      } else if (q.key === 'poetry_type') {
         query.type = q.val
-      }else{
-        query[q.key]=q.val
+      } else {
+        query[q.key] = q.val
       }
       t.query = query
-      t._renderdata(t.url,query)
+      t._renderdata(t.url, query)
     },
-    _getlist(url,pg){
+    _getlist (url, pg) {
       let t = this
       let query = this.query
-      if(typeof pg!='undefined'){
+      if (typeof pg !== 'undefined') {
         query.page = pg
       }
-      t._renderdata(url,query)
+      t._renderdata(url, query)
     },
-    _renderdata(url,query){
+    _renderdata (url, query) {
       let t = this
-      t.arr=[]
-      ajax.get(url,query,function(res) {
+      t.arr = []
+      ajax.get(url, query, function (res) {
         let list = res.list
-        if(res.page_max==0){
-          t.isempty=true
-        }else{
-          t.pagesize = res.page_max       
-          MIP.setData({pagesize:res.page_max})
+        if (res.page_max === 0) {
+          t.isempty = true
+        } else {
+          t.pagesize = res.page_max
+          MIP.setData({pagesize: res.page_max})
           t.arr = list
         }
       })

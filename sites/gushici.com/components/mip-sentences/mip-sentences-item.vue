@@ -1,34 +1,45 @@
 <template>
   <li>
-    <span v-text="item.body" @click="_go" :data-id="item.id"></span>
-    <p><a :href="'https://mip.gushici.com/a_'+item.auth_id+'.html'" v-text="item.auth" mip-link></a>《<a :href="'https://mip.gushici.com/t_'+item.poetry_id+'.html'" v-text="item.poetry" mip-link></a>》</p>
-  </li> 
+    <span
+      :data-id="item.id"
+      @click="_go"
+      v-text="item.body"/>
+    <p><a
+      :href="'https://mip.gushici.com/a_'+item.auth_id+'.html'"
+      mip-link
+      v-text="item.auth"/>《<a
+        :href="'https://mip.gushici.com/t_'+item.poetry_id+'.html'"
+        mip-link
+        v-text="item.poetry"/>》</p>
+  </li>
 </template>
 
 <script>
 const cookie = MIP.util.customStorage(0)
 export default{
-  props:{
-    item:{
+  props: {
+    item: {
       type: Object,
-      default:{}
+      default: function () {
+        return {}
+      }
     },
-    index:{
+    index: {
       type: Number,
       default: 0
     }
   },
-  data(){
+  data () {
     return {
     }
   },
-  methods:{
-    _go(e){
+  methods: {
+    _go (e) {
       let id = e.target.attributes['data-id'].value
       let val = e.target.innerText
-      cookie.set('dt',val)
-      MIP.viewer.open('https://mip.gushici.com/dt_'+id+'.html',{isMipLink:true})
-    },
+      cookie.set('dt', val)
+      MIP.viewer.open('https://mip.gushici.com/dt_' + id + '.html', {isMipLink: true})
+    }
   }
 }
 </script>

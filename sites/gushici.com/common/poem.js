@@ -3,415 +3,409 @@
 * @title:  html代码渲染 PC&M共用
 * @Date:   2019-01-05 13:31:54
 * @Last Modified by:   shl
-* @Last Modified time: 2019-04-12 14:53:50
+* @Last Modified time: 2019-04-12 17:37:07
 */
-// 诗句格式
-const _poem = function() {
-  return '<div><div class="poem-item"><div></div><p class="y"></p><p class="z"></p></div></div>';
-}
+
 // 诗篇处理
-const process_poem = function(def,y,z,s) {
-  let htm = '',obj={t:'',s:'',line:{},line_count:0},arr=[],oldt='';
-  // 获取基本内容
-  let _def=null,_y=null,_z=null,ya=[],za=[];
-  _def = _getdef(def);
-  arr = _def;
-  if(y!=''){
-    _y = _getY(y);
-    ya = _y.arr;
-    obj.t = _y.t;
+const processPoem = function (def, y, z, s) {
+  let obj = {t: '', s: '', line: {}, line_count: 0}
+  let arr = []
+  let _def = null
+  let _y = null
+  let _z = null
+  let ya = []
+  let za = []
+  let max = 0
+  _def = _getdef(def)
+  arr = _def
+  if (y !== '') {
+    _y = _getY(y)
+    ya = _y.arr
+    obj.t = _y.t
   }
-  if(z!=''){
-    _z = _getZ(z);
-    za = _z.arr;
+  if (z !== '') {
+    _z = _getZ(z)
+    za = _z.arr
   }
 
-  let max = arr.length;
-  for(let i=0;i<max;i++){
+  max = arr.length
+  for (let i = 0; i < max; i++) {
     let o = {
-      line_num:arr[i].line_num,
-      def:arr[i].txt,
-      y:'',
-      z:''
-    };
-    if(ya.length!=0&&typeof ya[i]!='undefined'){
+      line_num: arr[i].line_num,
+      def: arr[i].txt,
+      y: '',
+      z: ''
+    }
+    if (ya.length !== 0 && typeof ya[i] !== 'undefined') {
       o.y = ya[i].y
     }
-    if(za.length!=0&&typeof za[i]!='undefined'){
+    if (za.length !== 0 && typeof za[i] !== 'undefined') {
       o.z = za[i].z
     }
-    obj.line[o.def] = o;
-    obj.line_count+=1;
+    obj.line[o.def] = o
+    obj.line_count += 1
   }
 
   // 获取赏析
-  if(s!=''){
-    obj.s = s;
+  if (s !== '') {
+    obj.s = s
   }
-  return obj;
+  return obj
 }
 
-const process_doc = function(str) {
-  let arr=[],part='',tip='',f=false;
-  if(str==null){
-    return {arr,tip,hasmore:f};
+const processDoc = function (str) {
+  let arr = []
+  let part = ''
+  let tip = ''
+  let f = false
+  let ele = document.createElement('div')
+  if (str == null) {
+    return {arr, tip, hasmore: f}
   }
-  let ele = document.createElement('div');
-  ele.innerHTML=str;
-  f = str.length>500?true:false;
-  if(str.indexOf('<p style=" color:#919090;margin:0px; font-size:12px;line-height:160%;">')>-1){
-    if(part==''){
-      part = str.split('<p style=" color:#919090;margin:0px; font-size:12px;line-height:160%;"')[0];
-    }else if(ele.children.length<=2){
-      part = ele.innerHTML.substring(0,ele.innerHTML.indexOf('<'));
+  ele.innerHTML = str
+  f = str.length > 500
+  if (str.indexOf('<p style=" color:#919090;margin:0px; font-size:12px;line-height:160%;">') > -1) {
+    if (part === '') {
+      part = str.split('<p style=" color:#919090;margin:0px; font-size:12px;line-height:160%;"')[0]
+    } else if (ele.children.length <= 2) {
+      part = ele.innerHTML.substring(0, ele.innerHTML.indexOf('<'))
     }
-  }else if(str.indexOf('<p style=" color:#999999;margin:0px; font-size:12px;line-height:160%;">')>-1){
-    if(part==''){
-      part = ele.innerHTML.split('<p style=" color:#999999;margin:0px; font-size:12px;line-height:160%;">')[0];
-    }else if(ele.children.length<=2){
-      part = ele.innerHTML.substring(0,ele.innerHTML.indexOf('<'));
+  } else if (str.indexOf('<p style=" color:#999999;margin:0px; font-size:12px;line-height:160%;">') > -1) {
+    if (part === '') {
+      part = ele.innerHTML.split('<p style=" color:#999999;margin:0px; font-size:12px;line-height:160%;">')[0]
+    } else if (ele.children.length <= 2) {
+      part = ele.innerHTML.substring(0, ele.innerHTML.indexOf('<'))
     }
-  }else{
-    if(ele.children.length<=1){
-      part = ele.innerHTML.substring(0,ele.innerHTML.indexOf('<'));
+  } else {
+    if (ele.children.length <= 1) {
+      part = ele.innerHTML.substring(0, ele.innerHTML.indexOf('<'))
     }
   }
-  for(let i=0;i<ele.children.length;i++){
-    let pt = {};
-    let e = ele.children[i];
-    if(e.nodeName!='#text'){
-        let a = e.innerHTML
-        if(a=='参考资料：'){
-          tip = `<p>${a}</p>`;
-        }else if(a.indexOf('译赏内容整理自网络')>-1||a.indexOf('本节内容整理自网络')>-1){
+  for (let i = 0; i < ele.children.length; i++) {
+    let pt = {}
+    let e = ele.children[i]
+    if (e.nodeName !== '#text') {
+      let a = e.innerHTML
+      if (a === '参考资料：') {
+        tip = `<p>${a}</p>`
+      } else if (a.indexOf('译赏内容整理自网络') > -1 || a.indexOf('本节内容整理自网络') > -1) {
 
-        }else if(tip!=''){
-          a = a.replace(/<[^<]*>/g,'').replace(/\n/g,'')
-          tip += `<p>${a}</p>`;
-        }else if(a==''){
+      } else if (tip !== '') {
+        a = a.replace(/<[^<]*>/g, '').replace(/\n/g, '')
+        tip += `<p>${a}</p>`
+      } else if (a === '') {
 
-        }else{
-          let sub = /<strong>(.*)<\/strong>/.exec(a);
-          let info = a;
-          if(sub!=null){
-            pt={sub:sub[1].replace('<br>','')};
-            info = a.replace(sub[0],'');
-          }
-          let info_arr = info.replace(/\n/g,'').split('<br>');
-          pt.arr=[];
-          for(let j=0;j<info_arr.length;j++){
-            if(info_arr[j]!='')
-            {
-              info_arr[j] = info_arr[j].replace('▲','');
-              pt.arr.push(info_arr[j]);
-            }
-          }
-          arr.push(pt)
+      } else {
+        let sub = /<strong>(.*)<\/strong>/.exec(a)
+        let info = a
+        if (sub !== null) {
+          pt = {sub: sub[1].replace('<br>', '')}
+          info = a.replace(sub[0], '')
         }
+        let infoArr = info.replace(/\n/g, '').split('<br>')
+        pt.arr = []
+        for (let j = 0; j < infoArr.length; j++) {
+          if (infoArr[j] !== '') {
+            infoArr[j] = infoArr[j].replace('▲', '')
+            pt.arr.push(infoArr[j])
+          }
+        }
+        arr.push(pt)
       }
+    }
   }
-  if(part!=''&&part.indexOf('<')==-1){
+  if (part !== '' && part.indexOf('<') === -1) {
     arr.push({
-      arr:[part]
+      arr: [part]
     })
   }
 
-  return {arr,tip,hasmore:f}
+  return {arr, tip, hasmore: f}
 }
 
-const _getdef = function(def) {
-  let arr=[];
-  let ele = document.createElement('div');
-  ele.innerHTML=def;
-  for(let j=0;j<ele.children.length;j++){
-    let e = ele.children[j];
-    let txt = e.innerHTML.replace(/\<span\>/g,'<span class="z">');
-    arr.push({line_num:j,txt});
+const _getdef = function (def) {
+  let arr = []
+  let ele = document.createElement('div')
+  ele.innerHTML = def
+  for (let j = 0; j < ele.children.length; j++) {
+    let e = ele.children[j]
+    let txt = e.innerHTML.replace(/<span>/g, '<span class="z">')
+    arr.push({line_num: j, txt})
   };
-  return arr;
+  return arr
 }
 
 // 从译文内获取默认诗文的格式
-const _getY = function(y) {
-  let arr = [],t=''; 
-  let close=false;
-  let ele = document.createElement('div');
-  ele.innerHTML=y;
-  for(let j=0;j<ele.children.length;j++){
-    let e = ele.children[j];
-    let y = e.innerHTML;
+const _getY = function (y) {
+  let arr = []
+  let t = ''
+  let close = false
+  let ele = document.createElement('div')
+  ele.innerHTML = y
+  for (let j = 0; j < ele.children.length; j++) {
+    let e = ele.children[j]
+    let y = e.innerHTML
     let o = {
-      line_num:j,
+      line_num: j,
       y
-    };
-    if(e.nodeName=='DIV'){
-      close=true;
-    }else if(!close){
-      arr.push(o);
     }
-    if(close){
-      t+=y.replace(/\<p\>/g,'<p class="z">');
+    if (e.nodeName === 'DIV') {
+      close = true
+    } else if (!close) {
+      arr.push(o)
+    }
+    if (close) {
+      t += y.replace(/<p>/g, '<p class="z">')
     }
   }
-  
-  return {arr,t};
+
+  return {arr, t}
 }
 
 // 获取注释
-const _getZ = function(z) {
-  let arr=[];
-  let ele = document.createElement('div');
-  ele.innerHTML=z;
-  for(let j=0;j<ele.children.length;j++){
-    let e = ele.children[j];
-    let z = e.innerHTML;
+const _getZ = function (z) {
+  let arr = []
+  let ele = document.createElement('div')
+  ele.innerHTML = z
+  for (let j = 0; j < ele.children.length; j++) {
+    let e = ele.children[j]
+    let z = e.innerHTML
     let o = {
-      line_num:j,
+      line_num: j,
       z
     }
-    arr.push(o);
+    arr.push(o)
   }
-  return {arr};
+  return {arr}
 }
-
 
 // 获取文字匹配情况
 // 每个字具体的匹配定位
-const _note = function(htm,str) {
-  let obj={isall:false,info:[]};
-  let reg = new RegExp(/[，|。|！|：|（|）]/,'i');
-  let d = [];
-  let start = htm.indexOf(str);
-  let real_txt='</div>';
-  if(start==-1){
-    // 全句无法匹配 
+const _note = function (htm, str) {
+  let obj = {isall: false, info: []}
+  let reg = new RegExp(/[，|。|！|：|（|）]/, 'i')
+  let d = []
+  let start = htm.indexOf(str)
+  let realtxt = '</div>'
+  if (start === -1) {
+    // 全句无法匹配
     // 先尝试是否可以全句大致匹配
-    let all = _same(start,htm,str);
-    if(all!=null){
-      real_txt = htm.substring(all.start,all.end);
+    let all = _same(start, htm, str)
+    if (all !== null) {
+      realtxt = htm.substring(all.start, all.end)
     }
-    if(real_txt.indexOf('</div>')==-1){
+    if (realtxt.indexOf('</div>') === -1) {
       // 全句可以匹配
-      obj.info.push(all);
-    }else{
+      obj.info.push(all)
+    } else {
       // 按符号拆分单句再匹配
-      let d_s = 0,d_c=0;
-      for(let i in str){
-        if(reg.test(str[i])){
+      let ds = 0
+      let dc = 0
+      for (let i in str) {
+        if (reg.test(str[i])) {
           let o = {
-            isc:false,//是纯文本匹配
-            c_v: str.substring(d_s,Number(i)),//纯文本不带标点符号
-            v: str.substring(d_s,Number(i)+1),//带标点符号
-          };
-          o.start = htm.indexOf(o.v);
-          if(o.start==-1){
-            o.start = htm.indexOf(o.c_v);
-            if(o.start!=-1){
-              o.isc=true;
+            isc: false, // 是纯文本匹配
+            c_v: str.substring(ds, Number(i)), // 纯文本不带标点符号
+            v: str.substring(ds, Number(i) + 1)// 带标点符号
+          }
+          o.start = htm.indexOf(o.v)
+          if (o.start === -1) {
+            o.start = htm.indexOf(o.c_v)
+            if (o.start !== -1) {
+              o.isc = true
             }
           }
-          d.push(o);
-          d_s = str.substring(0,Number(i)+1).length;  
+          d.push(o)
+          ds = str.substring(0, Number(i) + 1).length
           // 是否全部单句都匹配
-          if(o.start!=-1){
-            d_c++;
-            if(Number(i)==str.length-1){
-              if(d_c==d.length){
-                obj.isall=true;
+          if (o.start !== -1) {
+            dc++
+            if (Number(i) === str.length - 1) {
+              if (dc === d.length) {
+                obj.isall = true
               }
             }
           }
         }
       }
-      if(obj.isall){
+      if (obj.isall) {
         // 全部单句匹配
-        for(let i=0;i<d.length;i++){
+        for (let i = 0; i < d.length; i++) {
           obj.info.push({
-            isd:true,
-            isc:d[i].isc,
-            start:d[i].start,
-            end: d[i].start+d[i].v.length+1,
+            isd: true,
+            isc: d[i].isc,
+            start: d[i].start,
+            end: d[i].start + d[i].v.length + 1,
             v: d[i].v,
             c_v: d[i].c_v
-          });
+          })
         }
-      }else{
-        for(let i=0;i<d.length;i++){
-          if(d[i].start==-1){
-            let o = _same(d[i].start,htm,d[i].v);
-            if(o!=null){
-              obj.info.push(o);
+      } else {
+        for (let i = 0; i < d.length; i++) {
+          if (d[i].start === -1) {
+            let o = _same(d[i].start, htm, d[i].v)
+            if (o !== null) {
+              obj.info.push(o)
             }
-          }else{
+          } else {
             obj.info.push({
-              isd:true,
-              isc:d[i].isc,
-              start:d[i].start,
-              end: d[i].start+d[i].v.length+1,
+              isd: true,
+              isc: d[i].isc,
+              start: d[i].start,
+              end: d[i].start + d[i].v.length + 1,
               v: d[i].v,
               c_v: d[i].c_v
-            });
+            })
           }
         }
       }
     }
-  }else{
-    obj.isall = true;
+  } else {
+    obj.isall = true
     obj.info.push({
-      isd:false,
-      isc:false,
+      isd: false,
+      isc: false,
       start,
-      end:start+str.length,
-      v:str
-    });
+      end: start + str.length,
+      v: str
+    })
   }
-  return obj;
+  return obj
 }
 
-function _same(start,htm,str) {
-  let obj={};
-  let s = 0, e = str.length,start_a=[];
-  let reg = new RegExp(/[，|。|！|：|（|）]/,'i');
-  let p_c = 0;//匹配的字数量
-  for(let i in str){
-    if(htm.indexOf(str[i])>-1){
-      if(!reg.test(str[i])){
-        p_c++;
+function _same (start, htm, str) {
+  let obj = {}
+  let s = 0
+  let e = str.length
+  let reg = new RegExp(/[，|。|！|：|（|）]/, 'i')
+  let pc = 0// 匹配的字数量
+  for (let i in str) {
+    if (htm.indexOf(str[i]) > -1) {
+      if (!reg.test(str[i])) {
+        pc++
       }
     }
-    if(reg.test(str[i])){
-      p_c++;
+    if (reg.test(str[i])) {
+      pc++
     }
   }
-  if(p_c<str.length){
-    obj=null;
-  }else{
-    while(start==-1&&e>0){
-      e--;
-      start = htm.indexOf(str.substring(s,e));
+  if (pc < str.length) {
+    obj = null
+  } else {
+    while (start === -1 && e > 0) {
+      e--
+      start = htm.indexOf(str.substring(s, e))
     }
-    if(start!=-1){
-      obj.isd=false;
-      obj.isc=false;
-      obj.v = str;
-      obj.c_v = str.substring(0,str.length-1);
-      obj.start = start;
-      let end = str.substring(str.length-1,str.length);
+    if (start !== -1) {
+      obj.isd = false
+      obj.isc = false
+      obj.v = str
+      obj.c_v = str.substring(0, str.length - 1)
+      obj.start = start
+      let end = str.substring(str.length - 1, str.length)
       // 获取剩余没匹配的内容再进行一次匹配
-      let after = str.substring(e,str.length-1);
-      obj.end = htm.indexOf(after);
-      if(obj.end!=-1){
-        obj.end = obj.end+after.length;
-      }else{
-        s = 0;
-        while(obj.end==-1&&s<after.length){
-          s++;
-          let v = after.substring(s,after.length);
-          obj.end = htm.indexOf(v);
-          console.log(v);
+      let after = str.substring(e, str.length - 1)
+      obj.end = htm.indexOf(after)
+      if (obj.end !== -1) {
+        obj.end = obj.end + after.length
+      } else {
+        s = 0
+        while (obj.end === -1 && s < after.length) {
+          s++
+          let v = after.substring(s, after.length)
+          obj.end = htm.indexOf(v)
         }
-        if(obj.end==-1){
-          obj=null;
-        }else{
-          obj.end = obj.end+after.length-s;
+        if (obj.end === -1) {
+          obj = null
+        } else {
+          obj.end = obj.end + after.length - s
         }
         // 获取最后一个文字到最后一个标点符合的字符长度
-        let after_end = htm.substring(obj.end,htm.length);
-        let close = false;
-        for(let i in after_end){
-          if(!close){
-            obj.end++;
-            if(after_end[i]==end){
-              close=true;
+        let afterend = htm.substring(obj.end, htm.length)
+        let close = false
+        for (let i in afterend) {
+          if (!close) {
+            obj.end++
+            if (afterend[i] === end) {
+              close = true
             }
           }
         }
       }
     }
   }
-  return obj;
+  return obj
 }
-
-// const hgt = function(htm,str,key) {
-//   if(typeof key=='undefined'){
-//     key = 'def';
-//   }
-//   if(key=='def'){
-//     return def_hgt(htm,str);
-//   }else{
-//     return poem_hgt(htm,str);
-//   }
-// }
-
 
 /**
  * 根据传入需要高亮的文本对文本执行高亮操作
+ *
  * @param  {string} body 文本
  * @param  {string} str  需高亮内容
- * @return {string}      
+ * @return {string}
  */
-const def_hgt = function(body,str) {
-  let obj = _note(body,str);
-  let txt = '';
-  let need_end = [];
-  function change_at_end(v) {
-    if(txt==''){
-      txt = body;
+const hgt = function (body, str) {
+  let obj = _note(body, str)
+  let txt = ''
+  let needend = []
+  function changeatend (v) {
+    if (txt === '') {
+      txt = body
     }
-    txt = txt.replace(v,`<span class="hlt">${v}</span>`);
+    txt = txt.replace(v, `<span class="hlt">${v}</span>`)
   }
-  if(obj.isall){
-    for(let i=0;i<obj.info.length;i++){
-      if(obj.info[i].isd){
-        let v = obj.info[i].v;
-        if(obj.info[i].isc){
-          v = obj.info[i].c_v;
+  if (obj.isall) {
+    for (let i = 0; i < obj.info.length; i++) {
+      if (obj.info[i].isd) {
+        let v = obj.info[i].v
+        if (obj.info[i].isc) {
+          v = obj.info[i].c_v
         }
-        need_end.push(v);
-      }else{
-        if(txt==''){
-          txt = body.replace(obj.info[i].v,`<span class="hlt">${obj.info[i].v}</span>`);
-        }else{
-          txt = txt.replace(obj.info[i].v,`<span class="hlt">${obj.info[i].v}</span>`);
+        needend.push(v)
+      } else {
+        if (txt === '') {
+          txt = body.replace(obj.info[i].v, `<span class="hlt">${obj.info[i].v}</span>`)
+        } else {
+          txt = txt.replace(obj.info[i].v, `<span class="hlt">${obj.info[i].v}</span>`)
         }
       }
     }
-  }else{
-    for(let i=0;i<obj.info.length;i++){
-      if(obj.info[i].isd){
-        let v = obj.info[i].v;
-        if(obj.info[i].isc){
-          v = obj.info[i].c_v;
+  } else {
+    for (let i = 0; i < obj.info.length; i++) {
+      if (obj.info[i].isd) {
+        let v = obj.info[i].v
+        if (obj.info[i].isc) {
+          v = obj.info[i].c_v
         }
-        need_end.push(v);
-        if(i==obj.info.length-1){
-          txt += body.substring(obj.info[i].end,body.length);
+        needend.push(v)
+        if (i === obj.info.length - 1) {
+          txt += body.substring(obj.info[i].end, body.length)
         }
-      }else{
-        if(txt==''){
-          txt = body.substring(0,obj.info[i].start)+'<span class="hlt">';
-          txt += body.substring(obj.info[i].start,obj.info[i].end)+'</span>';
-        }else{
-          body += body.substring(txt.length,obj.info[i].start)+'<span class="hlt">';
-          body += body.substring(obj.info[i].start,obj.info[i].end)+'</span>';
+      } else {
+        if (txt === '') {
+          txt = body.substring(0, obj.info[i].start) + '<span class="hlt">'
+          txt += body.substring(obj.info[i].start, obj.info[i].end) + '</span>'
+        } else {
+          body += body.substring(txt.length, obj.info[i].start) + '<span class="hlt">'
+          body += body.substring(obj.info[i].start, obj.info[i].end) + '</span>'
         }
-        if(i==obj.info.length-1){
-          txt += body.substring(obj.info[i].end,body.length);
+        if (i === obj.info.length - 1) {
+          txt += body.substring(obj.info[i].end, body.length)
         }
       }
     }
   }
-  for(let i=0;i<need_end.length;i++){
-    change_at_end(need_end[i]);
+  for (let i = 0; i < needend.length; i++) {
+    changeatend(needend[i])
   }
-  if(obj.info.length==0){
-    txt = body;
+  if (obj.info.length === 0) {
+    txt = body
   }
-  return txt;
+  return txt
 }
 
 module.exports = {
-  poem:process_poem,
-  doc:process_doc,
-  hlg:def_hgt
+  poem: processPoem,
+  doc: processDoc,
+  hlg: hgt
 }
