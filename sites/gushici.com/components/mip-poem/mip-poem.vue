@@ -134,17 +134,12 @@ export default{
     _go (e) {
       let id = e.target.attributes['data-id'].value
       cookie.rm('dt')
-      MIP.viewer.open('/example/t.html?id=' + id, {isMipLink: true})
+      MIP.viewer.open('https://mip.gushici.com/t_' + id + '.html', {isMipLink: true})
     },
     _chosefilter (e) {
       let v = e.target.innerText
-      if (this.item.key === 'refresh') {
-        // 首页时，需要跳转到诗文列表页，且进行条件筛选
-        MIP.viewer.open('/example/p.html?tags=' + v, {isMipLink: true})
-      } else {
-        // 触发父组件内_childfilter函数
-        this.$emit('filter', {key: 'tags', val: v})
-      }
+      // 触发父组件内_childfilter函数
+      this.$emit('filter', {key: 'tags', val: v})
     },
     _change (e) {
       let v = e.target.attributes['data-v'].value

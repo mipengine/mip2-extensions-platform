@@ -42,12 +42,15 @@ export default class MIPDataUrl extends MIP.CustomElement {
     let t = this
     if (key !== 'so') {
       ajax.get(url, {id}, function (res) {
-        if (key === 'poem') {
+        if (key === 'poem' || key === 'dt') {
           t._poem(res)
         } else if (key === 'auth') {
           t._auth(res)
         }
       })
+      if (key === 'poem') {
+        MIP.util.customStorage(0).rm('dt')
+      }
     }
   }
 
@@ -57,34 +60,35 @@ export default class MIPDataUrl extends MIP.CustomElement {
     let haspoem = false
     let hasauth = false
     let has = false
-
-    for (let i = 0; i < res.poetry.length; i++) {
-      let info = res.poetry[i]
-      let o = poem.poem(info.body, info.translation, info.explanation, info.appreciation)
-      for (let j in o.line) {
-        o.line[j].def = poem.hlg(o.line[j].def, value)
+    if (res.poetry !== null) {
+      for (let i = 0; i < res.poetry.length; i++) {
+        let info = res.poetry[i]
+        let o = poem.poem(info.body, info.translation, info.explanation, info.appreciation)
+        for (let j in o.line) {
+          o.line[j].def = poem.hlg(o.line[j].def, value)
+        }
+        let item = {
+          key: 'refresh',
+          id: info.id,
+          title: poem.hlg(info.title, value),
+          auth_id: info.auth_id,
+          auth: poem.hlg(info.auth, value),
+          dynasty_id: info.dynasty_id,
+          dynasty: poem.hlg(info.dynasty, value),
+          tag_arr: info.tag_arr,
+          has_y: info.translation !== '',
+          has_z: info.explanation !== '',
+          has_s: info.appreciation !== '',
+          line: o.line,
+          s: o.s,
+          t: o.t,
+          is_y: false,
+          is_z: false,
+          is_s: false,
+          hasmore: false
+        }
+        poems.push(item)
       }
-      let item = {
-        key: 'refresh',
-        id: info.id,
-        title: poem.hlg(info.title, value),
-        auth_id: info.auth_id,
-        auth: poem.hlg(info.auth, value),
-        dynasty_id: info.dynasty_id,
-        dynasty: poem.hlg(info.dynasty, value),
-        tag_arr: info.tag_arr,
-        has_y: info.translation !== '',
-        has_z: info.explanation !== '',
-        has_s: info.appreciation !== '',
-        line: o.line,
-        s: o.s,
-        t: o.t,
-        is_y: false,
-        is_z: false,
-        is_s: false,
-        hasmore: false
-      }
-      poems.push(item)
     }
     if (res.author !== null) {
       auth = {
@@ -120,7 +124,7 @@ export default class MIPDataUrl extends MIP.CustomElement {
       {'iscur': false, 'htm': {title: '人物生平'}},
       {'iscur': false, 'htm': {title: '评价'}}
     ]
-    let head = [{iscur: true, title: '作品'}]
+    let head = [{iscur: true, title: '作品', id: 1}]
     let o1 = poem.doc(info.allusion)
     tabs[1].htm.arr = o1.arr
     tabs[1].htm.tip = o1.tip
