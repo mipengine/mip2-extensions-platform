@@ -77,7 +77,6 @@ export default{
     let t = this
     // 首页推荐
     this.$on('refresh', function (event) {
-      console.log('refresh')
       t._getlist(t.url)
     })
     // 诗文列表
@@ -98,7 +97,6 @@ export default{
     })
   },
   updated () {
-    console.log('updated like', this.list)
     if (this.key === 'like') {
       this.arr = this.list
     }
