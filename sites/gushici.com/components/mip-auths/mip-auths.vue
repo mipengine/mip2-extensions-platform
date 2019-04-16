@@ -1,5 +1,5 @@
 <template>
-  <div class="poem-list">
+  <div class="author-list">
     <div
       v-if="arr.length===0&&!isempty"
       class="load-box"><div class="loading"/></div>
@@ -53,8 +53,11 @@ export default{
   },
   created () {
     // 无携带ID的情况 直接获取
-    if (location.pathname.indexOf('_') === -1) {
+    let path = location.pathname.replace('.html', '').replace('/', '').split('_')
+    if (path.length === 1) {
       this._getlist(this.url, this.page)
+    } else if (path[0] === 'a') {
+      this._getlist(this.url)
     }
   },
   mounted () {

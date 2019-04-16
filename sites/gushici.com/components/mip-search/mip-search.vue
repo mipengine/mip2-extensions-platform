@@ -33,11 +33,10 @@
         <dl>
           <dt>名句</dt>
           <dd>
-            <a
+            <span
               v-for="(item,i) in mingju"
               :key="i"
-              :href="'https://mip.gushici.com'+item.url+'.html'"
-              mip-link>{{ item.body }}</a>
+              @click="_go(item.body,'https://mip.gushici.com'+item.url+'.html')">{{ item.body }}</span>
           </dd>
         </dl>
         <dl>
@@ -61,6 +60,7 @@
 <script>
 import './index.less'
 import ajax from '../../common/ajax.js'
+const cookie = MIP.util.customStorage(0)
 export default{
   props: {
 
@@ -110,6 +110,10 @@ export default{
       let result = document.querySelector('.search-result')
       MIP.util.css(body, 'position', 'static')
       MIP.util.css(result, 'height', 0)
+    },
+    _go (str, url) {
+      cookie.set('dt', str)
+      MIP.viewer.open(url, {isMipLink: true})
     }
   }
 }

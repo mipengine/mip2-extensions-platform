@@ -122,7 +122,8 @@ export default{
   },
   methods: {
     param () {
-      let path = location.pathname.replace('.html', '').split('_')
+      let path = location.pathname.replace('.html', '').replace('/', '').split('_')
+      console.log('path', path)
       let q = {}
       if (path.length > 2) {
         if (/[a-z]/.test(path[1]) && path[0] === 'p') {
@@ -146,6 +147,7 @@ export default{
           q.val = path[1]
         }
       }
+      console.log('q', q)
       this.query = q
     },
     /**
@@ -188,7 +190,9 @@ export default{
               iscur: false
             })
             if (typeof t.query.key !== 'undefined') {
-              if (t.query.key === arr[i].key && t.query.val === res[arr[i].key][j].id) {
+              let k = arr[i].key
+              let id = res[arr[i].key][j].id
+              if (t.query.key === k && Number(t.query.val) === id) {
                 t.cur = v
                 t.query.val = v
               }
