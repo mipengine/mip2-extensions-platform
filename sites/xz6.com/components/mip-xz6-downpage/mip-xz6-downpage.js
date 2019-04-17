@@ -15,6 +15,6 @@ export default class MIPXz6Down extends MIP.CustomElement {
       btns.removeChild(goRead)
     } else if (bookCata.querySelectorAll('#chapter-list li').length === 1) {
       moerChapter.style.display = 'none'
-    }    
+    }
   }
 }
