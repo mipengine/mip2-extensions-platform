@@ -9,16 +9,12 @@ export default class MIPXz6Down extends MIP.CustomElement {
     if (tzz.querySelectorAll('li').length === 0) {
       this.element.querySelector('#mip-toggle').removeChild(tzz)
     }
-    if (bookCata.querySelectorAll('#chapter-list li').length < 1) {
-      if (bookCata.querySelectorAll('#chapter-list li').length === 0 && readAdd !== '') {
-        goRead.setAttribute('href', readAdd)
-      } else {
-        btns.removeChild(goRead)
-      }
-      this.element.querySelector('#mip-toggle').removeChild(bookCata)
-    }
-    else if (bookCata.querySelectorAll('#chapter-list li').length === 1) {
+    if (bookCata.querySelectorAll('#chapter-list li').length === 0 && readAdd !== '') {
+      goRead.setAttribute('href', readAdd)
+    } else if (bookCata.querySelectorAll('#chapter-list li').length === 0 && readAdd === '') {
+      btns.removeChild(goRead)
+    } else if (bookCata.querySelectorAll('#chapter-list li').length === 1) {
       moerChapter.style.display = 'none'
-    }
+    }    
   }
 }
