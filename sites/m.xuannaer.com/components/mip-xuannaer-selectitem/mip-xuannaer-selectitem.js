@@ -23,7 +23,6 @@ const { fetchJsonp } = window
 function heightAni (opt) {
   let element = opt.ele
   let type = opt.type
-
   if (!type || !element) {
     return
   }
@@ -90,12 +89,11 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
     this.buildClickEvent()
     // 获取数据
     this.param = this.getData()
-    console.log(this.param)
     // 添加背景蒙版的点击事件
     if (this.isBackground === 'true') {
       this.clickBackground()
     }
-    MIP.watch('areaType', (newVal) => {
+    MIP.watch('areaType', newVal => {
       this.param.areaType = newVal
       this.getAreaTypeHtml(newVal)
       this.buildMoreItemClick()
@@ -126,16 +124,19 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
       district_2nd: '',
       district_3rd: ''
     }
-    let script = this.element.querySelector('script[type="application/json"]')
-    if (script) {
-      return Object.assign(params, util.jsonParse(script.textContent.toString()))
+    try {
+      let script = this.element.querySelector('script[type="application/json"]')
+      if (script) {
+        return Object.assign(params, util.jsonParse(script.textContent.toString()))
+      }
+      return params
+    }catch (e) {
+      console.error(e)
     }
-    return params
   }
 
   buildClickEvent () {
-    let selects = this.selects
-    selects.forEach((select, index) => this.clickEvent(select))
+    this.selects.forEach((select, index) => this.clickEvent(select))
   }
 
   clickEvent (select) {
@@ -286,7 +287,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
       ele: ele,
       type: 'unfold',
       oriHeight: 0,
-      cb: function () {
+      cb () {
         util.css(ele, 'height', '')
       }
     })
@@ -318,15 +319,11 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
 
   /*
    * 删除所有的class
-   * @param className
+   * @param {string} className class名称
+   * @param {string} ele dom选择器
    */
   removeAllClass (className, ele) {
-    let elements = {}
-    if (ele) {
-      elements = this.element.querySelectorAll(`.${ele} .${className}`)
-    } else {
-      elements = this.element.querySelectorAll(`.${className}`)
-    }
+    let elements = this.element.querySelectorAll(ele ? `.${ele} .${className}` : `.${className}`)
     elements.forEach((element) => {
       removeClass(element, className)
     })
@@ -384,7 +381,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
 
   /*
    * 切换面积单位，获取相关html
-   * @param areaType
+   * @param {string} areaType 面积类型
    */
   getAreaTypeHtml (areaType = 1) {
     let areaUnits = {}
@@ -539,7 +536,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
         }
       }
       let href = this.splitUrlStr(xinTerm)
-      window.location.replace(href)
+      MIP.viewer.open(href, { isMipLink: false, replace: true })
     })
   }
 
@@ -613,7 +610,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
           name = '全' + name
         } else {
           let href = this.splitUrlStr('', '', '', '')
-          window.location.replace(href)
+          MIP.viewer.open(href, { isMipLink: false, replace: true })
           return false
         }
         this.removeAllClass('select-region-1-item-active', this.modal)
@@ -660,7 +657,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
         let type = item.getAttribute('type')
         let href = this.param.hostUrl + this.param.typeUrl + '/' + this.param.cateUrl + this.param.term
         if (districtId === 0) {
-          window.location.replace(href)
+          MIP.viewer.open(href, { isMipLink: false, replace: true })
           return false
         }
         if (name.indexOf('全') === -1) {
@@ -699,7 +696,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
       item.addEventListener('click', () => {
         let ab = item.getAttribute('ab')
         let href = `${this.param.hostUrl}${ab}/${this.param.typeUrl}/${this.param.cateUrl}${this.param.term}`
-        window.location.replace(href)
+        MIP.viewer.open(href, { isMipLink: false, replace: true })
       })
     }
   }
@@ -729,7 +726,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
               href = href.replace(sco[0], '')
             }
           }
-          window.location.replace(href)
+          MIP.viewer.open(href, { isMipLink: false, replace: true })
           return false
         }
         let im = item.getAttribute('data-im') ? item.getAttribute('data-im') : 'industry'
@@ -756,6 +753,15 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
     clearBtn.addEventListener('click', () => {
       this.removeAllClass('more-item-active-ios', this.modal)
       this.removeAllClass('more-item-active', this.modal)
+      element.querySelectorAll(`.select-fixed-item-wrapper .more-item-wrapper`).forEach((item => {
+        let mores = item.querySelectorAll(`.more-item`)
+        if (util.platform.isIos()) {
+          addClass(mores[0], 'more-item-active-ios')
+        }
+        if (util.platform.isAndroid()) {
+          addClass(mores[0], 'more-item-active')
+        }
+      }))
     })
   }
 
@@ -897,6 +903,9 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
           }
         }
       })
+      if(this.param.cateUrl === undefined) {
+        this.param.cateUrl = ''
+      }
       let kws = ''
       if (this.param.keywordTerms) {
         let kw = this.param.term.match(new RegExp(this.param.keywordTerms + '(.*)'))
@@ -906,7 +915,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
         }
       }
       let href = this.splitUrlStr(xinTerm) + kws
-      window.location.replace(href)
+      MIP.viewer.open(href, { isMipLink: false, replace: true })
     })
   }
 }
