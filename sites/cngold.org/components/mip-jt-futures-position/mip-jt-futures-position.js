@@ -87,8 +87,9 @@ export default class MIPJtFuturesPosition extends MIP.CustomElement {
           return res.json()
         }).then(function (data) {
           if (data.flag) {
-            window.location = 'https://m.cngold.org/futures/m_qhcc/e' +
+            let newLink = 'https://m.cngold.org/futures/m_qhcc/e' +
               exchangeId + '_v' + varietyId + '_d' + date + '.html'
+            MIP.viewer.open(newLink, { isMipLink: false, replace: false })
           } else {
             $('exText').innerHTML = ''
             $('kindText').innerHTML = ''
