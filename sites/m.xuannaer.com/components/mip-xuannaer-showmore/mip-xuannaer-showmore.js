@@ -1,14 +1,17 @@
 import './index.less'
+
 const {
   util,
   viewport
 } = MIP
+
 export default class MIPXuannaerShowmore extends MIP.CustomElement {
   build () {
     let box = this.element.querySelector('.open-box')
     let button = this.element.querySelector('.base-info-more')
     let addClassName = this.element.getAttribute('add-class') || 'show-more'
     let addClassButtonName = this.element.getAttribute('add-class-button') || 'last-inco'
+
     let docHeight = this.element.getAttribute('need-height')
     let type = this.element.getAttribute('data-type')
     let nowheight = util.css(box, 'height')
@@ -36,6 +39,7 @@ export default class MIPXuannaerShowmore extends MIP.CustomElement {
         button.classList.remove(addClassButtonName)
         button.querySelector('span').innerHTML = '展开更多信息'
       }
+
 
     })
   }

@@ -148,6 +148,7 @@ export default class MIPJtXianhuoExfilter extends MIP.CustomElement {
     // 5,重置
     $('reset').addEventListener('click', function () {
       $('res-box').style.display = 'none'
+      $('nores-box').style.display = 'none'
       $('zimu').parentNode.style.display = 'block'
       $('hot-city').parentNode.style.display = 'block'
       $('area-filter').style.display = 'block'
