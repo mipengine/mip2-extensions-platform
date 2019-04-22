@@ -22,8 +22,8 @@
 ## 属性
 add-class 用来标识div
 add-class-button 按钮的样式控制class
- need-height : 设置高度
- data-type : 只支持rem
+need-height : 设置高度
+data-type : 只支持rem
 ### 属性1
 
 **说明**：
