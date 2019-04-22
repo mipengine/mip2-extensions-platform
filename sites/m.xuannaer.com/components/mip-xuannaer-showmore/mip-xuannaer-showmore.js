@@ -28,13 +28,13 @@ export default class MIPXuannaerShowmore extends MIP.CustomElement {
       if (box.classList.contains(addClassName)) {
         box.classList.remove(addClassName)
         util.css(box, 'height', 'auto')
-        button.classList.remove(addClassButtonName)
-        button.querySelector('span').innerHTML = '展开更多信息'
+        button.classList.add(addClassButtonName)
+        button.querySelector('span').innerHTML = '收起'
       } else {
         box.classList.add(addClassName)
         util.css(box, 'height', docHeight + 'px')
-        button.classList.add(addClassButtonName)
-        button.querySelector('span').innerHTML = '收起'
+        button.classList.remove(addClassButtonName)
+        button.querySelector('span').innerHTML = '展开更多信息'
       }
 
     })
