@@ -35,7 +35,7 @@ export default class MIPXuannaerCollect extends MIP.CustomElement {
             this.element.querySelector('.collect-text').innerHTML = '已收藏'
             this.element.querySelector('.collect-img').setAttribute('src', `${dataArr['imgUrl']}/static/mobile/images/heartyes.png`)
           } else {
-            if (data.rsg == '请先登录') {
+            if (data.rsg === '请先登录') {
               MIP.viewer.open(`${dataArr['imsUrl']}/user/login/login_tab`, {
                 isMipLink: false,
                 replace: false
@@ -49,7 +49,7 @@ export default class MIPXuannaerCollect extends MIP.CustomElement {
         }).then(data => {
           if (data.code === 200) {
             this.element.querySelector('.collect-text').innerHTML('收藏')
-            this.element.querySelector('.collect-img').setAttribute('src',`${data['imgurl']}/static/mobile/images/heart.png`)
+            this.element.querySelector('.collect-img').setAttribute('src', `${data['imgurl']}/static/mobile/images/heart.png`)
           } else {
             if (data.rsg === '请先登录') {
               MIP.viewer.open(`${dataArr['imsUrl']}user/login/login_tab`, {
