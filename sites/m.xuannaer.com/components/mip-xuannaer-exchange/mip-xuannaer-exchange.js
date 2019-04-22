@@ -10,12 +10,12 @@ export default class MIPXuannaerExchange extends MIP.CustomElement {
     this.exchange = document.querySelector('.intro-but')
     this.showThat = document.querySelector('.m-base-info-detail')
     this.bg = document.querySelectorAll('.m-product-base-info')
-    //需要控制的div
+    // 需要控制的div
     this.completionPrice = document.querySelector('.completion_price')
     this.floorPrice = document.querySelector('.completion_floor_price')
     this.landPrice = document.querySelector('.land_price')
     this.premiumRate = document.querySelector('.premium_rate')
-    //处理数据的显示和单位的转化
+    // 处理数据的显示和单位的转化
     this.dataArr = this.getData()
     this.nowStatus()
     this.showThat.addEventListener('click', () => {
@@ -61,13 +61,13 @@ export default class MIPXuannaerExchange extends MIP.CustomElement {
     fetchJsonp(`${this.dataArr['hostUrl']}Mipplugin/recruitClickPrice/id/${this.dataArr['detailId']}`).then(res => {
       return res.json()
     }).then(result => {
-      if (result && result['code'] == 1) {
+      if (result && result['code'] === 1) {
         window.location.href = `${this.dataArr['imsUrl']}/user/login/login_tab`
       }
-      if (result && result['code'] == 500) {
+      if (result && result['code'] === 500) {
         this.tipModal(result['msg'])
       }
-      if (result && result['code'] == 200) {
+      if (result && result['code'] === 200) {
         this.bg.forEach(function (evt) {
           evt.classList.remove('m-background')
         })
@@ -97,10 +97,10 @@ export default class MIPXuannaerExchange extends MIP.CustomElement {
   }
   getData () {
     let params = {
-      "imsUrl": "",
-      "imgUrl": "",
-      "hostUrl": "",
-      "detailId": ""
+      'imsUrl': '',
+      'imgUrl': '',
+      'hostUrl': '',
+      'detailId': ''
     }
     let script = this.element.querySelector('script[type="application/json"]')
     if (script) {

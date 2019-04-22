@@ -1,10 +1,7 @@
 import './index.less'
-
 const {
-  util,
-  viewport
+  util
 } = MIP
-
 export default class MIPXuannaerShowmore extends MIP.CustomElement {
   build () {
     let box = this.element.querySelector('.open-box')
@@ -17,16 +14,15 @@ export default class MIPXuannaerShowmore extends MIP.CustomElement {
     let nowheight = util.css(box, 'height')
     if (type === 'rem') {
       let fontsize = util.css(document.querySelector('html'), 'fontSize')
-      let remint = fontsize.replace("px", "")
-      nowheight = nowheight.replace("px", "")
-      docHeight = docHeight.replace("px", "") * remint
+      let remint = fontsize.replace('px', '')
+      nowheight = nowheight.replace('px', '')
+      docHeight = docHeight.replace('px', '') * remint
       if (nowheight > docHeight) {
         util.css(box, 'height', docHeight + 'px')
         box.classList.add(addClassName)
         util.css(button, 'display', 'block')
       }
     }
-
     button.addEventListener('click', () => {
       if (box.classList.contains(addClassName)) {
         box.classList.remove(addClassName)
@@ -39,8 +35,6 @@ export default class MIPXuannaerShowmore extends MIP.CustomElement {
         button.classList.remove(addClassButtonName)
         button.querySelector('span').innerHTML = '展开更多信息'
       }
-
-
     })
   }
 }

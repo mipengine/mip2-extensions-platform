@@ -2,6 +2,9 @@ import './index.less'
 const {
   util
 } = MIP
+const {
+  fetchJsonp
+} = window
 export default class MIPXuannaerAddmeet extends MIP.CustomElement {
   build () {
     let appoint = this.element.querySelector('.to_entrust')
@@ -11,12 +14,12 @@ export default class MIPXuannaerAddmeet extends MIP.CustomElement {
       fetchJsonp(`${inDate['checkUrl']}/Mipplugin/sitNum`).then(res => {
         return res.json()
       }).then(data => {
-        if (data['code'] == 404) {
+        if (data['code'] === 404) {
           MIP.viewer.open(`inDate[${inDate['imsUrl']}/user/login/login_tab`, {
             isMipLink: false,
             replace: false
           })
-        } else if (data['data'] == 0) {
+        } else if (data['data'] === 0) {
           this.popupModal()
         } else {
           MIP.viewer.open(`${inDate['checkUrl']}/Entrust/book/${dataId}`, {
@@ -56,10 +59,10 @@ export default class MIPXuannaerAddmeet extends MIP.CustomElement {
   }
   getData () {
     let params = {
-      "hostUrl": "https://ims.xuannaer.com",
-      "imgUrl": "http://img.ims.com",
-      "checkUrl": "http://m.ims.com/",
-      "imsUrl": "http:ims.xuannaer.com"
+      'hostUrl': 'https://ims.xuannaer.com',
+      'imgUrl': 'http://img.ims.com',
+      'checkUrl': 'http://m.ims.com/',
+      'imsUrl': 'http:ims.xuannaer.com'
     }
     let script = this.element.querySelector('script[type="application/json"]')
     if (script) {
