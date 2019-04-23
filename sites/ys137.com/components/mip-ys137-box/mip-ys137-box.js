@@ -146,16 +146,16 @@ function osOk (sourceOsArr) {
 function referrerOk (sourceOsArr) {
   let referrer = MIP.sandbox.window.document.referrer
   // 有不带"!"的os, 则以不带"!"os作为最终判断依据, 判断符为“||”
-  // sourceOsArr[0]为带"!"的os合集
+  // sourceOsArr[0]为不带"!"的合集
   if (sourceOsArr && sourceOsArr[0].length > 0) {
     return sourceOsArr[0].some(item => {
       return (referrer.indexOf(item) !== -1)
     })
   }
   // 带有"!"的os合集，判断符为“&&”
-  // sourceOsArr[1]为带"!"的os合集
+  // sourceOsArr[1]为带"!"的合集
   return sourceOsArr[1].every(item => {
-    return (referrer.substr(1).indexOf(item) === -1)
+    return (referrer.indexOf(item.substr(1)) === -1)
   })
 }
 /**
@@ -184,11 +184,9 @@ function scopeOk (scope) {
     // 将value值拆分为带有!与不带有!组
     const value = splitScopeValue(param)
     if (!checkFuns[key] || !checkFuns[key](value)) {
-      console.warn(key + ' error')
       return false
     }
   }
-  console.log('all right check')
   return true
 }
 export default class MIPYs137Box extends MIP.CustomElement {
@@ -197,7 +195,7 @@ export default class MIPYs137Box extends MIP.CustomElement {
     const scope = element.getAttribute('scope')
     const isOk = scopeOk(scope) // 检测scope是否合规
     const targetId = element.getAttribute('targetId')
-    const targetDom = targetId !== '' ? document.documentElement.querySelector('#' + targetId) : null
+    const targetDom = targetId !== '' ? document.querySelector('#' + targetId) : null
     if (!isOk) {
       // 检测不合规时将内容清空
       if (targetDom !== null) {
