@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>MIP page</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <style mip-custom>
+    /* 自定义样式 */
+    .container{text-align: center;}
+    .title{height: 50px;padding: 50px 0 10px;}
+    .container p{padding: 10px 0;}
+    </style>
+  </head>
+  <body>
+      <div class="container">
+        <h2 class="title">示例页面</h2>
+        <mip-async-form id="my-form" method="post" url="http://xh.me/api/baidumip/reserve">
+            <p><input type="text" name="name" placeholder="姓名"></p>
+            <p>性别：<input required  type="radio" value="1" name="radio">男<input required  type="radio" value="2" name="radio">女</p>
+            <p><input required type="text" name="mobile" placeholder="电话"></p>
+            <p>标签：<input  type="checkbox" value="1" name="checkbox[]">标签1<input  type="checkbox" value="2" name="checkbox[]">标签2</p>
+            <p>是否本地人：<input type="checkbox" value="3" name="checkbox2"></p>
+            <p><input type="password" name="password" placeholder="密码"></p>
+            <p>
+                <select required name="sex">
+                    <option value="">请选择性别</option>
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </p>
+            <p><textarea required name="remark" placeholder="备注"></textarea></p>
+            <p><input type="hidden" name="hidden"></p>
+            <p><button type="button" on="tap:my-form.send">提交表单</button></p>
+        </mip-async-form>
+    </div>
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-script/mip-script.js"></script>
+    <script src="/mip-async-form/mip-async-form.js"></script>
+  </body>
+</html>
