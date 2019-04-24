@@ -7,7 +7,7 @@ export default class MIPAsyncForm extends MIP.CustomElement {
       if (url.length === 0) {
         url = window.location.href
       }
-      if (method.length === 0 || (method.toLowerCase() != 'post' && method.toLowerCase() != 'get')) {
+      if (method.length === 0 || (method.toLowerCase() !== 'post' && method.toLowerCase() !== 'get')) {
         method = 'get'
       }
       // 验证表单数据
@@ -15,20 +15,20 @@ export default class MIPAsyncForm extends MIP.CustomElement {
         // 获取表单数据
         let data = this.getFormData()
         // 组装数据
-        let datastr = "?"
+        let datastr = '?'
         for (let key in data) {
-          if (typeof(data[key]) == 'object') {
-            for (let i=0; i<data[key].length; i++) {
+          if (typeof (data[key]) === 'object') {
+            for (let i = 0; i < data[key].length; i++) {
               datastr += key + '[' + i + ']' + '=' + data[key][i] + '&'
             }
           } else {
             datastr += key + '=' + data[key] + '&'
           }
         }
-        datastr = datastr.replace(/\&$/, '')
-        
+        datastr = datastr.replace(/&$/, '')
+
         // 发送数据
-        fetch(url + datastr, { method:method.toLowerCase() }).then(function (response) {
+        fetch(url + datastr, { method: method.toLowerCase() }).then(function (response) {
           // 整个fetch信息
           return response.json()
         }).then((function (element) {
@@ -36,10 +36,10 @@ export default class MIPAsyncForm extends MIP.CustomElement {
             // 在此处进行接收数据之后的操作
             if (json.ret) {
               // 触发请求失败事件
-              MIP.viewer.eventAction.execute('formfailure', element, json.msg, typeof(json.data) == 'object' ? json.data : {})
+              MIP.viewer.eventAction.execute('formfailure', element, json.msg, typeof (json.data) === 'object' ? json.data : {})
             } else {
               // 触发请求成功事件
-              MIP.viewer.eventAction.execute('formsuccess', element, json.msg, typeof(json.data) == 'object' ? json.data : {})
+              MIP.viewer.eventAction.execute('formsuccess', element, json.msg, typeof (json.data) === 'object' ? json.data : {})
             }
           }
         })(this.element)).catch((function (element) {
@@ -48,21 +48,21 @@ export default class MIPAsyncForm extends MIP.CustomElement {
             // 触发请求错误事件
             MIP.viewer.eventAction.execute('formerror', element, ex)
           }
-        }) (this.element))
+        })(this.element))
       }
     })
   }
-  validateFormData() {
+  validateFormData () {
     let elements = this.element.querySelectorAll('input[type="checkbox"]:enabled , input[type="password"]:enabled , input[type="radio"]:enabled , input[type="text"]:enabled , select:enabled , textarea:enabled')
     for (let i = 0; i < elements.length; i++) {
-      if (typeof(elements[i].getAttribute('required')) !== 'string') {
+      if (typeof (elements[i].getAttribute('required')) !== 'string') {
         continue
       }
-      if (elements[i].tagName.toLowerCase() == 'input') {
-        if (elements[i].type == 'radio') {
+      if (elements[i].tagName.toLowerCase() === 'input') {
+        if (elements[i].type === 'radio') {
           let radios = this.element.querySelectorAll('input[name="' + elements[i].name + '"]')
           let checked = false
-          for (let j=0; j < radios.length; j++) {
+          for (let j = 0; j < radios.length; j++) {
             if (radios[j].checked) {
               checked = true
             }
@@ -70,15 +70,15 @@ export default class MIPAsyncForm extends MIP.CustomElement {
           if (!checked) {
             return false
           }
-        } else if (elements[i].type == 'checkbox') {
+        } else if (elements[i].type === 'checkbox') {
           let checkboxs = this.element.querySelectorAll('input[name="' + elements[i].name + '"]')
-          let checkboxs_count = 0
-          for (let j=0; j<checkboxs.length; j++) {
+          let checkboxsCount = 0
+          for (let j = 0; j < checkboxs.length; j++) {
             if (checkboxs[j].checked) {
-              checkboxs_count++
+              checkboxsCount++
             }
           }
-          if (checkboxs_count==0) {
+          if (checkboxsCount === 0) {
             return false
           }
         } else {
@@ -96,31 +96,31 @@ export default class MIPAsyncForm extends MIP.CustomElement {
     }
     return true
   }
-  getFormData(){
+  getFormData () {
     let elements = this.element.querySelectorAll('input:enabled , select:enabled , textarea:enabled')
     let data = {}
-    for (let i = 0;i < elements.length; i++) {
-      if (elements[i].tagName.toLowerCase() == 'input') {
-        if (elements[i].type == 'radio') {
-          let radios = this.element.querySelectorAll('input[name="'+elements[i].name+'"]')
+    for (let i = 0; i < elements.length; i++) {
+      if (elements[i].tagName.toLowerCase() === 'input') {
+        if (elements[i].type === 'radio') {
+          let radios = this.element.querySelectorAll('input[name="' + elements[i].name + '"]')
           for (let j = 0; j < radios.length; j++) {
             if (radios[j].checked) {
               data[elements[i].name] = radios[j].value
             }
           }
-        } else if (elements[i].type == 'checkbox') {
+        } else if (elements[i].type === 'checkbox') {
           let checkboxs = this.element.querySelectorAll('input[name="' + elements[i].name + '"]')
           if (checkboxs.length > 1) {
-            let array_name = elements[i].name.replace('[]', [])
-            if (typeof(data[array_name]) == 'undefined') {
-              data[array_name] = []
+            let arrayName = elements[i].name.replace('[]', [])
+            if (typeof (data[arrayName]) === 'undefined') {
+              data[arrayName] = []
             }
             for (let j = 0; j < checkboxs.length; j++) {
               if (checkboxs[j].checked) {
-                data[array_name].push(checkboxs[j].value)
+                data[arrayName].push(checkboxs[j].value)
               }
             }
-          } else if(checkboxs.length == 1 && elements[i].checked) {
+          } else if (checkboxs.length === 1 && elements[i].checked) {
             data[elements[i].name] = elements[i].value
           }
         } else {
@@ -130,20 +130,20 @@ export default class MIPAsyncForm extends MIP.CustomElement {
         data[elements[i].name] = elements[i].value
       }
     }
-    let new_data = {}
+    let newData = {}
     for (let i in data) {
-      if (typeof(data[i]) == 'object') {
-        new_data[i] = this.unique(data[i])
+      if (typeof (data[i]) === 'object') {
+        newData[i] = this.unique(data[i])
       } else {
-        new_data[i] = data[i]
+        newData[i] = data[i]
       }
     }
-    return new_data
+    return newData
   }
   unique (array) {
     let temp = []
     for (let i = 0; i < array.length; i++) {
-      if (temp.indexOf(array[i]) == -1) {
+      if (temp.indexOf(array[i]) === -1) {
         temp.push(array[i])
       }
     }
