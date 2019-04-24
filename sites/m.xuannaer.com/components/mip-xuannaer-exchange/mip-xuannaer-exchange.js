@@ -62,7 +62,7 @@ export default class MIPXuannaerExchange extends MIP.CustomElement {
       return res.json()
     }).then(result => {
       if (result && result['code'] === 1) {
-        window.location.href = `${this.dataArr['imsUrl']}/user/login/login_tab`
+        window.location.href = `${this.dataArr['imsUrl']}user/login/login_tab`
       }
       if (result && result['code'] === 500) {
         this.tipModal(result['msg'])
