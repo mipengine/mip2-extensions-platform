@@ -80,7 +80,7 @@ export default class MIPXuannaerAddmeet extends MIP.CustomElement {
       return res.json()
     }).then(data => {
       if (data === 1) {
-        this.appoint.innerHTML='已预约'
+        this.appoint.innerHTML = '已预约'
         this.appoint.classList.add('unentrust')
         this.appoint.classList.remove('test')
       }
