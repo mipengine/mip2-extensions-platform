@@ -192,16 +192,18 @@ export default class MIPCommon {
             this.setAttribute('class', 'active')
             css(list[index], { display: 'block' })
           }
-          this.rankMore(i)
+          this.rankMore(id, i)
         }
       }
     }
   }
   /*
    * 排行榜显示更多
-   * @param {Number} [i] [下标] 
+   * @param {Number} [id] [分类id]
+   * @param {Number} [i] [下标]
    */
-  static rankMore (i) {
+  static rankMore (id, i) {
+    let rank = document.getElementsByClassName('rank')[0]
     let aiJson = this.inArray(id, [ang, anr, ig, ir])
     let list = rank.getElementsByClassName('tab-content')
     let lookmore = list[i].getElementsByClassName('lookmore')[0]
