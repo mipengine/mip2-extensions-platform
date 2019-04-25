@@ -11,25 +11,15 @@
     </style>
   </head>
   <body>
-  <mip-data>
-  <script type="application/json">
-    {
-      "action_status": "remove",
-      "show":false
-    }
-  </script>
-</mip-data>
     <div>
-      <!--
-        ua:'baidu' , 'baidubrowser', 'wechat', 'uc' , 'chrome' , 'safari' , 'firefox' , 'qq' 
-
-      -->
-      <mip-ys137-box scope={"referrer":"!/components/mip-ys137-box/example/"}>
-          来源：!http://127.0.0.1:8111/components/mip-ys137-box/example/
-      </mip-ys137-box>
+      <button on="tap:search-layer.open">点击展示搜索图层</button>   
+      <mip-sidebar id="search-layer" class="search-layer" side="right">
+        <mip-search-layer on="close:search-layer.close" ></mip-search-layer>
+      </mip-sidebar>
     </div>
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
-    
-    <script src="/mip-ys137-box/mip-ys137-box.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-sidebar/mip-sidebar.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-form/mip-form.js"></script>
+    <script src="/mip-search-layer/mip-search-layer.js"></script>
   </body>
 </html>
