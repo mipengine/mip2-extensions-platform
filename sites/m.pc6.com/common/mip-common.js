@@ -4,7 +4,14 @@
  */
 const { util } = MIP
 const { jsonParse, dom, css } = util
-
+let ang = [634, 695, 594, 696, 697, 712, 598, 592, 596, 593, 595, 637, 713, 638, 636, 842]
+let anr = [588, 589, 584, 582, 583, 585, 586, 587, 590, 600, 703, 704, 708, 709, 875, 876,
+  877, 878, 879, 880, 881, 628, 705, 706, 627, 599
+]
+let ig = [797, 798, 799, 800, 801, 802, 803, 804, 805, 806, 807, 808, 809, 810]
+let ir = [776, 777, 778, 779, 780, 781, 782, 783, 784, 785, 786, 787, 788, 789, 790, 791,
+  792, 793, 794, 795
+]
 export default class MIPCommon {
   /*
    *设置cookies
@@ -84,10 +91,6 @@ export default class MIPCommon {
    */
   static alterNewUrl (xgwz, id, caNameArr, url) {
     if (id) {
-      let ang = [634, 695, 594, 696, 697, 712, 598, 592, 596, 593, 595, 637, 713, 638, 636, 842]
-      let anr = [588, 589, 584, 582, 583, 585, 586, 587, 590, 600, 703, 704, 708, 709, 875, 786, 877, 878, 879, 880, 881, 628, 705, 706, 627, 599]
-      let ig = [797, 798, 799, 800, 801, 802, 803, 804, 805, 806, 807, 808, 809, 810]
-      let ir = [776, 777, 778, 779, 780, 781, 782, 783, 784, 785, 786, 787, 788, 789, 790, 791, 792, 793, 794, 795]
       let aiJson = MIPCommon.inArray(id, [ang, anr, ig, ir])
       let caName = ''
       let newsUrl = ''
@@ -196,9 +199,11 @@ export default class MIPCommon {
   }
   /*
    * 排行榜显示更多
-   * @param {Number} [i] [下标]
+   * @param {Number} [i] [下标] 
    */
   static rankMore (i) {
+    let aiJson = this.inArray(id, [ang, anr, ig, ir])
+    let list = rank.getElementsByClassName('tab-content')
     let lookmore = list[i].getElementsByClassName('lookmore')[0]
     let li = list[i].getElementsByClassName('list')[0].getElementsByTagName('div')[aiJson.index].getElementsByTagName('li')
     lookmore.onclick = () => {
