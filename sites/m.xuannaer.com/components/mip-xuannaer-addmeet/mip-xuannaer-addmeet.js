@@ -13,7 +13,7 @@ export default class MIPXuannaerAddmeet extends MIP.CustomElement {
     console.log(this.inDate)
     this.initButton()
     this.appoint.addEventListener('click', () => {
-      if(this.appoint.classList.contains('unentrust')){
+      if (this.appoint.classList.contains('unentrust')) {
         return false
       }
       fetchJsonp(`${this.inDate['hostUrl']}Mipplugin/sitNum`).then(res => {
@@ -33,7 +33,7 @@ export default class MIPXuannaerAddmeet extends MIP.CustomElement {
           })
         }
       })
-    },false)
+    }, false)
     this.element.querySelector('.fixed-wrapper').addEventListener('click', () => {
       this.popupModal()
     }, false)
@@ -87,7 +87,6 @@ export default class MIPXuannaerAddmeet extends MIP.CustomElement {
         this.appoint.innerHTML = '已预约'
         this.appoint.classList.add('unentrust')
         this.appoint.classList.remove('to_entrust')
-        this.appoint.removeEventListener('click',)
       }
     })
   }
