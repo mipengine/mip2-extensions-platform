@@ -15,7 +15,7 @@
 示例说明
 
 ```
-// 代码示例
+<!-- 代码示例 -->
 <mip-jt-hkstock-sort
   kind='all'
   list-id='list_box'
@@ -41,66 +41,66 @@
       </div>
     </div>
     <div id="list_box">
-        <dl class="content_dl">
-            <dt><a href="https://m.cngold.org/hkstock/m_00988.html" title="楼东俊安资源"><p class="name">楼东俊安资源</p><span>00988</span></a></dt>
-          <dd class=" red">0.06</dd>
-          <dd class=" red">0.01</dd>
-          <dd class=" red">31.11%</dd>
-        </dl>
-        <dl class="content_dl">
-            <dt><a href="https://m.cngold.org/hkstock/m_08153.html" title="科地农业"><p class="name">科地农业</p><span>08153</span></a></dt>
-          <dd class=" red">0.13</dd>
-          <dd class=" red">0.03</dd>
-          <dd class=" red">25%</dd>
-        </dl>
-        <dl class="content_dl">
-            <dt><a href="https://m.cngold.org/hkstock/m_08172.html" title="拉近网娱"><p class="name">拉近网娱</p><span>08172</span></a></dt>
-          <dd class=" red">0.12</dd>
-          <dd class=" red">0.02</dd>
-          <dd class=" red">20%</dd>
-        </dl>
-        <dl class="content_dl">
-            <dt><a href="https://m.cngold.org/hkstock/m_08115.html" title="上海青浦消防"><p class="name">上海青浦消防</p><span>08115</span></a></dt>
-          <dd class=" red">0.58</dd>
-          <dd class=" red">0.07</dd>
-          <dd class=" red">13.73%</dd>
-        </dl>
-        <dl class="content_dl">
-            <dt><a href="https://m.cngold.org/hkstock/m_08100.html" title="智易控股"><p class="name">智易控股</p><span>08100</span></a></dt>
-          <dd class=" red">0.44</dd>
-          <dd class=" red">0.05</dd>
-          <dd class=" red">12.66%</dd>
-        </dl>
-        <dl class="content_dl">
-            <dt><a href="https://m.cngold.org/hkstock/m_08432.html" title="太平洋酒吧"><p class="name">太平洋酒吧</p><span>08432</span></a></dt>
-          <dd class=" red">0.72</dd>
-          <dd class=" red">0.08</dd>
-          <dd class=" red">12.5%</dd>
-        </dl>
-        <dl class="content_dl">
-            <dt><a href="https://m.cngold.org/hkstock/m_08353.html" title="安科系统"><p class="name">安科系统</p><span>08353</span></a></dt>
-          <dd class=" red">0.51</dd>
-          <dd class=" red">0.05</dd>
-          <dd class=" red">12.09%</dd>
-        </dl>
-        <dl class="content_dl">
-            <dt><a href="https://m.cngold.org/hkstock/m_08237.html" title="华星控股"><p class="name">华星控股</p><span>08237</span></a></dt>
-          <dd class=" red">0.11</dd>
-          <dd class=" red">0.01</dd>
-          <dd class=" red">12%</dd>
-        </dl>
-        <dl class="content_dl">
-            <dt><a href="https://m.cngold.org/hkstock/m_06828.html" title="蓝天威力"><p class="name">蓝天威力</p><span>06828</span></a></dt>
-          <dd class=" red">0.28</dd>
-          <dd class=" red">0.03</dd>
-          <dd class=" red">12%</dd>
-        </dl>
-        <dl class="content_dl">
-            <dt><a href="https://m.cngold.org/hkstock/m_08423.html" title="CHI HO DEV"><p class="name">CHI HO DEV</p><span>08423</span></a></dt>
-          <dd class=" red">0.58</dd>
-          <dd class=" red">0.06</dd>
-          <dd class=" red">11.54%</dd>
-        </dl>
+      <dl class="content_dl">
+        <dt><a href="https://m.cngold.org/hkstock/m_00988.html" title="楼东俊安资源"><p class="name">楼东俊安资源</p><span>00988</span></a></dt>
+        <dd class=" red">0.06</dd>
+        <dd class=" red">0.01</dd>
+        <dd class=" red">31.11%</dd>
+      </dl>
+      <dl class="content_dl">
+        <dt><a href="https://m.cngold.org/hkstock/m_08153.html" title="科地农业"><p class="name">科地农业</p><span>08153</span></a></dt>
+        <dd class=" red">0.13</dd>
+        <dd class=" red">0.03</dd>
+        <dd class=" red">25%</dd>
+      </dl>
+      <dl class="content_dl">
+        <dt><a href="https://m.cngold.org/hkstock/m_08172.html" title="拉近网娱"><p class="name">拉近网娱</p><span>08172</span></a></dt>
+        <dd class=" red">0.12</dd>
+        <dd class=" red">0.02</dd>
+        <dd class=" red">20%</dd>
+      </dl>
+      <dl class="content_dl">
+        <dt><a href="https://m.cngold.org/hkstock/m_08115.html" title="上海青浦消防"><p class="name">上海青浦消防</p><span>08115</span></a></dt>
+        <dd class=" red">0.58</dd>
+        <dd class=" red">0.07</dd>
+        <dd class=" red">13.73%</dd>
+      </dl>
+      <dl class="content_dl">
+        <dt><a href="https://m.cngold.org/hkstock/m_08100.html" title="智易控股"><p class="name">智易控股</p><span>08100</span></a></dt>
+        <dd class=" red">0.44</dd>
+        <dd class=" red">0.05</dd>
+        <dd class=" red">12.66%</dd>
+      </dl>
+      <dl class="content_dl">
+        <dt><a href="https://m.cngold.org/hkstock/m_08432.html" title="太平洋酒吧"><p class="name">太平洋酒吧</p><span>08432</span></a></dt>
+        <dd class=" red">0.72</dd>
+        <dd class=" red">0.08</dd>
+        <dd class=" red">12.5%</dd>
+      </dl>
+      <dl class="content_dl">
+        <dt><a href="https://m.cngold.org/hkstock/m_08353.html" title="安科系统"><p class="name">安科系统</p><span>08353</span></a></dt>
+        <dd class=" red">0.51</dd>
+        <dd class=" red">0.05</dd>
+        <dd class=" red">12.09%</dd>
+      </dl>
+      <dl class="content_dl">
+        <dt><a href="https://m.cngold.org/hkstock/m_08237.html" title="华星控股"><p class="name">华星控股</p><span>08237</span></a></dt>
+        <dd class=" red">0.11</dd>
+        <dd class=" red">0.01</dd>
+        <dd class=" red">12%</dd>
+      </dl>
+      <dl class="content_dl">
+        <dt><a href="https://m.cngold.org/hkstock/m_06828.html" title="蓝天威力"><p class="name">蓝天威力</p><span>06828</span></a></dt>
+        <dd class=" red">0.28</dd>
+        <dd class=" red">0.03</dd>
+        <dd class=" red">12%</dd>
+      </dl>
+      <dl class="content_dl">
+        <dt><a href="https://m.cngold.org/hkstock/m_08423.html" title="CHI HO DEV"><p class="name">CHI HO DEV</p><span>08423</span></a></dt>
+        <dd class=" red">0.58</dd>
+        <dd class=" red">0.06</dd>
+        <dd class=" red">11.54%</dd>
+      </dl>
     </div>
     <div class="view_more" id="content_before"><a href="javascript:void(0)" title="查看更多">查看更多<i class="icon"></i></a></div>
   </div>
