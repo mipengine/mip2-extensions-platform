@@ -62,8 +62,7 @@ export default class MIPJtHkstockSort extends MIP.CustomElement {
     }
     // 获取排序后的数据
     function getSort (order) {
-      let fetchUrl = 'https://m.cngold.org//hkstock/m_ajax_' +
-        kind + '_' + order + '_p1.html'
+      let fetchUrl = `https://m.cngold.org//hkstock/m_ajax_${kind}_${order}_p1.html`
       fetch(fetchUrl, {
         method: 'POST',
         mode: 'cors',
