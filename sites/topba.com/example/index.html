@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html mip>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="target-densitydpi=device-dpi, width=640, user-scalable=no">
+  <title>自动判定位置显示门店测试</title>
+  <link rel="canonical" href="http://www.baidu.com">
+  <link rel="stylesheet" href="http://bos.nj.bpc.baidu.com/v1/assets/mip/projects/mip.css">
+</head>
+<body>
+
+<mip-test id="maptest" on='openWindow:myMAP.openWindow addOverlay:myMAP.addOverlay setZoomCenter:myMAP.setZoomCenter setCenter:myMAP.setCenter'></mip-test>
+
+<mip-map-ext id="myMAP" on="getPositionComplete:maptest.getPositionComplete getPositionFailed:maptest.getPositionFailed" height="400" style="padding-bottom: 240px;">
+  <script type="application/json">
+    {
+      "ak": "hKhuzfFBrcL6zGm4s6b371NDxaUrhFPl",
+      "hideMap": false,
+      "getPosition": true,
+      "dataOnlyGetSdk": false,
+      "location": {},
+      "controls": {
+        "NavigationControl": {
+          "showZoomInfo": true,
+          "enableGeolocation": true
+        },
+        "MapTypeControl": {
+          "type": "BMAP_MAPTYPE_CONTROL_HORIZONTAL",
+          "mapTypes": ["BMAP_NORMAL_MAP", "BMAP_SATELLITE_MAP", "BMAP_HYBRID_MAP"]
+        }
+      }
+    }
+  </script>
+</mip-map-ext>
+</div>
+<script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+<script src="/mip-test/mip-test.js"></script>
+<script src="/mip-map-ext/mip-map-ext.js"></script>
+</body>
+</html>
