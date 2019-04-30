@@ -8,7 +8,7 @@
 
 ## 说明
 
-信用卡办理地区展示及查询功能
+信用卡办理地区展示及查询功能，需依赖于cityList
 
 ## 示例
 
@@ -20,7 +20,6 @@
   input-id='search_input'
   res-id='slist'
   reset-id='search_cancel'
-  fetch-url='./mip_credit_cityList.json'
 ></mip-jt-credit-search>
 <section class="mt20">
   <div class="bank_filter clearfix">
@@ -153,12 +152,3 @@
 
 **默认值**：无
 
-### fetch-url
-
-**说明**：fetch请求的url
-
-**必选项**：是
-
-**类型**：字符串
-
-**默认值**：无
