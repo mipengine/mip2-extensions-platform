@@ -1,7 +1,7 @@
 import './index.less'
 
 export default class MIPLesoFullpage extends MIP.CustomElement {
-  build() {
+  build () {
     // 设定尺寸
     let fullbody = MIP.viewport.getHeight()
     MIP.util.css(this.element, 'height', fullbody)
@@ -13,22 +13,22 @@ export default class MIPLesoFullpage extends MIP.CustomElement {
     // 添加滚动条件
     let Gesture = MIP.util.Gesture
     let gesture = new Gesture(this.element)
-    let nowsec = 1;
+    let nowsec = 1
     let allsec = alp.attributes.sec.value
 
     gesture.on('swipeup swipedown', function (event, data) {
-      if (data.swipeDirection == "up") {
+      if (data.swipeDirection === 'up') {
         if (nowsec < allsec) {
           MIP.util.css(alp, 'top', '-' + fullbody * nowsec + 'px')
-          nowsec++;
+          nowsec++
         }
       }
-      if (data.swipeDirection == "down") {
+      if (data.swipeDirection === "down") {
         if (nowsec > 1) {
           MIP.util.css(alp, 'top', '-' + fullbody * (nowsec - 2) + 'px')
-          nowsec--;
+          nowsec--
         }
       }
-    });
+    })
   }
 }
