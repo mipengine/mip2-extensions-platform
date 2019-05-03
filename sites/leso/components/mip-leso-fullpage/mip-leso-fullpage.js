@@ -23,7 +23,7 @@ export default class MIPLesoFullpage extends MIP.CustomElement {
           nowsec++
         }
       }
-      if (data.swipeDirection === "down") {
+      if (data.swipeDirection === 'down') {
         if (nowsec > 1) {
           MIP.util.css(alp, 'top', '-' + fullbody * (nowsec - 2) + 'px')
           nowsec--
