@@ -7,10 +7,10 @@ export default class MIPJtInsuranceCarcalc extends MIP.CustomElement {
     // 弹窗提示
     function alertTips (msg) {
       if (msg) {
-        document.getElementById('calc_tips').innerHTML = msg
-        document.getElementById('calc_tips').style.display = 'block'
+        $('calc_tips').innerHTML = msg
+        $('calc_tips').style.display = 'block'
         setTimeout(function () {
-          document.getElementById('calc_tips').style.display = 'none'
+          $('calc_tips').style.display = 'none'
         }, 2000)
       }
     }
