@@ -77,9 +77,9 @@ section{ background: #fff;}
 
 
 /*补充样式*/
-.calculator{position:relative}
+.w-counter{position:relative}
 mip-form div{display:block;}
-.calculator .calc_tips{display:none;position:absolute;top: 50%;left: 50%;margin-left: -2.8rem;height: .8rem;background: rgba(0,0,0,.6);text-align: center;color: #fff;width: 5.6rem;line-height: .8rem;border-radius: .1rem;font-size:.3rem;padding:0;}
+.w-counter .calc_tips{display:none;position:absolute;top: 50%;left: 50%;margin-left: -2.8rem;height: .8rem;background: rgba(0,0,0,.6);text-align: center;color: #fff;width: 5.6rem;line-height: .8rem;border-radius: .1rem;font-size:.3rem;padding:0;}
 .calculator div.operate span {display: block;width: 6.9rem;height: .9rem;margin: 0 auto;background: #2f75ea;color: #fff;line-height: 0.9rem;text-align: center;border-radius: 0.05rem;font-size: 0.32rem;}
 .calculator table td input.input_wrap{padding:0;}
 .endowment_insurance_btn span{display:block;width:6.9rem;height:.9rem;background-color:#2f75ea;border-radius:3px;font-size:.32rem;color:#fff;border:0;text-align: center;line-height:.9rem;}
@@ -92,9 +92,8 @@ mip-form div{display:block;}
 
 
 <mip-jt-insurance-tool
-  tips-id="calc_tips"
   type="medical"
-></mip-jt-insurance-tool>
+>
 <section class="mt20 w-counter">
   <div class="index_tit">
     <i class="icon"></i>
@@ -128,6 +127,7 @@ mip-form div{display:block;}
       <input id="person_rate" placeholder="0" type="text" value="">
     </li>
   </ul>
+  <div id="calc_tips" class="calc_tips"></div>
   <ul class="endowment_insurance_respones">
     <li>
       <span>今年您每月缴存的医疗保险(元)</span>
@@ -153,7 +153,7 @@ mip-form div{display:block;}
     <span id="btnCalc" name="btnCalc">计算</span>
   </div>
 </section>
-
+</mip-jt-insurance-tool>
 
 
 

@@ -15,7 +15,7 @@
 示例说明
 
 ```
-<mip-jt-insurance-socialcalc></mip-jt-insurance-socialcalc>
+<mip-jt-insurance-socialcalc>
 <section class="calculator w-counter mb26">
   <div class="index_tit">
     <i class="icon"></i> <h2>社保计算器</h2>
@@ -65,7 +65,7 @@
       </div>
     </div>
     <div class="clearfix jsq-content1-3 operate">
-      <span id="calc_btn">开始计算</span>
+      <span id="calc_btn" >开始计算</span>  
     </div>
   </div>
   <div class="calc_tips" id="calc_tips"></div>
@@ -159,6 +159,7 @@
     </div>
   </div>
 </section>
+</mip-jt-insurance-socialcalc>
 ```
 
 ## 属性

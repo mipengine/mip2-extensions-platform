@@ -2,17 +2,16 @@ import RateData from './data/rate'
 
 export default class MIPJtInsuranceSocialcalc extends MIP.CustomElement {
   build () {
-    // 定义$函数
-    function $ (str) {
-      return document.getElementById(str)
-    }
+    let that = this
+    let rateJson = new RateData().str
+
     // 弹窗提示
     function alertTips (msg) {
       if (msg) {
-        document.getElementById('calc_tips').innerHTML = msg
-        document.getElementById('calc_tips').style.display = 'block'
+        that.element.querySelector('#calc_tips').innerHTML = msg
+        that.element.querySelector('#calc_tips').style.display = 'block'
         setTimeout(function () {
-          document.getElementById('calc_tips').style.display = 'none'
+          that.element.querySelector('#calc_tips').style.display = 'none'
         }, 2000)
       }
     }
@@ -31,11 +30,9 @@ export default class MIPJtInsuranceSocialcalc extends MIP.CustomElement {
       }
     }
 
-    let rateJson = new RateData().str
-
     // 城市列表的展示
-    $('city_input').onclick = function () {
-      $('citySelect').style.display = 'block'
+    that.element.querySelector('#city_input').onclick = function () {
+      that.element.querySelector('#citySelect').style.display = 'block'
       if (this.value === '请选择地区') {
         this.value = ''
       }
@@ -51,8 +48,8 @@ export default class MIPJtInsuranceSocialcalc extends MIP.CustomElement {
     // 点击城市之后比例随之变化
     function inputArea (ele) {
       let selectArea = ele.innerHTML
-      $('city_input').value = selectArea
-      $('citySelect').style.display = 'none'
+      that.element.querySelector('#city_input').value = selectArea
+      that.element.querySelector('#citySelect').style.display = 'none'
 
       // 社保最低和最高的显示
       let c = rateJson[selectArea]
@@ -101,8 +98,8 @@ export default class MIPJtInsuranceSocialcalc extends MIP.CustomElement {
           maxTemp = v
         }
       })
-      $('pension_min').innerHTML = minTemp
-      $('pension_max').innerHTML = maxTemp
+      that.element.querySelector('#pension_min').innerHTML = minTemp
+      that.element.querySelector('#pension_max').innerHTML = maxTemp
 
       changeBase()
     }
@@ -110,57 +107,57 @@ export default class MIPJtInsuranceSocialcalc extends MIP.CustomElement {
     // 设置公积金基数和社保基数
     function changeBase () {
       // 设置社保基数
-      let income1 = $('pretax_income').value
+      let income1 = that.element.querySelector('#pretax_income').value
       if (income1 === '') {
         income1 = 0
       }
-      if (income1 < parseFloat($('pension_min').innerHTML)) {
-        income1 = parseFloat($('pension_min').innerHTML)
+      if (income1 < parseFloat(that.element.querySelector('#pension_min').innerHTML)) {
+        income1 = parseFloat(that.element.querySelector('#pension_min').innerHTML)
       } else {
-        if (income1 > parseFloat($('pension_max').innerHTML)) {
-          income1 = parseFloat($('pension_max').innerHTML)
+        if (income1 > parseFloat(that.element.querySelector('#pension_max').innerHTML)) {
+          income1 = parseFloat(that.element.querySelector('#pension_max').innerHTML)
         }
       }
-      $('social_security_base').value = income1
+      that.element.querySelector('#social_security_base').value = income1
 
       // 设置公积金基数
-      let income2 = $('pretax_income').value
+      let income2 = that.element.querySelector('#pretax_income').value
       if (income2 === '') {
         income2 = 0
       }
-      if (income2 < parseFloat($('provident_fund_min').innerHTML)) {
-        income2 = parseFloat($('provident_fund_min').innerHTML)
+      if (income2 < parseFloat(that.element.querySelector('#provident_fund_min').innerHTML)) {
+        income2 = parseFloat(that.element.querySelector('#provident_fund_min').innerHTML)
       } else {
-        if (income2 > parseFloat($('provident_fund_max').innerHTML)) {
-          income2 = parseFloat($('provident_fund_max').innerHTML)
+        if (income2 > parseFloat(that.element.querySelector('#provident_fund_max').innerHTML)) {
+          income2 = parseFloat(that.element.querySelector('#provident_fund_max').innerHTML)
         }
       }
-      $('provident_fund_base').value = income2
+      that.element.querySelector('#provident_fund_base').value = income2
     }
 
     // 计算
     function calc () {
       // 表单数据检查
-      if ($('city_input').value === '' || $('city_input').value === '请选择地区') {
+      if (that.element.querySelector('#city_input').value === '' || that.element.querySelector('#city_input').value === '请选择地区') {
         alertTips('请选择地区')
         return
       } else {
-        let val = $('city_input').value
+        let val = that.element.querySelector('#city_input').value
         if (rateJson[val] === undefined) {
           alertTips('地区有误请重新选择!')
           return
         }
       }
-      if (!checkElem($('pretax_income'), '税前收入')) {
+      if (!checkElem(that.element.querySelector('#pretax_income'), '税前收入')) {
         return
       }
 
       changeBase()
       // 计算各保险的单位缴费和个人缴费
-      let areaId = $('city_input').value
+      let areaId = that.element.querySelector('#city_input').value
       let rate = rateJson[areaId]
       let fees = {}
-      let income = $('social_security_base').value
+      let income = that.element.querySelector('#social_security_base').value
       let rateInputs = document.querySelectorAll('input[id$="rate"]')
       for (let i = 0; i < rateInputs.length; i++) {
         let obId = rateInputs[i].getAttribute('id')
@@ -168,7 +165,7 @@ export default class MIPJtInsuranceSocialcalc extends MIP.CustomElement {
         let baseIncome = 0
         let baseFeeName = feeName.replace('_company', '')
         if (baseFeeName === 'provident_fund') {
-          baseIncome = $('provident_fund_base').value
+          baseIncome = that.element.querySelector('#provident_fund_base').value
         } else {
           baseIncome = income
         }
@@ -180,8 +177,9 @@ export default class MIPJtInsuranceSocialcalc extends MIP.CustomElement {
         }
         fees[feeName] = (baseIncome * rateInputs[i].value / 100).toFixed(2)
       }
+
       for (let i in fees) {
-        let feeEle = $(fees[i] + '_fee')
+        let feeEle = that.element.querySelector('#' + i + '_fee')
         if (feeEle) {
           if (feeEle.nodeName.toLowerCase() === 'input') {
             feeEle.value = fees[i]
@@ -192,13 +190,13 @@ export default class MIPJtInsuranceSocialcalc extends MIP.CustomElement {
       }
 
       // 计算个人缴费总额
-      $('personal_fee_total').innerHTML = (parseInt(fees['pension']) + parseInt(fees['medical']) + parseInt(fees['unemployment']) + parseInt(fees['injury']) + parseInt(fees['fertility']) + parseInt(fees['provident_fund'])).toFixed(2)
+      that.element.querySelector('#personal_fee_total').innerHTML = (parseInt(fees['pension']) + parseInt(fees['medical']) + parseInt(fees['unemployment']) + parseInt(fees['injury']) + parseInt(fees['fertility']) + parseInt(fees['provident_fund'])).toFixed(2)
       // 计算单位缴费总额
-      $('company_fee_total').innerHTML = (parseInt(fees['pension_company']) + parseInt(fees['medical_company']) + parseInt(fees['unemployment_company']) + parseInt(fees['injury_company']) + parseInt(fees['fertility_company']) + parseInt(fees['provident_fund_company'])).toFixed(2)
+      that.element.querySelector('#company_fee_total').innerHTML = (parseInt(fees['pension_company']) + parseInt(fees['medical_company']) + parseInt(fees['unemployment_company']) + parseInt(fees['injury_company']) + parseInt(fees['fertility_company']) + parseInt(fees['provident_fund_company'])).toFixed(2)
     }
 
     // 计算按钮的点击事件
-    $('calc_btn').addEventListener('click', function () {
+    that.element.querySelector('#calc_btn').addEventListener('click', function () {
       calc()
     })
   }

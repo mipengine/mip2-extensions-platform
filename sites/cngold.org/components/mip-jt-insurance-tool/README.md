@@ -16,9 +16,8 @@
 
 ```
 <mip-jt-insurance-tool
-  tips-id="calc_tips"
   type="houseFund"
-></mip-jt-insurance-tool>
+>
 <!--计算器-->
 <section class="calculator mt20">
   <div class="index_tit">
@@ -74,6 +73,7 @@
   </div>
   </mip-form>
 </section>
+</mip-jt-insurance-tool>
 ```
 
 ## 属性
@@ -87,14 +87,4 @@
 **类型**：字符串
 
 **取值范围**：houseFund（住房公积金）、pension（养老保险）、lostjob（失业保险）、injury（工伤保险）、birth（生育保险）、medical（医疗保险）、retire（养老退休金）
-
-### tips-id
-
-**说明**：错误提示弹窗对应id
-
-**必选项**：是
-
-**单位**：无
-
-**默认值**：无
 

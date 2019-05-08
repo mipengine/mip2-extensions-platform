@@ -1,16 +1,14 @@
 export default class MIPJtInsuranceCarcalc extends MIP.CustomElement {
   build () {
-    // 定义$函数
-    function $ (str) {
-      return document.getElementById(str)
-    }
+    let that = this
+
     // 弹窗提示
     function alertTips (msg) {
       if (msg) {
-        $('calc_tips').innerHTML = msg
-        $('calc_tips').style.display = 'block'
+        that.element.querySelector('#calc_tips').innerHTML = msg
+        that.element.querySelector('#calc_tips').style.display = 'block'
         setTimeout(function () {
-          $('calc_tips').style.display = 'none'
+          that.element.querySelector('#calc_tips').style.display = 'none'
         }, 2000)
       }
     }
@@ -20,19 +18,19 @@ export default class MIPJtInsuranceCarcalc extends MIP.CustomElement {
         return false
       }
 
-      if ($('txtMoney').value === '0' || $('txtMoney').value === '') {
-        $('txtCompulsory').value = 0
-        $('txtCommonTotal').value = 0
-        $('txtTPL').value = 0
-        $('txtCarDamage').value = 0
-        $('txtTPL').value = 0
-        $('txtCarTheft').value = 0
-        $('txtBreakageOfGlass').value = 0
-        $('txtSelfignite').value = 0
-        $('txtAbatement').value = 0
-        $('txtBlameless').value = 0
-        $('txtCarDamageDW').value = 0
-        $('txtLimitOfPassenger').value = 0
+      if (that.element.querySelector('#txtMoney').value === '0' || that.element.querySelector('#txtMoney').value === '') {
+        that.element.querySelector('#txtCompulsory').value = 0
+        that.element.querySelector('#txtCommonTotal').value = 0
+        that.element.querySelector('#txtTPL').value = 0
+        that.element.querySelector('#txtCarDamage').value = 0
+        that.element.querySelector('#txtTPL').value = 0
+        that.element.querySelector('#txtCarTheft').value = 0
+        that.element.querySelector('#txtBreakageOfGlass').value = 0
+        that.element.querySelector('#txtSelfignite').value = 0
+        that.element.querySelector('#txtAbatement').value = 0
+        that.element.querySelector('#txtBlameless').value = 0
+        that.element.querySelector('#txtCarDamageDW').value = 0
+        that.element.querySelector('#txtLimitOfPassenger').value = 0
         // 公司报价=3+12
         calcCompany()
         // 市场报价=13*0.77
@@ -41,11 +39,11 @@ export default class MIPJtInsuranceCarcalc extends MIP.CustomElement {
         return
       }
 
-      if ($('txtMoney').value !== '0') {
+      if (that.element.querySelector('#txtMoney').value !== '0') {
         // 交强险
         calcCompulsory()
         // 第三者责任险
-        calcTPL()
+        calcThirdDuty()
         // 车辆损失险
         calcCarDamage()
         // 全车盗抢险
@@ -73,32 +71,32 @@ export default class MIPJtInsuranceCarcalc extends MIP.CustomElement {
 
     function calcCompany () {
       // debugger;
-      let companyTotal = formatCurrency(parseFloat($('txtCompulsory').value) + parseFloat($('txtCommonTotal').value))
+      let companyTotal = formatCurrency(parseFloat(that.element.querySelector('#txtCompulsory').value) + parseFloat(that.element.querySelector('#txtCommonTotal').value))
       setSpanValueByBrowerType('spanTopCompany', companyTotal)
     }
 
     function calcMarket () {
-      let MarketTotal = formatCurrency(parseInt((parseFloat($('txtCompulsory').value) + parseFloat($('txtCommonTotal').value)) * 0.77))
+      let MarketTotal = formatCurrency(parseInt((parseFloat(that.element.querySelector('#txtCompulsory').value) + parseFloat(that.element.querySelector('#txtCommonTotal').value)) * 0.77))
       setSpanValueByBrowerType('spanTopMarket', MarketTotal)
     }
 
     function setSpanValueByBrowerType (a, b) {
-      $(a).innerHTML = b
+      that.element.querySelector('#' + a).innerHTML = b
     }
 
     function checkMoneyValidation () {
-      if (isNaN($('txtMoney').value)) {
+      if (isNaN(that.element.querySelector('#txtMoney').value)) {
         alertTips('请输入数字!')
-        $('txtMoney').value = ''
-        $('txtMoney').focus()
+        that.element.querySelector('#txtMoney').value = ''
+        that.element.querySelector('#txtMoney').focus()
         return false
       }
-      if ($('txtMoney').value === '0' || $('txtMoney').value === '') {
-        $('divErrorInfo').style.display = ''
-        $('divCalcInfo').style.display = 'none'
+      if (that.element.querySelector('#txtMoney').value === '0' || that.element.querySelector('#txtMoney').value === '') {
+        that.element.querySelector('#divErrorInfo').style.display = ''
+        that.element.querySelector('#divCalcInfo').style.display = 'none'
       } else {
-        $('divErrorInfo').style.display = 'none'
-        $('divCalcInfo').style.display = ''
+        that.element.querySelector('#divErrorInfo').style.display = 'none'
+        that.element.querySelector('#divCalcInfo').style.display = ''
       }
       return true
     }
@@ -118,231 +116,231 @@ export default class MIPJtInsuranceCarcalc extends MIP.CustomElement {
     }
     // 交强险
     function calcCompulsory () {
-      let a = document.getElementsByClassName('rdoForce')
+      let a = document.getElementsByClassName('rdo-force')
       for (let i = 0; i < a.length; i++) {
         if (a[i].checked) {
-          $('txtCompulsory').value = a[i].value
+          that.element.querySelector('#txtCompulsory').value = a[i].value
           break
         }
       }
     }
     // 第三者责任险
-    function calcTPL () {
-      let a = document.getElementsByClassName('rdoForce')
-      if ((a[0].checked || a[1].checked) && $('chkTPL').checked) {
-        $('txtTPL').className = ''
-        let b = document.getElementsByClassName('rdoTPL')
+    function calcThirdDuty () {
+      let a = document.getElementsByClassName('rdo-force')
+      if ((a[0].checked || a[1].checked) && that.element.querySelector('#chkTPL').checked) {
+        that.element.querySelector('#txtTPL').className = ''
+        let b = document.getElementsByClassName('rdo-tpl')
         if (a[0].checked) {
           if (b[0].checked) {
-            $('txtTPL').value = '801'
+            that.element.querySelector('#txtTPL').value = '801'
           }
           if (b[1].checked) {
-            $('txtTPL').value = '971'
+            that.element.querySelector('#txtTPL').value = '971'
           }
           if (b[2].checked) {
-            $('txtTPL').value = '1120'
+            that.element.querySelector('#txtTPL').value = '1120'
           }
           if (b[3].checked) {
-            $('txtTPL').value = '1293'
+            that.element.querySelector('#txtTPL').value = '1293'
           }
           if (b[4].checked) {
-            $('txtTPL').value = '1412'
+            that.element.querySelector('#txtTPL').value = '1412'
           }
         } else if (a[1].checked) {
           if (b[0].checked) {
-            $('txtTPL').value = '685'
+            that.element.querySelector('#txtTPL').value = '685'
           }
           if (b[1].checked) {
-            $('txtTPL').value = '831'
+            that.element.querySelector('#txtTPL').value = '831'
           }
           if (b[2].checked) {
-            $('txtTPL').value = '958'
+            that.element.querySelector('#txtTPL').value = '958'
           }
           if (b[3].checked) {
-            $('txtTPL').value = '1106'
+            that.element.querySelector('#txtTPL').value = '1106'
           }
           if (b[4].checked) {
-            $('txtTPL').value = '1208'
+            that.element.querySelector('#txtTPL').value = '1208'
           }
         }
       } else {
-        $('txtTPL').value = ''
-        $('txtTPL').className = 'disablebox'
+        that.element.querySelector('#txtTPL').value = ''
+        that.element.querySelector('#txtTPL').className = 'disablebox'
       }
     }
     // 车辆损失险
     function calcCarDamage () {
-      if ($('chkCarDamage').checked) {
-        $('txtCarDamage').className = ''
-        $('txtCarDamage').value = Math.round($('txtMoney').value * 0.012)
+      if (that.element.querySelector('#chkCarDamage').checked) {
+        that.element.querySelector('#txtCarDamage').className = ''
+        that.element.querySelector('#txtCarDamage').value = Math.round(that.element.querySelector('#txtMoney').value * 0.012)
       } else {
-        $('txtCarDamage').value = ''
-        $('txtCarDamage').className = 'disablebox'
+        that.element.querySelector('#txtCarDamage').value = ''
+        that.element.querySelector('#txtCarDamage').className = 'disablebox'
       }
     }
     // 全车盗抢险
     function calcCarTheft () {
-      if ($('chkCarTheft').checked && $('chkCarDamage').checked) {
-        $('txtCarTheft').className = ''
-        $('txtCarTheft').value = Math.round($('txtMoney').value * 0.01)
+      if (that.element.querySelector('#chkCarTheft').checked && that.element.querySelector('#chkCarDamage').checked) {
+        that.element.querySelector('#txtCarTheft').className = ''
+        that.element.querySelector('#txtCarTheft').value = Math.round(that.element.querySelector('#txtMoney').value * 0.01)
       } else {
-        $('chkCarTheft').checked = false
-        $('txtCarTheft').value = ''
-        $('txtCarTheft').className = 'disablebox'
+        that.element.querySelector('#chkCarTheft').checked = false
+        that.element.querySelector('#txtCarTheft').value = ''
+        that.element.querySelector('#txtCarTheft').className = 'disablebox'
       }
     }
     // 玻璃单独破碎险
     function calcBreakageOfGlass () {
-      if ($('chkBreakageOfGlass').checked) {
-        $('txtBreakageOfGlass').className = ''
-        let a = document.getElementsByClassName('rdoGlass')
+      if (that.element.querySelector('#chkBreakageOfGlass').checked) {
+        that.element.querySelector('#txtBreakageOfGlass').className = ''
+        let a = document.getElementsByClassName('rdo-glass')
         if (a[0].checked) {
-          $('txtBreakageOfGlass').value = Math.round($('txtMoney').value * 0.0025)
+          that.element.querySelector('#txtBreakageOfGlass').value = Math.round(that.element.querySelector('#txtMoney').value * 0.0025)
         }
         if (a[1].checked) {
-          $('txtBreakageOfGlass').value = Math.round($('txtMoney').value * 0.0015)
+          that.element.querySelector('#txtBreakageOfGlass').value = Math.round(that.element.querySelector('#txtMoney').value * 0.0015)
         }
       } else {
-        $('txtBreakageOfGlass').value = ''
-        $('txtBreakageOfGlass').className = 'disablebox'
+        that.element.querySelector('#txtBreakageOfGlass').value = ''
+        that.element.querySelector('#txtBreakageOfGlass').className = 'disablebox'
       }
     }
     // 自燃损失险
     function calcSelfignite () {
-      if ($('chkSelfignite').checked) {
-        $('txtSelfignite').className = ''
-        $('txtSelfignite').value = Math.round($('txtMoney').value * 0.0015)
+      if (that.element.querySelector('#chkSelfignite').checked) {
+        that.element.querySelector('#txtSelfignite').className = ''
+        that.element.querySelector('#txtSelfignite').value = Math.round(that.element.querySelector('#txtMoney').value * 0.0015)
       } else {
-        $('txtSelfignite').value = ''
-        $('txtSelfignite').className = 'disablebox'
+        that.element.querySelector('#txtSelfignite').value = ''
+        that.element.querySelector('#txtSelfignite').className = 'disablebox'
       }
     }
     // 不计免赔特约险
     function calcAbatement () {
-      if ($('chkCarDamage').checked && $('chkTPL').checked && $('chkAbatement').checked) {
-        $('txtAbatement').className = ''
-        let a = parseInt($('txtCarDamage').value) + parseInt($('txtTPL').value)
-        $('txtAbatement').value = Math.round(a * 0.2)
+      if (that.element.querySelector('#chkCarDamage').checked && that.element.querySelector('#chkTPL').checked && that.element.querySelector('#chkAbatement').checked) {
+        that.element.querySelector('#txtAbatement').className = ''
+        let a = parseInt(that.element.querySelector('#txtCarDamage').value) + parseInt(that.element.querySelector('#txtTPL').value)
+        that.element.querySelector('#txtAbatement').value = Math.round(a * 0.2)
       } else {
-        $('chkAbatement').checked = false
-        $('txtAbatement').value = ''
-        $('txtAbatement').className = 'disablebox'
+        that.element.querySelector('#chkAbatement').checked = false
+        that.element.querySelector('#txtAbatement').value = ''
+        that.element.querySelector('#txtAbatement').className = 'disablebox'
       }
     }
     // 无过责任险
     function calcBlameless () {
-      if ($('chkTPL').checked && $('chkBlameless').checked) {
-        $('txtBlameless').className = ''
-        $('txtBlameless').value = Math.round($('txtTPL').value * 0.2)
+      if (that.element.querySelector('#chkTPL').checked && that.element.querySelector('#chkBlameless').checked) {
+        that.element.querySelector('#txtBlameless').className = ''
+        that.element.querySelector('#txtBlameless').value = Math.round(that.element.querySelector('#txtTPL').value * 0.2)
       } else {
-        $('chkBlameless').checked = false
-        $('txtBlameless').value = ''
-        $('txtBlameless').className = 'disablebox'
+        that.element.querySelector('#chkBlameless').checked = false
+        that.element.querySelector('#txtBlameless').value = ''
+        that.element.querySelector('#txtBlameless').className = 'disablebox'
       }
     }
     // 车上责任险
     function calcLimitofPassenger () {
-      if ($('chkLimitofPassenger').checked) {
-        $('txtLimitOfPassenger').className = ''
-        if ($('txtLimitOfPassenger').value === '0' || $('txtLimitOfPassenger').value === '') {
-          $('txtLimitOfPassenger').value = '50'
-        } else if ($('txtLimitOfPassenger').value % 50 !== 0) {
+      if (that.element.querySelector('#chkLimitofPassenger').checked) {
+        that.element.querySelector('#txtLimitOfPassenger').className = ''
+        if (that.element.querySelector('#txtLimitOfPassenger').value === '0' || that.element.querySelector('#txtLimitOfPassenger').value === '') {
+          that.element.querySelector('#txtLimitOfPassenger').value = '50'
+        } else if (that.element.querySelector('#txtLimitOfPassenger').value % 50 !== 0) {
           alertTips('车上责任险的缴费额 = 每人的保费50元 * 车辆的实际座位数')
-          $('txtLimitOfPassenger').value = '50'
+          that.element.querySelector('#txtLimitOfPassenger').value = '50'
         }
       } else {
-        $('txtLimitOfPassenger').value = ''
-        $('txtLimitOfPassenger').className = 'disablebox'
+        that.element.querySelector('#txtLimitOfPassenger').value = ''
+        that.element.querySelector('#txtLimitOfPassenger').className = 'disablebox'
       }
     }
     // 车身划痕险
     function calcCarDamageDW () {
-      if ($('chkCarDamage').checked && $('chkCarDamageDW').checked) {
-        $('txtCarDamageDW').className = ''
-        let a = document.getElementsByClassName('rdoDw')
-        if ($('txtMoney').value < 3E5) {
+      if (that.element.querySelector('#chkCarDamage').checked && that.element.querySelector('#chkCarDamageDW').checked) {
+        that.element.querySelector('#txtCarDamageDW').className = ''
+        let a = document.getElementsByClassName('rdo-dw')
+        if (that.element.querySelector('#txtMoney').value < 3E5) {
           if (a[0].checked) {
-            $('txtCarDamageDW').value = '400'
+            that.element.querySelector('#txtCarDamageDW').value = '400'
           }
           if (a[1].checked) {
-            $('txtCarDamageDW').value = '570'
+            that.element.querySelector('#txtCarDamageDW').value = '570'
           }
           if (a[2].checked) {
-            $('txtCarDamageDW').value = '760'
+            that.element.querySelector('#txtCarDamageDW').value = '760'
           }
           if (a[3].checked) {
-            $('txtCarDamageDW').value = '1140'
+            that.element.querySelector('#txtCarDamageDW').value = '1140'
           }
-        } else if ($('txtMoney').value > 5E5) {
+        } else if (that.element.querySelector('#txtMoney').value > 5E5) {
           if (a[0].checked) {
-            $('txtCarDamageDW').value = '850'
+            that.element.querySelector('#txtCarDamageDW').value = '850'
           }
           if (a[1].checked) {
-            $('txtCarDamageDW').value = '1100'
+            that.element.querySelector('#txtCarDamageDW').value = '1100'
           }
           if (a[2].checked) {
-            $('txtCarDamageDW').value = '1500'
+            that.element.querySelector('#txtCarDamageDW').value = '1500'
           }
           if (a[3].checked) {
-            $('txtCarDamageDW').value = '2250'
+            that.element.querySelector('#txtCarDamageDW').value = '2250'
           }
         } else {
           if (a[0].checked) {
-            $('txtCarDamageDW').value = '585'
+            that.element.querySelector('#txtCarDamageDW').value = '585'
           }
           if (a[1].checked) {
-            $('txtCarDamageDW').value = '900'
+            that.element.querySelector('#txtCarDamageDW').value = '900'
           }
           if (a[2].checked) {
-            $('txtCarDamageDW').value = '1170'
+            that.element.querySelector('#txtCarDamageDW').value = '1170'
           }
           if (a[3].checked) {
-            $('txtCarDamageDW').value = '1780'
+            that.element.querySelector('#txtCarDamageDW').value = '1780'
           }
         }
       } else {
-        $('chkCarDamageDW').checked = false
-        $('txtCarDamageDW').value = ''
-        $('txtCarDamageDW').className = 'disablebox'
+        that.element.querySelector('#chkCarDamageDW').checked = false
+        that.element.querySelector('#txtCarDamageDW').value = ''
+        that.element.querySelector('#txtCarDamageDW').className = 'disablebox'
       }
     }
     // 常规保险合计
     function calcCommonTotal () {
       let a = 0
-      if ($('chkTPL').checked) {
-        a += parseFloat($('txtTPL').value)
+      if (that.element.querySelector('#chkTPL').checked) {
+        a += parseFloat(that.element.querySelector('#txtTPL').value)
       }
-      if ($('chkCarDamage').checked) {
-        a += parseFloat($('txtCarDamage').value)
+      if (that.element.querySelector('#chkCarDamage').checked) {
+        a += parseFloat(that.element.querySelector('#txtCarDamage').value)
       }
-      if ($('chkCarTheft').checked) {
-        a += parseFloat($('txtCarTheft').value)
+      if (that.element.querySelector('#chkCarTheft').checked) {
+        a += parseFloat(that.element.querySelector('#txtCarTheft').value)
       }
-      if ($('chkBreakageOfGlass').checked) {
-        a += parseFloat($('txtBreakageOfGlass').value)
+      if (that.element.querySelector('#chkBreakageOfGlass').checked) {
+        a += parseFloat(that.element.querySelector('#txtBreakageOfGlass').value)
       }
-      if ($('chkSelfignite').checked) {
-        a += parseFloat($('txtSelfignite').value)
+      if (that.element.querySelector('#chkSelfignite').checked) {
+        a += parseFloat(that.element.querySelector('#txtSelfignite').value)
       }
-      if ($('chkAbatement').checked) {
-        a += parseFloat($('txtAbatement').value)
+      if (that.element.querySelector('#chkAbatement').checked) {
+        a += parseFloat(that.element.querySelector('#txtAbatement').value)
       }
-      if ($('chkBlameless').checked) {
-        a += parseFloat($('txtBlameless').value)
+      if (that.element.querySelector('#chkBlameless').checked) {
+        a += parseFloat(that.element.querySelector('#txtBlameless').value)
       }
-      if ($('chkLimitofPassenger').checked) {
-        a += parseFloat($('txtLimitOfPassenger').value)
+      if (that.element.querySelector('#chkLimitofPassenger').checked) {
+        a += parseFloat(that.element.querySelector('#txtLimitOfPassenger').value)
       }
-      if ($('chkCarDamageDW').checked) {
-        a += parseFloat($('txtCarDamageDW').value)
+      if (that.element.querySelector('#chkCarDamageDW').checked) {
+        a += parseFloat(that.element.querySelector('#txtCarDamageDW').value)
       }
-      $('txtCommonTotal').value = Math.round(a)
+      that.element.querySelector('#txtCommonTotal').value = Math.round(a)
     }
 
-    $('txtMoney').addEventListener('input', function () {
+    that.element.querySelector('#txtMoney').addEventListener('input', function () {
       calcAll()
     })
-    let calcInputs = document.getElementsByClassName('calc_input')
+    let calcInputs = document.getElementsByClassName('calc-input')
     for (let i = 0; i < calcInputs.length; i++) {
       calcInputs[i].addEventListener('click', function () {
         calcAll()
