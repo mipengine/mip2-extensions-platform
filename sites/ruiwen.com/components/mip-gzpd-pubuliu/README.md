@@ -1,31 +1,24 @@
 # mip-example
 
-标题|内容
+标题|文章列表组件（上拉加载更多）
 ----|----
-类型|
-支持布局|
-所需脚本| [https://c.mipcdn.com/extensions/platform/v2/a.b.com/mip-example/mip-gzpd-pubuliu.js](https://c.mipcdn.com/extensions/platform/v2/a.b.com/mip-example/mip-example.js)
+类型|业务组件
+支持布局|无
+所需脚本| 
 
 ## 说明
 
-组件功能说明
+文章列表组件（上拉加载更多）
 
 ## 示例
 
-示例说明
 
 ```
-// 代码示例
+<mip-gzpd-pubuliu></mip-gzpd-pubuliu>
 ```
 
 ## 属性
 
 ### 属性1
 
-**说明**：
-
-**必选项**：
-
-**单位**：
-
-**默认值**：
+无
