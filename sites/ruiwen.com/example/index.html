@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html mip="" class="mip-i-android-scroll mip-i-ios-scroll mip-i-ios-width">
+<head>
+    <style mip-extension="mip-gzpd-alert">mip-gzpd-alert div.mip-gzpd-alert-marks .alert-box, mip-gzpd-alert div.mip-gzpd-alert-cservice-marks .mip-gzpd-alert-cservice {
+        overflow: unset
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .claos, mip-gzpd-alert div.mip-gzpd-alert-cservice-marks .claos {
+        position: absolute;
+        right: -10px;
+        background: url(https://static.yjbys.com/img/company/pay/zhifu_icon.2.png) no-repeat -149px -31px;
+        width: 30px;
+        height: 30px;
+        text-indent: -9999px;
+        top: -10px;
+        cursor: pointer
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .claos:hover, mip-gzpd-alert div.mip-gzpd-alert-cservice-marks .claos:hover {
+        background: url(https://static.yjbys.com/img/company/pay/zhifu_icon.2.png) no-repeat -180px -31px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks {
+        float: left;
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(19, 19, 19, 0.6)
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .alert-box {
+        width: 85%;
+        position: relative;
+        margin: auto;
+        margin-top: 20%;
+        border-radius: 6px;
+        background: #fff;
+        text-align: center
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .alert-box .paybox {
+        width: 100%;
+        padding: 6% 0;
+        border-bottom: 1px solid #ccc
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .paybox .paybox-title {
+        color: #3c3c3c;
+        font-size: 22px;
+        display: inline-block;
+        font-weight: 700;
+        line-height: 30px;
+        height: 30px;
+        width: 100%;
+        margin-bottom: 5px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .paybox .paybox-img {
+        width: 100px;
+        display: inline-block
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .paybox .paybox-img .qrimg {
+        width: 100%
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .paybox .paybox-money {
+        height: 30px;
+        line-height: 30px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .paybox .paybox-money span:first-child {
+        color: #ff6600;
+        font-size: 16px;
+        font-weight: 400
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .paybox .paybox-money span:last-child {
+        text-decoration: line-through;
+        color: #949494;
+        margin-left: 10px;
+        font-size: 14px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .paybox .paybox-bottom {
+        cursor: pointer;
+        background: #44b549;
+        height: 45px;
+        line-height: 45px;
+        border-radius: 6px;
+        margin: 6px auto;
+        width: 230px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .paybox .paybox-bottom-a {
+        font-size: 18px;
+        color: #fff;
+        font-weight: 700
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .alert-box .freebox {
+        width: 100%;
+        padding: 6% 0
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .freebox .freebox-description {
+        text-align: left;
+        color: #3c3c3c;
+        margin: 0 3%
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .freebox .freebox-title {
+        color: #3c3c3c;
+        font-size: 22px;
+        display: inline-block;
+        font-weight: 700;
+        line-height: 30px;
+        height: 30px;
+        width: 100%;
+        margin-bottom: 5px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .freebox .freebox-description p {
+        margin: 10px;
+        font-size: 14px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .freebox .freebox-description p .text-focus {
+        color: #FF5722
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .freebox .freebox-code {
+        display: inline-block;
+        margin-top: 7px;
+        width: 80%;
+        border: 1px solid #44b549;
+        height: 32px;
+        line-height: 30px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .freebox .freebox-code .freebox-input {
+        line-height: 32px;
+        width: 78%;
+        font-size: 14px;
+        float: left;
+        border: none;
+        color: #bdbdbd;
+        padding-left: 3%
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .freebox .freebox-code .freebox-btn {
+        line-height: 32px;
+        width: 19%;
+        background: #44b549;
+        color: #fff;
+        text-align: center;
+        font-size: 16px;
+        border: 0 none;
+        cursor: pointer;
+        float: right;
+        -webkit-appearance: none;
+        border-radius: 0
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks .alert-box .paybox-cservice {
+        font-size: 14px;
+        padding-bottom: 10px;
+        cursor: pointer;
+        color: #a2a2a2
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay {
+        display: none;
+        float: left;
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        background: rgba(19, 19, 19, 0.6)
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .block_ad_qr {
+        display: inline-block;
+        margin: 30px 50px;
+        font-size: 19px;
+        color: #ff0000
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .payqr_success_text .text {
+        display: block;
+        font-size: 30px;
+        color: #44b549
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .payqr_success_text .icon {
+        padding-top: 30px;
+        fill: #44b549;
+        width: 80px;
+        display: inline-block;
+        margin-bottom: 10px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .payqr_success_box {
+        display: none
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .payqr_success_box button.btn {
+        font-weight: 700;
+        background: #38ad3a;
+        border: none;
+        width: 230px;
+        height: 46px;
+        font-size: 18px;
+        color: #fff;
+        border-radius: 6px;
+        margin-top: 25px;
+        cursor: pointer
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .payqr_success_box .payqr_success_text span.text {
+        display: block;
+        font-size: 30px;
+        color: #44b549;
+        margin-bottom: 6px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .payqr_success_box .payqr_success_text span.text.small {
+        color: #999;
+        font-size: 16px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .my_wxpay {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        margin: auto;
+        background: rgba(0, 0, 0, 0.6);
+        cursor: pointer;
+        visibility: visible;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        display: none
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .my_wxpay .sm {
+        display: block;
+        margin-top: 8px;
+        font-size: 18px;
+        color: #6d6d6d
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .my_wxpay .sm span {
+        color: #FF7800;
+        padding: 6px 11px;
+        font-weight: 700
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .my_wxpay .claos {
+        position: absolute;
+        right: -10px;
+        background: url(https://static.yjbys.com/img/company/pay/zhifu_icon.2.png) no-repeat -149px -31px;
+        width: 30px;
+        height: 30px;
+        text-indent: -9999px;
+        top: -10px;
+        cursor: pointer
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .my_wxpay .claos:hover {
+        background: url(https://static.yjbys.com/img/company/pay/zhifu_icon.2.png) no-repeat -180px -31px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .wx_pic_img {
+        text-align: center;
+        background: #fff;
+        z-index: 10;
+        border-radius: 6px;
+        width: 75%;
+        margin: auto;
+        margin-top: 40%;
+        height: 360px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .my_wxpay .iconfont {
+        color: #FFFFFF;
+        font-size: 16px;
+        line-height: 28px;
+        background: #38ad3a;
+        width: 171px;
+        margin: auto
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .my_wxpay .iconfont span {
+        background: url(https://static.yjbys.com/img/company/pay/zhifu_icon.png) no-repeat 0 center;
+        padding-left: 28px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .cg {
+        width: 300px;
+        margin: auto;
+        height: 250px;
+        display: none
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .cg .cg-img {
+        width: 176px;
+        margin-top: 50px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .wx_top {
+        background: #38AD3A;
+        height: 60px;
+        border-radius: 6px 6px 0 0;
+        color: #fff;
+        font-size: 24px;
+        line-height: 60px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .zhifu {
+        width: 100%
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .zhifu .sm {
+        display: block;
+        margin-top: 8px;
+        font-size: 18px;
+        color: #6d6d6d
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .zhifu .sm span {
+        color: #FF7800;
+        padding: 6px 11px;
+        font-weight: 700
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .hc {
+        margin-top: 10px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-marks-wxpay .hc .hc-img {
+        width: 200px;
+        margin: auto
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-success .icon {
+        width: 1.8em;
+        height: 2.5em;
+        vertical-align: middle;
+        fill: #00ba9b;
+        overflow: hidden;
+        margin-right: 6px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-success {
+        display: none;
+        border: 1px solid #d3d4d3;
+        padding: 4px;
+        width: 32%;
+        text-align: center;
+        color: #333;
+        font-size: 16px;
+        background: #fff;
+        position: fixed;
+        top: 45%;
+        left: 34%;
+        z-index: 100
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-bounceIn {
+        animation-name: mip-gzpd-alert-bounceIn;
+        animation-duration: .3s
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-cservice-marks {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        margin: auto;
+        background: rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        visibility: visible;
+        z-index: 10;
+        top: 0;
+        left: 0;
+        display: none
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-cservice-marks .phone-pic {
+        width: 90%;
+        display: inline-block
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-cservice-marks .mip-gzpd-alert-cservice {
+        text-align: center;
+        background: #fff;
+        width: 75%;
+        margin: auto;
+        margin-top: 40%;
+        padding: 6% 0;
+        border-radius: 6px;
+        position: relative;
+        height: 350px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-cservice-marks .kefu-name {
+        color: #44b549;
+        font-size: 22px;
+        margin-top: 40px;
+        font-weight: 700
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-cservice-marks .copy-txt-btn {
+        display: inline-block;
+        background: #4c84da;
+        color: #fff;
+        padding: 12px 40px;
+        border-radius: 4px;
+        margin-top: 42px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-cservice-marks .copy-txt-btn a {
+        color: #fff;
+        font-size: 16px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-cservice-marks .open-wechat {
+        width: 100%;
+        float: left;
+        height: 60px;
+        line-height: 60px;
+        color: #215cb7;
+        font-size: 16px;
+        margin-top: 10px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-cservice-marks .phone-art {
+        text-align: center;
+        display: inline-block;
+        font-size: 16px;
+        line-height: 30px;
+        margin-top: 40px
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-cservice-marks .phone-art span {
+        display: block;
+        margin-top: 3px;
+        color: #666
+    }
+
+    mip-gzpd-alert div.mip-gzpd-alert-cservice-marks #kefu-name-input {
+        width: 1px;
+        height: 1px;
+        border: 0;
+        color: rgba(255, 255, 255, 0);
+        background-color: rgba(255, 255, 255, 0)
+    }
+
+    @-webkit-keyframes mip-gzpd-alert-bounceIn {
+        0% {
+            opacity: 0;
+            transform: scale(.5)
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1)
+        }
+    }</style>
+    <style mip-extension="mip-content-readmore">.mip-content-readmore {
+        text-align: center;
+        height: 30px;
+        width: 94px;
+        margin: auto;
+        margin-bottom: 10px;
+        cursor: pointer;
+        display: block
+    }
+
+    .mip-content-readmore em {
+        display: inline-block;
+        height: 20px;
+        width: 20px;
+        top: 3px;
+        background: #3c91c7;
+        border-radius: 50px;
+        margin-right: 5px;
+        margin-top: 6px;
+        position: relative
+    }
+
+    .mip-content-readmore span {
+        display: inline-block;
+        font-size: 17px;
+        color: #2184c4
+    }
+
+    .mip-content-readmore .mip-readmore-fx:after, .mip-content-readmore .mip-readmore-fx:before {
+        width: 0;
+        height: 0;
+        border: .45rem solid transparent;
+        border-top: .45rem solid #3c91c7;
+        display: inline-block;
+        position: absolute;
+        top: .3rem;
+        left: .2rem;
+        content: ""
+    }
+
+    .mip-content-readmore .mip-readmore-fx:before {
+        border-top-color: #fff;
+        top: .45rem
+    }</style>
+    <style mip-extension="mip-ad">.mip-ad-row {
+        width: auto;
+        display: -webkit-box;
+        -webkit-box-orient: horizontal;
+        -webkit-box-direction: normal;
+        -webkit-box-pack: justify;
+        -webkit-box-align: stretch;
+        -webkit-box-lines: single;
+        display: -webkit-flex;
+        -webkit-flex-direction: row;
+        -webkit-justify-content: space-between;
+        -webkit-align-items: strecth;
+        -webkit-align-content: flex-start;
+        -webkit-flex-wrap: nowrap
+    }
+
+    .mip-ad-row {
+        margin-right: -1.81818182%;
+        margin-left: -1.81818182%
+    }
+
+    .mip-ad-row * {
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box
+    }
+
+    .c-span1, .c-span2, .c-span3, .c-span4, .c-span5, .c-span6, .c-span7, .c-span8, .c-span9, .c-span10, .c-span11, .c-span12 {
+        position: relative;
+        min-height: 1px;
+        padding-right: 1.81818182%;
+        padding-left: 1.81818182%
+    }
+
+    .c-span1 {
+        width: 8.33333333%;
+        -webkit-box-flex: 1;
+        -webkit-flex: 1 1 auto
+    }
+
+    .c-span2 {
+        width: 16.66666667%;
+        -webkit-box-flex: 2;
+        -webkit-flex: 2 2 auto
+    }
+
+    .c-span3 {
+        width: 25%;
+        -webkit-box-flex: 3;
+        -webkit-flex: 3 3 auto
+    }
+
+    .c-span4 {
+        width: 33.33333333%;
+        -webkit-box-flex: 4;
+        -webkit-flex: 4 4 auto
+    }
+
+    .c-span5 {
+        width: 41.66666667%;
+        -webkit-box-flex: 5;
+        -webkit-flex: 5 5 auto
+    }
+
+    .c-span6 {
+        width: 50%;
+        -webkit-box-flex: 6;
+        -webkit-flex: 6 6 auto
+    }
+
+    .c-span7 {
+        width: 58.33333333%;
+        -webkit-box-flex: 7;
+        -webkit-flex: 7 7 auto
+    }
+
+    .c-span8 {
+        width: 66.66666667%;
+        -webkit-box-flex: 8;
+        -webkit-flex: 8 8 auto
+    }
+
+    .c-span9 {
+        width: 75%;
+        -webkit-box-flex: 9;
+        -webkit-flex: 9 9 auto
+    }
+
+    .c-span10 {
+        width: 83.33333333%;
+        -webkit-box-flex: 10;
+        -webkit-flex: 10 10 auto
+    }
+
+    .c-span11 {
+        width: 91.66666667%;
+        -webkit-box-flex: 11;
+        -webkit-flex: 11 11 auto
+    }
+
+    .c-span12 {
+        width: 100%;
+        -webkit-box-flex: 12;
+        -webkit-flex: 12 12 auto
+    }
+
+    .c-line-clamp1 {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap
+    }
+
+    .c-line-clamp2 {
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 4px;
+        -webkit-line-clamp: 2
+    }
+
+    .c-gap-bottom-small {
+        margin-bottom: 4px
+    }
+
+    .c-img {
+        display: block;
+        width: 100%;
+        border: 0 none;
+        background: #f7f7f7 url(//m.baidu.com/static/search/image_default.png) center center no-repeat;
+        margin: 4px 0
+    }
+
+    .c-img img {
+        width: 100%
+    }
+
+    .c-img-s, .c-img-l, .c-img-w, .c-img-x {
+        height: 0;
+        overflow: hidden
+    }
+
+    .c-blocka {
+        display: block
+    }
+
+    .c-title {
+        font: 18px/26px Arial, Helvetica, sans-serif
+    }
+
+    a {
+        text-decoration: none;
+        color: #333
+    }
+
+    .adv {
+        margin: 10px 0;
+        font-size: 13px;
+        background-color: #fff
+    }
+
+    .mip-ad-bannerbox {
+        position: relative;
+        width: 100%;
+        overflow: hidden
+    }
+
+    .mip-ad-bannerbox img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%
+    }
+
+    .mip-ad-box {
+        padding: 6px 21px;
+        font-size: 13px;
+        line-height: 22px
+    }
+
+    .mip-ad-box .mip-ad-row {
+        text-align: justify;
+        -webkit-box-align: center;
+        -webkit-align-items: center
+    }
+
+    .mip-ad-imgbox {
+        position: relative
+    }
+
+    .mip-ad-abs {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        line-height: 20px;
+        font-size: 12px;
+        text-align: center;
+        background-color: rgba(0, 0, 0, 0.6);
+        color: #fff
+    }
+
+    mip-embed, mip-ad {
+        max-width: 100% !important;
+        overflow: hidden
+    }
+
+    mip-embed[type='ad-baidu'], mip-ad[type='ad-baidu'] {
+        min-height: 50px
+    }</style>
+    <link rel="dns-prefetch" href="https://static.ruiwen.com">
+    <link rel="dns-prefetch" href="https://pic.gzpinda.com">
+    <link rel="dns-prefetch" href="https://ab.pincai.com">
+    <link rel="dns-prefetch" href="https://apps.bdimg.com">
+    <link rel="dns-prefetch" href="https://zz.bdstatic.com">
+    <link rel="dns-prefetch" href="http://push.zhanzhang.baidu.com">
+    <link rel="dns-prefetch" href="https://wn.pos.baidu.com">
+    <link rel="dns-prefetch" href="https://cpro.baidustatic.com">
+    <link rel="dns-prefetch" href="https://dup.baidustatic.com">
+    <link rel="dns-prefetch" href="https://pos.baidu.com">
+    <link rel="dns-prefetch" href="https://crs.baidu.com">
+    <link rel="dns-prefetch" href="https://cb.baidu.com">
+    <link rel="dns-prefetch" href="https://hm.baidu.com">
+    <link rel="dns-prefetch" href="https://imageplus.baidu.com">
+    <link rel="dns-prefetch" href="https://su.bdimg.com">
+    <link rel="dns-prefetch" href="https://mipcache.bdstatic.com">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="https://mipcache.bdstatic.com/static/v1/mip.css">
+    <link rel="canonical" href="https://m.ruiwen.com/chengyu/2286214.html">
+    <title>与时消息成语解释</title>
+    <style mip-custom="">body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td {
+        margin: 0;
+        padding: 0;
+    }
+
+    table {
+        border-collapse: collapse;
+        border-spacing: 0;
+        width: 100% !important;
+        line-height: 30px;
+    }
+
+    td {
+        line-height: 30px;
+    }
+
+    ul, ol, li {
+        list-style: outside none none
+    }
+
+    em, i {
+        font-style: normal
+    }
+
+    img {
+        border: 0 none
+    }
+
+    div {
+        display: block;
+        clear: both;
+        overflow: hidden
+    }
+
+    textarea {
+        outline: medium none
+    }
+
+    a {
+        text-decoration: none;
+        font-size: 14px;
+        color: #0086c5;
+    }
+
+    body {
+        background: none repeat scroll 0 0 #f2f0f1;
+        color: #1a1a1a;
+        max-width: 740px;
+        margin: auto;
+    }
+
+    .header .sidebar {
+        background: #F2F2F2;
+        border-bottom: 1px solid #dfdfdf;
+        color: #f2f2f2;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        height: 42px;
+        overflow: hidden;
+    }
+
+    .header .sidebar a {
+        height: 42px;
+        line-height: 42px;
+        display: inline-block;
+        padding: 0 17px 0 8px;
+        overflow: hidden;
+        font-size: 16px;
+        color: #1a1a1a;
+        background: url(https://static.ruiwen.com/img/m/site_icon.png) no-repeat right center;
+        background-size: auto 42px;
+    }
+
+    .header .sidebar i.home {
+        background-size: auto 100%;
+        height: 22px;
+        position: relative;
+        top: 5px;
+        width: 36px;
+        display: inline-block;
+        float: left;
+        margin-top: 6px;
+        background: url(https://static.ruiwen.com/img/m/m_logo.png) no-repeat right center;
+        margin-left: 5px;
+    }
+
+    .header .sidebar code {
+        display: none;
+    }
+
+    .main {
+        display: block;
+        position: relative;
+    }
+
+    .article {
+        background: #fff;
+        padding: 10px 2%;
+        border-bottom: 1px solid #e4e4e4;
+    }
+
+    .title {
+        color: #000;
+        font-size: 1.5rem;
+        line-height: 130%;
+        padding-bottom: 5px;
+    }
+
+    .info {
+        float: left;
+        line-height: 25px;
+        width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .info font {
+        color: #ccc;
+        font-size: 16px;
+        margin-right: 10px
+    }
+
+    .info a {
+        display: inline-block;
+        font-size: 1rem;
+        height: 11px;
+        line-height: 11px;
+    }
+
+    .content p {
+        color: #444;
+        line-height: 26px;
+        margin: 10px 0;
+        font-size: 16px;
+    }
+
+    .content p a {
+        font-size: 16px;
+    }
+
+    .content strong {
+        font-weight: 700;
+        font-size: 16px;
+    }
+
+    .fx, .c {
+        transition-duration: 0.5s;
+        line-height: 28px;
+        display: inline-block;
+        width: 9px;
+        height: 9px;
+        border-bottom: 1px solid #ffffff;
+        border-right: 1px solid #ffffff;
+        transform: rotate(45deg);
+        margin: 2px 2px 0px 5px;
+        float: left;
+    }
+
+    .c {
+        transform: rotate(225deg);
+        transition-duration: 0.3s;
+        margin: 8px 2px 0px 5px;
+    }
+
+    .content img, .content mip-img {
+        max-width: 100% !important;
+        height: auto !important;
+        width: auto !important;
+        min-width: 10%;
+        display: inline-block;
+    }
+
+    .page_box {
+        float: left;
+        width: 100%;
+        height: 45px;
+        overflow: hidden;
+        margin: 10px 0;
+    }
+
+    .pages {
+        text-align: center;
+    }
+
+    .pages li {
+        background-color: #fff;
+        color: #444;
+        border: 1px solid #dad9d9;
+        padding: 1.5% 3.5%;
+        display: inline-block;
+        margin: 0.5%;
+    }
+
+    .pages li a {
+        color: #444
+    }
+
+    .pages li:active {
+        color: #fff;
+        background: none repeat scroll 0 0 #2184c4;
+        border: 1px solid #2184c4;
+    }
+
+    .pages li:active a {
+        color: #fff;
+    }
+
+    .pages li.thisclassa {
+        color: #fff
+    }
+
+    .pages li.thisclass {
+        color: #fff;
+        background: none repeat scroll 0 0 #2184c4;
+        border: 1px solid #2184c4;
+    }
+
+    .related_article, .hot_article, .news_article {
+        margin: 0.6rem 0 0.5rem;
+        background: #fff;
+        border-bottom: 1px solid #e4e4e4;
+        border-top: 1px solid #e4e4e4;
+        padding-bottom: 5px;
+    }
+
+    .related_article font {
+        background: url(https://static.ruiwen.com/img/m/about.png) no-repeat;
+        color: #333;
+        width: 90%;
+        float: left;
+        padding-left: 25px;
+        height: 24px;
+        line-height: 24px;
+        margin: 2%;
+        margin-bottom: 0;
+    }
+
+    .hot_article font {
+        color: #333;
+        background: url(https://static.ruiwen.com/img/m/hot.png) 0 2px no-repeat;
+        width: 90%;
+        float: left;
+        padding-left: 25px;
+        height: 24px;
+        line-height: 24px;
+        margin: 2%;
+        margin-bottom: 0;
+    }
+
+    .news_article font {
+        background: url(https://static.ruiwen.com/img/m/new.png) 0 2px no-repeat;
+        color: #333;
+        width: 90%;
+        float: left;
+        padding-left: 25px;
+        height: 24px;
+        line-height: 24px;
+        margin: 2%;
+        margin-bottom: 0;
+    }
+
+    .related_article ul, .hot_article ul, .news_article ul {
+        margin: 0 2%;
+        display: inline-block;
+        width: 100%;
+        padding: 6px 0 0px;
+    }
+
+    .related_article ul li, .hot_article ul li, .news_article ul li {
+        display: inline-block;
+        padding: 5px 0 0px;
+        border-top: 1px dashed #E4E4E4;
+        margin-top: 4px;
+        margin-bottom: 4px;
+    }
+
+    .related_article ul li:last-child, .hot_article ul li:last-child, .news_article ul li:last-child {
+        border-bottom: 0;
+    }
+
+    .related_article ul li a, .hot_article ul li a, .news_article ul li a {
+        width: 100%;
+        display: block;
+    }
+
+    .related_article ul li a i, .hot_article ul li a i, .news_article ul li a i {
+        width: 5px;
+        height: 5px;
+        background: #ccc;
+        border-radius: 50%;
+        margin-right: .5rem;
+        display: inline-block;
+        position: relative;
+        top: -1.125rem;
+    }
+
+    .related_article ul li a mip-img, .hot_article ul li a mip-img, .news_article ul li a mip-img {
+        width: 70px !important;
+        height: 54px !important;
+        float: left;
+        margin-right: 16px;
+    }
+
+    .related_article .comm_r, .hot_article .comm_r, .news_article .comm_r {
+        width: 68%;
+        display: inline-block;
+    }
+
+    .related_article .comm_r span, .hot_article .comm_r span, .news_article .comm_r span {
+        display: block;
+        height: 16px;
+        font-size: 12px;
+        color: #888888;
+        width: 324px;
+        line-height: 16px;
+        overflow: hidden;
+    }
+
+    .related_article .comm_r code, .hot_article .comm_r code, .news_article .comm_r code {
+        display: block;
+        overflow: hidden;
+        width: 100%;
+        margin-bottom: 8px;
+        margin-top: 2px;
+        font-size: 16px;
+        line-height: 20px;
+        height: 20px;
+    }
+
+    .previous {
+        color: #666;
+        padding: 8px 10px 5px;
+    }
+
+    .previous span {
+        background: #fff;
+        display: inline-block;
+        height: 40px;
+        line-height: 40px;
+        overflow: hidden;
+        border: 1px solid #e0e0e0;
+        text-align: center;
+        border-radius: 2px;
+        padding: 0 11%;
+    }
+
+    .previous span i {
+        transition-duration: 0.5s;
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-bottom: 2px solid #0086c5;
+        border-right: 2px solid #0086c5;
+        transform: rotate(140deg);
+        margin: 15px 4px 0px 10px;
+        float: left;
+    }
+
+    .previous span:nth-child(even) {
+        float: right;
+    }
+
+    .previous span:nth-child(even) i {
+        float: right;
+        transform: rotate(320deg);
+        margin: 16px 4px 0px 8px;
+    }
+
+    @media (min-width: 340px) {
+        .previous span {
+            padding: 0 13%;
+        }
+    }
+
+    .previous span a {
+        color: #0086c5;
+        font-size: 16px;
+    }
+
+    .art_next {
+        color: #666;
+        line-height: 30px;
+        width: 100%;
+        background: #fff;
+        padding: 2%;
+    }
+
+    .art_next a {
+        font-size: 16px;
+    }
+
+    .art_next span {
+        display: block;
+        background-size: 9px;
+        margin-bottom: 2px;
+    }
+
+    .art_next {
+        width: auto;
+        padding-bottom: 5px;
+    }
+
+    .content .wangzhi {
+        font-size: 14px;
+        height: 24px;
+        line-height: 24px;
+        width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        margin: 6px 0 10px;
+    }
+
+    .content .wangzhi a {
+        font-size: 14px;
+    }
+
+    .backtop {
+        position: fixed;
+        width: 2.5rem;
+        height: 2.5rem;
+        bottom: 10rem;
+        right: 0.7rem;
+        opacity: 0.6;
+        background: #868686;
+        border-radius: 1.5rem;
+        display: none;
+    }
+
+    .backtop img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .footer {
+        width: 96%;
+        background: #ffffff;
+        float: left;
+        text-align: center;
+        padding: 2%;
+    }
+
+    .footer a {
+        color: #888;
+        font-size: 16px;
+        background: url(https://static.ruiwen.com/img/m/m_logo.png) no-repeat -2px 0px;
+        background-size: 23px;
+        padding-left: 26px;
+    }
+
+    .s_footer {
+        padding: 2%;
+        background: #fff;
+        border-top: 1px solid #e4e4e4;
+    }
+
+    .mip-adbd {
+        padding: 10px;
+        background: #fff;
+    }</style>
+    <script type="text/javascript" async=""
+            src="https://abc.pincai.com/auto_ds?in=B&amp;qyz=s4403kELkDQkDQxt0ki25t7pykinzxkDQnspyr95kDQDDJHDCFkis4xw&amp;uxn=FBFEnGJBDpJlJGJHmnEJlGmHGonKEqqH&amp;yuw=CGGIDJFFHEIGH&amp;iwn=B&amp;fsy=C&amp;ih=F&amp;ufw=EIG8HHI&amp;ux=CB8CB&amp;hjh=cbQjJ&amp;fwn=D&amp;uwty=D&amp;jcux=CCCBBD,CCBBCC&amp;iyr=LcbZiUaZY_&amp;ifn=C&amp;uhx=EIG8HHI&amp;unx=jC8jC&amp;inx=B&amp;uxx=EIG8CGIK&amp;ihg=iiimlto5i5ytzyinlwwmlnvi"></script>
+    <script type="text/javascript" async="" src="https://ab.pincai.com/oimqomg.js"></script>
+    <script type="application/ld+json">
+        {
+            "@context": "https://ziyuan.baidu.com/contexts/cambrian.jsonld",
+            "@id": "https://mip.ruiwen.com/chengyu/2286214.html",
+            "appid": "1578487758338574",
+            "title": "与时消息成语解释",
+            "images": [
+                "https://pic.gzpinda.com/allimg/copyright/lanmu/lm539.jpg"
+            ],
+            "pubDate": "1970-01-01T08:00:00"
+        }
+    </script>
+    <script data-src="https://c.mipcdn.com/static/deps/zepto.js" src="https://c.mipcdn.com/static/deps/zepto.js"
+            async=""></script>
+</head>
+<body mip-ready="" class="mip-i-android-scroll">
+<mip-fixed type="top" class="mip-shell-header-wrapper hide mip-element" mipdata-fixedidx="Fixed0"
+           style="z-index: 10000;">
+    <div class="mip-shell-header transition" style="background-color: rgb(255, 255, 255);"><a href="javascript:void(0)"
+                                                                                              class="back-button"
+                                                                                              mip-header-btn=""
+                                                                                              data-button-name="back">
+        <svg t="1530857979993" class="icon" style="fill: rgb(0, 0, 0);" viewBox="0 0 1024 1024" version="1.1"
+             xmlns="http://www.w3.org/2000/svg" p-id="3173" xmlns:xlink="http://www.w3.org/1999/xlink">
+            <path fill="currentColor"
+                  d="M348.949333 511.829333L774.250667 105.728C783.978667 96 789.333333 83.712 789.333333 71.104c0-12.629333-5.354667-24.917333-15.082666-34.645333-9.728-9.728-22.037333-15.082667-34.645334-15.082667-12.586667 0-24.917333 5.333333-34.624 15.082667L249.557333 471.616A62.570667 62.570667 0 0 0 234.666667 512c0 10.410667 1.130667 25.408 14.890666 40.042667l455.424 435.605333c9.706667 9.728 22.016 15.082667 34.624 15.082667s24.917333-5.354667 34.645334-15.082667c9.728-9.728 15.082667-22.037333 15.082666-34.645333 0-12.608-5.354667-24.917333-15.082666-34.645334L348.949333 511.829333z"
+                  p-id="3174"></path>
+        </svg>
+    </a>
+        <div class="mip-shell-header-logo-title"><span class="mip-shell-header-title" style="color: rgb(0, 0, 0);">与时消息成语解释</span>
+        </div>
+    </div>
+</mip-fixed>
+<div class="mip-adbd">
+    <mip-ad type="baidu-wm-ext" domain="ab.pincai.com" token="gbtckkakj" class="mip-element mip-layout-container">
+        <div id="gbtckkakj">
+            <iframe width="375" frameborder="0" height="113" scrolling="no"
+                    src="https://pos.baidu.com/s?hei=113&amp;wid=375&amp;di=u3711619&amp;ltu=https%3A%2F%2Fmip.ruiwen.com%2Fchengyu%2F2286214.html&amp;psi=4043c5802e8a8586bc38a5b65dc93ff6&amp;cpl=0&amp;dai=1&amp;prot=2&amp;dc=3&amp;col=zh-CN&amp;par=375x667&amp;cmi=0&amp;cdo=0&amp;ari=2&amp;exps=111000,110011&amp;chi=1&amp;ti=%E4%B8%8E%E6%97%B6%E6%B6%88%E6%81%AF%E6%88%90%E8%AF%AD%E8%A7%A3%E9%87%8A&amp;ps=10x10&amp;pis=-1x-1&amp;ccd=24&amp;cja=false&amp;cec=UTF-8&amp;drs=3&amp;dri=0&amp;dis=0&amp;tpr=1557284463756&amp;pss=375x1579&amp;tlm=1557284463&amp;psr=375x667&amp;pcs=375x667&amp;cfv=0&amp;ltr=https%3A%2F%2Fmip.ruiwen.com%2Fyuwen%2F&amp;ant=0&amp;dtm=HTML_POST&amp;tcn=1557284464&amp;cce=true"></iframe>
+        </div>
+    </mip-ad>
+</div>
+<header class="header">
+    <div class="sidebar"><i class="home"></i><a target="_blank"
+                                                href="https://mip.ruiwen.com/">瑞文网</a><code>&gt;</code><a
+            target="_blank" href="https://mip.ruiwen.com/yuwen/">语文</a><code>&gt;</code><a target="_blank"
+                                                                                           href="https://mip.ruiwen.com/chengyu/">成语大全</a><code>&gt;</code>
+    </div>
+</header>
+<div class="main">
+    <mip-gzpd-alert class="mip-element mip-layout-container">
+        <div class="article"><h1 class="title">与时消息成语解释</h1>
+            <p class="info"><font>2019-05-01</font> <a target="_blank" href="https://mip.ruiwen.com/chengyu/">成语大全</a>
+            </p>
+            <div class="content"><p>　　【成语原文】：与时消息</p>
+                <p>
+                    <mip-img popup="" src="https://pic.ruiwen.com/allimg/copyright/lanmu/lm539.jpg"
+                             class="mip-element mip-layout-container mip-img-loaded" index="0"
+                             mip-firstscreen-element=""><img class="mip-fill-content mip-replaced-content"
+                                                             src="https://pic.ruiwen.com/allimg/copyright/lanmu/lm539.jpg">
+                    </mip-img>
+                </p>
+                <p>　　【标准发音】：yǔ shí xiāo xi</p>
+                <p>　　【繁体写法】：與時消息</p>
+                <p>　　【与时消息是什么意思】：指事物无常，随时间的推移而兴盛衰亡。消，消亡。息，孳生。</p>
+                <p>　　【与时消息成语接龙】：时不我与 → 与时消息 → 息事宁人</p>
+                <p>　　【用法分析】：作谓语、定语；用于书面语</p>
+                <p>　　【读音预警】：注意多音字：与 ① yǔ 给与；② yù 参与。</p>
+                <p>　　【出处说明】：《周易 丰》：“日中则昃，月盈则食，天地盈虚，与时消息。”《后汉书 孔融传》：“故曰‘上失其道，民散久矣’。而欲绳之以古行刑，投之以残弃，非所谓与时消息者也。”</p>
+                <p>　　【与时消息的造句示例】：</p>
+                <p>　　《隋书·杨约传》：“自古贤人君子，莫不与时消息以避祸患。”</p>
+                <p><a target="_blank" href="https://mip.ruiwen.com/chengyu/2286214.html">与时消息成语解释</a></p>
+                <p class="wangzhi">https://mip.ruiwen.com/chengyu/2286214.html</p>
+                <div class="mip-gzpd-alert-marks">
+                    <div class="alert-box mip-gzpd-alert-bounceIn">
+                        <div class="claos"></div>
+                        <div class="paybox">
+                            <div class="paybox-title">付费文档</div>
+                            <div class="paybox-img"><a
+                                    href="https://my.pincai.com/wx_app/wxpay/native_middle.php?mip&amp;id=111&amp;rd=https://mip.ruiwen.com/chengyu/2286214.html">
+                                <mip-img class="qrimg mip-element mip-layout-container mip-img-loaded"
+                                         src="//static.yjbys.com/qrcode/pay.jpg"><img
+                                        class="mip-fill-content mip-replaced-content"
+                                        src="//static.yjbys.com/qrcode/pay.jpg"></mip-img>
+                            </a></div>
+                            <div class="paybox-money"><span>限时特价:1.99元/篇</span> <span>原价:10元</span></div>
+                            <a class="paybox-bottom-a"
+                               href="https://my.pincai.com/wx_app/wxpay/native_middle.php?mip&amp;id=111&amp;rd=https://mip.ruiwen.com/chengyu/2286214.html">
+                                <div class="paybox-bottom">在线支付</div>
+                            </a></div>
+                        <div class="freebox">
+                            <div class="freebox-title">免费复制 仅需3秒</div>
+                            <div class="freebox-description"><p>1、打开微信，搜索关注公众号“<span class="text-focus">网站小帮手</span>”
+                            </p>
+                                <p>2、进入<span class="text-focus">网站小帮手</span>公众号免费获取验证码</p>
+                                <p>3、将验证码输入下方框内，确认即可复制</p></div>
+                            <div class="freebox-code"><input type="text" placeholder="请在这里输入验证码" class="freebox-input">
+                                <input type="button" value="确认" class="freebox-btn"></div>
+                        </div>
+                        <div class="paybox-cservice">联系客服</div>
+                    </div>
+                </div>
+                <div class="mip-gzpd-alert-marks-wxpay">
+                    <div class="wx_pic_img mip-gzpd-alert-bounceIn">
+                        <div class="wx_top"><span>微信支付中，请勿关闭窗口</span></div>
+                        <div class="cg">
+                            <mip-img class="cg-img mip-element mip-layout-container mip-img-loaded"
+                                     src="https://static.yjbys.com/img/company/pay/zhifu_cg.png"><img
+                                    class="mip-fill-content mip-replaced-content"
+                                    src="https://static.yjbys.com/img/company/pay/zhifu_cg.png"></mip-img>
+                        </div>
+                        <div class="payqr_box">
+                            <div class="hc" style="display: block;">
+                                <mip-img class="hc-img mip-element mip-layout-container mip-img-loaded"
+                                         src="https://static.yjbys.com/img/my/company/wxzhifu_load.gif"><img
+                                        class="mip-fill-content mip-replaced-content"
+                                        src="https://static.yjbys.com/img/my/company/wxzhifu_load.gif"></mip-img>
+                            </div>
+                            <div class="zhifu">
+                                <div class="sm">微信支付: <span>1.99元</span></div>
+                            </div>
+                        </div>
+                        <div class="payqr_success_box">
+                            <div class="payqr_success_text">
+                                <svg class="icon" viewBox="0 0 1024 1024" version="1.1"
+                                     xmlns="http://www.w3.org/2000/svg" p-id="1629">
+                                    <path d="M511.993344 0.002048C229.260838 0.002048 0 229.261862 0 511.998464c0 282.732506 229.259814 511.990272 511.993344 511.990272C794.73097 1023.987712 1023.988736 794.73097 1023.988736 511.998464c0-282.736602-229.257766-511.996416-511.995392-511.996416zM788.582942 397.083376L475.699087 709.96723C464.321548 721.341697 449.189043 727.145665 434.1702 727.145665c-15.018843 0-30.036662-5.687233-41.527863-17.177411l-157.23859-157.241662c-22.982403-22.865668-22.982403-60.072299 0-83.054702 22.982403-22.982403 60.074347-22.86874 83.05675 0l115.823366 115.710727 271.352919-271.357015c22.871812-22.86874 60.074347-22.86874 83.05675 0 22.871812 22.983427 22.871812 60.189034-0.11059 83.057774z"
+                                          fill="" p-id="1630"></path>
+                                </svg>
+                                <span class="text">支付成功</span> <span class="text small">已获得该文章七天复制权限</span>
+                                <button class="btn">确定</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mip-gzpd-alert-success mip-gzpd-alert-bounceIn">
+                    <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+                         p-id="1271">
+                        <path d="M512 1024C229.248 1024 0 794.752 0 512S229.248 0 512 0s512 229.248 512 512-229.248 512-512 512z m0-938.666667C276.352 85.333333 85.333333 276.352 85.333333 512s191.018667 426.666667 426.666667 426.666667 426.666667-191.018667 426.666667-426.666667S747.648 85.333333 512 85.333333z m-10.368 625.365334a42.624 42.624 0 0 1-60.330667 0 41.130667 41.130667 0 0 1-7.381333-11.136L275.413333 536.32a42.666667 42.666667 0 1 1 61.056-59.605333l137.216 141.269333 262.016-262.016a42.666667 42.666667 0 0 1 60.330667 60.330667l-294.4 294.4z"
+                              p-id="1272"></path>
+                    </svg>
+                    <span>复制成功</span></div>
+                <div class="mip-gzpd-alert-cservice-marks">
+                    <div class="mip-gzpd-alert-cservice mip-gzpd-alert-bounceIn">
+                        <div class="claos"></div>
+                        <div class="phone-pic"><h1 class="kefu-name">客服QQ:2880172220</h1>        <span
+                                class="copy-txt-btn"><a targe="_blank"
+                                                        href="mqq://im/chat?chat_type=wpa&amp;uin=2880172220&amp;version=1&amp;src_type=web&amp;web_src=oicqzone.com">联系客服</a></span>
+                        </div>
+                        <div class="phone-art"><span style="color:#ff6600;">付费成功后，若无法使用请联系客服</span>
+                            <span>在线时间：周一至周五</span> <span>9:00~12:30 14:00~18:00</span> <input type="text"
+                                                                                               value="客服QQ:2880172220"
+                                                                                               id="kefu-name-input">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <mip-content-readmore element=".content" buttitle="阅读更多"
+                                  class="mip-element mip-layout-container"></mip-content-readmore>
+            <div class="pages_box"></div>
+            <div class="mip-adbd">
+                <mip-ad type="baidu-wm-ext" domain="ab.pincai.com" token="fasbjjzpb"
+                        class="mip-element mip-layout-container">
+                    <div id="fasbjjzpb">
+                        <div style="text-align:left;">
+                            <div id="glwbyihoo" style="padding-top:0px;">
+                                <div style="margin:0px;"><abbr class="ghsbtmpsde" style="display:none;"></abbr>
+                                    <iframe width="375" frameborder="0" height="188" scrolling="no"
+                                            src="https://pos.baidu.com/s?hei=188&amp;wid=375&amp;di=u3711627&amp;ltu=https%3A%2F%2Fmip.ruiwen.com%2Fchengyu%2F2286214.html&amp;psi=4043c5802e8a8586bc38a5b65dc93ff6&amp;cmi=0&amp;psr=375x667&amp;cce=true&amp;cpl=0&amp;cja=false&amp;prot=2&amp;chi=1&amp;pis=-1x-1&amp;par=375x667&amp;pcs=375x667&amp;ps=1123x17&amp;tpr=1557284463756&amp;cdo=0&amp;ltr=https%3A%2F%2Fmip.ruiwen.com%2Fyuwen%2F&amp;dis=0&amp;exps=111000,110011&amp;tlm=1557284463&amp;drs=3&amp;cfv=0&amp;dri=0&amp;dc=3&amp;dai=2&amp;ccd=24&amp;ari=2&amp;cec=UTF-8&amp;dtm=HTML_POST&amp;col=zh-CN&amp;ant=0&amp;pss=375x1695&amp;ti=%E4%B8%8E%E6%97%B6%E6%B6%88%E6%81%AF%E6%88%90%E8%AF%AD%E8%A7%A3%E9%87%8A&amp;tcn=1557284464"></iframe>
+                                    <div class="apcwzwjskgrpdh" style="display:none;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </mip-ad>
+            </div>
+        </div>
+    </mip-gzpd-alert>
+    <div class="related_article"><font>[成语大全]相关推荐</font>
+        <mip-pubuliu></mip-pubuliu>
+    </div>
+</div>
+<div class="s_footer">
+    <div class="mip-adbd">
+        <mip-ad type="baidu-wm-ext" domain="ab.pincai.com" token="ytluccslz" class="mip-element mip-layout-container">
+            <div id="ytluccslz">
+                <iframe width="375" frameborder="0" height="225" scrolling="no"
+                        src="//pos.baidu.com/s?hei=225&amp;wid=375&amp;di=u3711630&amp;ltu=https%3A%2F%2Fmip.ruiwen.com%2Fchengyu%2F2286214.html&amp;psi=4043c5802e8a8586bc38a5b65dc93ff6&amp;psr=375x667&amp;dis=0&amp;tlm=1557284463&amp;ti=%E4%B8%8E%E6%97%B6%E6%B6%88%E6%81%AF%E6%88%90%E8%AF%AD%E8%A7%A3%E9%87%8A&amp;col=zh-CN&amp;dtm=HTML_POST&amp;ccd=24&amp;prot=2&amp;ant=0&amp;tpr=1557284463756&amp;ari=2&amp;tcn=1557284464&amp;dai=3&amp;dri=0&amp;cja=false&amp;chi=1&amp;dc=3&amp;drs=3&amp;pcs=375x667&amp;ltr=https%3A%2F%2Fmip.ruiwen.com%2Fyuwen%2F&amp;cec=UTF-8&amp;cfv=0&amp;ps=1756x17&amp;cpl=0&amp;cmi=0&amp;cdo=0&amp;pss=375x1886&amp;exps=111000,110011&amp;pis=-1x-1&amp;cce=true&amp;par=375x667"></iframe>
+            </div>
+        </mip-ad>
+    </div>
+</div>
+<div class="art_next"><span>上一篇：<a target="_blank"
+                                   href="https://mip.ruiwen.com/chengyu/2286175.html">博闻强志成语解释</a> </span> <span>下一篇：<a
+        target="_blank" href="https://mip.ruiwen.com/chengyu/2286154.html">雅量高致成语解释</a> </span></div>
+<div class="footer"><a target="_blank" href="https://mip.ruiwen.com/">瑞文网</a></div>
+<script src="https://mipcache.bdstatic.com/static/v1/mip.js"></script>
+<mip-shell class="mip-element mip-layout-container">
+    <script type="application/json">{
+        "ignoreWarning": true
+    }</script>
+</mip-shell>
+<script src="https://mipcache.bdstatic.com/static/v1/mip-ad/mip-ad.js"></script>
+<script src="https://mipcache.bdstatic.com/static/v1/mip-stats-baidu/mip-stats-baidu.js"></script>
+<mip-stats-baidu token="4d9c0095d55f98245e83c4b5879def56" class="mip-element mip-layout-container">
+    <script src="https://hm.baidu.com/hm.js?4d9c0095d55f98245e83c4b5879def56"></script>
+</mip-stats-baidu>
+<script src="https://mipcache.bdstatic.com/static/v1/mip-content-readmore/mip-content-readmore.js"></script>
+<script src="https://mipcache.bdstatic.com/static/v1/mip-gzpd-alert/mip-gzpd-alert.js"></script>
+<mip-fixed class="mip-shell-more-button-mask mip-element" mipdata-fixedidx="Fixed1"
+           style="z-index: 9999; display: none;"></mip-fixed>
+<mip-fixed class="mip-shell-more-button-wrapper mip-element" mipdata-fixedidx="Fixed2"
+           style="height: 0px; z-index: 9998; display: none;"></mip-fixed>
+<mip-fixed class="mip-shell-header-mask mip-element" mipdata-fixedidx="Fixed3"
+           style="z-index: 9997; display: none;"></mip-fixed>
+<mip-fixed id="mip-page-loading-wrapper" class="mip-page-loading-wrapper mip-element" mipdata-fixedidx="Fixed4"
+           style="z-index: 9996; display: none;">
+    <div class="mip-shell-header"><span mip-header-btn="" class="back-button"><svg t="1530857979993" class="icon"
+                                                                                   style="" viewBox="0 0 1024 1024"
+                                                                                   version="1.1"
+                                                                                   xmlns="http://www.w3.org/2000/svg"
+                                                                                   p-id="3173"
+                                                                                   xmlns:xlink="http://www.w3.org/1999/xlink"><path
+            fill="currentColor"
+            d="M348.949333 511.829333L774.250667 105.728C783.978667 96 789.333333 83.712 789.333333 71.104c0-12.629333-5.354667-24.917333-15.082666-34.645333-9.728-9.728-22.037333-15.082667-34.645334-15.082667-12.586667 0-24.917333 5.333333-34.624 15.082667L249.557333 471.616A62.570667 62.570667 0 0 0 234.666667 512c0 10.410667 1.130667 25.408 14.890666 40.042667l455.424 435.605333c9.706667 9.728 22.016 15.082667 34.624 15.082667s24.917333-5.354667 34.645334-15.082667c9.728-9.728 15.082667-22.037333 15.082666-34.645333 0-12.608-5.354667-24.917333-15.082666-34.645334L348.949333 511.829333z"
+            p-id="3174"></path></svg></span>
+        <div class="mip-shell-header-logo-title"><img class="mip-shell-header-logo" src=""><span
+                class="mip-shell-header-title"></span></div>
+    </div>
+</mip-fixed>
+<script src="https://ab.pincai.com/gbtckkakj.js"></script>
+<script src="https://ab.pincai.com/fasbjjzpb.js"></script>
+<script src="https://ab.pincai.com/ytluccslz.js"></script>
+<script src="/mip-pubuliu/mip-pubuliu.js"></script>
+<div id="cli_dialog_div"></div>
+</body>
+</html>
