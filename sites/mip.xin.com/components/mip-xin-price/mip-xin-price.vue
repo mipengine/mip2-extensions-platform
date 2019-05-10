@@ -49,7 +49,7 @@
         class="car-servive-paybox">
         <div
           class="car-servive-pay">
-            <span>服务费不超过车价9%</span>
+          <span>服务费不超过车价9%</span>
         </div>
       </div>
       <div
