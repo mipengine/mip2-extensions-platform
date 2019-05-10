@@ -1,6 +1,6 @@
 {
   "name": "a.b.com",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "mip-pubuliu",
   "scripts": {
     "dev": "mip2 dev",
