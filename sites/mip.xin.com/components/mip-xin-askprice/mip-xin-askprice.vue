@@ -14,8 +14,7 @@
       <div
         id="askPrice"
         class="enquiryContent" >
-        <span class="leaveContact">提交询价，立即获取最低报价</span>
-        <span class="car-price-current">本车可议价，当前报价{{ carPrice }}万元</span>
+        <span class="leaveContact">提交询价，现在购车立享优惠</span>
         <div class="input-box">
           <mip-form>
             <input
@@ -53,19 +52,19 @@
               src="//c2.xinstatic.com/f3/20180803/1517/5b6401764c164734049.png"/>
             <label
               for="bdAuth"
-              class="auth-font">登陆百度账号，第一时间了解订单状态</label>
+              class="auth-font">登录百度账号，第一时间了解订单状态</label>
           </div>
           <button
             v-if="!info.isLogin && baAuth && telCorrect"
             :style="{'margin-top':authBottom}"
             class="enquiryBtn tel-submit"
             on="tap:customlog.login"
-            @click="handleLogin">获取底价</button>
+            @click="handleLogin">我要优惠</button>
           <button
             v-else
             :style="{'margin-top':authBottom}"
             class="enquiryBtn tel-submit"
-            @click="queryClick">获取底价</button>
+            @click="queryClick">我要优惠</button>
         </div>
       </div>
     </mip-fixed>
@@ -84,7 +83,7 @@
           <mip-img
             class="askprice-success-boximg"
             src="//c2.xinstatic.com/f3/20180717/1102/5b4d5c379c451177647.png"/>
-          <span class="askprice-success-font">询价成功</span>
+          <span class="askprice-success-font">提交成功</span>
         </div>
       </div>
       <div
@@ -92,7 +91,7 @@
         style="border-top: 0.12rem solid rgba(246, 246, 249, 1);">
         <div class="similar-recommend-title">
           <span>
-            为您推荐相似车源，一键询价，秒知底价
+            为您推荐相似车源
           </span>
         </div>
         <div style="max-height: 5rem;overflow: scroll;background: #fff;">
@@ -122,10 +121,10 @@
                     <div
                       v-if="item.isAsk && item.enquiry_status == 1"
                       class="pricedetail-div-scroll"
-                      @click="askPriceOne(index,item.carid)">一键询价</div>
+                      @click="askPriceOne(index,item.carid)">我要优惠</div>
                     <div
                       v-if="!item.isAsk && item.enquiry_status == 1"
-                      class="asked-price-scroll">已询价</div>
+                      class="asked-price-scroll">已提交</div>
                   </div>
                 </div>
               </div>
@@ -317,7 +316,7 @@ export default {
             this.showAskToast = false
             this.showSimilarToast = true
           }
-          // 登陆授权之后埋点
+          // 登录授权之后埋点
           let type = this.isDirect
           let telNum = this.telValue || getLocalStorage('phoneNumber')
           clickPoint(
@@ -478,7 +477,7 @@ export default {
   height: 0.88rem;
   color: #1b1b1b;
   border-radius: 0.06rem;
-  margin-top: 0.4rem;
+  /* margin-top: 0.4rem; */
   text-align: center;
 }
 

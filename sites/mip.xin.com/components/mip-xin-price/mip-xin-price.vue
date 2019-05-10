@@ -46,6 +46,13 @@
         </div>
       </div>
       <div
+        class="car-servive-paybox">
+        <div
+          class="car-servive-pay">
+            <span>服务费不超过车价9%</span>
+        </div>
+      </div>
+      <div
         v-if="!showMessage && carInfo.panel_price && showSimilarmodule"
         class="open-car-allmessagebox"
         @click="openMessage">
@@ -452,7 +459,23 @@ export default {
   margin-top: 0.24rem;
   margin-left: 0.4rem;
 }
-
+.car-servive-paybox {
+    display: flex;
+    justify-content: center;
+    margin-top:0.15rem
+}
+.car-servive-pay {
+    display: flex;
+    border-top: 1px solid #f1f1f1;
+    justify-content: flex-end;
+    height: 0.9rem;
+    align-items: center;
+    font-size: 0.22rem;
+    font-family: PingFangSC-Light;
+    font-weight: 300;
+    color: rgba(150, 157, 168, 1);
+    width: 90%;
+}
 .beyondValue {
   display: flex;
   justify-content: center;
