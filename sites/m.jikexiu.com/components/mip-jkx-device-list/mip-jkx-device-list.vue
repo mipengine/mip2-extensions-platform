@@ -310,6 +310,7 @@ export default {
         this.show = false
         this.price = item.price
         this.malfunctionId = this.data4[this.brandsIndex1].children[index].id
+        this.solutionId = this.data4[this.brandsIndex1].children[index].smInfo.solutionId
         let per = ''
         if (item.smInfo.warrantyPeriod > 0) {
           per = `质保${item.smInfo.warrantyPeriod}天`
@@ -325,7 +326,8 @@ export default {
             price: this.price > 0 ? `￥${this.price}` : '待检测',
             fault: item.name,
             brandId: item.id,
-            period: `(${per})`
+            period: `(${per})`,
+            solutionId: this.solutionId
           },
           deviceData: {
             name1: this.name1,
@@ -337,7 +339,8 @@ export default {
             fault: item.smInfo.method,
             brandId: item.id,
             period: `(${per})`,
-            showFault: !!item.smInfo.method
+            showFault: !!item.smInfo.method,
+            solutionId: this.solutionId
           }
         })
       } else {
@@ -493,7 +496,7 @@ export default {
         display: block;
         width: 20px;
         height: 20px;
-        background: url('../../common/icon/close.png') no-repeat center center;
+        background: url("../../common/icon/close.png") no-repeat center center;
         background-size: 100% 100%;
       }
       p {
@@ -509,7 +512,7 @@ export default {
         color: #e94609;
       }
       .active:after {
-        content: '';
+        content: "";
         position: absolute;
         bottom: -10px;
         left: 0;
@@ -550,7 +553,7 @@ export default {
           position: relative;
         }
         .act:after {
-          content: '';
+          content: "";
           position: absolute;
           top: 50%;
           right: 20px;

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>MIP page</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <style mip-custom>
+/*common*/
+html {height: 100%;-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; overflow-x:hidden}
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, input, a, table, img, hr, textarea, strong, figure { margin: 0; padding: 0;}
+body { color: #404040; font-size: .32rem; font-family: 'Microsoft Yahei';min-height: 100%; position: relative; margin: 0 auto;overflow-y: scroll;-webkit-overflow-scrolling : touch; overflow-x:hidden}
+body.noscroll{height:100%;}
+::-webkit-scrollbar{width:0;height:0}
+*html, html { height: 100%; overflow-x:hidden}
+article, footer, header, section, footer, nav, figure, menu, object, time {  display: block;}
+ul, ol, li { list-style: none; }
+a { color: #333333; text-decoration: none;}
+a:hover, a:active, a:focus, a:visited { color: #333; text-decoration: none;}
+img { border: none; vertical-align: middle; max-width: 100%; font-size:0px;}
+table {  border-collapse: collapse; border-spacing: 0;}
+a, input { outline: 0; cursor:pointer;font-family: 'microsoft yahei';}
+input[type="text"],input[type="password"]{text-indent: .15rem;}
+input::-webkit-input-placeholder {color:#ccc;}
+button,input[type="button"]{outline:none;}
+em,i { font-style: normal;}
+section{ background: #fff;}
+.clearfix:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix{zoom:1;}
+.fl{ float: left;}
+.fr{ float: right;}
+.mt10{ margin-top: .1rem;}
+.mt20{ margin-top: .2rem;}
+.mt25{ margin-top: .25rem;}
+.mb20{ margin-bottom: .2rem;}
+.mb25{ margin-bottom: .25rem;}
+.pb20{ padding-bottom: .20rem;}
+.pb25{ padding-bottom: .25rem;}
+.pdlr30{ padding-left:.3rem; padding-right:.3rem;}
+.mglr30{ margin-left:.3rem; margin-right:.3rem;}
+.overhide{ overflow: hidden;}
+.index_tit{ height: 1rem; line-height: 1rem; padding: 0 .3rem; border-bottom: 1px solid #f0f0f0;}
+.index_tit i.icon{ float: left; width: .06rem; height: .3rem; background-position: 0 -4.85rem; margin: .36rem .16rem 0 0;}
+.index_tit h2{ float: left; font-size: .36rem; font-weight: normal;}
+.bg_f5f5f5 {background: #f5f5f5;}
+.bg_fff {background: #fff;}
+/*全部美股-搜索框*/
+.sousuo{ height:0.7rem; border:solid 1px #cfcfcf; width:100%; border-radius:0.07rem}
+.sousuo input{ font-size:0.24rem; color:#bfbfbf; font-family: 'Microsoft Yahei'; width:83%; height:0.65rem; padding-left:2%; border:0; border-radius:0.07rem; float:left}
+.sousuo input:valid + .close{ display:block}
+.sousuo i{ background:url(https://res.cngoldres.com/mobile/images/icon_usstock11.png) no-repeat;background-size:2.53rem 5.07rem; background-position:0 -1.64rem; float:right; width:0.42rem; height:0.42rem; cursor:pointer; margin-right:0.2rem; margin-top:0.13rem}
+.sousuo span{ font-size:0.3rem; margin-top:0.13rem; margin-right:0.1rem; display:none}
+/*搜索*/
+.hks-search-con{}
+.hks-search-box{ padding: 0 0.2rem;}
+.hks-search i.cancel{ display: inline; background:url(https://res.cngoldres.com/mobile/images/icon_usstock11.png) no-repeat; background-size:2.53rem 5.07rem; margin-top:0.18rem;}
+.hks-search i:nth-of-type(1){ }
+.hks-search i:nth-of-type(2){ display: none; float: right; background-position:-2.27rem 0rem; width:0.26rem; height:0.26rem}
+.search-box-del{ display: inline-block; margin-left: 0.1rem; font-size: 0.3rem; color: #106fbf; margin-top:0.17rem}
+.hks-like{ font-size: 0.26rem; padding: 0 0.2rem; border-top: 1px solid #e5e5e5; margin-top: 0.1rem; background: #f7f7f7;}
+.hks-like .top{ text-align: center; height: 0.56rem; line-height: 0.56rem; padding-top: 0.12rem; border-bottom: 1px solid #e4e4e4;}
+.hks-like ul{ padding-top: 0.2rem;}
+.hks-like li{ display: inline-block; width: 24.2%; text-align: center;}
+.hks-like li a{ color: #999; display: block;}
+.hks-like li i{ display: inline-block; background:url(https://res.cngoldres.com/mobile/images/icon_usstock11.png) no-repeat; background-size:2.53rem 5.07rem; width:0.82rem; height:0.82rem; background-position:-1.71rem -1.68rem;}
+.hks-like li:nth-child(2) i{ background-position:-0.82rem -1.68rem;}
+.hks-like li:nth-child(3) i{ background-position:-0.82rem -0.82rem;}
+.hks-like li:nth-child(4) i{ background-position:-1.71rem -0.82rem;}
+.hks-like li p{ line-height: 0.5rem;}
+.hks-search-result{ display: none; font-size: 0.26rem; padding: 0.2rem 0.24rem 0; border-top: 1px solid #e4e4e4; margin-top: 0.1rem;}
+.hks-search-result li{ height: 0.6rem; line-height: 0.6rem; color: #989898; border-bottom: 1px solid #e7e7e7; overflow: hidden;}
+.hks-search-result li a{ display: block;}
+.hks-search-result li:last-child{ border-bottom: 0;}
+.hks-search-result span{ display: inline-block; height: 0.6rem; overflow: hidden; text-align: center; color: #989898;}
+.hks-search-result .code{ width: 1.8rem;}
+.hks-search-result .jian{ width: 5rem;}
+.hks-search-result .name{ width: 2.1rem;}
+.hks-search-result.col-2 .code{ width: 2rem;}
+.hks-search-result.col-2 .name{ width: 3.5rem;}
+.hks-search-result .top{ height: 0.5rem; line-height: 0.5rem; background: #edf0f3;}
+.hks-search-result .top span{height: 0.5rem; color: #a5aeb8;}
+.on-blur .search-box-del{ display: none;}
+.on-blur .hks-like{ display: none;}
+.on-focus{/* position: fixed; left:17.2%; top: 0;*/ width: 100%;}
+.on-focus .hks-search{ width: 6.3rem; float:left}
+.on-focus .hks-search input{ width: 4.2rem;}
+
+
+/*样式调整*/
+.sousuo .false_input{font-size: 0.24rem;color: #bfbfbf;font-family: 'Microsoft Yahei';width: 83%;height: 0.65rem;line-height:.65rem;padding-left: 2%;border: 0;border-radius: 0.07rem;float: left;text-indent: .15rem;}
+#mip-lightbox-mask{background:#f5f5f5;}
+.hks-search-result li span.empty{color:#db1011;}
+
+    </style>
+  </head>
+  <body class="bg_f5f5f5">
+
+<mip-jt-resize></mip-jt-resize>
+
+
+<section class="mt20 on-blur bg_f5f5f5">
+  <!--点击搜索-->
+  <div class="hks-search-box clearfix">
+    <div class="hks-search sousuo bg_fff" on="tap:search-lightbox.open">
+      <i></i>
+      <div class="false_input">股票代码/名称/简拼</div>
+      <!--<input type="text" placeholder="股票代码/名称/简拼" />-->
+    </div>
+  </div>
+</section>
+
+<mip-jt-usstock-search
+  input-id="select_input"
+  list-id="result_ul"
+></mip-jt-usstock-search>
+<mip-lightbox
+  id="search-lightbox"
+  layout="nodisplay"
+  class="mip-hidden">
+<section class="on-focus mt20 bg_f5f5f5">
+  <div class="hks-search-box clearfix">
+    <div class="hks-search sousuo bg_fff">
+      <i></i>
+      <mip-form method="get" url="https://m.cngold.org/usstock/m_quote_all.html">
+        <input type="text" placeholder="股票代码/名称/简拼" id="select_input"/>
+      </mip-form>
+      <!--<i class="cancel"></i>-->
+    </div>
+    <div class="search-box-del" on="tap:search-lightbox.close">取消</div>
+  </div>
+  <div class="hks-search-result">
+    <div class="top">
+      <span class="code">代码</span><span class="jian">简拼</span>
+    </div>
+    <ul id="result_ul">
+    </ul>
+  </div>
+  <div class="hks-like">
+    <div class="top">你可能感兴趣的内容</div>
+    <ul>
+      <li><a href="//m.cngold.org/usstock/m_quote_internet.html"><i></i><p>中概股行情</p></a></li>
+      <li><a href="//m.cngold.org/usstock/m_quote_internet.html"><i></i><p>互联网行情</p></a></li>
+      <li><a href="//m.cngold.org/usstock/lm692/"><i></i><p>公司新闻</p></a></li>
+      <li><a href="//m.cngold.org/usstock/lm689/"><i> </i><p>美股学堂</p></a></li>
+    </ul>
+  </div>
+</section>
+</mip-lightbox>
+
+
+
+<script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+<script src="https://c.mipcdn.com/static/v2/mip-lightbox/mip-lightbox.js"></script>
+<script src="https://c.mipcdn.com/static/v2/mip-form/mip-form.js"></script>
+<script src="https://c.mipcdn.com/static/v1/mip-jt-resize/mip-jt-resize.js"></script>
+<script src="/mip-jt-usstock-search/mip-jt-usstock-search.js"></script>
+  </body>
+</html>

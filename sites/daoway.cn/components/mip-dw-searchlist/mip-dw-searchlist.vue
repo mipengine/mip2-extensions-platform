@@ -301,7 +301,7 @@ export default {
         text-align: center;
         color: #428ffe;
         height: 32px;
-        border-left: 1px solid #d1d1d1;
+        border-left: 1px solid #898989;
         line-height: 32px;
     }
 
@@ -346,7 +346,7 @@ export default {
     }
 
     .sc-box {
-        margin-top: 54px;
+        margin-top: 44px;
         box-sizing: border-box;
     }
     .sc-box-list {

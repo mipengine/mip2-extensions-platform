@@ -24,6 +24,9 @@
           <span>{{ illegal.degree || 0 }} </span>分，罚款
           <span>{{ illegal.fine || 0 }} </span>元。
         </div>
+        <p
+          v-if="DzyNotice"
+          style="font-size:.13rem;color:#FD2900">{{ DzyNotice.Content }}</p>
       </div>
       <div class="s4s-title">违章记录</div>
       <div v-if="!!lists&&lists.length" >
@@ -156,6 +159,7 @@ export default {
   },
   data () {
     return {
+      DzyNotice: null,
       provice: '省',
       proviceShow: false,
       detail: false,
@@ -195,7 +199,7 @@ export default {
 
     if (!this.globalData.car_no && this.getQueryString('carno')) {
       console.log('url模式')
-      this.globalData.car_no = this.getQueryString('carno').slice(1, 10)
+      this.globalData.car_no = this.getQueryString('carno').slice(1)
       this.globalData.provice = this.getQueryString('carno').slice(0, 1)
       this.globalData.vin = this.getQueryString('vin')
       this.globalData.engine = this.getQueryString('engine')
@@ -244,8 +248,23 @@ export default {
         that.globalData.engine
       )
     })
+    this.getNotice()
   },
   methods: {
+    getNotice () {
+      util.fetchData('v3/violation/view/notice').then(res => {
+        console.log(res)
+        if (res.code === 0 && res.data) {
+          if (res.data.DzyHave) {
+            this.DzyNotice = res.data.DzyNotice
+          }
+        } else {
+          this.DzyNotice = null
+        }
+      }).catch((e) => {
+        this.DzyNotice = null
+      })
+    },
     // 删除按键逻辑 删除前一位  2 3 4 格有效。
     captchDelete (index, value) {
       switch (index) {
@@ -360,6 +379,7 @@ export default {
         param.key = this.captchKey
         param.value = this.captchValue.join('')
       }
+      util.toast('正在查询，请稍后...')
       // car_no车牌号，vin车架号，engion发动机，{car_no: 陕KC1166 vin: LSVNJ49J472028756 engine: 020297
       util
         .fetchData('v3/violation/web/query', param)

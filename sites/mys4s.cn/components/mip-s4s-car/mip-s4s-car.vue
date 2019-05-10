@@ -131,7 +131,7 @@ export default {
       MIP.setData({
         '#globalData': {
           provice: car.CarNo.substring(0, 1),
-          car_no: car.CarNo.substring(1, 7),
+          car_no: car.CarNo.substring(1),
           vin: car.ClassNo,
           engine: car.EngineNo
         }
@@ -161,7 +161,7 @@ export default {
         '#changeCarData': {
           car_id: car.Id + '',
           provice: car.CarNo.substring(0, 1),
-          car_no: car.CarNo.substring(1, 7),
+          car_no: car.CarNo.substring(1),
           vin: car.ClassNo,
           engine: car.EngineNo
         }

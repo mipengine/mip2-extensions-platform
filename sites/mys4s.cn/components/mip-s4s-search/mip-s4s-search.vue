@@ -171,6 +171,11 @@
       class="s4s-btn"
       style="margin-top:0;width:calc( 100% - .3rem )"
       @click="formSubmit"> 查询违章 </button>
+    <div style="font-size:.13rem;line-height:.19rem;color:#989898;bottom: 20px;width:100%;margin-left: .15rem;">
+      <p>本服务由齐车大圣提供，客服电话：<a
+        style="color:#FE7000;font-weight:bold"
+        href="tel:400000119">400-000-1199</a></p>
+    </div>
     <div>
       <div
         v-if="data.length"
@@ -216,9 +221,6 @@
       </div>
     </div>
     <a
-      ref="opens"
-      href=""/>
-    <a
       ref="violation"
       data-type="mip"
       href="violation.html"/>
@@ -260,12 +262,7 @@
         </div>
       </div>
     </mip-fixed>
-    <div style="text-align:center;font-size:.13rem;line-height:.19rem;color:#989898;bottom: 20px;width:100%;margin:.3rem auto;">
-      <p>本服务由齐车大圣提供</p>
-      <p>客服电话：<a
-        style="color:#FE7000;font-weight:bold"
-        href="tel:400000119">400-000-1199</a></p>
-    </div>
+
   </div>
 </template>
 
@@ -526,11 +523,10 @@ export default {
     },
     gotoNews ({id, Type}) {
       if (Type === 1) {
-        this.$refs.opens.href = `https://mys4s.cn/static/xcar/index.html#/News/${id}?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xfrom=baidu_jisu_vio`
+        MIP.viewer.open(`https://mys4s.cn/static/xcar/index.html#/News/${id}?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xform=baidu_jisu_vio`)
       } if (Type === 2) {
-        this.$refs.opens.href = `https://mys4s.cn/static/xcar/index.html#/Evaluation?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xfrom=baidu_jisu_vio`
+        MIP.viewer.open(`https://mys4s.cn/static/xcar/index.html#/Evaluation?token=${window.localStorage.getItem('mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp') || ''}&xform=baidu_jisu_vio`)
       }
-      this.$refs.opens.click()
     },
     fetchLocalCar () {
       console.log('获取本地车辆信息')
@@ -670,7 +666,7 @@ export default {
       MIP.setData({
         '#globalData': {
           'provice': item.carNo.slice(0, 1),
-          'car_no': item.carNo.slice(1, 10),
+          'car_no': item.carNo.slice(1),
           'vin': item.vin,
           'engine': item.engine,
           'car_type': item.car_type || ''
