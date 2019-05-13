@@ -39,7 +39,7 @@
               v-for="item2 in filterdata[index].children"
               :key="item2.label"
               :title="item2.label + '展会'"
-              :href="newRrl(url,item2.pid,item2.id, urlType)"
+              :href="newRrl(url, item2.pid, item2.id, urlType)"
             >
               <li>{{ item2.label }}</li>
             </a>
