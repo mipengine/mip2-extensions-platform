@@ -122,7 +122,7 @@ export default{
   },
   methods: {
     param () {
-      let path = location.pathname.replace('.html', '').replace('/', '').split('_')
+      let path = location.pathname.replace('.html', '').replace(/^\/(.*)\//g, '').split('_')
       let q = {}
       if (path.length > 2) {
         if (/[a-z]/.test(path[1]) && path[0] === 'p') {
