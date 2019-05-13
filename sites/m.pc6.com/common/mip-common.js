@@ -51,7 +51,7 @@ export default class MIPCommon {
     if (document.getElementById('alert_tips')) {
       document.getElementById('alert_tips').parentNode.removeChild(document.getElementById('alert_tips'))
     }
-    let cTips = dom.create(`<div id="alert_tips" class="animated fadeIn">${msg}</div>`)
+    let cTips = dom.create(`<mip-fixed type="top" id="alert_tips" class="animated fadeIn">${msg}</mip-fixed>`)
     document.body.appendChild(cTips)
     setTimeout(() => {
       if (document.getElementById('alert_tips')) {
