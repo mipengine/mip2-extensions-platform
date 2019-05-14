@@ -5,8 +5,9 @@ export default class MIPNjtAd extends MIP.CustomElement {
     /**
      * 构造元素，只会运行一次
      */
+    var $ = require('zepto')
     let element = document.querySelectorAll('mip-njt-ad')[0]
-    let ajaxIps = !!element.getAttribute('ajaxIp')
+    let ajaxIps = element.getAttribute('ajaxIp')
       ? element.getAttribute('ajaxIp')
       : '/API/IP.ashx?action=js'
     // TODO
@@ -28,7 +29,7 @@ export default class MIPNjtAd extends MIP.CustomElement {
         url: ajaxXml,
         dataType: 'xml',
         success: function (responsexml) {
-          let isLbs = false //是否开启地理位置定向策略
+          let isLbs = false // 是否开启地理位置定向策略
           for (let x in adplace) {
             $(responsexml)
               .find('adplace')
@@ -79,9 +80,9 @@ export default class MIPNjtAd extends MIP.CustomElement {
                         isLbs = true
                         return false
                       }
-                    });
+                    })
                 }
-              });
+              })
           }
           if (isLbs) {
             loadIp(responsexml)
@@ -124,7 +125,7 @@ export default class MIPNjtAd extends MIP.CustomElement {
         error: function (e) {
           checkAdmIPajax(responsexml)
         }
-      });
+      })
     }
     function loadadm (admxml, province, city, placeName) {
       $(admxml)
@@ -204,7 +205,7 @@ export default class MIPNjtAd extends MIP.CustomElement {
                       display: 'block',
                       'max-width': '100%',
                       margin: '2% auto'
-                    });
+                    })
                   return false
                 }
               })
