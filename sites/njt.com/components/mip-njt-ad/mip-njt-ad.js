@@ -115,9 +115,9 @@ export default class MIPNjtAd extends MIP.CustomElement {
               loadadm(responsexml, '', '', adplace[i])
             }
             let errReportStr =
-              '<img src='https://error-report.danongchang.cn/img.aspx?Appname=njtwap&priority=10&Url=' +
+              '<img src="https://error-report.danongchang.cn/img.aspx?Appname=njtwap&priority=10&Url=' +
               window.location.href +
-              '&Errcode=njtwap' />'
+              '&Errcode=njtwap" />'
             $(errReportStr).appendTo(document.body)
           }
         },
@@ -217,9 +217,9 @@ export default class MIPNjtAd extends MIP.CustomElement {
         loadadm(responsexml, '', '', adplace[i])
       }
       let errReportStr =
-        '<img src='https://error-report.danongchang.cn/img.aspx?Appname=njtwap&priority=5&Url=' +
+        '<img src="https://error-report.danongchang.cn/img.aspx?Appname=njtwap&priority=5&Url=' +
         window.location.href +
-        '&Errcode=admipajax' />'
+        '&Errcode=admipajax" />'
       $(errReportStr).appendTo(document.body)
     }
   }
