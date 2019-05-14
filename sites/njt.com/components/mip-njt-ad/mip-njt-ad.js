@@ -1,5 +1,5 @@
 export default class MIPNjtAd extends MIP.CustomElement {
-  build() {
+  build () {
     /**
      * 构造元素，只会运行一次
      */
@@ -15,7 +15,7 @@ export default class MIPNjtAd extends MIP.CustomElement {
     let ptypeid = element.getAttribute('ptypeid')
     let pcategoryid = element.getAttribute('pcategoryid')
     let adplace = element.getAttribute('adplace')
-    let remote_ip_info = false
+    let remoteIpInfo = false
 
     adplace = adplace ? adplace.split(',') : ['m_b1']
 
@@ -94,13 +94,13 @@ export default class MIPNjtAd extends MIP.CustomElement {
         url: ajaxIp,
         dataType: 'script',
         success: function () {
-          if (remote_ip_info) {
-            if (remote_ip_info.ret === 1) {
+          if (remoteIpInfo) {
+            if (remoteIpInfo.ret === 1) {
               for (let i = 0; i < adplace.length; i++) {
                 loadadm(
                   responsexml,
-                  remote_ip_info.province,
-                  remote_ip_info.city,
+                  remoteIpInfo.province,
+                  remoteIpInfo.city,
                   adplace[i]
                 )
               }
@@ -222,4 +222,4 @@ export default class MIPNjtAd extends MIP.CustomElement {
       $(errReportStr).appendTo(document.body)
     }
   }
-}
+}   
