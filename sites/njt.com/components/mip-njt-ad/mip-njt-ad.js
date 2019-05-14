@@ -222,4 +222,4 @@ export default class MIPNjtAd extends MIP.CustomElement {
       $(errReportStr).appendTo(document.body)
     }
   }
-}   
+}
