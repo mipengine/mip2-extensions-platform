@@ -1299,28 +1299,7 @@ class fdad extends MIP.CustomElement {
           return res.json();
         }).then(function () {});
 
-        let fixedElement = require('fixed-element');
-        let layer = fixedElement._fixedLayer;
-        let child = document.getElementById(token);
-
-        child.addEventListener('DOMSubtreeModified', function (e) {
-          let elem = window.getComputedStyle(child, null);
-          let pos = elem && elem.getPropertyValue('position') ? elem.getPropertyValue('position') : '';
-          if (layer && layer.querySelector('#' + token)) {
-            return;
-          }
-          if (pos === 'fixed' && layer) {
-            let idx = document.querySelectorAll('mip-fixed').length;
-            let data = {
-              element: child.parentElement,
-              id: 'Fixed' + idx
-            };
-            fixedElement.moveToFixedLayer(data, parseInt(idx, 10));
-          }
-        }, false);
-
         let close = document.createElement('a');
-
         close.innerHTML = 'X';
         close.style.position = 'absolute';
         close.style.right = '26px';
