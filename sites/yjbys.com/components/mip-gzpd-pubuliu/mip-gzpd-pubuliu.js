@@ -10,11 +10,11 @@ export default class MIPGzpdPubuliu extends MIP.CustomElement {
       this.wrapper.classList.add('index-list')
       this.element.appendChild(this.wrapper)
       this.page = 1
-      this.moreFlag = false
+      this.more = false
       this.getList()
       this.str = ''
       MIP.viewport.on('scroll', () => {
-        if (MIP.viewport.getHeight() + MIP.viewport.getScrollTop() > MIP.viewport.getScrollHeight() - 300 && !this.moreFlag) {
+        if (MIP.viewport.getHeight() + MIP.viewport.getScrollTop() > MIP.viewport.getScrollHeight() - 300 && !this.more) {
           this.page++
           this.getList()
         }
@@ -23,7 +23,7 @@ export default class MIPGzpdPubuliu extends MIP.CustomElement {
   }
   down () {
     let pathname = location.pathname
-    let host = '//' + location.host
+    let hrefHost = '//' + location.host
     let star = 0
     for (let i = 0; i < pathname.length; i++) {
       star = parseInt(star) + parseInt(pathname.charCodeAt(i))
@@ -40,11 +40,11 @@ export default class MIPGzpdPubuliu extends MIP.CustomElement {
       }
     }
     if (location.host.indexOf('yjbys') !== -1) {
-      host = '//m.yjbys.com'
+      hrefHost = '//m.yjbys.com'
     } else {
-      host = host.replace('mip.', 'm.')
+      hrefHost = hrefHost.replace('mip.', 'm.')
     }
-    let d = `<a href='${host}/dldoc/index${pathname}' target='_blank' class='download-card'>
+    let d = `<a href='${hrefHost}/dldoc/index${pathname}' target='_blank' class='download-card'>
                <div class='download-card-msg'>
                  <div class='download-card-title'>《${document.title}.doc》</div>
                  <div class='download-card-tip'>将本文的Word文档下载，方便收藏和打印</div>
@@ -68,7 +68,7 @@ export default class MIPGzpdPubuliu extends MIP.CustomElement {
     }
   }
   getList () {
-    this.moreFlag = true
+    this.more = true
     let resize3 = '?x-oss-process=image/resize,m_fill,w_229,h_120'
     let resize = '?x-oss-process=image/resize,m_fill,w_120,h_84'
     let url = ''
@@ -105,9 +105,9 @@ export default class MIPGzpdPubuliu extends MIP.CustomElement {
               }
               this.wrapper.innerHTML = this.str
             }
-            this.moreFlag = false
+            this.more = false
           }).catch(function (ex) {
-            this.moreFlag = false
+            this.more = false
           })
       })
   }
