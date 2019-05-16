@@ -14,7 +14,7 @@ mip-familydoctor-ad 组件说明
 
 ```html
 // 代码示例
-<mip-familydoctor-ad class="__customer_place" data-id="11"></mip-familydoctor-ad>
+<mip-familydoctor-ad class="__customer_place" data-id="543"></mip-familydoctor-ad>
 ```
 
 ## 属性
