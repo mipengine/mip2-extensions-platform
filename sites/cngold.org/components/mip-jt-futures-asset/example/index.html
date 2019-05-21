@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>期货-资管产品数据展示</title>
+    <link rel="canonical" href="https://m.cngold.org/futures/m_qhzg.html">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <style mip-custom>
+/* 自定义样式 */
+.fl{float:left;}
+.fr{float:right;}
+em,i { font-style: normal;}
+section{ background: #fff;}
+.clearfix:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix{zoom:1;}
+/*产品详情*/
+.f-zgcp-data{ font-size: .24rem;color:#999;}
+.f-zgcp-data .top{ padding: 0.3rem; background: #f3f7ff; }
+.f-zgcp-data .top .fl{ width: 2rem; height:.9rem; border-right: .01rem solid #e1ebff;}
+.f-zgcp-data .top .fl p.red{ font-size: .5rem;color:#ff0000;font-weight:bold;}
+.f-zgcp-data .top .fr{ width:4.49rem;height:.9rem; overflow: hidden;}
+.f-zgcp-data .top .fr .name{ font-size:.28rem; font-weight: bold;overflow: hidden;color:#333;margin-bottom:.2rem;}
+.f-zgcp-data .top .fr .blue{color:#106fbf;}
+.f-zgcp-data .top .fr span:last-child{ float: right; text-align: right;}
+.f-zgcp-data .btm{ border-bottom: 1px solid #eaeaea;padding:.2rem .3rem;font-size:.28rem;}
+.f-zgcp-data .btm li{ float: left; width: 50%; height: 1.65em; line-height: 1.65em; overflow: hidden;}
+.f-zgcp-data .btm li em{ color: #505050;}
+.f-zgcp-data .btm li em.red{color:#ff0000;}
+ /*统计*/
+.f-zgcp-tj{ padding:0 .3rem .2rem;}
+.f-zgcp-tj dl{ float: left; width: 31.5%; height: 2.36rem; overflow: hidden; background: #f3f7ff; margin-right: 2.7%;}
+.f-zgcp-tj dl:last-child{ margin-right: 0;}
+.f-zgcp-tj dt{ font-size: 0.28rem; background: #2f75ea;line-height:.48rem; text-align: center; color: #fff;margin-bottom:.1rem; }
+.f-zgcp-tj dd{ font-size: 0.26rem;  overflow: hidden;text-align:center;line-height:.42rem;color:#666;}
+.f-zgcp-tj dd span{color:#333;}
+
+    </style>
+  </head>
+  <body>
+  
+  <mip-jt-resize></mip-jt-resize>
+  
+  <mip-jt-futures-asset codes="JO_95722" ids="q90,q63,q59,q60,q135,q91,q149,q148,q147,q153,q152,q146,q151" repeat-ids="totalRate,q90"></mip-jt-futures-asset>
+	<!-- 产品详情 -->
+	<section class="mt20 f-zgcp-data">
+		<div class="top clearfix">
+			<div class="fl">
+				<p>累计收益</p>
+				<p id="JO_95722_q90"></p>
+			</div>
+			<div class="fr">
+				<p class="name">erfty</p>
+				<p>
+					<span>最新净值：<em id="JO_95722_q63">2</em></span><span>运行状态：<em id="runState" class="blue">运行中</em></span>
+				</p>
+			</div>
+		</div>
+		<div class="btm ov-h clearfix">
+			<ul>
+				<li><span>净值日期：</span><em id="JO_95722_q59"></em></li>
+				<!--<li><span>净值日期：</span><em id="time"></em></li>-->
+				<li><span>今年以来收益：</span><em id="JO_95722_q60"></em></li>
+				<li><span>成立日期：</span><em>${variety.foundDate!'--'}</em></li>
+				<li><span>近1年收益：</span><em id="JO_95722_q135"></em></li>
+			</ul>
+		</div>
+	</section>
+
+	<!-- 统计 -->
+	<section class="f-zgcp-tj pl-pr-10 clearfix mb0">
+		<dl>
+			<dt>收益统计</dt>
+			<dd>总收益率：<span id="totalRate"></span></dd>
+			<dd>周收益率：<span id="JO_95722_q91"></span></dd>
+			<dd>月收益率：<span id="JO_95722_q149"></span></dd>
+			<dd>今年以来：<span id="JO_95722_q148"></span></dd>
+		</dl>
+		<dl>
+			<dt>风险统计</dt>
+			<dd>最大回撤率：<span id="JO_95722_q147"></span></dd>
+			<dd>盈利月占比：<span id="JO_95722_q153"></span></dd>
+			<dd>亏损月占比：<span id="JO_95722_q152"></span></dd>
+		</dl>
+		<dl>
+			<dt>风险统计</dt>
+			<dd>夏普值：<span id="JO_95722_q146"></span></dd>
+			<dd>累计盈亏比：<span id="JO_95722_q151"></span></dd>
+		</dl>
+	</section>
+	
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="https://mipcache.bdstatic.com/extensions/platform/v1/mip-jt-resize/mip-jt-resize.js"></script>
+    <script src="/mip-jt-futures-asset/mip-jt-futures-asset.js"></script>
+  </body>
+</html>

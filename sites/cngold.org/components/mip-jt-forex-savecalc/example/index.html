@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>外汇储蓄计算器</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <style mip-custom>
+/* 自定义样式 */
+.pdlr30{padding-left:.3rem;padding-right:.3rem;}
+.index_tit{ height: 1rem; line-height: 1rem; padding: 0 .3rem; border-bottom: 1px solid #f0f0f0;}
+.index_tit i.icon{ float: left; width: .06rem; height: .3rem; background-position: 0 -4.85rem; margin: .36rem .16rem 0 0;}
+.index_tit h2{ float: left; font-size: .36rem; font-weight: normal;}
+.mt20{margin-top:.2rem;}
+/*---------------------外汇-买卖计算器---------------------*/
+.part_con .row{height: 1rem;line-height: 1rem;border-bottom: solid 1px #f0f0f0;font-size: .32rem;padding: 0 .3rem;}
+.part_con .row span{float: left;}
+.part_con .row p{float: right;position: relative;width: 4.5rem;overflow: hidden;}
+.part_con .row p input{width: 4.5rem;height: .96rem;line-height: .96rem;border: none;outline:none;/*text-align: right;*/}
+.part_con .row p select{height: .96rem;line-height: .96rem;width: 4.5rem;color: #333;font-size: .32rem;border: none;outline:none;direction: rtl;appearance: none;    -webkit-appearance: none;padding-right: .3rem;}
+.part_con .row p i{ background:url(https://res.cngoldres.com/mobile/home/images/icon1_index_beta514.png) no-repeat; background-size:4.68rem;display: block;width:0.1rem;height:0.2rem;right: .05rem;top:.43rem;background-position: 0 -5.32rem;position: absolute;}
+.part_con .mrje{padding: .2rem 0;}
+.part_con .mrje .total{background: #fff;padding: 0 .3rem;}
+.part_con .mrje .total span{float: right;color: #fd3828;font-weight: 700;}
+.jisuan{padding:.1rem .3rem .3rem .3rem;}
+.jisuan a{width: 6.9rem;height: .9rem;background: #2f75ea;font-size: .32rem;color: #fff;text-align: center;line-height: .9rem;display: block;letter-spacing: .1rem;}
+.part_con .row p.gh_dqhl{position: relative;}
+.part_con .row p.gh_dqhl b{right: 0;top: 0;position: absolute;font-weight: normal;color: #999;font-size: .25rem;}
+
+
+
+/*补充弹窗提示样式*/
+.section-part{position:relative}
+#tool_tips{display:none;position:absolute;top:45%;width:4rem;padding:.2rem .25rem;left:50%;margin-left:-2.25rem;background:rgba(0,0,0,.7);z-index:999999;line-height:.5rem;border-radius: .1rem;}
+#tool_tips p {color:#fff;font-size:.3rem;text-align:center;}
+
+    </style>
+  </head>
+  <body>
+
+<mip-jt-resize></mip-jt-resize>
+
+
+<mip-jt-forex-savecalc></mip-jt-forex-savecalc>
+<section class="section-part ">   
+	<div class="index_tit">
+		<i class="icon"></i>
+		<h2>外汇储蓄计算器</h2>
+	</div>
+	<mip-form method="get" url="http://m.cngold.org/forex/m_jisuanqi_whcx.html">
+	<div class="part_con">
+		<div class="row clearfix">
+			<span>外币种类：</span>
+			<p>
+				<select id="ccfxType">
+					<option value="0">美元</option>
+					<option value="1">英镑</option>
+					<option value="2">欧元</option>
+					<option value="3">日元</option>
+					<option value="4">港币</option>
+					<option value="5">加拿大元</option>
+					<option value="6">瑞士法郎</option>
+					<option value="7">澳大利亚元</option>
+					<option value="8">新加坡元</option>
+				</select>
+				<i></i>
+			</p>
+		</div>
+		<div class="row clearfix">
+			<span>存款期限种类：</span>
+			<p>
+				<select id="ccfxTime">
+					<option value="0">活期</option>
+					<option value="7">七天通知</option>
+					<option value="30">一个月</option>
+					<option value="90">三个月</option>
+					<option value="180">六个月</option>
+					<option value="360">一年</option>
+					<option value="720">两年</option>
+				</select>
+				<i></i>
+				<input type="hidden" name="ccrd" id="ccrd" value="0">
+			</p>
+		</div>
+		<div class="row clearfix">
+			<span>存款金额：</span>
+			<p>
+				<input type="text" name="ccsaveAmt" id="ccsaveAmt" class="whcx_input">
+			</p>
+		</div>
+		<div class="row clearfix">
+			<span>存款年利率：</span>
+			<p>
+				<input type="text" name="ccyearRate" id="ccyearRate" placeholder="(单位：%)" class="whcx_input">
+			</p>
+		</div>
+		<div id="saveTr">
+		<div class="row clearfix">
+			<span>存款日期：</span>
+			<p>
+				<input type="date" name="USER_AGE" class="whcx_input" id="ccsaveDate"/>
+			</p>
+		</div>
+		<div class="row clearfix">
+			<span>取款日期：</span>
+			<p>
+				<input type="date" name="USER_AGE"  class="whcx_input" id="ccfetchDate"/>
+			</p>
+		</div>
+		</div>
+		<div class="row bg_f5f5f5 mrje">
+			<div class="total clearfix">
+				存款利息：<span id="ccunit1">美元</span><span id="ccintAmt">0</span>
+				
+			</div>
+		</div>
+		<div class="row bg_f5f5f5 mrje">
+			<div class="total clearfix">
+				本息合计：<span id="ccunit2">美元</span><span id="ccsum">0</span>
+			</div>
+		</div>
+		<div id="tool_tips">
+			<p id="tool_tips_p"></p>
+		</div>
+	</div>
+	</mip-form>
+</section>
+
+<script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+<script src="https://mipcache.bdstatic.com/extensions/platform/v1/mip-jt-resize/mip-jt-resize.js"></script>
+<script src="/mip-jt-forex-savecalc/mip-jt-forex-savecalc.js"></script>
+
+  </body>
+</html>

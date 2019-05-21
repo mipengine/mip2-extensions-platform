@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>MIP page</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <style mip-custom>
+/*common*/
+html {height: 100%;-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; overflow-x:hidden}
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, input, a, table, img, hr, textarea, strong, figure { margin: 0; padding: 0;}
+body { color: #404040; font-size: .32rem; font-family: 'Microsoft Yahei';min-height: 100%; position: relative; margin: 0 auto;overflow-y: scroll;-webkit-overflow-scrolling : touch; overflow-x:hidden}
+body.noscroll{height:100%;}
+::-webkit-scrollbar{width:0;height:0}
+*html, html { height: 100%; overflow-x:hidden}
+article, footer, header, section, footer, nav, figure, menu, object, time {  display: block;}
+ul, ol, li { list-style: none; }
+a { color: #333333; text-decoration: none;}
+a:hover, a:active, a:focus, a:visited { color: #333; text-decoration: none;}
+img { border: none; vertical-align: middle; max-width: 100%; font-size:0px;}
+table {  border-collapse: collapse; border-spacing: 0;}
+a, input { outline: 0; cursor:pointer;font-family: 'microsoft yahei';}
+input[type="text"],input[type="password"]{text-indent: .15rem;}
+input::-webkit-input-placeholder {color:#ccc;}
+button,input[type="button"]{outline:none;}
+em,i { font-style: normal;}
+section{ background: #fff;}
+.clearfix:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix{zoom:1;}
+.fl{ float: left;}
+.fr{ float: right;}
+.mt10{ margin-top: .1rem;}
+.mt20{ margin-top: .2rem;}
+.mt25{ margin-top: .25rem;}
+.mb20{ margin-bottom: .2rem;}
+.mb25{ margin-bottom: .25rem;}
+.pb20{ padding-bottom: .20rem;}
+.pb25{ padding-bottom: .25rem;}
+.pdlr30{ padding-left:.3rem; padding-right:.3rem;}
+.mglr30{ margin-left:.3rem; margin-right:.3rem;}
+.overhide{ overflow: hidden;}
+.index_tit{ height: 1rem; line-height: 1rem; padding: 0 .3rem; border-bottom: 1px solid #f0f0f0;}
+.index_tit i.icon{ float: left; width: .06rem; height: .3rem; background-position: 0 -4.85rem; margin: .36rem .16rem 0 0;}
+.index_tit h2{ /*float: left;*/ font-size: .36rem; font-weight: normal;}
+/*筛选按钮*/
+.jys_tit {position: relative;}
+.xhhq-filter-btn a{ width: 50%; font-size: 0.875em; text-align: center; background: #2f75ea; color: #fff; display: inline-block;}
+.xhhq-filter-btn a.reset{ background: #eef1f7; color: #2f75ea;}
+.jys_tit .xh-filter-btn{display: block;font-size: .32rem;width: 1.44rem;height: .6rem;line-height: .6rem;background: #fff;border: none;margin-top: 0.1rem;font-weight: normal;color: #2f75ea;position: absolute;text-align: left;text-indent: .1rem;top: .1rem;right: .3rem;}
+.xh-filter-btn img{ font-size: 1em; width: 0.36rem; margin-top: -3px; margin-left: 0.3em;}
+.jys_tit .xh-filter-btn img{margin-right:.1rem;}
+/*行情筛选 D3*/
+.xhhq-filter{ background: #fff; position: fixed; width: 100%; height: 100%; top: 0; left: 0; overflow-y: scroll; z-index: 9900;}
+.xhhq-filter .hd{ position: fixed; width: 22.8%; height: 100%; left: 0; top: 0; background: #f1f9ff;}
+.xhhq-filter .hd ul{ padding-top: 2.5em;}
+.xhhq-filter .hd li{ font-size: 0.9375em; height: 3.6em; line-height: 3.6em; font-weight: bold; text-indent: 0.7em; border-bottom: 1px solid #f1f9ff; color: #2f75ea;white-space:nowrap;overflow:hidden;}
+.xhhq-filter .hd li.on{ background: #fff; border-bottom-color: #e5f3ff;}
+.xhhq-filter .bd{ padding: 3.4em 0 3em 26.4%;}
+.xhhq-filter .bd dl{height:auto;width:100%;}
+.xhhq-filter .bd dt{ font-size: 0.875em; height: 2.36em; line-height: 2.36em;}
+.xhhq-filter .bd dd{ display: inline-block; font-size: 0.875em; min-width: 26%; padding: 0 2%; margin: 0 3% 0.57em 0; height: 2em; line-height: 2em; border-radius: 3px; background: #f0f0f0; text-align: center;}
+.xhhq-filter .bd dd.on,.jys-city-filter .zimu a.on{ background: #2f75ea; color: #fff;}
+.xhhq-filter .bd dd a{ display: block;}
+.xhhq-filter-btn{ position: fixed; left: 0; bottom: 0; width: 100%; height: 2.5em; line-height: 2.5em;}
+/*交易所-城市筛选 E2*/
+.heading{ height:2.5em; line-height: 2.5em; background:#2f75ea; color:#fff; position:fixed; top:0; left:0; width: 100%; text-align:center; z-index:9999;}
+.heading a{color:#fff}
+.heading img{float:left; padding:13px 10px 0 10px; height: 35%;}
+.heading span{float:right;}
+.heading span a{background:#2188e0;border-radius:50%;padding:4px 7px;margin-right:10px; font-size: 0.875em;}
+.jys-city-filter{}
+.jys-city-filter .bd{ padding-left: 0.625em;}
+.jys-city-filter .tit{ font-size: 0.875em; font-weight: bold;margin-bottom:.1rem;}
+.jys-city-filter span.addr-icon{ font-size: 1em; font-weight: normal; float: right; margin-right: 1em; color: #2f75ea;}
+.jys-city-filter .bd dd{ width: auto; min-width: 20%; padding: 0 1.1%; margin-right: 2.58%;}
+.jys-city-filter .zimu{ margin-bottom: 0.625em;}
+.jys-city-filter .zimu a{ font-size: 0.875em; display: inline-block; width: 8%; line-height: 1.7em; margin-right: 3%; margin-bottom: 0.65em; box-sizing:border-box; border: 1px solid #e3e3e3; text-align: center;}
+.jys-city-filter .zimu a.on{ border-color: #106fbf;}
+/*大宗商品交易所*/
+.xh-jys{}
+.xh-jys li{ border-bottom: 1px solid #ececec; position: relative; padding: 0.78em 0;}
+.xh-jys li .img{ margin-top: 0; text-align: center;}
+.xh-jys li .btm{ left: auto; right: 0;}
+.xh-jys li .addr span{ color: #888; line-height: 2.1em; font-size: 0.8125em;}
+.xh-jys li .addr span.addr-icon,.jys-city-filter span.addr-icon{ padding-left: 0.9em; font-size: 0.875em; color: #555; background: url(https://res.jin99.net/mobile/images/xh_addr.png) 0 center no-repeat; background-size: 0.6em auto;}
+.xh-jys li .btm .more{ display: inline-block; font-size: 0.8125em; width: 5.77em; height: 2em; line-height: 2em; color: #2f75ea; text-align: center; border: 1px solid #2f75ea;}
+.xh-jys li .img img{ width: 100%; height: 100%;}
+.xh-jys-list{ position: relative;}
+.xh-jys-list .filter-selected{ padding-bottom: 0; padding-top: 0.7em;}
+.xh-jys-list .filter-clear{ right: .3rem; top: 0.7em;}
+.xh-jys-list .xh-jys li .img{ width: 6.25em; height: 5em;}
+.xh-jys-list .xh-jys li .name{ height: .4rem;font-size:.32rem; margin-bottom: 0.1rem;overflow:hidden;}
+.xh-jys-list .xh-jys li .text{ width: auto; padding-left: 6.875em;padding-top:0;padding-right:0; margin: 0;}
+.xh-jys-list .xh-jys li .btm{ width: auto; right: auto; left: 6.875em;}
+.xh-jys-list .xh-jys li .btm a{ margin-right: 0.7em;background:#2f75ea;color:#fff;border:none;}
+.xh-jys-list .xh-jys li.last{ border-bottom: 0;}
+.filter-result-none{ text-align: center; font-size: 1em; padding-right: 0.625rem;display:none;}
+.xh-jys li .addr span.addr-icon {font-size:.26rem;color:#2f75ea;}
+.xh-jys-list .view_more{border:none;}
+
+
+/*样式调整*/
+.heading .menuAllclose{float: left;width:.45rem;height:.45rem;margin:.2rem 0 0 .2rem;line-height:.45rem;}/*返回按钮*/
+.jys-city-filter .zimu a{color:#333;}
+#back{color:#2f75ea;font-weight:normal;}
+#res-box,#nores-box{display:none;}
+.xhhq-filter-btn span {width: 50%;font-size: 0.875em;text-align: center;background: #2f75ea;color: #fff;display: block;float:left;}
+.xhhq-filter-btn span.reset {background: #eef1f7;color: #2f75ea;}
+.jys-city-filter .zimu span{ font-size: 0.875em; display: inline-block; width: 8%; line-height: 1.7em; margin-right: 3%; margin-bottom: 0.65em; box-sizing:border-box; border: 1px solid #e3e3e3; text-align: center;}
+.jys-city-filter .zimu span.on{ border-color: #106fbf;background:#2f75ea;color:#fff;}
+
+    </style>
+  </head>
+  <body>
+
+<mip-jt-resize></mip-jt-resize>
+
+<mip-jt-xianhuo-exfilter
+  city-name='全国'
+  pro-name='全国'
+  city-id='0'
+  pro-id='0'
+  seltype-id='0'
+></mip-jt-xianhuo-exfilter>
+<!--<mip-jt-xianhuo-exfilter
+  city-name='沧州'
+  pro-name='河北省'
+  city-id='139'
+  pro-id='6'
+  seltype-id='0'
+></mip-jt-xianhuo-exfilter>-->
+<div class="index_tit jys_tit">
+  <i class="icon"></i>
+  <h2>
+    <a title="大宗交易所" href="">大宗交易所</a>
+    <span on="tap:chose-lightbox.open" class="jys-filter-btn jys-filter-btn-city br2 fr" >选城市</span>
+  </h2>
+</div>
+<!-- 选城市 -->
+<mip-lightbox
+  id="chose-lightbox"
+  layout="nodisplay"
+  class="mip-hidden">
+<div class="xhhq-filter jys-city-filter">
+  <div class="heading">
+    <div class="fl img">
+      <span class="menuAllclose" on="tap:chose-lightbox.close">&lt;</span>
+    </div>
+    城市选择
+    <span><a title="首" href="http://m.cngold.org/xianhuo/">首</a></span>
+  </div>
+  <div class="bd">
+    <!--当前选择城市-->
+    <div class="tit mb10 clearfix">
+    	当前选择城市：<span class="addr-icon selectCity" id="selectCity">全国</span>
+    </div>
+    <!-- letter -->
+    <div class="zimu_box">
+      <div class="zimu" id="zimu">
+          <span>A</span>
+          <span>B</span>
+          <span>C</span>
+          <span>D</span>
+          <span>E</span>
+          <span>F</span>
+          <span>G</span>
+          <span>H</span>
+          <span>I</span>
+          <span>J</span>
+          <span>K</span>
+          <span>L</span>
+          <span>M</span>
+          <span>N</span>
+          <span>O</span>
+          <span>P</span>
+          <span>Q</span>
+          <span>R</span>
+          <span>S</span>
+          <span>T</span>
+          <span>U</span>
+          <span>V</span>
+          <span>W</span>
+          <span>X</span>
+          <span>Y</span>
+          <span>Z</span>
+      </div>
+    </div>
+
+    <!-- hot-city -->
+    <div class="hot-city">
+      <div class="tit mb10">热门城市</div>
+      <dl id="hot-city">
+        <dd data-value="0-0-全国">全国</dd>
+        <dd data-value="213-12-杭州">杭州</dd>
+        <dd data-value="587-4-上海">上海</dd>
+        <dd data-value="585-2-北京">北京</dd>
+        <dd data-value="327-20-深圳">深圳</dd>
+        <dd data-value="326-20-广州">广州</dd>
+        <dd data-value="586-3-天津">天津</dd>
+        <dd data-value="200-11-南京">南京</dd>
+        <dd data-value="202-11-苏州">苏州</dd>
+      </dl>
+    </div>
+    <!-- area -->
+    <div class="area-filter" id="area-filter">
+      <div class="tit mt10">按省份</div>
+      <dl>
+        <dt>华北地区</dt>
+        <dd province="2">北京</dd><dd province="3">天津</dd><dd province="6">河北</dd><dd province="7">山西</dd><dd province="28">内蒙古</dd>
+      </dl>
+      <dl>
+        <dt>华东地区</dt>
+        <dd province="4">上海</dd><dd province="12">浙江</dd><dd province="16">山东</dd><dd province="11">江苏</dd><dd province="13">安徽</dd><dd province="14">福建</dd><dd province="15">江西</dd>
+      </dl>
+      <dl>
+        <dt>华南地区</dt>
+        <dd province="20">广东</dd><dd province="31">广西</dd><dd province="21">海南</dd>
+      </dl>
+      <dl>
+        <dt>华中地区</dt>
+        <dd province="19">湖南</dd><dd province="17">河南</dd><dd province="18">湖北</dd>
+      </dl>
+      <dl>
+        <dt>东北地区</dt>
+        <dd province="10">黑龙江</dd><dd province="8">辽宁</dd><dd province="9">吉林</dd>
+      </dl>
+      <dl>
+        <dt>西南地区</dt>
+        <dd province="22">四川</dd><dd province="23">贵州</dd><dd province="24">云南</dd><dd province="5">重庆</dd><dd province="405">西藏</dd>
+      </dl>
+      <dl>
+        <dt>西北地区</dt>
+        <dd province="26">甘肃</dd><dd province="25">陕西</dd><dd province="30">新疆</dd><dd province="441">青海</dd><dd province="29">宁夏</dd>
+      </dl>
+    </div>
+    <!-- 筛选结果 -->
+    <div class="filter-result-box" id="res-box">
+      <dl id="citydl">
+        <dd>杭州</dd><dd>上海</dd><dd>北京</dd><dd>深圳</dd><dd>广州</dd><dd>天津</dd><dd>南京</dd><dd>苏州</dd>
+      </dl>
+    </div>
+    <!-- 筛选结果-无 -->
+    <div class="filter-result-none" id="nores-box">该条件下暂无内容</div>
+  </div>
+  <div class="xhhq-filter-btn">
+    <span class="reset" id="reset">重置</span><span id="confirm" class="confirm">确认筛选</span>
+  </div>
+</div>
+</mip-lightbox>
+
+<script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+<script src="https://c.mipcdn.com/static/v2/mip-lightbox/mip-lightbox.js"></script>
+<script src="https://mipcache.bdstatic.com/extensions/platform/v1/mip-jt-resize/mip-jt-resize.js"></script>
+<script src="/mip-jt-xianhuo-exfilter/mip-jt-xianhuo-exfilter.js"></script>
+
+  </body>
+</html>
