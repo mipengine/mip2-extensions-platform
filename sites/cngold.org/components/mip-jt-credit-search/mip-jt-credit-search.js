@@ -1,9 +1,10 @@
+import CityList from './cityList/cityList'
+
 export default class MIPJtCreditSearch extends MIP.CustomElement {
   build () {
     let inputId = this.element.getAttribute('input-id')
     let resId = this.element.getAttribute('res-id')
     let resetId = this.element.getAttribute('reset-id')
-    let fetchUrl = this.element.getAttribute('fetch-url')
     // 用于存放城市数据
     let cityList = ''
     // 定义$函数
@@ -16,11 +17,10 @@ export default class MIPJtCreditSearch extends MIP.CustomElement {
       $(resId).style.display = 'none'
     }
 
-    // 初始化
-    fetch(fetchUrl).then(function (res) {
-      return res.text()
-    }).then(function (data) {
-      cityList = data
+    cityList = new CityList().str
+    search(cityList)
+
+    function search (cityList) {
       let e = []
       let cityArr = cityList.split('@')
       for (let i = 0; i < cityArr.length; i++) {
@@ -60,6 +60,6 @@ export default class MIPJtCreditSearch extends MIP.CustomElement {
       $(resetId).addEventListener('click', function () {
         cancelInput()
       })
-    })
+    }
   }
 }

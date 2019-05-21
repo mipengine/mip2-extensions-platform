@@ -53,7 +53,7 @@ export default{
   },
   created () {
     // 无携带ID的情况 直接获取
-    let path = location.pathname.replace('.html', '').replace('/', '').split('_')
+    let path = location.pathname.replace('.html', '').replace(/^\/(.*)\//g, '').split('_')
     if (path.length === 1) {
       this._getlist(this.url, this.page)
     } else if (path[0] === 'a') {
