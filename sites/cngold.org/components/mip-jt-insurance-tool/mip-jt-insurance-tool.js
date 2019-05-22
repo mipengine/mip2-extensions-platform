@@ -8,19 +8,19 @@ export default class MIPJtInsuranceTool extends MIP.CustomElement {
     let type = this.element.getAttribute('type')
 
     if (type === 'houseFund' || type === 'pension' || type === 'lostjob') { // 住房公积金、养老保险、失业保险
-      this.element.querySelector('#btnCalc').addEventListener('click', () => {
+      this.element.querySelector('#btn-calc').addEventListener('click', () => {
         this.shareRisks()
       })
     } else if (type === 'injury' || type === 'birth') { // 工伤保险、生育保险
-      this.element.querySelector('#btnCalc').addEventListener('click', () => {
+      this.element.querySelector('#btn-calc').addEventListener('click', () => {
         this.singleRisks()
       })
     } else if (type === 'medical') { // 医疗保险
-      this.element.querySelector('#btnCalc').addEventListener('click', () => {
+      this.element.querySelector('#btn-calc').addEventListener('click', () => {
         this.medical()
       })
     } else if (type === 'retire') { // 养老退休金
-      this.element.querySelector('#btnCalc').addEventListener('click', () => {
+      this.element.querySelector('#btn-calc').addEventListener('click', () => {
         this.retire()
       })
     }
@@ -28,10 +28,10 @@ export default class MIPJtInsuranceTool extends MIP.CustomElement {
   // 弹窗提示
   alertTips (msg) {
     if (msg) {
-      this.element.querySelector('#calc_tips').innerHTML = msg
-      this.element.querySelector('#calc_tips').style.display = 'block'
+      this.element.querySelector('#calc-tips').innerHTML = msg
+      this.element.querySelector('#calc-tips').style.display = 'block'
       setTimeout(() => {
-        this.element.querySelector('#calc_tips').style.display = 'none'
+        this.element.querySelector('#calc-tips').style.display = 'none'
       }, 2000)
     }
   }
@@ -49,145 +49,169 @@ export default class MIPJtInsuranceTool extends MIP.CustomElement {
       return true
     }
   }
-  //  住房公积金计算器、养老保险计算器、失业保险计算器(公司、个人都缴费)
+  // 住房公积金计算器、养老保险计算器、失业保险计算器(公司、个人都缴费)
   shareRisks () {
-    if (!this.checkElem(this.element.querySelector('#wages'), '您的月工资')) {
+    let wages = this.element.querySelector('#wages')
+    let avgWages = this.element.querySelector('#avg-wages')
+    let unitRate = this.element.querySelector('#unit-rate')
+    let personRate = this.element.querySelector('#person-rate')
+
+    if (!this.checkElem(wages, '您的月工资')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#avg_wages'), '本市职工上年月平均工资')) {
+    if (!this.checkElem(avgWages, '本市职工上年月平均工资')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#unit_rate'), '单位缴存比例')) {
+    if (!this.checkElem(unitRate, '单位缴存比例')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#person_rate'), '个人缴存比例')) {
+    if (!this.checkElem(personRate, '个人缴存比例')) {
       return
     }
 
-    let wages = parseFloat(this.element.querySelector('#wages').value)
-    let avgWages = parseFloat(this.element.querySelector('#avg_wages').value)
-    if (wages < avgWages * 0.6) {
-      wages = Math.round(avgWages * 0.6)
+    let wageTemp = parseFloat(wages.value)
+    let avgTemp = parseFloat(avgWages.value)
+    if (wageTemp < avgTemp * 0.6) {
+      wageTemp = Math.round(avgTemp * 0.6)
     }
-    if (wages > avgWages * 3) {
-      wages = Math.round(avgWages * 3)
+    if (wageTemp > avgTemp * 3) {
+      wageTemp = Math.round(avgTemp * 3)
     }
 
-    this.element.querySelector('#total_fund').value = formatNum(wages * (parseFloat(this.element.querySelector('#unit_rate').value) + parseFloat(this.element.querySelector('#person_rate').value)) / 100)
-    this.element.querySelector('#unit_fund').value = formatNum(wages * parseFloat(this.element.querySelector('#unit_rate').value) / 100)
-    this.element.querySelector('#person_fund').value = formatNum(wages * parseFloat(this.element.querySelector('#person_rate').value) / 100)
+    this.element.querySelector('#total-fund').value = formatNum(wageTemp * (parseFloat(unitRate.value) + parseFloat(personRate.value)) / 100)
+    this.element.querySelector('#unit-fund').value = formatNum(wageTemp * parseFloat(unitRate.value) / 100)
+    this.element.querySelector('#person-fund').value = formatNum(wageTemp * parseFloat(personRate.value) / 100)
   }
   // 工伤保险计算器、生育保险计算器(仅公司缴费)
   singleRisks () {
-    if (!this.checkElem(this.element.querySelector('#wages'), '您的月工资')) {
+    let wages = this.element.querySelector('#wages')
+    let avgWages = this.element.querySelector('#avg-wages')
+    let unitRate = this.element.querySelector('#unit-rate')
+    if (!this.checkElem(wages, '您的月工资')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#avg_wages'), '本市职工上年月平均工资')) {
+    if (!this.checkElem(avgWages, '本市职工上年月平均工资')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#unit_rate'), '单位缴存比例')) {
+    if (!this.checkElem(unitRate, '单位缴存比例')) {
       return
     }
 
-    let wages = parseFloat(this.element.querySelector('#wages').value)
-    let avgWages = parseFloat(this.element.querySelector('#avg_wages').value)
-    if (wages < avgWages * 0.6) {
-      wages = Math.round(avgWages * 0.6)
+    let wageTemp = parseFloat(wages.value)
+    let avgTemp = parseFloat(avgWages.value)
+    if (wageTemp < avgTemp * 0.6) {
+      wageTemp = Math.round(avgTemp * 0.6)
     }
-    if (wages > avgWages * 3) {
-      wages = Math.round(avgWages * 3)
+    if (wageTemp > avgTemp * 3) {
+      wageTemp = Math.round(avgTemp * 3)
     }
 
-    this.element.querySelector('#total_fund').value = formatNum(wages * parseFloat(this.element.querySelector('#unit_rate').value) / 100)
+    this.element.querySelector('#total-fund').value = formatNum(wageTemp * parseFloat(unitRate.value) / 100)
   }
   // 医疗保险计算器
   medical () {
-    if (!this.checkElem(this.element.querySelector('#wages'), '您的月工资')) {
+    let wages = this.element.querySelector('#wages')
+    let avgWages = this.element.querySelector('#avg-wages')
+    let unitRateBase = this.element.querySelector('#unit-rate-base')
+    let personRateBase = this.element.querySelector('#person-rate-base')
+    let unitRate = this.element.querySelector('#unit-rate')
+    let personRate = this.element.querySelector('#person-rate')
+
+    if (!this.checkElem(wages, '您的月工资')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#avg_wages'), '本市职工上年月平均工资')) {
+    if (!this.checkElem(avgWages, '本市职工上年月平均工资')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#unit_rate_base'), '单位缴存比例')) {
+    if (!this.checkElem(unitRateBase, '单位缴存比例')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#person_rate_base'), '个人缴存比例')) {
+    if (!this.checkElem(personRateBase, '个人缴存比例')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#unit_rate'), '单位缴存比例')) {
+    if (!this.checkElem(unitRate, '单位缴存比例')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#person_rate'), '个人缴存金额')) {
+    if (!this.checkElem(personRate, '个人缴存金额')) {
       return
     }
 
-    let wages = parseFloat(this.element.querySelector('#wages').value)
-    let avgWages = parseFloat(this.element.querySelector('#avg_wages').value)
-    if (wages < avgWages * 0.6) {
-      wages = Math.round(avgWages * 0.6)
+    let wageTemp = parseFloat(wages.value)
+    let avgTemp = parseFloat(avgWages.value)
+    if (wageTemp < avgTemp * 0.6) {
+      wageTemp = Math.round(avgTemp * 0.6)
     }
-    if (wages > avgWages * 3) {
-      wages = Math.round(avgWages * 3)
+    if (wageTemp > avgTemp * 3) {
+      wageTemp = Math.round(avgTemp * 3)
     }
 
-    this.element.querySelector('#total_fund').value = formatNum(wages * (parseFloat(this.element.querySelector('#unit_rate_base').value) + parseFloat(this.element.querySelector('#person_rate_base').value) + parseFloat(this.element.querySelector('#unit_rate').value)) / 100 + parseFloat(this.element.querySelector('#person_rate').value))
+    this.element.querySelector('#total-fund').value = formatNum(wageTemp * (parseFloat(unitRateBase.value) + parseFloat(personRateBase.value) + parseFloat(unitRate.value)) / 100 + parseFloat(personRate.value))
     // 基本单位缴存
-    this.element.querySelector('#unit_fund_base').value = formatNum(parseFloat(wages * parseFloat(parseFloat(this.element.querySelector('#unit_rate_base').value))) / 100)
+    this.element.querySelector('#unit-fund-base').value = formatNum(parseFloat(wageTemp * parseFloat(parseFloat(unitRateBase.value))) / 100)
     // 基本个人缴存
-    this.element.querySelector('#person_fund_base').value = formatNum(parseFloat(wages * parseFloat(parseFloat(this.element.querySelector('#person_rate_base').value))) / 100)
+    this.element.querySelector('#person-fund-base').value = formatNum(parseFloat(wageTemp * parseFloat(parseFloat(personRateBase.value))) / 100)
     // 大额单位缴存
-    this.element.querySelector('#unit_fund').value = formatNum(parseFloat(wages * parseFloat(parseFloat(this.element.querySelector('#unit_rate').value))) / 100)
+    this.element.querySelector('#unit-fund').value = formatNum(parseFloat(wageTemp * parseFloat(parseFloat(unitRate.value))) / 100)
     // 大额个人缴存
-    this.element.querySelector('#person_fund').value = formatNum(parseFloat(this.element.querySelector('#person_rate').value))
+    this.element.querySelector('#person-fund').value = formatNum(parseFloat(personRate.value))
   }
   // 养老退休金保险计算器
   retire () {
-    if (!this.checkElem(this.element.querySelector('#wages'), '您的月工资')) {
+    let wages = this.element.querySelector('#wages')
+    let avgWages = this.element.querySelector('#avg-wages')
+    let nowAge = this.element.querySelector('#now-age')
+    let retireAge = this.element.querySelector('#retire-age')
+    let nowMoney = this.element.querySelector('#now-money')
+    let personRate = this.element.querySelector('#person-rate')
+    let unitRate = this.element.querySelector('#unit-rate')
+    let wishLevel = this.element.querySelector('#wish-level')
+
+    if (!this.checkElem(wages, '您的月工资')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#avg_wages'), '本市职工上年月平均工资')) {
+    if (!this.checkElem(avgWages, '本市职工上年月平均工资')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#now_age'), '现在年龄')) {
+    if (!this.checkElem(nowAge, '现在年龄')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#retire_age'), '您打算退休时年龄')) {
+    if (!this.checkElem(retireAge, '您打算退休时年龄')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#now_money'), '现在您帐户累积的养老金额')) {
+    if (!this.checkElem(nowMoney, '现在您帐户累积的养老金额')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#person_rate'), '默认个人工资增长率')) {
+    if (!this.checkElem(personRate, '默认个人工资增长率')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#unit_rate'), '默认职工工资增长率')) {
+    if (!this.checkElem(unitRate, '默认职工工资增长率')) {
       return
     }
-    if (!this.checkElem(this.element.querySelector('#wish_level'), '您期望退休后每月的生活水平')) {
+    if (!this.checkElem(wishLevel, '您期望退休后每月的生活水平')) {
       return
     }
 
-    let wages = parseFloat(this.element.querySelector('#wages').value)
-    let avgWages = parseFloat(this.element.querySelector('#avg_wages').value)
-    if (wages < avgWages * 0.6) {
-      wages = Math.round(avgWages * 0.6)
+    let wageTemp = parseFloat(wages.value)
+    let avgTemp = parseFloat(avgWages.value)
+    if (wageTemp < avgTemp * 0.6) {
+      wageTemp = Math.round(avgTemp * 0.6)
     }
-    if (wages > avgWages * 3) {
-      wages = Math.round(avgWages * 3)
+    if (wageTemp > avgTemp * 3) {
+      wageTemp = Math.round(avgTemp * 3)
     }
 
-    let baseNum = avgWages * (1 + (parseFloat(this.element.querySelector('#retire_age').value) - parseFloat(this.element.querySelector('#now_age').value)) * parseFloat(this.element.querySelector('#unit_rate').value) / 100) * 0.2
-    let totalNum = parseFloat(this.element.querySelector('#now_money').value) + wages * 0.08 * 12 * (Math.pow(1 + (parseFloat(this.element.querySelector('#person_rate').value) / 100), parseFloat(this.element.querySelector('#retire_age').value) - parseFloat(this.element.querySelector('#now_age').value)) - 1) / (parseFloat(this.element.querySelector('#person_rate').value) / 100)
+    let baseNum = avgTemp * (1 + (parseFloat(retireAge.value) - parseFloat(nowAge.value)) * parseFloat(unitRate.value) / 100) * 0.2
+    let totalNum = parseFloat(nowMoney.value) + wageTemp * 0.08 * 12 * (Math.pow(1 + (parseFloat(personRate.value) / 100), parseFloat(retireAge.value) - parseFloat(nowAge.value)) - 1) / (parseFloat(personRate.value) / 100)
 
-    this.element.querySelector('#now_age_1').value = this.element.querySelector('#now_age').value
-    this.element.querySelector('#retire_age_1').value = this.element.querySelector('#retire_age').value
-    this.element.querySelector('#total_fund').value = formatNum(baseNum + totalNum / 120)
+    this.element.querySelector('#now-age-1').value = nowAge.value
+    this.element.querySelector('#retire-age-1').value = retireAge.value
+    this.element.querySelector('#total-fund').value = formatNum(baseNum + totalNum / 120)
 
-    let totalFund = parseFloat(this.element.querySelector('#total_fund').value)
-    let level = parseFloat(this.element.querySelector('#wish_level').value)
+    let totalFund = parseFloat(this.element.querySelector('#total-fund').value)
+    let level = parseFloat(this.element.querySelector('#wish-level').value)
     let temp = ''
     if (totalFund < level) {
-      let tempNum = formatNum((level - totalFund) * 10 / (parseFloat(this.element.querySelector('#retire_age').value) - parseFloat(this.element.querySelector('#now_age').value)))
+      let tempNum = formatNum((level - totalFund) * 10 / (parseFloat(retireAge.value) - parseFloat(nowAge.value)))
       temp += `按您目前的工资，不能満足您期望的退休后生活水平,您需要逐步提高你的工资待遇或者每月额外增加养老金<strong>${tempNum}</strong>元。`
     } else {
       temp += '您目前的工资水平一直保持下去的话，完全可以満足您期望的退休后生活水平。'
