@@ -1,6 +1,6 @@
 import './index.less'
 
-const { util } = MIP
+const { util, viewport } = MIP
 const { fetchJsonp } = window
 
 /**
@@ -98,6 +98,41 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
       this.getAreaTypeHtml(newVal)
       this.buildMoreItemClick()
     })
+    this.winHeight = viewport.getHeight()
+    // 屏幕滚动高度
+    this.scrollTop = 0
+    viewport.on('scroll', () => {
+      let className = document.querySelector('body').classList
+      if(className.value.indexOf('body-fixed') > -1) {
+        return false
+      }
+      this.scrollTop = viewport.getScrollTop()
+      let offset = util.rect.getElementOffset(this.element.querySelector('.select'))
+      if(offset.top+170 < this.scrollTop) {
+        this.stickyNav()
+      } else {
+        this.restore()
+      }
+    })
+    viewport.on('resize', () => {
+      let thisHeight = viewport.getHeight()
+      if (this.winHeight < 612) {
+        if (this.winHeight - thisHeight > 50) {
+          //窗口发生改变(大),故此时键盘弹出
+          //当软键盘弹出，在这里面操作
+          addClass(this.element.querySelector('.select-fixed-wrapper'), 'select-fixed-wrapper-bottom')
+          removeClass(this.element.querySelector('.select-fixed-wrapper-bottom'), 'select-fixed-wrapper')
+        } else {
+          //窗口发生改变(小),故此时键盘收起
+          //当软键盘收起，在此处操作
+          addClass(this.element.querySelector('.select-fixed-wrapper-bottom'), 'select-fixed-wrapper')
+          removeClass(this.element.querySelector('.select-fixed-wrapper'), 'select-fixed-wrapper-bottom')
+        }
+      }
+    })
+
+
+
     if (!this.param.areaUnits) {
       return false
     }
@@ -122,7 +157,8 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
       hostUrl: '',
       district_1st: '',
       district_2nd: '',
-      district_3rd: ''
+      district_3rd: '',
+      strename: ''
     }
     try {
       let script = this.element.querySelector('script[type="application/json"]')
@@ -182,6 +218,10 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
         // 增加背景蒙版样式
         if (this.isBackground === 'true') {
           addClass(this.selectFixedPopup, 'select-fixed-popup-active')
+        }
+        // 初始化三级联动地区选中效果
+        if( this.isDistrict === 'true') {
+          this.initSecondRegionData()
         }
         // 如果有图标显示，需要切换成对应的图标
         if (this.isIcon === 'true') {
@@ -281,6 +321,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
    * @param ele
    */
   showSelectModal (ele) {
+    addClass(document.querySelector('body'), 'body-fixed')
     util.css(this.selectWrapper, 'display', 'flex')
     util.css(ele, 'display', 'block')
     heightAni({
@@ -299,6 +340,8 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
    */
   hideSelectModal (ele) {
     util.css(ele, 'height', '0')
+    removeClass(document.querySelector('body'), 'body-fixed')
+    viewport.setScrollTop(this.scrollTop)
   }
 
   /*
@@ -599,6 +642,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
     let element = this.element
     let regionFirsts = element.querySelectorAll('.select-region-1-item')
     let regionSecondBox = element.querySelector('.select-region-2')
+    let regionThirdBox = element.querySelector('.select-region-3')
 
     regionFirsts.forEach((item) => {
       item.addEventListener('click', () => {
@@ -632,6 +676,8 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
             html += `<div class="select-region-2-item border-right-1px" value="${value.id}" ab="${ab}-${value.ab}" type="${type}">${value.name}</div>`
           }
           regionSecondBox.innerHTML = html
+          regionThirdBox.innerHTML = ''
+          removeClass(element.querySelector('.select-region-3'), 'select-region-3-active')
           // 添加二级区域点击监听
           this.buildSecondRegionClick()
         })
@@ -662,6 +708,10 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
         }
         if (name.indexOf('全') === -1) {
           name = '全' + name
+        } else {
+          let href = this.splitUrlStr('', ab, '', '')
+          MIP.viewer.open(href, { isMipLink: false, replace: true })
+          return false
         }
         addClass(element.querySelector('.select-region-3'), 'select-region-3-active')
         let url = `${this.param.hostUrl}${this.fetchUrl}?district_id=${districtId}`
@@ -699,6 +749,82 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
         MIP.viewer.open(href, { isMipLink: false, replace: true })
       })
     }
+  }
+
+  /**
+   * 初始化二级地区数据
+   */
+  initSecondRegionData() {
+    let regionSecondBox = this.element.querySelector('.select-region-2')
+    var district_1st = this.element.querySelector(".select-region-1-item-active").getAttribute('value')
+    let type = this.element.querySelector(".select-region-1-item-active").getAttribute('type');
+    let url = `${this.param.hostUrl}${this.fetchUrl}?district_id=${district_1st}`
+    let html = ''
+    if (typeof (this.param.monter) !== 'string' || this.param.monter !== 'price') {
+      let name = this.element.querySelector(".select-fixed-region .select-region-1-item-active").innerHTML
+      if(name.indexOf('全') === -1) {
+        name = `全${name}`
+      }
+      if(this.param.district_1st !== '' && this.param.district_2nd === '') {
+        html += `<div class="select-region-2-item border-right-1px select-region-2-item-active" value="0" ab="${this.param.ab}" type="${type}">${name}</div>`
+      } else {
+        html += `<div class="select-region-2-item border-right-1px" value="0" ab="${this.param.ab}" type="${type}">${name}</div>`
+      }
+    }
+    if(district_1st === '0') {
+      return false
+    }
+    fetchJsonp(url).then(res => {
+      return res.json()
+    }).then(data => {
+      let secondRegion = data
+      for (let value of secondRegion) {
+        if(value.id === this.param.district_2nd) {
+          html += `<div class="select-region-2-item border-right-1px select-region-2-item-active" value="${value.id}" ab="${this.param.ab}-${value.ab}" type="${type}">${value.name}</div>`
+        } else {
+          html += `<div class="select-region-2-item border-right-1px" value="${value.id}" ab="${this.param.ab}-${value.ab}" type="${type}">${value.name}</div>`
+        }
+      }
+      regionSecondBox.innerHTML = html
+      // 添加二级区域点击监听
+      this.buildSecondRegionClick()
+      // 初始化三级地区数据
+      this.initThirdRegionData()
+    })
+  }
+
+  /**
+   * 初始化三级地区数据
+   */
+  initThirdRegionData() {
+    if (!this.param.district_3rd) {
+      return false
+    }
+    addClass(this.element.querySelector('.select-region-3'), 'select-region-3-active')
+    addClass(this.element.querySelector('.select-region-3'), 'select-region-3-active')
+    let url = `${this.param.hostUrl}${this.fetchUrl}?district_id=${this.param.district_2nd}`
+    let type = this.element.querySelector(".select-region-1-item-active").getAttribute('type')
+    let ab = this.element.querySelector(".select-region-2 .select-region-2-item-active").getAttribute('ab')
+    let regionThirdBox = this.element.querySelector('.select-region-3')
+    let name = ''
+    if(this.param.strename && this.param.strename !== '') {
+      name = `全${this.param.strename}`
+    }
+    fetchJsonp(url).then(res => {
+      return res.json()
+    }).then(data => {
+      let thirdRegion = data
+      let html = `<div class="select-region-2-item" value="0" ab="${ab}" type="${type}">${name}</div>`
+      for (let value of thirdRegion) {
+        if (value.id === this.param.district_3rd) {
+          html += `<div class="select-region-2-item select-region-2-item-active" value="${value.id}" ab="${ab}-${value.ab}" type="${type}">${value.name}</div>`
+        } else {
+          html += `<div class="select-region-2-item" value="${value.id}" ab="${ab}-${value.ab}" type="${type}">${value.name}</div>`
+        }
+      }
+      regionThirdBox.innerHTML = html
+      this.buildThirdRegionClick()
+    })
   }
 
   /*
