@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html mip>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <title>MIP page</title>
+  <link rel="canonical" href="对应的原页面地址">
+  <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+  <link rel="stylesheet" type="text/css" href="//img2.xuannaer.com/static/new/mobile/css/reset.css?">
+  <link rel="stylesheet" type="text/css" href="//img2.xuannaer.com/static/new/mobile/css/public.css?">
+  <link rel="stylesheet" type="text/css" href="//img2.xuannaer.com/static/new/mobile/css/swiper-4.3.3.min.css?">
+  <link rel="stylesheet" type="text/css" href="//img2.xuannaer.com/static/new/mobile/css/list-header.css?">
+  <link rel="stylesheet" type="text/css" href="//img2.xuannaer.com/static/new/mobile/css/detail.css?">
+  <link rel="stylesheet" type="text/css" href="//img2.xuannaer.com/static/new/mobile/css/popup.css?">
+  <style mip-custom>
+    body {
+      opacity: 1;
+    }
+
+    .collect-text {
+      font-size: 0.3rem
+    }
+    .collect{
+      width: 1rem;
+    }
+    .btn-tel{
+      display: block;
+      margin-left: 0.3rem;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div>
+    <div class="btn-bottom">
+      <if condition="$rightlist neq 1">
+        <mip-xuannaer-collect>
+            <mip-data>
+                <script type="application/json">
+                    {
+                      "type":"2",
+                      "item_id":"689566",
+                      "cate":"7",
+                      "imsUrl":"https://ims.xuannaer.com/",
+                      "imgUrl":"http://img.ims.com/Public",
+                      "hostUrl": "http://m.ims.com/"
+                    }
+                </script>
+            </mip-data>
+          <div class="collect">
+            <img class="collect-img" src="//img2.xuannaer.com/static/mobile/images/heart.png" alt="关注">
+            <div class="collect-text">收藏</div>
+          </div>
+        </mip-xuannaer-collect>
+      </if>
+      <a href="tel:{:C(FUWU_400_STR_M)}" class="btn-tel">电话咨询：400-161-6251</a>
+    </div>
+  </div>
+  <mip-rem font-size='[{"maxWidth": 415, "size": 55},{"maxWidth": 376, "size": 50}]'></mip-rem>
+  <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+  <script src="/mip-xuannaer-collect/mip-xuannaer-collect.js"></script>
+</body>
+</html>
