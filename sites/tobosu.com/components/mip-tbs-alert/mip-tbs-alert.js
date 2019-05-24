@@ -5,16 +5,6 @@
 import './mip-tbs-alert.less'
 export default class MIPTbsalert extends MIP.CustomElement {
   build () {
-    // 重置html font-size
-    let scr = window.screen.width
-    scr > 1024 && (scr = 1024)
-    document.querySelector('html').style.fontSize = scr / 7.5 + 'px'
-    // 当页面加载时即可获取当前设备的宽度，以设计rem的值
-    window.onresize = function () {
-      let scr = window.screen.width
-      scr > 1024 && (scr = 1024)
-      document.querySelector('html').style.fontSize = scr / 7.5 + 'px'
-    }
     // 省份
     const province = [
       {
@@ -131,20 +121,25 @@ export default class MIPTbsalert extends MIP.CustomElement {
     let currentAddress = ''
     // 禁止表单多次提交 false--不能被请求
     let formsubmit = true
+    let _this = this
     getCurrentCity()
-    // 点击提交按钮--表单提示方法
+    /*
+     * 点击提交按钮， 表单提示方法
+     * @param {"string"} type 类型
+     * @param {"string"} content 内容
+     */
     function tipsMess (type, content) {
       switch (type) {
         // 验证表单填写信息
         case 'checking':
-          let globalForm = document.getElementsByClassName('global-form')[0]
-          let div = document.createElement('div')
+          let globalForm = this.element.getElementsByClassName('global-form')[0]
+          let div = this.element.createElement('div')
           // 提示弹窗
           let tipsWindows = `<div class="tips-content"> ${content} </div>`
           div.innerHTML = tipsWindows
           globalForm.appendChild(div)
           setTimeout(function () {
-            let tipsContent = document.querySelector('.tips-content')
+            let tipsContent = _this.element.querySelector('.tips-content')
             tipsContent.parentElement.innerHTML = ''
           }, 500)
           break
@@ -155,9 +150,11 @@ export default class MIPTbsalert extends MIP.CustomElement {
           break
       }
     }
-    // 获取当前所在城市信息
+    /**
+     * 获取用户所在城市信息的方法
+     */
     function getCurrentCity () {
-      fetch('http://www.tobosu.com/tapi/api/getIpCityInfo')
+      fetch('http://www.dev.tobosu.com/tapi/api/getIpCityInfo')
         .then(function (res) {
           return res.json()
         })
@@ -168,18 +165,18 @@ export default class MIPTbsalert extends MIP.CustomElement {
           // 获取当前所在城市昵称
           let provinceName = idChangeName(province, 'id', currentProvince, 'name')
           // 获取所有城市信息
-          fetch('http://www.tobosu.com/tapi/Smallprogram/getCityData')
+          fetch('http://www.dev.tobosu.com/tapi/Smallprogram/getCityData')
             .then(function (res) {
               return res.json()
             })
             .then(function (data) {
               allCity = data.cityData
               // 将当前城市信息写入input (可以不用这个input隐藏域--可删掉。)
-              document.querySelector('input[name="province"]').setAttribute('value', currentProvince)
-              document.querySelector('input[name="city"]').setAttribute('value', currentCity)
+              _this.element.querySelector('input[name="province"]').setAttribute('value', currentProvince)
+              _this.element.querySelector('input[name="city"]').setAttribute('value', currentCity)
               for (let i = 0; i < allCity.length; i++) {
                 if (allCity[i].city_id * 1 === currentCity * 1) {
-                  document.querySelector('input[name="citygrade"]').setAttribute('value', allCity[i].city_grade)
+                  _this.element.querySelector('input[name="citygrade"]').setAttribute('value', allCity[i].city_grade)
                 }
               }
               // citygrade
@@ -189,7 +186,11 @@ export default class MIPTbsalert extends MIP.CustomElement {
             }).catch(function () {})
         }).catch(function () {})
     }
-    // 根据省份获取城市信息
+    /*
+     * 根据省份获取城市信息的方法
+     * @param {"string"} proviceId 省份id
+     * @returns {"array"} list 所在省城市信息列表
+     */
     function setProvicegetCity (proviceId) {
       let list = []
       for (let i = 0; i < allCity.length; i++) {
@@ -197,18 +198,16 @@ export default class MIPTbsalert extends MIP.CustomElement {
           list.push(allCity[i])
         }
       }
-      // cityDatas.find(function (element) {
-      //   if (element.province_id === proviceId * 1) {
-      //     list.push(element)
-      //   }
-      // })
       return list
     }
-    // 将省，城市id转换成name
-    // dataSource --数据源
-    // mate -- 匹配的字段
-    // targId -- 查找的字段
-    // resName --返回字段
+    /*
+     * 拼接省市昵称的方法
+     * @param {"array"} dataSource 数据源
+     * @param {"string"} mate 查找的字段
+     * @param {"number"} targId 匹配值
+     * @param {"string"} resName 返回的结果值
+     * @returns {"string"} res 拼接后的昵称
+     */
     function idChangeName (dataSource, mate, targId, resName) {
       let res = ''
       for (let i = 0; i < dataSource.length; i++) {
@@ -216,14 +215,13 @@ export default class MIPTbsalert extends MIP.CustomElement {
           res += dataSource[i][resName].replace(/[A-Z]/, '').replace(/^\s+|\s+$/g, '')
         }
       }
-      // dataSource.find(function (element) {
-      //   if (element[mate] === targId * 1) {
-      //     res += element[resName].replace(/[A-Z]/, '').replace(/^\s+|\s+$/g, '')
-      //   }
-      // })
       return res
     }
-    // 提交表单时的body参数格式转换
+    /*
+     * 格式化表单提交的方法
+     * @param {"object"} obj 转换对象
+     * @returns {"string"} PARAMS_ARRAY.join 格式化后的结果内容
+     */
     function joinRequestParams (obj) {
       const PARAMS_ARRAY = []
       // 拼接参数
@@ -232,18 +230,21 @@ export default class MIPTbsalert extends MIP.CustomElement {
       })
       return PARAMS_ARRAY.join('&')
     }
-    // 表单提交成功后的报价结果渲染
+    /*
+     * 表单提交成功后,渲染报价的方法
+     * @returns {"object"}  报价对象内容
+     */
     function renderData () {
       // 金钱
       let money = 0
       // 装修方式
-      let zxType = document.querySelectorAll('input[name="zx_type"]').length > 0 ? document.querySelector('input[name="zx_type"]').value : 1
+      let zxType = this.element.querySelectorAll('input[name="zx_type"]').length > 0 ? this.element.querySelector('input[name="zx_type"]').value : 1
       // 城市等级 citygrade
-      let citygrade = document.querySelector('input[name="citygrade"]').value
+      let citygrade = this.element.querySelector('input[name="citygrade"]').value
       // 面积
-      let housearea = document.querySelector('.house').length > 0 ? document.querySelector('.house').value : 1
+      let housearea = this.element.querySelector('.house').length > 0 ? this.element.querySelector('.house').value : 1
       // 装修程度
-      let decdegree = document.querySelectorAll('input[name="decdegree"]').length > 0 ? document.querySelector('input[name="decdegree"]').value : 2
+      let decdegree = this.element.querySelectorAll('input[name="decdegree"]').length > 0 ? this.element.querySelector('input[name="decdegree"]').value : 2
       // 根据装修方式，城市等级得出基本价格
       // 全包
       if (zxType * 1 === 2) {
@@ -301,16 +302,10 @@ export default class MIPTbsalert extends MIP.CustomElement {
         quality: 3500
       }
     }
-    /**
-     *  第一次进入可视区回调，只会执行一次
-     */
-    // let customElement = require('customElement').create()
-    // let customElement = $('div')
-    // let customElement = document.createElement('div')
     // 定义弹窗模板
     let mould = `
-      <div  class="global-window">
-        <div class="global-inner">
+      <mip-fixed still class="global-window">
+        <div class="global-inner" >
             <div class="top-close">
               <mip-img layout="responsive"  width="48" height="120" src="https://front.tobosu.com/static/mask/images/Q&A-home-folat-x-icon.png"></mip-img>
             </div>
@@ -380,11 +375,10 @@ export default class MIPTbsalert extends MIP.CustomElement {
               </div>
             </div>
         </div>
-      </div>
+      </mip-fixed>
     `
-    // 缓存时间
+    // 缓存弹窗是否出现的时间
     if (localStorage.getItem('currentHours')) {
-      let _this = this
       // 如果有
       let localHours = localStorage.getItem('currentHours')
       // 获取现在时间
@@ -412,35 +406,35 @@ export default class MIPTbsalert extends MIP.CustomElement {
       let hours = new Date().getTime()
       localStorage.setItem('currentHours', hours)
       // 显示弹窗
-      this.element.innerHTML = mould
+      _this.element.innerHTML = mould
     }
     // 点击选择城市出现的弹窗
-    if (document.querySelector('.custom-province-city')) {
-      let provincecity = document.querySelector('.custom-province-city')
+    if (this.element.querySelector('.custom-province-city')) {
+      let provincecity = this.element.querySelector('.custom-province-city')
       provincecity.onclick = function () {
-        let body = document.querySelectorAll('body')[0]
-        let model = ''
-        model += '<div class="m-area-select-background">' +
-                    '<div class="close-menu">' +
-                      '点<br>击<br>此<br>处<br>收<br>起' +
-                    '</div>' +
-                  '</div>'
-        model += '<div class="m-area-select-obj">' +
-                    '<div class="area-select area-province">' +
-                      '<ul class="area-select-province"></ul>' +
-                    '</div>' +
-                    '<div class="area-select area-city">' +
-                      '<ul class="area-select-city">' +
-                      '</ul>' +
-                    '</div>' +
-                  '</div>'
+        let model = '<mip-fixed still>' +
+                      '<div class="m-area-select-background">' +
+                        '<div class="close-menu">' +
+                          '点<br>击<br>此<br>处<br>收<br>起' +
+                        '</div>' +
+                      '</div>' +
+                      '<div class="m-area-select-obj">' +
+                        '<div class="area-select area-province">' +
+                          '<ul class="area-select-province"></ul>' +
+                        '</div>' +
+                        '<div class="area-select area-city">' +
+                          '<ul class="area-select-city">' +
+                          '</ul>' +
+                        '</div>' +
+                      '</div>' +
+                    '<mip-fixed>'
         let div = document.createElement('div')
         div.setAttribute('class', 'm-area-select2')
         div.innerHTML = model
-        body.appendChild(div)
+        _this.element.appendChild(div)
         // 写入省信息
         let provinceHtml = ''
-        let $par = document.querySelector('.m-area-select2')
+        let $par = _this.element.querySelector('.m-area-select2')
         // let $par = $('.m-area-select2')
         for (let i = 0, len = province.length; i < len; i++) {
           let nameArr = province[i]['name'].split(' ')
@@ -448,7 +442,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
             '<span class = "initial">' + nameArr[0] + '</span>' + nameArr[1] +
           '</li>'
         }
-        let selectProvince = document.querySelector('.area-select-province')
+        let selectProvince = _this.element.querySelector('.area-select-province')
         selectProvince.innerHTML = provinceHtml
         // 设置默认选中省份
         let provParent = selectProvince.querySelectorAll('li')
@@ -485,7 +479,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
         let originY = -1
         let time = 0
         let stopTime = 0
-        let areaSelect = document.querySelectorAll('.area-select')
+        let areaSelect = _this.element.querySelectorAll('.area-select')
         let li = ''
         for (let i = 0; i < areaSelect.length; i++) {
           areaSelect[i].addEventListener('touchstart', function (e) {
@@ -516,7 +510,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
           areaSelect[i].addEventListener('touchmove', function (e) {
             // 当前触发事件的元素
             let classNames = e.currentTarget.classList[1]
-            let select = document.querySelector(`.${classNames}`)
+            let select = _this.element.querySelector(`.${classNames}`)
             // 触发元素下的ul
             let ul = select.querySelector('ul')
             // 移动后的Y坐标
@@ -562,13 +556,13 @@ export default class MIPTbsalert extends MIP.CustomElement {
           // 触摸离开
           areaSelect[i].addEventListener('touchend', function (e) {
             // 如果是上下滑动不执行后续动作
-            let _this = this
+            let __this = this
             time = 0
             clearInterval(stopTime)
             let classNames = e.currentTarget.classList[1]
-            let select = document.querySelector(`.${classNames}`)
+            let select = _this.element.querySelector(`.${classNames}`)
             let ul = select.querySelector('ul')
-            let height = _this.clientHeight - ul.clientHeight
+            let height = __this.clientHeight - ul.clientHeight
             ul.classList.add('transition-select')
             if (ul.getAttribute('top') >= 0) {
               ul.style.webkitTransform = 'translateY(0px)'
@@ -605,7 +599,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
                 let fullName = newList[j]['full_name']
                 newCityHtml += '<li value="' + cityId + '" data-citygrade="' + cityGrade + '" >' + fullName + '</li>'
               }
-              let selectCity = document.querySelector('.area-select-city')
+              let selectCity = _this.element.querySelector('.area-select-city')
               selectCity.style.webkitTransform = 'translateY(0)'
               selectCity.innerHTML = newCityHtml
             }
@@ -616,48 +610,40 @@ export default class MIPTbsalert extends MIP.CustomElement {
               li.classList.add('on')
               let selectObj = $par.querySelector('.m-area-select-obj')
               selectObj.style.left = '100%'
-              $par.parentElement.removeChild(document.querySelector('.m-area-select2'))
-              // $par.innerHTML = ''
-              // li.addClass('on').siblings('li').removeClass('on')
-              // 触发关闭城市选择器
-              // $('.m-area-select-obj', $par).animate({'left': '100%'}, 0)
-              // $par.remove()
-              // setTimeout(function () {
-              //  $par.remove()
-              //  }, 300)
+              $par.parentElement.removeChild(_this.element.querySelector('.m-area-select2'))
               // 回写信息
-              document.querySelector('input[name="province"]').setAttribute('value', currentProvince)
-              document.querySelector('input[name="city"]').setAttribute('value', currentCity)
-              document.querySelector('input[name="citygrade"]').setAttribute('value', li.getAttribute('data-citygrade'))
+              _this.element.querySelector('input[name="province"]').setAttribute('value', currentProvince)
+              _this.element.querySelector('input[name="city"]').setAttribute('value', currentCity)
+              _this.element.querySelector('input[name="citygrade"]').setAttribute('value', li.getAttribute('data-citygrade'))
               let provinceName = idChangeName(province, 'id', currentProvince, 'name')
               let cityName = idChangeName(allCity, 'city_id', currentCity, 'full_name')
               currentAddress = provinceName + ' ' + cityName
-              document.querySelector('.custom-province-city').innerHTML = currentAddress
+              _this.element.querySelector('.custom-province-city').innerHTML = currentAddress
             }
           })
         }
-        document.querySelector('.m-area-select-background') && document.querySelector('.m-area-select-background').addEventListener('click', function () {
-          this.parentElement.querySelector('.m-area-select-obj').style.left = '100%'
-          this.parentElement.parentElement.removeChild(document.querySelector('.m-area-select2'))
+        _this.element.querySelector('.m-area-select-background') && _this.element.querySelector('.m-area-select-background').addEventListener('click', function () {
+          _this.element.querySelector('.m-area-select-obj').style.left = '100%'
+          _this.element.removeChild(_this.element.querySelector('.m-area-select2'))
         })
       }
     }
     // 关闭整个弹窗
-    document.querySelector('.top-close') && document.querySelector('.top-close').addEventListener('click', function () {
-      document.querySelector('mip-tbs-alert').style.display = 'none'
+    _this.element.querySelector('.top-close') && _this.element.querySelector('.top-close').addEventListener('click', function () {
+      _this.element.style.display = 'none'
     })
     // 提交表单
-    if (document.querySelector('.global-getBtn')) {
-      let globalForm = document.querySelector('.global-getBtn')
+    if (_this.element.querySelector('.global-getBtn')) {
+      let globalForm = _this.element.querySelector('.global-getBtn')
       globalForm && globalForm.addEventListener('click', function () {
         // 组合数据
         // 获取房屋所在地
-        let province = document.querySelector('.province') ? document.querySelector('.province').getAttribute('value') : currentProvince
-        let city = document.querySelector('.city') ? document.querySelector('.city').getAttribute('value') : currentCity
+        let province = _this.element.querySelector('.province') ? _this.element.querySelector('.province').getAttribute('value') : currentProvince
+        let city = _this.element.querySelector('.city') ? _this.element.querySelector('.city').getAttribute('value') : currentCity
         // 获取面积信息
-        let houseArea = document.querySelector('.house').value
+        let houseArea = _this.element.querySelector('.house').value
         // 获取手机号
-        let callres = document.querySelector('.call').value
+        let callres = _this.element.querySelector('.call').value
         let callReg = /^1[3-9][0-9]{9}$/
         let isNext = true
         // 验证
@@ -682,13 +668,13 @@ export default class MIPTbsalert extends MIP.CustomElement {
             city: city,
             cellphone: callres,
             comeurl: '',
-            source: document.querySelector('input[name=\'source\']').getAttribute('value'),
-            pageTag: document.querySelector('.global-getBtn').getAttribute('data-ptag'),
+            source: _this.element.querySelector('input[name=\'source\']').getAttribute('value'),
+            pageTag: _this.element.querySelector('.global-getBtn').getAttribute('data-ptag'),
             houseArea: houseArea
           }
-          this.innerHTML = '提交中,请稍后'
+          _this.innerHTML = '提交中,请稍后'
           if (formsubmit === false) return
-          fetch('http://www.tobosu.com//tapi/order/pub_order', {
+          fetch('https://www.tobosu.com//tapi/order/pub_order', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -698,18 +684,18 @@ export default class MIPTbsalert extends MIP.CustomElement {
           }).then(function (res) {
             let result = renderData()
             // 写入报价信息
-            document.querySelector('.total').innerHTML = result.total
-            document.querySelector('.design').innerHTML = result.design
-            document.querySelector('.quality').innerHTML = result.quality
-            document.querySelector('.manMake').innerHTML = result.manMake
-            document.querySelector('.material').innerHTML = result.material
+            _this.element.querySelector('.total').innerHTML = result.total
+            _this.element.querySelector('.design').innerHTML = result.design
+            _this.element.querySelector('.quality').innerHTML = result.quality
+            _this.element.querySelector('.manMake').innerHTML = result.manMake
+            _this.element.querySelector('.material').innerHTML = result.material
             return res.json()
           }).then(function (data) {
             formsubmit = true
             if (data.error_code === 0) {
               // 请求成功后，渲染报价明细
-              document.querySelector('.step-first').style.display = 'none'
-              document.querySelector('.result').style.display = 'block'
+              _this.element.querySelector('.step-first').style.display = 'none'
+              _this.element.querySelector('.result').style.display = 'block'
             } else {
               tipsMess('checking', data.msg)
             }
@@ -718,8 +704,8 @@ export default class MIPTbsalert extends MIP.CustomElement {
         }
       })
     }
-    document.querySelector('.pop-publi-btn') && document.querySelector('.pop-publi-btn').addEventListener('click', function () {
-      document.querySelector('mip-tbs-alert').style.display = 'none'
+    _this.element.querySelector('.pop-publi-btn') && _this.element.querySelector('.pop-publi-btn').addEventListener('click', function () {
+      _this.element.style.display = 'none'
     })
   }
 }
