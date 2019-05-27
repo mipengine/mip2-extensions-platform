@@ -1,7 +1,7 @@
 {
-  "name": "oh100.com",
+  "name": "ruiwen.com",
   "version": "1.2.0",
-  "description": "dldoc",
+  "description": "pubuliu",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
