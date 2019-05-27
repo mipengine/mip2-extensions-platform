@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html mip>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+  <title><!-- 标题 --></title>
+  <link rel="stylesheet" type="text/css" href="https://c.mipcdn.com/static/v1/mip.css">
+  <link rel="canonical" href="对应的原页面地址">
+  <script>
+    ( function () {
+      let scr = window.screen.width
+      scr > 1024 && (scr = 1024)
+      document.querySelector('html').style.fontSize = scr / 7.5 + 'px'
+      // 当页面加载时即可获取当前设备的宽度，以设计rem的值
+      window.onresize = function () {
+        let scr = window.screen.width
+        scr > 1024 && (scr = 1024)
+        document.querySelector('html').style.fontSize = scr / 7.5 + 'px'
+      }
+    })()
+  </script>
+</head>
+<body>
+  <mip-tbs-alert></mip-tbs-alert>
+  <!-- 正文 -->
+  <script src="https://c.mipcdn.com/static/v1/mip.js"></script>
+  <script src="/mip-tbs-alert/mip-tbs-alert.js"></script>
+  <script src="https://c.mipcdn.com/static/v1/mip-form/mip-form.js"></script>
+  <script src="https://c.mipcdn.com/static/v1/mip-fixed/mip-fixed.js"></script>
+</body>
+</html>
