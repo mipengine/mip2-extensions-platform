@@ -409,7 +409,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
       _this.element.innerHTML = mould
     }
     // 点击选择城市出现的弹窗
-    if (_this.element.querySelector('input[name="province"]').getAttribute('value')) {
+    if (_this.element.querySelector('.custom-province-city')) {
       let provincecity = this.element.querySelector('.custom-province-city')
       provincecity.onclick = function () {
         let model = '<mip-fixed still>' +
