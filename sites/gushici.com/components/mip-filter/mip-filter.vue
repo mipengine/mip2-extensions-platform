@@ -78,7 +78,7 @@
 
 <script>
 import './index.less'
-import ajax from '../../common/ajax.js'
+import ajaxGet from '../../common/ajax.js'
 export default{
   props: {
     page: {
@@ -122,7 +122,7 @@ export default{
   },
   methods: {
     param () {
-      let path = location.pathname.replace('.html', '').replace(/^\/(.*)\//g, '').split('_')
+      let path = location.pathname.replace('.html', '').replace('/','').split('_')
       let q = {}
       if (path.length > 2) {
         if (/[a-z]/.test(path[1]) && path[0] === 'p') {
@@ -164,7 +164,7 @@ export default{
           }
         }
       }
-      ajax.get(this.url, {}, function (res) {
+      ajaxGet(this.url, {}, function (res) {
         for (let i = 0; i < arr.length; i++) {
           let o = {
             title: arr[i].cn,
@@ -188,7 +188,7 @@ export default{
               iscur: false
             })
             if (typeof t.query.key !== 'undefined') {
-              if (t.query.key === arr[i].key && Number(t.query.val) === res[arr[i].key][j].id) {
+              if (t.query.key === arr[i].key && t.query.val === res[arr[i].key][j].id) {
                 t.cur = v
                 t.query.val = v
               }

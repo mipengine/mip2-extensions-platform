@@ -3,11 +3,11 @@
 * @title:
 * @Date:   2019-04-09 14:51:26
 * @Last Modified by:   shl
-* @Last Modified time: 2019-04-12 17:02:35
+* @Last Modified time: 2019-05-28 16:30:03
 */
 const apipath = 'https://www.gushici.com/'
 
-function get (url, data, cb) {
+export default function ajaxGet (url, data, cb) {
   let param = ''
   for (let i in data) {
     param += i + '=' + data[i] + '&'
@@ -27,8 +27,4 @@ function get (url, data, cb) {
     .then(json => {
       cb(json)
     })
-}
-
-module.exports = {
-  get
 }
