@@ -131,8 +131,6 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
       }
     })
 
-
-
     if (!this.param.areaUnits) {
       return false
     }
@@ -756,7 +754,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
    */
   initSecondRegionData () {
     let regionSecondBox = this.element.querySelector('.select-region-2')
-    var districtFirst = this.element.querySelector('.select-region-1-item-active').getAttribute('value')
+    let districtFirst = this.element.querySelector('.select-region-1-item-active').getAttribute('value')
     let type = this.element.querySelector('.select-region-1-item-active').getAttribute('type')
     let url = `${this.param.hostUrl}${this.fetchUrl}?district_id=${districtFirst}`
     let html = ''
@@ -879,7 +877,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
     clearBtn.addEventListener('click', () => {
       this.removeAllClass('more-item-active-ios', this.modal)
       this.removeAllClass('more-item-active', this.modal)
-      element.querySelectorAll('.select-fixed-item-wrapper .more-item-wrapper').forEach((item => {
+      element.querySelectorAll('.select-fixed-item-wrapper .more-item-wrapper').forEach(item => {
         let mores = item.querySelectorAll('.more-item')
         if (util.platform.isIos()) {
           addClass(mores[0], 'more-item-active-ios')
@@ -887,7 +885,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
         if (util.platform.isAndroid()) {
           addClass(mores[0], 'more-item-active')
         }
-      }))
+      })
     })
   }
 
