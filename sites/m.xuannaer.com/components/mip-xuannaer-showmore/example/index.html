@@ -7,19 +7,23 @@
   <title>MIP page</title>
   <link rel="canonical" href="对应的原页面地址">
   <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
-  <link rel="stylesheet" type="text/css" href="http://img.ims.com/static/new/mobile/css/reset.css?">
-  <link rel="stylesheet" type="text/css" href="http://img.ims.com/static/new/mobile/css/public.css?">
-  <link rel="stylesheet" type="text/css" href="http://img.ims.com/static/new/mobile/css/swiper-4.3.3.min.css?">
-  <link rel="stylesheet" type="text/css" href="http://img.ims.com/static/new/mobile/css/list-header.css?">
-  <link rel="stylesheet" type="text/css" href="http://img.ims.com/static/new/mobile/css/detail.css?">
-  <link rel="stylesheet" type="text/css" href="http://img.ims.com/static/new/mobile/css/popup.css?">
+
+  <link rel="stylesheet" type="text/css" href="//img2.xuannaer.com/static/new/mobile/css/reset.css?">
+  <link rel="stylesheet" type="text/css" href="//img2.xuannaer.com/static/new/mobile/css/public.css?">
+  <link rel="stylesheet" type="text/css" href="//img2.xuannaer.com/static/new/mobile/css/swiper-4.3.3.min.css?">
+  <link rel="stylesheet" type="text/css" href="//img2.xuannaer.com/static/new/mobile/css/list-header.css?">
+  <link rel="stylesheet" type="text/css" href="//img2.xuannaer.com/static/new/mobile/css/detail.css?">
+  <link rel="stylesheet" type="text/css" href="//img2.xuannaer.com/static/new/mobile/css/popup.css?">
+
   <style mip-custom>
     /* 自定义样式 */
       body{
         opacity: 1;
       }
       .base-info-more{
-        display: block;
+
+    /* display: block; */
+
         background-color: #fff;
       }
       mip-xuannaer-showmore .show-more{
@@ -37,14 +41,18 @@
       .last-inco{
         background: url(http://img.ims.com/static/new/mobile/images/select-icon-top.png) no-repeat;
         background-size: 10px;
-        background-position:60% 
+
+        background-position:68% 
+
       }
   </style>
 </head>
 
 <body>
   <div>
-    <mip-xuannaer-showmore>
+
+    <mip-xuannaer-showmore add-class="show-more" add-class-button="last-inco" need-height="3" data-type="rem">
+
       <div class="open-box">
         <div class="product-base-info">
           <p class="base-info-label">出让年限</p>
@@ -87,9 +95,10 @@
           </p>
         </div>
       </div>
-      <div class="base-info-more" add-class="show-more" add-class-button="last-inco">
+
+      <div class="base-info-more" >
           <span>展开更多信息</span>
-          <!-- <mip-img src="https://img.xuannaer.com/static/new/mobile/images/select-icon.png" alt="展开更多信息"></mip-img> -->
+
       </div>
     </mip-xuannaer-showmore>
   </div>

@@ -187,7 +187,6 @@ export default class MIPJtCangQuote extends MIP.CustomElement {
         return res.text()
       }).then(function (result) {
         result = JSON.parse(result.split('=')[1])
-        console.log(result)
         if (result) {
           let data = result[code]
           if (data !== undefined) {
