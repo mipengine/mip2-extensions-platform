@@ -103,12 +103,12 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
     this.scrollTop = 0
     viewport.on('scroll', () => {
       let className = document.querySelector('body').classList
-      if(className.value.indexOf('body-fixed') > -1) {
+      if (className.value.indexOf('body-fixed') > -1) {
         return false
       }
       this.scrollTop = viewport.getScrollTop()
       let offset = util.rect.getElementOffset(this.element.querySelector('.select'))
-      if(offset.top+170 < this.scrollTop) {
+      if (offset.top + 170 < this.scrollTop) {
         this.stickyNav()
       } else {
         this.restore()
@@ -118,13 +118,13 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
       let thisHeight = viewport.getHeight()
       if (this.winHeight < 612) {
         if (this.winHeight - thisHeight > 50) {
-          //窗口发生改变(大),故此时键盘弹出
-          //当软键盘弹出，在这里面操作
+          // 窗口发生改变(大),故此时键盘弹出
+          // 当软键盘弹出，在这里面操作
           addClass(this.element.querySelector('.select-fixed-wrapper'), 'select-fixed-wrapper-bottom')
           removeClass(this.element.querySelector('.select-fixed-wrapper-bottom'), 'select-fixed-wrapper')
         } else {
-          //窗口发生改变(小),故此时键盘收起
-          //当软键盘收起，在此处操作
+          // 窗口发生改变(小),故此时键盘收起
+          // 当软键盘收起，在此处操作
           addClass(this.element.querySelector('.select-fixed-wrapper-bottom'), 'select-fixed-wrapper')
           removeClass(this.element.querySelector('.select-fixed-wrapper'), 'select-fixed-wrapper-bottom')
         }
@@ -166,7 +166,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
         return Object.assign(params, util.jsonParse(script.textContent.toString()))
       }
       return params
-    }catch (e) {
+    } catch (e) {
       console.error(e)
     }
   }
@@ -220,7 +220,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
           addClass(this.selectFixedPopup, 'select-fixed-popup-active')
         }
         // 初始化三级联动地区选中效果
-        if( this.isDistrict === 'true') {
+        if (this.isDistrict === 'true') {
           this.initSecondRegionData()
         }
         // 如果有图标显示，需要切换成对应的图标
@@ -754,24 +754,24 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
   /**
    * 初始化二级地区数据
    */
-  initSecondRegionData() {
+  initSecondRegionData () {
     let regionSecondBox = this.element.querySelector('.select-region-2')
-    var district_1st = this.element.querySelector(".select-region-1-item-active").getAttribute('value')
-    let type = this.element.querySelector(".select-region-1-item-active").getAttribute('type');
-    let url = `${this.param.hostUrl}${this.fetchUrl}?district_id=${district_1st}`
+    var districtFirst = this.element.querySelector('.select-region-1-item-active').getAttribute('value')
+    let type = this.element.querySelector('.select-region-1-item-active').getAttribute('type')
+    let url = `${this.param.hostUrl}${this.fetchUrl}?district_id=${districtFirst}`
     let html = ''
     if (typeof (this.param.monter) !== 'string' || this.param.monter !== 'price') {
-      let name = this.element.querySelector(".select-fixed-region .select-region-1-item-active").innerHTML
-      if(name.indexOf('全') === -1) {
+      let name = this.element.querySelector('.select-fixed-region .select-region-1-item-active').innerHTML
+      if (name.indexOf('全') === -1) {
         name = `全${name}`
       }
-      if(this.param.district_1st !== '' && this.param.district_2nd === '') {
+      if (this.param.district_1st !== '' && this.param.district_2nd === '') {
         html += `<div class="select-region-2-item border-right-1px select-region-2-item-active" value="0" ab="${this.param.ab}" type="${type}">${name}</div>`
       } else {
         html += `<div class="select-region-2-item border-right-1px" value="0" ab="${this.param.ab}" type="${type}">${name}</div>`
       }
     }
-    if(district_1st === '0') {
+    if (districtFirst === '0') {
       return false
     }
     fetchJsonp(url).then(res => {
@@ -779,7 +779,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
     }).then(data => {
       let secondRegion = data
       for (let value of secondRegion) {
-        if(value.id === this.param.district_2nd) {
+        if (value.id === this.param.district_2nd) {
           html += `<div class="select-region-2-item border-right-1px select-region-2-item-active" value="${value.id}" ab="${this.param.ab}-${value.ab}" type="${type}">${value.name}</div>`
         } else {
           html += `<div class="select-region-2-item border-right-1px" value="${value.id}" ab="${this.param.ab}-${value.ab}" type="${type}">${value.name}</div>`
@@ -796,18 +796,18 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
   /**
    * 初始化三级地区数据
    */
-  initThirdRegionData() {
+  initThirdRegionData () {
     if (!this.param.district_3rd) {
       return false
     }
     addClass(this.element.querySelector('.select-region-3'), 'select-region-3-active')
     addClass(this.element.querySelector('.select-region-3'), 'select-region-3-active')
     let url = `${this.param.hostUrl}${this.fetchUrl}?district_id=${this.param.district_2nd}`
-    let type = this.element.querySelector(".select-region-1-item-active").getAttribute('type')
-    let ab = this.element.querySelector(".select-region-2 .select-region-2-item-active").getAttribute('ab')
+    let type = this.element.querySelector('.select-region-1-item-active').getAttribute('type')
+    let ab = this.element.querySelector('.select-region-2 .select-region-2-item-active').getAttribute('ab')
     let regionThirdBox = this.element.querySelector('.select-region-3')
     let name = ''
-    if(this.param.strename && this.param.strename !== '') {
+    if (this.param.strename && this.param.strename !== '') {
       name = `全${this.param.strename}`
     }
     fetchJsonp(url).then(res => {
@@ -879,8 +879,8 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
     clearBtn.addEventListener('click', () => {
       this.removeAllClass('more-item-active-ios', this.modal)
       this.removeAllClass('more-item-active', this.modal)
-      element.querySelectorAll(`.select-fixed-item-wrapper .more-item-wrapper`).forEach((item => {
-        let mores = item.querySelectorAll(`.more-item`)
+      element.querySelectorAll('.select-fixed-item-wrapper .more-item-wrapper').forEach((item => {
+        let mores = item.querySelectorAll('.more-item')
         if (util.platform.isIos()) {
           addClass(mores[0], 'more-item-active-ios')
         }
@@ -1029,7 +1029,7 @@ export default class MipXuannaerSelectitem extends MIP.CustomElement {
           }
         }
       })
-      if(this.param.cateUrl === undefined) {
+      if (this.param.cateUrl === undefined) {
         this.param.cateUrl = ''
       }
       let kws = ''
