@@ -3,7 +3,7 @@
 * @title:  html代码渲染 PC&M共用
 * @Date:   2019-01-05 13:31:54
 * @Last Modified by:   shl
-* @Last Modified time: 2019-05-28 16:39:18
+* @Last Modified time: 2019-05-28 17:11:28
 */
 
 // 诗篇处理
@@ -339,7 +339,6 @@ function _same (start, htm, str) {
 
 /**
  * 根据传入需要高亮的文本对文本执行高亮操作
- *
  * @param  {string} body 文本
  * @param  {string} str  需高亮内容
  * @return {string}
@@ -403,7 +402,6 @@ const hlg = function (body, str) {
   }
   return txt
 }
-
 
 export {
   poem,

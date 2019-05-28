@@ -111,7 +111,7 @@ export default{
       MIP.util.css(body, 'position', 'static')
       MIP.util.css(result, 'height', 0)
     },
-    _go(str,url){
+    _go (str, url) {
       cookie.set('dt', str)
       MIP.viewer.open(url, {isMipLink: true})
     }

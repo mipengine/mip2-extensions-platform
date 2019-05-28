@@ -90,7 +90,7 @@ export default class MIPDataUrl extends MIP.CustomElement {
       auth = {
         id: res.author.id,
         name: res.author.name,
-        intro: res.author.intro===null?'':res.author.intro.replace(new RegExp(res.author.name, 'i'), `<em>${res.author.name}</em>`),
+        intro: res.author.intro === null ? '' : res.author.intro.replace(new RegExp(res.author.name, 'i'), `<em>${res.author.name}</em>`),
         img: res.author.img ? res.author.img : '',
         ishide: false
       }
@@ -152,7 +152,7 @@ export default class MIPDataUrl extends MIP.CustomElement {
     let auth = {
       id: info.id,
       name: info.name,
-      intro: info.intro===null?'':info.intro.replace(new RegExp(info.name, 'i'), `<em>${info.name}</em>`),
+      intro: info.intro === null ? '' : info.intro.replace(new RegExp(info.name, 'i'), `<em>${info.name}</em>`),
       img: info.img,
       ishide: false
     }
@@ -225,7 +225,7 @@ export default class MIPDataUrl extends MIP.CustomElement {
       id: info.auth_id,
       title: info.title,
       name: info.auth,
-      intro: info.intro===null?'':info.intro.replace(new RegExp(info.auth, 'g'), `<em>${info.auth}</em>`),
+      intro: info.intro === null ? '' : info.intro.replace(new RegExp(info.auth, 'g'), `<em>${info.auth}</em>`),
       img: info.img,
       ishide: false
     }

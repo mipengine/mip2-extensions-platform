@@ -106,11 +106,11 @@ export default{
     return {
       list: [],
       keyValue: [
-        {key: 'tags', cn: '类型'},
-        {key: 'auths', cn: '作者'},
-        {key: 'dynasty', cn: '朝代'},
-        {key: 'poetry_type', cn: '形式'},
-        {key: 'themes', cn: '主题'}
+        { key: 'tags', cn: '类型' },
+        { key: 'auths', cn: '作者' },
+        { key: 'dynasty', cn: '朝代' },
+        { key: 'poetry_type', cn: '形式' },
+        { key: 'themes', cn: '主题' }
       ],
       cur: '',
       query: {}
@@ -122,7 +122,7 @@ export default{
   },
   methods: {
     param () {
-      let path = location.pathname.replace('.html', '').replace('/','').split('_')
+      let path = location.pathname.replace('.html', '').replace('/', '').split('_')
       let q = {}
       if (path.length > 2) {
         if (/[a-z]/.test(path[1]) && path[0] === 'p') {
