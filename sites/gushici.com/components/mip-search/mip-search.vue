@@ -62,9 +62,7 @@ import './index.less'
 import ajaxGet from '../../common/ajax.js'
 const cookie = MIP.util.customStorage(0)
 export default{
-  props: {
-
-  },
+  props: {},
   data () {
     return {
       showResult: false,
