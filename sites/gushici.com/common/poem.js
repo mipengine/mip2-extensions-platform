@@ -3,11 +3,11 @@
 * @title:  html代码渲染 PC&M共用
 * @Date:   2019-01-05 13:31:54
 * @Last Modified by:   shl
-* @Last Modified time: 2019-04-12 17:37:07
+* @Last Modified time: 2019-05-28 17:11:28
 */
 
 // 诗篇处理
-const processPoem = function (def, y, z, s) {
+const poem = function (def, y, z, s) {
   let obj = {t: '', s: '', line: {}, line_count: 0}
   let arr = []
   let _def = null
@@ -53,7 +53,7 @@ const processPoem = function (def, y, z, s) {
   return obj
 }
 
-const processDoc = function (str) {
+const doc = function (str) {
   let arr = []
   let part = ''
   let tip = ''
@@ -339,12 +339,11 @@ function _same (start, htm, str) {
 
 /**
  * 根据传入需要高亮的文本对文本执行高亮操作
- *
  * @param  {string} body 文本
  * @param  {string} str  需高亮内容
  * @return {string}
  */
-const hgt = function (body, str) {
+const hlg = function (body, str) {
   let obj = _note(body, str)
   let txt = ''
   let needend = []
@@ -404,8 +403,8 @@ const hgt = function (body, str) {
   return txt
 }
 
-module.exports = {
-  poem: processPoem,
-  doc: processDoc,
-  hlg: hgt
+export {
+  poem,
+  doc,
+  hlg
 }
