@@ -1,6 +1,6 @@
 import './index.less'
-import ajax from '../../common/ajax.js'
-import poem from '../../common/poem.js'
+import ajaxGet from '../../common/ajax.js'
+import { poem, hlg, doc } from '../../common/poem.js'
 export default class MIPDataUrl extends MIP.CustomElement {
   constructor (...args) {
     super(...args)
@@ -28,7 +28,7 @@ export default class MIPDataUrl extends MIP.CustomElement {
       }
       MIP.setData({poem: [], auth: {}, pagesize: 0})
       MIP.viewport.setScrollTop(0)
-      ajax.get(url, query, function (res) {
+      ajaxGet(url, query, function (res) {
         t._so(res, query.value)
       })
     }
@@ -41,16 +41,13 @@ export default class MIPDataUrl extends MIP.CustomElement {
     let key = this.key
     let t = this
     if (key !== 'so') {
-      ajax.get(url, {id}, function (res) {
-        if (key === 'poem' || key === 'dt') {
+      ajaxGet(url, {id}, function (res) {
+        if (key === 'poem') {
           t._poem(res)
         } else if (key === 'auth') {
           t._auth(res)
         }
       })
-      if (key === 'poem') {
-        MIP.util.customStorage(0).rm('dt')
-      }
     }
   }
 
@@ -60,41 +57,40 @@ export default class MIPDataUrl extends MIP.CustomElement {
     let haspoem = false
     let hasauth = false
     let has = false
-    if (res.poetry !== null) {
-      for (let i = 0; i < res.poetry.length; i++) {
-        let info = res.poetry[i]
-        let o = poem.poem(info.body, info.translation, info.explanation, info.appreciation)
-        for (let j in o.line) {
-          o.line[j].def = poem.hlg(o.line[j].def, value)
-        }
-        let item = {
-          key: 'refresh',
-          id: info.id,
-          title: poem.hlg(info.title, value),
-          auth_id: info.auth_id,
-          auth: poem.hlg(info.auth, value),
-          dynasty_id: info.dynasty_id,
-          dynasty: poem.hlg(info.dynasty, value),
-          tag_arr: info.tag_arr,
-          has_y: info.translation !== '',
-          has_z: info.explanation !== '',
-          has_s: info.appreciation !== '',
-          line: o.line,
-          s: o.s,
-          t: o.t,
-          is_y: false,
-          is_z: false,
-          is_s: false,
-          hasmore: false
-        }
-        poems.push(item)
+
+    for (let i = 0; i < res.poetry.length; i++) {
+      let info = res.poetry[i]
+      let o = poem(info.body, info.translation, info.explanation, info.appreciation)
+      for (let j in o.line) {
+        o.line[j].def = hlg(o.line[j].def, value)
       }
+      let item = {
+        key: 'refresh',
+        id: info.id,
+        title: hlg(info.title, value),
+        auth_id: info.auth_id,
+        auth: hlg(info.auth, value),
+        dynasty_id: info.dynasty_id,
+        dynasty: hlg(info.dynasty, value),
+        tag_arr: info.tag_arr,
+        has_y: info.translation !== '',
+        has_z: info.explanation !== '',
+        has_s: info.appreciation !== '',
+        line: o.line,
+        s: o.s,
+        t: o.t,
+        is_y: false,
+        is_z: false,
+        is_s: false,
+        hasmore: false
+      }
+      poems.push(item)
     }
     if (res.author !== null) {
       auth = {
         id: res.author.id,
         name: res.author.name,
-        intro: res.author.intro.replace(new RegExp(res.author.name, 'i'), `<em>${res.author.name}</em>`),
+        intro: res.author.intro === null ? '' : res.author.intro.replace(new RegExp(res.author.name, 'i'), `<em>${res.author.name}</em>`),
         img: res.author.img ? res.author.img : '',
         ishide: false
       }
@@ -124,29 +120,29 @@ export default class MIPDataUrl extends MIP.CustomElement {
       {'iscur': false, 'htm': {title: '人物生平'}},
       {'iscur': false, 'htm': {title: '评价'}}
     ]
-    let head = [{iscur: true, title: '作品', id: 1}]
-    let o1 = poem.doc(info.allusion)
+    let head = [{iscur: true, title: '作品'}]
+    let o1 = doc(info.allusion)
     tabs[1].htm.arr = o1.arr
     tabs[1].htm.tip = o1.tip
     tabs[1].htm.hasmore = o1.hasmore
     if (o1.arr.length !== 0) {
       head.push({iscur: false, title: tabs[1].htm.title, id: 2})
     }
-    let o2 = poem.doc(info.achievement)
+    let o2 = doc(info.achievement)
     tabs[2].htm.arr = o2.arr
     tabs[2].htm.tip = o2.tip
     tabs[2].htm.hasmore = o2.hasmore
     if (o2.arr.length !== 0) {
       head.push({iscur: false, title: tabs[2].htm.title, id: 3})
     }
-    let o3 = poem.doc(info.life)
+    let o3 = doc(info.life)
     tabs[3].htm.arr = o3.arr
     tabs[3].htm.tip = o3.tip
     tabs[3].htm.hasmore = o3.hasmore
     if (o3.arr.length !== 0) {
       head.push({iscur: false, title: tabs[3].htm.title, id: 4})
     }
-    let o4 = poem.doc(info.evaluation)
+    let o4 = doc(info.evaluation)
     tabs[4].htm.arr = o4.arr
     tabs[4].htm.tip = o4.tip
     tabs[4].htm.hasmore = o4.hasmore
@@ -156,7 +152,7 @@ export default class MIPDataUrl extends MIP.CustomElement {
     let auth = {
       id: info.id,
       name: info.name,
-      intro: info.intro.replace(new RegExp(info.name, 'i'), `<em>${info.name}</em>`),
+      intro: info.intro === null ? '' : info.intro.replace(new RegExp(info.name, 'i'), `<em>${info.name}</em>`),
       img: info.img,
       ishide: false
     }
@@ -167,7 +163,7 @@ export default class MIPDataUrl extends MIP.CustomElement {
   _poem (res) {
     let info = res.detail
     let likes = []
-    let o = poem.poem(info.body, info.translation, info.explanation, info.appreciation)
+    let o = poem(info.body, info.translation, info.explanation, info.appreciation)
     let item = {
       key: 'refresh',
       id: info.id,
@@ -195,7 +191,7 @@ export default class MIPDataUrl extends MIP.CustomElement {
         arr: [],
         tip: ''
       }
-      let o = poem.doc(info.yi_zhu)
+      let o = doc(info.yi_zhu)
       doc.arr = o.arr
       doc.tip = o.tip
       doc.hasmore = o.hasmore
@@ -207,7 +203,7 @@ export default class MIPDataUrl extends MIP.CustomElement {
         arr: [],
         tip: ''
       }
-      let o = poem.doc(info.historical)
+      let o = doc(info.historical)
       doc.arr = o.arr
       doc.tip = o.tip
       doc.hasmore = o.hasmore
@@ -219,7 +215,7 @@ export default class MIPDataUrl extends MIP.CustomElement {
         arr: [],
         tip: ''
       }
-      let o = poem.doc(info.appreciation)
+      let o = doc(info.appreciation)
       doc.arr = o.arr
       doc.tip = o.tip
       doc.hasmore = o.hasmore
@@ -229,12 +225,12 @@ export default class MIPDataUrl extends MIP.CustomElement {
       id: info.auth_id,
       title: info.title,
       name: info.auth,
-      intro: info.intro.replace(new RegExp(info.auth, 'g'), `<em>${info.auth}</em>`),
+      intro: info.intro === null ? '' : info.intro.replace(new RegExp(info.auth, 'g'), `<em>${info.auth}</em>`),
       img: info.img,
       ishide: false
     }
     for (let i = 0; i < res.like.length; i++) {
-      let lo = poem.poem(res.like[i].body, res.like[i].translation, res.like[i].explanation, res.like[i].appreciation)
+      let lo = poem(res.like[i].body, res.like[i].translation, res.like[i].explanation, res.like[i].appreciation)
       let lk = {
         key: 'refresh',
         id: res.like[i].id,
