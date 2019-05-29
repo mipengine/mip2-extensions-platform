@@ -154,7 +154,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
      * 获取用户所在城市信息的方法
      */
     function getCurrentCity () {
-      fetch('http://www.tobosu.com/tapi/api/getIpCityInfo')
+      fetch('https://www.tobosu.com/tapi/api/getIpCityInfo')
         .then(function (res) {
           return res.json()
         })
@@ -165,7 +165,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
           // 获取当前所在城市昵称
           let provinceName = idChangeName(province, 'id', currentProvince, 'name')
           // 获取所有城市信息
-          fetch('http://www.tobosu.com/tapi/Smallprogram/getCityData')
+          fetch('https://www.tobosu.com/tapi/Smallprogram/getCityData')
             .then(function (res) {
               return res.json()
             })
@@ -409,7 +409,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
       _this.element.innerHTML = mould
     }
     // 点击选择城市出现的弹窗
-    if (this.element.querySelector('.custom-province-city')) {
+    if (_this.element.querySelector('.custom-province-city')) {
       let provincecity = this.element.querySelector('.custom-province-city')
       provincecity.onclick = function () {
         let model = '<mip-fixed still>' +
