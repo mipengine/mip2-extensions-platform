@@ -132,8 +132,8 @@ export default class MIPTbsalert extends MIP.CustomElement {
       switch (type) {
         // 验证表单填写信息
         case 'checking':
-          let globalForm = this.element.getElementsByClassName('global-form')[0]
-          let div = this.element.createElement('div')
+          let globalForm = _this.element.querySelector('.global-form')
+          let div = document.createElement('div')
           // 提示弹窗
           let tipsWindows = `<div class="tips-content"> ${content} </div>`
           div.innerHTML = tipsWindows
@@ -410,7 +410,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
     }
     // 点击选择城市出现的弹窗
     if (_this.element.querySelector('.custom-province-city')) {
-      let provincecity = this.element.querySelector('.custom-province-city')
+      let provincecity = _this.element.querySelector('.custom-province-city')
       provincecity.onclick = function () {
         let model = '<mip-fixed still>' +
                       '<div class="m-area-select-background">' +
