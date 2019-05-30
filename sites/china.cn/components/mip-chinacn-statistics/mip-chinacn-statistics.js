@@ -1,11 +1,9 @@
 export default class MIPChinacnStatistics extends MIP.CustomElement {
   build () {
     if (location.host !== 'mip.china.cn') {
-      let timer = setInterval(() => {
-        let timing = MIP.performance.getTiming()
-        if (timing.loadEventEnd !== 0) {
-          clearInterval(timer)
-          timer = null
+      window.addEventListener('load', () => {
+        setTimeout(() => {
+          let timing = MIP.performance.getTiming()
           let data = {}
           // 页面地址
           data.url = encodeURIComponent(location.href)
@@ -27,8 +25,8 @@ export default class MIPChinacnStatistics extends MIP.CustomElement {
             body: 'type=mip&page=' + page + '&str=' + JSON.stringify(data),
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
           })
-        }
-      }, 300)
+        }, 500)
+      })
     }
   }
 }
