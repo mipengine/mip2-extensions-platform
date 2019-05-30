@@ -672,7 +672,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
             pageTag: _this.element.querySelector('.global-getBtn').getAttribute('data-ptag'),
             houseArea: houseArea
           }
-          _this.innerHTML = '提交中,请稍后'
+          _this.element.querySelector('.global-getBtn').innerHTML = '提交中,请稍后'
           if (formsubmit === false) return
           fetch('https://www.tobosu.com//tapi/order/pub_order', {
             method: 'POST',
