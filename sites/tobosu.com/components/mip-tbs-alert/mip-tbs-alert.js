@@ -242,13 +242,13 @@ export default class MIPTbsalert extends MIP.CustomElement {
       // 城市等级 citygrade
       let citygrade = _this.element.querySelector('input[name="citygrade"]').value
       // 面积
-      let housearea = _this.element.querySelector('.house').length > 0 ? _this.element.querySelector('.house').value : 1
+      let housearea = _this.element.querySelectorAll('.house').length > 0 ? _this.element.querySelector('.house').value : 1
       // 装修程度
       let decdegree = _this.element.querySelectorAll('input[name="decdegree"]').length > 0 ? _this.element.querySelector('input[name="decdegree"]').value : 2
       // 根据装修方式，城市等级得出基本价格
       // 全包
       if (zxType * 1 === 2) {
-        switch (citygrade) {
+        switch (citygrade * 1) {
           case 2:
             money = 860
             break
@@ -264,7 +264,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
         }
       } else {
         // 半包
-        switch (citygrade) {
+        switch (citygrade * 1) {
           case 2:
             money = 440
             break
@@ -282,7 +282,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
       // 乘以面积
       money *= housearea
       // 乘以装修程度
-      switch (decdegree) {
+      switch (decdegree * 1) {
         case 1:
           money *= 0.78
           break
