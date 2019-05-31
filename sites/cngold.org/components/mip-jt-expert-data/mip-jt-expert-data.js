@@ -55,8 +55,8 @@ export default class MIPJtExpertData extends MIP.CustomElement {
     fetchJsonp(fetchUrl).then((res) => {
       return res.json()
     }).then((data) => {
-      if (data && data.data) {
-        let result = data.data
+      let result = data.data
+      if (result !== null && result !== '' && result !== undefined && result.length > 0) {
         let html = ''
         for (let i = 0; i < result.length; i++) {
           let data = result[i]
@@ -100,9 +100,9 @@ export default class MIPJtExpertData extends MIP.CustomElement {
             '</div>' + '</a></li>'
         }
         this.element.querySelector('#say-list').innerHTML = html
-      } else if (!data && page === 1) {
+      } else if ((result === null || result === '' || result === undefined || result.length === 0) && page === 1) {
         let html = '<li class="con_none">' +
-          '<div class="img"><mip-img layout="responsive" width="137" height="134" src="https//res.cngoldres.com/mobile/mingjia/img/none.png" alt="暂时还没有说说哦"></mip-img></div>' +
+          '<div class="img"><mip-img layout="responsive" width="137" height="134" src="https://res.cngoldres.com/mobile/mingjia/img/none.png" alt="暂时还没有说说哦"></mip-img></div>' +
           '<p>暂时还没有说说哦</p>' +
           '</li>'
         this.element.querySelector('#say-list').innerHTML = html
