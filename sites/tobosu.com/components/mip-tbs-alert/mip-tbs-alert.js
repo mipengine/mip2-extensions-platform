@@ -248,7 +248,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
       // 根据装修方式，城市等级得出基本价格
       // 全包
       if (zxType * 1 === 2) {
-        switch (citygrade) {
+        switch (citygrade * 1) {
           case 2:
             money = 860
             break
