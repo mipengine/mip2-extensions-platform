@@ -669,8 +669,8 @@ export default class MIPTbsalert extends MIP.CustomElement {
             cellphone: callres,
             comeurl: '',
             source: _this.element.querySelector('input[name=\'source\']').getAttribute('value'),
-            pageTag: _this.element.querySelector('.global-getBtn').getAttribute('data-ptag'),
-            houseArea: houseArea
+            page_tag: _this.element.querySelector('.global-getBtn').getAttribute('data-ptag'),
+            housearea: houseArea
           }
           _this.element.querySelector('.global-getBtn').innerHTML = '提交中,请稍后'
           if (formsubmit === false) return
