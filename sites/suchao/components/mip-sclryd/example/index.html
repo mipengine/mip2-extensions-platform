@@ -1,0 +1,98 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>图片左右横向切换</title>
+
+<style type="text/css">
+body{font-family:"微软雅黑";}
+img{border:none;}
+
+/* scrollpic */
+.scrollpic{max-width:1048px;min-height:550px;margin:20px auto;}
+#myscroll{display:block; width:100%; position:relative; height:390px; overflow:hidden;}
+#myscroll #myscrollbox{display:block; float:left; position:absolute; left:0; top:0; width:1000000px;}
+#myscroll ul{display:block; float:left; list-style-type:none; padding:0; margin:0;}
+#myscroll ul li{display:block; float:left; padding:0; margin:0;}
+#myscroll ul li a{display:block; float:left; width:242px;  height:390px; padding:0 10px; position:relative; color:#333;}
+#myscroll a .intro{position:absolute; left:0; z-index:10; background-color:rgba(255,255,255,.80); padding:0 10px;}
+#myscroll a .intro h5{padding:0; margin:0; font-size:16px; font-weight:bold; padding:0 47px 0 15px; background:url(images/go.png) right no-repeat; height:40px; width:180px; line-height:40px; border-bottom:1px solid rgba(215,0,15,.2);}
+#myscroll a .intro p{font-size:13px; line-height:20px; margin:10px 15px; height:40px; overflow:hidden;}
+#myscroll a .intro{bottom:-61px;}
+#myscroll a:hover .intro{bottom:0px;}
+
+#mybtns{margin:10px; width:100%; display:block; height:42px;}
+#mybtns a{width:42px; height:42px; display:block; float:left; margin-right:1px; background-color: #c1c1c1;}
+#mybtns a:hover{background-color: #d7000f;}
+#mybtns a:hover, #myscroll, #mybtns a,#myscroll a:hover .intro, #myscroll a .intro,#myscroll #myscrollbox{
+	-webkit-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-ms-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+#mybtns #left{background-image:url(images/jt_l.png);}
+#mybtns #right{background-image:url(images/jt_r.png);}
+
+@media(min-width:1572px){
+.scrollpic{max-width:1572px; width:100%;}
+#myscroll{width:1572px;}
+}
+@media(max-width:1571px){
+.scrollpic{max-width:1310px; width:100%;}
+#myscroll{width:1310px;}
+}
+@media(max-width:1309px){
+.scrollpic{max-width:1048px; width:100%;}
+#myscroll{width:1048px;}
+}
+@media(max-width:1047px){
+.scrollpic{max-width:786px; width:100%;}
+#myscroll{width:786px;}
+}
+@media(max-width:767px){
+.scrollpic{max-width:524px; width:100%;}
+#myscroll{width:524px;}
+}
+@media(max-width:523px){
+.scrollpic{max-width:262px; width:100%;}
+#myscroll{width:262px;}
+}
+/*浏览器宽度变化时需刷新页面才能正常显示*/
+</style>
+
+
+</head>
+
+<body>
+<mip-sclryd></mip-sclryd>
+<div class="scrollpic">
+	<div id="mybtns">
+	  <a id="left"></a>
+	  <a id="right"></a>
+	</div>
+	<div id="myscroll">
+		<div id="myscrollbox" class="aaa">
+			<ul>
+				<li class="lia"><a href="/"><mip-img src="images/01.jpg" width="242" height="390"></mip-img ><span class="intro"><h5>标题1</h5><p>这里写上简介文字</p></span></a></li>
+				<li class="lia"><a href="/"><mip-img src="images/01.jpg" width="242" height="390"></mip-img ><span class="intro"><h5>标题2</h5><p>文字信息文字信息文字信息文字信息文字信息文字信息文字信息</p></span></a></li>
+				<li class="lia"><a href="/"><mip-img src="images/01.jpg" width="242" height="390"></mip-img ><span class="intro"><h5>标题3</h5><p>这里写上简介文字</p></span></a></li>
+				<li class="lia"><a href="/"><mip-img src="images/01.jpg" width="242" height="390"></mip-img ><span class="intro"><h5>标题4</h5><p>文字信息文字信息文字信息文字信息文字信息文字信息文字信息</p></span></a></li>
+				<li class="lia"><a href="/"><mip-img src="images/01.jpg" width="242" height="390"></mip-img ><span class="intro"><h5>标题5</h5><p>这里写上简介文字</p></span></a></li>
+				<li class="lia"><a href="/"><mip-img src="images/01.jpg" width="242" height="390"></mip-img ><span class="intro"><h5>标题6</h5><p>文字信息文字信息文字信息文字信息文字信息文字信息文字信息</p></span></a></li>
+				<li class="lia"><a href="/"><mip-img src="images/01.jpg" width="242" height="390"></mip-img ><span class="intro"><h5>标题7</h5><p>这里写上简介文字</p></span></a></li>
+				<li class="lia"><a href="/"><mip-img src="images/01.jpg" width="242" height="390"></mip-img ><span class="intro"><h5>标题8</h5><p>文字信息文字信息文字信息文字信息文字信息文字信息文字信息</p></span></a></li>
+
+			
+			</ul>
+		</div>
+	</div>
+
+</div>
+ <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+  <script src="/mip-sclryd/mip-sclryd.js"></script>
+
+	
+</body>
+</html>
