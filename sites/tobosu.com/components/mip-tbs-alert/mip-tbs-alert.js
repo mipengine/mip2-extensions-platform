@@ -132,8 +132,8 @@ export default class MIPTbsalert extends MIP.CustomElement {
       switch (type) {
         // 验证表单填写信息
         case 'checking':
-          let globalForm = this.element.getElementsByClassName('global-form')[0]
-          let div = this.element.createElement('div')
+          let globalForm = _this.element.querySelector('.global-form')
+          let div = document.createElement('div')
           // 提示弹窗
           let tipsWindows = `<div class="tips-content"> ${content} </div>`
           div.innerHTML = tipsWindows
@@ -238,17 +238,17 @@ export default class MIPTbsalert extends MIP.CustomElement {
       // 金钱
       let money = 0
       // 装修方式
-      let zxType = this.element.querySelectorAll('input[name="zx_type"]').length > 0 ? this.element.querySelector('input[name="zx_type"]').value : 1
+      let zxType = _this.element.querySelectorAll('input[name="zx_type"]').length > 0 ? _this.element.querySelector('input[name="zx_type"]').value : 1
       // 城市等级 citygrade
-      let citygrade = this.element.querySelector('input[name="citygrade"]').value
+      let citygrade = _this.element.querySelector('input[name="citygrade"]').value
       // 面积
-      let housearea = this.element.querySelector('.house').length > 0 ? this.element.querySelector('.house').value : 1
+      let housearea = _this.element.querySelectorAll('.house').length > 0 ? _this.element.querySelector('.house').value : 1
       // 装修程度
-      let decdegree = this.element.querySelectorAll('input[name="decdegree"]').length > 0 ? this.element.querySelector('input[name="decdegree"]').value : 2
+      let decdegree = _this.element.querySelectorAll('input[name="decdegree"]').length > 0 ? _this.element.querySelector('input[name="decdegree"]').value : 2
       // 根据装修方式，城市等级得出基本价格
       // 全包
       if (zxType * 1 === 2) {
-        switch (citygrade) {
+        switch (citygrade * 1) {
           case 2:
             money = 860
             break
@@ -264,7 +264,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
         }
       } else {
         // 半包
-        switch (citygrade) {
+        switch (citygrade * 1) {
           case 2:
             money = 440
             break
@@ -282,7 +282,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
       // 乘以面积
       money *= housearea
       // 乘以装修程度
-      switch (decdegree) {
+      switch (decdegree * 1) {
         case 1:
           money *= 0.78
           break
@@ -388,7 +388,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
       let oneHoursTime = 60 * 60 * 1000
       if (disTime >= oneHoursTime) {
         // 显示弹窗
-        this.element.innerHTML = mould
+        _this.element.innerHTML = mould
         // 更新时间
         localStorage.setItem('currentHours', newHours)
       } else {
@@ -410,7 +410,7 @@ export default class MIPTbsalert extends MIP.CustomElement {
     }
     // 点击选择城市出现的弹窗
     if (_this.element.querySelector('.custom-province-city')) {
-      let provincecity = this.element.querySelector('.custom-province-city')
+      let provincecity = _this.element.querySelector('.custom-province-city')
       provincecity.onclick = function () {
         let model = '<mip-fixed still>' +
                       '<div class="m-area-select-background">' +
@@ -638,8 +638,8 @@ export default class MIPTbsalert extends MIP.CustomElement {
       globalForm && globalForm.addEventListener('click', function () {
         // 组合数据
         // 获取房屋所在地
-        let province = _this.element.querySelector('.province') ? _this.element.querySelector('.province').getAttribute('value') : currentProvince
-        let city = _this.element.querySelector('.city') ? _this.element.querySelector('.city').getAttribute('value') : currentCity
+        let province = !_this.element.querySelector('input[name="province"]').getAttribute('value') === '' ? _this.element.querySelector('input[name="province"]').getAttribute('value') : currentProvince
+        let city = !_this.element.querySelector('input[name="city"]').getAttribute('value') === '' ? _this.element.querySelector('input[name="city"]').getAttribute('value') : currentCity
         // 获取面积信息
         let houseArea = _this.element.querySelector('.house').value
         // 获取手机号
@@ -669,10 +669,10 @@ export default class MIPTbsalert extends MIP.CustomElement {
             cellphone: callres,
             comeurl: '',
             source: _this.element.querySelector('input[name=\'source\']').getAttribute('value'),
-            pageTag: _this.element.querySelector('.global-getBtn').getAttribute('data-ptag'),
-            houseArea: houseArea
+            page_tag: _this.element.querySelector('.global-getBtn').getAttribute('data-ptag'),
+            housearea: houseArea
           }
-          _this.innerHTML = '提交中,请稍后'
+          _this.element.querySelector('.global-getBtn').innerHTML = '提交中,请稍后'
           if (formsubmit === false) return
           fetch('https://www.tobosu.com//tapi/order/pub_order', {
             method: 'POST',
