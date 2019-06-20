@@ -1,6 +1,6 @@
 {
   "name": "m.ddooo.com",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "mip2 for m.ddooo.com",
   "scripts": {
     "dev": "mip2 dev",
