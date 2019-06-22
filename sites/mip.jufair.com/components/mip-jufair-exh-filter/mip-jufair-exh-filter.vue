@@ -233,6 +233,10 @@ export default {
           temp[1] = id
           temp[2] = 0
           break
+        case 'firstIndustryName':
+          temp[1] = pid
+          temp[2] = id
+          break
         case 'continentName':
           temp[3] = id
           temp[4] = 0
