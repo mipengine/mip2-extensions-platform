@@ -233,7 +233,7 @@ export default {
           temp[1] = id
           temp[2] = 0
           break
-        case 'firstIndustryName':
+        case 'secondIndustryName':
           temp[1] = pid
           temp[2] = id
           break
@@ -265,12 +265,13 @@ export default {
     handleFilter (data) {
       this.filterdata = data
       this.index = 0
-      this.urlType = 'secondIndustryName'
       if (this.type === 'region') {
         this.visible = true
         this.type = 'industry'
+        this.urlType = 'secondIndustryName'
       } else if (this.type === 'industry') {
         this.visible = !this.visible
+        this.urlType = 'countryName'
       }
     }
   }
