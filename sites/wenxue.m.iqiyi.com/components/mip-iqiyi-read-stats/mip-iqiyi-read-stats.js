@@ -7,12 +7,12 @@ import { isInViewport } from '../../common/viewport'
 import { RSEAT_ATTR, BLOCK_ATTR } from './const'
 
 export default class MIPIqiyiReadStats extends MIP.CustomElement {
-  constructor(props) {
+  constructor (props) {
     super(props)
     this.log = MIP.util.log('iQiyi Read Stats')
   }
 
-  checkBlock() {
+  checkBlock () {
     if (!this.blockElements.length) return false
     this.blockElements.forEach(element => {
       if (isInViewport(element)) {
@@ -23,13 +23,13 @@ export default class MIPIqiyiReadStats extends MIP.CustomElement {
     this.updateBlockElements()
   }
 
-  updateBlockElements() {
+  updateBlockElements () {
     this.blockElements = document.querySelectorAll(
       `[${BLOCK_ATTR}]`
     )
   }
 
-  build() {
+  build () {
     try {
       const option = JSON.parse(this.element.children[0].innerText)
       configPingback(option)
