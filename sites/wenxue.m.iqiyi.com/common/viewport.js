@@ -2,7 +2,12 @@ export const isInViewport = (
   el,
   { partial = true, thresholdX = 0, thresholdY = 0 } = {}
 ) => {
-  const { top, left, width: elWidth, height: elHeight } = MIP.util.rect.getElementOffset(el)
+  const {
+    top,
+    left,
+    width: elWidth,
+    height: elHeight
+  } = MIP.util.rect.getElementOffset(el)
   const bottom = top + elHeight
   const right = left + elWidth
   const { height, width } = MIP.viewport.getRect()
@@ -21,5 +26,5 @@ export const isInViewport = (
     : top >= viewPortTop &&
         left >= viewPortLeft &&
         bottom <= viewPortBottom &&
-        right <= viewPortRight;
+        right <= viewPortRight
 }
