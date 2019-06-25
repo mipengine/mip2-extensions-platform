@@ -11,7 +11,7 @@ const {
 export default class MipSmRecommend extends CustomElement {
   connectedCallback () {
     let element = this.element
-    let title = element.getAttribute('title') || (document.querySelector('title') && document.querySelector('title').textContent)    
+    let title = element.getAttribute('title') || (document.querySelector('title') && document.querySelector('title').textContent)
     let hashQuery = this.getQueryString(location.hash, 'q')
     let query = hashQuery || encodeURIComponent(title)
     let recommendAPI = 'https://mip.m.sm.cn/rec/recword?wd=' + query + '&from=mip'
@@ -40,12 +40,12 @@ export default class MipSmRecommend extends CustomElement {
       })
   }
 
-  getQueryString(str,key) {
+  getQueryString (str, key) {
     if (!str || !key) {
       return null
     }
-    var reg = new RegExp("(^|&)"+ key +"=([^&]*)(&|$)")
-    var r = str.substr(1).match(reg)
+    let reg = new RegExp('(^|&)' + key + '=([^&]*)(&|$)')
+    let r = str.substr(1).match(reg)
     if (r === null) {
       return null
     }
