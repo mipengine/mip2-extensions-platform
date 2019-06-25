@@ -11,7 +11,7 @@ const {
 export default class MipSmRecommend extends CustomElement {
   connectedCallback () {
     let element = this.element
-    let title = element.getAttribute('title') || (document.querySelector('title') && document.querySelector('title').textContent)    
+    let title = element.getAttribute('title') || (document.querySelector('title') && document.querySelector('title').textContent)
     let query = MIP.hash.get('q') || encodeURIComponent(title)
     let recommendAPI = 'https://mip.m.sm.cn/rec/recword?wd=' + query + '&from=mip'
 
