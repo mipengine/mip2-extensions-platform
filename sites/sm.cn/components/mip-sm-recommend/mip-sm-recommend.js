@@ -11,8 +11,9 @@ const {
 export default class MipSmRecommend extends CustomElement {
   connectedCallback () {
     let element = this.element
-    let title = element.getAttribute('title') || (document.querySelector('title') && document.querySelector('title').textContent)
-    let query = location.hash ? location.hash.split('#')[1] : encodeURIComponent(title)
+    let title = element.getAttribute('title') || (document.querySelector('title') && document.querySelector('title').textContent)    
+    let hashQuery = this.getQueryString(location.hash, 'q')
+    let query = hashQuery || encodeURIComponent(title)
     let recommendAPI = 'https://mip.m.sm.cn/rec/recword?wd=' + query + '&from=mip'
 
     if (!query) {
@@ -23,6 +24,7 @@ export default class MipSmRecommend extends CustomElement {
       .then(res => res.json())
       .then(data => {
         let wordsJson = data.items.words
+        wordsJson = wordsJson.slice(0, 8)
         let listHtml = '<div><p>大家还在搜</p><ul>'
         Object.keys(wordsJson).map((key) => {
           let item = wordsJson[key]
@@ -36,5 +38,17 @@ export default class MipSmRecommend extends CustomElement {
       .catch(error => {
         console.warn('error ', error.message)
       })
+  }
+
+  getQueryString(str,key) {
+    if (!str || !key) {
+      return null
+    }
+    var reg = new RegExp("(^|&)"+ key +"=([^&]*)(&|$)")
+    var r = str.substr(1).match(reg) 
+    if (r == null) {
+      return null
+    }
+    return r[2]
   }
 }
