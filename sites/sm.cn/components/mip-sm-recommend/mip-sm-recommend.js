@@ -46,7 +46,7 @@ export default class MipSmRecommend extends CustomElement {
     }
     var reg = new RegExp("(^|&)"+ key +"=([^&]*)(&|$)")
     var r = str.substr(1).match(reg) 
-    if (r == null) {
+    if (r === null) {
       return null
     }
     return r[2]
