@@ -8,24 +8,15 @@
 
 ## 说明
 
-组件功能说明
+扩展默认轮播组件，通过jsonp的方式获取数据
 
 ## 示例
 
 示例说明
 
 ```
-// 代码示例
+<mip-bannerapi 
+        url="http://yh.cszkbdfyy.com/api/1/" bwidth="1920" bheight="465" defer="5000"
+>
+</mip-bannerapi>
 ```
-
-## 属性
-
-### 属性1
-
-**说明**：
-
-**必选项**：
-
-**单位**：
-
-**默认值**：
