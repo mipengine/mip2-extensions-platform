@@ -42,7 +42,11 @@ export default class MIPIqiyiReadStats extends MIP.CustomElement {
         `[${RSEAT_ATTR}]`,
         'click',
         ({ target }) => {
-          sendClick(target.getAttribute(RSEAT_ATTR))
+          const element = MIP.util.dom.closest(
+            target,
+            `[${RSEAT_ATTR}]`
+          )
+          sendClick(element.getAttribute(RSEAT_ATTR))
         }
       )
       this.updateBlockElements()
