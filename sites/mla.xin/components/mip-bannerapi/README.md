@@ -1,4 +1,4 @@
-# mip-example
+# mip-bannerapi
 
 标题|内容
 ----|----
@@ -16,7 +16,7 @@
 
 ```
 <mip-bannerapi 
-        url="http://yh.cszkbdfyy.com/api/1/"  bwidth="1920" bheight="465" defer="5000"
+        url="https://s.mla.xin/test/"  bwidth="1920" bheight="500" defer="5000"
     >
 </mip-bannerapi>
 ```
