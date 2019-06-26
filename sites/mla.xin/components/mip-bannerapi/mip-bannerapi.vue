@@ -7,48 +7,63 @@
     </div>
     <div v-else>
       <mip-carousel
-      autoplay
-      :defer="de"
-      layout="responsive" :width="bw" :height="bh" indicator indicatorId="mip-carousel-yd">
-        <a data-type="mip" :href="bannerItem.redirecturl" :key="bannerItem.id" v-for="bannerItem in bannerList">
-            <mip-img :src="bannerItem.litpic" alt="">
-            </mip-img>
+        :defer="de"
+        :width="bw"
+        :height="bh"
+        autoplay
+        indicator
+        layout="responsive"
+        indicator-id="mip-carousel-yd">
+        <a
+          v-for="bannerItem in bannerList"
+          :href="bannerItem.redirecturl"
+          :key="bannerItem.id"
+          data-type="mip">
+          <mip-img :src="bannerItem.litpic"/>
         </a>
       </mip-carousel>
       <div class="mip-carousel-indicator-wrapper">
-          <div class="mip-carousel-indicatorDot" id="mip-carousel-yd">
-              <div :class="index==0?'mip-carousel-activeitem mip-carousel-indecator-item' : 'mip-carousel-indecator-item'" :key="bannerItem.id" v-for="(bannerItem,index) in bannerList">
-              </div>
-          </div>
+        <div
+          id="mip-carousel-yd"
+          class="mip-carousel-indicatorDot">
+          <div
+            v-for="(bannerItem,index) in bannerList"
+            :class="index==0?'mip-carousel-activeitem mip-carousel-indecator-item' : 'mip-carousel-indecator-item'"
+            :key="bannerItem.id" />
+        </div>
       </div>
     </div>
-  </div>  
+  </div>
 </template>
 <script>
 export default {
   props: {
     url: {
       type: String,
+      default: '#'
     },
-    bwidth:{
-      type: String
+    bwidth: {
+      type: String,
+      default: '1920'
     },
-    bheight:{
-      type: String
+    bheight: {
+      type: String,
+      default: '450'
     },
-    defer:{
-      type: String
-    },
+    defer: {
+      type: String,
+      default: '3000'
+    }
   },
   data () {
     return {
-      bw:'',
-      bh:'',
-      de:'',
-      bannerList:[]
+      bw: '',
+      bh: '',
+      de: '',
+      bannerList: []
     }
   },
-  created() {
+  created () {
     let me = this
     me.bw = me.bwidth
     me.bh = me.bheight
@@ -60,7 +75,7 @@ export default {
       return res.json()
     }).then(function (data) {
       // 渲染逻辑,直接进行数据赋值就可以了
-      me.bannerList=JSON.parse(data)
+      me.bannerList = JSON.parse(data)
     })
   }
 }
