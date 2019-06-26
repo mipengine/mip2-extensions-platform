@@ -12,8 +12,7 @@
         :height="bh"
         autoplay
         indicator
-        layout="responsive"
-        indicator-id="mip-carousel-yd">
+        layout="responsive">
         <a
           v-for="bannerItem in bannerList"
           :href="bannerItem.redirecturl"
@@ -22,16 +21,6 @@
           <mip-img :src="bannerItem.litpic"/>
         </a>
       </mip-carousel>
-      <div class="mip-carousel-indicator-wrapper">
-        <div
-          id="mip-carousel-yd"
-          class="mip-carousel-indicatorDot">
-          <div
-            v-for="(bannerItem,index) in bannerList"
-            :class="index==0?'mip-carousel-activeitem mip-carousel-indecator-item' : 'mip-carousel-indecator-item'"
-            :key="bannerItem.id" />
-        </div>
-      </div>
     </div>
   </div>
 </template>
