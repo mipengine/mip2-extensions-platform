@@ -1,12 +1,18 @@
 <template>
   <div class="view">
     <!-- 文字 -->
-    <div class="view-text" v-if="type == 'text'">
-      <a :href="data.href" class="adv-text dan">{{data.text}}</a>
+    <div class="view-text" 
+          v-if="type == 'text'">
+      <a 
+          :href="data.href" 
+          class="adv-text dan">{{data.text}}</a>
     </div>
     <!-- 图片 -->
-    <div class="view-img" v-if="type == 'image'">
-      <a :href="data.href">
+    <div 
+          class="view-img" 
+          v-if="type == 'image'">
+      <a 
+        :href="data.href">
         <mip-img
           class="img"
           :src="data.src"
@@ -15,7 +21,8 @@
       </a>
     </div>
     <!-- 轮播图 -->
-    <div class="view-carousel" v-if="type == 'carousel'">
+    <div class="view-carousel" 
+          v-if="type == 'carousel'">
       <mip-carousel
         layout="responsive"
         autoplay
@@ -24,21 +31,31 @@
         :width="(size[0] / 375) * 100+'vw'"
         :height="(size[1] / 375) * 100+'vw'"
       >
-        <a v-for="(item, index) in data.list" :key="index" :href="item.href">
-          <mip-img class="img" :src="item.src"></mip-img>
+        <a 
+          v-for="(item, index) in data.list" 
+          :key="index" 
+          :href="item.href">
+          <mip-img 
+            class="img" 
+            :src="item.src"></mip-img>
         </a>
       </mip-carousel>
       <div class="mip-carousel-indicator-wrapper">
         <div class="mip-carousel-indicatorDot" id="mip-carousel-dot">
-          <div class="mip-carousel-activeitem mip-carousel-indecator-item"></div>
-          <div class="mip-carousel-indecator-item"></div>
-          <div class="mip-carousel-indecator-item"></div>
+          <div 
+          v-for="(item, index) in data.list" 
+          :key="index"  
+          class="mip-carousel-indecator-item"></div>
         </div>
       </div>
     </div>
     <!-- 图文 -->
-    <div class="view-graphic" v-if="type == 'graphic'">
-      <a :href="data.href" class="item">
+    <div 
+      class="view-graphic" 
+      v-if="type == 'graphic'">
+      <a 
+        :href="data.href" 
+        class="item">
         <div class="info">
           <h3 class="info-title shuang">{{data.title}}</h3>
           <div class="info-about">
@@ -46,7 +63,9 @@
             <span>阅读({{data.total}}+)</span>
           </div>
         </div>
-        <mip-img class="img" :src="data.src"></mip-img>
+        <mip-img 
+          class="img" 
+          :src="data.src"></mip-img>
       </a>
     </div>
   </div>
