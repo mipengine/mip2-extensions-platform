@@ -12,6 +12,7 @@
         :height="bh"
         autoplay
         indicator
+        buttonController
         layout="responsive">
         <a
           v-for="bannerItem in bannerList"
