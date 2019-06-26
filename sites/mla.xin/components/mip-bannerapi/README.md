@@ -12,7 +12,10 @@
 
 ## 示例
 
-示例说明
+url：获取jsonp的远程地址
+bwidth：图片的宽度
+bheight：图片的高度
+defer：设置轮播间隔时间
 
 ```
 <mip-bannerapi 
