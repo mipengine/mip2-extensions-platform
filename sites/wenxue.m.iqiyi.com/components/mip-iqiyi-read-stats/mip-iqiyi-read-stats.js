@@ -4,54 +4,85 @@ import {
   sendBlock
 } from '../../common/pingback'
 import { isInViewport } from '../../common/viewport'
-import { RSEAT_ATTR, BLOCK_ATTR } from './const'
+import {
+  RSEAT_ATTR,
+  BLOCK_ATTR,
+  THROTTLE_DELAY,
+  OPTION_ERROR
+} from './const'
 
 export default class MIPIqiyiReadStats extends MIP.CustomElement {
   constructor (props) {
     super(props)
     this.log = MIP.util.log('iQiyi Read Stats')
+    this.scrollElements = {}
+    this.scrollHandler = MIP.util.fn.throttle(() => {
+      this.checkBlock()
+    }, THROTTLE_DELAY)
   }
 
   checkBlock () {
-    if (!this.blockElements.length) return false
-    this.blockElements.forEach(element => {
-      if (isInViewport(element)) {
-        sendBlock(element.getAttribute(BLOCK_ATTR))
-        element.removeAttribute(BLOCK_ATTR)
+    for (const selector in this.scrollElements) {
+      if (this.scrollElements.hasOwnProperty(selector)) {
+        const block = this.scrollElements[selector]
+        const element = document.querySelector(selector)
+        if (element && isInViewport(element)) {
+          sendBlock(block)
+          MIP.util.fn.del(this.scrollElements, selector)
+        }
       }
-    })
-    this.updateBlockElements()
+    }
   }
 
-  updateBlockElements () {
-    this.blockElements = document.querySelectorAll(
-      `[${BLOCK_ATTR}]`
+  bindEvents ({ click }) {
+    MIP.util.event.delegate(
+      document.body,
+      `[${RSEAT_ATTR}]`,
+      'click',
+      ({ target }) => {
+        const element = MIP.util.dom.closest(
+          target,
+          `[${RSEAT_ATTR}]`
+        )
+        sendClick(element.getAttribute(RSEAT_ATTR))
+      }
     )
+    if (click) {
+      for (const selector in click) {
+        if (click.hasOwnProperty(selector)) {
+          MIP.util.event.delegate(
+            document.body,
+            selector,
+            'click',
+            () => {
+              sendClick(click[selector])
+            },
+            true
+          )
+        }
+      }
+    }
+    this.checkBlock()
+    if (Object.keys(this.scrollElements).length) {
+      MIP.viewport.on('scroll', this.scrollHandler)
+    }
   }
 
   build () {
+    let option
     try {
-      const option = JSON.parse(this.element.children[0].innerText)
-      configPingback(option)
+      option = JSON.parse(this.element.children[0].innerText)
+      configPingback(option.config)
     } catch (e) {
-      this.log.error('组件内必须传入 stats 配置选项')
+      this.log.error(OPTION_ERROR)
     }
     MIP.util.dom.waitDocumentReady(() => {
-      MIP.util.event.delegate(
-        document.body,
-        `[${RSEAT_ATTR}]`,
-        'click',
-        ({ target }) => {
-          sendClick(target.getAttribute(RSEAT_ATTR))
-        }
-      )
-      this.updateBlockElements()
-      this.checkBlock()
-      if (this.blockElements.length) {
-        MIP.viewport.on('scroll', () => {
-          this.checkBlock()
-        })
-      }
+      document.querySelectorAll(`[${BLOCK_ATTR}]`).forEach(el => {
+        const block = el.getAttribute(BLOCK_ATTR)
+        this.scrollElements[`[${BLOCK_ATTR}='${block}']`] = block
+      })
+      if (option.scroll) Object.assign(this.scrollElements, option.scroll)
+      this.bindEvents(option)
     })
   }
 }
