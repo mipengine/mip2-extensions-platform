@@ -1,4 +1,4 @@
-import { isJSON } from './type'
+import { isJSON, isObject } from './type'
 import { getAnonymousUid } from './user'
 import {
   currentURL,
@@ -39,16 +39,24 @@ const send = params => {
 }
 
 const formatBlock = (block = '') =>
-  isJSON(block) ? JSON.parse(block) : { block }
+  isJSON(block)
+    ? JSON.parse(block)
+    : isObject(block)
+      ? block
+      : { block }
 
 const formatRseat = (rseat = '') =>
-  isJSON(rseat) ? JSON.parse(rseat) : { rseat }
+  isJSON(rseat)
+    ? JSON.parse(rseat)
+    : isObject(rseat)
+      ? rseat
+      : { rseat }
 
 export const sendPV = rpage => {
   LOG.pv.log({ rpage })
   send({
-    rpage,
-    t: 'detailspg'
+    t: 'detailspg',
+    rpage
   })
 }
 
@@ -56,8 +64,8 @@ export const sendBlock = (params = '') => {
   const block = formatBlock(params)
   LOG.block.log(block)
   send({
-    ...block,
-    t: 'blockpv'
+    t: 'blockpv',
+    ...block
   })
 }
 
@@ -65,8 +73,8 @@ export const sendClick = (params = '') => {
   const rseat = formatRseat(params)
   LOG.click.log(rseat)
   send({
-    ...rseat,
-    t: 'click'
+    t: 'click',
+    ...rseat
   })
 }
 
