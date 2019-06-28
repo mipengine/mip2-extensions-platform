@@ -12,7 +12,7 @@ export default class MIPWstimesView extends MIP.CustomElement {
       this.element.appendChild(content)
     } else if (type === 'image') {
       content.className = 'view-img'
-      content.innerHTML = '<a href="' + data.href + '"><mip-img class="img" src="' + data.src + '" style="width:' + (size[0] / 375) * 100 + 'vw;height:' +(size[1]==0?'auto':(size[1] / 375) * 100 + 'vw')+'"></mip-img></a>'
+      content.innerHTML = '<a href="' + data.href + '"><mip-img class="img" src="' + data.src + '" style="width:' + (size[0] / 375) * 100 + 'vw;height:' +(size[1] === 0 ? 'auto':(size[1] / 375) * 100 + 'vw')+'"></mip-img></a>'
       this.element.appendChild(content)
     } else if (type === 'graphic') {
       content.className = 'view-graphic'
