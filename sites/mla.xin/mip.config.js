@@ -26,6 +26,6 @@ module.exports = {
      *
      * @type {string|boolean}
      */
-    autoopen: '/components/mip-iqiyi-read-stats/example/index.html'
+    autoopen: false
   }
 }

@@ -1,7 +1,7 @@
 {
-  "name": "wenxue.m.iqiyi.com",
-  "version": "0.0.2",
-  "description": "iQiyi read mip components.",
+  "name": "wstimes.cn",
+  "version": "0.0.1",
+  "description": "容器组件",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
@@ -10,7 +10,7 @@
     "fix": "npm run fix:js",
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
-  "author": "靳宏立 (jinhongli@qiyi.com)",
+  "author": "tang85 (359377420@qq.com)",
   "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",
