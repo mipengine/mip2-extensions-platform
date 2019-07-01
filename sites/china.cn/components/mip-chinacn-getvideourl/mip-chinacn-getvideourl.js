@@ -11,25 +11,25 @@ export default class MIPChinacnGetvideourl extends MIP.CustomElement {
     let myVideo = element.querySelector('video');
     let request = false;
     myVideo.addEventListener('play', function () {
-        if (request === true) {
-            return;
-        } else {
-            myVideo.pause();
-            let id = element.querySelector('#id').value;
-            let k = md5('chinavideoplay');
-            fetch('https://www.china.cn/video_api.php?a=play&k=' + k + '&t=mip&id=' + id + '')
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (myJson) {
-                    request = true;
-                    let videoUrl = myJson.data;
-                    myVideo.setAttribute('src', videoUrl);
-                    myVideo.play();
-                }).catch(function (e) {
-                    console.log(e);
-                });
-        }
+      if (request === true) {
+        return;
+      } else {
+        myVideo.pause();
+        let id = element.querySelector('#id').value;
+        let k = md5('chinavideoplay');
+        fetch('https://www.china.cn/video_api.php?a=play&k=' + k + '&t=mip&id=' + id + '')
+          .then(function (response) {
+            return response.json();
+          })
+          .then(function (myJson) {
+            request = true;
+            let videoUrl = myJson.data;
+            myVideo.setAttribute('src', videoUrl);
+            myVideo.play();
+          }).catch(function (e) {
+            console.log(e);
+          });
+      }
     });
   }
 }
