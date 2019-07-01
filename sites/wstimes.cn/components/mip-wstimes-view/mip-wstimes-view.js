@@ -6,13 +6,14 @@ export default class MIPWstimesView extends MIP.CustomElement {
     let data = JSON.parse(this.element.getAttribute('data'))
     let size = JSON.parse(this.element.getAttribute('size'))
     let content = document.createElement('div')
+    console.log(size[1],typeof(size[1]),(size[1] === 'auto' ? 'auto' : (size[1] / 375) * 100 + 'vw'))
     if (type === 'text') {
       content.className = 'view-text'
       content.innerHTML = '<a href="' + data.href + '" class="adv-text dan">' + data.text + '</a>'
       this.element.appendChild(content)
     } else if (type === 'image') {
       content.className = 'view-img'
-      content.innerHTML = '<a href="' + data.href + '"><mip-img class="img" src="' + data.src + '" style="width:' + (size[0] / 375) * 100 + 'vw;height:' + (size[1] === 0 ? 'auto' : (size[1] / 375) * 100 + 'vw') + '"></mip-img></a>'
+      content.innerHTML = '<a href="' + data.href + '"><mip-img class="img" src="' + data.src + '" style="width:' + (size[0] / 375) * 100 + 'vw;height:' + (size[1] === 'auto' ? 'auto' : (size[1] / 375) * 100 + 'vw') + '"></mip-img></a>'
       this.element.appendChild(content)
     } else if (type === 'graphic') {
       content.className = 'view-graphic'
