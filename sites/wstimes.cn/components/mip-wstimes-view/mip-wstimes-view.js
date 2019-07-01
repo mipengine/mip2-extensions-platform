@@ -6,7 +6,6 @@ export default class MIPWstimesView extends MIP.CustomElement {
     let data = JSON.parse(this.element.getAttribute('data'))
     let size = JSON.parse(this.element.getAttribute('size'))
     let content = document.createElement('div')
-    console.log(size[1],typeof(size[1]),(size[1] === 'auto' ? 'auto' : (size[1] / 375) * 100 + 'vw'))
     if (type === 'text') {
       content.className = 'view-text'
       content.innerHTML = '<a href="' + data.href + '" class="adv-text dan">' + data.text + '</a>'
