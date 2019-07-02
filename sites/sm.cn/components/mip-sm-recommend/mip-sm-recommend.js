@@ -24,11 +24,11 @@ export default class MipSmRecommend extends CustomElement {
       .then(data => {
         let wordsJson = data.items.words
         wordsJson = wordsJson.slice(0, 8)
-        let listHtml = '<div><p>大家还在搜</p><ul>'
+        let listHtml = '<div class="title"><p>大家还在搜</p><ul>'
         Object.keys(wordsJson).map((key) => {
           let item = wordsJson[key]
           let queryUrl = 'https://mip.m.sm.cn/rec/redirect/?src=http://m.sa.sm.cn/s?q=' + encodeURIComponent(item.show_word) + '&from=wh30010'
-          listHtml += '<li><a href="' + queryUrl + '">' + item.show_word + '</a></li>'
+          listHtml += '<li><div class="item"><a href="' + queryUrl + '">' + item.show_word + '</a></div></li>'
         })
         listHtml += '</ul></div>'
         let createElement = MIP.util.dom.create(listHtml)
