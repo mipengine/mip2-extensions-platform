@@ -1,6 +1,6 @@
 mip-sm-recommend {
   background-color: #fff;
-  div {
+  .title {
     padding: 20px;
     p {
       font-size: 18px;
@@ -19,20 +19,29 @@ mip-sm-recommend {
       flex-wrap: wrap;
       justify-content: space-between;
       li {
-        font-size: 14px;
-        line-height: 22px;
-        background-color: #F4F4F4;
-        border-radius: 6px;
-        width: 43.1%;
-        color: rgba(0,0,0,0.86);
-        padding: 9px;
-        text-align: center;
-        margin-top: 10px;
-        a {
-          overflow: hidden;
-          text-overflow:ellipsis;
-          white-space: nowrap;
-          display: block;
+        width: 50%;
+        .item {
+          &:nth-child(odd) {
+            margin-right: 6px;
+          }
+          &:nth-child(even) {
+            margin-left: 6px;
+          }
+          font-size: 14px;
+          line-height: 40px;
+          height: 40px;
+          background-color: #f8f8f8;
+          border-radius: 6px;
+          color: rgba(0,0,0,0.86);
+          padding: 0 10px;
+          text-align: center;
+          margin-top: 10px;
+          a {
+            overflow: hidden;
+            text-overflow:ellipsis;
+            white-space: nowrap;
+            display: block;
+          }
         }
       }
     }
