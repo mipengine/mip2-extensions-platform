@@ -10,7 +10,7 @@ export default class MIPJxwlSyDown extends MIP.CustomElement {
     let iosdownurl = el.getAttribute('iosdownurl')
     let iossize = el.getAttribute('iossize')
     let dom = ''
-    if (platform.isIOS()) { 
+    if (platform.isIOS()) {
       if (iosdownurl === '') {
         dom = '<span class="yuyue">苹果预约</span>'
       } else {
