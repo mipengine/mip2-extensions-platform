@@ -1,7 +1,7 @@
 import './index.less'
 
 export default class MIPWstimesView extends MIP.CustomElement {
-  build () {
+  build() {
     let type = this.element.getAttribute('type')
     let data = JSON.parse(this.element.getAttribute('data'))
     let size = JSON.parse(this.element.getAttribute('size'))
@@ -30,7 +30,7 @@ export default class MIPWstimesView extends MIP.CustomElement {
           dotItems += '<div class="mip-carousel-indecator-item"></div>'
         }
       }
-      content.innerHTML = '<mip-carousel layout="responsive" autoplay defer="4000" indicatorId="mip-carousel-dot" width="' + (size[0] / 375) * 100 + 'vw" height="' + (size[1] / 375) * 100 + 'vw">' + swiperItems + '</mip-carousel><div class="mip-carousel-indicator-wrapper"><div class="mip-carousel-indicatorDot" id="mip-carousel-dot">' + dotItems + '</div></div>'
+      content.innerHTML = '<mip-carousel layout="responsive" ' + (data.list.length > 1 ? "autoplay" : "") + ' defer="4000" indicatorId="mip-carousel-dot" width="' + (size[0] / 375) * 100 + 'vw" height="' + (size[1] / 375) * 100 + 'vw">' + swiperItems + '</mip-carousel><div class="mip-carousel-indicator-wrapper"><div class="mip-carousel-indicatorDot" id="mip-carousel-dot">' + dotItems + '</div></div>'
       this.element.appendChild(content)
     }
   }
