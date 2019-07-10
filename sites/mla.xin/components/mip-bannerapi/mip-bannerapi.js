@@ -19,7 +19,7 @@ export default class MIPBannerapi extends MIP.CustomElement {
     }).then(function (data) {
       let oData = JSON.parse(data)
       for (let i = 0; i < oData.length; i++) {
-        objHtml = objHtml + `<a data-type="mip" href="` + oData[i].redirecturl + `"><mip-img src="` + oData[i].litpic + `" alt="banner"></mip-img></a>`
+        objHtml = `<a data-type="mip" href="` + oData[i].redirecturl + `"><mip-img src="` + oData[i].litpic + `" alt="banner"></mip-img></a>` + objHtml
         if (i === 0) {
           dotHtml += `<div class="mip-carousel-activeitem mip-carousel-indecator-item"></div>`
         } else {
