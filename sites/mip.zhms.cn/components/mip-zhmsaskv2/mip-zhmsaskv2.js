@@ -73,7 +73,7 @@ export default class MIPZhmsaskv2 extends MIP.CustomElement {
           method: 'POST',
           body: JSON.stringify(data)
         }
-        fetch('http://mip.zhms.cn/brand/addconsultation/', a).then(function (response) {
+        fetch('https://mip.zhms.cn/brand/addconsultation/', a).then(function (response) {
           $this.IsSubmit = false
           return response.json()
         }).then(function (json) {
