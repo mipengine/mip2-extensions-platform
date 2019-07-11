@@ -91,7 +91,7 @@ export default class MIPZhmsaskv2 extends MIP.CustomElement {
               }
               $this.Toast('咨询成功')
             } else {
-			  $this.Toast(json.msg || '咨询失败，请稍候重试！')
+              $this.Toast(json.msg || '咨询失败，请稍候重试！')
             }
           }
         })
