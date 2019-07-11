@@ -1,7 +1,7 @@
 import './index.less'
 
 export default class MIPZhmsaskv2 extends MIP.CustomElement {
-  constructor ( element ) {
+  constructor (element) {
     super(element)
     this.IsSubmit = false
     this.show = true
@@ -25,26 +25,26 @@ export default class MIPZhmsaskv2 extends MIP.CustomElement {
 
   InitPage () {
     this.zhmsask = document.getElementsByClassName('mip-zhmsask')[0]
-      let MaleRadios = this.zhmsask.getElementsByTagName('lable')
-      MIP.viewer.eventAction.execute('tap', MaleRadios[0])
+    let MaleRadios = this.zhmsask.getElementsByTagName('lable')
+    MIP.viewer.eventAction.execute('tap', MaleRadios[0])
   }
   BindQuickBtn () {
-      let quickbtns = this.zhmsask.getElementsByClassName('quickquestion')
-      let $this = this
-      for (let i = 0; i < quickbtns.length; i++) {
-        $this.tap(quickbtns[i], function (e) {
-          let questionArea = document.getElementById('Question')
-          let question = questionArea.value
-          if (question.indexOf(e.target.innerText) > -1) {
-            questionArea.value = question.replace(e.target.innerText, '')
-            quickbtns[i].classList.remove('ct')
-          } else {
-            questionArea.value = question + e.target.innerText
-            quickbtns[i].classList.add('ct')
-          }
-        })
-      }
-  }    
+    let quickbtns = this.zhmsask.getElementsByClassName('quickquestion')
+    let $this = this
+    for (let i = 0; i < quickbtns.length; i++) {
+      $this.tap(quickbtns[i], function (e) {
+        let questionArea = document.getElementById('Question')
+        let question = questionArea.value
+        if (question.indexOf(e.target.innerText) > -1) {
+          questionArea.value = question.replace(e.target.innerText, '')
+          quickbtns[i].classList.remove('ct')
+        } else {
+          questionArea.value = question + e.target.innerText
+          quickbtns[i].classList.add('ct')
+        }
+      })
+    }
+  }
   BindSubmit () {
     let $this = this
     $this.tap($this.zhmsask.getElementsByClassName('mip-zhmsask-submit-btn')[0], function () {
@@ -78,7 +78,7 @@ export default class MIPZhmsaskv2 extends MIP.CustomElement {
           return response.json()
         }).then(function (json) {
           $this.IsSubmit = false
-          // handleRes(json) 
+          // handleRes(json)
           if (json.state !== 0) $this.Toast(json.msg || '咨询失败，请稍候重试！')
           else {
             if (json.state === 0) {
@@ -90,20 +90,20 @@ export default class MIPZhmsaskv2 extends MIP.CustomElement {
                 quickbtns[i].classList.remove('ct')
               }
               $this.Toast('咨询成功')
-            } 
-			else 
-			  $this.Toast(json.msg || '咨询失败，请稍候重试！')       
+            } else {
+			  $this.Toast(json.msg || '咨询失败，请稍候重试！')
+            }
           }
         })
       }
     })
   }
 
-  Toast ( info ) {
+  Toast (info) {
     this.handleShow(null, info)
   }
   // tap事件封装
-  tap ( obj, callBack ) {
+  tap (obj, callBack) {
     if (typeof obj !== 'object') return
     // 变量
     let startTime = 0 // 记录触摸开始时间
@@ -124,7 +124,7 @@ export default class MIPZhmsaskv2 extends MIP.CustomElement {
       isMove = false
     })
   }
-  GetRadioValue ( radioName ) {
+  GetRadioValue (radioName) {
     let radios = document.getElementsByClassName(radioName)
     for (let i = 0; i < radios.length; i++) {
       let radio = radios.item(i).firstChild
@@ -135,10 +135,10 @@ export default class MIPZhmsaskv2 extends MIP.CustomElement {
     }
     return undefined
   }
-  // 
+  // update
   update () {
     const { closeTime, infoIconSrc } = this.props
-    this.showTime = closeTime * 1000   
+    this.showTime = closeTime * 1000
     if (!infoIconSrc) {
       this.show = false
     } else {
@@ -151,7 +151,7 @@ export default class MIPZhmsaskv2 extends MIP.CustomElement {
     }, this.showTime)
     this.render()
   }
-  handleShow ( event, info ) {
+  handleShow (event, info) {
     const { infoText } = this.props
     this.close = true
     if (typeof info === 'string') {
@@ -174,39 +174,30 @@ export default class MIPZhmsaskv2 extends MIP.CustomElement {
     const toast = document.createElement('div')
     const toastImg = document.createElement('img')
     const toastText = document.createElement('p')
-    
     wrapper.classList.add('wrapper')
     wrapper.appendChild(fixed)
-    
     fixed.setAttribute('type', 'top')
     fixed.setAttribute('still', true)
     fixed.classList.add(station)
-    
     if (!this.close) {
       fixed.style.display = 'none'
     }
-    
     fixed.appendChild(toastWrapper)
-    
     if (this.hasPic) {
       toastWrapper.classList.add('limit-width')
     }
     toastWrapper.appendChild(toast)
-    
     toast.classList.add('toast')
-    
     if (this.show) {
       toastImg.setAttribute('src', infoIconSrc)
       toastImg.classList.add('icon')
       toast.appendChild(toastImg)
     }
-    
     toastText.innerText = this.showToastText
     if (this.isBlock) {
       toastText.classList.add('block')
     }
     toast.appendChild(toastText)
-    
     document.getElementById('toast-bar').innerHTML = ''
     document.getElementById('toast-bar').appendChild(wrapper)
   }
