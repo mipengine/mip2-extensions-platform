@@ -1,6 +1,6 @@
 import './index.less'
 
-export default class MIPZhmsaskv2 extends MIP.CustomElement {
+export default class MIPZhmsasknew extends MIP.CustomElement {
   constructor (element) {
     super(element)
     this.IsSubmit = false
@@ -202,7 +202,7 @@ export default class MIPZhmsaskv2 extends MIP.CustomElement {
     document.getElementById('toast-bar').appendChild(wrapper)
   }
 }
-MIPZhmsaskv2.props = {
+MIPZhmsasknew.props = {
   infoIconSrc: {
     type: String,
     default: ''
