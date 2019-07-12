@@ -30,9 +30,8 @@ export default class MIPZhmsasknew extends MIP.CustomElement {
   }
   bindQuickBtn () {
     let quickBtns = this.zhmsask.getElementsByClassName('quick-question')
-    let that = this
     for (let i = 0; i < quickBtns.length; i++) {
-      that.tap(quickBtns[i], e => {
+      this.tap(quickBtns[i], e => {
         let questionArea = document.getElementById('data-question')
         let question = questionArea.value
         if (question.indexOf(e.target.innerText) > -1) {
@@ -46,57 +45,56 @@ export default class MIPZhmsasknew extends MIP.CustomElement {
     }
   }
   bindSubmit () {
-    let that = this
-    that.tap(that.zhmsask.getElementsByClassName('mip-zhmsask-submit-btn')[0], () => {
-      if (!that.isSubmit) {
-        that.isSubmit = true
+    this.tap(this.zhmsask.getElementsByClassName('mip-zhmsask-submit-btn')[0], () => {
+      if (!this.isSubmit) {
+        this.isSubmit = true
         let data = {}
         data.NickName = document.getElementById('data-nickname').value
         if (!data.NickName || data.NickName.length <= 0) {
-          that.toast('请填写您的姓名')
-          that.isSubmit = false
+          this.toast('请填写您的姓名')
+          this.isSubmit = false
           return false
         }
-        data.Sex = that.getRadioValue('lable-sex')
+        data.Sex = this.getRadioValue('lable-sex')
         data.Tel = document.getElementById('data-tel').value
         if (!data.Tel || data.Tel.length <= 0) {
-          that.toast('请填写您的联系电话')
-          that.isSubmit = false
+          this.toast('请填写您的联系电话')
+          this.isSubmit = false
           return false
         }
         data.Question = document.getElementById('data-question').value
-        data.MerchantId = that.element.getAttribute('data-merchantId')
-        data.BrandId = that.element.getAttribute('data-brandId')
-        data.CategoryId = that.element.getAttribute('data-categoryId')
-        data.SourceUrl = that.element.getAttribute('data-source')
+        data.MerchantId = this.element.getAttribute('data-merchantId')
+        data.BrandId = this.element.getAttribute('data-brandId')
+        data.CategoryId = this.element.getAttribute('data-categoryId')
+        data.SourceUrl = this.element.getAttribute('data-source')
         let config = {
           method: 'POST',
           body: JSON.stringify(data)
         }
-        fetch(that.zhmsask.getAttribute('url'), config).then(response => {
-          that.isSubmit = false
+        fetch(this.zhmsask.getAttribute('url'), config).then(response => {
+          this.isSubmit = false
           return response.json()
         }).then(json => {
-          that.isSubmit = false
+          this.isSubmit = false
           // handleRes(json)
-          if (json.state !== 0) that.toast(json.msg || '咨询失败，请稍候重试！')
+          if (json.state !== 0) this.toast(json.msg || '咨询失败，请稍候重试！')
           else {
             if (json.state === 0) {
               document.getElementById('data-nickname').value = ''
               document.getElementById('data-tel').value = ''
               document.getElementById('data-question').value = ''
-              let quickBtns = that.zhmsask.getElementsByClassName('quick-question')
+              let quickBtns = this.zhmsask.getElementsByClassName('quick-question')
               for (let i = 0; i < quickBtns.length; i++) {
                 quickBtns[i].classList.remove('ct')
               }
-              that.toast('咨询成功')
+              this.toast('咨询成功')
             } else {
-              that.toast(json.msg || '咨询失败，请稍候重试！')
+              this.toast(json.msg || '咨询失败，请稍候重试！')
             }
           }
         }).catch(err => {
-          that.isSubmit = false
-          that.toast('咨询失败，请稍候重试！' + err.message)
+          this.isSubmit = false
+          this.toast('咨询失败，请稍候重试！' + err.message)
         })
       }
     })
