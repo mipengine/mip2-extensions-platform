@@ -3,7 +3,7 @@
  * @author wangsha@mail.china.cn
  */
 import './index.less'
-import md5 from './md5'
+import md5 from 'blueimp-md5'
 
 export default class MIPChinacnGetvideourl extends MIP.CustomElement {
   firstInviewCallback () {
