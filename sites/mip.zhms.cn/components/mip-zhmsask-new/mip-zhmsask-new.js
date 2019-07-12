@@ -32,7 +32,7 @@ export default class MIPZhmsasknew extends MIP.CustomElement {
     let quickBtns = this.zhmsask.getElementsByClassName('quick-question')
     let that = this
     for (let i = 0; i < quickBtns.length; i++) {
-      that.tap(quickBtns[i],  e => {
+      that.tap(quickBtns[i], e => {
         let questionArea = document.getElementById('data-question')
         let question = questionArea.value
         if (question.indexOf(e.target.innerText) > -1) {
@@ -47,7 +47,7 @@ export default class MIPZhmsasknew extends MIP.CustomElement {
   }
   bindSubmit () {
     let that = this
-    that.tap(that.zhmsask.getElementsByClassName('mip-zhmsask-submit-btn')[0],  () => {
+    that.tap(that.zhmsask.getElementsByClassName('mip-zhmsask-submit-btn')[0], () => {
       if (!that.isSubmit) {
         that.isSubmit = true
         let data = {}
@@ -73,7 +73,7 @@ export default class MIPZhmsasknew extends MIP.CustomElement {
           method: 'POST',
           body: JSON.stringify(data)
         }
-        fetch(that.zhmsask.getAttribute("url"), config).then(response => {
+        fetch(that.zhmsask.getAttribute('url'), config).then(response => {
           that.isSubmit = false
           return response.json()
         }).then(json => {
@@ -94,9 +94,9 @@ export default class MIPZhmsasknew extends MIP.CustomElement {
               that.toast(json.msg || '咨询失败，请稍候重试！')
             }
           }
-        }).catch(err=>{
-            that.isSubmit = false
-            that.toast('咨询失败，请稍候重试！' + err.message)
+        }).catch( err => {
+          that.isSubmit = false
+          that.toast('咨询失败，请稍候重试！' + err.message)
         })
       }
     })
@@ -111,7 +111,7 @@ export default class MIPZhmsasknew extends MIP.CustomElement {
     // 变量
     let startTime = 0 // 记录触摸开始时间
     let isMove = false // 记录是否产生移动
-    obj.addEventListener('touchstart',  () => {
+    obj.addEventListener('touchstart', () => {
       startTime = Date.now()
     })
     obj.addEventListener('touchmove',  () => {
@@ -136,7 +136,6 @@ export default class MIPZhmsasknew extends MIP.CustomElement {
         return radio.value
       }
     }
-    return
   }
   // update
   update () {
