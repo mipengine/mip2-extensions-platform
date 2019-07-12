@@ -3,7 +3,7 @@ import './index.less'
 export default class MIPZhmsasknew extends MIP.CustomElement {
   constructor (element) {
     super(element)
-    this.IsSubmit = false
+    this.isSubmit = false
     this.show = true
     this.close = false
     this.isBlock = false
@@ -18,88 +18,91 @@ export default class MIPZhmsasknew extends MIP.CustomElement {
     this.render()
     this.addEventAction('show', this.handleShow)
     this.addEventAction('hidden', this.handleHide)
-    this.InitPage()
-    this.BindQuickBtn()
-    this.BindSubmit()
+    this.initPage()
+    this.bindQuickBtn()
+    this.bindSubmit()
   }
 
-  InitPage () {
-    this.zhmsask = document.getElementsByClassName('mip-zhmsask')[0]
-    let MaleRadios = this.zhmsask.getElementsByTagName('lable')
-    MIP.viewer.eventAction.execute('tap', MaleRadios[0])
+  initPage () {
+    this.zhmsask = document.getElementsByClassName('mip-zhmsask-from')[0]
+    let maleRadios = this.zhmsask.getElementsByTagName('lable')
+    MIP.viewer.eventAction.execute('tap', maleRadios[0])
   }
-  BindQuickBtn () {
-    let quickbtns = this.zhmsask.getElementsByClassName('quickquestion')
-    let $this = this
-    for (let i = 0; i < quickbtns.length; i++) {
-      $this.tap(quickbtns[i], function (e) {
-        let questionArea = document.getElementById('Question')
+  bindQuickBtn () {
+    let quickBtns = this.zhmsask.getElementsByClassName('quick-question')
+    let that = this
+    for (let i = 0; i < quickBtns.length; i++) {
+      that.tap(quickBtns[i],  e => {
+        let questionArea = document.getElementById('data-question')
         let question = questionArea.value
         if (question.indexOf(e.target.innerText) > -1) {
           questionArea.value = question.replace(e.target.innerText, '')
-          quickbtns[i].classList.remove('ct')
+          quickBtns[i].classList.remove('ct')
         } else {
           questionArea.value = question + e.target.innerText
-          quickbtns[i].classList.add('ct')
+          quickBtns[i].classList.add('ct')
         }
       })
     }
   }
-  BindSubmit () {
-    let $this = this
-    $this.tap($this.zhmsask.getElementsByClassName('mip-zhmsask-submit-btn')[0], function () {
-      if (!$this.IsSubmit) {
-        $this.IsSubmit = true
+  bindSubmit () {
+    let that = this
+    that.tap(that.zhmsask.getElementsByClassName('mip-zhmsask-submit-btn')[0],  () => {
+      if (!that.isSubmit) {
+        that.isSubmit = true
         let data = {}
-        data.NickName = document.getElementById('NickName').value
+        data.NickName = document.getElementById('data-nickname').value
         if (!data.NickName || data.NickName.length <= 0) {
-          $this.Toast('请填写您的姓名')
-          $this.IsSubmit = false
+          that.toast('请填写您的姓名')
+          that.isSubmit = false
           return false
         }
-        data.Sex = $this.GetRadioValue('sex-lable')
-        data.Tel = document.getElementById('Tel').value
+        data.Sex = that.getRadioValue('lable-sex')
+        data.Tel = document.getElementById('data-tel').value
         if (!data.Tel || data.Tel.length <= 0) {
-          $this.Toast('请填写您的联系电话')
-          $this.IsSubmit = false
+          that.toast('请填写您的联系电话')
+          that.isSubmit = false
           return false
         }
-        data.Question = document.getElementById('Question').value
-        data.MerchantId = $this.element.getAttribute('MerchantId')
-        data.BrandId = $this.element.getAttribute('BrandId')
-        data.CategoryId = $this.element.getAttribute('CategoryId')
-        data.SourceUrl = $this.element.getAttribute('Source')
-        let a = {
+        data.Question = document.getElementById('data-question').value
+        data.MerchantId = that.element.getAttribute('data-merchantId')
+        data.BrandId = that.element.getAttribute('data-brandId')
+        data.CategoryId = that.element.getAttribute('data-categoryId')
+        data.SourceUrl = that.element.getAttribute('data-source')
+        let config = {
           method: 'POST',
           body: JSON.stringify(data)
         }
-        fetch('https://mip.zhms.cn/brand/addconsultation/', a).then(function (response) {
-          $this.IsSubmit = false
+        fetch(that.zhmsask.getAttribute("url"), config).then(response => {
+          that.isSubmit = false
           return response.json()
-        }).then(function (json) {
-          $this.IsSubmit = false
+        }).then(json => {
+          that.isSubmit = false
           // handleRes(json)
-          if (json.state !== 0) $this.Toast(json.msg || '咨询失败，请稍候重试！')
+          if (json.state !== 0) that.toast(json.msg || '咨询失败，请稍候重试！')
           else {
             if (json.state === 0) {
-              document.getElementById('NickName').value = ''
-              document.getElementById('Tel').value = ''
-              document.getElementById('Question').value = ''
-              let quickbtns = $this.zhmsask.getElementsByClassName('quickquestion')
-              for (let i = 0; i < quickbtns.length; i++) {
-                quickbtns[i].classList.remove('ct')
+              document.getElementById('data-nickname').value = ''
+              document.getElementById('data-tel').value = ''
+              document.getElementById('data-question').value = ''
+              let quickBtns = that.zhmsask.getElementsByClassName('quick-question')
+              for (let i = 0; i < quickBtns.length; i++) {
+                quickBtns[i].classList.remove('ct')
               }
-              $this.Toast('咨询成功')
+              that.toast('咨询成功')
             } else {
-              $this.Toast(json.msg || '咨询失败，请稍候重试！')
+              that.toast(json.msg || '咨询失败，请稍候重试！')
             }
           }
+        }).catch(err=>{
+            that.isSubmit = false
+            that.toast('咨询失败，请稍候重试！' + err.message)
         })
       }
     })
   }
 
-  Toast (info) {
+  toast (info) {
     this.handleShow(null, info)
   }
   // tap事件封装
@@ -108,13 +111,13 @@ export default class MIPZhmsasknew extends MIP.CustomElement {
     // 变量
     let startTime = 0 // 记录触摸开始时间
     let isMove = false // 记录是否产生移动
-    obj.addEventListener('touchstart', function () {
+    obj.addEventListener('touchstart',  () => {
       startTime = Date.now()
     })
-    obj.addEventListener('touchmove', function () {
+    obj.addEventListener('touchmove',  () => {
       isMove = true
     })
-    obj.addEventListener('touchend', function (e) {
+    obj.addEventListener('touchend', e => {
       if (Date.now() - startTime < 300 && !isMove) {
         // 触碰时间在300ms以内,不产生移动
         callBack && callBack(e)
@@ -124,16 +127,16 @@ export default class MIPZhmsasknew extends MIP.CustomElement {
       isMove = false
     })
   }
-  GetRadioValue (radioName) {
+  getRadioValue (radioName) {
     let radios = document.getElementsByClassName(radioName)
     for (let i = 0; i < radios.length; i++) {
       let radio = radios.item(i).firstChild
       if (radio.checked) {
-        if (!radio.value || radio.value.length <= 0) return undefined
+        if (!radio.value || radio.value.length <= 0) return
         return radio.value
       }
     }
-    return undefined
+    return
   }
   // update
   update () {
