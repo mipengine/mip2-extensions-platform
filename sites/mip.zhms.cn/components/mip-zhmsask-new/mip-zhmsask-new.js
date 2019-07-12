@@ -94,7 +94,7 @@ export default class MIPZhmsasknew extends MIP.CustomElement {
               that.toast(json.msg || '咨询失败，请稍候重试！')
             }
           }
-        }).catch( err => {
+        }).catch(err => {
           that.isSubmit = false
           that.toast('咨询失败，请稍候重试！' + err.message)
         })
@@ -114,7 +114,7 @@ export default class MIPZhmsasknew extends MIP.CustomElement {
     obj.addEventListener('touchstart', () => {
       startTime = Date.now()
     })
-    obj.addEventListener('touchmove',  () => {
+    obj.addEventListener('touchmove', () => {
       isMove = true
     })
     obj.addEventListener('touchend', e => {
