@@ -4,215 +4,213 @@
  * @file mip-accordion
  * @time 2017.07
  */
-define(function (require) {
-  var customElement = require('customElement').create();
-  var $ = require('zepto');
-  var localurl = location.href;
+import './index.less'
 
-  // 恢复用户上次选择
-  function userSelect(id) {
-    var self = this;
-    var sessionsKey = 'MIP-' + id + '-' + localurl;
-    var datajson = getSession(sessionsKey);
+let $ = require('zepto');
+let localurl = location.href;
 
-    for (var prop in datajson) {
-      if (!datajson.hasOwnProperty(prop)) {
-        return;
-      }
+// 恢复用户上次选择
+function userSelect(id) {
+  let self = this;
+  let sessionsKey = 'MIP-' + id + '-' + localurl;
+  let datajson = getSession(sessionsKey);
 
-      var expand = datajson[prop];
-      if (expand) {
-        var content = $('#' + prop, self);
-        content.attr('aria-expanded', 'open');
-        content.parents('section').attr('expanded', 'open');
-      }
-
-    }
-  }
-
-  // 绑定事件
-  function bindEven(element) {
-    var $element = $(element);
-    var aniTime = $(element).attr('animatetime');
-
-    if (aniTime === undefined || isNaN(aniTime)) {
-      // if transition time is not set, set into 0.24s
-      aniTime = 0.24;
-    }
-    else {
-      // '0.2s' -> 0.2, 20 -> 1, -0.5 -> 0.5
-      aniTime = Math.min(parseFloat(aniTime), 1);
-    }
-
-
-    $element.on('click', '.mip-accordion-header', function () {
-      var targetId = $(this).attr('aria-controls');
-      var $targetdom = $('#' + targetId);
-      var expanded = $targetdom.attr('aria-expanded');
-      var $showMore = $(this).parents('section').find('.show-more');
-      var $showLess = $(this).parents('section').find('.show-less');
-
-      if (expanded === 'open') {
-        // 收起内容区域
-        // fold animation
-        heightAni({
-          ele: $targetdom[0],
-          type: 'fold',
-          transitionTime: aniTime,
-          cbFun: function ($dom) {
-            $dom.attr('aria-expanded', 'close');
-          }.bind(undefined, $targetdom)
-        });
-
-        $(this).parents('section').removeAttr('expanded');
-        if (!!$showMore.length && !!$showLess.length) {
-          $showMore.css('display', 'block');
-          $showLess.css('display', 'none');
-        }
-
-        setSession(element, targetId, false);
-      }
-      else {
-        // 同时只能展开一个节点
-
-        if (element.hasAttribute('expaned-limit')) {
-          var sections = element.querySelectorAll('section');
-          for (var i = 0; i < sections.length; i++) {
-            var cont = sections[i].querySelector('.mip-accordion-content');
-            var header = sections[i].querySelector('.mip-accordion-header');
-            var id = header.getAttribute('aria-controls');
-
-            sections[i].removeAttribute('expanded');
-            cont.removeAttribute('aria-expanded');
-            setSession(element, id, false);
-            // fold animation
-            heightAni({
-              ele: cont,
-              type: 'fold',
-              transitionTime: aniTime
-            });
-          }
-        }
-
-        $targetdom.attr('aria-expanded', 'open');
-        $(this).parents('section').attr('expanded', 'open');
-        if (!!$showMore.length && !!$showLess.length) {
-          $showLess.css('display', 'block');
-          $showMore.css('display', 'none');
-        }
-
-        // unfold animation
-        heightAni({
-          ele: $targetdom[0],
-          type: 'unfold',
-          oriHeight: 0,
-          transitionTime: aniTime
-        });
-
-        setSession(element, targetId, true);
-      }
-    });
-  }
-
-  // 设置session storage
-  function setSession(element, obj, expand) {
-    var sessionsKey = 'MIP-' + element.getAttribute('sessions-key') + '-' + localurl;
-
-    var objsession = getSession(sessionsKey);
-    objsession[obj] = expand;
-    sessionStorage[sessionsKey] = JSON.stringify(objsession);
-  }
-
-  // 获取sission
-  function getSession(sessionsKey) {
-    var data = sessionStorage[sessionsKey];
-    return data ? JSON.parse(data) : {};
-  }
-
-  /**
-   * Make height transiton for element that has unknown height.
-   * height transiton from 0px/40px to whatever height element will be.
-   *
-   * author&maintainer liangjiaying<jiaojiaomao220@163.com>
-   *
-   * @param  {Object} opt options
-   * @example
-   * {
-   *     "ele": document.getElementById('id1'), // target DOM
-   *     "type": "fold",                  // "fold" or "unfold"
-   *     "transitionTime": "0.3",         // seconds, animation time
-   *     "tarHeight": "140px",            // DOM height when animation ends
-   *     "oriHeight": "20px",             // DOM height when animation begins
-   *     "cbFun": function() {}.bind()    //callback, exec after animation
-   * }
-   */
-  function heightAni(opt) {
-    var element = opt.ele;
-    var type = opt.type;
-    var transitionTime;
-
-    if (!type || !element) {
+  for (let prop in datajson) {
+    if (!datajson.hasOwnProperty(prop)) {
       return;
     }
-
-    if (opt.transitionTime === undefined || isNaN(opt.transitionTime)) {
-      // if transition time is not set, set into 0.24s
-      transitionTime = 0.24;
-    }
-    else {
-      // '0.2s' -> 0.2, 20 -> 1, -0.5 -> 0.5
-      transitionTime = Math.min(parseFloat(opt.transitionTime), 1);
+    let expand = datajson[prop];
+    if (expand) {
+      let content = $('#' + prop, self);
+      content.attr('aria-expanded', 'open');
+      content.parents('section').attr('expanded', 'open');
     }
 
-    // use ?: to make sure oriHeight won't be rewrite when opt.oriHeight is set to 0
-    var oriHeight = (opt.oriHeight !== undefined ? opt.oriHeight : getComputedStyle(element).height);
-    var tarHeight;
-    var cbFun = opt.cbFun || function () { };
+  }
+}
 
-    if (type === 'unfold') {
+// 绑定事件
+function bindEven(element) {
+  let $element = $(element);
+  let aniTime = $(element).attr('animatetime');
 
-      // make sure tarHeight won't be rewrite when opt.tarHeight is set to 0
-      if (opt.tarHeight !== undefined) {
-        tarHeight = opt.tarHeight;
-      }
-      else {
-        // before set height to auto, remove animation.
-        // or bad animation happens in iphone 4s
-        element.style.transition = 'height 0s';
-        element.style.height = 'auto';
-        tarHeight = getComputedStyle(element).height;
-      }
-
-      // set height to auto after transition,
-      // in case of height change of inside element later.
-      setTimeout(function () {
-        // before set height to auto, remove animation.
-        // or bad animation happens in iphone 4s
-        element.style.transition = 'height 0s';
-        element.style.height = 'auto';
-      }, transitionTime * 1000);
-    }
-    else if (type === 'fold') {
-      tarHeight = opt.tarHeight || 0;
-    }
-
-    element.style.height = oriHeight;
-    // now start the animation
-    setTimeout(function () {
-      element.style.transition = 'height ' + transitionTime + 's';
-      // XXX: in setTimeout, or there won't be any animation
-      element.style.height = tarHeight;
-    }, 10);
-    // after transition, exec callback functions
-    setTimeout(function () {
-      cbFun();
-    }, transitionTime * 1000);
+  if (aniTime === undefined || isNaN(aniTime)) {
+    // if transition time is not set, set into 0.24s
+    aniTime = 0.24;
+  }
+  else {
+    // '0.2s' -> 0.2, 20 -> 1, -0.5 -> 0.5
+    aniTime = Math.min(parseFloat(aniTime), 1);
   }
 
-  // 初始化
-  customElement.prototype.build = function () {
-    var self = this;
-    var element = this.element;
+  $element.on('click', '.mip-accordion-header', function () {
+    let targetId = $(this).attr('aria-controls');
+    let $targetdom = $('#' + targetId);
+    let expanded = $targetdom.attr('aria-expanded');
+    let $showMore = $(this).parents('section').find('.show-more');
+    let $showLess = $(this).parents('section').find('.show-less');
+
+    if (expanded === 'open') {
+      // 收起内容区域
+      // fold animation
+      heightAni({
+        ele: $targetdom[0],
+        type: 'fold',
+        transitionTime: aniTime,
+        cbFun: function ($dom) {
+          $dom.attr('aria-expanded', 'close');
+        }.bind(undefined, $targetdom)
+      });
+
+      $(this).parents('section').removeAttr('expanded');
+      if (!!$showMore.length && !!$showLess.length) {
+        $showMore.css('display', 'block');
+        $showLess.css('display', 'none');
+      }
+
+      setSession(element, targetId, false);
+    }
+    else {
+      // 同时只能展开一个节点
+
+      if (element.hasAttribute('expaned-limit')) {
+        let sections = element.querySelectorAll('section');
+        for (let i = 0; i < sections.length; i++) {
+          let cont = sections[i].querySelector('.mip-accordion-content');
+          let header = sections[i].querySelector('.mip-accordion-header');
+          let id = header.getAttribute('aria-controls');
+
+          sections[i].removeAttribute('expanded');
+          cont.removeAttribute('aria-expanded');
+          setSession(element, id, false);
+          // fold animation
+          heightAni({
+            ele: cont,
+            type: 'fold',
+            transitionTime: aniTime
+          });
+        }
+      }
+
+      $targetdom.attr('aria-expanded', 'open');
+      $(this).parents('section').attr('expanded', 'open');
+      if (!!$showMore.length && !!$showLess.length) {
+        $showLess.css('display', 'block');
+        $showMore.css('display', 'none');
+      }
+
+      // unfold animation
+      heightAni({
+        ele: $targetdom[0],
+        type: 'unfold',
+        oriHeight: 0,
+        transitionTime: aniTime
+      });
+
+      setSession(element, targetId, true);
+    }
+  });
+}
+
+// 设置session storage
+function setSession(element, obj, expand) {
+  let sessionsKey = 'MIP-' + element.getAttribute('sessions-key') + '-' + localurl;
+
+  let objsession = getSession(sessionsKey);
+  objsession[obj] = expand;
+  sessionStorage[sessionsKey] = JSON.stringify(objsession);
+}
+
+// 获取sission
+function getSession(sessionsKey) {
+  let data = sessionStorage[sessionsKey];
+  return data ? JSON.parse(data) : {};
+}
+
+/**
+ * Make height transiton for element that has unknown height.
+ * height transiton from 0px/40px to whatever height element will be.
+ *
+ * author&maintainer liangjiaying<jiaojiaomao220@163.com>
+ *
+ * @param  {Object} opt options
+ * @example
+ * {
+ *     "ele": document.getElementById('id1'), // target DOM
+ *     "type": "fold",                  // "fold" or "unfold"
+ *     "transitionTime": "0.3",         // seconds, animation time
+ *     "tarHeight": "140px",            // DOM height when animation ends
+ *     "oriHeight": "20px",             // DOM height when animation begins
+ *     "cbFun": function() {}.bind()    //callback, exec after animation
+ * }
+ */
+function heightAni(opt) {
+  let element = opt.ele;
+  let type = opt.type;
+  let transitionTime;
+
+  if (!type || !element) {
+    return;
+  }
+
+  if (opt.transitionTime === undefined || isNaN(opt.transitionTime)) {
+    // if transition time is not set, set into 0.24s
+    transitionTime = 0.24;
+  }
+  else {
+    // '0.2s' -> 0.2, 20 -> 1, -0.5 -> 0.5
+    transitionTime = Math.min(parseFloat(opt.transitionTime), 1);
+  }
+
+  // use ?: to make sure oriHeight won't be rewrite when opt.oriHeight is set to 0
+  let oriHeight = (opt.oriHeight !== undefined ? opt.oriHeight : getComputedStyle(element).height);
+  let tarHeight;
+  let cbFun = opt.cbFun || function () { };
+
+  if (type === 'unfold') {
+
+    // make sure tarHeight won't be rewrite when opt.tarHeight is set to 0
+    if (opt.tarHeight !== undefined) {
+      tarHeight = opt.tarHeight;
+    }
+    else {
+      // before set height to auto, remove animation.
+      // or bad animation happens in iphone 4s
+      element.style.transition = 'height 0s';
+      element.style.height = 'auto';
+      tarHeight = getComputedStyle(element).height;
+    }
+
+    // set height to auto after transition,
+    // in case of height change of inside element later.
+    setTimeout(function () {
+      // before set height to auto, remove animation.
+      // or bad animation happens in iphone 4s
+      element.style.transition = 'height 0s';
+      element.style.height = 'auto';
+    }, transitionTime * 1000);
+  }
+  else if (type === 'fold') {
+    tarHeight = opt.tarHeight || 0;
+  }
+
+  element.style.height = oriHeight;
+  // now start the animation
+  setTimeout(function () {
+    element.style.transition = 'height ' + transitionTime + 's';
+    // XXX: in setTimeout, or there won't be any animation
+    element.style.height = tarHeight;
+  }, 10);
+  // after transition, exec callback functions
+  setTimeout(function () {
+    cbFun();
+  }, transitionTime * 1000);
+}
+
+export default class MIPExample extends MIP.CustomElement {
+  build() {
+    let self = this;
+    let element = this.element;
 
     this.type = $(element).attr('type') || 'automatic';
     this.sections = $(element).find('section');
@@ -220,8 +218,8 @@ define(function (require) {
     this.element.setAttribute('role', 'tablist');
     this.currentState = getSession.call(this);
     this.sections.map(function (index, section) {
-      var header = $(section).find('[accordionbtn]');
-      var content = $(section).find('[accordionbox]');
+      let header = $(section).find('[accordionbtn]');
+      let content = $(section).find('[accordionbox]');
 
       if (!header.length || !content.length) {
         header = $(section.children.item(0));
@@ -232,7 +230,7 @@ define(function (require) {
       content.addClass('mip-accordion-content');
 
       // id 初始化
-      var id = content.attr('id');
+      let id = content.attr('id');
       if (!id) {
         id = 'MIP_' + self.id + '_content_' + index;
         content.attr({
@@ -263,10 +261,6 @@ define(function (require) {
     if (self.type === 'automatic') {
       userSelect.call(element, this.id);
     }
-
     bindEven(element);
-  };
-
-  return customElement;
-
-});
+  }
+}
