@@ -3,7 +3,6 @@
  * @author wangsha@mail.china.cn
  */
 import './index.less'
-import md5 from 'blueimp-md5'
 
 export default class MIPChinacnGetvideourl extends MIP.CustomElement {
   firstInviewCallback () {
@@ -14,8 +13,7 @@ export default class MIPChinacnGetvideourl extends MIP.CustomElement {
       if (request === false) {
         myVideo.pause()
         let id = element.querySelector('#id').value
-        let k = md5('chinavideoplay')
-        fetch('https://www.china.cn/video_api.php?a=play&k=' + k + '&t=mip&id=' + id + '')
+        fetch('https://www.china.cn/video_api.php?a=play&k=ebcc38b544f07554d0d9bd31522c2f1e&t=mip&id=' + id + '')
           .then(function (response) {
             return response.json()
           })
