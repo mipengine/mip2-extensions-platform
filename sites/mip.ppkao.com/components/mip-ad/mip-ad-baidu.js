@@ -31,7 +31,7 @@ export default class MIPExample extends MIP.CustomElement {
         let s = '_' + Math.random().toString(36).slice(2)
         let html = '<div style="" id="' + s + '"></div>'
         $this.append(html)
-        let apiStr = '__container_api_'
+        let apiStr = '_container_api_'
         (window[apiStr] = window[apiStr] || []).push({
           containerId: s,
           exps: exps,
@@ -59,7 +59,7 @@ export default class MIPExample extends MIP.CustomElement {
     /**
      * [initJs JS初始化函数]
      *
-     * @return {Object}
+     * @returns {Object}
      */
     function initJs () {
       let MIPDUPJS = document.getElementById(scriptId)
@@ -73,7 +73,6 @@ export default class MIPExample extends MIP.CustomElement {
       document.body.appendChild(script)
 
       return script
-
     }
 
     /**
@@ -86,7 +85,6 @@ export default class MIPExample extends MIP.CustomElement {
      *
      */
     function initadbaidu ($elemID, cproID, me, script) {
-
       let s = '_' + Math.random().toString(36).slice(2)
       let html = '<div style="" id="' + s + '"></div>'
       $elemID.append(html)
@@ -124,19 +122,16 @@ export default class MIPExample extends MIP.CustomElement {
       }
 
       me.applyFillContent(document.getElementById(s), true)
-
     }
-
 
     /**
      * [isJsonScriptTag 判断是否是定制化script标签]
      *
      * @param {Object} element 节点对象
      *
-     * @return {boolean}
+     * @returns {boolean}
      */
     function isJsonScriptTag (element) {
-
       return element.tagName === 'SCRIPT' &&
         element.getAttribute('type') &&
         element.getAttribute('type').toUpperCase() === 'APPLICATION/JSON'

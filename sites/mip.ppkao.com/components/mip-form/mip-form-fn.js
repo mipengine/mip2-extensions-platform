@@ -113,7 +113,8 @@ export default class MIPExample extends MIP.CustomElement {
         let method = (element.getAttribute('method') || 'GET').toUpperCase()
         form.action = url
         form.method = method
-        target = target ? target : '_blank'
+        target = target
+          ? target : '_blank'
         form.target = viewer.isIframed && target !== '_blank' ? '_top' : target
         element.appendChild(form)
         util.dom.insert(form, element.children)
@@ -177,7 +178,7 @@ export default class MIPExample extends MIP.CustomElement {
        *
        * @param  {string} type 验证类型
        * @param  {string} value 需要验证的文案
-       * @return {boolean} 是否符合自定义校验
+       * @returns {boolean} 是否符合自定义校验
        */
       verification: function (type, value) {
         return (type === 'must') ? !(value === '') : REGS[type.toUpperCase()].test(value)

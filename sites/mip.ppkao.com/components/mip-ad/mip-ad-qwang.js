@@ -8,6 +8,7 @@
 export default class MIPExample extends MIP.CustomElement {
   build () {
     /**
+     * 
      * 渲染广告
      * @param  {obj} domEle [description]
      * @param  {obj} mipEle [description]
@@ -32,6 +33,7 @@ export default class MIPExample extends MIP.CustomElement {
     }
 
     /**
+     * 
      * initJs JS初始化函数
      * @param  {dom} node   盛放script的div
      * @param  {Object} mipEle mip元素
@@ -55,7 +57,7 @@ export default class MIPExample extends MIP.CustomElement {
      *
      * @param {string} scriptId  广告脚本标识ID
      * @param {string} scriptSrc 广告脚本地址
-     * @return {obj} false/scriptElement
+     * @returns {obj} false/scriptElement
      */
     function addScriptOnce (scriptId, scriptSrc) {
       // 短期方案，修复网盟广告加载顺序问题
