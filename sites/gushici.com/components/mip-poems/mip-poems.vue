@@ -23,8 +23,8 @@
 <script>
 import './index.less'
 import MipPoemItem from './mip-poems-item'
-import ajax from '../../common/ajax.js'
-import poem from '../../common/poem.js'
+import ajaxGet from '../../common/ajax.js'
+import { poem } from '../../common/poem.js'
 export default{
   components: {
     MipPoemItem
@@ -77,6 +77,7 @@ export default{
     let t = this
     // 首页推荐
     this.$on('refresh', function (event) {
+      console.log('refresh')
       t._getlist(t.url)
     })
     // 诗文列表
@@ -97,6 +98,7 @@ export default{
     })
   },
   updated () {
+    console.log('updated like', this.list)
     if (this.key === 'like') {
       this.arr = this.list
     }
@@ -131,7 +133,7 @@ export default{
     _renderdata (url, query) {
       let t = this
       t.arr = []
-      ajax.get(url, query, function (res) {
+      ajaxGet(url, query, function (res) {
         let list = res.list
         if (res.page_max === 0) {
           t.isempty = true
@@ -141,7 +143,7 @@ export default{
             MIP.setData({pagesize: res.page_max})
           }
           for (let i = 0; i < list.length; i++) {
-            let o = poem.poem(list[i].body, list[i].translation, list[i].explanation, list[i].appreciation)
+            let o = poem(list[i].body, list[i].translation, list[i].explanation, list[i].appreciation)
             let p = {
               key: t.key,
               id: list[i].id,

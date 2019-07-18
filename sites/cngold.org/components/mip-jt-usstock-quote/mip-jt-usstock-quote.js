@@ -2,7 +2,8 @@ export default class MIPJtUsstockQuote extends MIP.CustomElement {
   build () {
     let code = this.element.getAttribute('code')
     let ids = this.element.getAttribute('ids')
-    let fetchUrl = 'http://api.jijinhao.com/quoteCenter/realTime.htm?codes=' + code
+    // 接口需用https
+    let fetchUrl = 'https://api.jijinhao.com/quoteCenter/realTime.htm?codes=' + code
 
     // 定义$函数
     function $ (str) {
