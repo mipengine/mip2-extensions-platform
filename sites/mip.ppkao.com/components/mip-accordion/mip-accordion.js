@@ -190,7 +190,7 @@ function heightAni (opt) {
   setTimeout(function () {
     element.style.transition = 'height ' + transitionTime + 's'
     // XXX: in setTimeout, or there won't be any animation
-    element.style.height = tarHeight;
+    element.style.height = tarHeight
   }, 10)
   // after transition, exec callback functions
   setTimeout(function () {
@@ -226,7 +226,7 @@ export default class MIPExample extends MIP.CustomElement {
         id = 'MIP_' + self.id + '_content_' + index
         content.attr({
           id: id
-        });
+        })
       }
 
       // tab 状态[展开|收起]判断
@@ -245,7 +245,7 @@ export default class MIPExample extends MIP.CustomElement {
       }
 
       header.attr('aria-controls', id)
-    });
+    })
 
     if (self.type === 'automatic') {
       userSelect.call(element, this.id)
