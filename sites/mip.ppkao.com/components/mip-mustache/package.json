@@ -1,11 +1,11 @@
 {
     "name": "mip-mustache",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "contributors": [
         {
             "name": "MIP authors",
             "email": "mip-support@baidu.com"
-        } 
+        }
     ],
     "engines": {
         "mip": ">=1.1.0"

@@ -83,7 +83,7 @@ export default class MIPExample extends MIP.CustomElement {
           let enc3
           let enc4
           let i = 0
-          input = input.replace(/[^A-Za-z0-9\+\/\=]/g, '')
+          input = input.replace(/[^A-Za-z0-9+/=]/g, '')
           while (i < input.length) {
             enc1 = keyStr.indexOf(input.charAt(i++))
             enc2 = keyStr.indexOf(input.charAt(i++))
@@ -164,8 +164,8 @@ export default class MIPExample extends MIP.CustomElement {
           Array.isArray(i) ? (t[a] = [], i.forEach(function (e) {
             t[a].push(decode(e))
           })) : i instanceof Object ? t[a] = decode(i) : t[a] = base64('decode', i)
-        }),
-          t
+        })
+        t
       }
       console.log(element.dataset.categoryid)
       function getInfobyprovinceID (ID, name) {

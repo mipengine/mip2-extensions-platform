@@ -185,7 +185,7 @@ export default class MIPExample extends MIP.CustomElement {
           let loaded = false
           script.onload = script.onreadystatechange = function () {
             if (!loaded && (!script.readyState ||
-              script.readyState === 'loaded' || 
+              script.readyState === 'loaded' ||
               script.readyState === 'complete')) {
               loaded = true
               setTimeout(function () {
@@ -314,24 +314,24 @@ export default class MIPExample extends MIP.CustomElement {
             if (s === 'init') {
               status[type] = 'loading'
               callbacks[type].push(init)
-              load(config.protocol, newConfig.static_servers || newConfig.domains, newConfig[type] || 
+              load(config.protocol, newConfig.static_servers || newConfig.domains, newConfig[type] ||
                 newConfig.path, null,
-                function (err) {
+              function (err) {
                   if (err) {
-                    status[type] = 'fail'
-                    throwError('networkError', config)
-                  } else {
-                    status[type] = 'loaded'
-                    let cbs = callbacks[type]
-                    for (let i = 0, len = cbs.length; i < len; i = i + 1) {
-                      let cb = cbs[i]
-                      if (isFunction(cb)) {
-                        cb()
-                      }
+                  status[type] = 'fail'
+                  throwError('networkError', config)
+                } else {
+                  status[type] = 'loaded'
+                  let cbs = callbacks[type]
+                  for (let i = 0, len = cbs.length; i < len; i = i + 1) {
+                    let cb = cbs[i]
+                    if (isFunction(cb)) {
+                      cb()
                     }
-                    callbacks[type] = []
                   }
+                  callbacks[type] = []
                 }
+              }
               )
             } else if (s === 'loaded') {
               init()
