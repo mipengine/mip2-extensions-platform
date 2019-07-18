@@ -5,10 +5,11 @@
  * @copyright 2016 Baidu.com, Inc. All Rights Reserved
  */
 export default class MIPExample extends MIP.CustomElement {
-  build() {
+  build () {
     function render (element, me) {
       /* 图加功能下线 */
       element.remove()
+
       //return;
       // var unionId = element.getAttribute('unionId');
       // var formList = element.getAttribute('formList') || '';

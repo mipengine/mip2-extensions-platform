@@ -32,21 +32,21 @@ export default class MIPExample extends MIP.CustomElement {
         let html = '<div style="" id="' + s + '"></div>'
         $this.append(html)
         let apiStr = '__container_api_'
-          (window[apiStr] = window[apiStr] || []).push({
-            containerId: s,
-            exps: exps,
-            slotId: cproID
-          })
+        (window[apiStr] = window[apiStr] || []).push({
+          containerId: s,
+          exps: exps,
+          slotId: cproID
+        })
       } else {
         if (elem) {
           if (isJsonScriptTag(elem)) {
             jsSrc = '//cpro.baidustatic.com/cpro/ui/c.js'
             scriptId = 'MIP_DUP_JS_EXT'
             let obj = JSON.parse(elem.textContent.toString())
-              (window.cproArray = window.cproArray || []).push({
-                id: cproID
-              })
-              (window.cproStyleApi = window.cproStyleApi || {})[cproID] = obj
+            (window.cproArray = window.cproArray || []).push({
+              id: cproID
+            })
+            (window.cproStyleApi = window.cproStyleApi || {})[cproID] = obj
           }
         }
         let script = initJs()
@@ -66,11 +66,14 @@ export default class MIPExample extends MIP.CustomElement {
       if (MIPDUPJS) {
         return MIPDUPJS
       }
+
       let script = document.createElement('script')
       script.src = jsSrc
       script.id = scriptId
       document.body.appendChild(script)
+
       return script
+
     }
 
     /**
@@ -83,17 +86,18 @@ export default class MIPExample extends MIP.CustomElement {
      *
      */
     function initadbaidu ($elemID, cproID, me, script) {
+
       let s = '_' + Math.random().toString(36).slice(2)
       let html = '<div style="" id="' + s + '"></div>'
       $elemID.append(html)
 
-        (window.slotbydup = window.slotbydup || []).push({
-          id: cproID,
-          container: s,
-          display: 'inlay-fix',
-          exps: exps,
-          async: true
-        })
+      (window.slotbydup = window.slotbydup || []).push({
+        id: cproID,
+        container: s,
+        display: 'inlay-fix',
+        exps: exps,
+        async: true
+      })
 
       if (script) {
         let fixedElement = require('fixed-element')
@@ -101,8 +105,7 @@ export default class MIPExample extends MIP.CustomElement {
         let child = document.getElementById(s)
         child.addEventListener('DOMSubtreeModified', function (e) {
           let elem = window.getComputedStyle(child, null)
-          let pos = elem && elem.getPropertyValue('position')
-            ? elem.getPropertyValue('position') : ''
+          let pos = elem && elem.getPropertyValue('position') ? elem.getPropertyValue('position') : ''
           if (layer && layer.querySelector('#' + s)) {
             return
           }
@@ -119,8 +122,11 @@ export default class MIPExample extends MIP.CustomElement {
           }
         }, false)
       }
+
       me.applyFillContent(document.getElementById(s), true)
+
     }
+
 
     /**
      * [isJsonScriptTag 判断是否是定制化script标签]
@@ -130,10 +136,12 @@ export default class MIPExample extends MIP.CustomElement {
      * @return {boolean}
      */
     function isJsonScriptTag (element) {
+
       return element.tagName === 'SCRIPT' &&
         element.getAttribute('type') &&
         element.getAttribute('type').toUpperCase() === 'APPLICATION/JSON'
     }
+
     return {
       render: render
     }

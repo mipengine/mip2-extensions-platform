@@ -22,6 +22,7 @@ export default class MIPExample extends MIP.CustomElement {
         let scripts = document.querySelector('script[mip-preload="mip-script-wm"]')
         if (scripts && sample === 'mip_wm_sample') {
           let apiStr = '__container_api_'
+
           (window[apiStr] = window[apiStr] || []).push({
             containerId: token,
             exps: exps,

@@ -85,7 +85,7 @@ export default class MIPExample extends MIP.CustomElement {
 
     /**
      * [renderOneImg 单图样式渲染函数]
-     * @return 
+     * @return
      */
     function renderOneImg (_this, me) {
       let $this = $(_this)
@@ -134,11 +134,11 @@ export default class MIPExample extends MIP.CustomElement {
 
       let len = src.length < 3 ? src.length : 3
 
-      let img_Html = ''
+      let imgHtml = ''
 
       if (len >= 3) {
         for (let index = 0; index < len; index++) {
-          img_Html += [
+          imgHtml += [
             '<div class="c-span4">',
             '    <div class="mip-ad-imgbox">',
             '        <div class="c-img c-img-x" style="padding-bottom:' + ratio + '%">',
@@ -156,7 +156,7 @@ export default class MIPExample extends MIP.CustomElement {
           '    <div class="c-span12 c-title">' + title + '</div>',
           '</div>',
           '<div class="mip-ad-row">',
-          '    ' + img_Html,
+          '    ' + imgHtml,
           '</div>'
         ].join('')
 
@@ -187,5 +187,3 @@ export default class MIPExample extends MIP.CustomElement {
     }
   }
 }
-
-

@@ -6,7 +6,7 @@
  * @copyright 2016 Baidu.com, Inc. All Rights Reserved
  */
 export default class MIPExample extends MIP.CustomElement {
-  build() {
+  build () {
     /**
      * 渲染广告
      * @param  {obj} domEle [description]
