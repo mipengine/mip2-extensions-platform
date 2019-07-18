@@ -7,7 +7,7 @@
 export default class MIPExample extends MIP.CustomElement {
   build () {
     /**
-     * 
+     *
      * 渲染ssp 配置dom
      * @param  {dom} dom     custumElement的dom,此处为<mip-ad>
      * @param  {element} me    mip-element

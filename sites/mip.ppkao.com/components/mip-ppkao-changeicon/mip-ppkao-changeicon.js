@@ -2,27 +2,28 @@
  * @file mip-ppkao-changeicon 组件
  * @author
  */
+export default class MIPExample extends MIP.CustomElement {
+  build () {
+    let $ = require('zepto')
+    let customElement = require('customElement').create()
 
-define(function (require) {
-  var $ = require('zepto');
-  var customElement = require('customElement').create();
+    /**
+     * 第一次进入可视区回调，只会执行一次
+     */
+    customElement.prototype.firstInviewCallback = function () {
+      let ele = $(this.element)
+      let textT = ele.find('.toggle_text span')
+      let zkIcon = ele.find('.toggle_text i')
+      let textMain = ele.find('.test_main_box')
+      textT.on('click', function () {
+        if (textT.text() === '收起') {
+          zkIcon.removeClass('ss_icon')
+        } else {
+          zkIcon.addClass('ss_icon')
+        }
+      })
+    }
 
-  /**
-   * 第一次进入可视区回调，只会执行一次
-   */
-  customElement.prototype.firstInviewCallback = function () {
-    var ele = $(this.element);
-    var textT = ele.find('.toggle_text span');
-    var zkIcon = ele.find('.toggle_text i');
-    var textMain = ele.find('.test_main_box');
-    textT.on('click', function () {
-      if (textT.text() === '收起') {
-        zkIcon.removeClass('ss_icon');
-      } else {
-        zkIcon.addClass('ss_icon');
-      }
-    });
-  };
-
-  return customElement;
-});
+    return customElement
+  }
+}

@@ -31,7 +31,7 @@ export default class MIPExample extends MIP.CustomElement {
 
     /**
      * [renderOnlyImg banner样式渲染函数]
-     * 
+     *
      * @returns
      */
     function renderOnlyImg (_this, me) {
@@ -58,8 +58,8 @@ export default class MIPExample extends MIP.CustomElement {
     }
 
     /**
+     *
      * [renderNoneImg 无图样式渲染函数]
-     * 
      * @returns
      */
     function renderNoneImg (_this, me) {
@@ -86,8 +86,8 @@ export default class MIPExample extends MIP.CustomElement {
     }
 
     /**
+     *
      * [renderOneImg 单图样式渲染函数]
-     * 
      * @returns
      */
     function renderOneImg (_this, me) {
@@ -123,7 +123,6 @@ export default class MIPExample extends MIP.CustomElement {
 
     /**
      * [renderMoreImg 多图样式渲染函数]
-     * 
      * @returns
      */
     function renderMoreImg (_this, me) {

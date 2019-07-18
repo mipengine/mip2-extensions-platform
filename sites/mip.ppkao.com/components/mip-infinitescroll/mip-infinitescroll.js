@@ -10,7 +10,7 @@ export default class MIPExample extends MIP.CustomElement {
     let fetchJsonp = require('fetch-jsonp')
     let customElement = require('customElement').create()
     let InfiniteScroll = require('./infinitescroll')
-    //let infiniteScroll = null
+    let infiniteScroll = null
 
     /**
      * [getUrl url 拼接函数]

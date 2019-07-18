@@ -8,7 +8,7 @@
 export default class MIPExample extends MIP.CustomElement {
   build () {
     /**
-     * 
+     *
      * 渲染广告
      * @param  {obj} domEle [description]
      * @param  {obj} mipEle [description]
@@ -33,7 +33,7 @@ export default class MIPExample extends MIP.CustomElement {
     }
 
     /**
-     * 
+     *
      * initJs JS初始化函数
      * @param  {dom} node   盛放script的div
      * @param  {Object} mipEle mip元素
