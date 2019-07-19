@@ -115,7 +115,7 @@ export default {
         }
         if (count > 500) {
           this.resetQueryMsg(
-            '<p style="color: #666;">大客户专享服务，请直接点击 “<a href="javascript:;" onclick="openSDK()">购买咨询</a>”进行询价</p>',
+            '<p style="color: #666;">大客户专享服务，请直接点击 “<a href="https://qiyukf.com/client?k=abab5b9989e6f898240067f40874a096&u=&d=ptxgkhzvbattncugls3d&uuid=ybbv4czl0o4cgnt97a1s&gid=0&sid=0&qtype=0&dvctimer=0&robotShuntSwitch=0&hc=0&robotId=0&pageId=1563437083921KncbRRhZoq&t=%25E7%25BD%2591%25E6%2598%2593%25E4%25BC%2581%25E4%25B8%259A%25E9%2582%25AE%25E7%25AE%25B1%2520-%2520%25E4%25BC%2581%25E4%25B8%259A%25E9%2582%25AE%25E7%25AE%25B1%25E4%25BF%25A1%25E6%2581%25AF%25E5%258C%2596%25E4%25B8%2593%25E4%25B8%259A%25E8%25A7%25A3%25E5%2586%25B3%25E6%2596%25B9%25E6%25A1%2588">购买咨询</a>”进行询价</p>',
             '0.00',
             '0.00'
           )
