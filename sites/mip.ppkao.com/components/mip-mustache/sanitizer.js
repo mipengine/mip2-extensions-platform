@@ -101,7 +101,7 @@ export default class MIPExample extends MIP.CustomElement {
       }
 
       if (attrValue) {
-        let attrValueNorm = attrValue.toLowerCase().replace(/[\s,\u0000]+/g, '')
+        let attrValueNorm = attrValue.toLowerCase().replace(/[s,u0000]+/g, '')
         for (let i = 0; i < BLACKLISTED_ATTR_VALUES.length; i++) {
           if (attrValueNorm.indexOf(BLACKLISTED_ATTR_VALUES[i]) !== -1) {
             return false
@@ -159,7 +159,7 @@ export default class MIPExample extends MIP.CustomElement {
             }
             attribs = scrubbed.attribs
             for (let i = 0; i < attribs.length; i += 2) {
-              if (WHITELISTED_ATTRS.indexOf(attribs[i]) != -1) {
+              if (WHITELISTED_ATTRS.indexOf(attribs[i]) !== -1) {
                 attribs[i + 1] = savedAttribs[i + 1]
               } else if (attribs[i].search(WHITELISTED_ATTR_PREFIX_REGEX) === 0) {
                 attribs[i + 1] = savedAttribs[i + 1]

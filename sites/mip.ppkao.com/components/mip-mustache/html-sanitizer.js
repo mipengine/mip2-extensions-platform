@@ -32,7 +32,7 @@ export default class MIPExample extends MIP.CustomElement {
           if (47 !== k.charCodeAt(0)) {
             let k = y(b.g || '').replace(x, '')
             let s = k.lastIndexOf('/') + 1
-            let k = y((s ? k.substring(0, s) : '') + y(m)).replace(x, '')
+            k = y((s ? k.substring(0, s) : '') + y(m)).replace(x, '')
           }
         } else {
           k = k && k.replace(x, ''), k !== m && b.G(k)

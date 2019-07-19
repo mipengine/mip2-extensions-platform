@@ -18,7 +18,7 @@ export default class MIPExample extends MIP.CustomElement {
       let addBtn0 = ele.find('.ad_tkBox ul li')
       let dq = ele.find('#dq_')
       let xlIcon = ele.find('.xia_icon')
-      // let page = 1
+      let page
 
       xlIcon.on('click', function () {
         adTk.toggle(200)
@@ -178,9 +178,9 @@ export default class MIPExample extends MIP.CustomElement {
         })
       }
       console.log(element.dataset.categoryid)
-      function getInfobyprovinceID (ID, name) {
-        let kszxL = ele.find('#KSZX_1')
+      function getInfobyprovinceID(ID, name) {
         page += 1
+        let kszxL = ele.find('#KSZX_1')
         kszxL.html('<h3>正在为您切换到' + name + '的考试资料，请稍等...</h3>')
         let url = 'http://192.168.1.190:8086/Interface/PageInfo.ashx?action=' + element.dataset.action
         if (element.dataset.categoryid) {

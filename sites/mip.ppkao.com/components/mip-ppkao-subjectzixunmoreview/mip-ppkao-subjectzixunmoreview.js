@@ -61,8 +61,7 @@ export default class MIPExample extends MIP.CustomElement {
             }
           },
           error: function (err) {
-            // alert(err.statusText)
-            throw
+            throw err
           }
         })
       }

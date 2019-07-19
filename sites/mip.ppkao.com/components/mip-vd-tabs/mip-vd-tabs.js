@@ -267,8 +267,7 @@ export default class MIPExample extends MIP.CustomElement {
         navClass: ITEM_CLS,
         logClass: 'mip-vd-tabs-log',
         toggleClass: TOGGLE_CLS,
-        toggleLabel: $el.attr('toggle-label') || '请选择'
-      })
+        toggleLabel: $el.attr('toggle-label') || '请选择'})
 
       // override toggle-more
       (function register (ptr) {

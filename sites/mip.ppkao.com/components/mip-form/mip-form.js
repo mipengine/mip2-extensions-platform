@@ -10,7 +10,10 @@ export default class MIPExample extends MIP.CustomElement {
     let customElement = require('customElement').create()
     let util = require('util')
     let form = require('./mip-form-fn')
-    function clear(e) {
+    let cross = document.createElement('div')
+    cross.id = 'mip-form-cross'
+    this.cross = cross
+    function clear (e) {
       e.stopPropagation()
       e.preventDefault()
       let name = e.target.getAttribute('name')
@@ -40,10 +43,6 @@ export default class MIPExample extends MIP.CustomElement {
         if (!clearItems.length) {
           return
         }
-
-        let cross = document.createElement('div')
-        cross.id = 'mip-form-cross'
-        this.cross = cross
 
         for (let index = 0; index < clearItems.length; index++) {
           let height = clearItems[index].offsetHeight
@@ -76,7 +75,6 @@ export default class MIPExample extends MIP.CustomElement {
         cross.addEventListener('touchstart', clear, false)
         cross.addEventListener('mousedown', clear, false)
         cross.addEventListener('click', clear, false)
-
       }
       form.initMessageEvents(element)
     }
