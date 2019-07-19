@@ -277,7 +277,7 @@ export default class MIPExample extends MIP.CustomElement {
         let $navLayerUl = $('<ul class="mip-vd-tabs-nav-layer-ul"></ul>')
         let $mask = $('<div class="mip-vd-tabs-mask"></div>')
 
-        _this.toggleState = 0   // 展开状态 0-收起,1-展开
+        _this.toggleState = 0 // 展开状态 0-收起,1-展开
 
         // 事件代理
         $navLayerUl.on('click', '.mip-vd-tabs-episode-item ', function () {

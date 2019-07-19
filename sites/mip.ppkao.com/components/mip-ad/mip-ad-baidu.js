@@ -31,7 +31,7 @@ export default class MIPExample extends MIP.CustomElement {
         let s = '_' + Math.random().toString(36).slice(2)
         let html = '<div style="" id="' + s + '"></div>'
         $this.append(html)
-        let apiStr = 'container_api'
+        let apiStr = 'containerapi'
         (window[apiStr] = window[apiStr] || []).push({
           containerId: s,
           exps: exps,
@@ -59,7 +59,7 @@ export default class MIPExample extends MIP.CustomElement {
     /**
      * [initJs JS初始化函数]
      *
-     * @returns {Object}
+     * @returns {Object} 返回对象
      */
     function initJs () {
       let MIPDUPJS = document.getElementById(scriptId)

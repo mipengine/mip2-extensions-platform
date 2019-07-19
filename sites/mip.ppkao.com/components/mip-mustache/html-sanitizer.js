@@ -29,7 +29,11 @@ export default class MIPExample extends MIP.CustomElement {
         if (g) {
           b.ba(e.T()), k = k && k.replace(x, '')
         } else if (g = !!m) {
-          if (47 !== k.charCodeAt(0)) let k = y(b.g || '').replace(x, ''), s = k.lastIndexOf('/') + 1, k = y((s ? k.substring(0, s) : '') + y(m)).replace(x, '')
+          if (47 !== k.charCodeAt(0)) {
+            let k = y(b.g || '').replace(x, '')
+            let s = k.lastIndexOf('/') + 1
+            let k = y((s ? k.substring(0, s) : '') + y(m)).replace(x, '')
+          }
         } else {
           k = k && k.replace(x, ''), k !== m && b.G(k)
           g ? b.G(k) : g = e.Z()

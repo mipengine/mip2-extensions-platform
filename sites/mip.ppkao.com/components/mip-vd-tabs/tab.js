@@ -19,141 +19,140 @@ export default class MIPExample extends MIP.CustomElement {
       _setEvents.call(this)
       this.allowScroll && this.view.length && _setScroll.call(this)
       this.toggleMore && this.allowScroll && this.view.length && _setToggerMore.call(this)
-    },
-      _setWrap = function ($wrapper) {
-        let _this = this
-        $wrapper.children().eq(0).wrap('<div class="mip-vd-tabs-scroll-touch"></div>')
-        // UC浏览器对overflow-x兼容性太差,只能用元素占位的方式来解决
-        if ($wrapper.children().eq(1).hasClass(_this.toggleClass)) {
-          $wrapper.find('.' + _this.navWrapperClass).append(
-            '<div class="mip-vd-tabs-nav-toggle-holder"></div>'
-          )
-        }
-        return $wrapper
-      },
-      _setScroll = function () {
-        let _this = this
+    }
+    let _setWrap = function ($wrapper) {
+      let _this = this
+      $wrapper.children().eq(0).wrap('<div class="mip-vd-tabs-scroll-touch"></div>')
+      // UC浏览器对overflow-x兼容性太差,只能用元素占位的方式来解决
+      if ($wrapper.children().eq(1).hasClass(_this.toggleClass)) {
+        $wrapper.find('.' + _this.navWrapperClass).append(
+          '<div class="mip-vd-tabs-nav-toggle-holder"></div>'
+        )
+      }
+      return $wrapper
+    }
+    let _setScroll = function () {
+      let _this = this
+      _this.tabScroll = _setWrap.call(_this, _this.view)
 
-        _this.tabScroll = _setWrap.call(_this, _this.view)
+      // 前置检测选中的tab是否在可视区
+      if (_this.current > 0 && _this.current < _this.sum) {
+        let currentTab = Math.min(_this.current + 1, _this.sum - 1)
+        slideTo(currentTab, 1, _this.navs.eq(_this.current), _this.navs.length, false)
+      }
 
-        // 前置检测选中的tab是否在可视区
-        if (_this.current > 0 && _this.current < _this.sum) {
-          let currentTab = Math.min(_this.current + 1, _this.sum - 1)
-          slideTo(currentTab, 1, _this.navs.eq(_this.current), _this.navs.length, false)
-        }
-
-        // 若tab横滑回调方法存在,执行回调
-        if (typeof _this.onTabScrollEnd === 'function') {
-          _this.tabScroll.on('scrollEnd', function () {
-            if (this.customFlag && this.customFlag.autoScroll) {
-              // 若为自动触发滑动，不执行回调
-              return
-            }
-
-           // _this.onTabScrollEnd.call(_this, this)
-          })
-        }
-      },
-      _setToggerMore = function () {
-        let _this = this
-        let $navLayer = $('<div class="' + _this.layerClass + '"><p>' + _this.toggleLabel + '</p></div>')
-        let $navLayerUl = $('<ul class="' + _this.layerUlClass + '"></ul>')
-
-        _this.toggleState = 0 // 展开状态 0-收起,1-展开
-
-        // 事件代理
-        $navLayerUl.on('click', '.' + _this.navClass, function () {
-          let $domThis = $(this)
-          // $(this).addClass(_this.currentClass)
-          _this.navs.eq($domThis.attr('data-tid')).trigger('click')
-          toggleUp()
-        })
-
-        _this.toggle.on('click', function () {
-          if (_this.toggleState === 0) {
-            // 点击时为收起
-            toggleDown()
-          } else {
-            // 点击时为展开
-            toggleUp()
-          }
-        })
-
-        // 收起
-        function toggleUp () {
-          $navLayerUl.empty()
-          $navLayer.hide()
-          _this.toggle.css({
-            '-webkit-transform': 'scaleY(1)',
-            'transform': 'scaleY(1)'
-          })
-          _this.toggleState = 0
-        }
-
-        // 展开
-        function toggleDown () {
-          $navLayerUl.html(_this.navs.clone())
-          $navLayer.append($navLayerUl)
-          _this.view.after($navLayer.show())
-          _this.toggle.css({
-            '-webkit-transform': 'scaleY(1)',
-            'transform': 'scaleY(-1)'
-          })
-          _this.toggleState = 1
-        }
-      },
-      _setEvents = function () {
-        let _this = this
-
-        $.each(_this.navs, function (i, v) {
-          let $v = $(v)
-          if ($v.hasClass(_this.currentClass)) {
-            _this.current = i // 获取当前nav序号
+      // 若tab横滑回调方法存在,执行回调
+      if (typeof _this.onTabScrollEnd === 'function') {
+        _this.tabScroll.on('scrollEnd', function () {
+          if (this.customFlag && this.customFlag.autoScroll) {
+            // 若为自动触发滑动，不执行回调
+            // return
           }
 
-          $v.addClass(_this.logClass)
-          $v.attr('data-tid', i)
-
-          $v.on('click', function () {
-            let tid = parseInt($(this).attr('data-tid'))
-            if (tid === _this.current) {
-              return
-            }
-
-            _this.last = _this.current
-            _this.current = tid
-
-            _this.hideTab(_this.last)
-            _this.showTab(_this.current)
-
-            if (_this.onResetChange === fn) {
-              _this.hideContent(_this.last)
-              _this.showContent(_this.current)
-            }
-              /* 添加异步处理事件，返回点击tab序号及内容框 */
-             // _this.onChange.call(_this, _this.current, _this.conts[_this.current])
-            // } else {
-            // _this.onResetChange.call(_this, _this.current)
-            // }
-
-            // 滑动对象存在,执行滑动并传递autoScroll标记用于scrollEnd事件判断
-            if (_this.tabScroll) {
-              slideTo(_this.current + 1, 1, $v, _this.navs.length, true)
-            }
-          })
-        })
-
-        // 第一次加载
-        $.each(_this.conts, function (i, v) {
-          if (i === _this.current) {
-            _this.showTab(i)
-            _this.showContent(i)
-          } else {
-            _this.hideTab(i)
-            _this.hideContent(i)
-          }
+          // _this.onTabScrollEnd.call(_this, this)
         })
       }
+    }
+    let _setToggerMore = function () {
+      let _this = this
+      let $navLayer = $('<div class="' + _this.layerClass + '"><p>' + _this.toggleLabel + '</p></div>')
+      let $navLayerUl = $('<ul class="' + _this.layerUlClass + '"></ul>')
+
+      _this.toggleState = 0 // 展开状态 0-收起,1-展开
+
+      // 事件代理
+      $navLayerUl.on('click', '.' + _this.navClass, function () {
+        let $domThis = $(this)
+        // $(this).addClass(_this.currentClass)
+        _this.navs.eq($domThis.attr('data-tid')).trigger('click')
+        toggleUp()
+      })
+
+      _this.toggle.on('click', function () {
+        if (_this.toggleState === 0) {
+          // 点击时为收起
+          toggleDown()
+        } else {
+          // 点击时为展开
+          toggleUp()
+        }
+      })
+
+      // 收起
+      function toggleUp () {
+        $navLayerUl.empty()
+        $navLayer.hide()
+        _this.toggle.css({
+          '-webkit-transform': 'scaleY(1)',
+          'transform': 'scaleY(1)'
+        })
+        _this.toggleState = 0
+      }
+
+      // 展开
+      function toggleDown () {
+        $navLayerUl.html(_this.navs.clone())
+        $navLayer.append($navLayerUl)
+        _this.view.after($navLayer.show())
+        _this.toggle.css({
+          '-webkit-transform': 'scaleY(1)',
+          'transform': 'scaleY(-1)'
+        })
+        _this.toggleState = 1
+      }
+    }
+    let _setEvents = function () {
+      let _this = this
+
+      $.each(_this.navs, function (i, v) {
+        let $v = $(v)
+        if ($v.hasClass(_this.currentClass)) {
+          _this.current = i // 获取当前nav序号
+        }
+
+        $v.addClass(_this.logClass)
+        $v.attr('data-tid', i)
+
+        $v.on('click', function () {
+          let tid = parseInt($(this).attr('data-tid'))
+          if (tid === _this.current) {
+            return
+          }
+
+          _this.last = _this.current
+          _this.current = tid
+
+          _this.hideTab(_this.last)
+          _this.showTab(_this.current)
+
+          if (_this.onResetChange === fn) {
+            _this.hideContent(_this.last)
+            _this.showContent(_this.current)
+          }
+          /* 添加异步处理事件，返回点击tab序号及内容框 */
+          // _this.onChange.call(_this, _this.current, _this.conts[_this.current])
+          // } else {
+          // _this.onResetChange.call(_this, _this.current)
+          // }
+
+          // 滑动对象存在,执行滑动并传递autoScroll标记用于scrollEnd事件判断
+          if (_this.tabScroll) {
+            slideTo(_this.current + 1, 1, $v, _this.navs.length, true)
+          }
+        })
+      })
+
+      // 第一次加载
+      $.each(_this.conts, function (i, v) {
+        if (i === _this.current) {
+          _this.showTab(i)
+          _this.showContent(i)
+        } else {
+          _this.hideTab(i)
+          _this.hideContent(i)
+        }
+      })
+    }
 
     let Tabs = function (panel, options) {
       options = options || {}
@@ -204,7 +203,7 @@ export default class MIPExample extends MIP.CustomElement {
       showTab: function (i) {
         let _this = this
         let navs = _this.navs
-        let seps = _this.seps
+        // let seps = _this.seps
 
         $(navs[i]).addClass(_this.currentClass)
       },

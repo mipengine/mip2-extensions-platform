@@ -4,14 +4,14 @@
  * @time 2017-7
  */
 export default class MIPExample extends MIP.CustomElement {
-  build() {
+  build () {
     let customElement = require('customElement').create()
     let util = require('util')
     let viewport = require('viewport')
     let timeoutArray = []
 
     // 匹配节点是否在按钮中
-    function matchOriginTarget(id, node) {
+    function matchOriginTarget (id, node) {
       while (node.parentNode) {
         let attr = node.getAttribute('on')
         if (attr && attr.indexOf('tap:' + id) === 0) {
@@ -390,7 +390,7 @@ export default class MIPExample extends MIP.CustomElement {
         *     "cbFun": function() {}.bind()    //callback, exec after animation
         * }
     */
-    function heightAni(opt) {
+    function heightAni (opt) {
       let element = opt.ele
       let type = opt.type
       let transitionTime
@@ -460,9 +460,9 @@ export default class MIPExample extends MIP.CustomElement {
      * get real height of DOM without height restrictions
      *
      * @param  {Object} dom some dom
-     * @return {number}     height
+     * @returns {number}     height
      */
-    function getHeightUnfold(dom) {
+    function getHeightUnfold (dom) {
       let fakeNode = document.createElement('div')
       let style = getComputedStyle(dom)
       fakeNode.innerHTML = dom.innerHTML
@@ -504,7 +504,7 @@ export default class MIPExample extends MIP.CustomElement {
 
     // when remove node, clear timeout
     customElement.prototype.detachedCallback = function () {
-      let tArr = (timeoutArray && timeoutArray[this.element.id])|| []
+      let tArr = (timeoutArray && timeoutArray[this.element.id]) || []
       for (let i = 0; i < tArr.length; i++) {
         window.clearTimeout(tArr[i])
       }

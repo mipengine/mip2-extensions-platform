@@ -41,24 +41,24 @@ export default class MIPExample extends MIP.CustomElement {
       'template': true,
       'video': true
     }
-    let WHITELISTED_FORMAT_TAGS = [
-      'b',
-      'br',
-      'code',
-      'del',
-      'em',
-      'i',
-      'ins',
-      'mark',
-      'q',
-      's',
-      'small',
-      'strong',
-      'sub',
-      'sup',
-      'time',
-      'u'
-    ]
+    // let WHITELISTED_FORMAT_TAGS = [
+    // 'b',
+    // 'br',
+    // 'code',
+    // 'del',
+    // 'em',
+    // 'i',
+    // 'ins',
+    // 'mark',
+    // 'q',
+    // 's',
+    // 'small',
+    // 'strong',
+    // 'sub',
+    // 'sup',
+    // 'time',
+    // 'u'
+    // ]
     let WHITELISTED_ATTR_PREFIX_REGEX = /^data-/i
     let BLACKLISTED_ATTR_VALUES = [
       'javascript:',
@@ -69,7 +69,7 @@ export default class MIPExample extends MIP.CustomElement {
     ]
     let BLACKLISTED_TAG_SPECIFIC_ATTR_VALUES = {
       'input': {
-        'type': /(?:image|file|password|button)/i,
+        'type': /(?:image|file|password|button)/i
       }
     }
     let BLACKLISTED_FIELDS_ATTR = [
@@ -89,21 +89,21 @@ export default class MIPExample extends MIP.CustomElement {
       'fallback',
       'href',
       'on',
-      'placeholder',
+      'placeholder'
     ]
     function isValidAttr (tagName, attrName, attrValue) {
-      if (attrName.indexOf('on') == 0 && attrName != 'on') {
+      if (attrName.indexOf('on') === 0 && attrName !== 'on') {
         return false
       }
 
-      if (attrName == 'style') {
+      if (attrName === 'style') {
         return false
       }
 
       if (attrValue) {
-        let attrValueNorm = attrValue.toLowerCase().replace(/[\s,\u0000]+g/, '')
+        let attrValueNorm = attrValue.toLowerCase().replace(/[\s,\u0000]+/g, '')
         for (let i = 0; i < BLACKLISTED_ATTR_VALUES.length; i++) {
-          if (attrValueNorm.indexOf(BLACKLISTED_ATTR_VALUES[i]) != -1) {
+          if (attrValueNorm.indexOf(BLACKLISTED_ATTR_VALUES[i]) !== -1) {
             return false
           }
         }
@@ -118,7 +118,7 @@ export default class MIPExample extends MIP.CustomElement {
       if (attrBlacklist) {
         let blacklistedValuesRegex = attrBlacklist[attrName]
         if (blacklistedValuesRegex &&
-          attrValue.search(blacklistedValuesRegex) != -1) {
+          attrValue.search(blacklistedValuesRegex) !== -1) {
           return false
         }
       }
@@ -151,7 +151,7 @@ export default class MIPExample extends MIP.CustomElement {
           if (BLACKLISTED_TAGS[tagName]) {
             ignore++
             // MIP元素
-          } else if (tagName.indexOf('mip-') != 0) {
+          } else if (tagName.indexOf('mip-') !== 0) {
             let savedAttribs = attribs.slice(0)
             let scrubbed = tagPolicy(tagName, attribs)
             if (!scrubbed) {
@@ -161,7 +161,7 @@ export default class MIPExample extends MIP.CustomElement {
             for (let i = 0; i < attribs.length; i += 2) {
               if (WHITELISTED_ATTRS.indexOf(attribs[i]) != -1) {
                 attribs[i + 1] = savedAttribs[i + 1]
-              } else if (attribs[i].search(WHITELISTED_ATTR_PREFIX_REGEX) == 0) {
+              } else if (attribs[i].search(WHITELISTED_ATTR_PREFIX_REGEX) === 0) {
                 attribs[i + 1] = savedAttribs[i + 1]
               }
             }
@@ -202,7 +202,7 @@ export default class MIPExample extends MIP.CustomElement {
         },
         'pcdata': emit,
         'rcdata': emit,
-        'cdata': emit,
+        'cdata': emit
       })
       parser(html)
       return output.join('')

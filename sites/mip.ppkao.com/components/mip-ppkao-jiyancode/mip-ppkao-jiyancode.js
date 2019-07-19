@@ -317,7 +317,7 @@ export default class MIPExample extends MIP.CustomElement {
               load(config.protocol, newConfig.static_servers || newConfig.domains, newConfig[type] ||
                 newConfig.path, null,
               function (err) {
-                  if (err) {
+                if (err) {
                   status[type] = 'fail'
                   throwError('networkError', config)
                 } else {
@@ -328,7 +328,7 @@ export default class MIPExample extends MIP.CustomElement {
                     if (isFunction(cb)) {
                       cb()
                     }
-                }
+                  }
                   callbacks[type] = []
                 }
               }

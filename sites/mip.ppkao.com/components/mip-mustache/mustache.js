@@ -6,12 +6,13 @@
 (function defineMustache (global, factory) {
   if (typeof exports === 'object' && exports && typeof exports.nodeName !== 'string') {
     factory(exports) // CommonJS
-  } else if (typeof define === 'function' && define.amd) {
-    define(['exports'], factory) // AMD
   } else {
     global.Mustache = {}
     factory(global.Mustache) // script, wsh, asp
   }
+  // else if (typeof define === 'function' && define.amd) {
+  // define(['exports'], factory) // AMD
+  // }
 }(this, function mustacheFactory (mustache) {
   let objectToString = Object.prototype.toString
   let isArray = Array.isArray || function isArrayPolyfill (object) {

@@ -50,7 +50,8 @@ export default class MIPExample extends MIP.CustomElement {
         Object.keys(e).forEach(function (i) {
           let a = e[i]
           if (Array.isArray(a)) {
-            t[i] = [], a.forEach(function (e) {
+            t[i] = []
+            a.forEach(function (e) {
               t[i].push(decode(e))
             })
           } else {

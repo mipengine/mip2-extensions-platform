@@ -3,7 +3,7 @@
  * @author
  */
 export default class MIPExample extends MIP.CustomElement {
-  build() {
+  build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()
 
@@ -18,7 +18,7 @@ export default class MIPExample extends MIP.CustomElement {
       let addBtn0 = ele.find('.ad_tkBox ul li')
       let dq = ele.find('#dq_')
       let xlIcon = ele.find('.xia_icon')
-      let page = 1
+      // let page = 1
 
       xlIcon.on('click', function () {
         adTk.toggle(200)
@@ -36,11 +36,11 @@ export default class MIPExample extends MIP.CustomElement {
       dq.on('click', function () {
         adTk.toggle(200)
       })
-      function base64(fun, val) {
+      function base64 (fun, val) {
         // private property
         let keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/='
         // public method for encoding
-        function encode(input) {
+        function encode (input) {
           let output = ''
           let chr1
           let chr2
@@ -71,7 +71,7 @@ export default class MIPExample extends MIP.CustomElement {
           return output
         }
         // public method for decoding
-        function decode(input) {
+        function decode (input) {
           if (input === 'undefined' || input === null || undefined === '' || input === '0') {
             return input
           }
@@ -105,7 +105,7 @@ export default class MIPExample extends MIP.CustomElement {
           return output
         }
         // private method for UTF-8 encoding
-        function utf8Encode(string) {
+        function utf8Encode (string) {
           string = string.replace(/\r\n/g, '\n')
           let utftext = ''
           for (let n = 0; n < string.length; n++) {
@@ -124,7 +124,7 @@ export default class MIPExample extends MIP.CustomElement {
           return utftext
         }
         // private method for UTF-8 decoding
-        function utf8Decode(utftext) {
+        function utf8Decode (utftext) {
           let string = ''
           let i = 0
           let c = 0
@@ -158,18 +158,27 @@ export default class MIPExample extends MIP.CustomElement {
             break
         }
       }
-      function decode(e) {
+      function decode (e) {
         let t = {}
         return Object.keys(e).forEach(function (a) {
           let i = e[a]
-          Array.isArray(i) ? (t[a] = [], i.forEach(function (e) {
-            t[a].push(decode(e))
-          })) : i instanceof Object ? t[a] = decode(i) : t[a] = base64('decode', i)
+          if (Array.isArray(i)) {
+            t[a] = []
+            i.forEach(function (e) {
+              t[a].push(decode(e))
+            })
+          } else {
+            if (i instanceof Object) {
+              t[a] = decode(i)
+            } else {
+              t[a] = base64('decode', i)
+            }
+          }
+          return t
         })
-        return t
       }
       console.log(element.dataset.categoryid)
-      function getInfobyprovinceID(ID, name) {
+      function getInfobyprovinceID (ID, name) {
         let kszxL = ele.find('#KSZX_1')
         page += 1
         kszxL.html('<h3>正在为您切换到' + name + '的考试资料，请稍等...</h3>')
@@ -189,7 +198,7 @@ export default class MIPExample extends MIP.CustomElement {
           dataType: 'json',
           cache: false,
           // 加载执行方法
-          error: function erryFunction(ERROR, CWXX) {
+          error: function erryFunction (ERROR, CWXX) {
             kszxL.html('<h3>诶呀,数据迷路了!</h3>')
           },
           // 错误执行方法

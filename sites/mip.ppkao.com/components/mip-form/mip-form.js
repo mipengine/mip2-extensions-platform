@@ -9,9 +9,16 @@ export default class MIPExample extends MIP.CustomElement {
   build () {
     let customElement = require('customElement').create()
     let util = require('util')
-
     let form = require('./mip-form-fn')
-
+    function clear(e) {
+      e.stopPropagation()
+      e.preventDefault()
+      let name = e.target.getAttribute('name')
+      let inputSelect = cross.parentNode.querySelector('input[name="' + name + '"]')
+      inputSelect.focus()
+      inputSelect.value = ''
+      util.css(cross, { display: 'none' })
+    }
     /**
      * [build build函数]
      */
@@ -70,17 +77,7 @@ export default class MIPExample extends MIP.CustomElement {
         cross.addEventListener('mousedown', clear, false)
         cross.addEventListener('click', clear, false)
 
-        function clear (e) {
-          e.stopPropagation()
-          e.preventDefault()
-          let name = e.target.getAttribute('name')
-          let inputSelect = cross.parentNode.querySelector('input[name="' + name + '"]')
-          inputSelect.focus()
-          inputSelect.value = ''
-          util.css(cross, { display: 'none' })
-        }
       }
-
       form.initMessageEvents(element)
     }
     return customElement
