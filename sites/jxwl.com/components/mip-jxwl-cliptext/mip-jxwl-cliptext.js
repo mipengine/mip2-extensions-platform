@@ -12,7 +12,7 @@ export default class MIPJxwlClipText extends MIP.CustomElement {
       util.css(copybtn, 'display', 'inline')
       copybtn.innerHTML = '复制'
     })
-    copybox.addEventListener('mouseout', e => {
+    document.body.addEventListener('mouseout', e => {
       util.css(copybtn, 'display', 'none')
     })
     copybtn.addEventListener('click', e => {
