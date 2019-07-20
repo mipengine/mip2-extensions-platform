@@ -32,7 +32,7 @@ export default class MIPExample extends MIP.CustomElement {
         let html = '<div style="" id="' + s + '"></div>'
         $this.append(html)
         let apiStr = '__container_api_'
-        (window[apiStr] = window[apiStr] || []).push({containerId: s,exps: exps,slotId: cproID})
+        (window[apiStr] = window[apiStr] || []).push({containerId: s, exps: exps, slotId: cproID})
       } else {
         if (elem) {
           if (isJsonScriptTag(elem)) {
@@ -82,7 +82,7 @@ export default class MIPExample extends MIP.CustomElement {
       let s = '_' + Math.random().toString(36).slice(2)
       let html = '<div style="" id="' + s + '"></div>'
       $elemID.append(html)
-      (window.slotbydup = window.slotbydup || []).push({id: cproID,container: s,display: 'inlay-fix',exps: exps,async: true})
+      ( window.slotbydup = window.slotbydup || [] ).push({ id: cproID, container: s, display: 'inlay-fix', exps: exps, async: true })
 
       if (script) {
         let fixedElement = require('fixed-element')

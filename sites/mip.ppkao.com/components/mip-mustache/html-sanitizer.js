@@ -6,9 +6,9 @@ export default class MIPExample extends MIP.CustomElement {
         a = ('' + a).match(E)
         return !a ? l : new B(q(a[1]), q(a[2]), q(a[3]), q(a[4]), q(a[5]), q(a[6]), q(a[7]))
       }
-      function z(a, e) {
+      function z (a, e) {
         if (typeof a) {
-          return encodeURI(a).replace(e, B) == 'string'
+          return encodeURI(a).replace(e, B) === 'string'
         } else {
           return l === 'string'
         }
@@ -43,7 +43,8 @@ export default class MIPExample extends MIP.CustomElement {
             k = y((s ? k.substring(0, s) : '') + y(m)).replace(x, '')
           }
         } else {
-          k = k && k.replace(x, ''), k !== m && b.G(k)
+          k = k && k.replace(x, '')
+          k !== m && b.G(k)
           g ? b.G(k) : g = e.Z()
           g ? b.M(e.l) : g = e.X()
           g && b.ea(e.n)
@@ -60,7 +61,11 @@ export default class MIPExample extends MIP.CustomElement {
         this.n = s
       }
       function q (a) {
-        return 'string' == typeof a && 0 < a.length ? a : l
+        if (typeof a && 0 < a.length) {
+          return a === 'string'
+        } else {
+          return l === 'string'
+        }
       }
       let m = RegExp(/(\/|^)(?:[^./][^/]*|\.{2,}(?:[^./][^/]*)|\.{3,}[^/]*)\/\.\.(?:\/|$)/)
       let x = /^(?:\.\.\/)*(?:\.\.$)?/
@@ -74,20 +79,32 @@ export default class MIPExample extends MIP.CustomElement {
         return a.join('')
       }
       b.prototype.R = function () {
-        return new b(this.j, this.m, this.k, this.h, this.g, this.l, this.n)
+        return new B(this.j, this.m, this.k, this.h, this.g, this.l, this.n)
       }
       b.prototype.U = function () {
         return this.j && decodeURIComponent(this.j).toLowerCase()
       }
       b.prototype.fa =
         function (a) {
-          this.j = a ? a : l
+          if (a == null) {
+            this.j = a
+          } else {
+            this.j = l
+          }
         }
       b.prototype.K = function () {
-        return l !== this.j
+        if (l !== this.j) {
+          return true
+        } else {
+          return false
+        }
       }
       b.prototype.ca = function (a) {
-        this.m = a ? a : l
+        if (a == null) {
+          this.m = a;
+        } else {
+          this.m = l;
+        }
       }
       b.prototype.V = function () {
         return l !== this.m
@@ -105,25 +122,49 @@ export default class MIPExample extends MIP.CustomElement {
       b.prototype.ba = function (a) {
         if (a) {
           a = Number(a)
-          if (a !== (a & 65535)) throw Error('Bad port number ' + a)
+          if (a !== (a & 65535)) {
+            throw Error('Bad port number ' + a)
+          }
           this.h = '' + a
-        } else this.h = l
+        } else {
+          this.h = l
+        }
       }
       b.prototype.Y = function () {
-        return l !== this.h
+        if (l !== this.h) {
+          return true
+        } else {
+          return false
+        }
       }
-      b.prototype.S =
-        function () {
+      b.prototype.S = function () {
           return this.g && decodeURIComponent(this.g)
         }
       b.prototype.G = function (a) {
-        a ? (a = '' + a, this.g = !this.k || /^\//.test(a) ? a : '/' + a) : this.g = l
+        if (a == null) {
+          a = '' + a
+          if (this.g = !this.k || /^\//.test(a)) {
+            this.g = a
+          } else {
+            this.g = '/' + a
+          }
+        } else {
+          this.g = l
+        }
       }
       b.prototype.M = function (a) {
-        this.l = a ? a : l
+        if (a == null) {
+          this.l = a
+        } else {
+          this.l = l
+        }
       }
       b.prototype.Z = function () {
-        return l !== this.l
+        if (l !== this.l) {
+          return true
+        } else {
+          return false
+        }
       }
       b.prototype.aa = function (a) {
         if ('object' === typeof a && !(a instanceof Array) && (a instanceof Object || '[object Array]' !== Object.prototype.toString.call(a))) {
@@ -186,23 +227,164 @@ export default class MIPExample extends MIP.CustomElement {
     }
     P.ELEMENTS = P.f
     P.O = {
-      a: 'HTMLAnchorElement', abbr: 'HTMLElement', acronym: 'HTMLElement', address: 'HTMLElement', applet: 'HTMLAppletElement', area: 'HTMLAreaElement', article: 'HTMLElement', aside: 'HTMLElement', audio: 'HTMLAudioElement', b: 'HTMLElement', base: 'HTMLBaseElement', basefont: 'HTMLBaseFontElement', bdi: 'HTMLElement', bdo: 'HTMLElement', big: 'HTMLElement', blockquote: 'HTMLQuoteElement', body: 'HTMLBodyElement', br: 'HTMLBRElement', button: 'HTMLButtonElement', canvas: 'HTMLCanvasElement', caption: 'HTMLTableCaptionElement', center: 'HTMLElement',
-      cite: 'HTMLElement', code: 'HTMLElement', col: 'HTMLTableColElement', colgroup: 'HTMLTableColElement', command: 'HTMLCommandElement', data: 'HTMLElement', datalist: 'HTMLDataListElement', dd: 'HTMLElement', del: 'HTMLModElement', details: 'HTMLDetailsElement', dfn: 'HTMLElement', dialog: 'HTMLDialogElement', dir: 'HTMLDirectoryElement', div: 'HTMLDivElement', dl: 'HTMLDListElement', dt: 'HTMLElement', em: 'HTMLElement', fieldset: 'HTMLFieldSetElement', figcaption: 'HTMLElement', figure: 'HTMLElement', font: 'HTMLFontElement', footer: 'HTMLElement',
-      form: 'HTMLFormElement', frame: 'HTMLFrameElement', frameset: 'HTMLFrameSetElement', h1: 'HTMLHeadingElement', h2: 'HTMLHeadingElement', h3: 'HTMLHeadingElement', h4: 'HTMLHeadingElement', h5: 'HTMLHeadingElement', h6: 'HTMLHeadingElement', head: 'HTMLHeadElement', header: 'HTMLElement', hgroup: 'HTMLElement', hr: 'HTMLHRElement', html: 'HTMLHtmlElement', i: 'HTMLElement', iframe: 'HTMLIFrameElement', img: 'HTMLImageElement', input: 'HTMLInputElement', ins: 'HTMLModElement', isindex: 'HTMLUnknownElement', kbd: 'HTMLElement', keygen: 'HTMLKeygenElement',
-      label: 'HTMLLabelElement', legend: 'HTMLLegendElement', li: 'HTMLLIElement', link: 'HTMLLinkElement', map: 'HTMLMapElement', mark: 'HTMLElement', menu: 'HTMLMenuElement', meta: 'HTMLMetaElement', meter: 'HTMLMeterElement', nav: 'HTMLElement', nobr: 'HTMLElement', noembed: 'HTMLElement', noframes: 'HTMLElement', noscript: 'HTMLElement', object: 'HTMLObjectElement', ol: 'HTMLOListElement', optgroup: 'HTMLOptGroupElement', option: 'HTMLOptionElement', output: 'HTMLOutputElement', p: 'HTMLParagraphElement', param: 'HTMLParamElement', pre: 'HTMLPreElement',
-      progress: 'HTMLProgressElement', q: 'HTMLQuoteElement', s: 'HTMLElement', samp: 'HTMLElement', script: 'HTMLScriptElement', section: 'HTMLElement', select: 'HTMLSelectElement', small: 'HTMLElement', source: 'HTMLSourceElement', span: 'HTMLSpanElement', strike: 'HTMLElement', strong: 'HTMLElement', style: 'HTMLStyleElement', sub: 'HTMLElement', summary: 'HTMLElement', sup: 'HTMLElement', table: 'HTMLTableElement', tbody: 'HTMLTableSectionElement', td: 'HTMLTableDataCellElement', textarea: 'HTMLTextAreaElement', tfoot: 'HTMLTableSectionElement',
-      th: 'HTMLTableHeaderCellElement', thead: 'HTMLTableSectionElement', time: 'HTMLTimeElement', title: 'HTMLTitleElement', tr: 'HTMLTableRowElement', track: 'HTMLTrackElement', tt: 'HTMLElement', u: 'HTMLElement', ul: 'HTMLUListElement', 'let': 'HTMLElement', video: 'HTMLVideoElement', wbr: 'HTMLElement'
+      a: 'HTMLAnchorElement',
+      abbr: 'HTMLElement',
+      acronym: 'HTMLElement',
+      address: 'HTMLElement',
+      applet: 'HTMLAppletElement',
+      area: 'HTMLAreaElement',
+      article: 'HTMLElement',
+      aside: 'HTMLElement',
+      audio: 'HTMLAudioElement',
+      b: 'HTMLElement',
+      base: 'HTMLBaseElement',
+      basefont: 'HTMLBaseFontElement',
+      bdi: 'HTMLElement',
+      bdo: 'HTMLElement',
+      big: 'HTMLElement',
+      blockquote: 'HTMLQuoteElement',
+      body: 'HTMLBodyElement',
+      br: 'HTMLBRElement',
+      button: 'HTMLButtonElement',
+      canvas: 'HTMLCanvasElement',
+      caption: 'HTMLTableCaptionElement',
+      center: 'HTMLElement',
+      cite: 'HTMLElement',
+      code: 'HTMLElement',
+      col: 'HTMLTableColElement',
+      colgroup: 'HTMLTableColElement',
+      command: 'HTMLCommandElement',
+      data: 'HTMLElement',
+      datalist: 'HTMLDataListElement',
+      dd: 'HTMLElement',
+      del: 'HTMLModElement',
+      details: 'HTMLDetailsElement',
+      dfn: 'HTMLElement',
+      dialog: 'HTMLDialogElement',
+      dir: 'HTMLDirectoryElement',
+      div: 'HTMLDivElement',
+      dl: 'HTMLDListElement',
+      dt: 'HTMLElement',
+      em: 'HTMLElement',
+      fieldset: 'HTMLFieldSetElement',
+      figcaption: 'HTMLElement',
+      figure: 'HTMLElement',
+      font: 'HTMLFontElement',
+      footer: 'HTMLElement',
+      form: 'HTMLFormElement',
+      frame: 'HTMLFrameElement',
+      frameset: 'HTMLFrameSetElement',
+      h1: 'HTMLHeadingElement',
+      h2: 'HTMLHeadingElement',
+      h3: 'HTMLHeadingElement',
+      h4: 'HTMLHeadingElement',
+      h5: 'HTMLHeadingElement',
+      h6: 'HTMLHeadingElement',
+      head: 'HTMLHeadElement',
+      header: 'HTMLElement',
+      hgroup: 'HTMLElement',
+      hr: 'HTMLHRElement',
+      html: 'HTMLHtmlElement',
+      i: 'HTMLElement',
+      iframe: 'HTMLIFrameElement',
+      img: 'HTMLImageElement',
+      input: 'HTMLInputElement',
+      ins: 'HTMLModElement',
+      isindex: 'HTMLUnknownElement',
+      kbd: 'HTMLElement',
+      keygen: 'HTMLKeygenElement',
+      label: 'HTMLLabelElement',
+      legend: 'HTMLLegendElement',
+      li: 'HTMLLIElement',
+      link: 'HTMLLinkElement',
+      map: 'HTMLMapElement',
+      mark: 'HTMLElement',
+      menu: 'HTMLMenuElement',
+      meta: 'HTMLMetaElement',
+      meter: 'HTMLMeterElement',
+      nav: 'HTMLElement',
+      nobr: 'HTMLElement',
+      noembed: 'HTMLElement',
+      noframes: 'HTMLElement',
+      noscript: 'HTMLElement',
+      object: 'HTMLObjectElement',
+      ol: 'HTMLOListElement',
+      optgroup: 'HTMLOptGroupElement',
+      option: 'HTMLOptionElement',
+      output: 'HTMLOutputElement',
+      p: 'HTMLParagraphElement',
+      param: 'HTMLParamElement',
+      pre: 'HTMLPreElement',
+      progress: 'HTMLProgressElement',
+      q: 'HTMLQuoteElement',
+      s: 'HTMLElement',
+      samp: 'HTMLElement',
+      script: 'HTMLScriptElement',
+      section: 'HTMLElement',
+      select: 'HTMLSelectElement',
+      small: 'HTMLElement',
+      source: 'HTMLSourceElement',
+      span: 'HTMLSpanElement',
+      strike: 'HTMLElement',
+      strong: 'HTMLElement',
+      style: 'HTMLStyleElement',
+      sub: 'HTMLElement',
+      summary: 'HTMLElement',
+      sup: 'HTMLElement',
+      table: 'HTMLTableElement',
+      tbody: 'HTMLTableSectionElement',
+      td: 'HTMLTableDataCellElement',
+      textarea: 'HTMLTextAreaElement',
+      tfoot: 'HTMLTableSectionElement',
+      th: 'HTMLTableHeaderCellElement',
+      thead: 'HTMLTableSectionElement',
+      time: 'HTMLTimeElement',
+      title: 'HTMLTitleElement',
+      tr: 'HTMLTableRowElement',
+      track: 'HTMLTrackElement',
+      tt: 'HTMLElement',
+      u: 'HTMLElement',
+      ul: 'HTMLUListElement',
+      'let': 'HTMLElement',
+      video: 'HTMLVideoElement',
+      wbr: 'HTMLElement'
     }
     P.ELEMENT_DOM_INTERFACES = P.O
     P.N = { NOT_LOADED: 0, SAME_DOCUMENT: 1, NEW_DOCUMENT: 2 }
     P.ueffects = P.N
     P.J = {
-      'a::href': 2, 'area::href': 2, 'audio::src': 1, 'blockquote::cite': 0, 'command::icon': 1, 'del::cite': 0, 'form::action': 2, 'img::src': 1, 'input::src': 1, 'ins::cite': 0, 'q::cite': 0, 'video::poster': 1, 'video::src': 1
+      'a::href': 2,
+      'area::href': 2,
+      'audio::src': 1,
+      'blockquote::cite': 0,
+      'command::icon': 1,
+      'del::cite': 0,
+      'form::action': 2,
+      'img::src': 1,
+      'input::src': 1,
+      'ins::cite': 0,
+      'q::cite': 0,
+      'video::poster': 1,
+      'video::src': 1
     }
     P.URIEFFECTS = P.J
     P.L = { UNSANDBOXED: 2, SANDBOXED: 1, DATA: 0 }
     P.ltypes = P.L
-    P.I = { 'a::href': 2, 'area::href': 2, 'audio::src': 2, 'blockquote::cite': 2, 'command::icon': 1, 'del::cite': 2, 'form::action': 2, 'img::src': 1, 'input::src': 1, 'ins::cite': 2, 'q::cite': 2, 'video::poster': 1, 'video::src': 2 }
+    P.I = {
+      'a::href': 2,
+      'area::href': 2,
+      'audio::src': 2,
+      'blockquote::cite': 2,
+      'command::icon': 1,
+      'del::cite': 2,
+      'form::action': 2,
+      'img::src': 1,
+      'input::src': 1,
+      'ins::cite': 2,
+      'q::cite': 2,
+      'video::poster': 1,
+      'video::src': 2
+    }
     P.LOADERTYPES = P.I
     let ba = function (e) {
       function z (f) {
