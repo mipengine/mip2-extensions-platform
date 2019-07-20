@@ -1,23 +1,23 @@
 export default class MIPExample extends MIP.CustomElement {
-  build () {
+  build() {
     let l = null
     let p = function () {
-      function e (a) {
+      function e(a) {
         a = ('' + a).match(E)
         return !a ? l : new B(q(a[1]), q(a[2]), q(a[3]), q(a[4]), q(a[5]), q(a[6]), q(a[7]))
       }
-      function z (a, e) {
+      function z(a, e) {
         if (typeof a) {
           return encodeURI(a).replace(e, B) === 'string'
         } else {
           return l === 'string'
         }
       }
-      function B (a) {
+      function B(a) {
         a = a.charCodeAt(0)
         return '%' + '0123456789ABCDEF'.charAt(a >> 4 & 15) + '0123456789ABCDEF'.charAt(a & 15)
       }
-      function y (a) {
+      function y(a) {
         if (a === l) {
           return l
         }
@@ -25,7 +25,7 @@ export default class MIPExample extends MIP.CustomElement {
           return a
         }
       }
-      function A (a, e) {
+      function A(a, e) {
         let b = a.R()
         let g = e.K()
         g ? b.fa(e.j) : g = e.V()
@@ -51,7 +51,7 @@ export default class MIPExample extends MIP.CustomElement {
           return b
         }
       }
-      function b (a, e, b, g, m, k, s) {
+      function b(a, e, b, g, m, k, s) {
         this.j = a
         this.m = e
         this.k = b
@@ -60,7 +60,7 @@ export default class MIPExample extends MIP.CustomElement {
         this.l = k
         this.n = s
       }
-      function q (a) {
+      function q(a) {
         if (typeof a && 0 < a.length) {
           return a === 'string'
         } else {
@@ -138,8 +138,8 @@ export default class MIPExample extends MIP.CustomElement {
         }
       }
       b.prototype.S = function () {
-          return this.g && decodeURIComponent(this.g)
-        }
+        return this.g && decodeURIComponent(this.g)
+      }
       b.prototype.G = function (a) {
         if (a == null) {
           a = '' + a
@@ -167,17 +167,24 @@ export default class MIPExample extends MIP.CustomElement {
         }
       }
       b.prototype.aa = function (a) {
+        let g
+        let m
         if ('object' === typeof a && !(a instanceof Array) && (a instanceof Object || '[object Array]' !== Object.prototype.toString.call(a))) {
-          let e = [], b = -1, g
+          let e = []
+          let b = -1
           for (g in a) {
-            let m = a[g]
+            m = a[g]
             'string' === typeof m && (e[++b] = g, e[++b] = m)
           }
           a = e
         }
-        for (let e = [], b = '', k = 0; k < a.length;)
-          g = a[k++],
-            m = a[k++], e.push(b, encodeURIComponent(g.toString())), b = '&', m && e.push('=', encodeURIComponent(m.toString()))
+        for (let e = [], b = '', k = 0; k < a.length;) {
+          g = a[k++]
+          m = a[k++]
+          e.push(b, encodeURIComponent(g.toString()))
+          b = '&'
+          m && e.push('=', encodeURIComponent(m.toString()))
+        }
         this.l = e.join('')
       }
       b.prototype.ea = function (a) {
@@ -841,23 +848,24 @@ export default class MIPExample extends MIP.CustomElement {
     }
     P.LOADERTYPES = P.I
     let ba = function (e) {
-      function z (f) {
-        if (G.hasOwnProperty(f))
+      function z(f) {
+        if (G.hasOwnProperty(f)) {
           return G[f]
+        }
         let a = f.match(Q)
         return a ? String.fromCharCode(parseInt(a[1], 10)) : (a = f.match(R)) ? String.fromCharCode(parseInt(a[1], 16)) : H && S.test(f) ? (H.innerHTML = '&' + f + ';', a = H.textContent, G[f] = a) : '&' + f + ';'
       }
-      function B (f, a) { return z(a) }
-      function y (f) {
+      function B(f, a) { return z(a) }
+      function y(f) {
         return f.replace(T, B)
       }
-      function A (f) {
+      function A(f) {
         return ('' + f).replace(U, '&amp;').replace(L, '&lt;').replace(M, '&gt;').replace(V, '&#34;')
       }
-      function b (f) {
+      function b(f) {
         return f.replace(W, '&amp;$1').replace(L, '&lt;').replace(M, '&gt;')
       }
-      function q (f) {
+      function q(f) {
         let a = { z: f.z || f.cdata, A: f.A || f.comment, B: f.B || f.endDoc, r: f.r || f.endTag, d: f.d || f.pcdata, F: f.F || f.rcdata, H: f.H || f.startDoc, v: f.v || f.startTag }
         return function (f, e) {
           let c
@@ -875,10 +883,10 @@ export default class MIPExample extends MIP.CustomElement {
           x(a, c, 0, { o: !1, C: !1 }, e)
         }
       }
-      function m (f, a, d, e, c) {
+      function m(f, a, d, e, c) {
         return function () { x(f, a, d, e, c) }
       }
-      function x (f, a, d, j, c) {
+      function x(f, a, d, j, c) {
         try {
           f.H && 0 == d && f.H(c)
           for (let b, i, h, n = a.length; d < n;) {
@@ -917,7 +925,7 @@ export default class MIPExample extends MIP.CustomElement {
                 break
               case '<\!--':
                 if (!j.C) {
-                  for (i = d + 1; i < n && !('>' === a[i] && /--$/.test(a[i - 1])); i++)
+                  for (i = d + 1; i < n && !('>' === a[i] && /--$/.test(a[i - 1])); i++) {
                     if (i < n) {
                       if (f.A) {
                         let A = a.slice(d, i).join('')
@@ -927,6 +935,8 @@ export default class MIPExample extends MIP.CustomElement {
                     } else {
                       j.C = !0
                     }
+                  }
+
                 }
                 j.C && f.d && f.d('&lt;!--', c, t, m(f, a, d, j, c))
                 break
@@ -943,8 +953,13 @@ export default class MIPExample extends MIP.CustomElement {
                 break
               case '<?':
                 if (!j.o) {
-                  for (i = d + 1; i < n && '>' !== a[i]; i++)
-                    i < n ? d = i + 1 : j.o = !0
+                  for (i = d + 1; i < n && '>' !== a[i]; i++) {
+                    if (i < n) {
+                      d = i + 1
+                    } else {
+                      j.o = !0
+                    }
+                  }
                 }
                 j.o && f.d && f.d('&lt;?', c, t, m(f, a, d, j, c))
                 break
@@ -959,33 +974,36 @@ export default class MIPExample extends MIP.CustomElement {
           }
           f.B && f.B(c)
         } catch (B) {
-          if (B !== t)
+          if (B !== t) {
             throw B
+          }
         }
       }
-      function E (a, w, d, j, c, u) {
+      function E(a, w, d, j, c, u) {
         let i = a.length
         I.hasOwnProperty(w.name) || (I[w.name] = RegExp('^' + w.name + '(?:[\\s\\/]|$)', 'i'))
-        for (let h = I[w.name], n = w.next, r = w.next + 1; r < i && !('</' === a[r - 1] && h.test(a[r])); r++)
+        for (let h = I[w.name], n = w.next, r = w.next + 1; r < i && !('</' === a[r - 1] && h.test(a[r])); r++) {
           r < i && (r -= 1)
-        i = a.slice(n, r).join('')
-        if (w.c & e.c.CDATA)
-          d.z && d.z(i, j, c, m(d, a, r, u, j))
-        else if (w.c & e.c.RCDATA)
-          d.F && d.F(b(i), j, c, m(d, a, r, u, j))
-        else
-          throw Error('bug')
-        return r
+          i = a.slice(n, r).join('')
+          if (w.c & e.c.CDATA) {
+            d.z && d.z(i, j, c, m(d, a, r, u, j))
+          } else if (w.c & e.c.RCDATA) {
+            d.F && d.F(b(i), j, c, m(d, a, r, u, j))
+          } else {
+            throw Error('bug')
+          }
+          return r
+        }
       }
-      function D (a, b) {
+      function D(a, b) {
         let d = /^([-\w:]+)/.exec(a[b]), j = {}
         j.name = d[1].toLowerCase()
         j.c = e.f[j.name]
         for (let c = a[b].substr(d[0].length), u = b + 1, i = a.length; u < i && '>' !== a[u]; u++)
           c += a[u]
         if (!(i <= u)) {
-          for (let h = []; '' !== c;)
-            if (d = Z.exec(c))
+          for (let h = []; '' !== c;) {
+            if (d = Z.exec(c)) {
               if (d[4] && !d[5] || d[6] && !d[7]) {
                 for (let d = d[4] || d[6], n = !1, c = [c, a[u++]]; u < i; u++) {
                   if (n) {
@@ -1004,25 +1022,31 @@ export default class MIPExample extends MIP.CustomElement {
                 if (d[2]) {
                   r = d[3]
                   let g = r.charCodeAt(0)
-                  if (34 === g || 39 === g)
+                  if (34 === g || 39 === g) {
                     r = r.substr(1, r.length - 2)
+                  }
                   r = y(r.replace($, ''))
-                } else
+                } else {
                   r = ''
-                h.push(n, r)
-                c = c.substr(d[0].length)
-              } else
+                  h.push(n, r)
+                  c = c.substr(d[0].length)
+                }
+              }
+            } else {
               c = c.replace(/^[\s\S][^a-z\s]*/, '')
-          j.P = h
-          j.next = u + 1
-          return j
+            }
+            j.P = h
+            j.next = u + 1
+            return j
+          }
         }
       }
-      function F (a) {
-        function b (a, f) {
+      function F(a) {
+        function b(a, f) {
           j || f.push(a)
         }
-        let d, j
+        let d
+        let j
         return q({
           startDoc: function () {
             d = []
@@ -1033,12 +1057,14 @@ export default class MIPExample extends MIP.CustomElement {
               if (!(h & e.c.FOLDABLE)) {
                 let n = a(c, b)
                 if (n) {
-                  if ('object' !== typeof n)
+                  if ('object' !== typeof n) {
                     throw Error('tagPolicy did not return object (old API?)')
-                  if ('attribs' in n)
+                  }
+                  if ('attribs' in n) {
                     b = n.attribs
-                  else
+                  } else {
                     throw Error('tagPolicy gave no attribs')
+                  }
                   let g
                   'tagName' in n ? (g = n.tagName, n = e.f[g]) : (g = c, n = h)
                   if (h & e.c.OPTIONAL_ENDTAG) {
@@ -1058,21 +1084,25 @@ export default class MIPExample extends MIP.CustomElement {
                   j = !(h & e.c.EMPTY)
               }
             }
-          }, endTag: function (a, f) {
-            if (j)
+          },
+          endTag: function (a, f) {
+            if (j) {
               j = !1
-            else if (e.f.hasOwnProperty(a)) {
+            } else if (e.f.hasOwnProperty(a)) {
               let b = e.f[a]
               if (!(b & (e.c.EMPTY | e.c.FOLDABLE))) {
-                if (b & e.c.OPTIONAL_ENDTAG)
+                if (b & e.c.OPTIONAL_ENDTAG) {
                   for (b = d.length; 0 <= --b;) {
                     let h = d[b].D
-                    if (h === a)
+                    if (h === a) {
                       break
-                    if (!(e.f[h] & e.c.OPTIONAL_ENDTAG))
+                    }
+                    if (!(e.f[h] & e.c.OPTIONAL_ENDTAG)) {
                       return
-                  } else
-                  for (b = d.length; 0 <= --b && d[b].D !== a;)
+                    }
+                  }
+                } else {
+                  for (b = d.length; 0 <= --b && d[b].D !== a;) {
                     if (!(0 > b)) {
                       for (h = d.length; --h > b;) {
                         let g = d[h].t
@@ -1082,14 +1112,25 @@ export default class MIPExample extends MIP.CustomElement {
                       d.length = b
                       f.push('</', a, '>')
                     }
+                  }
+                }
               }
             }
-          }, pcdata: b, rcdata: b, cdata: b, endDoc: function (a) { for (; d.length; d.length--)a.push('</', d[d.length - 1].t, '>') }
+          },
+          pcdata: b,
+          rcdata: b,
+          cdata: b,
+          endDoc: function (a) {
+            for (; d.length; d.length--) {
+              a.push('</', d[d.length - 1].t, '>')
+            }
+          }
         })
       }
-      function a (a, b, d, e, c) {
-        if (!c)
+      function a(a, b, d, e, c) {
+        if (!c) {
           return l
+        }
         try {
           let g = p.parse('' + a)
           if (g && (!g.K() || aa.test(g.U()))) {
@@ -1099,7 +1140,7 @@ export default class MIPExample extends MIP.CustomElement {
         } catch (h) { }
         return l
       }
-      function v (a, b, d, e, c) {
+      function v(a, b, d, e, c) {
         d || a(b + ' removed', { Q: 'removed', tagName: b })
         if (e !== c) {
           let g = 'changed'
@@ -1107,20 +1148,27 @@ export default class MIPExample extends MIP.CustomElement {
           a(b + '.' + d + ' ' + g, { Q: g, tagName: b, ia: d, oldValue: e, newValue: c })
         }
       }
-      function J (a, b, d) {
+      function J(a, b, d) {
         b = b + '::' + d
-        if (a.hasOwnProperty(b))
+        if (a.hasOwnProperty(b)) {
           return a[b]
+        }
         b = '*::' + d
-        if (a.hasOwnProperty(b))
+        if (a.hasOwnProperty(b)) {
           return a[b]
+        }
       }
-      function g (b, g, d, j, c) {
+      function g(b, g, d, j, c) {
         for (let k = 0; k < g.length; k += 2) {
-          let i = g[k], h = g[k + 1], n = h, m = l, o
-          if ((o = b + '::' + i, e.w.hasOwnProperty(o)) || (o = '*::' + i, e.w.hasOwnProperty(o)))
+          let i = g[k]
+          let h = g[k + 1]
+          let n = h
+          let m = l
+          let o
+          if ((o = b + '::' + i, e.w.hasOwnProperty(o)) || (o = '*::' + i, e.w.hasOwnProperty(o))) {
             m = e.w[o]
-          if (m !== l)
+          }
+          if (m !== l) {
             switch (m) {
               case e.e.NONE:
                 break
@@ -1167,34 +1215,61 @@ export default class MIPExample extends MIP.CustomElement {
                 break
               default:
                 h = l, c && v(c, b, i, n, h)
-            } else
+            }
+          } else {
             h = l, c && v(c, b, i, n, h)
+          }
           g[k + 1] = h
         }
         return g
       }
-      function K (a, b, d) {
+      function K(a, b, d) {
         return function (j, c) {
-          if (e.f[j] & e.c.UNSAFE)
+          if (e.f[j] & e.c.UNSAFE) {
             d && v(d, j, void 0, void 0, void 0)
-          else return {
-            attribs: g(j, c, a, b, d)
+          } else {
+            return {
+              attribs: g(j, c, a, b, d)
+            }
           }
         }
       }
-      function k (a, b) {
+      function k(a, b) {
         let d = []
         F(b)(a, d)
         return d.join('')
       }
       let s, O
       'undefined' !== typeof window && (s = window.parseCssDeclarations, O = window.sanitizeCssProperty)
-      let G = { lt: '<', LT: '<', gt: '>', GT: '>', amp: '&', AMP: '&', quot: '"', apos: '"', nbsp: '\u00a0' }, Q = /^#(\d+)$/, R = /^#x([0-9A-Fa-f]+)$/,
-        S = /^[A-Za-z][A-za-z0-9]+$/, H = 'undefined' !== typeof window && window.document ? window.document.createElement('textarea') : l,
-        $ = /\0/g, T = /&(#[0-9]+|#[xX][0-9A-Fa-f]+|\w+);/g, Y = /^(#[0-9]+|#[xX][0-9A-Fa-f]+|\w+);/, U = /&/g,
-        W = /&([^a-z#]|#(?:[^0-9x]|x(?:[^0-9a-f]|$)|$)|$)/gi, L = /[<]/g, M = />/g, V = /\'/g,
-        Z = /^\s*([-.:\w]+)(?:\s*(=)\s*((')[^']*('|$)|(')[^']*('|$)|(?=[a-z][-\w]*\s*=)|[^''\s]*))?/i,
-        X = 3 === 'a,b'.split(/(,)/).length, N = e.c.CDATA | e.c.RCDATA, t = {}, I = {}, aa = /^(?:https?|mailto)$/i, o = {}
+      let G = {
+        lt: '<',
+        LT: '<',
+        gt: '>',
+        GT: '>',
+        amp: '&',
+        AMP: '&',
+        quot: '"',
+        apos: '"',
+        nbsp: '\u00a0'
+      }
+      let Q = /^#(\d+)$/, R = /^#x([0-9A-Fa-f]+)$/
+      let S = /^[A-Za-z][A-za-z0-9]+$/
+      let H = 'undefined' !== typeof window && window.document ? window.document.createElement('textarea') : l
+      let $ = /\0/g
+      let T = /&(#[0-9]+|#[xX][0-9A-Fa-f]+|\w+);/g
+      let Y = /^(#[0-9]+|#[xX][0-9A-Fa-f]+|\w+);/
+      let U = /&/g
+      let W = /&([^a-z#]|#(?:[^0-9x]|x(?:[^0-9a-f]|$)|$)|$)/gi
+      let L = /[<]/g
+      let M = />/g
+      let V = /\'/g
+      let Z = /^\s*([-.:\w]+)(?:\s*(=)\s*((')[^']*('|$)|(')[^']*('|$)|(?=[a-z][-\w]*\s*=)|[^''\s]*))?/i
+      let X = 3 === 'a,b'.split(/(,)/).length
+      let N = e.c.CDATA | e.c.RCDATA
+      let t = {}
+      let I = {}
+      let aa = /^(?:https?|mailto)$/i
+      let o = {}
       o.ka = o.escapeAttrib = A
       o.la = o.makeHtmlSanitizer = F
       o.ma = o.makeSaxParser = q
