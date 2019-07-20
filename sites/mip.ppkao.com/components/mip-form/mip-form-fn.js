@@ -113,7 +113,7 @@ export default class MIPExample extends MIP.CustomElement {
         let method = (element.getAttribute('method') || 'GET').toUpperCase()
         form.action = url
         form.method = method
-        if (target.trim() == null && target.trim() == '') {
+        if (target.trim() == null && target.trim() === '') {
           target = '_blank'
         }
         form.target = viewer.isIframed && target !== '_blank' ? '_top' : target

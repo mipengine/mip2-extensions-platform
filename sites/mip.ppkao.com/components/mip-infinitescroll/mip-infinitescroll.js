@@ -10,7 +10,7 @@ export default class MIPExample extends MIP.CustomElement {
     let fetchJsonp = require('fetch-jsonp')
     let customElement = require('customElement').create()
     let InfiniteScroll = require('./infinitescroll')
-    let infiniteScroll
+    let infiniteScrollOne
 
     /**
      * [getUrl url 拼接函数]
@@ -100,7 +100,7 @@ export default class MIPExample extends MIP.CustomElement {
         return defer.promise()
       }
 
-      infiniteScroll = new InfiniteScroll({
+      infiniteScrollOne = new InfiniteScroll({
         $result: element.querySelector('.mip-infinitescroll-results'),
         $loading: element.querySelector('.mip-infinitescroll-loading'),
         loadingHtml: self.params.loadingHtml,
@@ -116,7 +116,7 @@ export default class MIPExample extends MIP.CustomElement {
     }
 
     customElement.prototype.detachedCallback = function () {
-      infiniteScroll = null
+      infiniteScrollOne = null
     }
 
     return customElement

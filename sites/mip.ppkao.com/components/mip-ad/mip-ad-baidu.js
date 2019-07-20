@@ -31,21 +31,15 @@ export default class MIPExample extends MIP.CustomElement {
         let s = '_' + Math.random().toString(36).slice(2)
         let html = '<div style="" id="' + s + '"></div>'
         $this.append(html)
-        let apiStr = 'containerapi'
-        (window[apiStr] = window[apiStr] || []).push({
-          containerId: s,
-          exps: exps,
-          slotId: cproID
-        })
+        let apiStr = '__container_api_'
+        (window[apiStr] = window[apiStr] || []).push({containerId: s,exps: exps,slotId: cproID})
       } else {
         if (elem) {
           if (isJsonScriptTag(elem)) {
             jsSrc = '//cpro.baidustatic.com/cpro/ui/c.js'
             scriptId = 'MIP_DUP_JS_EXT'
             let obj = JSON.parse(elem.textContent.toString())
-            (window.cproArray = window.cproArray || []).push({
-              id: cproID
-            })
+            (window.cproArray = window.cproArray || []).push({id: cproID})
             (window.cproStyleApi = window.cproStyleApi || {})[cproID] = obj
           }
         }
@@ -88,14 +82,7 @@ export default class MIPExample extends MIP.CustomElement {
       let s = '_' + Math.random().toString(36).slice(2)
       let html = '<div style="" id="' + s + '"></div>'
       $elemID.append(html)
-
-      (window.slotbydup = window.slotbydup || []).push({
-        id: cproID,
-        container: s,
-        display: 'inlay-fix',
-        exps: exps,
-        async: true
-      })
+      (window.slotbydup = window.slotbydup || []).push({id: cproID,container: s,display: 'inlay-fix',exps: exps,async: true})
 
       if (script) {
         let fixedElement = require('fixed-element')
@@ -129,7 +116,7 @@ export default class MIPExample extends MIP.CustomElement {
      *
      * @param {Object} element 节点对象
      *
-     * @returns {boolean}
+     * @returns {boolean} 返回结果
      */
     function isJsonScriptTag (element) {
       return element.tagName === 'SCRIPT' &&

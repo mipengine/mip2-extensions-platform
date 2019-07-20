@@ -180,7 +180,7 @@ export default class MIPExample extends MIP.CustomElement {
           script.charset = 'UTF-8'
           script.async = true
           script.onerror = function () {
-            cb(true)
+            cb(new Error(true))
           }
           let loaded = false
           script.onload = script.onreadystatechange = function () {
@@ -189,7 +189,7 @@ export default class MIPExample extends MIP.CustomElement {
               script.readyState === 'complete')) {
               loaded = true
               setTimeout(function () {
-                cb(false)
+                cb(new Error(false))
               }, 0)
             }
           }
@@ -235,12 +235,12 @@ export default class MIPExample extends MIP.CustomElement {
             loadScript(url, function (err) {
               if (err) {
                 if (at >= domains.length - 1) {
-                  cb(true)
+                  cb(new Error(true))
                 } else {
                   tryRequest(at + 1)
                 }
               } else {
-                cb(false)
+                cb(new Error(false))
               }
             })
           }

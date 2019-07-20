@@ -4,20 +4,26 @@ export default class MIPExample extends MIP.CustomElement {
     let p = function () {
       function e (a) {
         a = ('' + a).match(E)
-        return !a ? l : new b(q(a[1]), q(a[2]), q(a[3]), q(a[4]), q(a[5]), q(a[6]), q(a[7]))
+        return !a ? l : new B(q(a[1]), q(a[2]), q(a[3]), q(a[4]), q(a[5]), q(a[6]), q(a[7]))
       }
-      function z (a, e) {
-        return 'string' == typeof a ? encodeURI(a).replace(e, B) : l
+      function z(a, e) {
+        if (typeof a) {
+          return encodeURI(a).replace(e, B) == 'string'
+        } else {
+          return l === 'string'
+        }
       }
       function B (a) {
         a = a.charCodeAt(0)
         return '%' + '0123456789ABCDEF'.charAt(a >> 4 & 15) + '0123456789ABCDEF'.charAt(a & 15)
       }
       function y (a) {
-        if (a === l)
+        if (a === l) {
           return l
-        for (let a = a.replace(/(^|\/)\.(?:\/|$)/g, '$1').replace(/\/{2,}/g, '/'), e = m, b; (b = a.replace(e, '$1')) != a; a = b)
+        }
+        for (let a = a.replace(/(^|\/)\.(?:\/|$)/g, '$1').replace(/\/{2,}/g, '/'), e = m, b; (b = a.replace(e, '$1')) !== a; a = b) {
           return a
+        }
       }
       function A (a, e) {
         let b = a.R()
@@ -25,9 +31,11 @@ export default class MIPExample extends MIP.CustomElement {
         g ? b.fa(e.j) : g = e.V()
         g ? b.ca(e.m) : g = e.W()
         g ? b.da(e.k) : g = e.Y()
-        let m = e.g, k = y(m)
+        let m = e.g
+        let k = y(m)
         if (g) {
-          b.ba(e.T()), k = k && k.replace(x, '')
+          b.ba(e.T())
+          k = k && k.replace(x, '')
         } else if (g = !!m) {
           if (47 !== k.charCodeAt(0)) {
             let k = y(b.g || '').replace(x, '')
