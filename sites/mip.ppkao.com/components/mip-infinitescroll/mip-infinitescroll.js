@@ -100,7 +100,7 @@ export default class MIPExample extends MIP.CustomElement {
         return defer.promise()
       }
 
-      infiniteScroll = new InfiniteScroll({
+      InfiniteScroll = new InfiniteScroll({
         $result: element.querySelector('.mip-infinitescroll-results'),
         $loading: element.querySelector('.mip-infinitescroll-loading'),
         loadingHtml: self.params.loadingHtml,
@@ -116,7 +116,7 @@ export default class MIPExample extends MIP.CustomElement {
     }
 
     customElement.prototype.detachedCallback = function () {
-      infiniteScroll = null
+      InfiniteScroll = null
     }
 
     return customElement
