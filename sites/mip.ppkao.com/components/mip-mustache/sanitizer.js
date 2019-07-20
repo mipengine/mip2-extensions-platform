@@ -101,7 +101,7 @@ export default class MIPExample extends MIP.CustomElement {
       }
 
       if (attrValue) {
-        let attrValueNorm = attrValue.toLowerCase().replace(/[s,u0000]+/g, '')
+        let attrValueNorm = attrValue.toLowerCase()
         for (let i = 0; i < BLACKLISTED_ATTR_VALUES.length; i++) {
           if (attrValueNorm.indexOf(BLACKLISTED_ATTR_VALUES[i]) !== -1) {
             return false
