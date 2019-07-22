@@ -16,12 +16,13 @@ export default class MIPExample extends MIP.CustomElement {
       if (sample === 'mip_wm_sample') {
         exps = '113006'
       }
-          /* eslint-disable */
       if (domain && token) {
         // 判断 preload 逻辑
         let scripts = document.querySelector('script[mip-preload="mip-script-wm"]')
         if (scripts && sample === 'mip_wm_sample') {
+          /* eslint-disable */
           let apiStr = '__container_api_'
+          /* eslint-disable */
           (window[apiStr] = window[apiStr] || []).push({ containerId: token, exps: exps, token: token })
         } else {
           window['_' + token] = {
