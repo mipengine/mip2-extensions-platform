@@ -1,7 +1,7 @@
 {
-  "name": "mip-contentfilter-miaoshou-v2",
+  "name": "mip-collect-miaoshou-v2",
   "version": "2.0.0",
-  "description": "妙手医生MIP详情页过滤正文空p标签",
+  "description": "妙手医生统计MIP页面组件",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",

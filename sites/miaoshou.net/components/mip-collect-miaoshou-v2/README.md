@@ -6,13 +6,13 @@ mip-stats-miaoshou-v2 妙手医生统计MIP页面浏览次数组件
 ----|----
 类型|通用
 支持布局|responsive,fixed-height,fill,container,fixed
-所需脚本|https://c.mipcdn.com/static/v2/mip-stats-miaoshou-v2/mip-stats-miaoshou-v2.js
+所需脚本|https://c.mipcdn.com/static/v2/mip-collect-miaoshou-v2/mip-stats-miaoshou-v2.js
 
 ## 示例
 
 ### 基本用法
 ```html
-<mip-stats-miaoshou-v2 tid="1" type="2" url="https://m.miaoshou.net" selectName="view-num" selectName="#view_num"></mip-stats-miaoshou-v2>
+<mip-collect-miaoshou-v2 tid="1" type="2" url="https://m.miaoshou.net"></mip-stats-miaoshou-v2>
 ```
 
 ## 属性
@@ -45,11 +45,3 @@ mip-stats-miaoshou-v2 妙手医生统计MIP页面浏览次数组件
 单位：无
 默认值：无
 
-### selectName
-
-说明：浏览次数ID选择器名称
-必选项：是
-类型：字符串
-取值范围：无
-单位：无
-默认值：#view_num
