@@ -16,7 +16,7 @@ export default class MIPExample extends MIP.CustomElement {
       if (sample === 'mip_wm_sample') {
         exps = '113006'
       }
-
+          /* eslint-disable */
       if (domain && token) {
         // 判断 preload 逻辑
         let scripts = document.querySelector('script[mip-preload="mip-script-wm"]')
