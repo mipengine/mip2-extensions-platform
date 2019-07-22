@@ -31,13 +31,16 @@ export default class MIPExample extends MIP.CustomElement {
         let s = '_' + Math.random().toString(36).slice(2)
         let html = '<div style="" id="' + s + '"></div>'
         $this.append(html)
+        /* eslint-disable */
         let apiStr = '__container_api_'
+        /* eslint-disable */
         (window[apiStr] = window[apiStr] || []).push({containerId: s, exps: exps, slotId: cproID})
       } else {
         if (elem) {
           if (isJsonScriptTag(elem)) {
             jsSrc = '//cpro.baidustatic.com/cpro/ui/c.js'
             scriptId = 'MIP_DUP_JS_EXT'
+            /* eslint-disable */
             let obj = JSON.parse(elem.textContent.toString())
             (window.cproArray = window.cproArray || []).push({id: cproID})
             (window.cproStyleApi = window.cproStyleApi || {})[cproID] = obj
@@ -81,8 +84,10 @@ export default class MIPExample extends MIP.CustomElement {
     function initadbaidu ($elemID, cproID, me, script) {
       let s = '_' + Math.random().toString(36).slice(2)
       let html = '<div style="" id="' + s + '"></div>'
+      /* eslint-disable */
       $elemID.append(html)
-      ( window.slotbydup = window.slotbydup || [] ).push({ id: cproID, container: s, display: 'inlay-fix', exps: exps, async: true })
+        /* eslint-disable */
+      (window.slotbydup = window.slotbydup || []).push({ id: cproID, container: s, display: 'inlay-fix', exps: exps, async: true })
 
       if (script) {
         let fixedElement = require('fixed-element')
