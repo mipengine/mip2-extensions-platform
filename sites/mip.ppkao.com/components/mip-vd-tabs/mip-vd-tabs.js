@@ -267,9 +267,11 @@ export default class MIPExample extends MIP.CustomElement {
         navClass: ITEM_CLS,
         logClass: 'mip-vd-tabs-log',
         toggleClass: TOGGLE_CLS,
+        /* eslint-disable */
         toggleLabel: $el.attr('toggle-label') || '请选择'})
 
       // override toggle-more
+      /* eslint-disable */
       (function register (ptr) {
         let _this = tab
         let $navLayer = $('<div class="mip-vd-tabs-nav-layer"><p>' + _this.toggleLabel + '</p></div>')
