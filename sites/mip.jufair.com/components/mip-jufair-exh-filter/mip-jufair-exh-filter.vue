@@ -6,13 +6,13 @@
       <div class="top-filter-container">
         <div
           class="filter-box"
-          @click="handleFilter(industrydata)">
+          @click="handleFilter(industrydata, 'industry')">
           行业分类
           <span class="san">▼</span>
         </div>
         <div
           class="filter-box"
-          @click="handleFilter(regiondata)">
+          @click="handleFilter(regiondata, 'region')">
           地区分类
           <span class="san">▼</span>
         </div>
@@ -208,7 +208,6 @@ export default {
       clientHeight: '300px',
       filterdata: this.industrydata,
       index: 0,
-      type: 'industry',
       urlType: 'secondIndustryName'
     }
   },
@@ -232,6 +231,10 @@ export default {
         case 'firstIndustryName':
           temp[1] = id
           temp[2] = 0
+          break
+        case 'secondIndustryName':
+          temp[1] = pid
+          temp[2] = id
           break
         case 'continentName':
           temp[3] = id
@@ -258,15 +261,15 @@ export default {
     itemClick (i) {
       this.index = i
     },
-    handleFilter (data) {
+    handleFilter (data, type) {
       this.filterdata = data
       this.index = 0
-      this.urlType = 'secondIndustryName'
-      if (this.type === 'region') {
-        this.visible = true
-        this.type = 'industry'
-      } else if (this.type === 'industry') {
+      if (type === 'region') {
         this.visible = !this.visible
+        this.urlType = 'countryName'
+      } else if (type === 'industry') {
+        this.visible = !this.visible
+        this.urlType = 'secondIndustryName'
       }
     }
   }

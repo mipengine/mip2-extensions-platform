@@ -1,7 +1,7 @@
 {
-  "name": "china.cn",
-  "version": "0.0.1",
-  "description": "A MIP project",
+  "name": "wenxue.m.iqiyi.com",
+  "version": "0.0.2",
+  "description": "iQiyi read mip components.",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
@@ -10,7 +10,8 @@
     "fix": "npm run fix:js",
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
-  "author": "wangzheng (wangzheng@mail.china.cn)",
+  "author": "靳宏立 (jinhongli@qiyi.com)",
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
