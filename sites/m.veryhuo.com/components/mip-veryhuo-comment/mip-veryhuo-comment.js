@@ -344,8 +344,6 @@ export default class MIPMpc6Comment extends CustomElement {
         fetch('/postfrm_ajax.' + PageType + '?comment=' + msg + '&softid=' + temsoftid + '&pImgCode=' + imgcode).then(function (res) {
           return res.text()
         }).then(function (text) {
-          let text1 = text.slice(0, 4)
-          let text2 = text.slice(0, 2)
           cpltext.focus()
           cpltext.attributes['placeholder'].value = ''
           calertmes.innerHTML = '你的评论发表成功，需要审核才能显示！'
