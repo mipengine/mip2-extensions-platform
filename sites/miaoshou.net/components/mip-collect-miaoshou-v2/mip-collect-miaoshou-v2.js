@@ -13,7 +13,8 @@ export default class MIPCollectMiaoshouV2 extends CustomElement {
     let type = e.getAttribute('type')
     let fkname = e.getAttribute('doctor_fkname')
     let skname = e.getAttribute('doctor_skname')
-    url = url + '?id=' + tid + '&type=' + type + '&doctor_fkname=' + fkname + '&doctor_skname=' + skname
+    let title = e.getAttribute('doctor_skname')
+    url = url + '?id=' + tid + '&type=' + type + '&doctor_fkname=' + fkname + '&doctor_skname=' + skname + '&title=' + title
     fetch(url).then(function (res) {
 
     }).then(function (data) {
