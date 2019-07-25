@@ -1,6 +1,6 @@
 {
     "name": "mip-accordion",
-    "version": "2.0.2",
+    "version": "2.0.3",
     "description": "折叠隐藏节点(可记录用户上次行为)。",
     "contributors": [
         {

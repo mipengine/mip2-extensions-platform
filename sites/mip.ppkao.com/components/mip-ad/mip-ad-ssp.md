@@ -9,7 +9,7 @@ mip-ad 的一种类型：百度Feeds联盟广告。  
 支持布局|fixed-height, fixed
 所需脚本|https://c.mipcdn.com/static/v2/mip.js
 https://c.mipcdn.com/static/v2/mip-fixed/mip-fixed.js"
-https://c.mipcdn.com/static/v2//mip-ad/mip-ad.js
+https://c.mipcdn.com/static/v2/mip-ad/mip-ad.js
 
 
 ## 支持布局
