@@ -1,7 +1,7 @@
 {
-  "name": "china.cn",
+  "name": "mla.xin",
   "version": "0.0.1",
-  "description": "A MIP project",
+  "description": "banner通过jsonp的方式获取",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
@@ -10,7 +10,8 @@
     "fix": "npm run fix:js",
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
-  "author": "wangzheng (wangzheng@mail.china.cn)",
+  "author": "mla (admin@mla.xin)",
+  "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
