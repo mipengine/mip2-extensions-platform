@@ -6,7 +6,7 @@ mip-stats-cnzz 介绍
 ----|----
 类型|通用
 支持布局|responsive,fixed-height,fill,container,fixed
-所需脚本|https://mipcache.bdstatic.com/static/v1/mip-stats-cnzz/mip-stats-cnzz.js
+所需脚本|https://c.mipcdn.com/static/v2/mip-stats-cnzz/mip-stats-cnzz.js
 
 ## 示例
 
@@ -16,6 +16,3 @@ mip-stats-cnzz 介绍
     自定义内容，可以嵌套其他组件
 </mip-stats-cnzz>
 ```
-
-
-
