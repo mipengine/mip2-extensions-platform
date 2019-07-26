@@ -6,7 +6,7 @@
 ----|----
 类型| 通用
 支持布局|N/S
-# 所需脚本|https://c.mipcdn.com/static/v2/mip-stats-baidu/mip-stats-baidu.js
+所需脚本|https://c.mipcdn.com/static/v2/mip-stats-baidu/mip-stats-baidu.js
 
 ## 组件说明：MIP百度统计组件基于[百度统计API](http://tongji.baidu.com/open/api/more)，请参照API将参数配置在MIP页；目前事件追踪支持`click`,`mouseup`,`load`，其它事件暂不支持。
 
