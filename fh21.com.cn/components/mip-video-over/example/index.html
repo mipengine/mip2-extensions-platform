@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=no">
+    <title>MIP page</title>
+    <link rel="canonical" href="https://m.bohe.cn/video/view/588017.html" >
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    
+<style mip-custom>
+    .pop{position: absolute; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); }
+    .box2{width:100%;  position:absolute; background-color:#000000;z-index:5500000000; top:0;opacity: 0.85;}
+    .box3{width:100%;  position:absolute;z-index:5500000001; top:0;}
+    .tuijian{ width:100%; height:45px;}
+    .tuijian p{color:#FFF; font-size:18px; width:30%; float:left; margin-left:15px; line-height:40px;}
+    .tuijian .close{font-size:15px; text-align:center;width: 55px; height: 25px;
+     margin-top: 10px; margin-right:20px; float:right; line-height:25px;
+     border: 1px solid rgba(255, 255, 255, 0.3);border-radius:2px;}
+    .tuijian .close b{display:inline-block; width:12px; height:2px; background:#fff; font-size:0; line-height:0;
+     vertical-align:middle;-webkit-transform: rotate(45deg); margin-left:3px;}
+    .tuijian .close a{color:#fff !important;}
+    .tuijian .close b:after{content:'.'; display:block; width:12px; height:2px;
+    background:#fff;-webkit-transform: rotate(-90deg);}
+    .picqu{ width:90%; margin:0 auto;}
+    .pic{width: 46.7%;  display:inline-block;}
+    .juli{margin-left: 5.2%;}
+    .neirong{width:90%; height:20px; margin:0 auto; margin-top:3px; font-size:14px;}
+    .neirong a{color:#fff; width: 46.7%;  display:inline-block; float:left; overflow:hidden; height:16px;}
+    .play{width:80px; height:30px; background-color:#e2480e; border-radius:15px; bottom:9px;
+     text-align:center; line-height:28px; color:#fff; margin:0 auto; position:absolute; left:50%;
+     margin-left:-40px; z-index:5500000001;}
+     .gaodu{height: 90px; width: 100%;}
+    .hide{display:none;}
+    @media screen and (min-width:300px) and (max-width:374px){
+          .play { bottom: 10px;}
+      .gaodu{height:60px; width: 100%;}
+    }
+    @media screen and (min-width:414px) and (max-width:750px){
+          .play { bottom: 15px;}
+    }
+</style>
+  </head>
+  <body>
+
+      <mip-video-over
+        id="video"
+        poster="https://file.bohe.cn/fhfile1/M00/74/79/o4YBAF04HzaALMSaAALTaj8z9DQ36.jpeg"
+        src="https://video.bohe.cn/20190723wj25.mp4">
+        <div class="hide pop">
+          <div class="box3">
+            <div class="tuijian">
+              <p>向您推荐</p>
+              <p class="close" on="click:video.close">关闭<b></b></p>
+            </div>
+            <div class="picqu">
+               <a class="pic" href="https://m.bohe.cn/video/view/586349.html">
+                   <mip-img class="gaodu" id="gaodu1" src="https://file.bohe.cn/fhfile1/M00/73/F2/oYYBAF0cTbqAIE6RAAL3Nc2IzFM12.jpeg">
+               </a>
+               <a class="pic juli" href="https://m.bohe.cn/video/view/586349.html">
+                  <mip-img class="gaodu" src="https://file.bohe.cn/fhfile1/M00/73/F2/oYYBAF0cTbqAIE6RAAL3Nc2IzFM12.jpeg">
+               </a>
+            </div>
+          </div>
+          <div class="play" on="click:video.play">继续播放</div>
+        </div>
+      </mip-video-over>
+
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="/mip-video-over/mip-video-over.js"></script>
+  </body>
+</html>
