@@ -58,10 +58,11 @@ export default class MIPVideoOver extends MIP.CustomElement {
             video.controls = false;
         };
 
-	    // 在这里注册事件的监听
+	    // 重新播放
 	    this.addEventAction('play', (event, str) => {
 	      video.play();
 	    })
+        // 关闭弹窗
 	    this.addEventAction('close', (event, str) => {
 	      popEle.style.display = 'none';
 	      video.controls = true;
