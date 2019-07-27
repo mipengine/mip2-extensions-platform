@@ -1,7 +1,6 @@
 import './mip-jxwl-cliptext.less'
 
 const { util } = MIP
-const { platform } = util
 
 export default class MIPJxwlClipText extends MIP.CustomElement {
   build () {
@@ -21,7 +20,7 @@ export default class MIPJxwlClipText extends MIP.CustomElement {
       oInput.value = copytext.innerHTML
       document.body.appendChild(oInput)
       oInput.select()
-      oInput.setSelectionRange(0, oInput.value.length)  
+      oInput.setSelectionRange(0,oInput.value.length)  
       let success = document.execCommand('copy')
       document.body.removeChild(oInput)
       if (success) {
