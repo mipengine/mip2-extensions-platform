@@ -1,26 +1,139 @@
 <!DOCTYPE html>
 <html mip>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=no">
-    <title>MIP page</title>
-    <link rel="canonical" href="对应的原页面地址">
-    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
-    <style mip-custom>
-      /* 自定义样式 */
-      h2 {
-        margin: 50px auto;
-        text-align: center;
-      }
-    </style>
-  </head>
-  <body>
-    <div>
-      <h2>First MIP page</h2>
-      <h2>Add MIP components here</h2>
-      <mip-example></mip-example>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=no">
+  <title>MIP page</title>
+  <link rel="canonical" href="对应的原页面地址">
+  <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+  <style mip-custom>
+    html {
+      font-size: 256%;
+    }
+
+    /* 自定义样式 */
+    .leavemsg .leavemsgBox {
+      height: auto;
+      border: 1px solid #D80000;
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 5px 5px 5px #eeeeee;
+    }
+
+    .leavemsg .leavemsgBox {
+      height: auto;
+      border: 1px solid #D80000;
+      margin: 0 auto;
+      background: #fff;
+      box-shadow: 5px 5px 5px #eeeeee;
+    }
+
+    .leavemsg .leavemsgBox .laveMsg-tit {
+      height: 1.06666667rem;
+      background: #fff5d5;
+      font-size: 0.34666667rem;
+      color: #ffc001;
+      line-height: 1.06666667rem;
+      text-align: center;
+    }
+
+    .leavemsg .leavemsgBox .laveMsg-srk {
+      height: auto;
+      padding: 0 0.64rem 0.4rem 0.64rem;
+    }
+
+    .leavemsg .leavemsgBox .laveMsg-srk p {
+      height: 1.05rem;
+      font-size: 0.4rem;
+      line-height: 1.05rem;
+      border: 1px solid #d2d2d2;
+      outline: none;
+      color: #666;
+      padding-left: 0.26666667rem;
+      border-radius: 0.08rem;
+      -webkit-appearance: none;
+      margin-top: 0.26666667rem;
+      visibility: initial;
+    }
+
+    .leavemsg .leavemsgBox .laveMsg-srk .msgTxt {
+      min-height: 1.05rem;
+      height: auto;
+    }
+
+    .laveMsg-srk p:empty:before {
+      content: attr(placeholder);
+      color: #bbb;
+    }
+
+    .laveMsg-srk p:focus:before {
+      content: none;
+    }
+
+    .leavemsg .leavemsgBox .laveMsg-srk #srkMsg {
+      width: 7.84rem;
+      height: 1.8rem;
+      font-size: 0.34666667rem;
+      border: 1px solid #d2d2d2;
+      outline: none;
+      color: #666;
+      padding-left: 0.26666667rem;
+      border-radius: 0.08rem;
+      -webkit-appearance: none;
+      margin-top: 0.26666667rem;
+
+    }
+
+    .leavemsg .leavemsgBox .laveMsg-srk #Mbutton3 {
+      display: block;
+      height: 1.06666667rem;
+      line-height: 1.06666667rem;
+      text-align: center;
+      border: 0;
+      background: #d80000;
+      font-size: 0.4rem;
+      color: #fff;
+      outline: none;
+      -webkit-appearance: none;
+      padding-left: 0.26666667rem;
+      margin-top: 0.26666667rem;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <mip-53public></mip-53public>
+    <div class="leavemsg">
+      <div class="leavemsgBox">
+        <p class="laveMsg-tit">在线留言，商家将会在第一时间与您联系！</p>
+        <div class="laveMsg-srk">
+          <mip-53msg popContact="Mcontact3" popTel="Mtel3" popInfo="Minfo3" popButton="Mbutton3" projectId="131415">
+            <p contenteditable="true" name="Mcontact3" id="Mcontact3" validatetarget="meContact" validatetype="must"
+              placeholder="请输入您的姓名~"></p>
+            <p contenteditable="true" name="Mtel3" id="Mtel3" validatetarget="meTel" validatetype="must"
+              placeholder="请输入您的手机~"></p>
+            <p contenteditable="true" class="msgTxt" name="Minfo3" id="Minfo3" placeholder="请输入留言内容~"></p>
+            <div class="clause">
+              <i class="check-box">
+                <i></i>
+              </i>
+              <div> 我已阅读并同意<a target="_blank" href="https://www.53.com.cn/aboutus/msgprotocol.html">《53加盟网服务条款》</a>
+              </div>
+            </div>
+            <span id="Mbutton3">提交留言ss</span>
+          </mip-53msg>
+        </div>
+      </div>
     </div>
-    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
-    <script src="/mip-example/mip-example.js"></script>
-  </body>
+
+
+  </div>
+  <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+  <script src="/mip-53public/mip-53public.js"></script>
+  <script src="/mip-53msg/mip-53msg.js"></script>
+  <script type="text/javascript" src="https://s4.cnzz.com/z_stat.php?id=1277859230&web_id=1277859230"></script>
+</body>
+
 </html>
