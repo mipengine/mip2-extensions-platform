@@ -7,7 +7,7 @@ export default class MIPVideoOver extends MIP.CustomElement {
     let src = ele.getAttribute('src')
     let poster = ele.getAttribute('poster')
     let autoplay = ele.getAttribute('autoplay') || true
-    let width = ele.getAttribute('width');
+    let width = ele.getAttribute('width')
     let controls = ele.getAttribute('controls') || true
     let preload = ele.getAttribute('preload')
     // 视频宽高比
@@ -67,7 +67,5 @@ export default class MIPVideoOver extends MIP.CustomElement {
       popEle.style.display = 'none'
       video.controls = true
     })
-
   }
-
 }
