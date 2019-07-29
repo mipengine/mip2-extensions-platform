@@ -1,6 +1,6 @@
 {
   "name": "jxwl.com",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "jxwl custom components",
   "scripts": {
     "dev": "mip2 dev",
