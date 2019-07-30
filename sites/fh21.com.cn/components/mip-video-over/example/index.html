@@ -7,61 +7,152 @@
     <link rel="canonical" href="https://m.bohe.cn/video/view/588017.html" >
     <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
     <style mip-custom>
-      .pop{position: absolute; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); }
-      .box2{width:100%;  position:absolute; background-color:#000000;z-index:5500000000; top:0;opacity: 0.85;}
-      .box3{width:100%;  position:absolute;z-index:5500000001; top:0;}
-      .tuijian{ width:100%; height:45px;}
-      .tuijian p{color:#FFF; font-size:18px; width:30%; float:left; margin-left:15px; line-height:40px;}
-      .tuijian .close{font-size:15px; text-align:center;width: 55px; height: 25px;
-       margin-top: 10px; margin-right:20px; float:right; line-height:25px;
-       border: 1px solid rgba(255, 255, 255, 0.3);border-radius:2px;}
-      .tuijian .close b{display:inline-block; width:12px; height:2px; background:#fff; font-size:0; line-height:0;
-       vertical-align:middle;-webkit-transform: rotate(45deg); margin-left:3px;}
-      .tuijian .close a{color:#fff !important;}
-      .tuijian .close b:after{content:'.'; display:block; width:12px; height:2px;
-      background:#fff;-webkit-transform: rotate(-90deg);}
-      .picqu{ width:90%; margin:0 auto;}
-      .pic{width: 46.7%;  display:inline-block;}
-      .juli{margin-left: 5.2%;}
-      .neirong{width:90%; height:20px; margin:0 auto; margin-top:3px; font-size:14px;}
-      .neirong a{color:#fff; width: 46.7%;  display:inline-block; float:left; overflow:hidden; height:16px;}
-      .play{width:80px; height:30px; background-color:#e2480e; border-radius:15px; bottom:9px;
-       text-align:center; line-height:28px; color:#fff; margin:0 auto; position:absolute; left:50%;
-       margin-left:-40px; z-index:5500000001;}
-       .gaodu{height: 90px; width: 100%;}
-      .hide{display:none;}
-      @media screen and (min-width:300px) and (max-width:374px){
-            .play { bottom: 10px;}
-        .gaodu{height:60px; width: 100%;}
+      button{
+        border:none;
+        background-color: transparent;
       }
-      @media screen and (min-width:414px) and (max-width:750px){
-            .play { bottom: 15px;}
-      }
+      .v-tuijian{
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 99999;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            display: none;
+        }
+        .v-tj-main{
+            width: 80%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+        }
+        .v-tj-main h4{
+            font-size: 14px;
+            color: #fff;
+            line-height: 18px;
+            margin-bottom: 10px;
+        }
+        .v-tj-main .v-close{
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 18px;
+            width: 44px;
+            font-size: 12px;
+            color: #666;
+            background-color: #222;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .v-tj-main .v-close span{
+            width: 12px;
+            height: 12px;
+            margin-right: 2px;
+            position: relative;
+        }
+
+        .v-tj-main .v-close span:after,.v-tj-main .v-close span:before{
+            position: absolute;
+            left: 0;
+            top: 50%;
+            content:'';
+            display:block;
+            width:12px;
+            height:1px;
+            background:#666;
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+        }
+        .v-tj-main .v-close span:before{
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+        }
+        .v-tj-video{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .v-tj-video .v-tj{
+            position: relative;
+            width: 47%;
+            height: 80px;
+            background: url(https://file.bohe.cn/fhfile1/M00/74/79/o4YBAF04HzaALMSaAALTaj8z9DQ36.jpeg) no-repeat center/cover;
+        }
+        .v-tj-video .v-tj.v-tj-img2{
+            background-image: url(https://file.youlai.cn/cnkfile1/M00/00/0F/o4YBAFdfrCOAF1LtAAJ3dYR9o_Y50.jpeg);
+        }
+        .v-tj-video .v-tj p{
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            font-size: 12px;
+            color: #fff;
+            height: 20px;
+            line-height: 20px;
+            text-indent: 5px;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .v-tj-btn button{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            font-size: 14px;
+            color: #23c6a5;
+            border: 1px solid #23c6a5;
+            height: 30px;
+            width: 100px;
+            border-radius: 15px;
+        }
+        .v-tj-btn button span.icon{
+            margin-right: 5px;
+            width: 16px;
+            height: 16px;
+            background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAbCAYAAAAdx42aAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyFpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNS1jMDE0IDc5LjE1MTQ4MSwgMjAxMy8wMy8xMy0xMjowOToxNSAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIChXaW5kb3dzKSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDpBODMyNjI1M0IxREQxMUU5OURCQzgyODJBMDFBOUZDMyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDpBODMyNjI1NEIxREQxMUU5OURCQzgyODJBMDFBOUZDMyI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkE4MzI2MjUxQjFERDExRTk5REJDODI4MkEwMUE5RkMzIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOkE4MzI2MjUyQjFERDExRTk5REJDODI4MkEwMUE5RkMzIi8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+Nj2IBQAAAmxJREFUeNq8l2uITVEUx8+5TVPzkJSIiCLDII9vEyY+UIqilGdqPgjTiCLvPEpIKR8MyiMp8koTXzSTR5PGBxHKIHmEiGTymBG6xm/Xf9fudu+559zZd/716+yz775nrfZZa521wxFtZ4MCNAnmwzSohgGa/wOv4T40QxN8i3pQSULDs2AX1OT4vRSqxBLoguOwB770xIG+cBQWO3Nf4SbchY8yVgmjoVa7Uw5rYTmsgouFODBM2zlK989hL5zXlufSENgA9dAPLsBE2AbddlEqj/HBcNsxbgyPhzN5jBu9h3Uy+lhzW2CfuyiVJz4uw3D4B8vk/d+EcdMOU+CW7jfB0jgOrHeCbQ0UlC7ST5jr7EQjDIxyoD9s1/gaHAl6rk5YqFdngnp3lAMrFNFp7YQvPVM2GdWZ4MzlgH1HV+BF4FcHlQWmZizI5sAgGKtxU+Bf76DNFjYT6adgsrOgwhnvgI0ap5UJTz04cUeZMaFEwXZPOZ+pKmfc4Mm40UtbrMwr+KAU6Yr4Q6PwpU5dy2wMPFDgdWdZfF313Kfsa/7lBqEJuM0ZC58od9OeHRhpy3VmFhyAkxp/hjnwvQiZMFXXR9nSsF7bPg/eFMH4UKfEN2f7HJtSOTsonkxlDeG3+dilgt7VGFit8Wno6E0HKtWUlKpP3BmnIfGlPnBVzYyNs09JHVipYlSe0Hi1av8M3e+Hc3FbMqvpcFiet6vBLIsR7YfgIYxzWrqt7qIw5rnANBDHYJEz9wNuQCu8VbGqUKDVKtdDre3QDl7KfHCY8GAyU51MTYKaf8LHucCqRUSdjF7pZNQS52T0X4ABAGsngvuqkgFCAAAAAElFTkSuQmCC') no-repeat center/contain;
+        }
     </style>
   </head>
   <body>
 
       <mip-video-over
         id="video"
+        controls="controls"
+        preload="no"
+
+        t7-video-player-type="inline"
+        playsinline="playsinline"
+        x5-playsinline="x5-playsinline"
+        webkit-playsinline="webkit-playsinline"
+
         poster="https://file.bohe.cn/fhfile1/M00/74/79/o4YBAF04HzaALMSaAALTaj8z9DQ36.jpeg"
         src="https://video.bohe.cn/20190723wj25.mp4">
-        <div class="hide pop">
-          <div class="box3">
-            <div class="tuijian">
-              <p>向您推荐</p>
-              <p class="close" on="click:video.close">关闭<b></b></p>
-            </div>
-            <div class="picqu">
-               <a class="pic" href="https://m.bohe.cn/video/view/586349.html">
-                   <mip-img class="gaodu" id="gaodu1" src="https://file.bohe.cn/fhfile1/M00/73/F2/oYYBAF0cTbqAIE6RAAL3Nc2IzFM12.jpeg">
-               </a>
-               <a class="pic juli" href="https://m.bohe.cn/video/view/586349.html">
-                  <mip-img class="gaodu" src="https://file.bohe.cn/fhfile1/M00/73/F2/oYYBAF0cTbqAIE6RAAL3Nc2IzFM12.jpeg">
-               </a>
-            </div>
+        <div class="v-tuijian">
+          <div class="v-tj-main">
+              <h4>向您推荐</h4>
+              <button class="v-close" on="click:video.close"><span></span>关闭</button>
+              <div class="v-tj-video">
+                  <a class="v-tj v-tj-img1" href="#">
+                      <p>标题标题标题标题标题标题标题标题标题标</p>
+                  </a>
+                  <a class="v-tj v-tj-img2" href="#">
+                      <p>标题标题标题标题标题标题标题标题标题标题</p>
+                  </a>
+              </div>
+              <div class="v-tj-btn">
+                  <button on="click:video.play"><span class="icon"></span><span>重播</span></button>
+              </div>
           </div>
-          <div class="play" on="click:video.play">继续播放</div>
-        </div>
+      </div>
       </mip-video-over>
 
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
