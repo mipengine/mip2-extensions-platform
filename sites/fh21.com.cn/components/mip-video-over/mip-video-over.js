@@ -56,7 +56,7 @@ export default class MIPVideoOver extends MIP.CustomElement {
     }
 
     function addAttrs () {
-      let v = ele.getAttribute('data-attrs');
+      let v = ele.getAttribute('data-attrs')
       if (v) {
         v.split('||').forEach(e => {
           let c = e.split('=')
