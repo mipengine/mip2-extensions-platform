@@ -83,6 +83,13 @@ export default class MIPVideoOver extends MIP.CustomElement {
       if (popEle) {
         popEle.style.display = 'block'
         video.style.display = 'none'
+        ele.querySelectorAll('a[data-href]').forEach(e => {
+          let h = e.getAttribute('data-href')
+          if (h) {
+            e.href = h
+            e.removeAttribute('data-href')
+          }
+        })
       }
     }
 
