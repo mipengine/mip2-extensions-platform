@@ -10,7 +10,7 @@
     "fix": "npm run fix:js",
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
-  "author": "ldf",
+  "author": "lindengfeng (lin15958030225@163.com)",
   "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",
