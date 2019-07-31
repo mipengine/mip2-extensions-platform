@@ -2,10 +2,8 @@ import './index.less'
 
 export default class MIPComponentLiuyan extends MIP.CustomElement {
   build() {
-
     this.mask.addEventListener('click', this.close);
     this.btnClose.addEventListener('click', this.close);
-
     this.addEventAction('open', function (_event, userid) {
       this.open(userid);
     });
@@ -88,6 +86,7 @@ export default class MIPComponentLiuyan extends MIP.CustomElement {
   }
 
   submit(event) {
+
     var that = this;
     if (that.submiting) {
       return;
@@ -97,7 +96,7 @@ export default class MIPComponentLiuyan extends MIP.CustomElement {
     var formData = that.getFormObjData(form);
     var checkResult = that.checkForm(formData);
     if (checkResult) {
-      result = that.dialog.open(form, '全球品牌网(globrand)提示：', checkResult, true);
+   that.dialog.open(form, '全球品牌网(globrand)提示：', checkResult, true);
       that.submiting = false;
       return;
     }
@@ -123,7 +122,6 @@ export default class MIPComponentLiuyan extends MIP.CustomElement {
 
   // 提交返回的样式框
   dialog = {
-
     open: function (form, headInfo, contentInfo, isFreetalk) {
       var result = this.get(headInfo, contentInfo, isFreetalk);
       if (form.parentElement.tagName === 'MIP-COMPONENT-LIUYAN') {
