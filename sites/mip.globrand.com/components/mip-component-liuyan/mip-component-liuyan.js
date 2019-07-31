@@ -96,7 +96,7 @@ export default class MIPComponentLiuyan extends MIP.CustomElement {
     var formData = that.getFormObjData(form);
     var checkResult = that.checkForm(formData);
     if (checkResult) {
-   that.dialog.open(form, '全球品牌网(globrand)提示：', checkResult, true);
+      that.dialog.open(form, '全球品牌网(globrand)提示：', checkResult, true);
       that.submiting = false;
       return;
     }
