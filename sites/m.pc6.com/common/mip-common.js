@@ -110,16 +110,14 @@ export default class MIPCommon {
       for (let i = 0; i < bodyCa.length; i++) {
         bodyCa[i].innerHTML = caName
       }
-
       // 动态显示区分内容
       let bodyDif = document.getElementsByClassName('dif')
       for (let i = 0; i < bodyDif.length; i++) {
-        if(aiJson.index != undefined){
+        if (aiJson.index !== undefined) {
           css(bodyDif[i].getElementsByTagName('div')[aiJson.index], { display: 'block' })
-        }else{
+        } else {
           bodyDif[i].parentNode.removeChild(bodyDif[i])
         }
-
       }
     }
   }

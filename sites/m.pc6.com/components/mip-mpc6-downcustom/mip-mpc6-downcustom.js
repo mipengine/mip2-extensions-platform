@@ -93,14 +93,14 @@ export default class MIPMpc6DownCustom extends CustomElement {
     if (!document.getElementById('dcatetory')) {
       this.element.removeChild(document.getElementsByClassName('tips_more')[0])
     }
-    if(document.body.getAttribute('show')){
-      if(document.getElementsByClassName('hot_gamerec').length){
+    if (document.body.getAttribute('show')) {
+      if (document.getElementsByClassName('hot_gamerec').length) {
         this.element.removeChild(document.getElementsByClassName('hot_gamerec')[0])
       }
-      if(document.getElementsByClassName('rank').length){
+      if (document.getElementsByClassName('rank').length) {
         this.element.removeChild(document.getElementsByClassName('rank')[0])
       }
-      if(document.getElementsByClassName('tips_more').length){
+      if (document.getElementsByClassName('tips_more').length) {
         this.element.removeChild(document.getElementsByClassName('tips_more')[0])
       }
     }
