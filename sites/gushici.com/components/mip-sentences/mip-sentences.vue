@@ -28,7 +28,7 @@
 <script>
 import './index.less'
 import MipSentenceItem from './mip-sentences-item'
-import ajax from '../../common/ajax.js'
+import ajaxGet from '../../common/ajax.js'
 export default{
   components: {
     MipSentenceItem
@@ -107,7 +107,7 @@ export default{
     _renderdata (url, query) {
       let t = this
       t.arr = []
-      ajax.get(url, query, function (res) {
+      ajaxGet(url, query, function (res) {
         if (res.page_max === 0) {
           t.isempty = true
         } else {

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>住房公积金</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <style mip-custom>
+/*common*/
+html {height: 100%;-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; overflow-x:hidden}
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, input, a, table, img, hr, textarea, strong, figure { margin: 0; padding: 0;}
+body { color: #404040; font-size: .32rem; font-family: 'Microsoft Yahei';min-height: 100%; position: relative; margin: 0 auto;overflow-y: scroll;-webkit-overflow-scrolling : touch; overflow-x:hidden}
+body.noscroll{height:100%;}
+::-webkit-scrollbar{width:0;height:0}
+*html, html { height: 100%; overflow-x:hidden}
+article, footer, header, section, footer, nav, figure, menu, object, time {  display: block;}
+ul, ol, li { list-style: none; }
+a { color: #333333; text-decoration: none;}
+a:hover, a:active, a:focus, a:visited { color: #333; text-decoration: none;}
+img { border: none; vertical-align: middle; max-width: 100%; font-size:0px;}
+table {  border-collapse: collapse; border-spacing: 0;}
+a, input { outline: 0; cursor:pointer;font-family: 'microsoft yahei';}
+input[type="text"],input[type="password"]{text-indent: .15rem;}
+input::-webkit-input-placeholder {color:#ccc;}
+button,input[type="button"]{outline:none;}
+em,i { font-style: normal;}
+section{ background: #fff;}
+.clearfix:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix{zoom:1;}
+.fl{ float: left;}
+.fr{ float: right;}
+.mt10{ margin-top: .1rem;}
+.mt20{ margin-top: .2rem;}
+.mt25{ margin-top: .25rem;}
+.mb20{ margin-bottom: .2rem;}
+.mb25{ margin-bottom: .25rem;}
+.pb20{ padding-bottom: .20rem;}
+.pb25{ padding-bottom: .25rem;}
+.pdlr30{ padding-left:.3rem; padding-right:.3rem;}
+.mglr30{ margin-left:.3rem; margin-right:.3rem;}
+.overhide{ overflow: hidden;}
+.index_tit{ height: 1rem; line-height: 1rem; padding: 0 .3rem; border-bottom: 1px solid #f0f0f0;}
+.index_tit i.icon{ float: left; width: .06rem; height: .3rem; background-position: 0 -4.85rem; margin: .36rem .16rem 0 0;}
+.index_tit h2{ float: left; font-size: .36rem; font-weight: normal;}
+/*计算器*/
+.calculator{padding-bottom: .3rem; font-size: .32rem;}
+.calculator table tr{height:1rem;padding:0 0.3rem;border-bottom:1px solid #f0f0f0;background:#fff;color:#333;}
+.calculator table th{width:60%;font-weight:normal;text-align:left;text-indent:0.3rem;}
+.calculator table td{width:50%;}
+.calculator table td select{width:90%;border:none;padding: 0 0.3rem;outline: 0;font-size: .32rem;color:#333; direction:rtl;appearance:none;-moz-appearance:none;-webkit-appearance:none;}
+.calculator table td .icon{display:inline-block;position:relative;left:-0.1rem;top:0;width:0.1rem;height:0.2rem;background-position: 0 -5.32rem;}
+.calculator table td input.input_wrap{width:90%;height:100%;border:none;font-size: .32rem;text-align:right;}
+.calculator div.operate{ padding: .3rem 0;}
+.calculator div.operate a{display:block;width:6.9rem;height:.9rem; margin: 0 auto; border:1px solid #2f75ea;background:#2f75ea;color:#fff;line-height:0.9rem;text-align:center;border-radius:0.05rem;font-size:0.32rem;}
+.calculator div.operate a.again{ display: none; background:#fff;color:#2f75ea;}
+.calculator table.calc_result{ border-top: .2rem solid #f5f5f5;}
+.calculator table.calc_result th{width:70%;}
+.calculator table.calc_result td{width:30%;}
+.calculator table.calc_result input{width:90%;border:none;height:1rem;line-height:1rem;font-size: .32rem;}
+.calculator .calc_inform{ padding: 0 .3rem; font-size: .24rem; color: #999; line-height: .34rem;}
+.calculator .calc_inform span{ color: #6099f9;}
+
+/*补充样式*/
+.calculator{position:relative}
+mip-form div{display:block;}
+.calculator .calc_tips{display:none;position:absolute;top: 50%;left: 50%;margin-left: -2.8rem;height: .8rem;background: rgba(0,0,0,.6);text-align: center;color: #fff;width: 5.6rem;line-height: .8rem;border-radius: .1rem;font-size:.3rem;padding:0;}
+.calculator div.operate span {display: block;width: 6.9rem;height: .9rem;margin: 0 auto;background: #2f75ea;color: #fff;line-height: 0.9rem;text-align: center;border-radius: 0.05rem;font-size: 0.32rem;}
+.calculator table td input.input_wrap{padding:0;}
+    </style>
+  </head>
+  <body>
+
+<mip-jt-resize></mip-jt-resize>
+
+<mip-jt-insurance-tool
+  type="houseFund"
+>
+<!--计算器-->
+<section class="calculator mt20">
+  <div class="index_tit">
+    <i class="icon"></i>
+    <h2>住房公积金缴费计算器</h2>
+  </div>
+  <mip-form method="get" url="https://m.cngold.org/insurance/m_jisuanqi_gongjijin.html">
+  <table cellspacing="0" width="100%">
+    <tr>
+      <th>您的月工资： </th>
+      <td>
+        <input class="input_wrap" id="wages" placeholder="0" type="text">
+      </td>
+    </tr>
+    <tr>
+      <th>本市职工上年月平均工资： </th>
+      <td>
+        <input class="input_wrap" id="avg-wages" placeholder="0" type="text">
+      </td>
+    </tr>
+    <tr>
+      <th>单位缴存比例(%)： </th>
+      <td>
+        <input class="input_wrap" id="unit-rate" placeholder="0" type="text">
+      </td>
+    </tr>
+    <tr>
+      <th>个人缴存比例(%)：</th>
+      <td>
+        <input class="input_wrap" id="person-rate" placeholder="0" type="text">
+      </td>
+    </tr>
+  </table>
+  <table cellspacing="0" width="100%" class="calc_result">
+    <tbody>
+      <tr>
+        <th id="messg2">今年您每月缴存的住房公积金为：</th>
+        <td><input class="input_wrap" id="total-fund" type="text" disabled></td>
+      </tr>
+      <tr>
+        <th>单位缴存： </th>
+        <td><input class="input_wrap" id="unit-fund" type="text" disabled></td>
+      </tr>
+      <tr>
+        <th>个人缴存： </th>
+        <td><input class="input_wrap" id="person-fund" type="text" disabled></td>
+      </tr>
+    </tbody>
+  </table>
+  <div id="calc-tips" class="calc_tips"></div>
+  <div class="operate clearfix mglr30">
+    <span id="btn-calc" name="btnCalc" class="on fl">开始计算</span>
+  </div>
+  </mip-form>
+</section>
+</mip-jt-insurance-tool>
+
+
+
+<script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+<script src="https://c.mipcdn.com/static/v1/mip-jt-resize/mip-jt-resize.js"></script>
+<script src="https://c.mipcdn.com/static/v2/mip-form/mip-form.js"></script>
+<script src="/mip-jt-insurance-tool/mip-jt-insurance-tool.js"></script>
+  </body>
+</html>

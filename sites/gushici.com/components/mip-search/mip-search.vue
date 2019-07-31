@@ -59,12 +59,10 @@
 
 <script>
 import './index.less'
-import ajax from '../../common/ajax.js'
+import ajaxGet from '../../common/ajax.js'
 const cookie = MIP.util.customStorage(0)
 export default{
-  props: {
-
-  },
+  props: {},
   data () {
     return {
       showResult: false,
@@ -93,7 +91,7 @@ export default{
       if (v !== '' && !/[a-z]/.test(v)) {
         let body = document.querySelector('body')
         let result = document.querySelector('.search-result')
-        ajax.get('search_menu', {text: v}, function (res) {
+        ajaxGet('search_menu', {text: v}, function (res) {
           t.poetry = res.poetry
           t.mingju = res.mingju
           t.auth = res.auth
