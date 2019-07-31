@@ -1,0 +1,77 @@
+mip-53popup {
+  &.my-popup-box{
+    display: none;
+  }
+  .popup-content{
+    background-color: #ffffff;
+    text-align: center;
+    width: 100%;
+    padding: 20px 0 0;
+    border-radius:7px; 
+    overflow: hidden;
+    background: #ffffff;
+    .mip-popup-header{
+      font-size: 15px;
+      letter-spacing: 1px;
+      font-weight: bold;
+      color: #ff5c00;
+    }
+    .mip-popup-body{
+      margin: 15px 0;
+      padding: 0 15px;
+      border-bottom: 0;
+      color: #888;
+      .laber-input{
+				display: flex;
+				background-color: #f5f5f5;
+				margin-bottom: .2rem;
+				border-radius: .4rem;
+				padding: .2rem 0;
+			}
+			.laber-input .item-name{
+				width: 2rem;
+				color: #333333;
+				text-align: center;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 14px;
+			}
+			.laber-input .item-input,.laber-input .item-select{
+				flex: 1;
+				background-color: transparent;
+				border: none;
+				outline: none;
+				font-size: 14px;
+			}
+			.laber-input .item-select{
+				appearance:none;
+				-moz-appearance:none;
+				-webkit-appearance:none;
+			}
+    }
+    .mip-popup-footer{
+      margin-top: 15px;
+      padding: 0;
+      border-top: 1px solid #ddd;
+      border-radius: 0 0 7px 7px;
+      .mip-popup-buttons{
+        display: flex;
+        .mip-popup-button{
+          height: 40px;
+          font-size: 16px;
+          line-height: 40px;
+          flex: 1;
+          position: relative;
+          &:last-child{
+            border-left:1px solid #ddd 
+          }
+        }
+      }
+    }
+    .mip-popup-tishi{
+      text-align: center;
+      color: #d80000;
+    }
+  }
+}
