@@ -113,7 +113,11 @@ export default class MIPCommon {
       // 动态显示不同内容
       let bodyDif = document.getElementsByClassName('dif')
       for (let i = 0; i < bodyDif.length; i++) {
-        css(bodyDif[i].getElementsByTagName('div')[aiJson.index], { display: 'block' })
+        if(aiJson.index != undefined){
+          css(bodyDif[i].getElementsByTagName('div')[aiJson.index], { display: 'block' })
+        }else{
+          bodyDif[i].parentNode.removeChild(bodyDif[i])
+        }
       }
     }
   }
