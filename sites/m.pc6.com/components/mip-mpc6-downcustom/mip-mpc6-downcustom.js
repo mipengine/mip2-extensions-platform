@@ -93,7 +93,6 @@ export default class MIPMpc6DownCustom extends CustomElement {
     if (!document.getElementById('dcatetory')) {
       this.element.removeChild(document.getElementsByClassName('tips_more')[0])
     }
-    // 根据body
     if(document.body.getAttribute('show')){
       if(document.getElementsByClassName('hot_gamerec').length){
         this.element.removeChild(document.getElementsByClassName('hot_gamerec')[0])
