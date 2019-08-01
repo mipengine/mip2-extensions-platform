@@ -1,6 +1,6 @@
 <template>
   <div>
-    <slot></slot>
+    <slot/>
   </div>
 </template>
 
@@ -10,17 +10,13 @@ export default {
   mounted () {
     // 套餐
     const workElements = this.$element.querySelectorAll('.workStyle')
-    console.log('workElements', workElements, this.$element.querySelector('.workStyle.work1'))
-    for (let i=0; i< workElements.length; i++) {
+    for (let i = 0; i < workElements.length; i++) {
       workElements[i].onclick = (e) => {
+        const className = workElements[i].className
         let id = ''
         if (workElements[i].querySelector('.dtImg')) {
           id = parseInt(workElements[i].querySelector('.dtImg').className.substring(6))
         }
-        const className = workElements[i].className
-
-        console.log(className.indexOf(' work') > -1, i, className)
-
         if (className.indexOf(' work') > -1) {
           MIP.viewer.open('//m.hunliji.com/package/detail_' + id)
         } else if (className.indexOf('case') > -1) {
@@ -35,9 +31,6 @@ export default {
         }
       }
     }
-
-
-
   }
 }
 </script>
