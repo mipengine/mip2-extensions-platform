@@ -2,7 +2,8 @@
  * @file mip-ppkao-shitiviewmore 组件
  * @author
  */
-export default class MIPShitiviewmore extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoShitiviewmore extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()

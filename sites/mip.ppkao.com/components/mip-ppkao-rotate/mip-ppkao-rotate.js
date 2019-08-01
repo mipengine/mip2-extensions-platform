@@ -2,7 +2,8 @@
  * @file mip-ppkao-rotate 组件
  * @author
  */
-export default class MIPRotate extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoRotate extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()

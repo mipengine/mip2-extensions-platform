@@ -2,7 +2,8 @@
  * @file mip-ppkao-login 组件
  * @author
  */
-export default class MIPLogin extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoLogin extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()

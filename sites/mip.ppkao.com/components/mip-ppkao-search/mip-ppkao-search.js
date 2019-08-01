@@ -2,7 +2,8 @@
  * @file mip-ppkao-search 组件
  * @author
  */
-export default class MIPSearch extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoSearch extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()

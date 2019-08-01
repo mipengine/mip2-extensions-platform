@@ -2,7 +2,8 @@
  * @file mip-ppkao-jiyancode 组件
  * @author
  */
-export default class MIPJiyancode extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoJiyancode extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()

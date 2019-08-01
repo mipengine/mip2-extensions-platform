@@ -2,7 +2,9 @@
  * @file mip-ppkao-calenderslide 组件
  * @author
  */
-export default class MIPCalenderslide extends MIP.CustomElement {
+import './index.less'
+
+export default class MIPPpkaoCalenderslide extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()
@@ -55,7 +57,6 @@ export default class MIPCalenderslide extends MIP.CustomElement {
         }
       })
     }
-
     return customElement
   }
 }

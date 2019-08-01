@@ -2,7 +2,8 @@
  * @file mip-ppkao-kaotilightbox 组件
  * @author
  */
-export default class MIPKaotilightbox extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoKaotilightbox extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()

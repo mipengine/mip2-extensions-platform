@@ -2,7 +2,8 @@
  * @file mip-ppkao-zikaolightbox 组件
  * @author
  */
-export default class MIPZikaolightbox extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoZikaolightbox extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()

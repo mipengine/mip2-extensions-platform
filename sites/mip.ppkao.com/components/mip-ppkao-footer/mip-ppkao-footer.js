@@ -2,7 +2,8 @@
  * @file mip-ppkao-footer 组件
  * @author
  */
-export default class MIPFooter extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoFooter extends MIP.CustomElement {
   build () {
     'use strict'
     let $ = require('zepto')

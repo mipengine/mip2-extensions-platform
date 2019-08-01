@@ -2,7 +2,8 @@
  * @file mip-ppkao-showlistindex 组件
  * @author
  */
-export default class MIPShowlistindex extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoShowlistindex extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()

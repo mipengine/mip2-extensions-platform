@@ -2,7 +2,8 @@
  * @file mip-ppkao-table 组件
  * @author
  */
-export default class MIPTable extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoTable extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()

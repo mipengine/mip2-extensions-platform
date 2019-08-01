@@ -2,7 +2,8 @@
  * @file mip-ppkao-slidetoggle 组件
  * @author
  */
-export default class MIPSlidetoggle extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoSlidetoggle extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()

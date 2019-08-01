@@ -2,7 +2,8 @@
  * @file mip-ppkao-encode 组件
  * @author
  */
-export default class MIPEncode extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoEncode extends MIP.CustomElement {
   build () {
     'use strict'
     let $ = require('zepto')

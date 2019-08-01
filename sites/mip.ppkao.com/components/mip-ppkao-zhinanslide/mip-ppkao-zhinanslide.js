@@ -2,7 +2,8 @@
  * @file mip-ppkao-zhinanslide 组件
  * @author
  */
-export default class MIPZhinanslide extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoZhinanslide extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()

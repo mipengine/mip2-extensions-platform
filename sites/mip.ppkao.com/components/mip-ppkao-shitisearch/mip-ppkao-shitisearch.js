@@ -2,7 +2,8 @@
  * @file mip-ppkao-shitisearch 组件
  * @author
  */
-export default class MIPShitisearch extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoShitisearch extends MIP.CustomElement {
   build () {
     let customElement = require('customElement').create()
 

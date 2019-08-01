@@ -2,7 +2,8 @@
  * @file mip-ppkao-fontsizechange 组件
  * @author
  */
-export default class MIPFontsizechang extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoFontsizechang extends MIP.CustomElement {
   build () {
     'use strict'
     let $ = require('zepto')

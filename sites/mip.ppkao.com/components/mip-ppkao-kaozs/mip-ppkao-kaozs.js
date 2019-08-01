@@ -2,7 +2,8 @@
  * @file mip-ppkao-tiku 组件
  * @author
  */
-export default class MIPTiku extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoKaozs extends MIP.CustomElement {
   build () {
     'use strict'
     let $ = require('zepto')

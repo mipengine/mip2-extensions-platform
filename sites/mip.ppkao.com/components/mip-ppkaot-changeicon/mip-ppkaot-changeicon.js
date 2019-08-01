@@ -2,7 +2,8 @@
  * @file mip-ppkaot-changeicon 组件
  * @author
  */
-export default class MIPChangeicon extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoChangeicon extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()

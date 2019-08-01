@@ -2,7 +2,9 @@
  * @file mip-ppkao-address 组件
  * @author
  */
-export default class MIPAddress extends MIP.CustomElement {
+import './index.less'
+
+export default class MIPPpkaoAddress extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()

@@ -2,7 +2,9 @@
  * @file mip-ppkao-buyqiehuan 组件
  * @author
  */
-export default class MIPBuyqiehuan extends MIP.CustomElement {
+import './index.less'
+
+export default class MIPPpkaoBuyqiehuan extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()

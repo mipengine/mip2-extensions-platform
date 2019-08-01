@@ -2,7 +2,8 @@
  * @file mip-ppkao-loadkemuzixun 组件
  * @author
  */
-export default class MIPLoadkemuzixun extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoLoadkemuzixun extends MIP.CustomElement {
   build () {
     'use strict'
     let $ = require('zepto')

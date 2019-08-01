@@ -2,7 +2,7 @@
  * @file mip-ppkao-kaoshixinxi 组件
  * @author
  */
-export default class MIPKaoshixinxi extends MIP.CustomElement {
+export default class MIPPpkaoKaoshixinxi extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()

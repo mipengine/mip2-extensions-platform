@@ -2,7 +2,8 @@
  * @file mip-ppkao-dropdown 组件
  * @author
  */
-export default class MIPDropdown extends MIP.CustomElement {
+import './index.less'
+export default class MIPPpkaoDropdown extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()
