@@ -1,7 +1,7 @@
 {
-    "name": "mip-ppkao-buyqiehuan",
+    "name": "mip-ppkao-table",
     "version": "1.0.3",
-    "description": "价格和支付样式变换",
+    "description": "表格滑动",
     "contributors": [
         {
             "name": "fll",

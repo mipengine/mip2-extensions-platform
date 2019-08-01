@@ -1,9 +1,10 @@
 /**
- * @file mip-ppkao-buyqiehuan 组件
+ * @file mip-ppkao-encode 组件
  * @author
  */
-export default class MIPBuyqiehuan extends MIP.CustomElement {
+export default class MIPEncode extends MIP.CustomElement {
   build () {
+    'use strict'
     let $ = require('zepto')
     let customElement = require('customElement').create()
 
@@ -12,11 +13,10 @@ export default class MIPBuyqiehuan extends MIP.CustomElement {
      */
     customElement.prototype.firstInviewCallback = function () {
       let ele = $(this.element)
-      let chooseLi = ele.find('.choose-vip ul li')
-      chooseLi.click(function () {
-        $(this).addClass('check').siblings().removeClass('check')
-      })
+      let charset = ele.attr('accept-charset') ? ele.attr('accept-charset') : 'utf-8'
+      ele.find('form').attr('accept-charset', charset)
     }
+
     return customElement
   }
 }

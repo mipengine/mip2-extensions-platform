@@ -1,8 +1,8 @@
-/**
- * @file mip-ppkao-buyqiehuan 组件
+/*
+ * @file mip-ppkao-zixun 组件
  * @author
  */
-export default class MIPBuyqiehuan extends MIP.CustomElement {
+export default class MIPZixun extends MIP.CustomElement {
   build () {
     let $ = require('zepto')
     let customElement = require('customElement').create()
@@ -12,11 +12,14 @@ export default class MIPBuyqiehuan extends MIP.CustomElement {
      */
     customElement.prototype.firstInviewCallback = function () {
       let ele = $(this.element)
-      let chooseLi = ele.find('.choose-vip ul li')
-      chooseLi.click(function () {
-        $(this).addClass('check').siblings().removeClass('check')
+      let zxKinds = ele.find('.zx_kinds ul li:nth-child(4n)')
+      let zxKul = ele.find('.zx_kinds ul li')
+      zxKinds.css({ 'margin-right': '0' })
+      zxKul.click(function () {
+        $(this).toggleClass('zx_lis')
       })
     }
+
     return customElement
   }
 }

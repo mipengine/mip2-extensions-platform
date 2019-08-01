@@ -1,7 +1,7 @@
 {
-    "name": "mip-ppkao-buyqiehuan",
-    "version": "1.0.3",
-    "description": "价格和支付样式变换",
+    "name": "mip-ppkao-address",
+    "version": "1.0.9",
+    "description": "地区",
     "contributors": [
         {
             "name": "fll",
