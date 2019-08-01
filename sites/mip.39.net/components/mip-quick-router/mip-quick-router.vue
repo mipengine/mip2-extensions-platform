@@ -118,7 +118,7 @@ export default {
       console.log(userAgent)
       if (userAgent) {
         let huaweibrowser = userAgent.indexOf('huaweibrowser')
-        //let android = userAgent.indexOf('android')
+        // let android = userAgent.indexOf('android')
         let huawei = userAgent.indexOf('build/huawei')
         if (huaweibrowser >= 0) return 1
         if (huawei >= 0) return 1
