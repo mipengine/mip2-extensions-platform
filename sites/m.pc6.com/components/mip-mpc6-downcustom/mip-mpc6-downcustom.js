@@ -52,8 +52,6 @@ export default class MIPMpc6DownCustom extends CustomElement {
         this.element.removeChild(document.getElementsByClassName('guess')[0])
       }
     }
-    // 移除空内容
-    this.emptyRemove()
     // 文章动态增加链接
     if (document.getElementsByClassName('xgwz').length) {
       MIPCommon.alterNewUrl(document.getElementsByClassName('xgwz')[0].getElementsByClassName('d_title')[0], this.data().id, ['手游', '软件'], this.data().url)
@@ -72,6 +70,8 @@ export default class MIPMpc6DownCustom extends CustomElement {
     MIPCommon.statCustom()
     // 排行榜
     MIPCommon.rank(this.data().id)
+    // 移除空内容
+    this.emptyRemove()
   }
   /*
    * 移除空内容
@@ -88,6 +88,21 @@ export default class MIPMpc6DownCustom extends CustomElement {
     // 相关视频
     if (document.getElementsByClassName('xgsp').length && document.getElementsByClassName('xgsp')[0].getElementsByTagName('li').length === 0) {
       this.element.removeChild(document.getElementsByClassName('xgsp')[0])
+    }
+    // 更多标签
+    if (!document.getElementById('dcatetory')) {
+      this.element.removeChild(document.getElementsByClassName('tips_more')[0])
+    }
+    if (document.body.getAttribute('show')) {
+      if (document.getElementsByClassName('hot_gamerec').length) {
+        this.element.removeChild(document.getElementsByClassName('hot_gamerec')[0])
+      }
+      if (document.getElementsByClassName('rank').length) {
+        this.element.removeChild(document.getElementsByClassName('rank')[0])
+      }
+      if (document.getElementsByClassName('tips_more').length) {
+        this.element.removeChild(document.getElementsByClassName('tips_more')[0])
+      }
     }
   }
   /*
