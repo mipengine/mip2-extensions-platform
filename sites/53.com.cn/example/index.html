@@ -11,6 +11,7 @@
     html {
       font-size: 256%;
     }
+
     /* 自定义样式 */
     .leavemsg .leavemsgBox {
       height: auto;
@@ -99,37 +100,165 @@
       margin-top: 0.26666667rem;
     }
 
+    /* 底部样式 */
+      html body .maxBOX mip-fixed {
+				max-width: 640px;
+				margin: 0 auto;
+				overflow: initial;
+			}
+      ul,li{
+				list-style: none;
+			}
+			.footBar {width: 100%;height: 1.30666667rem;background: #D80000;
+				/* box-shadow: 0 -3px 3px #e7e7e7 */
+			}
+			.ftBar-nav {height: 1.30666667rem;display: flex;display: -webkit-flex;flex-direction: row;justify-content: space-between;}
+			.ftBar-nav li {width: 20%;height: 1.14666667rem;padding-top: 0.16rem;}
+			.ftBar-nav li mip-link {display: block;width: 100%;height: 1.30666667rem;font-size: 0.26666667rem;line-height: 0.50666667rem;color: #fff;text-align: center;}
+			.ftBar-nav li mip-link span {display: block; width: 0.61333333rem;height: 0.61333333rem; margin: 0 auto;}
+			.ftBar-nav li mip-link .iconFt_sy {background: url(https://m.53.com.cn/img/icon_y_sy.png) no-repeat;background-size: 0.61333333rem 0.61333333rem;}
+			.ftBar-nav li mip-link .iconFt_xm {background: url(https://m.53.com.cn/img/icon_xm.png) no-repeat;background-size: 0.61333333rem 0.61333333rem;}
+			.ftBar-nav li mip-link .iconFt_phb {background: url(https://m.53.com.cn/img/icon_phb.png) no-repeat;background-size: 0.61333333rem 0.61333333rem;}  
+			.ftBar-nav li mip-link .iconFt_xw {background: url(https://m.53.com.cn/img/icon_xw.png) no-repeat;background-size: 0.61333333rem 0.61333333rem;}
+			.ftBar-nav li mip-link .iconFt_zh {background: url(https://m.53.com.cn/img/icon_zh.png) no-repeat;background-size: 0.61333333rem 0.61333333rem;}
+			.ftBar-nav li .lookProj{display: block;width: 100%;height: 1.30666667rem;font-size: 0.26666667rem;line-height: 0.50666667rem;color: #fff;text-align: center;position: relative;padding-top: 0.56333333rem;}
+			.ftBar-nav li .lookProj span{
+				width: 1.11333333rem;
+				height: 1.11333333rem;
+				position: absolute;
+				top: -0.6rem;
+				left: 50%;
+				margin-left: -0.55666666rem;
+				background-color: #FFFFFF;
+				border-radius: 50%;
+				font-size: 1.05555555rem;
+				line-height: 1.11333333rem;
+				text-align: center;
+				border: 2px solid #D80000;
+				color: #D80000;
+				box-sizing: border-box;
+			}
+			.ftBar-nav li .lookProj .iconFt_zxm{
+				/* background: url(images/icon_release.png) no-repeat;background-size: 0.61333333rem 0.61333333rem; */
+      }
+      .mip-popup-back{
+        position: fixed !important;
+        top: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        height: 100% !important;
+        background-image: none !important;
+        background: rgba(0,0,0,0.8);
+        z-index: 10001 !important;
+        display: none;
+      }
   </style>
 </head>
 
 <body>
-  <div>
+  <div class="maxBOX">
     <mip-53public></mip-53public>
     <div class="leavemsg">
       <div class="leavemsgBox">
-        <p class="laveMsg-tit">在线留言，商家将会在第一时间与您联系！</p>
+        <p class="laveMsg-tit" id="laveMsg">在线留言，商家将会在第一时间与您联系！</p>
         <div class="laveMsg-srk">
-          <mip-53msg popContact="Mcontact3" popTel="Mtel3" popInfo="Minfo3" popButton="Mbutton3" projectId="131415">
-              <p contenteditable="true" name="Mcontact3" id="Mcontact3"  validatetarget="meContact" validatetype="must" placeholder="请输入您的姓名~" ></p>
-              <p contenteditable="true" name="Mtel3" id="Mtel3"    validatetarget="meTel" validatetype="must" placeholder="请输入您的手机~" ></p>
-              <p contenteditable="true" class="msgTxt" name="Minfo3" id="Minfo3"  placeholder="请输入留言内容~" ></p>
-              <div class="clause">
-                  <i class="check-box">
-                      <i></i>
-                  </i>
-                  <div> 我已阅读并同意<a target="_blank" href="https://www.53.com.cn/aboutus/msgprotocol.html">《53加盟网服务条款》</a></div>
+          <mip-53msg popContact="Mcontact3" laveMsg="laveMsg" popTel="Mtel3" popInfo="Minfo3" popButton="Mbutton3" projectId="131415">
+            <p contenteditable="true" name="Mcontact3" id="Mcontact3" validatetarget="meContact" validatetype="must"
+              placeholder="请输入您的姓名~"></p>
+            <p contenteditable="true" name="Mtel3" id="Mtel3" validatetarget="meTel" validatetype="must"
+              placeholder="请输入您的手机~"></p>
+            <p contenteditable="true" class="msgTxt" name="Minfo3" id="Minfo3" placeholder="请输入留言内容~"></p>
+            <div class="clause">
+              <i class="check-box">
+                <i></i>
+              </i>
+              <div> 我已阅读并同意<a target="_blank" href="https://www.53.com.cn/aboutus/msgprotocol.html">《53加盟网服务条款》</a>
               </div>
-              <span id="Mbutton3">提交留言</span>
+            </div>
+            <span id="Mbutton3">提交留言</span>
           </mip-53msg>
         </div>
       </div>
     </div>
-
+    <mip-53popup id="my-popup" class="my-popup-box" selct="itemselect" input="iteminput">
+      <div class="popup-content">
+        <div class="mip-popup-header">免费预约资深专家 量身定制加盟方案</div>
+        <div class="mip-popup-body">
+            <div class="laber-input">
+              <span class="item-name">我要加盟</span>
+              <select class="item-select" id="itemselect">
+                <option value="">--请选择加盟品牌--</option>
+                <option value="餐饮品牌">餐饮品牌</option>
+                <option value="服装品牌">服装品牌</option>
+                <option value="零售品牌">零售品牌</option>
+                <option value="美容品牌">美容品牌</option>
+                <option value="教育品牌">教育品牌</option>
+                <option value="母婴品牌">母婴品牌</option>
+                <option value="酒水品牌">酒水品牌</option>
+                <option value="其他">其他</option>
+              </select>
+            </div>
+            <div class="laber-input">
+              <span class="item-name">手机号码</span>
+              <input class="item-input" type="number" placeholder="请输入您的手机号" class="mip-input" id=iteminput >
+            </div>
+        </div>
+        <div class="mip-popup-tishi" id="mip-popup-tishi"></div>
+        <div class="mip-popup-footer">
+          <div class="mip-popup-buttons">
+            <div class="mip-popup-button" on="tap:my-popup.close">取消</div>
+            <div class="mip-popup-button" on="tap:my-popup.subme">确定</div>
+          </div>
+        </div>
+      </div>
+    </mip-53popup>
+    <div class="mip-popup-back" id="mip-popup-back" on="tap:my-popup.close"></div>
+    <mip-fixed type="bottom">
+      <div class="footBar">
+        <ul class="ftBar-nav">
+          <li>
+            <mip-link href="https://mip.53.com.cn/"> <span class="iconFt_sy"></span>
+              <p>首页</p>
+            </mip-link>
+          </li>
+          <li>
+            <mip-link href="https://mip.53.com.cn/pro/"> <span class="iconFt_xm"></span>
+              <p>项目</p>
+            </mip-link>
+          </li>
+          <li>
+            <div class="lookProj"  on="tap:my-popup.open">
+              <!--  on="tap:MIP.setData({visible: true})" -->
+              <span class="iconFt_zxm">+</span>
+              <p>找项目</p>
+            </div>
+          </li>
+          
+          <li>
+            <mip-link href="https://mip.53.com.cn/top/"> <span class="iconFt_phb"></span>
+              <p>排行榜</p>
+            </mip-link>
+          </li>
+          <li>
+            <mip-link href="https://mip.53.com.cn/news/"> <span class="iconFt_xw"></span>
+              <p>新闻</p>
+            </mip-link>
+          </li>
+          <!-- <li>
+            <mip-link href="https://mip.53.com.cn/meeting/"> <span class="iconFt_zh"></span>
+              <p>展会</p>
+            </mip-link>
+          </li> -->
+        </ul>
+      </div>
+    </mip-fixed>
 
   </div>
   <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
   <script src="/mip-53public/mip-53public.js"></script>
   <script src="/mip-53msg/mip-53msg.js"></script>
+  <script src="/mip-53popup/mip-53popup.js"></script>
+  <script type="text/javascript" src="https://s4.cnzz.com/z_stat.php?id=1277859230&web_id=1277859230"></script>
 </body>
 
 </html>
