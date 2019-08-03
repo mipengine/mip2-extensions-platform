@@ -1,7 +1,7 @@
 {
   "name": "jxwl.com",
-  "version": "0.0.2",
-  "description": "jxwl custom components",
+  "version": "0.0.3",
+  "description": "v0.0.3新增控制文本显示字数组件",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
