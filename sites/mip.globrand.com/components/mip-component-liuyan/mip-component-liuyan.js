@@ -51,14 +51,14 @@ export default class MIPComponentLiuyan extends MIP.CustomElement {
   getFormObjData (form) {
     let formData = {
       UserID: form.querySelector('[name=UserID]').value.trim(),
-      Phone: form.querySelector('[name=Phone]').value.trim()
+      Phone: form.querySelector('[name=Phone]').value.trim(),
+      sourcepage:form.querySelector('[name=sourcepage]').value.trim()
     }
     if (!this.isFreetalk) {
       let sexDom = form.querySelector('[name=Sex]:checked')
       formData.Sex = sexDom ? sexDom.value.trim() : '先生'
       formData.Name = form.querySelector('[name=Name]').value.trim()
       formData.Content = form.querySelector('[name=Content]').value.trim()
-      formData.sourcepage = form.querySelector('[name=sourcepage]').value.trim()
     }
     return formData
   }
