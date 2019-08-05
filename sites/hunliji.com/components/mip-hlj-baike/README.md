@@ -14,7 +14,3 @@
   <mip-hlj-baike>
   </mip-hlj-baike>
 ```
-
-示例说明
-
-## 属性
