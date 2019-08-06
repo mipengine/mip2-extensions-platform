@@ -112,7 +112,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
 .dropmenu-pd-warp .dropdown {
   top: 104PX;
 }
