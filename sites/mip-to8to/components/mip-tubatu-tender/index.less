@@ -1,0 +1,927 @@
+@imgVersion: "?v=20190724";
+
+.clearfix:after,
+.clearfix:before {
+  content: "\0020";
+  display: block;
+  height: 0;
+  overflow: hidden;
+}
+
+.boxsizing() {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+
+div,
+input {
+  .boxsizing
+}
+
+mip-fixed{
+  position: initial !important;
+}
+
+mip-tubatu-tender {
+  .wrapper {
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+
+mip-fixed{
+  position: initial !important;
+}
+/*20170710*/
+.clearfix:after{
+  content: "\0020";
+  display: block;
+  height: 0;
+  overflow:hidden;
+  clear: both;
+}
+
+.bottom-form-btn-box{
+  position: fixed;
+  width: 100%;
+  height: 56px;
+  bottom: 0;
+  left: 0;
+  z-index: 101;
+  background: #fff;
+}
+.bottom-form-btn-box ul {
+  position: relative;
+  height: 56px;
+}
+.bottom-form-btn-box ul li{
+  width: 20%;
+  float: left;
+  display: inline-block;
+  height: 56px;
+  text-align: center;
+}
+.bottom-form-btn-box ul .btn-lhb-list{
+  height: 71px;
+  margin-top: -16px;
+}
+.bottom-form-btn-box ul li a{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  color: #666;
+  font-size: 14px;
+  width: 100%;
+  height: 100%;
+}
+.bottom-form-btn-box ul li.active a{
+  color: #ff436d;
+  font-weight: bold;
+}
+.bottom-form-btn-box ul li a.btn-lhb,
+.bottom-form-btn-box ul li.active a.btn-lhb{
+  color: #ff5054;
+  letter-spacing: 0.12px;
+  margin-top: 0;
+  height: 71px;
+}
+.bottom-form-btn-box ul li a i{
+  height: 34px;
+  width: 34px;
+  margin-top: 3px;
+}
+.bottom-form-btn-box ul li a span{
+  font-size: 10px;
+  margin-bottom: 4px;
+}
+
+.bottom-form-btn-box a.btn-mfsj i{
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_mfsj.png@{imgVersion}") no-repeat center center;
+  background-size: 100%;
+}
+.bottom-form-btn-box a.btn-zxbj i{
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_mfbj.png@{imgVersion}") no-repeat  center center;
+  background-size: 100%;
+}
+
+.center-ico{
+  height: 54px;
+  width: 60px;
+  margin-top: 0;
+  border: 7px solid #fff;
+  border-bottom: 0;
+  border-radius: 50%;
+  background-color: #fff;
+  .boxsizing
+}
+.bottom-form-btn-box a.btn-lhb i{
+  display: block;
+  margin-top: 0;
+  width: 46px;
+  height: 46px;
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_lhb.png@{imgVersion}") no-repeat center center;
+  background-size: 100%;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+.bottom-form-btn-box a.btn-zxgs i{
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_zxgs.png@{imgVersion}") no-repeat center center;
+  background-size: 100%;
+}
+.bottom-form-btn-box a.btn-zxfq i{
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_zxfq.png@{imgVersion}") no-repeat center center;
+  background-size: 100%;
+}
+
+.bottom-form-btn-box .active a.btn-mfsj i{
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_mfsj_on.png@{imgVersion}") no-repeat center center;
+  background-size: 100%;
+}
+.bottom-form-btn-box .active a.btn-zxbj i{
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_mfbj_on.png@{imgVersion}") no-repeat center center;
+  background-size: 100%;
+}
+.bottom-form-btn-box .active a.btn-lhb i{
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_lhb_on.png@{imgVersion}") no-repeat center center;
+  background-size: 100%;
+}
+.bottom-form-btn-box .active a.btn-zxgs i{
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_zxgs_on.png@{imgVersion}") no-repeat center center;
+  background-size: 100%;
+}
+.bottom-form-btn-box .active a.btn-zxfq i{
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_zxfq_on.png@{imgVersion}") no-repeat center center;
+  background-size: 100%;
+}
+
+input.common-city{
+  color: #000;
+}
+
+.tab-bottom-form-box{
+  width: 100%;
+  position: fixed;
+  bottom: 50px;
+  left: 0;
+  z-index: 100;
+  display:none;
+}
+
+.tab-form-box{
+  padding: 0 15px 24px 15px;
+}
+
+.tab-bottom-form-con{
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  -webkit-transition: 0.8s;
+  -moz-transition: 0.8s;
+  -ms-transition: 0.8s;
+  -o-transition: 0.8s;
+  transition: 0.8s;
+  //visibility: 0;
+  opacity: 0;
+  height: 0;
+  transform: translateZ(0);
+}
+.title-text-box{
+  font-size: 14px;
+  color: #FFFFFF;
+  height: 22px;
+  line-height: 22px;
+  border-radius: 2px;
+  text-align: center;
+  margin-bottom: 8px;
+  display: block;
+}
+.active-anim{
+  display: block;
+  opacity: 1;
+  //visibility: 1;
+  width: 100%;
+  height: 306px;
+  z-index: 50;
+  padding-top: 40px;
+}
+
+/*免费设计*/
+.mfsj-form-box {
+  background: #F5F1ED;
+}
+.form-top-box{
+  padding: 18px 15px 16px;
+}
+.form-top-box .ico-mfsj-text{
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_mfsj_text.png@{imgVersion}") no-repeat center center;
+  background-size: 100%;
+  display: inline-block;
+  width: 190px;
+  height: 35px;
+}
+.form-top-box .ico-mfsj-title{
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_mfsj_title.png@{imgVersion}") no-repeat center center;
+  background-size: 100%;
+  display: inline-block;
+  width: 100%;
+  height: 130px;
+  position: absolute;
+  z-index: 10;
+  top: -20px;
+  right: 5px;
+}
+.title-text-mfsj{
+  width: 118px;
+  background: #4E1F01;
+}
+.title-text-one{
+  font-size: 14px;
+  color: #4E1F01;
+  display: block;
+  height: 14px;
+  line-height: 14px;
+}
+
+.element-line input{
+  padding: 8px 10px;
+  border: 1px solid #B6B6C2;
+  width: 100%;
+  font-size: 14px;
+  border-radius: 2px;
+  -webkit-appearance: none;
+  appearance: none;
+  /*height: 46px;*/
+  vertical-align: middle;
+  line-height: 28px;
+  border-radius: 4px;
+}
+.element-line div{
+  width: 100%;
+  position: relative;
+}
+.zxbj-form-box .element-line div{
+  float: left;
+  width: 48%;
+}
+.zxbj-form-box .element-line div.fr{
+  float: right;
+}
+.element-line{
+  margin-bottom: 10px;
+  position: relative;
+}
+div.fr{
+  float: right;
+}
+
+.area-box::after,.download-arrow2::after{
+  position: absolute;
+  top: 20px;
+  right: 12px;
+  height: 7px;
+  width: 7px;
+  -webkit-transform: rotate(-45deg);
+  border-bottom: solid 1px #999;
+  border-right: solid 1px #999;
+  content: "\200B";
+  z-index: 2;
+}
+/* ::-webkit-input-placeholder {
+    color: #ccc;
+}
+:-moz-placeholder {
+    color: #ccc;
+}
+::-moz-placeholder {
+    color: #ccc;
+}
+:-ms-input-placeholder {
+    color: #ccc;
+
+} */
+
+.sub-mfsj-form{
+  display: block;
+  width: 90%;
+  margin:0 auto;
+  font-size: 18px;
+  text-align: center;
+  height: 46px;
+  line-height: 46px;
+  color: #fff;
+  font-weight: bold;
+  background: -webkit-linear-gradient(top,#F17D26, #964603) no-repeat;
+  box-shadow: 0 3px 7px 0 rgba(103,44,5,0.30);
+  border-radius: 24px;
+  margin-top: 15px;
+}
+
+.layerout{
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  display: none;
+  z-index: 99;
+}
+
+/*免费报价*/
+.zxbj-form-box {
+  background: #EDF0F5;
+}
+.title-text-mfbj{
+  background: #010E4E;
+  width: 146px;
+}
+.title-text-two{
+  font-size: 14px;
+  color: #010E4E;
+  display: block;
+  height: 14px;
+  line-height: 14px;
+}
+
+.form-top-box .ico-mfbj-title{
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_mfbj_title.png@{imgVersion}") no-repeat center center;
+  background-size: 100%;
+  display: inline-block;
+  width: 100%;
+  height: 120px;
+  position: absolute;
+  z-index: 10;
+  top: -20px;
+  right: 4px;
+}
+.area-hx-box{
+  display: none;
+}
+.zxbj-form-box .sub-mfsj-form{
+  background: -webkit-linear-gradient(top,#5A86FF, #2B36F0) no-repeat;
+  box-shadow: 0 3px 7px 0 rgba(50,81,184,0.30);
+}
+
+/*领红包*/
+.lhb-form-box{
+  background: #F5F1ED;
+}
+
+.ico-lhb-title{
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_lhb_title.png@{imgVersion}") no-repeat center center;
+  background-size: 100%;
+  display: inline-block;
+  width: 100%;
+  height: 114px;
+  position: absolute;
+  z-index: 10;
+  top: -20px;
+  right: 6px;
+}
+.title-text-lhb{
+  background: #F42828;
+  width: 140px;
+}
+.title-text-three{
+  font-size: 14px;
+  color: #F42828;
+  display: block;
+  height: 14px;
+  line-height: 14px;
+}
+.lhb-form-box .sub-mfsj-form{
+  background: -webkit-linear-gradient(top,#FF6767 , #FF2E2E) no-repeat;
+  box-shadow: 0 3px 8px 0 rgba(195,13,0,0.30);
+}
+
+/*装修公司*/
+.zxgs-form-box{
+  background: #EDF0F5;
+}
+
+.ico-zxgs-title{
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_zxgs_title.png@{imgVersion}") no-repeat center center;
+  background-size: 100%;
+  display: inline-block;
+  width: 100%;
+  height: 110px;
+  position: absolute;
+  z-index: 10;
+  top: -16px;
+  right: 0;
+}
+.title-text-zxgs{
+  background: #010E4E;
+  width: 135px;
+}
+.title-text-four{
+  font-size: 14px;
+  color: #010E4E;
+  display: block;
+  height: 14px;
+  line-height: 14px;
+}
+.zxgs-form-box .sub-mfsj-form{
+  background: -webkit-linear-gradient(top,#5A86FF , #2B36F0 ) no-repeat;
+}
+
+/*装修分期*/
+.zxfq-form-box{
+  background: #F5F1ED;
+}
+.ico-zxfq-title{
+  background: url("//static.to8to.com/wap/static/images/decorate_learning/ico_zxfq_title.png@{imgVersion}") no-repeat center center;
+  background-size: 100%;
+  display: inline-block;
+  width: 100%;
+  height: 116px;
+  position: absolute;
+  z-index: 10;
+  top: -20px;
+  right: 4px;
+}
+.title-text-zxfq{
+  background: #FF6411;
+  width: 166px;
+}
+.title-text-five{
+  font-size: 14px;
+  color: #FF6411;
+  display: block;
+  white-space: nowrap;
+  height: 14px;
+  line-height: 14px;
+}
+.zxfq-form-box .sub-mfsj-form{
+  background-image: linear-gradient(-180deg, #FFAA45 6%, #FF5C0B 100%);
+}
+
+
+div.yusuan-jishi{
+  width: 100%;
+  height: 40px;
+  line-height: 40px;
+  text-align: left;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  position: relative;
+  color: #666;
+  font-size: 14px;
+  float: none;
+  padding: 0 10px;
+}
+.yusuan-jishi em {
+  color: #666;
+  padding-left: .08rem;
+}
+.element-line .fr span{
+  position: absolute;
+  right: 10px;
+  top: 15px;
+}
+
+.oarea-remind{
+  display: none;
+  float: left;
+  margin-top: 5px;
+  font-size: 12px;
+  color: #f00;
+}
+
+.layer-huxing{
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  z-index: 110;
+  zoom: 1;
+  text-align: center;
+  bottom: 0px;
+  right: 0px;
+  background-color: rgba(0, 0, 0, 0.298039);
+  display: block;
+}
+.layer-huxing .layer-content{
+  position: fixed;
+  left: 8%;
+  top: 47%;
+  width: 84%;
+  padding-top: 23px;
+  margin-top: -170px;
+  z-index: 100;
+  zoom: 1;
+  background: #FFF;
+  border-radius: 3px;
+}
+.layer-huxing .column{
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  margin-left: -80px;
+  padding: 0 15px;
+  width: 160px;
+  text-align: center;
+  background: #fff;
+  font-size: 18px;
+  color: #333;
+  z-index: 10;
+}
+.layer-huxing .cut-line{
+  width: auto;
+  margin: 10px 45px 0;
+
+  height: 1px;
+  display: block;
+  border-bottom: #e3e3e3 1px solid;
+}
+.layer-huxing .huxing-option{
+  width: 100%;
+  padding: 30px 10% 10px 10%;
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px #e3e3e3 solid;
+}
+.layer-huxing .huxing-option:after{
+  content: '';
+  font-size: 0;
+  height: 0;
+  display: block;
+  clear: both;
+  overflow: hidden;
+}
+.layer-huxing ul{
+  width:20%;
+  margin-right: 10px;
+  float: left;
+}
+.layer-huxing ul:last-of-type {
+  margin-right: 0;
+}
+.layer-huxing ul li{
+  width: 100%;
+  height: 27px;
+  margin-bottom: 10px;
+  line-height: 27px;
+  background: #f4f4f4;
+  border-radius: 3px;
+  color: #666;
+}
+.layer-huxing ul li.on{
+  background: #f79c33;
+  color:#fff;
+}
+.layer-huxing input[type="button"]{
+  width: 100%;
+  height: 45px;
+  color: #f79c33;
+  font-size: 16px;
+  line-height: 45px;
+  background: none;
+  -webkit-appearance: none;
+  outline: none;
+  border: none;
+}
+
+.mfsj-layer-box{
+  position: fixed;
+  z-index: 201;
+  top: 30%;
+  width: 100%;
+  background: #fff;
+  text-align: center;
+  padding: 20px 0;
+  width: 72%;
+  left: 50%;
+  margin-left: -36%;
+  border-radius: 10px;
+}
+.mfsj-layer-box img{
+  height: 48px;
+  width: 48px;
+  display: inline-block;
+}
+.mfsj-layer-box h2{
+  font-size: 16px;
+  color: #06C792;
+  margin: 8px 0;
+  font-weight: bolder;
+}
+.mfsj-layer-box .tell-text{
+  font-size: 14px;
+  text-align: left;
+  padding: 0 20px;
+  line-height: 20px;
+}
+.mfsj-close-box{
+  width: 112px;
+  display: inline-block;
+  border-radius: 18px;
+  border: 1px solid #C1C1C1;
+  margin-top: 15px;
+  font-size: 15px;
+  height: 35px;
+  line-height: 35px;
+}
+.layerout-z{
+  z-index: 200;
+}
+
+.banner-wx-pop {
+  display: none;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 103;
+  background-color: rgba(51, 51, 51, 0.6);
+}
+
+.banner-wx-pop-box {
+  width: 206px;
+  height: 96px;
+  background-color: #fff;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -103px;
+  margin-top: -48px;
+  text-align: center;
+}
+
+.banner-wx-pop-box-tip {
+  height: 50%;
+  padding-top: 15px;
+  font-size: 14px;
+  margin-left: -7px;
+}
+
+.banner-wx-pop-box-tip img {
+  width: 19px;
+  height: 27px;
+  margin-left: 2px;
+}
+
+.banner-wx-pop-box-num {
+  height: 50%;
+  padding-top: 15px;
+  background-color: #25c875;
+  color: #fff;
+  font-size: 20px;
+}
+
+
+
+
+
+.price-text-one{
+  margin-top: 14px;
+  line-height: 44px;
+  height: 44px;
+}
+.price-text-one p{
+  font-size: 44px;
+  color: #ffb200;
+  padding: 0 10px 0;
+  font-weight: bold;
+}
+.price-text-one i{
+  font-size: 18px;
+  font-style: normal;
+  color:#ffb200;
+}
+.price-text-one span{
+  font-size: 44px;
+  color: #ffb200;
+  padding: 0 10px 0;
+  font-weight: bold;
+}
+.error-layer{
+  display: block;
+  position: fixed;
+  width: 150px;
+  height: 37px;
+  background-color: rgba(0,0,0,.8);
+  color: #fff;
+  text-align: center;
+  line-height: 37px;
+  border-radius: 5px;
+  left: 50%;
+  top: 50%;
+  margin-top: -18.5px;
+  margin-left: -75px;
+  z-index: 10003;
+  font-size: 12px;
+}
+
+
+
+
+// 免费报价弹窗样式
+.t8s-alert-box {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  z-index: 200;
+  text-align: center;
+  bottom: 0px;
+  right: 0px;
+  background-color: rgba(0, 0, 0, 0.298);
+  z-index: 10002 !important;
+  font-family: '微软雅黑';
+
+  .t8s-box {
+    position: fixed;
+    display: flex;
+    top: 15%;
+    width: 100%;
+
+    .alert-lay {
+      vertical-align: middle;
+      padding: 0 8%;
+      display: block;
+      -webkit-box-flex: 1;
+      -moz-box-flex: 1;
+      -webkit-flex: 1 1 0;
+      -moz-flex: 1 1 0;
+      -ms-flex: 1 1 0;
+      flex: 1 1 0;
+      text-align: center;
+
+      .overlay-bd {
+        position: relative;
+        background-color: #fff;
+        font-size: 14px;
+        color: #333;
+        line-height: 24px;
+        padding: 10px 15px 20px;
+        text-align: center;
+        width: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+
+        .t8s-alert-close {
+          width: 60px;
+          height: 60px;
+          position: absolute;
+          top: -22px;
+          right: -22px;
+          z-index: 100;
+          background: rgba(119,121,125,.3);
+          border-radius: 30px;
+
+          .t8s-alert-i {
+            background: url("//img.to8to.com/wap/v2/index-page-sprite-v2.png@{imgVersion}") -37px -124px no-repeat;
+            width: 14px;
+            height: 14px;
+            background-size: 80px auto;
+            display: block;
+            margin-top: 31px;
+            margin-left: 14px;
+          }
+        }
+
+        .t8s-fruit-price {
+          margin: 0 10px;
+          padding-bottom: 18px;
+          border-bottom: 1px #eee solid;
+          position: relative;
+
+          &:before {
+            content: ' ';
+            display: block;
+            position: absolute;
+            top: 30px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: #e3e3e3;
+          }
+
+          .column {
+            padding-top: 18px;
+            color: #333;
+            font-size: 24px;
+            position: relative;
+            z-index: 10;
+            width: 210px;
+            background: #fff;
+            margin: 0 auto;
+            text-align: center;
+          }
+
+          .price-text-one {
+            margin-top: 14px;
+            line-height: 44px;
+            height: 44px;
+
+            span {
+              font-size: 44px;
+              color: #ffb200;
+              padding: 0 10px 0;
+              font-weight: bold;
+            }
+            i {
+              font-size: 18px;
+              font-style: normal;
+              color: #ffb200;
+            }
+          }
+        }
+
+        .t8s-price-list {
+          ul {
+            list-style: none;
+            height: 210px;
+            overflow: hidden;
+
+            .tpl-li {
+              position: relative;
+              height: 53px;
+              font-size: 15px;
+              color: #666;
+              padding: 0 10px;
+              line-height: 53px;
+              overflow: hidden;
+
+              &:after {
+                content: '';
+                width: 90%;
+                height: 1px;
+                display: inline-block;
+                position: absolute;
+                bottom: 0;
+                left: 5%;
+                background: url("//img.to8to.com/wap/v2/t6s-result-cut-line.jpg@{imgVersion}");
+                background-size: 100%;
+              }
+
+              span {
+                float: left;
+                width: 57%;
+                font-size: 16px;
+                color: #333;
+                vertical-align: bottom;
+                text-align: left;
+
+                em {
+                  padding: 0 5px;
+                  font-size: 20px;
+                  font-style: normal;
+                }
+
+                del {
+                  margin-left: 10px;
+                  font-size: 16px;
+                  color: #999;
+                }
+              }
+              .t8s-budget-span {
+                width: 43%;
+                text-align: right;
+              }
+            }
+          }
+        }
+
+        .holiday-text-t6s {
+          position: relative;
+          margin-left: -15px;
+          margin-right: -15px;
+          margin-bottom: -20px;
+          padding: 30px 15px 20px;
+          background: #ffb200;
+
+          &:before {
+            content: ' ';
+            display: block;
+            position: absolute;
+            top: -15px;
+            left: 0;
+            width: 100%;
+            height: 30px;
+            padding: 0 15px;
+            background: url("//img.to8to.com/wap/v2/t6s-result-bg.png@{imgVersion}") no-repeat #fff;
+            background-size: 100% 30px;
+            z-index: 10;
+            .boxsizing
+          }
+
+          p {
+            position: relative;
+            display: block;
+            width: 100%;
+            color: #fff;
+            z-index: 10;
+            font-size: 12px;
+            text-align: left;
+          }
+        }
+      }
+      .boxsizing
+    }
+  }
+}
