@@ -18,16 +18,16 @@ export default {
           id = parseInt(workElements[i].querySelector('.dtImg').className.substring(6))
         }
         if (className.indexOf(' work') > -1) {
-          MIP.viewer.open('//m.hunliji.com/package/detail_' + id)
+          MIP.viewer.open('https://m.hunliji.com/package/detail_' + id)
         } else if (className.indexOf('case') > -1) {
-          MIP.viewer.open('//m.hunliji.com/example/detail_' + id)
+          MIP.viewer.open('https://m.hunliji.com/example/detail_' + id)
         } else if (className.indexOf('merchant') > -1) {
-          MIP.viewer.open('//m.hunliji.com/merchant/detail_' + id)
+          MIP.viewer.open('https://m.hunliji.com/merchant/detail_' + id)
         } else if (className.indexOf('hotel') > -1) {
           id = workElements[i].querySelector('.hotelTit mip-img').className
-          MIP.viewer.open('//m.hunliji.com/merchant/detail_' + parseInt(id))
+          MIP.viewer.open('https://m.hunliji.com/merchant/detail_' + parseInt(id))
         } else if (className.indexOf('weddingBig') > -1) {
-          MIP.viewer.open('//www.hunliji.com/hunpin/detail_' + id)
+          MIP.viewer.open('https://www.hunliji.com/hunpin/detail_' + id)
         }
       }
     }
