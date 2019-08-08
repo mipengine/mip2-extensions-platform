@@ -1,46 +1,77 @@
 <template>
   <div class="mianContent">
     <div class="article">
-      <p class="title">{{articleInfo.articlesTitle}}</p>
+      <p class="title">{{ articleInfo.articlesTitle }}</p>
       <div class="articleTab">
         <div class="time">
           <p class="duration">
-            <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565177135876icon_author.png" width="15" height="15" class="icon"></mip-img>
-            <span>作者：{{articleInfo.articlesAuthor}}</span>
+            <mip-img
+              src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565177135876icon_author.png"
+              width="15"
+              height="15"
+              class="icon"
+            />
+            <span>作者：{{ articleInfo.articlesAuthor }}</span>
           </p>
           <p>
-            <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565176807216eye.png" width="16" height="11" class="icon"></mip-img>
-            <span>浏览量：{{articleInfo.articlesReadNums}}</span>
+            <mip-img
+              src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565176807216eye.png"
+              width="16"
+              height="11"
+              class="icon"
+            />
+            <span>浏览量：{{ articleInfo.articlesReadNums }}</span>
           </p>
         </div>
         <p>
-          <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565177228558icon_time.png" width="15" height="15" class="icon"></mip-img>
-          <span>发布时间：{{articleInfo.updateTime}}</span>
+          <mip-img
+            src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565177228558icon_time.png"
+            width="15"
+            height="15"
+            class="icon"
+          />
+          <span>发布时间：{{ articleInfo.updateTime }}</span>
         </p>
       </div>
       <div class="articleContent">
         <div v-html="showContent"></div>
         <div class="loading" v-show="moreBtn">
           <p class="loadBtn" @click="loadMore">
-            <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565177488723double_arrow.png" class="arrow"></mip-img>
+            <mip-img
+              src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565177488723double_arrow.png"
+              class="arrow"
+            />
           </p>
         </div>
       </div>
       <p class="openBtn">
-        <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565177520497long_btn_bg.png" class="btnBg"></mip-img>
+        <mip-img
+          src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565177520497long_btn_bg.png"
+          class="btnBg"
+        />
         <span>打开APP阅读更多好文</span>
       </p>
       <div class="tabList">
         <p class="name">相关标签</p>
         <ul>
-          <li v-for="(item,index) in articleInfo.tagList" :key="index" v-show="index < 4">{{item.tagName}}</li>
+          <li
+            v-for="(item,index) in articleInfo.tagList"
+            :key="index"
+            v-show="index < 4"
+          >{{ item.tagName }}</li>
         </ul>
       </div>
     </div>
     <div class="openApp">
-      <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178011467logo2.png" class="logo"></mip-img>
+      <mip-img
+        src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178011467logo2.png"
+        class="logo"
+      />
       <p class="btn">
-        <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178054305btn_bg2.png" class="btnBg"></mip-img>
+        <mip-img
+          src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178054305btn_bg2.png"
+          class="btnBg"
+        ></mip-img>
         <span>打开APP</span>
       </p>
     </div>
@@ -52,12 +83,12 @@
             <mip-img :src="item.courseImgH5" class="courseImg" layout="fill"></mip-img>
           </div>
           <div class="info">
-            <p>{{item.courseName.length > 5?item.courseName.substring(0,5) + '...' : item.courseName}}</p>
-            <p>{{item.courseAuthor.length > 5?item.courseAuthor.substring(0,5) + '...' : item.courseAuthor}}</p>
-            <p>￥{{item.showCoursePrice}}</p>
+            <p>{{ item.courseName.length > 5?item.courseName.substring(0,5) + '...' : item.courseName }}</p>
+            <p>{{ item.courseAuthor.length > 5?item.courseAuthor.substring(0,5) + '...' : item.courseAuthor }}</p>
+            <p>￥{{ item.showCoursePrice }}</p>
           </div>
           <div class="btn" v-show="item.tagList.length > 0">
-            <span>{{item.tagList.length > 0?item.tagList[0].tagName : ''}}</span>
+            <span>{{ item.tagList.length > 0?item.tagList[0].tagName : '' }}</span>
           </div>
         </li>
       </ul>
@@ -65,11 +96,18 @@
     <div class="course_read">
       <p class="title">相关阅读</p>
       <ul class="read">
-        <li v-for="(item,index) in hotArticleList" :key="index" @click="goArticleDetail(item.articlesId)">
+        <li
+          v-for="(item,index) in hotArticleList"
+          :key="index"
+          @click="goArticleDetail(item.articlesId)"
+        >
           <span>
-            <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565175571079paper.png" class="paper"></mip-img>
+            <mip-img
+              src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565175571079paper.png"
+              class="paper"
+            ></mip-img>
           </span>
-          <span>{{item.articlesTitle}}</span>
+          <span>{{ item.articlesTitle }}</span>
         </li>
       </ul>
     </div>
@@ -104,8 +142,8 @@
   display: flex;
   justify-content: space-between;
 }
-.mianContent .article .articleTab .time .duration{
-  margin-right:8px;
+.mianContent .article .articleTab .time .duration {
+  margin-right: 8px;
 }
 .mianContent .article .articleTab p {
   display: flex;
@@ -113,8 +151,8 @@
   color: #999;
   font-size: 0.8rem;
 }
-.mianContent .article .articleTab p .icon{
-  margin-right:5px;
+.mianContent .article .articleTab p .icon {
+  margin-right: 5px;
 }
 
 .mianContent .article .articleContent {
@@ -126,7 +164,7 @@
   width: 100%;
   padding: 0 1rem;
   position: absolute;
-  height:100px;
+  height: 100px;
   bottom: 0;
   left: 0;
   text-align: center;
@@ -346,8 +384,8 @@ export default {
       courseList: [],
       articleInfo: "",
       hotArticleList: [],
-      moreBtn:false,
-      showContent:''
+      moreBtn: false,
+      showContent: ""
     };
   },
   props: ["serverurl", "pageurl", "articleid"],
@@ -363,15 +401,25 @@ export default {
         .then(function(data) {
           that.courseList = data.result.specialCourse;
           that.articleInfo = data.result.articlesInfo;
-          that.articleInfo.updateTime = that.getDate(that.articleInfo.updateTime);
+          that.articleInfo.updateTime = that.getDate(
+            that.articleInfo.updateTime
+          );
           that.hotArticleList = data.result.interestArticles;
           that.hideCourseContent();
         })
         .catch(error => console.error(error));
     },
-    getDate(date){
-        var date = new Date(date);
-          return date.getFullYear() + '-' + (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-' + (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
+    getDate(date) {
+      var date = new Date(date);
+      return (
+        date.getFullYear() +
+        "-" +
+        (date.getMonth() + 1 < 10
+          ? "0" + (date.getMonth() + 1)
+          : date.getMonth() + 1) +
+        "-" +
+        (date.getDate() < 10 ? "0" + date.getDate() : date.getDate())
+      );
     },
     postData(url, data) {
       // Default options are marked with *
@@ -389,25 +437,32 @@ export default {
         body: JSON.stringify(data) // body data type must match "Content-Type" header
       }).then(response => response.json()); // parses JSON response into native JavaScript objects
     },
-    hideCourseContent(){ //隐藏课程介绍内容
+    hideCourseContent() {
+      //隐藏课程介绍内容
       var length = this.articleInfo.articlesContent.length;
-      if(length > 300){
-        var showLength = length/3;
+      if (length > 300) {
+        var showLength = length / 3;
         this.moreBtn = true;
-        this.showContent = this.articleInfo.articlesContent.slice(0,showLength);
-      }else{
+        this.showContent = this.articleInfo.articlesContent.slice(
+          0,
+          showLength
+        );
+      } else {
         this.showContent = this.articleInfo.articlesContent;
       }
     },
-    loadMore(){ //加载更多
+    loadMore() {
+      //加载更多
       this.moreBtn = false;
       this.showContent = this.articleInfo.articlesContent;
     },
-    goCourseDetail(courseId){
-      window.location.href = this.pageurl + "/course_detail.html?courseId=" + courseId;
+    goCourseDetail(courseId) {
+      window.location.href =
+        this.pageurl + "/course_detail.html?courseId=" + courseId;
     },
-    goArticleDetail(articleId){
-      window.location.href = this.pageurl + "/article.html?articleId=" + articleId;
+    goArticleDetail(articleId) {
+      window.location.href =
+        this.pageurl + "/article.html?articleId=" + articleId;
     }
   }
 };
