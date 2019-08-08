@@ -1,7 +1,7 @@
 <template>
   <div class="mainContent" id="scroll">
     <div class="indexCarousel">
-      <!-- <mip-carousel
+      <mip-carousel
         autoplay
         defer="2000"
         layout="responsive"
@@ -9,17 +9,6 @@
         height="360"
         indicatorId="mip-carousel-example"
       >
-        <mip-img
-          width="750"
-          height="360"
-          :src="item.adImg"
-          :alt="item.adAlt"
-          v-for="(item,index) in adList"
-          :key="index"
-          @click="goAdPage(item.adHref)"
-        ></mip-img>
-      </mip-carousel>-->
-      <mip-carousel autoplay defer="2000" layout="responsive" width="750" height="360" indicatorId="mip-carousel-example">
         <mip-img :src="adList[0].adImg"></mip-img>
         <mip-img
           :src="item.adImg"
@@ -31,10 +20,15 @@
         ></mip-img>
       </mip-carousel>
       <div class="mip-carousel-indicator-wrapper">
-        <div class="mip-carousel-indicatorDot" id="mip-carousel-example">
-          <div class="mip-carousel-activeitem mip-carousel-indecator-item"></div>
-          <div class="mip-carousel-indecator-item"></div>
-          <div class="mip-carousel-indecator-item"></div>
+        <div
+        class="mip-carousel-indicatorDot"
+        id="mip-carousel-example">
+          <div
+          class="mip-carousel-activeitem mip-carousel-indecator-item"></div>
+          <div
+          class="mip-carousel-indecator-item"></div>
+          <div
+          class="mip-carousel-indecator-item"></div>
         </div>
       </div>
       <!-- <ul class="indicator_point">
@@ -54,13 +48,23 @@
         <p>今日精选</p>
         <p @click="seeMoreArticle">
           <span>查看更多</span>
-          <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565175464642right_arrow_gray.png" class="arrow"></mip-img>
+          <mip-img
+            src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565175464642right_arrow_gray.png"
+            class="arrow"
+          />
         </p>
       </div>
       <ul>
-        <li v-for="(item,index) in articlesList" :key="index" @click="goArticleDetail(item.articlesId)">
+        <li
+          v-for="(item,index) in articlesList"
+          :key="index"
+          @click="goArticleDetail(item.articlesId)"
+        >
           <span>
-            <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565175571079paper.png" class="articleImg"></mip-img>
+            <mip-img
+              src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565175571079paper.png"
+              class="articleImg"
+            />
           </span>
           <span>{{item.articlesTitle}}</span>
         </li>
@@ -71,33 +75,47 @@
         <p>{{item.categoryName}}</p>
         <p @click="seeMoreCourse">
           <span>查看更多</span>
-          <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565175464642right_arrow_gray.png" class="arrow"></mip-img>
+          <mip-img
+            src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565175464642right_arrow_gray.png"
+            class="arrow"
+          />
         </p>
       </div>
       <ul>
-        <li v-for="(item,index) in item.courseList" :key="index" @click="goCourseDetail(item.courseId)">
+        <li
+          v-for="(item,index) in item.courseList"
+          :key="index"
+          @click="goCourseDetail(item.courseId)"
+        >
           <div class="pic">
-            <mip-img :src="item.courseImgH5" class="courseImg" layout="fill"></mip-img>
+            <mip-img :src="item.courseImgH5"
+            class="courseImg"
+            layout="fill"></mip-img>
           </div>
           <div class="info">
-            <p>{{item.courseName.length > 5?item.courseName.substring(0,5) + '...' : item.courseName}}</p>
+            <p>{{ item.courseName.length > 5 ? item.courseName.substring(0,5) + '...' : item.courseName }}</p>
             <p>
-              <span>{{item.courseAuthor.length > 3?item.courseAuthor.substring(0,3) + '...' : item.courseAuthor}}</span>
-              <span>{{item.courseAuthorIntro.length > 5?item.courseAuthorIntro.substring(0,5) + '...' : item.courseAuthorIntro}}</span>
+              <span>{{ item.courseAuthor.length > 3 ? item.courseAuthor.substring(0,3) + '...' : item.courseAuthor }}</span>
+              <span>{{ item.courseAuthorIntro.length > 5 ? item.courseAuthorIntro.substring(0,5) + '...' : item.courseAuthorIntro }}</span>
             </p>
-            <p>{{item.handouts}}讲·{{item.learnNums}}人已学习</p>
-            <p>￥{{item.showCoursePrice}}</p>
+            <p>{{ item.handouts }}讲·{{ item.learnNums }}人已学习</p>
+            <p>￥{{ item.showCoursePrice }}</p>
           </div>
-          <div class="btn" v-show="item.tagList.length > 0">
-            <span>{{item.tagList.length > 0?item.tagList[0].tagName : ''}}</span>
+          <div
+          class="btn"
+          v-show="item.tagList.length > 0">
+            <span>{{ item.tagList.length > 0 ? item.tagList[0].tagName : '' }}</span>
           </div>
         </li>
       </ul>
     </div>
     <mip-fixed type="bottom">
       <p class="openBtn" v-show="btnShow">
-          <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178054305btn_bg2.png" class="btnImg"></mip-img>
-          <span>立即打开</span>
+        <mip-img
+          src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178054305btn_bg2.png"
+          class="btnImg"
+        />
+        <span>立即打开</span>
       </p>
     </mip-fixed>
   </div>
@@ -357,23 +375,23 @@
   width: 100%;
   display: block;
 }
-.openBtn{
+.openBtn {
   text-align: center;
-  margin-bottom:20px;
+  margin-bottom: 20px;
   position: relative;
 }
-.openBtn .btnImg{
+.openBtn .btnImg {
   width: 130px;
   display: inline-block;
 }
-.openBtn span{
+.openBtn span {
   position: absolute;
   color: #fff;
   font-size: 14px;
   width: 130px;
   left: 50%;
   top: 45%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
   font-family: PingFang-SC-Medium;
   text-align: center;
 }
@@ -383,17 +401,17 @@
 export default {
   data() {
     return {
-      categoryId:'',
+      categoryId: "",
       typeList: [],
       adList: [],
       articlesList: [],
       courseList: [],
-      btnShow:false
+      btnShow: false
     };
   },
-  props:['serverurl','pageurl'],
+  props: ["serverurl", "pageurl"],
   mounted() {
-    window.addEventListener('scroll', this.onScroll);
+    window.addEventListener("scroll", this.onScroll);
     var that = this;
     this.postData(this.serverurl + "/api/h5/userIndex", {})
       .then(function(data) {
@@ -406,19 +424,22 @@ export default {
       .catch(error => console.error(error));
   },
   methods: {
-    onScroll() {
+    onScroll () {
       //可滚动容器的高度
-      let innerHeight = document.querySelector('#scroll').clientHeight;
+      let innerHeight = document.querySelector("#scroll").clientHeight;
       //屏幕尺寸高度
       let outerHeight = document.documentElement.clientHeight;
       //可滚动容器超出当前窗口显示范围的高度
-      let scrollTop = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;
+      let scrollTop =
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        window.pageYOffset;
       //scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
-      if(scrollTop > innerHeight/3){
+      if (scrollTop > innerHeight / 3) {
         this.btnShow = true;
       }
     },
-    postData(url, data) {
+    postData (url, data) {
       // Default options are marked with *
       return fetch(url, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -434,36 +455,39 @@ export default {
         body: JSON.stringify(data) // body data type must match "Content-Type" header
       }).then(response => response.json()); // parses JSON response into native JavaScript objects
     },
-    goAdPage(url) {
+    goAdPage (url) {
       window.location.href = url;
     },
-    seeMoreArticle() {
+    seeMoreArticle () {
       window.location.href = this.pageurl + "/choiceness.html";
     },
-    goArticleDetail(articleId){
-      window.location.href = this.pageurl + "/article.html?articleId=" + articleId;
+    goArticleDetail (articleId) {
+      window.location.href =
+        this.pageurl + "/article.html?articleId=" + articleId;
     },
-    seeMoreCourse() {
-      window.location.href = this.pageurl + "/course.html?categoryId=" + this.categoryId;
+    seeMoreCourse () {
+      window.location.href =
+        this.pageurl + "/course.html?categoryId=" + this.categoryId;
     },
-    goCourseDetail(courseId){
-      window.location.href = this.pageurl + "/course_detail.html?courseId=" + courseId;
+    goCourseDetail (courseId) {
+      window.location.href =
+        this.pageurl + "/course_detail.html?courseId=" + courseId;
     },
-    typeChoose(id) {
+    typeChoose (id) {
       this.categoryId = id;
       var that = this;
       this.postData(this.serverurl + "/api/h5/getIndexCourse", {
         firstCategoryId: this.categoryId
       })
-      .then(function(data) {
-        if (data.resultCode == 10000) {
-          that.courseList = data.result.courseList;
-        }
-        if (data.resultCode == 1015) {
-          that.courseList = [];
-        }
-      })
-      .catch(error => console.error(error));
+        .then(function(data) {
+          if (data.resultCode == 10000) {
+            that.courseList = data.result.courseList;
+          }
+          if (data.resultCode == 1015) {
+            that.courseList = [];
+          }
+        })
+        .catch(error => console.error(error));
     }
   }
 };
