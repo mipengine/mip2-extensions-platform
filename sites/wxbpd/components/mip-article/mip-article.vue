@@ -35,10 +35,10 @@
       </div>
       <div class="articleContent">
         <div v-html="showContent" />
-        <div 
+        <div
         v-show="moreBtn"
         class="loading">
-          <p 
+          <p
           class="loadBtn"
           @click="loadMore">
             <mip-img
@@ -87,7 +87,10 @@
         :key="index"
         @click="goCourseDetail(item.courseId)">
           <div class="pic">
-            <mip-img :src="item.courseImgH5" class="courseImg" layout="fill" />
+            <mip-img
+            :src="item.courseImgH5"
+            class="courseImg"
+            layout="fill" />
           </div>
           <div class="info">
             <p>{{ item.courseName.length > 5 ? item.courseName.substring(0,5) + '...' : item.courseName }}</p>
@@ -388,38 +391,38 @@
 
 <script>
 export default {
-  data() {
+  props: ['serverurl', 'pageurl', 'articleid'],
+  data () {
     return {
       courseList: [],
       articleInfo: '',
       hotArticleList: [],
       moreBtn: false,
       showContent: ''
-    };
+    }
   },
-  props: ['serverurl', 'pageurl', 'articleid'],
-  mounted() {
-    this.getArticleInfo();
+  mounted () {
+    this.getArticleInfo()
   },
   methods: {
     getArticleInfo () {
-      var that = this;
+      const that = this
       this.postData(this.serverurl + '/api/pc/newsDetail', {
         articlesId: this.articleid
       })
-        .then(function(data) {
-          that.courseList = data.result.specialCourse;
-          that.articleInfo = data.result.articlesInfo;
+        .then(function (data) {
+          that.courseList = data.result.specialCourse
+          that.articleInfo = data.result.articlesInfo
           that.articleInfo.updateTime = that.getDate(
             that.articleInfo.updateTime
-          );
-          that.hotArticleList = data.result.interestArticles;
-          that.hideCourseContent();
+          )
+          that.hotArticleList = data.result.interestArticles
+          that.hideCourseContent()
         })
-        .catch(error => console.error(error));
+        .catch(error => console.error(error))
     },
-    getDate (date) {
-      var date = new Date(date);
+    getDate (Date) {
+      let date = new Date(Date)
       return (
         date.getFullYear() +
         '-' +
@@ -428,7 +431,7 @@ export default {
           : date.getMonth() + 1) +
         '-' +
         (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
-      );
+      )
     },
     postData (url, data) {
       // Default options are marked with *
@@ -444,34 +447,34 @@ export default {
         redirect: 'follow', // manual, *follow, error
         referrer: 'no-referrer', // no-referrer, *client
         body: JSON.stringify(data) // body data type must match 'Content-Type' header
-      }).then(response => response.json()); // parses JSON response into native JavaScript objects
+      }).then(response => response.json()) // parses JSON response into native JavaScript objects
     },
     hideCourseContent () {
-      //隐藏课程介绍内容
-      var length = this.articleInfo.articlesContent.length;
+      // 隐藏课程介绍内容
+      const length = this.articleInfo.articlesContent.length
       if (length > 300) {
-        var showLength = length / 3;
-        this.moreBtn = true;
+        let showLength = length / 3
+        this.moreBtn = true
         this.showContent = this.articleInfo.articlesContent.slice(
           0,
           showLength
-        );
+        )
       } else {
-        this.showContent = this.articleInfo.articlesContent;
+        this.showContent = this.articleInfo.articlesContent
       }
     },
     loadMore () {
-      //加载更多
-      this.moreBtn = false;
-      this.showContent = this.articleInfo.articlesContent;
+      // 加载更多
+      this.moreBtn = false
+      this.showContent = this.articleInfo.articlesContent
     },
     goCourseDetail (courseId) {
       window.location.href =
-        this.pageurl + '/course_detail.html?courseId=' + courseId;
+        this.pageurl + '/course_detail.html?courseId=' + courseId
     },
     goArticleDetail (articleId) {
       window.location.href =
-        this.pageurl + '/article.html?articleId=' + articleId;
+        this.pageurl + '/article.html?articleId=' + articleId
     }
   }
 };
