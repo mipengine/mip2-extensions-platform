@@ -1,5 +1,5 @@
 <template>
-  <div class="mainContent">
+  <div class="mainContent" id="scroll">
     <div class="indexCarousel">
       <!-- <mip-carousel
         autoplay
@@ -75,7 +75,7 @@
         </p>
       </div>
       <ul>
-        <li v-for="(item,index) in item.courseList" :key="index">
+        <li v-for="(item,index) in item.courseList" :key="index" @click="goCourseDetail(item.courseId)">
           <div class="pic">
             <mip-img :src="item.courseImgH5" class="courseImg" layout="fill"></mip-img>
           </div>
@@ -94,6 +94,12 @@
         </li>
       </ul>
     </div>
+    <mip-fixed type="bottom">
+      <p class="openBtn" v-show="btnShow">
+          <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178054305btn_bg2.png" class="btnImg"></mip-img>
+          <span>立即打开</span>
+      </p>
+    </mip-fixed>
   </div>
 </template>
 
@@ -351,72 +357,25 @@
   width: 100%;
   display: block;
 }
-
-.adDialog {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 100;
-}
-
-.adDialog .modalView {
-  position: relative;
-  width: 70%;
-  margin: 100px auto 0 auto;
-}
-
-.adDialog .modalView .bg {
-  width: 100%;
-}
-
-.adDialog .modalView .content {
-  position: absolute;
-  left: 50%;
-  bottom: 10px;
-  transform: translateX(-50%);
-  width: 100%;
+.openBtn{
   text-align: center;
-}
-
-.adDialog .modalView .content p:nth-child(1) {
-  color: #333;
-  font-size: 13px;
-  line-height: 30px;
-  padding: 0 20%;
-}
-
-.adDialog .modalView .content p:nth-child(2) {
-  display: inline-block;
-  margin: 0 auto;
-  width: 130px;
+  margin-bottom:20px;
   position: relative;
 }
-
-.adDialog .modalView .content p:nth-child(2) .btnImg {
+.openBtn .btnImg{
   width: 130px;
+  display: inline-block;
 }
-
-.adDialog .modalView .content p:nth-child(2) span {
+.openBtn span{
   position: absolute;
   color: #fff;
   font-size: 14px;
   width: 130px;
-  left: 0;
-  top: 45%;
-  transform: translateY(-50%);
-  font-family: PingFang-SC-Medium;
-}
-
-.adDialog .modalView .btn {
-  position: absolute;
   left: 50%;
-  top: 105%;
-  transform: translateX(-50%);
-  width: 40px;
-  height: 40px;
+  top: 45%;
+  transform: translate(-50%,-50%);
+  font-family: PingFang-SC-Medium;
+  text-align: center;
 }
 </style>
 <script src="https://c.mipcdn.com/static/v1/mip.js"></script>
@@ -428,11 +387,13 @@ export default {
       typeList: [],
       adList: [],
       articlesList: [],
-      courseList: []
+      courseList: [],
+      btnShow:false
     };
   },
   props:['serverurl','pageurl'],
   mounted() {
+    window.addEventListener('scroll', this.onScroll);
     var that = this;
     this.postData(this.serverurl + "/api/h5/userIndex", {})
       .then(function(data) {
@@ -445,6 +406,18 @@ export default {
       .catch(error => console.error(error));
   },
   methods: {
+    onScroll() {
+      //可滚动容器的高度
+      let innerHeight = document.querySelector('#scroll').clientHeight;
+      //屏幕尺寸高度
+      let outerHeight = document.documentElement.clientHeight;
+      //可滚动容器超出当前窗口显示范围的高度
+      let scrollTop = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;
+      //scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
+      if(scrollTop > innerHeight/3){
+        this.btnShow = true;
+      }
+    },
     postData(url, data) {
       // Default options are marked with *
       return fetch(url, {
@@ -472,6 +445,9 @@ export default {
     },
     seeMoreCourse() {
       window.location.href = this.pageurl + "/course.html?categoryId=" + this.categoryId;
+    },
+    goCourseDetail(courseId){
+      window.location.href = this.pageurl + "/course_detail.html?courseId=" + courseId;
     },
     typeChoose(id) {
       this.categoryId = id;
