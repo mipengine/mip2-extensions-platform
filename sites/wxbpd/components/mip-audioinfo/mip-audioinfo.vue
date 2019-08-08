@@ -3,33 +3,33 @@
     <div
     v-show="sectionInfo.courseHandoutsType == 1"
     class="playPart">
-      <div
-      class="picView">
-        <mip-img :src="courseInfo.courseImgH5" class="courseImg" />
+      <div class="picView">
+        <mip-img
+        :src="courseInfo.courseImgH5"
+        class="courseImg" />
         <mip-img src="/images/CD2.png" class="cdImg" />
         <mip-img src="/images/cd_point2.png" class="cdPoint" />
         <!-- <p class="playView">
           <mip-img src="/images/audio_play.png" id="audioPlayer" class="playImg"></mip-img>
-        </p> -->
+        </p>-->
       </div>
     </div>
     <div
     v-show="sectionInfo.courseHandoutsType == 2"
     class="vedioView">
-      <mip-video poster="https://www.mipengine.org/static/img/sample_04.jpg" controls
-        layout="responsive" width="750" height="360" 
-        :src="sectionInfo.courseHandoutsHref">
-      </mip-video>
+      <mip-video
+        poster="https://www.mipengine.org/static/img/sample_04.jpg"
+        controls
+        layout="responsive"
+        width="750"
+        height="360"
+        :src="sectionInfo.courseHandoutsHref"
+      />
     </div>
     <p class="courseTitle">{{ sectionInfo.courseHandoutsName }}</p>
-    <div
-    v-show=" sectionInfo.courseHandoutsType == 1 "
-    class="audioView">
+    <div v-show=" sectionInfo.courseHandoutsType == 1 " class="audioView">
       <div class="audio-wrapper">
-        <mip-audio
-          :src="sectionInfo.courseHandoutsHref"
-          class="myAudio">
-        </mip-audio>
+        <mip-audio :src="sectionInfo.courseHandoutsHref" class="myAudio" />
         <!-- <div class="audio-right">
           <div class="progress-bar-bg" id="progressBarBg">
             <div class="audioTime_start">
@@ -45,20 +45,27 @@
               <span id="totalTime">{{sectionInfo.showDuration}}</span>
             </div>
           </div>
-        </div> -->
+        </div>-->
       </div>
     </div>
     <div class="bottomBtn changBtn">
       <p>打开APP收藏下载</p>
     </div>
     <div
-    v-html=" sectionInfo.courseHandoutsContent "
-    class="courseContent"></div>
-    <div class="catalogue">
-      <div class="headPart">
-        <div class="leftContent">
-          <mip-img :src="courseInfo.courseImgH5" class="courseImg" />
-          <mip-img src="/images/CD2.png" class="cdImg" />
+    v-html=" sectionInfo.courseHandoutsContent"
+    class="courseContent" />
+    <div
+    class="catalogue">
+      <div
+      class="headPart">
+        <div
+        class="leftContent">
+          <mip-img
+          :src="courseInfo.courseImgH5"
+          class="courseImg" />
+          <mip-img
+          src="/images/CD2.png"
+          class="cdImg" />
         </div>
         <div class="centerContent">
           <p>{{ sectionInfo.courseHandoutsName.length > 7?sectionInfo.courseHandoutsName.substring(0,7) + '...' : sectionInfo.courseHandoutsName }}</p>
@@ -74,15 +81,13 @@
       <ul class="sectionList">
         <li v-for="(item,index) in sectionList" :key="index" @click="goSecitonDetail(item)">
           <p>
-            <mip-img
-            v-show="item.courseHandoutsType == 1"
-            src="/images/icon_audio.png" />
+            <mip-img v-show="item.courseHandoutsType == 1" src="/images/icon_audio.png" />
             <mip-img src="/images/icon_vedio.png" v-show="item.courseHandoutsType == 2" />
           </p>
           <p>
-            <span>{{item.courseHandoutsCode}}</span>
-            <span>{{item.courseHandoutsName}}</span>
-            <span v-show="item.showDuration != null">({{item.showDuration}})</span>
+            <span>{{ item.courseHandoutsCode }}</span>
+            <span>{{ item.courseHandoutsName }}</span>
+            <span v-show="item.showDuration != null">({{ item.showDuration }})</span>
           </p>
           <p>
             <mip-img src="/images/upload.png" />
@@ -91,7 +96,14 @@
       </ul>
     </div>
     <div class="adList">
-      <mip-carousel autoplay defer="2000" layout="responsive" width="750" height="360" indicatorId="mip-carousel-example">
+      <mip-carousel
+        autoplay
+        defer="2000"
+        layout="responsive"
+        width="750"
+        height="360"
+        indicatorId="mip-carousel-example"
+      >
         <mip-img :src="adList[0].adImg" />
         <mip-img
           :src="item.adImg"
@@ -106,14 +118,14 @@
     <div class="course_read">
       <p class="title">大家也在听</p>
       <ul class="course">
-        <li v-for="(item,index) in courseList" :key="index"  @click="goCourseDetail(item.courseId)">
+        <li v-for="(item,index) in courseList" :key="index" @click="goCourseDetail(item.courseId)">
           <div class="pic">
             <mip-img :src="item.courseImgH5" class="courseImg" layout="fill" />
           </div>
           <div class="info">
-            <p>{{item.courseName.length > 6?item.courseName.substring(0,6) + '...' : item.courseName}}</p>
-            <p>{{item.courseAuthor.length > 5?item.courseAuthor.substring(0,5) + '...' : item.courseAuthor}}</p>
-            <p>￥{{item.showCoursePrice}}</p>
+            <p>{{ item.courseName.length > 6 ? item.courseName.substring(0,6) + '...' : item.courseName }}</p>
+            <p>{{ item.courseAuthor.length > 5 ? item.courseAuthor.substring(0,5) + '...' : item.courseAuthor }}</p>
+            <p>￥{{ item.showCoursePrice }}</p>
           </div>
           <div class="btn">
             <span>打开APP</span>
@@ -159,7 +171,7 @@
 .mainContent .courseContent {
   margin-top: 0.5rem;
   background: #fff;
-  padding:1rem;
+  padding: 1rem;
 }
 
 .mainContent .catalogue {
@@ -167,9 +179,9 @@
   padding-left: 1rem;
   margin-top: 0.5rem;
 }
-.vedioView{
-  padding-bottom:30px;
-  background:#fff;
+.vedioView {
+  padding-bottom: 30px;
+  background: #fff;
 }
 .mainContent .catalogue .headPart {
   padding: 1.5rem 1rem 1.5rem 0;
@@ -244,57 +256,34 @@
   font-family: SourceHanSansCN-Regular;
   color: #333;
 }
-.mainContent .catalogue .sectionList{
-  padding:.5rem 0;
+.mainContent .catalogue .sectionList {
+  padding: 0.5rem 0;
 }
 .mainContent .catalogue .sectionList li {
   display: flex;
   justify-content: space-between;
-  padding:.5rem 1rem .5rem 0;
+  padding: 0.5rem 1rem 0.5rem 0;
   align-items: center;
 }
-.mainContent
-  .catalogue
-  .sectionList
-  li
-  p:nth-child(1){
-    margin-right:1rem;
-    width:15px;
-    height:15px;
-  }
-.mainContent
-  .catalogue
-  .sectionList
-  li
-  p:nth-child(2){
-    flex-grow: 1;
-  }
-.mainContent
-  .catalogue
-  .sectionList
-  li
-  p:nth-child(2)
-  span {
+.mainContent .catalogue .sectionList li p:nth-child(1) {
+  margin-right: 1rem;
+  width: 15px;
+  height: 15px;
+}
+.mainContent .catalogue .sectionList li p:nth-child(2) {
+  flex-grow: 1;
+}
+.mainContent .catalogue .sectionList li p:nth-child(2) span {
   font-size: 1.1rem;
   font-family: SourceHanSansCN-Normal;
   color: #333;
 }
-.mainContent
-  .catalogue
-  .sectionList
-  li
-  p:nth-child(2)
-  span:nth-child(1) {
-  padding-right: .5rem;
-  margin-right: .5rem;
+.mainContent .catalogue .sectionList li p:nth-child(2) span:nth-child(1) {
+  padding-right: 0.5rem;
+  margin-right: 0.5rem;
   position: relative;
 }
-.mainContent
-  .catalogue
-  .sectionList
-  li
-  p:nth-child(2)
-  span:nth-child(1):after {
+.mainContent .catalogue .sectionList li p:nth-child(2) span:nth-child(1):after {
   content: "";
   position: absolute;
   top: 50%;
@@ -304,37 +293,19 @@
   transform: translateY(-50%);
   background: #1d1d1d;
 }
-.mainContent
-  .catalogue
-  .sectionList
-  li
-  span:nth-child(3) {
+.mainContent .catalogue .sectionList li span:nth-child(3) {
   color: #999;
   font-size: 0.9rem;
 }
-.mainContent
-  .catalogue
-  .sectionList
-  li
-  p:nth-child(3) {
+.mainContent .catalogue .sectionList li p:nth-child(3) {
   display: flex;
   align-items: center;
 }
-.mainContent
-  .catalogue
-  .sectionList
-  li
-  p:nth-child(3)
-  img:nth-child(1) {
+.mainContent .catalogue .sectionList li p:nth-child(3) img:nth-child(1) {
   width: 1rem;
   margin-right: 1rem;
 }
-.mainContent
-  .catalogue
-  .sectionList
-  li
-  p:nth-child(3)
-  img:nth-child(2) {
+.mainContent .catalogue .sectionList li p:nth-child(3) img:nth-child(2) {
   width: 1.1rem;
 }
 .mainContent .courseTitle {
@@ -351,11 +322,11 @@
   padding: 0 1rem;
   background: #fff;
 }
-.myAudio{
-  width:100% !important;
+.myAudio {
+  width: 100% !important;
 }
-mip-audio.mip-audio-default-style [controller]{
-  background:#fff;
+mip-audio.mip-audio-default-style [controller] {
+  background: #fff;
 }
 .mainContent .audio-wrapper {
   background-color: #f9fbfe;
@@ -527,7 +498,7 @@ mip-audio.mip-audio-default-style [controller]{
 }
 .course_read .course li {
   display: flex;
-  margin-top:1rem;
+  margin-top: 1rem;
 }
 .course_read .course .pic {
   width: 125px;
@@ -622,15 +593,15 @@ mip-audio.mip-audio-default-style [controller]{
   transform: translate(-50%, -50%);
   z-index: 0;
 }
-.mainContent .playPart .picView .cdPoint{
-  width:5rem;
-  height:5rem;
+.mainContent .playPart .picView .cdPoint {
+  width: 5rem;
+  height: 5rem;
   position: absolute;
   z-index: 10;
   top: 36%;
   left: 70%;
 }
-.mainContent .playPart .picView .playView{
+.mainContent .playPart .picView .playView {
   width: 5rem;
   height: 5rem;
   position: absolute;
@@ -641,44 +612,61 @@ mip-audio.mip-audio-default-style [controller]{
 }
 .mainContent .playPart .picView .playImg,
 .stopImg {
-  width:5rem;
+  width: 5rem;
 }
-.adList{
-  padding:1rem;
-  background:#fff;
-  margin-top:.5rem;
+.adList {
+  padding: 1rem;
+  background: #fff;
+  margin-top: 0.5rem;
 }
-.changBtn p{
-    -webkit-animation: free_download 1s linear alternate infinite;
-    animation: free_download 1s linear alternate infinite;
+.changBtn p {
+  -webkit-animation: free_download 1s linear alternate infinite;
+  animation: free_download 1s linear alternate infinite;
 }
-@-webkit-keyframes free_download{
-    0%{-webkit-transform:scale(0.9);}
-    100%{-webkit-transform:scale(1);}
+@-webkit-keyframes free_download {
+  0% {
+    -webkit-transform: scale(0.9);
+  }
+  100% {
+    -webkit-transform: scale(1);
+  }
 }
-@keyframes free_download{
-    0%{transform:scale(0.9);}
-    100%{transform:scale(1);}
+@keyframes free_download {
+  0% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
 
 <script>
 export default {
   props: {
-    serverurl:String,
-    pageurl:String,
-    articleid:String
+    serverurl: {
+      type: String,
+      default: ''
+    },
+    pageurl: {
+      type: String,
+      default: ''
+    },
+    articleid: {
+      type: String,
+      default: ''
+    }
   },
   data () {
     return {
-      courseInfo:'', //课程信息
-      sectionInfo:'', //章节信息
-      sectionList:'', //章节列表
-      courseList:'', //看过的人还看了列表
-      adList:'', //广告列表
+      courseInfo: "", //课程信息
+      sectionInfo: "", //章节信息
+      sectionList: "", //章节列表
+      courseList: "", //看过的人还看了列表
+      adList: "" //广告列表
     };
   },
-  mounted() {
+  mounted () {
     this.getAudioInfo()
   },
   methods: {
@@ -687,14 +675,14 @@ export default {
       this.postData(this.serverurl + "/api/h5/audioDetail", {
         courseHandoutsId: this.section
       })
-      .then(function(data) {
-        that.courseInfo = data.result.course
-        that.sectionInfo = data.result.courseHandouts
-        that.sectionList = data.result.courseHandoutsList
-        that.courseList = data.result.courseList
-        that.adList = data.result.hotList
-      })
-      .catch(error => console.error(error))
+        .then(function(data) {
+          that.courseInfo = data.result.course
+          that.sectionInfo = data.result.courseHandouts
+          that.sectionList = data.result.courseHandoutsList
+          that.courseList = data.result.courseList
+          that.adList = data.result.hotList
+        })
+        .catch(error => console.error(error))
     },
     postData (url, data) {
       return fetch(url, {
@@ -711,23 +699,28 @@ export default {
         body: JSON.stringify(data) // body data type must match "Content-Type" header
       }).then(response => response.json()); // parses JSON response into native JavaScript objects
     },
-    goCourseDetail (courseId){
-      window.location.href = this.pageurl + "/course_detail.html?courseId=" + courseId
+    goCourseDetail (courseId) {
+      window.location.href =
+        this.pageurl + "/course_detail.html?courseId=" + courseId
     },
-    goSecitonDetail (item){ //跳转章节详情
-      if(item.tryType == 0){
+    goSecitonDetail (item) {
+      //跳转章节详情
+      if (item.tryType == 0) {
         return false
       }
-      if(item.courseHandoutsType == 1){
-        window.location.href = this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId
+      if (item.courseHandoutsType == 1) {
+        window.location.href =
+          this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId
       }
-      if(item.courseHandoutsType == 2){
-        window.location.href = this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId
+      if (item.courseHandoutsType == 2) {
+        window.location.href =
+          this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId
       }
-      if(item.courseHandoutsType == 3){
-        window.location.href = this.pageurl + "/course_detail.html?courseId=" + item.courseId
+      if (item.courseHandoutsType == 3) {
+        window.location.href =
+          this.pageurl + "/course_detail.html?courseId=" + item.courseId
       }
-      this.$router.go(0);
+      this.$router.go(0)
     }
   }
 };
