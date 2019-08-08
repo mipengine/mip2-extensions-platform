@@ -34,8 +34,8 @@
         </p>
       </div>
       <div class="articleContent">
-        <div v-html="showContent"></div>
-        <div class="loading" v-show="moreBtn">
+        <div v-html="showContent" />
+        <div v-show="moreBtn" class="loading">
           <p class="loadBtn" @click="loadMore">
             <mip-img
               src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565177488723double_arrow.png"
@@ -56,8 +56,8 @@
         <ul>
           <li
             v-for="(item,index) in articleInfo.tagList"
-            :key="index"
             v-show="index < 4"
+            :key="index"
           >{{ item.tagName }}</li>
         </ul>
       </div>
@@ -71,23 +71,27 @@
         <mip-img
           src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178054305btn_bg2.png"
           class="btnBg"
-        ></mip-img>
+        />
         <span>打开APP</span>
       </p>
     </div>
     <div class="course_read">
       <p class="title">相关课程</p>
       <ul class="course">
-        <li v-for="(item,index) in courseList" :key="index" @click="goCourseDetail(item.courseId)">
+        <li v-for="(item,index) in courseList"
+        :key="index"
+        @click="goCourseDetail(item.courseId)">
           <div class="pic">
-            <mip-img :src="item.courseImgH5" class="courseImg" layout="fill"></mip-img>
+            <mip-img :src="item.courseImgH5" class="courseImg" layout="fill" />
           </div>
           <div class="info">
             <p>{{ item.courseName.length > 5?item.courseName.substring(0,5) + '...' : item.courseName }}</p>
             <p>{{ item.courseAuthor.length > 5?item.courseAuthor.substring(0,5) + '...' : item.courseAuthor }}</p>
             <p>￥{{ item.showCoursePrice }}</p>
           </div>
-          <div class="btn" v-show="item.tagList.length > 0">
+          <div
+          v-show="item.tagList.length > 0"
+          class="btn">
             <span>{{ item.tagList.length > 0?item.tagList[0].tagName : '' }}</span>
           </div>
         </li>
@@ -105,7 +109,7 @@
             <mip-img
               src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565175571079paper.png"
               class="paper"
-            ></mip-img>
+            />
           </span>
           <span>{{ item.articlesTitle }}</span>
         </li>
@@ -382,20 +386,20 @@ export default {
   data() {
     return {
       courseList: [],
-      articleInfo: "",
+      articleInfo: '',
       hotArticleList: [],
       moreBtn: false,
-      showContent: ""
+      showContent: ''
     };
   },
-  props: ["serverurl", "pageurl", "articleid"],
+  props: ['serverurl', 'pageurl', 'articleid'],
   mounted() {
     this.getArticleInfo();
   },
   methods: {
-    getArticleInfo() {
+    getArticleInfo () {
       var that = this;
-      this.postData(this.serverurl + "/api/pc/newsDetail", {
+      this.postData(this.serverurl + '/api/pc/newsDetail', {
         articlesId: this.articleid
       })
         .then(function(data) {
@@ -409,35 +413,35 @@ export default {
         })
         .catch(error => console.error(error));
     },
-    getDate(date) {
+    getDate (date) {
       var date = new Date(date);
       return (
         date.getFullYear() +
-        "-" +
+        '-' +
         (date.getMonth() + 1 < 10
-          ? "0" + (date.getMonth() + 1)
+          ? '0' + (date.getMonth() + 1)
           : date.getMonth() + 1) +
-        "-" +
-        (date.getDate() < 10 ? "0" + date.getDate() : date.getDate())
+        '-' +
+        (date.getDate() < 10 ? '0' + date.getDate() : date.getDate())
       );
     },
-    postData(url, data) {
+    postData (url, data) {
       // Default options are marked with *
       return fetch(url, {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, cors, *same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, cors, *same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        redirect: "follow", // manual, *follow, error
-        referrer: "no-referrer", // no-referrer, *client
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
+        redirect: 'follow', // manual, *follow, error
+        referrer: 'no-referrer', // no-referrer, *client
+        body: JSON.stringify(data) // body data type must match 'Content-Type' header
       }).then(response => response.json()); // parses JSON response into native JavaScript objects
     },
-    hideCourseContent() {
+    hideCourseContent () {
       //隐藏课程介绍内容
       var length = this.articleInfo.articlesContent.length;
       if (length > 300) {
@@ -451,18 +455,18 @@ export default {
         this.showContent = this.articleInfo.articlesContent;
       }
     },
-    loadMore() {
+    loadMore () {
       //加载更多
       this.moreBtn = false;
       this.showContent = this.articleInfo.articlesContent;
     },
-    goCourseDetail(courseId) {
+    goCourseDetail (courseId) {
       window.location.href =
-        this.pageurl + "/course_detail.html?courseId=" + courseId;
+        this.pageurl + '/course_detail.html?courseId=' + courseId;
     },
-    goArticleDetail(articleId) {
+    goArticleDetail (articleId) {
       window.location.href =
-        this.pageurl + "/article.html?articleId=" + articleId;
+        this.pageurl + '/article.html?articleId=' + articleId;
     }
   }
 };
