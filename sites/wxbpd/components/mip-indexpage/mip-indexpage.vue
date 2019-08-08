@@ -54,13 +54,13 @@
         <p>今日精选</p>
         <p @click="seeMoreArticle">
           <span>查看更多</span>
-          <mip-img src="/images/right_arrow_gray.png" class="arrow"></mip-img>
+          <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565175464642right_arrow_gray.png" class="arrow"></mip-img>
         </p>
       </div>
       <ul>
-        <li v-for="(item,index) in articlesList" :key="index">
+        <li v-for="(item,index) in articlesList" :key="index" @click="goArticleDetail(item.articlesId)">
           <span>
-            <mip-img src="/images/paper.png" class="articleImg"></mip-img>
+            <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565175571079paper.png" class="articleImg"></mip-img>
           </span>
           <span>{{item.articlesTitle}}</span>
         </li>
@@ -71,26 +71,26 @@
         <p>{{item.categoryName}}</p>
         <p @click="seeMoreCourse">
           <span>查看更多</span>
-          <mip-img src="/images/right_arrow_gray.png" class="arrow"></mip-img>
+          <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565175464642right_arrow_gray.png" class="arrow"></mip-img>
         </p>
       </div>
       <ul>
         <li v-for="(item,index) in item.courseList" :key="index">
           <div class="pic">
-            <mip-img :src="item.courseImgH5" class="courseImg"></mip-img>
+            <mip-img :src="item.courseImgH5" class="courseImg" layout="fill"></mip-img>
           </div>
           <div class="info">
-            <p>{{item.courseName}}</p>
+            <p>{{item.courseName.length > 5?item.courseName.substring(0,5) + '...' : item.courseName}}</p>
             <p>
-              <span>{{item.courseAuthor}}</span>
-              <span>{{item.courseAuthorIntro}}</span>
+              <span>{{item.courseAuthor.length > 3?item.courseAuthor.substring(0,3) + '...' : item.courseAuthor}}</span>
+              <span>{{item.courseAuthorIntro.length > 5?item.courseAuthorIntro.substring(0,5) + '...' : item.courseAuthorIntro}}</span>
             </p>
             <p>{{item.handouts}}讲·{{item.learnNums}}人已学习</p>
             <p>￥{{item.showCoursePrice}}</p>
           </div>
-          <!-- <div class="btn">
-            <span>{{item.tagList[0].tagName}}</span>
-          </div>-->
+          <div class="btn" v-show="item.tagList.length > 0">
+            <span>{{item.tagList.length > 0?item.tagList[0].tagName : ''}}</span>
+          </div>
         </li>
       </ul>
     </div>
@@ -272,6 +272,7 @@
   background: #ddd;
   border-radius: 5px;
   flex-shrink: 0;
+  position: relative;
 }
 
 .course ul li .pic .courseImg {
@@ -329,6 +330,7 @@
 .course ul li .btn {
   position: relative;
   width: 50px;
+  flex-shrink: 0;
 }
 
 .course ul li .btn span {
@@ -422,36 +424,24 @@
 export default {
   data() {
     return {
+      categoryId:'',
       typeList: [],
       adList: [],
       articlesList: [],
-      courseList: [],
-      imgList: [
-        {
-          url:
-            "http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1564999616457banner2.png"
-        },
-        {
-          url:
-            "http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1564999616457banner2.png"
-        }
-      ]
+      courseList: []
     };
   },
-  props: {
-    baseUrl: String
-  },
+  props:['serverurl','pageurl'],
   mounted() {
     var that = this;
-    console.log(that.baseUrl);
-    this.postData("http://118.31.34.38:9999/api/h5/userIndex", {})
+    this.postData(this.serverurl + "/api/h5/userIndex", {})
       .then(function(data) {
-        // resultData = data.result;
-        console.log(data.result);
         that.adList = data.result.adList;
         that.articlesList = data.result.articlesList;
         that.typeList = data.result.firstCategoryList;
-      }) // JSON-string from `response.json()` call
+        that.categoryId = data.result.firstCategoryList[0].categoryId;
+        that.typeChoose(that.categoryId);
+      })
       .catch(error => console.error(error));
   },
   methods: {
@@ -475,25 +465,29 @@ export default {
       window.location.href = url;
     },
     seeMoreArticle() {
-      window.location.href = "http://192.168.0.27:8000/choiceness.html";
+      window.location.href = this.pageurl + "/choiceness.html";
+    },
+    goArticleDetail(articleId){
+      window.location.href = this.pageurl + "/article.html?articleId=" + articleId;
     },
     seeMoreCourse() {
-      window.location.href = "http://192.168.0.27:8000/course.html";
+      window.location.href = this.pageurl + "/course.html?categoryId=" + this.categoryId;
     },
     typeChoose(id) {
+      this.categoryId = id;
       var that = this;
-      this.postData("http://118.31.34.38:9999/api/h5/getIndexCourse", {
-        firstCategoryId: id
+      this.postData(this.serverurl + "/api/h5/getIndexCourse", {
+        firstCategoryId: this.categoryId
       })
-        .then(function(data) {
-          if (data.resultCode == 10000) {
-            that.courseList = data.result.courseList;
-          }
-          if (data.resultCode == 1015) {
-            that.courseList = [];
-          }
-        })
-        .catch(error => console.error(error));
+      .then(function(data) {
+        if (data.resultCode == 10000) {
+          that.courseList = data.result.courseList;
+        }
+        if (data.resultCode == 1015) {
+          that.courseList = [];
+        }
+      })
+      .catch(error => console.error(error));
     }
   }
 };
