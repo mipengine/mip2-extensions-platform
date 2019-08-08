@@ -36,11 +36,11 @@
       <div class="articleContent">
         <div v-html="showContent" />
         <div
-        v-show="moreBtn"
+        v-show=" moreBtn "
         class="loading">
           <p
-          class="loadBtn"
-          @click="loadMore">
+          class=" loadBtn "
+          @click=" loadMore ">
             <mip-img
               src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565177488723double_arrow.png"
               class="arrow"
@@ -82,15 +82,15 @@
     <div class="course_read">
       <p class="title">相关课程</p>
       <ul class="course">
-        <li 
-        v-for="(item,index) in courseList"
+        <li
+        v-for="( item,index ) in courseList"
         :key="index"
-        @click="goCourseDetail(item.courseId)">
+        @click="goCourseDetail( item.courseId )">
           <div class="pic">
             <mip-img
-            :src="item.courseImgH5"
-            class="courseImg"
-            layout="fill" />
+            :src=" item.courseImgH5 "
+            class=" courseImg "
+            layout=" fill " />
           </div>
           <div class="info">
             <p>{{ item.courseName.length > 5 ? item.courseName.substring(0,5) + '...' : item.courseName }}</p>
@@ -98,8 +98,8 @@
             <p>￥{{ item.showCoursePrice }}</p>
           </div>
           <div
-          v-show="item.tagList.length > 0"
-          class="btn">
+          v-show=" item.tagList.length > 0 "
+          class=" btn ">
             <span>{{ item.tagList.length > 0 ? item.tagList[0].tagName : '' }}</span>
           </div>
         </li>
@@ -391,7 +391,11 @@
 
 <script>
 export default {
-  props: ['serverurl', 'pageurl', 'articleid'],
+  props: {
+    serverurl:String,
+    pageurl:String,
+    articleid:String
+  },
   data () {
     return {
       courseList: [],
@@ -477,5 +481,5 @@ export default {
         this.pageurl + '/article.html?articleId=' + articleId
     }
   }
-};
+}
 </script>

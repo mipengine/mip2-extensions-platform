@@ -1,23 +1,30 @@
 <template>
   <div class="mainContent">
-    <div class="playPart" v-show="sectionInfo.courseHandoutsType == 1">
-      <div class="picView">
-        <mip-img :src="courseInfo.courseImgH5" class="courseImg"></mip-img>
-        <mip-img src="/images/CD2.png" class="cdImg"></mip-img>
-        <mip-img src="/images/cd_point2.png" class="cdPoint"></mip-img>
+    <div
+    v-show="sectionInfo.courseHandoutsType == 1"
+    class="playPart">
+      <div
+      class="picView">
+        <mip-img :src="courseInfo.courseImgH5" class="courseImg" />
+        <mip-img src="/images/CD2.png" class="cdImg" />
+        <mip-img src="/images/cd_point2.png" class="cdPoint" />
         <!-- <p class="playView">
           <mip-img src="/images/audio_play.png" id="audioPlayer" class="playImg"></mip-img>
         </p> -->
       </div>
     </div>
-    <div class="vedioView" v-show="sectionInfo.courseHandoutsType == 2">
+    <div
+    v-show="sectionInfo.courseHandoutsType == 2"
+    class="vedioView">
       <mip-video poster="https://www.mipengine.org/static/img/sample_04.jpg" controls
         layout="responsive" width="750" height="360" 
         :src="sectionInfo.courseHandoutsHref">
       </mip-video>
     </div>
-    <p class="courseTitle">{{sectionInfo.courseHandoutsName}}</p>
-    <div class="audioView" v-show="sectionInfo.courseHandoutsType == 1">
+    <p class="courseTitle">{{ sectionInfo.courseHandoutsName }}</p>
+    <div
+    v-show=" sectionInfo.courseHandoutsType == 1 "
+    class="audioView">
       <div class="audio-wrapper">
         <mip-audio
           :src="sectionInfo.courseHandoutsHref"
@@ -44,18 +51,20 @@
     <div class="bottomBtn changBtn">
       <p>打开APP收藏下载</p>
     </div>
-    <div class="courseContent" v-html="sectionInfo.courseHandoutsContent"></div>
+    <div
+    v-html=" sectionInfo.courseHandoutsContent "
+    class="courseContent"></div>
     <div class="catalogue">
       <div class="headPart">
         <div class="leftContent">
-          <mip-img :src="courseInfo.courseImgH5" class="courseImg"></mip-img>
-          <mip-img src="/images/CD2.png" class="cdImg"></mip-img>
+          <mip-img :src="courseInfo.courseImgH5" class="courseImg" />
+          <mip-img src="/images/CD2.png" class="cdImg" />
         </div>
         <div class="centerContent">
-          <p>{{sectionInfo.courseHandoutsName.length > 7?sectionInfo.courseHandoutsName.substring(0,7) + '...' : sectionInfo.courseHandoutsName}}</p>
+          <p>{{ sectionInfo.courseHandoutsName.length > 7?sectionInfo.courseHandoutsName.substring(0,7) + '...' : sectionInfo.courseHandoutsName }}</p>
           <p>
-            <span>{{courseInfo.courseAuthor.length > 3?courseInfo.courseAuthor.substring(0,3) + '...' : courseInfo.courseAuthor}}</span>
-            <span>{{courseInfo.courseAuthorIntro.length > 7?courseInfo.courseAuthorIntro.substring(0,7) + '...' : courseInfo.courseAuthorIntro}}</span>
+            <span>{{ courseInfo.courseAuthor.length > 3 ? courseInfo.courseAuthor.substring(0,3) + '...' : courseInfo.courseAuthor }}</span>
+            <span>{{ courseInfo.courseAuthorIntro.length > 7 ? courseInfo.courseAuthorIntro.substring(0,7) + '...' : courseInfo.courseAuthorIntro }}</span>
           </p>
         </div>
         <div class="rightContent">
@@ -65,8 +74,10 @@
       <ul class="sectionList">
         <li v-for="(item,index) in sectionList" :key="index" @click="goSecitonDetail(item)">
           <p>
-            <mip-img src="/images/icon_audio.png" v-show="item.courseHandoutsType == 1"></mip-img>
-            <mip-img src="/images/icon_vedio.png" v-show="item.courseHandoutsType == 2"></mip-img>
+            <mip-img
+            v-show="item.courseHandoutsType == 1"
+            src="/images/icon_audio.png" />
+            <mip-img src="/images/icon_vedio.png" v-show="item.courseHandoutsType == 2" />
           </p>
           <p>
             <span>{{item.courseHandoutsCode}}</span>
@@ -74,14 +85,14 @@
             <span v-show="item.showDuration != null">({{item.showDuration}})</span>
           </p>
           <p>
-            <mip-img src="/images/upload.png"></mip-img>
+            <mip-img src="/images/upload.png" />
           </p>
         </li>
       </ul>
     </div>
     <div class="adList">
       <mip-carousel autoplay defer="2000" layout="responsive" width="750" height="360" indicatorId="mip-carousel-example">
-        <mip-img :src="adList[0].adImg"></mip-img>
+        <mip-img :src="adList[0].adImg" />
         <mip-img
           :src="item.adImg"
           :alt="item.adAlt"
@@ -89,7 +100,7 @@
           @click="goAdPage(item.adHref)"
           :key="index"
           class="adImg"
-        ></mip-img>
+        />
       </mip-carousel>
     </div>
     <div class="course_read">
@@ -97,7 +108,7 @@
       <ul class="course">
         <li v-for="(item,index) in courseList" :key="index"  @click="goCourseDetail(item.courseId)">
           <div class="pic">
-            <mip-img :src="item.courseImgH5" class="courseImg" layout="fill"></mip-img>
+            <mip-img :src="item.courseImgH5" class="courseImg" layout="fill" />
           </div>
           <div class="info">
             <p>{{item.courseName.length > 6?item.courseName.substring(0,6) + '...' : item.courseName}}</p>
@@ -653,7 +664,12 @@ mip-audio.mip-audio-default-style [controller]{
 
 <script>
 export default {
-  data() {
+  props: {
+    serverurl:String,
+    pageurl:String,
+    articleid:String
+  },
+  data () {
     return {
       courseInfo:'', //课程信息
       sectionInfo:'', //章节信息
@@ -662,229 +678,25 @@ export default {
       adList:'', //广告列表
     };
   },
-  props: ["serverurl", "pageurl", "section"],
   mounted() {
-    this.getAudioInfo();
-    // document.addEventListener("DOMContentLoaded", this.initAudioEvent(), false);
-  },
-  updated(){
-    // this.initAudioEvent();
+    this.getAudioInfo()
   },
   methods: {
-    initAudioEvent() {
-      console.log(document.getElementById('myAudio'));
-      var audio = document.getElementById('myAudio');
-      var audioPlayer = document.getElementById("audioPlayer");
-      //获取音频总时长
-      audio.addEventListener(
-        "loadedmetadata",
-        function() {
-          document.getElementById("totalTime").innerText = transTime(
-            audio.duration
-          );
-        },
-        false
-      );
-      // 监听音频播放时间并更新进度条
-      audio.addEventListener(
-        "timeupdate",
-        function() {
-          updateProgress(audio);
-        },
-        false
-      );
-      // 监听播放完成事件
-      audio.addEventListener(
-        "ended",
-        function() {
-          audioEnded();
-        },
-        false
-      );
-
-      // 点击播放/暂停图片时，控制音乐的播放与暂停
-      audioPlayer.addEventListener(
-        "click",
-        function() {
-          // 改变播放/暂停图片
-          if (audio.paused) {
-            // 开始播放当前点击的音频
-            audio.play();
-            audioPlayer.src = "/images/audio_stop.png";
-          } else {
-            audio.pause();
-            audioPlayer.src = "/images/audio_play.png";
-          }
-        },
-        false
-      );
-
-      // 点击进度条跳到指定点播放
-      // PS：此处不要用click，否则下面的拖动进度点事件有可能在此处触发，此时e.offsetX的值非常小，会导致进度条弹回开始处（简直不能忍！！）
-      var progressBarBg = document.getElementById("progressBarBg");
-      progressBarBg.addEventListener(
-        "mousedown",
-        function(event) {
-          // 只有音乐开始播放后才可以调节，已经播放过但暂停了的也可以
-          if (!audio.paused || audio.currentTime != 0) {
-            var pgsWidth = parseFloat(
-              window
-                .getComputedStyle(progressBarBg, null)
-                .width.replace("px", "")
-            );
-            var rate = event.offsetX / pgsWidth;
-            audio.currentTime = audio.duration * rate;
-            updateProgress(audio);
-          }
-        },
-        false
-      );
-
-      // 拖动进度点调节进度
-      dragProgressDotEvent(audio);
-      function dragProgressDotEvent(audio) {
-        //鼠标拖动进度点时可以调节进度
-        var dot = document.getElementById("progressDot");
-
-        var position = {
-          oriOffestLeft: 0, // 移动开始时进度条的点距离进度条的偏移值
-          oriX: 0, // 移动开始时的x坐标
-          maxLeft: 0, // 向左最大可拖动距离
-          maxRight: 0 // 向右最大可拖动距离
-        };
-        var flag = false; // 标记是否拖动开始
-
-        // 鼠标按下时
-        dot.addEventListener("mousedown", down, false);
-        dot.addEventListener("touchstart", down, false);
-
-        // 开始拖动
-        window.addEventListener("mousemove", move, false);
-        window.addEventListener("touchmove", move, false);
-
-        // 拖动结束
-        window.addEventListener("mouseup", end, false);
-        window.addEventListener("touchend", end, false);
-
-        function down(event) {
-          if (!audio.paused || audio.currentTime != 0) {
-            // 只有音乐开始播放后才可以调节，已经播放过但暂停了的也可以
-            flag = true;
-
-            position.oriOffestLeft = dot.offsetLeft;
-            position.oriX = event.touches
-              ? event.touches[0].clientX
-              : event.clientX; // 要同时适配mousedown和touchstart事件
-            position.maxLeft = position.oriOffestLeft; // 向左最大可拖动距离
-            position.maxRight =
-              document.getElementById("progressBarBg").offsetWidth -
-              position.oriOffestLeft; // 向右最大可拖动距离
-
-            // 禁止默认事件（避免鼠标拖拽进度点的时候选中文字）
-            if (event && event.preventDefault) {
-              event.preventDefault();
-            } else {
-              event.returnValue = false;
-            }
-
-            // 禁止事件冒泡
-            if (event && event.stopPropagation) {
-              event.stopPropagation();
-            } else {
-              window.event.cancelBubble = true;
-            }
-          }
-        }
-
-        function move(event) {
-          if (flag) {
-            var clientX = event.touches
-              ? event.touches[0].clientX
-              : event.clientX; // 要同时适配mousemove和touchmove事件
-            var length = clientX - position.oriX;
-            if (length > position.maxRight) {
-              length = position.maxRight;
-            } else if (length < -position.maxLeft) {
-              length = -position.maxLeft;
-            }
-            var progressBarBg = document.getElementById("progressBarBg");
-            var pgsWidth = parseFloat(
-              window
-                .getComputedStyle(progressBarBg, null)
-                .width.replace("px", "")
-            );
-            var rate = (position.oriOffestLeft + length) / pgsWidth;
-            audio.currentTime = audio.duration * rate;
-            updateProgress(audio);
-          }
-        }
-
-        function end() {
-          flag = false;
-        }
-      }
-      function updateProgress(audio) {
-        //更新进度条与当前播放时间
-        var value = audio.currentTime / audio.duration;
-        document.getElementById("progressBar").style.width = value * 100 + "%";
-        document.getElementById("progressDot").style.left = value * 100 + "%";
-        document.getElementById("audioCurTime").innerText = transTime(
-          audio.currentTime
-        );
-      }
-      function audioEnded() {
-        //播放完成时把进度调回开始的位置
-        document.getElementById("progressBar").style.width = 0;
-        document.getElementById("progressDot").style.left = 0;
-        document.getElementById("audioCurTime").innerText = transTime(0);
-        document.getElementById(
-          "audioPlayer"
-        ).src = "/images/audio_play.png";
-      }
-      function transTime(value) {
-        //音频播放时间换算
-        var time = "";
-        var h = parseInt(value / 3600);
-        value %= 3600;
-        var m = parseInt(value / 60);
-        var s = parseInt(value % 60);
-        if (h > 0) {
-          time = formatTime(h + ":" + m + ":" + s);
-        } else {
-          time = formatTime(m + ":" + s);
-        }
-
-        return time;
-      }
-      function formatTime(value) {
-        //格式化时间显示，补零对齐
-        var time = "";
-        var s = value.split(":");
-        var i = 0;
-        for (; i < s.length - 1; i++) {
-          time += s[i].length == 1 ? "0" + s[i] : s[i];
-          time += ":";
-        }
-        time += s[i].length == 1 ? "0" + s[i] : s[i];
-
-        return time;
-      }
-    },
-    getAudioInfo() {
-      var that = this;
+    getAudioInfo () {
+      const that = this;
       this.postData(this.serverurl + "/api/h5/audioDetail", {
         courseHandoutsId: this.section
       })
       .then(function(data) {
-        that.courseInfo = data.result.course;
-        that.sectionInfo = data.result.courseHandouts;
-        that.sectionList = data.result.courseHandoutsList;
-        that.courseList = data.result.courseList;
-        that.adList = data.result.hotList;
+        that.courseInfo = data.result.course
+        that.sectionInfo = data.result.courseHandouts
+        that.sectionList = data.result.courseHandoutsList
+        that.courseList = data.result.courseList
+        that.adList = data.result.hotList
       })
-      .catch(error => console.error(error));
+      .catch(error => console.error(error))
     },
-    postData(url, data) {
+    postData (url, data) {
       return fetch(url, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         mode: "cors", // no-cors, cors, *same-origin
@@ -899,21 +711,21 @@ export default {
         body: JSON.stringify(data) // body data type must match "Content-Type" header
       }).then(response => response.json()); // parses JSON response into native JavaScript objects
     },
-    goCourseDetail(courseId){
-      window.location.href = this.pageurl + "/course_detail.html?courseId=" + courseId;
+    goCourseDetail (courseId){
+      window.location.href = this.pageurl + "/course_detail.html?courseId=" + courseId
     },
-    goSecitonDetail(item){ //跳转章节详情
+    goSecitonDetail (item){ //跳转章节详情
       if(item.tryType == 0){
         return false
       }
       if(item.courseHandoutsType == 1){
-        window.location.href = this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId;
+        window.location.href = this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId
       }
       if(item.courseHandoutsType == 2){
-        window.location.href = this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId;
+        window.location.href = this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId
       }
       if(item.courseHandoutsType == 3){
-        window.location.href = this.pageurl + "/course_detail.html?courseId=" + item.courseId;
+        window.location.href = this.pageurl + "/course_detail.html?courseId=" + item.courseId
       }
       this.$router.go(0);
     }
