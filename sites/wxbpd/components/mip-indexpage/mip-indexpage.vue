@@ -9,7 +9,7 @@
         layout="responsive"
         width="750"
         height="360"
-      >
+        indicatorId="mip-carousel-example">
         <mip-img :src="adList[0].adImg" />
         <mip-img
           v-for="(item,index) in adList.slice(1,adList.length)"
@@ -17,8 +17,7 @@
           :src="item.adImg"
           :alt="item.adAlt"
           class="adImg"
-          @click="goAdPage(item.adHref)"
-        />
+          @click="goAdPage(item.adHref)"/>
       </mip-carousel>
       <div class="mip-carousel-indicator-wrapper">
         <div
@@ -26,13 +25,12 @@
           class="mip-carousel-indicatorDot"
         >
           <div class="mip-carousel-activeitem mip-carousel-indecator-item" />
-          <div class="mip-carousel-indecator-item" />
-          <div class="mip-carousel-indecator-item" />
+          <div
+            v-for="(item,index) in adList.slice(1,adList.length)"
+            :key="index"
+            class="mip-carousel-indecator-item"/>
         </div>
       </div>
-      <!-- <ul class="indicator_point">
-        <li v-for="(item,index) in [0,adList.length - 1]" :key="index" class="active"></li>
-      </ul>-->
     </div>
     <ul class="typeList">
       <li
@@ -40,7 +38,9 @@
         :key="index"
         @click="typeChoose(item.categoryId)">
         <p>
-          <mip-img :src="item.categoryImg" />
+          <mip-img
+            :src="item.categoryImg"
+            class="typeImg"/>
         </p>
         <p>{{ item.categoryName }}</p>
       </li>
@@ -190,8 +190,9 @@
   height: 6rem;
   display: flex;
   align-items: center;
+  position: relative;
 }
-.typeList li p:nth-child(1) img {
+.typeList li p:nth-child(1) .typeImg {
   width: 4rem;
 }
 .typeList li p:nth-child(2) {

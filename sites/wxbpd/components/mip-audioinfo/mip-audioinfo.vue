@@ -4,9 +4,12 @@
       v-show="sectionInfo.courseHandoutsType == 1"
       class="playPart">
       <div class="picView">
-        <mip-img
-          :src="courseInfo.courseImgH5"
-          class="courseImg" />
+        <p>
+          <mip-img
+            :src="courseInfo.courseImgH5"
+            class="courseImg"
+            layout="fixed-height"/>
+        </p>
         <mip-img
           src="/images/CD2.png"
           class="cdImg" />
@@ -56,6 +59,37 @@
           </div>-->
       </div>
     </div>
+    <ul class="btnList">
+      <li>
+        <mip-img
+        src="/images/multiple.png"
+        layout="responsive"
+        width="48"
+        height="38"
+        />
+      </li>
+      <li>
+        <mip-img
+        src="/images/cloud.png"
+        layout="responsive"
+        width="42"
+        height="34"/>
+      </li>
+      <li>
+        <mip-img
+        src="/images/prev.png"
+        layout="responsive"
+        width="41"
+        height="41"/>
+      </li>
+      <li>
+        <mip-img
+        src="/images/next.png"
+        layout="responsive"
+        width="41"
+        height="41"/>
+      </li>
+    </ul>
     <div class="bottomBtn changBtn">
       <p>打开APP收藏下载</p>
     </div>
@@ -68,12 +102,18 @@
         class="headPart">
         <div
           class="leftContent">
-          <mip-img
-            :src="courseInfo.courseImgH5"
-            class="courseImg" />
+          <p>
+            <mip-img
+              :src="courseInfo.courseImgH5"
+              class="courseImg"
+              layout="fixed-height"/>
+          </p>
           <mip-img
             src="/images/CD2.png"
             class="cdImg" />
+            <mip-img
+          src="/images/cd_point3.png"
+          class="cdPoint" />
         </div>
         <div class="centerContent">
           <p>{{ sectionInfo.courseHandoutsName.length > 7?sectionInfo.courseHandoutsName.substring(0,7) + '...' : sectionInfo.courseHandoutsName }}</p>
@@ -117,7 +157,7 @@
         layout="responsive"
         width="750"
         height="360"
-      >
+        indicatorId="mip-carousel-example">
         <mip-img :src="adList[0].adImg" />
         <mip-img
           v-for="(item,index) in adList.slice(1,adList.length)"
@@ -125,9 +165,20 @@
           :src="item.adImg"
           :alt="item.adAlt"
           class="adImg"
-          @click="goAdPage(item.adHref)"
-        />
+          @click="goAdPage(item.adHref)"/>
       </mip-carousel>
+      <div class="mip-carousel-indicator-wrapper">
+        <div
+          id="mip-carousel-example"
+          class="mip-carousel-indicatorDot"
+        >
+          <div class="mip-carousel-activeitem mip-carousel-indecator-item" />
+          <div
+            v-for="(item,index) in adList.slice(1,adList.length)"
+            :key="index"
+            class="mip-carousel-indecator-item"/>
+        </div>
+      </div>
     </div>
     <div class="course_read">
       <p class="title">大家也在听</p>
@@ -160,6 +211,26 @@
 </template>
 
 <style scoped>
+.mip-carousel-indicator-wrapper {
+  width: calc(100% - 2rem);
+  margin: 0 auto;
+  position: absolute;
+  bottom: 25px;
+}
+
+.mip-carousel-indicatorDot .mip-carousel-indecator-item {
+  height: 4px;
+  width: 28px;
+  border-radius: 2px;
+}
+
+.mip-carousel-activeitem {
+  background: linear-gradient(
+    -13deg,
+    rgba(94, 172, 252, 1),
+    rgba(0, 90, 255, 1)
+  );
+}
 .mainContent {
   background: #f4f4f4;
 }
@@ -203,6 +274,16 @@
   padding-bottom: 30px;
   background: #fff;
 }
+.btnList{
+  display: flex;
+  background:#fff;
+  justify-content: space-between;
+  align-items: center;
+  padding:2.5rem 3rem 1rem 3rem;
+}
+.btnList li{
+  width:2.5rem;
+}
 .mainContent .catalogue .headPart {
   padding: 1.5rem 1rem 1.5rem 0;
   display: flex;
@@ -215,12 +296,22 @@
   text-align: left;
   position: relative;
 }
-.mainContent .catalogue .headPart .leftContent .courseImg {
+.mainContent .catalogue .headPart .leftContent p{
   width: 5rem;
   height: 5rem;
   display: block;
   position: relative;
+  border-radius: 5px;
+  overflow: hidden;
   z-index: 10;
+}
+.mainContent .catalogue .headPart .leftContent .courseImg {
+  width:6.75rem;
+  height: 5rem;
+  position:absolute;
+  top:0;
+  left:50%;
+  transform: translateX(-50%);
 }
 .mainContent .catalogue .headPart .leftContent .cdImg {
   width: 4rem;
@@ -228,6 +319,14 @@
   position: absolute;
   top: 0.55rem;
   left: 2.85rem;
+}
+.mainContent .catalogue .headPart .leftContent .cdPoint{
+  width:1.2rem;
+  height:1.2rem;
+  position: absolute;
+  top:40%;
+  left:61%;
+  z-index: 10;
 }
 .mainContent .catalogue .headPart .centerContent {
   text-align: left;
@@ -345,12 +444,8 @@
 .myAudio {
   width: 100% !important;
 }
-mip-audio.mip-audio-default-style [controller] {
-  background: #fff;
-}
 .mainContent .audio-wrapper {
   background-color: #f9fbfe;
-  padding: 20px 15px;
   border-radius: 10px;
   display: -webkit-box;
   display: -moz-box;
@@ -595,13 +690,23 @@ mip-audio.mip-audio-default-style [controller] {
   text-align: left;
   position: relative;
 }
-
-.mainContent .playPart .picView .courseImg {
+.mainContent .playPart .picView p{
   width: 16rem;
   height: 16rem;
   position: relative;
   z-index: 10;
   display: block;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.mainContent .playPart .picView .courseImg {
+  width: 22rem;
+  height: 16rem;
+  position: absolute;
+  top:0;
+  left:50%;
+  transform: translateX(-50%);
 }
 
 .mainContent .playPart .picView .cdImg {
@@ -614,12 +719,12 @@ mip-audio.mip-audio-default-style [controller] {
   z-index: 0;
 }
 .mainContent .playPart .picView .cdPoint {
-  width: 5rem;
-  height: 5rem;
+  width: 4.1rem;
+  height: 4.1rem;
   position: absolute;
   z-index: 10;
-  top: 36%;
-  left: 70%;
+  top: 37%;
+  left: 73.5%;
 }
 .mainContent .playPart .picView .playView {
   width: 5rem;
@@ -638,6 +743,7 @@ mip-audio.mip-audio-default-style [controller] {
   padding: 1rem;
   background: #fff;
   margin-top: 0.5rem;
+  position: relative;
 }
 .changBtn p {
   -webkit-animation: free_download 1s linear alternate infinite;

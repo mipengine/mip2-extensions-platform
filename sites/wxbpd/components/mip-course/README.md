@@ -8,12 +8,15 @@
 
 ## 说明
 
-组件功能说明
+mip-course 用于与服务端进行数据交互并动态展示页面信息
+由于官方的获取异步数据的组件对于数据格式有明确要求，并且无法满足项目需要，因此未使用官方组件
 
 ## 示例
 
-示例说明
+<mip-course serverurl="" pageurl="" categoryid=""></mip-course>
 
 ## 属性
 
-属性说明
+serverurl 获取服务端数据的地址
+pageurl 页面地址，用于页面跳转
+categoryid 获取数据所需参数

@@ -1,7 +1,6 @@
 <template>
   <div
     id="scroll"
-    :style="dialogShow == true ? 'overflow:hidden' : ''"
     class="mainContent">
     <div class="headPart">
       <mip-img
@@ -16,7 +15,6 @@
                 :src="courseInfo.courseImgH5"
                 class="courseImg"
                 layout="fixed-height"
-                height="112px"
               />
             </p>
             <mip-img
@@ -55,7 +53,7 @@
           <p class="pic">
             <mip-img
               :src="courseInfo.courseImgH5"
-              layout="fill"
+              layout="fixed-height"
               class="leftImg" />
           </p>
           <div class="rightContent">
@@ -146,34 +144,36 @@
         </div>
       </div>
     </div>
-    <div
-      v-show="dialogShow"
-      class="adDialog">
-      <div class="modalView">
-        <div class="headImg">
-          <mip-img
-            :src="courseInfo.courseImgH5"
-            class="pic"
-            layout="responsive"
-            width="600"
-            height="348"
-          />
-        </div>
-        <div class="content">
-          <p>2亿人都在用的财富学识APP赶快体验吧！</p>
-          <p>
+    <mip-fixed type="bottom">
+      <div
+        v-show="dialogShow"
+        class="adDialog">
+        <div class="modalView">
+          <div class="headImg">
             <mip-img
-              src="/images/btn_bg2.png"
-              class="btnBg" />
-            <span>立即打开</span>
-          </p>
+              :src="courseInfo.courseImgH5"
+              class="pic"
+              layout="responsive"
+              width="600"
+              height="348"
+            />
+          </div>
+          <div class="content">
+            <p>2亿人都在用的财富学识APP赶快体验吧！</p>
+            <p>
+              <mip-img
+                src="/images/btn_bg2.png"
+                class="btnBg" />
+              <span>立即打开</span>
+            </p>
+          </div>
+          <mip-img
+            src="/images/close_white.png"
+            class="btn"
+            @click="closeDialog" />
         </div>
-        <mip-img
-          src="/images/close_white.png"
-          class="btn"
-          @click="closeDialog" />
       </div>
-    </div>
+    </mip-fixed>
   </div>
 </template>
 
@@ -221,7 +221,8 @@
   position: absolute;
   border-radius: 5px;
   z-index: 10;
-  width: 154px;
+  width: 11rem;
+  height: 8rem;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -239,8 +240,8 @@
   position: absolute;
   width: 2rem;
   height: 2rem;
-  top: 37%;
-  left: 63%;
+  top: 38%;
+  left: 61.9%;
   z-index: 60;
 }
 .mainContent .headPart .courseInfo .intorduce .rightContent {
@@ -349,12 +350,17 @@
   border-radius: 50%;
   margin-right: 1rem;
   position: relative;
-}
-.mainContent .bodyPart .introduce .author .leftImg {
-  width: 6rem;
-  height: 6rem;
   border-radius: 50%;
   margin-right: 1rem;
+  overflow: hidden;
+}
+.mainContent .bodyPart .introduce .author .leftImg {
+  width:8.25rem;
+  height: 6rem;
+  position: absolute;
+  top:0;
+  left:50%;
+  transform: translateX(-50%);
 }
 
 .mainContent .bodyPart .introduce .author .rightContent {
@@ -582,13 +588,9 @@
 }
 
 .mainContent .adDialog {
-  position: absolute;
   width: 100%;
   height: 100%;
-  top: 0;
-  left: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 100;
 }
 
 .mainContent .adDialog .modalView {
@@ -712,6 +714,7 @@ export default {
     const that = this
     setTimeout(function () {
       that.dialogShow = true
+      document.getElementsByClassName('adDialog')[0].style='height:' + document.documentElement.clientHeight + 'px'
     }, 5000)
     window.addEventListener('scroll', this.onScroll)
     this.getAudioInfo()
