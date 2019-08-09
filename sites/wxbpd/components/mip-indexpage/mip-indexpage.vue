@@ -9,13 +9,12 @@
         layout="responsive"
         width="750"
         height="360"
-        indicatorId="mip-carousel-example"
       >
         <mip-img :src="adList[0].adImg" />
         <mip-img
-          :src="item.adImg"
           v-for="(item,index) in adList.slice(1,adList.length)"
           :key="index"
+          :src="item.adImg"
           :alt="item.adAlt"
           class="adImg"
           @click="goAdPage(item.adHref)"
@@ -41,7 +40,7 @@
         :key="index"
         @click="typeChoose(item.categoryId)">
         <p>
-          <img :src="item.categoryImg" />
+          <mip-img :src="item.categoryImg" />
         </p>
         <p>{{ item.categoryName }}</p>
       </li>
@@ -76,8 +75,7 @@
     <div
       v-for="(item,index) in courseList"
       :key="index"
-      class="course pagePadding"
-      >
+      class="course pagePadding">
       <div class="title">
         <p>{{ item.categoryName }}</p>
         <p @click="seeMoreCourse">
@@ -98,7 +96,7 @@
             <mip-img
               :src="item.courseImgH5"
               class="courseImg"
-              layout="fill"></mip-img>
+              layout="fill"/>
           </div>
           <div class="info">
             <p>{{ item.courseName.length > 5 ? item.courseName.substring(0,5) + '...' : item.courseName }}</p>
@@ -109,7 +107,9 @@
             <p>{{ item.handouts }}讲·{{ item.learnNums }}人已学习</p>
             <p>￥{{ item.showCoursePrice }}</p>
           </div>
-          <div class="btn" v-show="item.tagList.length > 0">
+          <div
+            v-show="item.tagList.length > 0"
+            class="btn">
             <span>{{ item.tagList.length > 0 ? item.tagList[0].tagName : '' }}</span>
           </div>
         </li>

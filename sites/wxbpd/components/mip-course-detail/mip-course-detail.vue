@@ -2,8 +2,7 @@
   <div
     id="scroll"
     :style="dialogShow == true ? 'overflow:hidden' : ''"
-    class="mainContent"
-    >
+    class="mainContent">
     <div class="headPart">
       <mip-img
         src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178872154course_bg.png"
@@ -24,11 +23,13 @@
               src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178930241CD2.png"
               class="cdImg"
             />
-            <mip-img src="/images/cd_point.png" class="cdPoint" />
+            <mip-img
+              src="/images/cd_point.png"
+              class="cdPoint" />
           </div>
           <div class="rightContent">
-            <p>{{ courseInfo.courseName.length > 8 ? courseInfo.courseName.substring(0,8) + '...' : courseInfo.courseName}}</p>
-            <p>{{ courseInfo.courseIntro.length > 12 ? courseInfo.courseIntro.substring(0,12) + '...' : courseInfo.courseIntro}}</p>
+            <p>{{ courseInfo.courseName.length > 8 ? courseInfo.courseName.substring(0,8) + '...' : courseInfo.courseName }}</p>
+            <p>{{ courseInfo.courseIntro.length > 12 ? courseInfo.courseIntro.substring(0,12) + '...' : courseInfo.courseIntro }}</p>
             <p>讲师：{{ courseInfo.courseAuthor }}</p>
           </div>
         </div>
@@ -64,8 +65,7 @@
         </div>
         <div
           class="courseContent"
-          v-html="courseInfo.courseContent"
-          />
+          v-html="courseInfo.courseContent" />
         <div class="bottomBtn">
           <p>
             <mip-img
@@ -102,14 +102,12 @@
               <span>
                 <mip-img
                   src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565179654483down_arrow_gray.png"
-                  class="arrow"
                   v-show="showSection != index"
-                />
+                  class="arrow"/>
                 <mip-img
                   src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565179680740top_arrow_gray.png"
-                  class="arrow"
                   v-show="showSection == index"
-                />
+                  class="arrow"/>
               </span>
             </p>
             <ul
@@ -680,7 +678,7 @@
 </style>
 
 <script>
-import { setTimeout } from "timers";
+import { setTimeout } from 'timers'
 export default {
   props: {
     serverurl: {
@@ -712,7 +710,7 @@ export default {
   },
   mounted () {
     const that = this
-    setTimeout(function() {
+    setTimeout(function () {
       that.dialogShow = true
     }, 5000)
     window.addEventListener('scroll', this.onScroll)
@@ -728,11 +726,11 @@ export default {
       let scrollTop =
         document.documentElement.scrollTop ||
         document.body.scrollTop ||
-        window.pageYOffset;
+        window.pageYOffset
       // scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
       if (innerHeight <= outerHeight + scrollTop + 5) {
         // 加载更多操作
-        if (this.pageNo <= this.pageCount && this.isEnd == true) {
+        if (this.pageNo <= this.pageCount && this.isEnd === true) {
           this.isEnd = false
           const that = this
           that.getSectionList()
@@ -744,23 +742,23 @@ export default {
       this.postData(this.serverurl + '/api/pc/courseDetail', {
         courseId: this.courseid
       })
-        .then(function(data) {
+        .then(function (data) {
           that.courseInfo = data.result.course
         })
         .catch(error => console.error(error))
     },
     getSectionList () {
-      var that = this;
+      const that = this;
       this.postData(this.serverurl + '/api/pc/courseHandoutsDetail', {
         courseId: this.courseid,
         pageNo: this.pageNo,
         pageSize: this.pageSize
       })
-        .then(function(data) {
+        .then(function (data) {
           that.pageNo += 1
-          if (data.resultCode == 10000) {
+          if (data.resultCode === 10000) {
             if (data.result.courseHandoutsList != null) {
-              that.isEmpty = false;
+              that.isEmpty = false
               that.sectionList = that.sectionList.concat(
                 data.result.courseHandoutsList
               );
@@ -771,7 +769,7 @@ export default {
               that.pageCount = 0
             }
           }
-          if (data.resultCode == 1015) {
+          if (data.resultCode === 1015) {
             that.isEmpty = true
             that.sectionList = []
             that.pageCount = 0
@@ -797,7 +795,7 @@ export default {
     typeChoose (tag) {
       // 介绍、目录选择
       this.type = tag
-      if (tag == 2) {
+      if (tag === 2) {
         this.getSectionList()
       }
     },
@@ -808,7 +806,7 @@ export default {
       this.dialogShow = false
     },
     goSecitonDetail (item) {
-      //跳转章节详情
+      // 跳转章节详情
       if (item.tryType === 0) {
         return false
       }
@@ -827,5 +825,5 @@ export default {
       this.$router.go(0)
     }
   }
-};
+}
 </script>

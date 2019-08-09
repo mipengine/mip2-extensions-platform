@@ -37,7 +37,7 @@
         <mip-img
           src="/images/empty.png"
           class="emptyImg"
-          layout="fill"></mip-img>
+          layout="fill" />
       </p>
       <p>亲~目前还没有课程,去别的地方看看吧</p>
     </div>
@@ -188,7 +188,7 @@ export default {
       pageNo: 1,
       pageSize: 5,
       courseList: []
-    };
+    }
   },
   mounted () {
     this.firstCategoryId = this.categoryid
@@ -197,7 +197,7 @@ export default {
   },
   methods: {
     getCourseList () {
-      var that = this;
+      const that = this
       this.postData(this.serverurl + '/api/pc/courseList', {
         firstCategoryId: this.firstCategoryId,
         categoryId: this.categoryId,
@@ -206,9 +206,9 @@ export default {
         pageNo: this.pageNo,
         pageSize: this.pageSize
       })
-        .then(function(data) {
+        .then(function (data) {
           that.pageNo += 1;
-          if (data.resultCode == 10000) {
+          if (data.resultCode === 10000) {
             if (data.result.courseList != null) {
               that.courseList = that.courseList.concat(data.result.courseList)
               that.pageCount = data.result.page.pageCount
@@ -219,7 +219,7 @@ export default {
               that.pageCount = 0
             }
           }
-          if (data.resultCode == 1015) {
+          if (data.resultCode === 1015) {
             that.isEmpty = true
             that.courseList = []
             that.pageCount = 0
@@ -229,20 +229,20 @@ export default {
     },
     onScroll () {
       // 可滚动容器的高度
-      let innerHeight = document.querySelector('#scroll').clientHeight;
+      let innerHeight = document.querySelector('#scroll').clientHeight
       // 屏幕尺寸高度
-      let outerHeight = document.documentElement.clientHeight;
+      let outerHeight = document.documentElement.clientHeight
       // 可滚动容器超出当前窗口显示范围的高度
       let scrollTop =
         document.documentElement.scrollTop ||
         document.body.scrollTop ||
-        window.pageYOffset;
+        window.pageYOffset
       // scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
       if (innerHeight <= outerHeight + scrollTop + 5) {
         // 加载更多操作
-        if (this.pageNo <= this.pageCount && this.isEnd == true) {
+        if (this.pageNo <= this.pageCount && this.isEnd === true) {
           this.isEnd = false
-          var that = this
+          const that = this
           that.getCourseList()
         }
       }
@@ -268,5 +268,5 @@ export default {
         this.pageurl + '/course_detail.html?courseId=' + courseId
     }
   }
-};
+}
 </script>

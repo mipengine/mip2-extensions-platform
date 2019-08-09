@@ -1,8 +1,7 @@
 <template>
   <div
     id="scroll"
-    class="mianContent"
-    >
+    class="mianContent">
     <p class="title">今日精选</p>
     <ul v-show="!isEmpty">
       <li
@@ -147,7 +146,7 @@ export default {
       pageSize: 5,
       articlesList: [],
       pageCount: 0
-    };
+    }
   },
   mounted () {
     window.addEventListener('scroll', this.onScroll)
@@ -161,12 +160,12 @@ export default {
         pageSize: that.pageSize
       })
         .then(function(data) {
-          that.pageNo += 1;
-          if (data.resultCode == 10000) {
+          that.pageNo += 1
+          if (data.resultCode === 10000) {
             if (data.result.articlesList != null) {
               that.articlesList = that.articlesList.concat(
                 data.result.articlesList
-              );
+              )
               that.pageCount = data.result.page.pageCount
               that.isEmpty = false
             } else {
@@ -175,7 +174,7 @@ export default {
               that.pageCount = 0
             }
           }
-          if (data.resultCode == 1015) {
+          if (data.resultCode === 1015) {
             that.isEmpty = true
             that.articlesList = []
             that.pageCount = 0
@@ -196,7 +195,7 @@ export default {
       // scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
       if (innerHeight <= outerHeight + scrollTop + 5) {
         // 加载更多操作
-        if (this.pageNo <= this.pageCount && this.isEnd == true) {
+        if (this.pageNo <= this.pageCount && this.isEnd === true) {
           this.isEnd = false
           this.getChoicenessList()
         }
@@ -223,5 +222,5 @@ export default {
         this.pageurl + '/article.html?articleid=' + articleid
     }
   }
-};
+}
 </script>

@@ -22,9 +22,9 @@
       v-show="sectionInfo.courseHandoutsType == 2"
       class="vedioView">
       <mip-video
+        :src="sectionInfo.courseHandoutsHref"
         poster="https://www.mipengine.org/static/img/sample_04.jpg"
         controls
-        :src="sectionInfo.courseHandoutsHref"
         layout="responsive"
         width="750"
         height="360"
@@ -61,8 +61,7 @@
     </div>
     <div
       class="courseContent"
-      v-html=" sectionInfo.courseHandoutsContent"
-      />
+      v-html=" sectionInfo.courseHandoutsContent"/>
     <div
       class="catalogue">
       <div
@@ -685,18 +684,18 @@ export default {
       sectionList: '', // 章节列表
       courseList: '', // 看过的人还看了列表
       adList: '' // 广告列表
-    };
+    }
   },
   mounted () {
     this.getAudioInfo()
   },
   methods: {
     getAudioInfo () {
-      const that = this;
+      const that = this
       this.postData(this.serverurl + '/api/h5/audioDetail', {
         courseHandoutsId: this.section
       })
-        .then(function(data) {
+        .then(function (data) {
           that.courseInfo = data.result.course
           that.sectionInfo = data.result.courseHandouts
           that.sectionList = data.result.courseHandoutsList
@@ -718,7 +717,7 @@ export default {
         redirect: 'follow', // manual, *follow, error
         referrer: 'no-referrer', // no-referrer, *client
         body: JSON.stringify(data) // body data type must match "Content-Type" header
-      }).then(response => response.json()); // parses JSON response into native JavaScript objects
+      }).then(response => response.json()) // parses JSON response into native JavaScript objects
     },
     goCourseDetail (courseId) {
       window.location.href =
@@ -744,5 +743,5 @@ export default {
       this.$router.go(0)
     }
   }
-};
+}
 </script>
