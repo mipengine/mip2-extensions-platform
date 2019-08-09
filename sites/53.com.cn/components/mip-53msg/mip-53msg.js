@@ -2,9 +2,9 @@ import './index.less'
 export default class MIPExample extends MIP.CustomElement {
   build () {
     let nick = this.element.getAttribute('popContact')
-		let  tel = this.element.getAttribute('popTel')
-		let  con = this.element.getAttribute('popInfo')
-		let  but = this.element.getAttribute('popButton')
+		let tel = this.element.getAttribute('popTel')
+		let con = this.element.getAttribute('popInfo')
+		let but = this.element.getAttribute('popButton')
     let tid = this.element.getAttribute('projectId')
     let laveMsg = this.element.getAttribute('laveMsg')
     let vm = this
@@ -64,7 +64,7 @@ export default class MIPExample extends MIP.CustomElement {
             document.getElementById(laveMsg).innerHTML = '留言成功!'
           }
         }, function (error) {})
-        // let AJAXurl = `https://m.53.com.cn/common/mipwebdo.ashx?tid=${option.tid}&type=${option.type}&tel=${option.tel}&popInfo=${option.popInfo}&popContact=${option.popContact}` 
+        // let AJAXurl = `https://m.53.com.cn/common/mipwebdo.ashx?tid=${option.tid}&type=${option.type}&tel=${option.tel}&popInfo=${option.popInfo}&popContact=${option.popContact}`
         // let req = new Request(AJAXurl, {
         //   headers: new Headers({
         //     'Accept': 'application/json',
@@ -91,7 +91,7 @@ export default class MIPExample extends MIP.CustomElement {
   }
   GetIsTuiguang (pid, meinfo) {
     let Data = new Object()
-    let lsvalue = localStorage.getItem("IsTuiguang") 
+    let lsvalue = localStorage.getItem("IsTuiguang")
     if (lsvalue) {
       Data.Pid = 2944621
       Data.MeInfo = lsvalue
@@ -101,4 +101,4 @@ export default class MIPExample extends MIP.CustomElement {
     }
     return Data
   }
-} 
+}
