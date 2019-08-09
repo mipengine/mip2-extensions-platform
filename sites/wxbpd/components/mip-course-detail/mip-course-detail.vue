@@ -714,7 +714,7 @@ export default {
     const that = this
     setTimeout(function () {
       that.dialogShow = true
-      document.getElementsByClassName('adDialog')[0].style='height:' + document.documentElement.clientHeight + 'px'
+      document.getElementsByClassName('adDialog') [0].style = 'height: ' + document.documentElement.clientHeight + 'px'
     }, 5000)
     window.addEventListener('scroll', this.onScroll)
     this.getAudioInfo()

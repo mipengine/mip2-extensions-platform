@@ -9,7 +9,7 @@
         layout="responsive"
         width="750"
         height="360"
-        indicatorId="mip-carousel-example">
+        indicatorid="mip-carousel-example">
         <mip-img :src="adList[0].adImg" />
         <mip-img
           v-for="(item,index) in adList.slice(1,adList.length)"

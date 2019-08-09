@@ -62,32 +62,31 @@
     <ul class="btnList">
       <li>
         <mip-img
-        src="/images/multiple.png"
-        layout="responsive"
-        width="48"
-        height="38"
-        />
+          src="/images/multiple.png"
+          layout="responsive"
+          width="48"
+          height="38"/>
       </li>
       <li>
         <mip-img
-        src="/images/cloud.png"
-        layout="responsive"
-        width="42"
-        height="34"/>
+          src="/images/cloud.png"
+          layout="responsive"
+          width="42"
+          height="34"/>
       </li>
       <li>
         <mip-img
-        src="/images/prev.png"
-        layout="responsive"
-        width="41"
-        height="41"/>
+          src="/images/prev.png"
+          layout="responsive"
+          width="41"
+          height="41"/>
       </li>
       <li>
         <mip-img
-        src="/images/next.png"
-        layout="responsive"
-        width="41"
-        height="41"/>
+          src="/images/next.png"
+          layout="responsive"
+          width="41"
+          height="41"/>
       </li>
     </ul>
     <div class="bottomBtn changBtn">
@@ -111,9 +110,9 @@
           <mip-img
             src="/images/CD2.png"
             class="cdImg" />
-            <mip-img
-          src="/images/cd_point3.png"
-          class="cdPoint" />
+          <mip-img
+            src="/images/cd_point3.png"
+            class="cdPoint" />
         </div>
         <div class="centerContent">
           <p>{{ sectionInfo.courseHandoutsName.length > 7?sectionInfo.courseHandoutsName.substring(0,7) + '...' : sectionInfo.courseHandoutsName }}</p>
@@ -157,7 +156,7 @@
         layout="responsive"
         width="750"
         height="360"
-        indicatorId="mip-carousel-example">
+        indicatorid="mip-carousel-example">
         <mip-img :src="adList[0].adImg" />
         <mip-img
           v-for="(item,index) in adList.slice(1,adList.length)"
