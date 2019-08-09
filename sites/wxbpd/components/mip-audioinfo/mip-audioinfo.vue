@@ -120,9 +120,9 @@
       >
         <mip-img :src="adList[0].adImg" />
         <mip-img
-          :src="item.adImg"
           v-for="(item,index) in adList.slice(1,adList.length)"
           :key="index"
+          :src="item.adImg"
           :alt="item.adAlt"
           class="adImg"
           @click="goAdPage(item.adHref)"

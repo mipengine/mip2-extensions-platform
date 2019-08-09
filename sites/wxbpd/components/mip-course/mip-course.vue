@@ -207,7 +207,7 @@ export default {
         pageSize: this.pageSize
       })
         .then(function (data) {
-          that.pageNo += 1;
+          that.pageNo += 1
           if (data.resultCode === 10000) {
             if (data.result.courseList != null) {
               that.courseList = that.courseList.concat(data.result.courseList)

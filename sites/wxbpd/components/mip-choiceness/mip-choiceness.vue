@@ -159,7 +159,7 @@ export default {
         pageNo: that.pageNo,
         pageSize: that.pageSize
       })
-        .then(function(data) {
+        .then(function (data) {
           that.pageNo += 1
           if (data.resultCode === 10000) {
             if (data.result.articlesList != null) {

@@ -101,12 +101,12 @@
               <span>{{ item.courseHandoutsName }}</span>
               <span>
                 <mip-img
-                  src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565179654483down_arrow_gray.png"
                   v-show="showSection != index"
+                  src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565179654483down_arrow_gray.png"
                   class="arrow"/>
                 <mip-img
-                  src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565179680740top_arrow_gray.png"
                   v-show="showSection == index"
+                  src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565179680740top_arrow_gray.png"
                   class="arrow"/>
               </span>
             </p>
@@ -114,9 +114,9 @@
               v-show="showSection == index"
               class="small_section">
               <li
-                class="small_item"
                 v-for="(item,index) in item.courseHandoutsList"
-                :key="index">
+                :key="index"
+                class="small_item">
                 <p
                   :style="item.tryType == 0 ? 'color:#999' : ''"
                   @click="goSecitonDetail(item)">
@@ -135,9 +135,9 @@
           class="emptyContent">
           <p>
             <mip-img
-            src="/images/empty.png"
-            class="emptyImg"
-            layout="fill" />
+              src="/images/empty.png"
+              class="emptyImg"
+              layout="fill" />
           </p>
           <p>亲~目前还没有内容,去别的地方看看吧</p>
         </div>
@@ -706,7 +706,7 @@ export default {
       pageCount: 0,
       showSection: 0,
       dialogShow: false
-    };
+    }
   },
   mounted () {
     const that = this
@@ -748,7 +748,7 @@ export default {
         .catch(error => console.error(error))
     },
     getSectionList () {
-      const that = this;
+      const that = this
       this.postData(this.serverurl + '/api/pc/courseHandoutsDetail', {
         courseId: this.courseid,
         pageNo: this.pageNo,
@@ -761,7 +761,7 @@ export default {
               that.isEmpty = false
               that.sectionList = that.sectionList.concat(
                 data.result.courseHandoutsList
-              );
+              )
               that.pageCount = data.result.page.pageCount
             } else {
               that.isEmpty = true
