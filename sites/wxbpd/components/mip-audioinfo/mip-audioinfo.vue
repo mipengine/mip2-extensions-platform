@@ -652,7 +652,7 @@ export default {
       type: String,
       default: ''
     },
-    articleid: {
+    section: {
       type: String,
       default: ''
     }

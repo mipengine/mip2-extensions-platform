@@ -20,15 +20,10 @@
         ></mip-img>
       </mip-carousel>
       <div class="mip-carousel-indicator-wrapper">
-        <div
-        class="mip-carousel-indicatorDot"
-        id="mip-carousel-example">
-          <div
-          class="mip-carousel-activeitem mip-carousel-indecator-item"></div>
-          <div
-          class="mip-carousel-indecator-item"></div>
-          <div
-          class="mip-carousel-indecator-item"></div>
+        <div class="mip-carousel-indicatorDot" id="mip-carousel-example">
+          <div class="mip-carousel-activeitem mip-carousel-indecator-item"></div>
+          <div class="mip-carousel-indecator-item"></div>
+          <div class="mip-carousel-indecator-item"></div>
         </div>
       </div>
       <!-- <ul class="indicator_point">
@@ -66,13 +61,16 @@
               class="articleImg"
             />
           </span>
-          <span>{{item.articlesTitle}}</span>
+          <span>{{ item.articlesTitle }}</span>
         </li>
       </ul>
     </div>
-    <div class="course pagePadding" v-for="(item,index) in courseList" :key="index">
+    <div
+      class="course pagePadding"
+      v-for="(item,index) in courseList"
+      :key="index">
       <div class="title">
-        <p>{{item.categoryName}}</p>
+        <p>{{ item.categoryName }}</p>
         <p @click="seeMoreCourse">
           <span>查看更多</span>
           <mip-img
@@ -88,9 +86,7 @@
           @click="goCourseDetail(item.courseId)"
         >
           <div class="pic">
-            <mip-img :src="item.courseImgH5"
-            class="courseImg"
-            layout="fill"></mip-img>
+            <mip-img :src="item.courseImgH5" class="courseImg" layout="fill"></mip-img>
           </div>
           <div class="info">
             <p>{{ item.courseName.length > 5 ? item.courseName.substring(0,5) + '...' : item.courseName }}</p>
@@ -101,9 +97,7 @@
             <p>{{ item.handouts }}讲·{{ item.learnNums }}人已学习</p>
             <p>￥{{ item.showCoursePrice }}</p>
           </div>
-          <div
-          class="btn"
-          v-show="item.tagList.length > 0">
+          <div class="btn" v-show="item.tagList.length > 0">
             <span>{{ item.tagList.length > 0 ? item.tagList[0].tagName : '' }}</span>
           </div>
         </li>
@@ -399,6 +393,16 @@
 <script src="https://c.mipcdn.com/static/v1/mip.js"></script>
 <script>
 export default {
+   props: {
+    serverurl: {
+      type: String,
+      default: ''
+    },
+    pageurl: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
       categoryId: "",
@@ -409,7 +413,6 @@ export default {
       btnShow: false
     };
   },
-  props: ["serverurl", "pageurl"],
   mounted() {
     window.addEventListener("scroll", this.onScroll);
     var that = this;
@@ -424,22 +427,22 @@ export default {
       .catch(error => console.error(error));
   },
   methods: {
-    onScroll () {
-      //可滚动容器的高度
-      let innerHeight = document.querySelector("#scroll").clientHeight;
-      //屏幕尺寸高度
-      let outerHeight = document.documentElement.clientHeight;
-      //可滚动容器超出当前窗口显示范围的高度
+    onScroll() {
+      // 可滚动容器的高度
+      let innerHeight = document.querySelector("#scroll").clientHeight
+      // 屏幕尺寸高度
+      let outerHeight = document.documentElement.clientHeight
+      // 可滚动容器超出当前窗口显示范围的高度
       let scrollTop =
         document.documentElement.scrollTop ||
         document.body.scrollTop ||
         window.pageYOffset;
-      //scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
+      // scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
       if (scrollTop > innerHeight / 3) {
-        this.btnShow = true;
+        this.btnShow = true
       }
     },
-    postData (url, data) {
+    postData(url, data) {
       // Default options are marked with *
       return fetch(url, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -453,27 +456,27 @@ export default {
         redirect: "follow", // manual, *follow, error
         referrer: "no-referrer", // no-referrer, *client
         body: JSON.stringify(data) // body data type must match "Content-Type" header
-      }).then(response => response.json()); // parses JSON response into native JavaScript objects
+      }).then(response => response.json()) // parses JSON response into native JavaScript objects
     },
-    goAdPage (url) {
-      window.location.href = url;
+    goAdPage(url) {
+      window.location.href = url
     },
-    seeMoreArticle () {
-      window.location.href = this.pageurl + "/choiceness.html";
+    seeMoreArticle() {
+      window.location.href = this.pageurl + "/choiceness.html"
     },
-    goArticleDetail (articleId) {
+    goArticleDetail(articleId) {
       window.location.href =
-        this.pageurl + "/article.html?articleId=" + articleId;
+        this.pageurl + "/article.html?articleId=" + articleId
     },
-    seeMoreCourse () {
+    seeMoreCourse() {
       window.location.href =
-        this.pageurl + "/course.html?categoryId=" + this.categoryId;
+        this.pageurl + "/course.html?categoryId=" + this.categoryId
     },
-    goCourseDetail (courseId) {
+    goCourseDetail(courseId) {
       window.location.href =
-        this.pageurl + "/course_detail.html?courseId=" + courseId;
+        this.pageurl + "/course_detail.html?courseId=" + courseId
     },
-    typeChoose (id) {
+    typeChoose(id) {
       this.categoryId = id;
       var that = this;
       this.postData(this.serverurl + "/api/h5/getIndexCourse", {
@@ -481,13 +484,13 @@ export default {
       })
         .then(function(data) {
           if (data.resultCode == 10000) {
-            that.courseList = data.result.courseList;
+            that.courseList = data.result.courseList
           }
           if (data.resultCode == 1015) {
-            that.courseList = [];
+            that.courseList = []
           }
         })
-        .catch(error => console.error(error));
+        .catch(error => console.error(error))
     }
   }
 };

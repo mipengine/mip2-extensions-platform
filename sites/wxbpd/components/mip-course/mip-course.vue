@@ -4,25 +4,35 @@
     <ul v-show="!isEmpty">
       <li v-for="(item,index) in courseList" :key="index" @click="goCourseDetail(item.courseId)">
         <div class="pic">
-          <mip-img :src="item.courseImgH5" class="courseImg" layout="fill"></mip-img>
+          <mip-img
+            :src="item.courseImgH5"
+            class="courseImg"
+            layout="fill" />
         </div>
         <div class="info">
-            <p>{{item.courseName.length > 5?item.courseName.substring(0,5) + '...' : item.courseName}}</p>
-            <p>
-              <span>{{item.courseAuthor.length > 3?item.courseAuthor.substring(0,3) + '...' : item.courseAuthor}}</span>
-              <span>{{item.courseAuthorIntro.length > 5?item.courseAuthorIntro.substring(0,5) + '...' : item.courseAuthorIntro}}</span>
-            </p>
-            <p>{{item.handouts}}讲·{{item.learnNums}}人已学习</p>
-            <p>￥{{item.showCoursePrice}}</p>
-          </div>
-        <div class="btn" v-show="item.tagList.length > 0">
-          <span>{{item.tagList.length > 0?item.tagList[0].tagName : ''}}</span>
+          <p>{{ item.courseName.length > 5 ? item.courseName.substring(0,5) + '...' : item.courseName }}</p>
+          <p>
+            <span>{{ item.courseAuthor.length > 3 ? item.courseAuthor.substring(0,3) + '...' : item.courseAuthor }}</span>
+            <span>{{ item.courseAuthorIntro.length > 5 ? item.courseAuthorIntro.substring(0,5) + '...' : item.courseAuthorIntro }}</span>
+          </p>
+          <p>{{ item.handouts }}讲·{{ item.learnNums }}人已学习</p>
+          <p>￥{{ item.showCoursePrice }}</p>
+        </div>
+        <div
+          v-show="item.tagList.length > 0"
+          class="btn">
+          <span>{{ item.tagList.length > 0 ? item.tagList[0].tagName : '' }}</span>
         </div>
       </li>
     </ul>
-    <div class="emptyContent" v-show="isEmpty">
+    <div
+      v-show="isEmpty"
+      class="emptyContent">
       <p>
-        <mip-img src="/images/empty.png" class="emptyImg" layout="fill"></mip-img>
+        <mip-img
+          src="/images/empty.png"
+          class="emptyImg"
+          layout="fill"></mip-img>
       </p>
       <p>亲~目前还没有课程,去别的地方看看吧</p>
     </div>
@@ -127,96 +137,112 @@
   border: 1px solid #b4a065;
   width: 100%;
 }
-.emptyContent{
+.emptyContent {
   text-align: center;
-  padding-top:15px;
+  padding-top: 15px;
 }
-.emptyContent p:nth-child(1){
+.emptyContent p:nth-child(1) {
   display: inline-block;
-  width:76px;
-  height:114px;
+  width: 76px;
+  height: 114px;
   position: relative;
 }
-.emptyContent .emptyImg{
-  width:76px;
-  height:114px;
+.emptyContent .emptyImg {
+  width: 76px;
+  height: 114px;
 }
-.emptyContent p:nth-child(2){
-  color:#BBBBBB;
-  font-size:1.1rem;
-  padding:.5rem 0;
+.emptyContent p:nth-child(2) {
+  color: #bbbbbb;
+  font-size: 1.1rem;
+  padding: 0.5rem 0;
 }
 </style>
 
 <script>
 export default {
+  props: {
+    serverurl: {
+      type: String,
+      default: ''
+    },
+    pageurl: {
+      type: String,
+      default: ''
+    },
+    categoryid: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
-      isEmpty:false,
-      isEnd:true,
-      firstCategoryId:0,
-      categoryId:0,
-      pageNo:1,
-      pageSize:5,
-      courseList:[]
+      isEmpty: false,
+      isEnd: true,
+      firstCategoryId: 0,
+      categoryId: 0,
+      pageNo: 1,
+      pageSize: 5,
+      courseList: []
     };
   },
-  props:['serverurl','pageurl','categoryid'],
   mounted() {
-    this.firstCategoryId = this.categoryid;
-    window.addEventListener('scroll', this.onScroll);
-    this.getCourseList();
+    this.firstCategoryId = this.categoryid
+    window.addEventListener("scroll", this.onScroll)
+    this.getCourseList()
   },
   methods: {
-    getCourseList(){
+    getCourseList () {
       var that = this;
       this.postData(this.serverurl + "/api/pc/courseList", {
-        firstCategoryId:this.firstCategoryId,
-        categoryId:this.categoryId,
-        coursePriceType:0,
-        newsType:0,
-        pageNo:this.pageNo,
-        pageSize:this.pageSize
+        firstCategoryId: this.firstCategoryId,
+        categoryId: this.categoryId,
+        coursePriceType: 0,
+        newsType: 0,
+        pageNo: this.pageNo,
+        pageSize: this.pageSize
       })
-      .then(function(data) {
-        that.pageNo += 1;
-        if (data.resultCode == 10000) {
-          if(data.result.courseList != null){
-            that.courseList = that.courseList.concat(data.result.courseList);
-            that.pageCount = data.result.page.pageCount;
-            that.isEmpty = false;
-          }else{
-            that.isEmpty = true;
-            that.courseList = [];
-            that.pageCount = 0;
+        .then(function(data) {
+          that.pageNo += 1;
+          if (data.resultCode == 10000) {
+            if (data.result.courseList != null) {
+              that.courseList = that.courseList.concat(data.result.courseList)
+              that.pageCount = data.result.page.pageCount
+              that.isEmpty = false
+            } else {
+              that.isEmpty = true
+              that.courseList = []
+              that.pageCount = 0
+            }
           }
-        }
-        if(data.resultCode == 1015){
-          that.isEmpty = true;
-          that.courseList = [];
-          that.pageCount = 0;
-        }
-      })
-      .catch(error => console.error(error));
+          if (data.resultCode == 1015) {
+            that.isEmpty = true
+            that.courseList = []
+            that.pageCount = 0
+          }
+        })
+        .catch(error => console.error(error))
     },
-    onScroll() {
-      //可滚动容器的高度
-      let innerHeight = document.querySelector('#scroll').clientHeight;
-      //屏幕尺寸高度
+    onScroll () {
+      // 可滚动容器的高度
+      let innerHeight = document.querySelector("#scroll").clientHeight;
+      // 屏幕尺寸高度
       let outerHeight = document.documentElement.clientHeight;
-      //可滚动容器超出当前窗口显示范围的高度
-      let scrollTop = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;
-      //scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
-      if (innerHeight <= (outerHeight + scrollTop + 5)) {
-        //加载更多操作
-        if(this.pageNo <= this.pageCount && this.isEnd == true){
-          this.isEnd = false;
-          var that = this;
-          that.getCourseList();
+      // 可滚动容器超出当前窗口显示范围的高度
+      let scrollTop =
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        window.pageYOffset;
+      // scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
+      if (innerHeight <= outerHeight + scrollTop + 5) {
+        // 加载更多操作
+        if (this.pageNo <= this.pageCount && this.isEnd == true) {
+          this.isEnd = false
+          var that = this
+          that.getCourseList()
         }
       }
     },
-    postData(url, data) {
+    postData (url, data) {
       // Default options are marked with *
       return fetch(url, {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
@@ -230,10 +256,11 @@ export default {
         redirect: "follow", // manual, *follow, error
         referrer: "no-referrer", // no-referrer, *client
         body: JSON.stringify(data) // body data type must match "Content-Type" header
-      }).then(response => response.json()); // parses JSON response into native JavaScript objects
+      }).then(response => response.json()) // parses JSON response into native JavaScript objects
     },
-    goCourseDetail(courseId){
-      window.location.href = this.pageurl + "/course_detail.html?courseId=" + courseId;
+    goCourseDetail (courseId) {
+      window.location.href =
+        this.pageurl + "/course_detail.html?courseId=" + courseId
     }
   }
 };

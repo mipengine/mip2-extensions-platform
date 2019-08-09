@@ -1,25 +1,36 @@
 <template>
   <div class="mainContent" id="scroll" :style="dialogShow == true?'overflow:hidden' : ''">
     <div class="headPart">
-      <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178872154course_bg.png" class="bg_img"></mip-img>
+      <mip-img
+        src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178872154course_bg.png"
+        class="bg_img"
+      ></mip-img>
       <div class="courseInfo">
         <div class="intorduce">
           <div class="leftContent">
             <p>
-              <mip-img :src="courseInfo.courseImgH5" class="courseImg" layout="fixed-height" height="112px"></mip-img>
+              <mip-img
+                :src="courseInfo.courseImgH5"
+                class="courseImg"
+                layout="fixed-height"
+                height="112px"
+              ></mip-img>
             </p>
-            <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178930241CD2.png" class="cdImg"></mip-img>
+            <mip-img
+              src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178930241CD2.png"
+              class="cdImg"
+            ></mip-img>
             <mip-img src="/images/cd_point.png" class="cdPoint"></mip-img>
           </div>
           <div class="rightContent">
-            <p>{{courseInfo.courseName.length > 8?courseInfo.courseName.substring(0,8) + '...' : courseInfo.courseName}}</p>
-            <p>{{courseInfo.courseIntro.length > 12?courseInfo.courseIntro.substring(0,12) + '...' : courseInfo.courseIntro}}</p>
+            <p>{{ courseInfo.courseName.length > 8 ? courseInfo.courseName.substring(0,8) + '...' : courseInfo.courseName}}</p>
+            <p>{{ courseInfo.courseIntro.length > 12 ? courseInfo.courseIntro.substring(0,12) + '...' : courseInfo.courseIntro}}</p>
             <p>讲师：{{courseInfo.courseAuthor}}</p>
           </div>
         </div>
         <div class="time">
-          <p>{{courseInfo.learnNums}}人已学习 · {{courseInfo.courseUpdate}}</p>
-          <p>共{{courseInfo.handouts}}讲</p>
+          <p>{{ courseInfo.learnNums }}人已学习 · {{ courseInfo.courseUpdate }}</p>
+          <p>共{{ courseInfo.handouts }}讲</p>
         </div>
       </div>
     </div>
@@ -31,36 +42,62 @@
       <div class="introduce" v-show="type == 1">
         <div class="author">
           <p class="pic">
-            <mip-img :src="courseInfo.courseImgH5" layout="fill" class="leftImg"></mip-img>
+            <mip-img
+              :src="courseInfo.courseImgH5"
+              layout="fill"
+              class="leftImg"></mip-img>
           </p>
           <div class="rightContent">
-            <p>{{courseInfo.courseAuthor.length > 8?courseInfo.courseAuthor.substring(0,8) + '...' : courseInfo.courseAuthor}}</p>
-            <p>{{courseInfo.courseAuthorIntro.length > 15?courseInfo.courseAuthorIntro.substring(0,15) + '...' : courseInfo.courseAuthorIntro}}</p>
+            <p>{{ courseInfo.courseAuthor.length > 8 ? courseInfo.courseAuthor.substring(0,8) + '...' : courseInfo.courseAuthor }}</p>
+            <p>{{ courseInfo.courseAuthorIntro.length > 15 ? courseInfo.courseAuthorIntro.substring(0,15) + '...' : courseInfo.courseAuthorIntro }}</p>
           </div>
         </div>
-        <div v-html="courseInfo.courseContent" class="courseContent"></div>
+        <div
+          v-html="courseInfo.courseContent"
+          class="courseContent"></div>
         <div class="bottomBtn">
           <p>
-            <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565179205620btn_bg3.png" class="btnBg"></mip-img>
+            <mip-img
+              src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565179205620btn_bg3.png"
+              class="btnBg"
+            />
             <span>免费试听</span>
           </p>
           <p>
-            <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178054305btn_bg2.png" class="btnBg"></mip-img>
+            <mip-img
+              src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178054305btn_bg2.png"
+              class="btnBg"
+            />
             <span>立即购买</span>
           </p>
         </div>
       </div>
       <div class="catalogue" v-show="type == 2">
         <ul class="big_section" v-show="!isEmpty">
-          <li class="big_item" v-for="(item,index) in sectionList" :key="index" :style="showSection == index?'border-bottom:0' : ''">
+          <li
+            class="big_item"
+            v-for="(item,index) in sectionList"
+            :key="index"
+            :style="showSection == index?'border-bottom:0' : ''"
+          >
             <p class="big_title" @click="chooseSection(index)">
               <span>{{item.courseHandoutsName}}</span>
               <span>
-                <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565179654483down_arrow_gray.png" class="arrow" v-show="showSection != index"></mip-img>
-                <mip-img src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565179680740top_arrow_gray.png" class="arrow" v-show="showSection == index"></mip-img>
+                <mip-img
+                  src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565179654483down_arrow_gray.png"
+                  class="arrow"
+                  v-show="showSection != index"
+                />
+                <mip-img
+                  src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565179680740top_arrow_gray.png"
+                  class="arrow"
+                  v-show="showSection == index"
+                />
               </span>
             </p>
-            <ul class="small_section" v-show="showSection == index">
+            <ul
+              v-show="showSection == index"
+              class="small_section">
               <li class="small_item" v-for="(item,index) in item.courseHandoutsList" :key="index">
                 <p :style="item.tryType == 0?'color:#999' : ''" @click="goSecitonDetail(item)">
                   <span>{{item.courseHandoutsName}}</span>
@@ -75,7 +112,10 @@
         </ul>
         <div class="emptyContent" v-show="isEmpty">
           <p>
-            <mip-img src="/images/empty.png" class="emptyImg" layout="fill"></mip-img>
+            <mip-img
+            src="/images/empty.png"
+            class="emptyImg"
+            layout="fill" />
           </p>
           <p>亲~目前还没有内容,去别的地方看看吧</p>
         </div>
@@ -84,31 +124,40 @@
         </div>
       </div>
     </div>
-    <div class="adDialog" v-show="dialogShow">
+    <div
+      v-show="dialogShow"
+      class="adDialog">
       <div class="modalView">
         <div class="headImg">
-          <mip-img :src="courseInfo.courseImgH5" class="pic" layout="responsive" width="600" height="348"></mip-img>
+          <mip-img
+            :src="courseInfo.courseImgH5"
+            class="pic"
+            layout="responsive"
+            width="600"
+            height="348"
+          />
         </div>
         <div class="content">
           <p>2亿人都在用的财富学识APP赶快体验吧！</p>
           <p>
-            <mip-img src="/images/btn_bg2.png" class="btnBg"></mip-img>
+            <mip-img
+              src="/images/btn_bg2.png"
+              class="btnBg"></mip-img>
             <span>立即打开</span>
           </p>
         </div>
         <mip-img
           src="/images/close_white.png"
           class="btn"
-          @click="closeDialog"
-        ></mip-img>
+          @click="closeDialog"></mip-img>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
-.mainContent{
-  height:100%;
+.mainContent {
+  height: 100%;
 }
 .mainContent .headPart {
   position: relative;
@@ -150,10 +199,10 @@
   position: absolute;
   border-radius: 5px;
   z-index: 10;
-  width:154px;
-  top:0;
-  left:50%;
-  transform:translateX(-50%);
+  width: 154px;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 .mainContent .headPart .courseInfo .intorduce .leftContent .cdImg {
@@ -164,12 +213,12 @@
   z-index: 0;
   left: 2.6rem;
 }
-.mainContent .headPart .courseInfo .intorduce .leftContent .cdPoint{
+.mainContent .headPart .courseInfo .intorduce .leftContent .cdPoint {
   position: absolute;
   width: 2rem;
-  height:2rem;
-  top:37%;
-  left:63%;
+  height: 2rem;
+  top: 37%;
+  left: 63%;
   z-index: 60;
 }
 .mainContent .headPart .courseInfo .intorduce .rightContent {
@@ -272,7 +321,7 @@
   display: flex;
   align-items: center;
 }
-.mainContent .bodyPart .introduce .author .pic{
+.mainContent .bodyPart .introduce .author .pic {
   width: 6rem;
   height: 6rem;
   border-radius: 50%;
@@ -306,9 +355,9 @@
   line-height: 1.8rem;
   text-align: left;
 }
-.mainContent .bodyPart .introduce .courseContent{
-  background:#fff;
-  padding:20px 1.5rem;
+.mainContent .bodyPart .introduce .courseContent {
+  background: #fff;
+  padding: 20px 1.5rem;
 }
 .mainContent .bodyPart .introduce .bottomBtn {
   background: #fff;
@@ -353,14 +402,14 @@
 .mainContent .bodyPart .catalogue .big_section .big_item {
   padding-right: 1.5rem;
   border-bottom: 1px solid #eeeeee;
-  margin-bottom:1rem;
+  margin-bottom: 1rem;
 }
 
 .mainContent .bodyPart .catalogue .big_section .big_item .big_title {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-bottom:1rem;
+  padding-bottom: 1rem;
 }
 
 .mainContent
@@ -384,8 +433,8 @@
   .big_title
   span:nth-child(2)
   .arrow {
-  width:16px;
-  height:8px;
+  width: 16px;
+  height: 8px;
 }
 .mainContent
   .bodyPart
@@ -397,7 +446,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: .5rem 0 .5rem 0;
+  padding: 0.5rem 0 0.5rem 0;
 }
 
 .mainContent
@@ -412,7 +461,7 @@
   display: flex;
   width: 82%;
   position: relative;
-  min-height:28px;
+  min-height: 28px;
 }
 
 .mainContent
@@ -535,7 +584,7 @@
   position: relative;
   text-align: center;
 }
-.mainContent .adDialog .modalView .headImg p{
+.mainContent .adDialog .modalView .headImg p {
   position: relative;
   display: inline-block;
 }
@@ -544,8 +593,8 @@
   display: inline-block;
   border-radius: 5px;
 }
-.mainContent .adDialog .modalView .content{
-  padding-bottom:15px;
+.mainContent .adDialog .modalView .content {
+  padding-bottom: 15px;
 }
 .mainContent .adDialog .modalView .content p:nth-child(1) {
   color: #333;
@@ -585,65 +634,81 @@
   width: 40px;
   height: 40px;
 }
-.emptyContent{
+.emptyContent {
   text-align: center;
-  padding-top:15px;
+  padding-top: 15px;
 }
-.emptyContent p:nth-child(1){
+.emptyContent p:nth-child(1) {
   display: inline-block;
-  width:76px;
-  height:114px;
+  width: 76px;
+  height: 114px;
   position: relative;
 }
-.emptyContent .emptyImg{
-  width:76px;
-  height:114px;
+.emptyContent .emptyImg {
+  width: 76px;
+  height: 114px;
 }
-.emptyContent p:nth-child(2){
-  color:#BBBBBB;
-  font-size:1.1rem;
-  padding:.5rem 0;
+.emptyContent p:nth-child(2) {
+  color: #bbbbbb;
+  font-size: 1.1rem;
+  padding: 0.5rem 0;
 }
 </style>
 
 <script>
-import { setTimeout } from 'timers';
+import { setTimeout } from "timers";
 export default {
+  props: {
+    serverurl: {
+      type: String,
+      default: ''
+    },
+    pageurl: {
+      type: String,
+      default: ''
+    },
+    courseid: {
+      type: String,
+      default: ''
+    }
+  },
   data() {
     return {
-      isEmpty:false,
-      isEnd:true,
-      courseInfo:'',
-      type:1,
-      pageNo:1,
-      pageSize:10,
-      sectionList:[],
-      pageCount:0,
-      showSection:0,
-      dialogShow:false
+      isEmpty: false,
+      isEnd: true,
+      courseInfo: "",
+      type: 1,
+      pageNo: 1,
+      pageSize: 10,
+      sectionList: [],
+      pageCount: 0,
+      showSection: 0,
+      dialogShow: false
     };
   },
-  props:['serverurl','pageurl','courseid'],
   mounted() {
     var that = this;
-    setTimeout(function(){
+    setTimeout(function() {
       that.dialogShow = true;
-    },5000)
-    window.addEventListener('scroll', this.onScroll);
+    }, 5000);
+    window.addEventListener("scroll", this.onScroll);
     this.getAudioInfo();
   },
   methods: {
     onScroll() {
       //可滚动容器的高度
-      let innerHeight = document.querySelector('#scroll').clientHeight;
+      let innerHeight = document.querySelector("#scroll").clientHeight;
       //屏幕尺寸高度
       let outerHeight = document.documentElement.clientHeight;
       //可滚动容器超出当前窗口显示范围的高度
-      let scrollTop = document.documentElement.scrollTop || document.body.scrollTop || window.pageYOffset;
+      let scrollTop =
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        window.pageYOffset;
       //scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
-      if (innerHeight <= (outerHeight + scrollTop + 5)) {
+      if (innerHeight <= outerHeight + scrollTop + 5) {
         //加载更多操作
-        if(this.pageNo <= this.pageCount && this.isEnd == true){
+        if (this.pageNo <= this.pageCount && this.isEnd == true) {
           this.isEnd = false;
           var that = this;
           that.getSectionList();
@@ -655,38 +720,40 @@ export default {
       this.postData(this.serverurl + "/api/pc/courseDetail", {
         courseId: this.courseid
       })
-      .then(function(data) {
-        that.courseInfo = data.result.course;
-      })
-      .catch(error => console.error(error));
+        .then(function(data) {
+          that.courseInfo = data.result.course;
+        })
+        .catch(error => console.error(error));
     },
-    getSectionList(){
+    getSectionList() {
       var that = this;
       this.postData(this.serverurl + "/api/pc/courseHandoutsDetail", {
         courseId: this.courseid,
-        pageNo:this.pageNo,
-        pageSize:this.pageSize
+        pageNo: this.pageNo,
+        pageSize: this.pageSize
       })
-      .then(function(data) {
-        that.pageNo += 1;
-        if (data.resultCode == 10000) {
-          if(data.result.courseHandoutsList != null){
-            that.isEmpty = false;
-            that.sectionList = that.sectionList.concat(data.result.courseHandoutsList);
-            that.pageCount = data.result.page.pageCount;
-          }else{
+        .then(function(data) {
+          that.pageNo += 1;
+          if (data.resultCode == 10000) {
+            if (data.result.courseHandoutsList != null) {
+              that.isEmpty = false;
+              that.sectionList = that.sectionList.concat(
+                data.result.courseHandoutsList
+              );
+              that.pageCount = data.result.page.pageCount;
+            } else {
+              that.isEmpty = true;
+              that.sectionList = [];
+              that.pageCount = 0;
+            }
+          }
+          if (data.resultCode == 1015) {
             that.isEmpty = true;
             that.sectionList = [];
             that.pageCount = 0;
           }
-        }
-        if(data.resultCode == 1015){
-          that.isEmpty = true;
-          that.sectionList = [];
-          that.pageCount = 0;
-        }
-      })
-      .catch(error => console.error(error));
+        })
+        .catch(error => console.error(error));
     },
     postData(url, data) {
       return fetch(url, {
@@ -703,33 +770,37 @@ export default {
         body: JSON.stringify(data) // body data type must match "Content-Type" header
       }).then(response => response.json()); // parses JSON response into native JavaScript objects
     },
-    typeChoose(tag) {
+    typeChoose (tag) {
       //介绍、目录选择
       this.type = tag;
       if (tag == 2) {
         this.getSectionList();
       }
     },
-    chooseSection(index){
+    chooseSection (index) {
       this.showSection = index;
     },
-    closeDialog(){
-      this.dialogShow = false;
+    closeDialog () {
+      this.dialogShow = false
     },
-    goSecitonDetail(item){ //跳转章节详情
-      if(item.tryType == 0){
+    goSecitonDetail (item) {
+      //跳转章节详情
+      if (item.tryType == 0) {
         return false
       }
-      if(item.courseHandoutsType == 1){
-        window.location.href = this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId;
+      if (item.courseHandoutsType == 1) {
+        window.location.href =
+          this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId
       }
-      if(item.courseHandoutsType == 2){
-        window.location.href = this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId;
+      if (item.courseHandoutsType == 2) {
+        window.location.href =
+          this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId
       }
-      if(item.courseHandoutsType == 3){
-        window.location.href = this.pageurl + "/course_detail.html?courseId=" + item.courseId;
+      if (item.courseHandoutsType == 3) {
+        window.location.href =
+          this.pageurl + "/course_detail.html?courseId=" + item.courseId
       }
-      this.$router.go(0);
+      this.$router.go(0)
     }
   }
 };

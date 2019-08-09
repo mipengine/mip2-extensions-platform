@@ -127,9 +127,14 @@
 <script>
 export default {
   props: {
-    serverurl:String,
-    pageurl:String,
-    articleid:String
+    serverurl: {
+      type: String,
+      default: ''
+    },
+    pageurl: {
+      type: String,
+      default: ''
+    }
   },
   data () {
     return {
