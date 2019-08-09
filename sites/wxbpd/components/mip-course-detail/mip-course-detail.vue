@@ -4,7 +4,7 @@
       <mip-img
         src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178872154course_bg.png"
         class="bg_img"
-      ></mip-img>
+      />
       <div class="courseInfo">
         <div class="intorduce">
           <div class="leftContent">
@@ -14,18 +14,18 @@
                 class="courseImg"
                 layout="fixed-height"
                 height="112px"
-              ></mip-img>
+              />
             </p>
             <mip-img
               src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178930241CD2.png"
               class="cdImg"
-            ></mip-img>
-            <mip-img src="/images/cd_point.png" class="cdPoint"></mip-img>
+            />
+            <mip-img src="/images/cd_point.png" class="cdPoint" />
           </div>
           <div class="rightContent">
             <p>{{ courseInfo.courseName.length > 8 ? courseInfo.courseName.substring(0,8) + '...' : courseInfo.courseName}}</p>
             <p>{{ courseInfo.courseIntro.length > 12 ? courseInfo.courseIntro.substring(0,12) + '...' : courseInfo.courseIntro}}</p>
-            <p>讲师：{{courseInfo.courseAuthor}}</p>
+            <p>讲师：{{ courseInfo.courseAuthor }}</p>
           </div>
         </div>
         <div class="time">
@@ -36,16 +36,22 @@
     </div>
     <div class="bodyPart">
       <p class="typeChoose">
-        <span :class="type == 1?'active' : ''" @click="typeChoose(1)">课程介绍</span>
-        <span :class="type == 2?'active' : ''" @click="typeChoose(2)">课程目录</span>
+        <span
+          :class="type == 1?'active' : ''"
+          @click="typeChoose(1)">课程介绍</span>
+        <span
+          :class="type == 2?'active' : ''"
+          @click="typeChoose(2)">课程目录</span>
       </p>
-      <div class="introduce" v-show="type == 1">
+      <div
+        v-show="type == 1"
+        class="introduce">
         <div class="author">
           <p class="pic">
             <mip-img
               :src="courseInfo.courseImgH5"
               layout="fill"
-              class="leftImg"></mip-img>
+              class="leftImg" />
           </p>
           <div class="rightContent">
             <p>{{ courseInfo.courseAuthor.length > 8 ? courseInfo.courseAuthor.substring(0,8) + '...' : courseInfo.courseAuthor }}</p>
@@ -81,7 +87,7 @@
             :style="showSection == index?'border-bottom:0' : ''"
           >
             <p class="big_title" @click="chooseSection(index)">
-              <span>{{item.courseHandoutsName}}</span>
+              <span>{{ item.courseHandoutsName }}</span>
               <span>
                 <mip-img
                   src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565179654483down_arrow_gray.png"
@@ -98,7 +104,10 @@
             <ul
               v-show="showSection == index"
               class="small_section">
-              <li class="small_item" v-for="(item,index) in item.courseHandoutsList" :key="index">
+              <li
+                class="small_item"
+                v-for="(item,index) in item.courseHandoutsList"
+                :key="index">
                 <p :style="item.tryType == 0?'color:#999' : ''" @click="goSecitonDetail(item)">
                   <span>{{item.courseHandoutsName}}</span>
                   <span>{{item.courseHandoursContent}}</span>
@@ -110,7 +119,9 @@
             </ul>
           </li>
         </ul>
-        <div class="emptyContent" v-show="isEmpty">
+        <div
+          v-show="isEmpty"
+          class="emptyContent">
           <p>
             <mip-img
             src="/images/empty.png"
@@ -142,14 +153,14 @@
           <p>
             <mip-img
               src="/images/btn_bg2.png"
-              class="btnBg"></mip-img>
+              class="btnBg" />
             <span>立即打开</span>
           </p>
         </div>
         <mip-img
           src="/images/close_white.png"
           class="btn"
-          @click="closeDialog"></mip-img>
+          @click="closeDialog" />
       </div>
     </div>
   </div>
@@ -672,11 +683,11 @@ export default {
       default: ''
     }
   },
-  data() {
+  data () {
     return {
       isEmpty: false,
       isEnd: true,
-      courseInfo: "",
+      courseInfo: '',
       type: 1,
       pageNo: 1,
       pageSize: 10,
@@ -686,99 +697,99 @@ export default {
       dialogShow: false
     };
   },
-  mounted() {
-    var that = this;
+  mounted () {
+    const that = this
     setTimeout(function() {
-      that.dialogShow = true;
+      that.dialogShow = true
     }, 5000);
-    window.addEventListener("scroll", this.onScroll);
-    this.getAudioInfo();
+    window.addEventListener('scroll', this.onScroll)
+    this.getAudioInfo()
   },
   methods: {
-    onScroll() {
-      //可滚动容器的高度
-      let innerHeight = document.querySelector("#scroll").clientHeight;
-      //屏幕尺寸高度
-      let outerHeight = document.documentElement.clientHeight;
-      //可滚动容器超出当前窗口显示范围的高度
+    onScroll () {
+      // 可滚动容器的高度
+      let innerHeight = document.querySelector('#scroll').clientHeight
+      // 屏幕尺寸高度
+      let outerHeight = document.documentElement.clientHeight
+      // 可滚动容器超出当前窗口显示范围的高度
       let scrollTop =
         document.documentElement.scrollTop ||
         document.body.scrollTop ||
         window.pageYOffset;
-      //scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
+      // scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
       if (innerHeight <= outerHeight + scrollTop + 5) {
-        //加载更多操作
+        // 加载更多操作
         if (this.pageNo <= this.pageCount && this.isEnd == true) {
-          this.isEnd = false;
-          var that = this;
-          that.getSectionList();
+          this.isEnd = false
+          const that = this
+          that.getSectionList()
         }
       }
     },
-    getAudioInfo() {
-      var that = this;
-      this.postData(this.serverurl + "/api/pc/courseDetail", {
+    getAudioInfo () {
+      const that = this
+      this.postData(this.serverurl + '/api/pc/courseDetail', {
         courseId: this.courseid
       })
         .then(function(data) {
-          that.courseInfo = data.result.course;
+          that.courseInfo = data.result.course
         })
-        .catch(error => console.error(error));
+        .catch(error => console.error(error))
     },
-    getSectionList() {
+    getSectionList () {
       var that = this;
-      this.postData(this.serverurl + "/api/pc/courseHandoutsDetail", {
+      this.postData(this.serverurl + '/api/pc/courseHandoutsDetail', {
         courseId: this.courseid,
         pageNo: this.pageNo,
         pageSize: this.pageSize
       })
         .then(function(data) {
-          that.pageNo += 1;
+          that.pageNo += 1
           if (data.resultCode == 10000) {
             if (data.result.courseHandoutsList != null) {
               that.isEmpty = false;
               that.sectionList = that.sectionList.concat(
                 data.result.courseHandoutsList
               );
-              that.pageCount = data.result.page.pageCount;
+              that.pageCount = data.result.page.pageCount
             } else {
-              that.isEmpty = true;
-              that.sectionList = [];
-              that.pageCount = 0;
+              that.isEmpty = true
+              that.sectionList = []
+              that.pageCount = 0
             }
           }
           if (data.resultCode == 1015) {
-            that.isEmpty = true;
-            that.sectionList = [];
-            that.pageCount = 0;
+            that.isEmpty = true
+            that.sectionList = []
+            that.pageCount = 0
           }
         })
-        .catch(error => console.error(error));
+        .catch(error => console.error(error))
     },
-    postData(url, data) {
+    postData (url, data) {
       return fetch(url, {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, cors, *same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, cors, *same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        redirect: "follow", // manual, *follow, error
-        referrer: "no-referrer", // no-referrer, *client
+        redirect: 'follow', // manual, *follow, error
+        referrer: 'no-referrer', // no-referrer, *client
         body: JSON.stringify(data) // body data type must match "Content-Type" header
-      }).then(response => response.json()); // parses JSON response into native JavaScript objects
+      }).then(response => response.json()) // parses JSON response into native JavaScript objects
     },
     typeChoose (tag) {
-      //介绍、目录选择
-      this.type = tag;
+      // 介绍、目录选择
+      this.type = tag
       if (tag == 2) {
-        this.getSectionList();
+        this.getSectionList()
       }
     },
     chooseSection (index) {
-      this.showSection = index;
+      this.showSection = index
     },
     closeDialog () {
       this.dialogShow = false
@@ -790,15 +801,15 @@ export default {
       }
       if (item.courseHandoutsType == 1) {
         window.location.href =
-          this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId
+          this.pageurl + '/audio_detail.html?section=' + item.courseHandoutsId
       }
       if (item.courseHandoutsType == 2) {
         window.location.href =
-          this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId
+          this.pageurl + '/audio_detail.html?section=' + item.courseHandoutsId
       }
       if (item.courseHandoutsType == 3) {
         window.location.href =
-          this.pageurl + "/course_detail.html?courseId=" + item.courseId
+          this.pageurl + '/course_detail.html?courseId=' + item.courseId
       }
       this.$router.go(0)
     }

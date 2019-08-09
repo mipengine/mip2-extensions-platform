@@ -403,9 +403,9 @@ export default {
       default: ''
     }
   },
-  data() {
+  data () {
     return {
-      categoryId: "",
+      categoryId: '',
       typeList: [],
       adList: [],
       articlesList: [],
@@ -413,23 +413,23 @@ export default {
       btnShow: false
     };
   },
-  mounted() {
-    window.addEventListener("scroll", this.onScroll);
-    var that = this;
-    this.postData(this.serverurl + "/api/h5/userIndex", {})
+  mounted () {
+    window.addEventListener('scroll', this.onScroll);
+    const that = this
+    this.postData(this.serverurl + '/api/h5/userIndex', {})
       .then(function(data) {
-        that.adList = data.result.adList;
-        that.articlesList = data.result.articlesList;
-        that.typeList = data.result.firstCategoryList;
-        that.categoryId = data.result.firstCategoryList[0].categoryId;
-        that.typeChoose(that.categoryId);
+        that.adList = data.result.adList
+        that.articlesList = data.result.articlesList
+        that.typeList = data.result.firstCategoryList
+        that.categoryId = data.result.firstCategoryList[0].categoryId
+        that.typeChoose(that.categoryId)
       })
-      .catch(error => console.error(error));
+      .catch(error => console.error(error))
   },
   methods: {
-    onScroll() {
+    onScroll () {
       // 可滚动容器的高度
-      let innerHeight = document.querySelector("#scroll").clientHeight
+      let innerHeight = document.querySelector('#scroll').clientHeight
       // 屏幕尺寸高度
       let outerHeight = document.documentElement.clientHeight
       // 可滚动容器超出当前窗口显示范围的高度
@@ -442,44 +442,44 @@ export default {
         this.btnShow = true
       }
     },
-    postData(url, data) {
+    postData (url, data) {
       // Default options are marked with *
       return fetch(url, {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, cors, *same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, cors, *same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        redirect: "follow", // manual, *follow, error
-        referrer: "no-referrer", // no-referrer, *client
-        body: JSON.stringify(data) // body data type must match "Content-Type" header
+        redirect: 'follow', // manual, *follow, error
+        referrer: 'no-referrer', // no-referrer, *client
+        body: JSON.stringify(data) // body data type must match 'Content-Type' header
       }).then(response => response.json()) // parses JSON response into native JavaScript objects
     },
-    goAdPage(url) {
+    goAdPage (url) {
       window.location.href = url
     },
-    seeMoreArticle() {
-      window.location.href = this.pageurl + "/choiceness.html"
+    seeMoreArticle () {
+      window.location.href = this.pageurl + '/choiceness.html'
     },
-    goArticleDetail(articleId) {
+    goArticleDetail (articleId) {
       window.location.href =
-        this.pageurl + "/article.html?articleId=" + articleId
+        this.pageurl + '/article.html?articleId=' + articleId
     },
-    seeMoreCourse() {
+    seeMoreCourse () {
       window.location.href =
-        this.pageurl + "/course.html?categoryId=" + this.categoryId
+        this.pageurl + '/course.html?categoryId=' + this.categoryId
     },
-    goCourseDetail(courseId) {
+    goCourseDetail (courseId) {
       window.location.href =
-        this.pageurl + "/course_detail.html?courseId=" + courseId
+        this.pageurl + '/course_detail.html?courseId=' + courseId
     },
-    typeChoose(id) {
-      this.categoryId = id;
-      var that = this;
-      this.postData(this.serverurl + "/api/h5/getIndexCourse", {
+    typeChoose (id) {
+      this.categoryId = id
+      const that = this
+      this.postData(this.serverurl + '/api/h5/getIndexCourse', {
         firstCategoryId: this.categoryId
       })
         .then(function(data) {

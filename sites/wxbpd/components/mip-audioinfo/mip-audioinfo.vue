@@ -1,35 +1,43 @@
 <template>
   <div class="mainContent">
     <div
-    v-show="sectionInfo.courseHandoutsType == 1"
-    class="playPart">
+      v-show="sectionInfo.courseHandoutsType == 1"
+      class="playPart">
       <div class="picView">
         <mip-img
-        :src="courseInfo.courseImgH5"
-        class="courseImg" />
-        <mip-img src="/images/CD2.png" class="cdImg" />
-        <mip-img src="/images/cd_point2.png" class="cdPoint" />
+          :src="courseInfo.courseImgH5"
+          class="courseImg" />
+        <mip-img
+          src="/images/CD2.png"
+          class="cdImg" />
+        <mip-img
+          src="/images/cd_point2.png"
+          class="cdPoint" />
         <!-- <p class="playView">
           <mip-img src="/images/audio_play.png" id="audioPlayer" class="playImg"></mip-img>
         </p>-->
       </div>
     </div>
     <div
-    v-show="sectionInfo.courseHandoutsType == 2"
-    class="vedioView">
+      v-show="sectionInfo.courseHandoutsType == 2"
+      class="vedioView">
       <mip-video
         poster="https://www.mipengine.org/static/img/sample_04.jpg"
         controls
         layout="responsive"
+        :src="sectionInfo.courseHandoutsHref"
         width="750"
         height="360"
-        :src="sectionInfo.courseHandoutsHref"
       />
     </div>
     <p class="courseTitle">{{ sectionInfo.courseHandoutsName }}</p>
-    <div v-show=" sectionInfo.courseHandoutsType == 1 " class="audioView">
+    <div
+      v-show=" sectionInfo.courseHandoutsType == 1 "
+      class="audioView">
       <div class="audio-wrapper">
-        <mip-audio :src="sectionInfo.courseHandoutsHref" class="myAudio" />
+        <mip-audio
+          :src="sectionInfo.courseHandoutsHref"
+          class="myAudio" />
         <!-- <div class="audio-right">
           <div class="progress-bar-bg" id="progressBarBg">
             <div class="audioTime_start">
@@ -52,20 +60,20 @@
       <p>打开APP收藏下载</p>
     </div>
     <div
-    v-html=" sectionInfo.courseHandoutsContent"
-    class="courseContent" />
+      v-html=" sectionInfo.courseHandoutsContent"
+      class="courseContent" />
     <div
-    class="catalogue">
+      class="catalogue">
       <div
-      class="headPart">
+        class="headPart">
         <div
-        class="leftContent">
+          class="leftContent">
           <mip-img
-          :src="courseInfo.courseImgH5"
-          class="courseImg" />
+            :src="courseInfo.courseImgH5"
+            class="courseImg" />
           <mip-img
-          src="/images/CD2.png"
-          class="cdImg" />
+            src="/images/CD2.png"
+            class="cdImg" />
         </div>
         <div class="centerContent">
           <p>{{ sectionInfo.courseHandoutsName.length > 7?sectionInfo.courseHandoutsName.substring(0,7) + '...' : sectionInfo.courseHandoutsName }}</p>
@@ -79,10 +87,15 @@
         </div>
       </div>
       <ul class="sectionList">
-        <li v-for="(item,index) in sectionList" :key="index" @click="goSecitonDetail(item)">
+        <li
+          v-for="(item,index) in sectionList"
+          :key="index"
+          @click="goSecitonDetail(item)">
           <p>
             <mip-img v-show="item.courseHandoutsType == 1" src="/images/icon_audio.png" />
-            <mip-img src="/images/icon_vedio.png" v-show="item.courseHandoutsType == 2" />
+            <mip-img
+              v-show="item.courseHandoutsType == 2"
+              src="/images/icon_vedio.png" />
           </p>
           <p>
             <span>{{ item.courseHandoutsCode }}</span>
@@ -659,11 +672,11 @@ export default {
   },
   data () {
     return {
-      courseInfo: "", //课程信息
-      sectionInfo: "", //章节信息
-      sectionList: "", //章节列表
-      courseList: "", //看过的人还看了列表
-      adList: "" //广告列表
+      courseInfo: '', //课程信息
+      sectionInfo: '', //章节信息
+      sectionList: '', //章节列表
+      courseList: '', //看过的人还看了列表
+      adList: '' //广告列表
     };
   },
   mounted () {
@@ -672,7 +685,7 @@ export default {
   methods: {
     getAudioInfo () {
       const that = this;
-      this.postData(this.serverurl + "/api/h5/audioDetail", {
+      this.postData(this.serverurl + '/api/h5/audioDetail', {
         courseHandoutsId: this.section
       })
         .then(function(data) {
@@ -686,22 +699,22 @@ export default {
     },
     postData (url, data) {
       return fetch(url, {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, cors, *same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, cors, *same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        redirect: "follow", // manual, *follow, error
-        referrer: "no-referrer", // no-referrer, *client
+        redirect: 'follow', // manual, *follow, error
+        referrer: 'no-referrer', // no-referrer, *client
         body: JSON.stringify(data) // body data type must match "Content-Type" header
       }).then(response => response.json()); // parses JSON response into native JavaScript objects
     },
     goCourseDetail (courseId) {
       window.location.href =
-        this.pageurl + "/course_detail.html?courseId=" + courseId
+        this.pageurl + '/course_detail.html?courseId=' + courseId
     },
     goSecitonDetail (item) {
       //跳转章节详情
@@ -710,15 +723,15 @@ export default {
       }
       if (item.courseHandoutsType == 1) {
         window.location.href =
-          this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId
+          this.pageurl + '/audio_detail.html?section=' + item.courseHandoutsId
       }
       if (item.courseHandoutsType == 2) {
         window.location.href =
-          this.pageurl + "/audio_detail.html?section=" + item.courseHandoutsId
+          this.pageurl + '/audio_detail.html?section=' + item.courseHandoutsId
       }
       if (item.courseHandoutsType == 3) {
         window.location.href =
-          this.pageurl + "/course_detail.html?courseId=" + item.courseId
+          this.pageurl + '/course_detail.html?courseId=' + item.courseId
       }
       this.$router.go(0)
     }
