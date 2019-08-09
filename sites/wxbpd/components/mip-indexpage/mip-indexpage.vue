@@ -1,5 +1,7 @@
 <template>
-  <div class="mainContent" id="scroll">
+  <div
+    id="scroll"
+    class="mainContent">
     <div class="indexCarousel">
       <mip-carousel
         autoplay
@@ -9,21 +11,24 @@
         height="360"
         indicatorId="mip-carousel-example"
       >
-        <mip-img :src="adList[0].adImg"></mip-img>
+        <mip-img :src="adList[0].adImg" />
         <mip-img
           :src="item.adImg"
-          :alt="item.adAlt"
           v-for="(item,index) in adList.slice(1,adList.length)"
-          @click="goAdPage(item.adHref)"
           :key="index"
+          :alt="item.adAlt"
           class="adImg"
-        ></mip-img>
+          @click="goAdPage(item.adHref)"
+        />
       </mip-carousel>
       <div class="mip-carousel-indicator-wrapper">
-        <div class="mip-carousel-indicatorDot" id="mip-carousel-example">
-          <div class="mip-carousel-activeitem mip-carousel-indecator-item"></div>
-          <div class="mip-carousel-indecator-item"></div>
-          <div class="mip-carousel-indecator-item"></div>
+        <div
+          id="mip-carousel-example"
+          class="mip-carousel-indicatorDot"
+        >
+          <div class="mip-carousel-activeitem mip-carousel-indecator-item" />
+          <div class="mip-carousel-indecator-item" />
+          <div class="mip-carousel-indecator-item" />
         </div>
       </div>
       <!-- <ul class="indicator_point">
@@ -31,11 +36,14 @@
       </ul>-->
     </div>
     <ul class="typeList">
-      <li v-for="(item,index) in typeList" :key="index" @click="typeChoose(item.categoryId)">
+      <li
+        v-for="(item,index) in typeList"
+        :key="index"
+        @click="typeChoose(item.categoryId)">
         <p>
           <img :src="item.categoryImg" />
         </p>
-        <p>{{item.categoryName}}</p>
+        <p>{{ item.categoryName }}</p>
       </li>
     </ul>
     <div class="choiceness pagePadding">
@@ -66,9 +74,10 @@
       </ul>
     </div>
     <div
-      class="course pagePadding"
       v-for="(item,index) in courseList"
-      :key="index">
+      :key="index"
+      class="course pagePadding"
+      >
       <div class="title">
         <p>{{ item.categoryName }}</p>
         <p @click="seeMoreCourse">
@@ -86,7 +95,10 @@
           @click="goCourseDetail(item.courseId)"
         >
           <div class="pic">
-            <mip-img :src="item.courseImgH5" class="courseImg" layout="fill"></mip-img>
+            <mip-img
+              :src="item.courseImgH5"
+              class="courseImg"
+              layout="fill"></mip-img>
           </div>
           <div class="info">
             <p>{{ item.courseName.length > 5 ? item.courseName.substring(0,5) + '...' : item.courseName }}</p>
@@ -104,7 +116,9 @@
       </ul>
     </div>
     <mip-fixed type="bottom">
-      <p class="openBtn" v-show="btnShow">
+      <p
+        v-show="btnShow"
+        class="openBtn">
         <mip-img
           src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178054305btn_bg2.png"
           class="btnImg"

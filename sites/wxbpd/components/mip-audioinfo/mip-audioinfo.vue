@@ -13,9 +13,9 @@
         <mip-img
           src="/images/cd_point2.png"
           class="cdPoint" />
-        <!-- <p class="playView">
+          <!-- <p class="playView">
           <mip-img src="/images/audio_play.png" id="audioPlayer" class="playImg"></mip-img>
-        </p>-->
+          </p>-->
       </div>
     </div>
     <div
@@ -24,44 +24,45 @@
       <mip-video
         poster="https://www.mipengine.org/static/img/sample_04.jpg"
         controls
-        layout="responsive"
         :src="sectionInfo.courseHandoutsHref"
+        layout="responsive"
         width="750"
         height="360"
       />
     </div>
     <p class="courseTitle">{{ sectionInfo.courseHandoutsName }}</p>
     <div
-      v-show=" sectionInfo.courseHandoutsType == 1 "
+      v-show="sectionInfo.courseHandoutsType == 1"
       class="audioView">
       <div class="audio-wrapper">
         <mip-audio
           :src="sectionInfo.courseHandoutsHref"
           class="myAudio" />
-        <!-- <div class="audio-right">
-          <div class="progress-bar-bg" id="progressBarBg">
-            <div class="audioTime_start">
-              <mip-img src="/images/icon_point.png" class="pointImg"></mip-img>
-              <span id="audioCurTime">00:00</span>
+          <!-- <div class="audio-right">
+            <div class="progress-bar-bg" id="progressBarBg">
+              <div class="audioTime_start">
+                <mip-img src="/images/icon_point.png" class="pointImg"></mip-img>
+                <span id="audioCurTime">00:00</span>
+              </div>
+              <div id="progressDot" class="progressPoint">
+                <mip-img src="/images/progress.png" class="pointImg"></mip-img>
+              </div>
+              <div class="progress-bar" id="progressBar"></div>
+              <div class="audioTime">
+                <mip-img src="/images/icon_point.png" class="pointImg"></mip-img>
+                <span id="totalTime">{{sectionInfo.showDuration}}</span>
+              </div>
             </div>
-            <div id="progressDot" class="progressPoint">
-              <mip-img src="/images/progress.png" class="pointImg"></mip-img>
-            </div>
-            <div class="progress-bar" id="progressBar"></div>
-            <div class="audioTime">
-              <mip-img src="/images/icon_point.png" class="pointImg"></mip-img>
-              <span id="totalTime">{{sectionInfo.showDuration}}</span>
-            </div>
-          </div>
-        </div>-->
+          </div>-->
       </div>
     </div>
     <div class="bottomBtn changBtn">
       <p>打开APP收藏下载</p>
     </div>
     <div
+      class="courseContent"
       v-html=" sectionInfo.courseHandoutsContent"
-      class="courseContent" />
+      />
     <div
       class="catalogue">
       <div
@@ -92,7 +93,9 @@
           :key="index"
           @click="goSecitonDetail(item)">
           <p>
-            <mip-img v-show="item.courseHandoutsType == 1" src="/images/icon_audio.png" />
+            <mip-img
+              v-show="item.courseHandoutsType == 1"
+              src="/images/icon_audio.png" />
             <mip-img
               v-show="item.courseHandoutsType == 2"
               src="/images/icon_vedio.png" />
@@ -115,25 +118,30 @@
         layout="responsive"
         width="750"
         height="360"
-        indicatorId="mip-carousel-example"
       >
         <mip-img :src="adList[0].adImg" />
         <mip-img
           :src="item.adImg"
-          :alt="item.adAlt"
           v-for="(item,index) in adList.slice(1,adList.length)"
-          @click="goAdPage(item.adHref)"
           :key="index"
+          :alt="item.adAlt"
           class="adImg"
+          @click="goAdPage(item.adHref)"
         />
       </mip-carousel>
     </div>
     <div class="course_read">
       <p class="title">大家也在听</p>
       <ul class="course">
-        <li v-for="(item,index) in courseList" :key="index" @click="goCourseDetail(item.courseId)">
+        <li
+          v-for="(item,index) in courseList"
+          :key="index"
+          @click="goCourseDetail(item.courseId)">
           <div class="pic">
-            <mip-img :src="item.courseImgH5" class="courseImg" layout="fill" />
+            <mip-img
+              :src="item.courseImgH5"
+              class="courseImg"
+              layout="fill" />
           </div>
           <div class="info">
             <p>{{ item.courseName.length > 6 ? item.courseName.substring(0,6) + '...' : item.courseName }}</p>
@@ -672,11 +680,11 @@ export default {
   },
   data () {
     return {
-      courseInfo: '', //课程信息
-      sectionInfo: '', //章节信息
-      sectionList: '', //章节列表
-      courseList: '', //看过的人还看了列表
-      adList: '' //广告列表
+      courseInfo: '', // 课程信息
+      sectionInfo: '', // 章节信息
+      sectionList: '', // 章节列表
+      courseList: '', // 看过的人还看了列表
+      adList: '' // 广告列表
     };
   },
   mounted () {
@@ -717,19 +725,19 @@ export default {
         this.pageurl + '/course_detail.html?courseId=' + courseId
     },
     goSecitonDetail (item) {
-      //跳转章节详情
-      if (item.tryType == 0) {
+      // 跳转章节详情
+      if (item.tryType === 0) {
         return false
       }
-      if (item.courseHandoutsType == 1) {
+      if (item.courseHandoutsType === 1) {
         window.location.href =
           this.pageurl + '/audio_detail.html?section=' + item.courseHandoutsId
       }
-      if (item.courseHandoutsType == 2) {
+      if (item.courseHandoutsType === 2) {
         window.location.href =
           this.pageurl + '/audio_detail.html?section=' + item.courseHandoutsId
       }
-      if (item.courseHandoutsType == 3) {
+      if (item.courseHandoutsType === 3) {
         window.location.href =
           this.pageurl + '/course_detail.html?courseId=' + item.courseId
       }

@@ -1,5 +1,9 @@
 <template>
-  <div class="mainContent" id="scroll" :style="dialogShow == true?'overflow:hidden' : ''">
+  <div
+    id="scroll"
+    :style="dialogShow == true ? 'overflow:hidden' : ''"
+    class="mainContent"
+    >
     <div class="headPart">
       <mip-img
         src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565178872154course_bg.png"
@@ -59,8 +63,9 @@
           </div>
         </div>
         <div
+          class="courseContent"
           v-html="courseInfo.courseContent"
-          class="courseContent"></div>
+          />
         <div class="bottomBtn">
           <p>
             <mip-img
@@ -78,15 +83,21 @@
           </p>
         </div>
       </div>
-      <div class="catalogue" v-show="type == 2">
-        <ul class="big_section" v-show="!isEmpty">
+      <div
+        v-show="type == 2"
+        class="catalogue">
+        <ul
+          v-show="!isEmpty"
+          class="big_section">
           <li
-            class="big_item"
             v-for="(item,index) in sectionList"
             :key="index"
             :style="showSection == index?'border-bottom:0' : ''"
+            class="big_item"
           >
-            <p class="big_title" @click="chooseSection(index)">
+            <p
+              class="big_title"
+              @click="chooseSection(index)">
               <span>{{ item.courseHandoutsName }}</span>
               <span>
                 <mip-img
@@ -108,9 +119,11 @@
                 class="small_item"
                 v-for="(item,index) in item.courseHandoutsList"
                 :key="index">
-                <p :style="item.tryType == 0?'color:#999' : ''" @click="goSecitonDetail(item)">
-                  <span>{{item.courseHandoutsName}}</span>
-                  <span>{{item.courseHandoursContent}}</span>
+                <p
+                  :style="item.tryType == 0 ? 'color:#999' : ''"
+                  @click="goSecitonDetail(item)">
+                  <span>{{ item.courseHandoutsName }}</span>
+                  <span>{{ item.courseHandoursContent }}</span>
                 </p>
                 <p v-show="item.tryType == 1">
                   <span>试听</span>
@@ -701,7 +714,7 @@ export default {
     const that = this
     setTimeout(function() {
       that.dialogShow = true
-    }, 5000);
+    }, 5000)
     window.addEventListener('scroll', this.onScroll)
     this.getAudioInfo()
   },
@@ -796,18 +809,18 @@ export default {
     },
     goSecitonDetail (item) {
       //跳转章节详情
-      if (item.tryType == 0) {
+      if (item.tryType === 0) {
         return false
       }
-      if (item.courseHandoutsType == 1) {
+      if (item.courseHandoutsType === 1) {
         window.location.href =
           this.pageurl + '/audio_detail.html?section=' + item.courseHandoutsId
       }
-      if (item.courseHandoutsType == 2) {
+      if (item.courseHandoutsType === 2) {
         window.location.href =
           this.pageurl + '/audio_detail.html?section=' + item.courseHandoutsId
       }
-      if (item.courseHandoutsType == 3) {
+      if (item.courseHandoutsType === 3) {
         window.location.href =
           this.pageurl + '/course_detail.html?courseId=' + item.courseId
       }

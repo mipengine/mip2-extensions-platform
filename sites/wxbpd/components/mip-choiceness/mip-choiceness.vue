@@ -1,5 +1,8 @@
 <template>
-  <div class="mianContent" id="scroll">
+  <div
+    id="scroll"
+    class="mianContent"
+    >
     <p class="title">今日精选</p>
     <ul v-show="!isEmpty">
       <li
@@ -14,25 +17,25 @@
               src="http://haya-cloud.oss-cn-shanghai.aliyuncs.com/haya-cloud/1565176807216eye.png"
               class="eye"
             />
-            <span>{{item.articlesReadNums}}</span>
+            <span>{{ item.articlesReadNums }}</span>
           </p>
         </div>
         <div class="rightContent">
           <mip-img
-          :src="item.articlesImg"
-          layout="fill"
-          class="articleImg" />
+            :src="item.articlesImg"
+            layout="fill"
+            class="articleImg" />
         </div>
       </li>
     </ul>
     <div
-    v-show="isEmpty"
-    class="emptyContent">
+      v-show="isEmpty"
+      class="emptyContent">
       <p>
         <mip-img
-        src="/images/empty.png"
-        class="emptyImg"
-        layout="fill" />
+          src="/images/empty.png"
+          class="emptyImg"
+          layout="fill" />
       </p>
       <p>亲~目前还没有课程,去别的地方看看吧</p>
     </div>
@@ -152,7 +155,7 @@ export default {
   },
   methods: {
     getChoicenessList () {
-      const that = this;
+      const that = this
       this.postData(this.serverurl + '/api/pc/specialList', {
         pageNo: that.pageNo,
         pageSize: that.pageSize
@@ -181,18 +184,18 @@ export default {
         .catch(error => console.error(error))
     },
     onScroll () {
-      //可滚动容器的高度
+      // 可滚动容器的高度
       let innerHeight = document.querySelector('#scroll').clientHeight
-      //屏幕尺寸高度
+      // 屏幕尺寸高度
       let outerHeight = document.documentElement.clientHeight
-      //可滚动容器超出当前窗口显示范围的高度
+      // 可滚动容器超出当前窗口显示范围的高度
       let scrollTop =
         document.documentElement.scrollTop ||
         document.body.scrollTop ||
         window.pageYOffset
-      //scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
+      // scrollTop在页面为滚动时为0，开始滚动后，慢慢增加，滚动到页面底部时，出现innerHeight < (outerHeight + scrollTop)的情况，严格来讲，是接近底部。
       if (innerHeight <= outerHeight + scrollTop + 5) {
-        //加载更多操作
+        // 加载更多操作
         if (this.pageNo <= this.pageCount && this.isEnd == true) {
           this.isEnd = false
           this.getChoicenessList()

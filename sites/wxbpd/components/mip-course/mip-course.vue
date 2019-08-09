@@ -1,8 +1,13 @@
 <template>
-  <div class="mianContent" id="scroll">
+  <div
+    id="scroll"
+    class="mianContent">
     <p class="title">课程</p>
     <ul v-show="!isEmpty">
-      <li v-for="(item,index) in courseList" :key="index" @click="goCourseDetail(item.courseId)">
+      <li
+        v-for="(item,index) in courseList"
+        :key="index"
+        @click="goCourseDetail(item.courseId)">
         <div class="pic">
           <mip-img
             :src="item.courseImgH5"
@@ -174,7 +179,7 @@ export default {
       default: ''
     }
   },
-  data() {
+  data () {
     return {
       isEmpty: false,
       isEnd: true,
@@ -185,15 +190,15 @@ export default {
       courseList: []
     };
   },
-  mounted() {
+  mounted () {
     this.firstCategoryId = this.categoryid
-    window.addEventListener("scroll", this.onScroll)
+    window.addEventListener('scroll', this.onScroll)
     this.getCourseList()
   },
   methods: {
     getCourseList () {
       var that = this;
-      this.postData(this.serverurl + "/api/pc/courseList", {
+      this.postData(this.serverurl + '/api/pc/courseList', {
         firstCategoryId: this.firstCategoryId,
         categoryId: this.categoryId,
         coursePriceType: 0,
@@ -224,7 +229,7 @@ export default {
     },
     onScroll () {
       // 可滚动容器的高度
-      let innerHeight = document.querySelector("#scroll").clientHeight;
+      let innerHeight = document.querySelector('#scroll').clientHeight;
       // 屏幕尺寸高度
       let outerHeight = document.documentElement.clientHeight;
       // 可滚动容器超出当前窗口显示范围的高度
@@ -245,22 +250,22 @@ export default {
     postData (url, data) {
       // Default options are marked with *
       return fetch(url, {
-        method: "POST", // *GET, POST, PUT, DELETE, etc.
-        mode: "cors", // no-cors, cors, *same-origin
-        cache: "no-cache", // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: "same-origin", // include, *same-origin, omit
+        method: 'POST', // *GET, POST, PUT, DELETE, etc.
+        mode: 'cors', // no-cors, cors, *same-origin
+        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+        credentials: 'same-origin', // include, *same-origin, omit
         headers: {
-          "Content-Type": "application/json"
+          'Content-Type': 'application/json'
           // 'Content-Type': 'application/x-www-form-urlencoded',
         },
-        redirect: "follow", // manual, *follow, error
-        referrer: "no-referrer", // no-referrer, *client
+        redirect: 'follow', // manual, *follow, error
+        referrer: 'no-referrer', // no-referrer, *client
         body: JSON.stringify(data) // body data type must match "Content-Type" header
       }).then(response => response.json()) // parses JSON response into native JavaScript objects
     },
     goCourseDetail (courseId) {
       window.location.href =
-        this.pageurl + "/course_detail.html?courseId=" + courseId
+        this.pageurl + '/course_detail.html?courseId=' + courseId
     }
   }
 };
