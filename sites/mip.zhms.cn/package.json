@@ -1,7 +1,7 @@
 {
-  "name": "hunliji.com",
+  "name": "mip.zhms.cn",
   "version": "0.0.1",
-  "description": "婚礼纪",
+  "description": "mip webiste for zhms",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
@@ -10,7 +10,7 @@
     "fix": "npm run fix:js",
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
-  "author": "960590968@qq.com",
+  "author": "Mrchensama",
   "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",
@@ -20,7 +20,6 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
-    "eslint-plugin-vue": "^4.5.0",
-    "husky": "^3.0.2"
+    "eslint-plugin-vue": "^4.5.0"
   }
 }

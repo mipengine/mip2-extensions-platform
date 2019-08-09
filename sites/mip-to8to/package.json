@@ -1,7 +1,7 @@
 {
-  "name": "hunliji.com",
+  "name": "mip-to8to",
   "version": "0.0.1",
-  "description": "婚礼纪",
+  "description": "to8to mip components",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
@@ -10,8 +10,10 @@
     "fix": "npm run fix:js",
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
-  "author": "960590968@qq.com",
-  "dependencies": {},
+  "author": "fidermo.hu (fidermo.hu@corp.to8to.com)",
+  "dependencies": {
+    "fetch-jsonp": "^1.1.3"
+  },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
@@ -20,7 +22,6 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
-    "eslint-plugin-vue": "^4.5.0",
-    "husky": "^3.0.2"
+    "eslint-plugin-vue": "^4.5.0"
   }
 }

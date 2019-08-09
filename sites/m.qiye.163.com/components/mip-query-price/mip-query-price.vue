@@ -156,6 +156,7 @@ export default {
     },
     /**
      * 询价信息显示
+     *
      * @param {string} msg
      * 提示信息
      * @param {number} min
