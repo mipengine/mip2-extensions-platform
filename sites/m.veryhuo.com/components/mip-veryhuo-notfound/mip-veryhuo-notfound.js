@@ -1,11 +1,10 @@
-const { CustomElement, util } = MIP
-const { css } = util
+const { CustomElement, util } = MIP;
 
 export default class MIPMhotComment extends CustomElement {
-    build() {
-        let goHome = this.element.querySelectorAll('.go-home')[0];   // 隐藏的分类盒子
-        goHome.onclick = function() {
-            location.href = './index.html';
-        }
+  build () {
+    let goHome = this.element.querySelectorAll('.go-home')[0]
+    goHome.onclick = function () {
+      location.href = './index.html'
     }
+  }
 }
