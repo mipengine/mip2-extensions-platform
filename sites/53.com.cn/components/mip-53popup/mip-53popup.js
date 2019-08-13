@@ -1,12 +1,12 @@
 import './index.less'
 export default class MIP53popup extends MIP.CustomElement {
-  constructor (...args) {
+  constructor(...args) {
     super(...args)
     this.id = this.element.getAttribute('id')
     this.selct = this.element.getAttribute('selct')
     this.input = this.element.getAttribute('input')
   }
-  build () {
+  build() {
     // 在这里注册 say 事件的监听
     this.addEventAction('open', (event, str) => {
       let box = document.getElementById(this.id)
@@ -34,15 +34,15 @@ export default class MIP53popup extends MIP.CustomElement {
       let selval = sel.options[index].value
       let inputval = document.getElementById(this.input).value
       let isphone = /^0?1[3|4|5|7|8|9][0-9]\d{8}$/
-      if (selval === ''){
+      if (selval === '') {
         document.getElementById('mip-popup-tishi').innerHTML = '请选择加盟品牌'
         return
       }
-      if (inputval === ''){
+      if (inputval === '') {
         document.getElementById('mip-popup-tishi').innerHTML = '请输入联系方式'
         return
       }
-      if (!isphone.test(inputval)){
+      if (!isphone.test(inputval)) {
         document.getElementById('mip-popup-tishi').innerHTML = '请输入正确的联系方式'
         return
       }
@@ -53,10 +53,10 @@ export default class MIP53popup extends MIP.CustomElement {
         url = 'https://www.53.com.cn/newapi/api/v1/Projects/AddQuickMsg'
       }
       // 提交
-      this.submitMessage(url,selval,inputval)
+      this.submitMessage(url, selval, inputval)
     })
   }
-  submitMessage(url,type,phone) {
+  submitMessage(url, type, phone) {
     let AJAXurl = `${url}?content=${type}&phone=${phone}`
     // let AJAXurl = 'https://www.53.com.cn/newapi/api/v1/home/AddMipSeo/?devicePixelRatio='+1+'&ScreenWidth='+300+'&ScreenHeight='+600
     fetch(AJAXurl, {

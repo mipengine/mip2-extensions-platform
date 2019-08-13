@@ -1,12 +1,12 @@
 import './index.less'
 export default class MIP53public extends MIP.CustomElement {
-  build () {
-    // let hrefs = 'https://mip.53.com.cn?hmsr=baidu&hmpl=&hmcu=&hmkw=&hmci=' 
+  build() {
+    // let hrefs = 'https://mip.53.com.cn?hmsr=baidu&hmpl=&hmcu=&hmkw=&hmci='
     let hrefs = window.location.href
     let IsTuiguang = this.getParamArgs(hrefs, 'hmsr')
     localStorage.setItem('IsTuiguang', IsTuiguang)
   }
-  // 获取链接中包含的hmsr参数 
+  // 获取链接中包含的hmsr参数
   getParamArgs(parms, parmName) {
     let argIndex = parms.indexOf('?')
     let arg = parms.substring(argIndex + 1)
@@ -20,5 +20,5 @@ export default class MIP53public extends MIP.CustomElement {
         valArg = arg[1]
     }
     return valArg
-  } 
-} 
+  }
+}
