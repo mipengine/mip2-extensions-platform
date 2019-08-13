@@ -8,8 +8,8 @@ export default class MIPMYHAdv extends MIP.CustomElement {
   }
   connectedCallback () {
     this.src = this.element.getAttribute('src') || ''
-    this.data_post = this.element.getAttribute('data-post')||'{}'
-    this.data_post_extParams = this.element.getAttribute('data-post-extParams')||'{}'
+    this.data_post = this.element.getAttribute('data-post') || '{}'
+    this.data_post_extParams = this.element.getAttribute('data-post-extParams') || '{}'
     this.postData = util.jsonParse(this.data_post)
     this.postExtParams = util.jsonParse(this.data_post_extParams)
     if (!this.postExtParams['referer']) {
@@ -61,7 +61,7 @@ export default class MIPMYHAdv extends MIP.CustomElement {
           if (!data.errcode && data.data) {
             let templateData = this.restructTemplateData(data.data)
             this.renderTemplate(templateData)
-         }
+          }
         }) // JSON-string from `response.json()` call
         .catch(error => console.error(error))
     })
@@ -120,33 +120,33 @@ function postData (url = '', data = {}) {
     credentials: 'omit', // include, *same-origin, omit
     headers: {
       // 'Content-Type': 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/x-www-form-urlencoded'
     },
     redirect: 'follow', // manual, *follow, error
     referrer: 'no-referrer', // no-referrer, *client
-    body:pdata // body data type must match "Content-Type" header
+    body: pdata // body data type must match "Content-Type" header
   })
     .then(response => response.json()) // parses JSON response into native JavaScript objects
 }
 
 function getCookie (name) {
-  let arr , reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
-  if (arr = document.cookie.match(reg)) {
+  let  reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
+  let arr = document.cookie.match(reg)
+  if (arr) {
     return unescape(arr[2])
-  }
-  else {
+  } else {
     return null
   }
 }
 // 写cookies
-/*function setCookie (name,value) {
+/* function setCookie (name,value) {
   var Days = 30
   var exp = new Date()
   exp.setTime(exp.getTime() + Days*24*60*60*1000)
   document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString()
-}*/
+} */
 function getIP () {
   return fetch('https://api.ipify.org?format=json', {
-    })
+  })
     .then(response => response.json())
 }
