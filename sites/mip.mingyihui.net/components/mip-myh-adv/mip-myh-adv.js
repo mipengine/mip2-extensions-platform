@@ -1,6 +1,6 @@
 import './index.less'
 
-const {templates, util } = MIP
+const { templates, util } = MIP
 
 const log = util.log('mip-myh-adv')
 export default class MIPMYHAdv extends MIP.CustomElement {
@@ -8,25 +8,25 @@ export default class MIPMYHAdv extends MIP.CustomElement {
   }
   connectedCallback () {
     this.src = this.element.getAttribute('src') || ''
-    this.data_post=this.element.getAttribute('data-post')||'{}'
-    this.data_post_extParams=this.element.getAttribute('data-post-extParams')||'{}'
-    this.postData=util.jsonParse(this.data_post)
-    this.postExtParams=util.jsonParse(this.data_post_extParams)
+    this.data_post = this.element.getAttribute('data-post')||'{}'
+    this.data_post_extParams = this.element.getAttribute('data-post-extParams')||'{}'
+    this.postData = util.jsonParse(this.data_post)
+    this.postExtParams = util.jsonParse(this.data_post_extParams)
     if (!this.postExtParams['referer']) {
-      this.postExtParams['referer']='mip'
+      this.postExtParams['referer'] = 'mip'
     }
     if (!this.postExtParams['data_type']) {
-      this.postExtParams['data_type']='json'
+      this.postExtParams['data_type'] = 'json'
     }
     if (!this.postExtParams['site']) {
-      this.postExtParams['site']='mingyihui'
+      this.postExtParams['site'] = 'mingyihui'
     }
-    this.postExtParams['url']=document.head.baseURI
+    this.postExtParams['url'] = document.head.baseURI
     if (!this.postData['userid']) {
-      this.postData['userid']=getCookie('mingyihuiuserid');
+      this.postData['userid'] = getCookie('mingyihuiuserid')
     }
     if (!this.postData['userid']) {
-      this.postData['userid']=0;
+      this.postData['userid'] = 0
     }
 
     // console.log(JSON.stringify(this.postExtParams))
@@ -53,24 +53,24 @@ export default class MIPMYHAdv extends MIP.CustomElement {
       return
     }
     getIP().then(da => {
-      this.postExtParams['ip']=da.ip
-      this.postData['ext_params']=JSON.stringify(this.postExtParams)
+      this.postExtParams['ip'] = da.ip
+      this.postData['ext_params'] = JSON.stringify(this.postExtParams)
       postData(this.src, this.postData)
-      .then(data => {
-        //console.log(data);
-        if (!data.errcode && data.data) {
-          let templateData= this.restructTemplateData(data.data)
-          this.renderTemplate(templateData)
-        }
-     }) // JSON-string from `response.json()` call
-      .catch(error => console.error(error))
-    });
-
+        .then(data => {
+        // console.log(data);
+          if (!data.errcode && data.data) {
+            let templateData = this.restructTemplateData(data.data)
+            this.renderTemplate(templateData)
+         }
+        }) // JSON-string from `response.json()` call
+        .catch(error => console.error(error))
+    })
   }
+
   restructTemplateData (data) {
-    let returnData=[]
-    if(data.adv_list.length==0) return returnData
-    data.adv_list.forEach( adv=> {
+    let returnData = []
+    if (data.adv_list.length === 0) return returnData
+    data.adv_list.forEach(adv => {
       returnData.push(adv.ad_contents[0])
     })
     return returnData
@@ -82,14 +82,14 @@ export default class MIPMYHAdv extends MIP.CustomElement {
   */
   renderTemplate (data) {
     if (!data || !(data instanceof Array)) {
-        log.error(this.element, data, '数据不符合规范')
-        return
+      log.error(this.element, data, '数据不符合规范')
+      return
     }
     templates
-        .render(this.element, data)
-        .then(html => {
+      .render(this.element, data)
+      .then(html => {
         this.render(html)
-    })
+      })
   }
 
   /**
@@ -110,43 +110,43 @@ export default class MIPMYHAdv extends MIP.CustomElement {
   }
 }
 
-
 function postData (url = '', data = {}) {
   // Default options are marked with *
-  pdata='adpp_id='+data['adpp_id']+'&userid='+data['userid']+'&ext_params='+data['ext_params']
+  let pdata = 'adpp_id=' + data['adpp_id'] + '&userid=' + data['userid'] + '&ext_params=' + data['ext_params']
   return fetch(url, {
     method: 'POST', // *GET, POST, PUT, DELETE, etc.
     mode: 'cors', // no-cors, cors, *same-origin
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     credentials: 'omit', // include, *same-origin, omit
     headers: {
-      //'Content-Type': 'application/json',
+      // 'Content-Type': 'application/json',
       'Content-Type': 'application/x-www-form-urlencoded',
     },
     redirect: 'follow', // manual, *follow, error
     referrer: 'no-referrer', // no-referrer, *client
     body:pdata // body data type must match "Content-Type" header
   })
-  .then(response => response.json()) // parses JSON response into native JavaScript objects
+    .then(response => response.json()) // parses JSON response into native JavaScript objects
 }
 
 function getCookie (name) {
-  var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)")
-  if(arr=document.cookie.match(reg))
+  let arr , reg = new RegExp('(^| )' + name + '=([^;]*)(;|$)')
+  if (arr = document.cookie.match(reg)) {
     return unescape(arr[2])
-  else
+  }
+  else {
     return null
+  }
 }
-//写cookies
-function setCookie (name,value) {
+// 写cookies
+/*function setCookie (name,value) {
   var Days = 30
   var exp = new Date()
   exp.setTime(exp.getTime() + Days*24*60*60*1000)
   document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString()
-}
+}*/
 function getIP () {
   return fetch('https://api.ipify.org?format=json', {
-  })
-  .then(response => response.json())
+    })
+    .then(response => response.json())
 }
-
