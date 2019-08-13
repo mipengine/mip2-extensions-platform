@@ -1,6 +1,6 @@
 import './index.less'
 export default class MIPExample extends MIP.CustomElement {
-  build() {
+  build () {
     let nick = this.element.getAttribute('popContact')
     let tel = this.element.getAttribute('popTel')
     let con = this.element.getAttribute('popInfo')
@@ -50,7 +50,7 @@ export default class MIPExample extends MIP.CustomElement {
         fetch(AJAXurl, {
           method: 'POST',
           headers: {
-            'Content-Type' : 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded'
           },
           body: AJAXdata
         }).then(function (response) {
@@ -90,7 +90,7 @@ export default class MIPExample extends MIP.CustomElement {
       }
     }
   }
-  GetIsTuiguang(pid, meinfo) {
+  GetIsTuiguang (pid, meinfo) {
     let Data = {
       Pid: 0,
       MeInfo: ''
