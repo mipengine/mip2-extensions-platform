@@ -16,8 +16,9 @@ export default class MIP53public extends MIP.CustomElement {
       let str = args[i]
       let arg = str.split('=')
       if (arg.length <= 1) continue
-      if (parmName === arg[0])
+      if (parmName === arg[0]){
         valArg = arg[1]
+      }
     }
     return valArg
   }
