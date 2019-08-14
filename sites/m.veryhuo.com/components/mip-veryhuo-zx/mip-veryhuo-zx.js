@@ -9,15 +9,8 @@ export default class MIPMhotComment extends CustomElement {
   build () {
     let bnum = 0
     let nnum = 0
-    // let PageType = ''
     let mclassifyCont = this.element.querySelectorAll('#mclassifyCont')[0]
     let ztheader = this.element.querySelectorAll('.ztheader')
-    let cSOHUCS = this.element.querySelectorAll('#SOHUCS')
-    if (cSOHUCS.length > 0) {
-      if (cSOHUCS[0].attributes['PageType'].value !== undefined) {
-        PageType = cSOHUCS[0].attributes['PageType'].value
-      }
-    }
     let oDiv = this.element.querySelectorAll('.SearchBox')[0]
     let csearchDiv = this.element.querySelectorAll('.searchDiv')[0]
     let sear = this.element.querySelectorAll('.searchDiv input')
@@ -117,7 +110,6 @@ export default class MIPMhotComment extends CustomElement {
     let open = this.element.querySelector('.open')
     let close = this.element.querySelector('.close')
     let aTit = this.element.querySelectorAll('.aTit')
-    let zz = 13
     open.onclick = function () {
       css(zxAs, {display: 'block'})
       css(open, {display: 'none'})
@@ -131,13 +123,14 @@ export default class MIPMhotComment extends CustomElement {
     let dlist = this.element.querySelector('#dlist')
     let zxTypeid = document.getElementById('zx_typeid').getAttribute('value')
     let zxp1 = 10
+    let zz = 13
     btnzx.onclick = function () {
       if (btnzx.innerText === '加载完毕啦,么么哒~') return false
       // 创建一个Request对象
       let req = new Request('https://admin.veryhuo.com/mobile/open/archives_more?p=' + zxp1 + '&typeid=' + zxTypeid, {
         method: 'GET',
         cache: 'reload'
-      });
+      })
       fetch(req).then(function (response) {
         return response.json()
       }).then(function (data) {
@@ -153,7 +146,7 @@ export default class MIPMhotComment extends CustomElement {
             if (dt.litpic === '') {
               dt.litpic = '/images/noimg.png'
             } else {
-              let litpic = dt.litpic;
+              let litpic = dt.litpic
               if (litpic.indexOf('article/') !== -1 || litpic.indexOf('default/') !== -1) {
                 litpic = 'https://admin.veryhuo.com/upload/' + litpic
               } else {
@@ -161,7 +154,7 @@ export default class MIPMhotComment extends CustomElement {
               }
             }
             khtml = document.createElement('li')
-            khtml.innerHTML = "<img src='" + litpic + "'><a href='/a/" + dt.id + ".html'>" + dt.title + "</a><p>" + dt.description + "</p>"
+            khtml.innerHTML = '<img src=\'' + dt.litpic + '\'><a href=\'/a/' + dt.id + '.html\'>' + dt.title + '</a><p>' + dt.description + '</p>'
             zz += 1
             dlist.appendChild(khtml)
           }

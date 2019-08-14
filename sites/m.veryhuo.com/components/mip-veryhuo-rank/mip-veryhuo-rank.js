@@ -5,15 +5,8 @@ export default class MIPMhotComment extends CustomElement {
   build () {
     let bnum = 0
     let nnum = 0
-    // let PageType = '';
     let mclassifyCont = this.element.querySelectorAll('#mclassifyCont')[0]
     let ztheader = this.element.querySelectorAll('.ztheader')
-    let cSOHUCS = this.element.querySelectorAll('#SOHUCS')
-    if (cSOHUCS.length > 0) {
-      if (cSOHUCS[0].attributes['PageType'].value !== undefined) {
-        PageType = cSOHUCS[0].attributes['PageType'].value
-      }
-    }
     let oDiv = this.element.querySelectorAll('.SearchBox')[0]
     let csearchDiv = this.element.querySelectorAll('.searchDiv')[0]
     let sear = this.element.querySelectorAll('.searchDiv input')
@@ -115,29 +108,28 @@ export default class MIPMhotComment extends CustomElement {
     zk.onclick = function () {
       css(rankA, {display: 'block'})
       css(zk, {display: 'none'})
-    };
+    }
     sq.onclick = function () {
       css(hides, {display: 'none'})
       css(sq, {display: 'none'})
       css(zk, {display: 'block'})
-    };
-    //如果不是手机打开，则跳转到pc页面
+    }
     let browser1 = {
-      versions: function () {
+      versions: (function () {
         let u = navigator.userAgent
         return {
-          trident: u.indexOf('Trident') > -1, 
+          trident: u.indexOf('Trident') > -1,
           presto: u.indexOf('Presto') > -1,
           webKit: u.indexOf('AppleWebKit') > -1,
           gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') === -1,
-          mobile: !!u.match(/AppleWebKit.*Mobile/i) || !!u.match(/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/), //是否为移动终端
+          mobile: !!u.match(/AppleWebKit.*Mobile/i) || !!u.match(/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/),
           ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
           android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
-          iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, 
+          iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
           iPad: u.indexOf('iPad') > -1,
           webApp: u.indexOf('Safari') === -1
         }
-      }(),
+      })(),
       language: (navigator.browserLanguage || navigator.language).toLowerCase()
     }
     if (location.href.indexOf('m.veryhuo.com') > -1 && browser1.versions.mobile === false && browser1.versions.ios === false && browser1.versions.android === false && browser1.versions.iPhone === false && browser1.versions.iPad === false) {
@@ -164,7 +156,6 @@ export default class MIPMhotComment extends CustomElement {
           }
         }
       }
-      let lm = 2
     }
     else if (iosweb === '1') {
       if (isyouxi === '1') {
@@ -174,7 +165,6 @@ export default class MIPMhotComment extends CustomElement {
       } else {
         window.location.href = '/mip_ddooo_m.rar/soft.html'
       }
-      let lm = 1
     }
     // 点击加载更多
     let btn1 = this.element.querySelector('#btn1')
@@ -205,8 +195,8 @@ export default class MIPMhotComment extends CustomElement {
             } else {
               dt.softrank = 5
             }
-            khtml = document.createElement("li")
-            khtml.innerHTML = "<a href='/s/" + dt.id + ".html' class='img'><mip-img src='" + dt.litpic + "'></mip-img></a><p><a href='/s/" + dt.id + ".html'><i>" + zz + "</i>" + dt.title + "</a><em class='lstar" + dt.softrank + "'></em><span>" + dt.typename + "<u>" + dt.softsize + "</u>" + dt.version + "</span></p><a href='/s/" + dt.id + ".html' class='btn'><em class='bg'></em>下载</a>"
+            khtml = document.createElement('li')
+            khtml.innerHTML = '<a href=\'/s/' + dt.id + '.html\' class=\'img\'><mip-img src=\'' + dt.litpic + '\'></mip-img></a><p><a href=\'/s/' + dt.id + '.html\'><i>' + zz + '</i>' + dt.title + '</a><em class=\'lstar' + dt.softrank + '\'></em><span>' + dt.typename + '<u>' + dt.softsize + '</u>' + dt.version + '</span></p><a href=\'/s/' + dt.id + '.html\' class=\'btn\'><em class=\'bg\'></em>下载</a>'
             zz += 1
             more.appendChild(khtml)
           }

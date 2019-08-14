@@ -2,7 +2,6 @@
  * @file 评论模块
  * @author fl
  */
-import fetchJsonp from 'fetch-jsonp'
 
 const { CustomElement, util } = MIP
 const { css } = util
@@ -11,15 +10,8 @@ export default class MIPMhotComment extends CustomElement {
   build () {
     let bnum = 0
     let nnum = 0
-    let PageType = ''
     let mclassifyCont = this.element.querySelectorAll('#mclassifyCont')[0]
     let ztheader = this.element.querySelectorAll('.ztheader')
-    let cSOHUCS = this.element.querySelectorAll('#SOHUCS')
-    if (cSOHUCS.length > 0) {
-      if (cSOHUCS[0].attributes['PageType'].value !== undefined) {
-        PageType = cSOHUCS[0].attributes['PageType'].value
-      }
-    }
     let oDiv = this.element.querySelectorAll('.SearchBox')[0]
     let searBtn = this.element.querySelectorAll('.SBBtn button')[0]
     let alert = this.element.querySelectorAll('#confirm')[0]
@@ -35,34 +27,30 @@ export default class MIPMhotComment extends CustomElement {
     let cbacktop = this.element.querySelectorAll('#Cbacktop')[0]
     let zxNav = this.element.querySelector('#zxNav')
     searBtn.onclick = function() {
-      if(oDiv.length === 0) {
-        css(alert, {display:'block'})
-      }else {
-        css(alert, {display:'none'})
+      if (oDiv.length === 0) {
+        css(alert, {display: 'block'})
+      } else {
+        css(alert, {display: 'none'})
       }
     }
     window.addEventListener('scroll', function () {
-      // 页面滚动一定高度时，显示吸顶导航盒子
       if (document.documentElement.scrollTop > 80) {
         css(fixNav, {display: 'block'})
         css(zxNav, {display: 'none'})
-      } else if(document.documentElement.scrollTop < 30) {
+      } else if (document.documentElement.scrollTop < 30) {
         css(fixNav, {display: 'none'})
         css(zxNav, {display: 'block'})
       }
-      // 页面滚动一定高度时，显示回到顶部按钮
       if (document.documentElement.scrollTop > 300) {
         css(cbacktop, {display: 'block'})
       } else {
         css(cbacktop, {display: 'none'})
       }
     })
-    // 点击回到顶部按钮
     cbacktop.onclick = function () {
       document.documentElement.scrollTop = 0
     }
     if (ztheader.length === 0) {
-      // 点击搜索按钮，显示搜索框盒子，隐藏分类盒子
       oDiv.onclick = function () {
         if (bnum === 0) {
           css(mclassifyCont, {display: 'none'})
@@ -83,7 +71,6 @@ export default class MIPMhotComment extends CustomElement {
           }
         }
       }
-      // 给隐藏的分类 tab 标题添加类样式
       for (let i = 0; i < cmslass.length; i++) {
         cmslass[i].onclick = function () {
           let siblings = this.parentNode.childNodes
@@ -94,7 +81,6 @@ export default class MIPMhotComment extends CustomElement {
               cmslass[i].index = i
             }
           }
-          // 点击隐藏的分类 tab 标题切换ul列表数据
           if (this.index === 0) {
             cul[0].className = 'on'
           } else {
@@ -107,7 +93,6 @@ export default class MIPMhotComment extends CustomElement {
           }
         }
       }
-      // 点击顶部分类按钮
       mclassify.onclick = function () {
         if (nnum === 0) {
           css(mclassifyCont, {display: 'block'})
@@ -124,36 +109,31 @@ export default class MIPMhotComment extends CustomElement {
         }
       }
     }
-    /*如果不是手机打开，则跳转到pc页面*/
-    var browser1 = {
-      versions: function () {
-        let u = navigator.userAgent, app = navigator.appVersion;
-        return {//移动终端浏览器版本信息
-          trident: u.indexOf('Trident') > -1, //IE内核
-          presto: u.indexOf('Presto') > -1, //opera内核
-          webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
-          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') === -1, //火狐内核
-          mobile: !!u.match(/AppleWebKit.*Mobile/i) || !!u.match(/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/), //是否为移动终端
-          ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
-          android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, //android终端或者uc浏览器
-          iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, //是否为iPhone或者QQHD浏览器
-          iPad: u.indexOf('iPad') > -1, //是否iPad
-          webApp: u.indexOf('Safari') === -1 //是否web应该程序，没有头部与底部
-        };
-      } (),
+    let browser1 = {
+      versions: (function () {
+        let u = navigator.userAgent
+        return {
+          trident: u.indexOf('Trident') > -1,
+          presto: u.indexOf('Presto') > -1,
+          webKit: u.indexOf('AppleWebKit') > -1, 
+          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') === -1, 
+          mobile: !!u.match(/AppleWebKit.*Mobile/i) || !!u.match(/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/), 
+          ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), 
+          android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, 
+          iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, 
+          iPad: u.indexOf('iPad') > -1, 
+          webApp: u.indexOf('Safari') === -1 
+        }
+      })(),
       language: (navigator.browserLanguage || navigator.language).toLowerCase()
-    };
+    }
     if (location.href.indexOf('m.veryhuo.com') > -1 && browser1.versions.mobile === false && browser1.versions.ios === false && browser1.versions.android === false && browser1.versions.iPhone === false && browser1.versions.iPad === false) {
-      //location.href = location.href.replace("m.","www.");//如果不是手机打开，则跳转到pc页面
       window.location='http://www.veryhuo.com'
     }
-    let moreBtn = this.element.querySelector('#androidsoft-more');
-    let asmUl = this.element.querySelector('#asm');
-    // 发送请求
-    let asm = 18;
-    // 更多软件点击事件
+    let moreBtn = this.element.querySelector('#androidsoft-more')
+    let asmUl = this.element.querySelector('#asm')
+    let asm = 18
     moreBtn.onclick = function () {
-      // 创建一个Request对象
       let req = new Request('https://admin.veryhuo.com/mobile/open/more_soft?p='+asm+'&type=2'+'&isgame=0', {
         method: 'GET',
         cache: 'reload'
@@ -164,79 +144,73 @@ export default class MIPMhotComment extends CustomElement {
         if (data === '') {
           moreBtn.innerText = '加载完毕啦,么么哒~'
           return false
-        }else{
+        } else {
           moreBtn.innerText = '加载中...'
           let khtml = ''
           let len = data.length
-          for (let i = 0;i < len; i++) {
+          for (let i = 0; i < len; i++) {
             let dt = data[i]
-            dt.pubdate = to_date(dt.pubdate)
-            khtml = document.createElement("li")
-            khtml.innerHTML = "<a class='img' href='/s/"+dt.id+".html'><img src='"+dt.litpic+"'></a><p><a href='/s/"+dt.id+".html'>"+dt.title+"</a><span><u>"+dt.typename+"</u>"+dt.softsize+"</span><span><u class='vis'>"+dt.os+"</u><u class='time'>"+dt.pubdate+"</u></span></p><a href='/s/"+dt.id+".html' class='btn'><em></em>下载</a>"
+            dt.pubdate = toDate(dt.pubdate)
+            khtml = document.createElement('li')
+            khtml.innerHTML = '<a class=\'img\' href=\'/s/' + dt.id + '.html\'><img src=\'' + dt.litpic + '\'></a><p><a href=\'/s/' + dt.id + '.html\'>' + dt.title + '</a><span><u>' + dt.typename + '</u>' + dt.softsize + '</span><span><u class=\'vis\'>' + dt.os + '</u><u class=\'time\'>' + dt.pubdate + '</u></span></p><a href=\'/s/' + dt.id + '.html\' class=\'btn\'><em></em>下载</a>'
             asmUl.appendChild(khtml)
           }
           if (len < 20) {
             moreBtn.innerText = '加载完毕啦,么么哒~'
-          }
-          else {
+          } else {
             moreBtn.innerText = '点击有惊喜,萌萌哒~'
           }
           asm = asm + 20
         }
-        // 将时间戳转换成 yy-mm-dd
-        function to_date (phpstr) {
-          let str = parseInt(phpstr) * 1000;//将php时间戳转化为整形并乘以1000
-          let newDate = new Date(str);
-          let yy = newDate.getUTCFullYear();//取年份
-          let mm = newDate.getUTCMonth() + 1;//取月份
-          let dd = newDate.getUTCDate();//取天数
-          return yy + "-" + mm + "-" + dd;//拼接
+        function toDate (phpstr) {
+          let str = parseInt(phpstr) * 1000
+          let newDate = new Date(str)
+          let yy = newDate.getUTCFullYear()
+          let mm = newDate.getUTCMonth() + 1
+          let dd = newDate.getUTCDate()
+          return yy + '-' + mm + '-' + dd
         }
-      });
-    };
-    // 更多游戏点击事件
-    let gameBtn = this.element.querySelector('#androidgame-more');
-    let agmUl = this.element.querySelector('#agm');
-    let agm=18
+      })
+    }
+    let gameBtn = this.element.querySelector('#androidgame-more')
+    let agmUl = this.element.querySelector('#agm')
+    let agm = 18
     gameBtn.onclick = function () {
-      // 创建一个Request对象
-      let req = new Request('https://admin.veryhuo.com/mobile/open/more_soft?p='+agm+'&type=2'+'&isgame=1', {
+      let req = new Request('https://admin.veryhuo.com/mobile/open/more_soft?p=' + agm + '&type=2' + '&isgame=1', {
         method: 'GET',
         cache: 'reload'
-      });
+      })
       fetch(req).then(function (response) {
         return response.json()
       }).then(function (data) {
         if (data === '') {
           gameBtn.innerText = '加载完毕啦,么么哒~'
           return false
-        }else{
+        } else {
           gameBtn.innerText = '加载中...'
           let ghtml = ''
           let len = data.length
-          for (let i = 0;i < len; i++) {
+          for (let i = 0; i < len; i++) {
             let dt = data[i]
-            dt.pubdate = to_date(dt.pubdate)
-            ghtml = document.createElement("li")
-            ghtml.innerHTML = "<a class='img' href='/s/"+dt.id+".html'><img src='"+dt.litpic+"'></a><p><a href='/s/"+dt.id+".html'>"+dt.title+"</a><span><u>"+dt.typename+"</u>"+dt.softsize+"</span><span><u class='vis'>"+dt.os+"</u><u class='time'>"+dt.pubdate+"</u></span></p><a href='/s/"+dt.id+".html' class='btn'><em></em>下载</a>"
+            dt.pubdate = toDate(dt.pubdate)
+            ghtml = document.createElement('li')
+            ghtml.innerHTML = '<a class=\'img\' href=\'/s/' + dt.id + '.html\'><img src=\'' + dt.litpic + '\'></a><p><a href=\'/s/' + dt.id + '.html\'>' + dt.title + '</a><span><u>' + dt.typename + '</u>' + dt.softsize + '</span><span><u class=\'vis\'>' + dt.os + '</u><u class=\'time\'>' + dt.pubdate + '</u></span></p><a href=\'/s/' + dt.id + '.html\' class=\'btn\'><em></em>下载</a>'
             agmUl.appendChild(ghtml)
           }
           if (len < 20) {
             gameBtn.innerText = '加载完毕啦,么么哒~'
-          }
-          else {
+          } else {
             gameBtn.innerText = '点击有惊喜,萌萌哒~'
           }
           agm = agm + 20
         }
-        // 将时间戳转换成 yy-mm-dd
-        function to_date(phpstr) {
-          let str = parseInt(phpstr) * 1000;//将php时间戳转化为整形并乘以1000
-          let newDate = new Date(str);
-          let yy = newDate.getUTCFullYear();//取年份
-          let mm = newDate.getUTCMonth() + 1;//取月份
-          let dd = newDate.getUTCDate();//取天数
-          return yy + "-" + mm + "-" + dd;//拼接
+        function toDate(phpstr) {
+          let str = parseInt(phpstr) * 1000
+          let newDate = new Date(str)
+          let yy = newDate.getUTCFullYear()
+          let mm = newDate.getUTCMonth() + 1
+          let dd = newDate.getUTCDate()
+          return yy + '-' + mm + '-' + dd
         }
       })
     }

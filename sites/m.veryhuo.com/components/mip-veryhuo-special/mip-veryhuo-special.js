@@ -9,15 +9,8 @@ export default class MIPMhotComment extends CustomElement {
   build () {
     let bnum = 0
     let nnum = 0
-    // let PageType = ''
     let mclassifyCont = this.element.querySelectorAll('#mclassifyCont')[0]
     let ztheader = this.element.querySelectorAll('.ztheader')
-    let cSOHUCS = this.element.querySelectorAll('#SOHUCS')
-    if (cSOHUCS.length > 0) {
-      if (cSOHUCS[0].attributes['PageType'].value !== undefined) {
-        PageType = cSOHUCS[0].attributes['PageType'].value
-      }
-    }
     let oDiv = this.element.querySelectorAll('.SearchBox')[0]
     let csearchDiv = this.element.querySelectorAll('.searchDiv')[0]
     let sear = this.element.querySelectorAll('.searchDiv input')
@@ -129,16 +122,17 @@ export default class MIPMhotComment extends CustomElement {
     let specG = this.element.querySelector('#spec-game')
     let specS = this.element.querySelector('#spec-soft')
     let sp1 = 20
+    let zz = 13
     btn1.onclick = function () {
       if (btn1.innerText === '加载完毕啦，么么哒~') return false
       // 创建一个Request对象
       let req = new Request('https://admin.veryhuo.com/mobile/open/spec_more?type=1&p=' + sp1, {
         method: 'GET',
         cache: 'reload'
-      });
+      })
       fetch(req).then(function (response) {
         return response.json()
-      }).then(function(data) {
+      }).then(function (data) {
         if (data === '') {
           btn1.innerText = '加载完毕啦,么么哒~'
           return false
@@ -152,10 +146,10 @@ export default class MIPMhotComment extends CustomElement {
             if (dt.litpic === '') {
               dt.litpic = '/images/nologo.png'
             } else {
-              dt.litpic='https://admin.veryhuo.com/upload/' + dt.litpic
+              dt.litpic = 'https://admin.veryhuo.com/upload/' + dt.litpic
             }
-            khtml = document.createElement("li")
-            khtml.innerHTML = "<a href='/z/" + dt.filename + "/'><span><mip-img src='" + dt.litpic + "'></mip-img></span><p>" + dt.title + "</p></a>"
+            khtml = document.createElement('li')
+            khtml.innerHTML = '<a href=\'/z/' + dt.filename + '/\'><span><mip-img src=\'' + dt.litpic + '\'></mip-img></span><p>' + dt.title + '</p></a>'
             zz += 1
             specG.appendChild(khtml)
           }
@@ -166,7 +160,7 @@ export default class MIPMhotComment extends CustomElement {
           }
           sp1 = sp1 + 20
         }
-      });
+      })
     }
     let sp2 = 20
     btn2.onclick = function () {
@@ -191,10 +185,10 @@ export default class MIPMhotComment extends CustomElement {
             if (dt.litpic === '') {
               dt.litpic = '/images/nologo.png'
             } else {
-              dt.litpic='https://admin.veryhuo.com/upload/'+dt.litpic
+              dt.litpic = 'https://admin.veryhuo.com/upload/' + dt.litpic
             }
             shtml = document.createElement('li')
-            shtml.innerHTML = "<a href='/z/" + dt.filename + "/'><span><mip-img src='" + dt.litpic + "'></mip-img></span><p>" + dt.title + "</p></a>"
+            shtml.innerHTML = '<a href=\'/z/' + dt.filename + '/\'><span><mip-img src=\'' + dt.litpic + '\'></mip-img></span><p>' + dt.title + '</p></a>'
             zz += 1
             specS.appendChild(shtml)
           }

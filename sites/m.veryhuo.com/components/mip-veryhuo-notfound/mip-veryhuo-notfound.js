@@ -1,4 +1,4 @@
-const { CustomElement} = MIP
+const { CustomElement } = MIP
 
 export default class MIPMhotComment extends CustomElement {
   build () {
