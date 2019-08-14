@@ -9,7 +9,7 @@ export default class MIPMhotComment extends CustomElement {
   build () {
     let bnum = 0
     let nnum = 0
-    let PageType = ''
+    // let PageType = ''
     let mclassifyCont = this.element.querySelectorAll('#mclassifyCont')[0]
     let ztheader = this.element.querySelectorAll('.ztheader')
     let cSOHUCS = this.element.querySelectorAll('#SOHUCS')
@@ -21,7 +21,7 @@ export default class MIPMhotComment extends CustomElement {
     let oDiv = this.element.querySelectorAll('.SearchBox')[0]
     let csearchDiv = this.element.querySelectorAll('.searchDiv')[0]
     let sear = this.element.querySelectorAll('.searchDiv input')
-    let cnav = this.element.querySelectorAll('nav')[0]   // 导航盒子
+    let cnav = this.element.querySelectorAll('nav')[0]
     let mclassify = this.element.querySelectorAll('#mclassify')[0]
     let pullNav = this.element.querySelectorAll('#nav .pullNav')
     let moreNav = this.element.querySelectorAll('#nav .moreNav')
@@ -46,7 +46,7 @@ export default class MIPMhotComment extends CustomElement {
     // 点击回到顶部按钮
     cbacktop.onclick = function () {
       document.documentElement.scrollTop = 0
-    };
+    }
     if (ztheader.length === 0) {
       // 点击搜索按钮，显示搜索框盒子，隐藏分类盒子
       oDiv.onclick = function () {
@@ -110,13 +110,13 @@ export default class MIPMhotComment extends CustomElement {
         }
       }
     }
-    let lis = this.element.querySelectorAll('.hqnav i');
-    let uls = this.element.querySelectorAll('.speContent');
+    let lis = this.element.querySelectorAll('.hqnav i')
+    let uls = this.element.querySelectorAll('.speContent')
     for (let i = 0; i < lis.length; i++) {
-      lis[i].id = i;
+      lis[i].id = i
       lis[i].onclick = function () {
         for (let j = 0; j < lis.length; j++) {
-          lis[j].className = '';
+          lis[j].className = ''
           uls[j].style.display = 'none'
         }
         this.className = 'cur'
@@ -124,16 +124,15 @@ export default class MIPMhotComment extends CustomElement {
       }
     }
     // 点击更多按钮
-    let btn1 = this.element.querySelector('#btn1');
-    let btn2 = this.element.querySelector('#btn2');
-    let specG = this.element.querySelector('#spec-game');
-    let specS = this.element.querySelector('#spec-soft');
+    let btn1 = this.element.querySelector('#btn1')
+    let btn2 = this.element.querySelector('#btn2')
+    let specG = this.element.querySelector('#spec-game')
+    let specS = this.element.querySelector('#spec-soft')
     let sp1 = 20
-    let zz = 13
     btn1.onclick = function () {
-      if (btn1.innerText === '加载完毕啦，么么哒~') return false;
+      if (btn1.innerText === '加载完毕啦，么么哒~') return false
       // 创建一个Request对象
-      let req = new Request('https://admin.veryhuo.com/mobile/open/spec_more?type=1&p='+sp1, {
+      let req = new Request('https://admin.veryhuo.com/mobile/open/spec_more?type=1&p=' + sp1, {
         method: 'GET',
         cache: 'reload'
       });
@@ -143,52 +142,50 @@ export default class MIPMhotComment extends CustomElement {
         if (data === '') {
           btn1.innerText = '加载完毕啦,么么哒~'
           return false
-        }else{
+        } else {
           btn1.innerText = '加载中...'
-          let khtml = '';
-          let len = data.length;
-          for (let i = 0;i < len; i++) {
-            let dt = data[i];
+          let khtml = ''
+          let len = data.length
+          for (let i = 0; i < len; i++) {
+            let dt = data[i]
             console.log(dt)
             if (dt.litpic === '') {
               dt.litpic = '/images/nologo.png'
             } else {
-              dt.litpic='https://admin.veryhuo.com/upload/'+dt.litpic
+              dt.litpic='https://admin.veryhuo.com/upload/' + dt.litpic
             }
             khtml = document.createElement("li")
-            khtml.innerHTML = "<a href='/z/"+dt.filename+"/'><span><mip-img src='"+dt.litpic+"'></mip-img></span><p>"+dt.title+"</p></a>"
-            zz += 1;
+            khtml.innerHTML = "<a href='/z/" + dt.filename + "/'><span><mip-img src='" + dt.litpic + "'></mip-img></span><p>" + dt.title + "</p></a>"
+            zz += 1
             specG.appendChild(khtml)
           }
           if (len < 20) {
             btn1.innerText = '加载完毕啦,么么哒~'
-          }
-          else {
+          } else {
             btn1.innerText = '点击有惊喜,萌萌哒~'
           }
           sp1 = sp1 + 20
         }
       });
     }
-    let sp2 = 20;
+    let sp2 = 20
     btn2.onclick = function () {
       if (btn2.innerText === '加载完毕啦，么么哒~') return false
-      // 创建一个Request对象
-      let req = new Request('https://admin.veryhuo.com/mobile/open/spec_more?type=2&p='+sp2, {
+      let req = new Request('https://admin.veryhuo.com/mobile/open/spec_more?type=2&p=' + sp2, {
         method: 'GET',
         cache: 'reload'
-      });
+      })
       fetch(req).then(function (response) {
         return response.json()
-      }).then(function(data) {
+      }).then(function (data) {
         if (data === '') {
-          btn2.innerText = '加载完毕啦,么么哒~';
+          btn2.innerText = '加载完毕啦,么么哒~'
           return false
-        }else{
+        } else {
           btn2.innerText = '加载中...'
-          let shtml = '';
+          let shtml = ''
           let len = data.length
-          for (let i = 0;i < len; i++) {
+          for (let i = 0; i < len; i++) {
             let dt = data[i]
             console.log(dt)
             if (dt.litpic === '') {
@@ -196,15 +193,14 @@ export default class MIPMhotComment extends CustomElement {
             } else {
               dt.litpic='https://admin.veryhuo.com/upload/'+dt.litpic
             }
-            shtml = document.createElement("li")
-            shtml.innerHTML = "<a href='/z/"+dt.filename+"/'><span><mip-img src='"+dt.litpic+"'></mip-img></span><p>"+dt.title+"</p></a>";
+            shtml = document.createElement('li')
+            shtml.innerHTML = "<a href='/z/" + dt.filename + "/'><span><mip-img src='" + dt.litpic + "'></mip-img></span><p>" + dt.title + "</p></a>"
             zz += 1
             specS.appendChild(shtml)
           }
           if (len < 20) {
             btn2.innerText = '加载完毕啦,么么哒~'
-          }
-          else {
+          } else {
             btn2.innerText = '点击有惊喜,萌萌哒~'
           }
           sp2 = sp2 + 20

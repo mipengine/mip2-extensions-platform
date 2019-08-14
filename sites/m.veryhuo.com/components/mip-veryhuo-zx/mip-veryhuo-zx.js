@@ -9,7 +9,7 @@ export default class MIPMhotComment extends CustomElement {
   build () {
     let bnum = 0
     let nnum = 0
-    let PageType = ''
+    // let PageType = ''
     let mclassifyCont = this.element.querySelectorAll('#mclassifyCont')[0]
     let ztheader = this.element.querySelectorAll('.ztheader')
     let cSOHUCS = this.element.querySelectorAll('#SOHUCS')
@@ -21,7 +21,7 @@ export default class MIPMhotComment extends CustomElement {
     let oDiv = this.element.querySelectorAll('.SearchBox')[0]
     let csearchDiv = this.element.querySelectorAll('.searchDiv')[0]
     let sear = this.element.querySelectorAll('.searchDiv input')
-    let cnav = this.element.querySelectorAll('nav')[0]   // 导航盒子
+    let cnav = this.element.querySelectorAll('nav')[0]
     let mclassify = this.element.querySelectorAll('#mclassify')[0]
     let pullNav = this.element.querySelectorAll('#nav .pullNav')
     let moreNav = this.element.querySelectorAll('#nav .moreNav')
@@ -113,28 +113,28 @@ export default class MIPMhotComment extends CustomElement {
         }
       }
     }
-    let zxAs = this.element.querySelectorAll('#zxnav-tit a');    // 获取资讯标题
-    let open = this.element.querySelector('.open');   // 展开按钮
-    let close = this.element.querySelector('.close');  // 关闭按钮
-    let aTit = this.element.querySelectorAll('.aTit');
+    let zxAs = this.element.querySelectorAll('#zxnav-tit a')
+    let open = this.element.querySelector('.open')
+    let close = this.element.querySelector('.close')
+    let aTit = this.element.querySelectorAll('.aTit')
+    let zz = 13
     open.onclick = function () {
-      css(zxAs, {display: 'block'});
+      css(zxAs, {display: 'block'})
       css(open, {display: 'none'})
     }
     close.onclick = function () {
-      css(aTit, {display: 'none'});
-      css(close, {display: 'none'});
+      css(aTit, {display: 'none'})
+      css(close, {display: 'none'})
       css(open, {display: 'block'})
     }
-    // 点击更多按钮
-    let btnzx = this.element.querySelector('#btnzx');  // 更多按钮
-    let dlist = this.element.querySelector('#dlist');  // ul
-    let zx_typeid = document.getElementById('zx_typeid').getAttribute('value');
-    let zxp1 = 10;
+    let btnzx = this.element.querySelector('#btnzx')
+    let dlist = this.element.querySelector('#dlist')
+    let zxTypeid = document.getElementById('zx_typeid').getAttribute('value')
+    let zxp1 = 10
     btnzx.onclick = function () {
-      if (btnzx.innerText === "加载完毕啦,么么哒~") return false
+      if (btnzx.innerText === '加载完毕啦,么么哒~') return false
       // 创建一个Request对象
-      let req = new Request('https://admin.veryhuo.com/mobile/open/archives_more?p='+zxp1+'&typeid='+zx_typeid, {
+      let req = new Request('https://admin.veryhuo.com/mobile/open/archives_more?p=' + zxp1 + '&typeid=' + zxTypeid, {
         method: 'GET',
         cache: 'reload'
       });
@@ -145,30 +145,29 @@ export default class MIPMhotComment extends CustomElement {
           btnzx.innerText = '加载完毕啦,么么哒~'
           return false
         } else {
-          btnzx.innerText = '加载中...';
-          let khtml = '';
-          let len = data.length;
-          for (let i = 0;i < len; i++) {
-            let dt = data[i];
+          btnzx.innerText = '加载中...'
+          let khtml = ''
+          let len = data.length
+          for (let i = 0; i < len; i++) {
+            let dt = data[i]
             if (dt.litpic === '') {
-              dt.litpic='/images/noimg.png'
+              dt.litpic = '/images/noimg.png'
             } else {
-              var litpic=dt.litpic;
-              if (litpic.indexOf("article/") !== -1 || litpic.indexOf("default/") !== -1) {
-                litpic='https://admin.veryhuo.com/upload/'+litpic
+              let litpic = dt.litpic;
+              if (litpic.indexOf('article/') !== -1 || litpic.indexOf('default/') !== -1) {
+                litpic = 'https://admin.veryhuo.com/upload/' + litpic
               } else {
-                litpic='https://www.veryhuo.com'+litpic
+                litpic = 'https://www.veryhuo.com' + litpic
               }
             }
-            khtml = document.createElement("li")
-            khtml.innerHTML = "<img src='"+litpic+"'><a href='/a/"+dt.id+".html'>"+dt.title+"</a><p>"+dt.description+"</p>"
-            zz += 1;
+            khtml = document.createElement('li')
+            khtml.innerHTML = "<img src='" + litpic + "'><a href='/a/" + dt.id + ".html'>" + dt.title + "</a><p>" + dt.description + "</p>"
+            zz += 1
             dlist.appendChild(khtml)
           }
           if (len < 20) {
             btnzx.innerText = '加载完毕啦,么么哒~'
-          }
-          else {
+          } else {
             btnzx.innerText = '点击有惊喜,萌萌哒~'
           }
           zxp1 = zxp1 + 20
