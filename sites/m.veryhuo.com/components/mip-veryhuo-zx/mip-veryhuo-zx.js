@@ -155,7 +155,7 @@ export default class MIPMhotComment extends CustomElement {
             }
             khtml = document.createElement('li')
             khtml.innerHTML = '<img src=\'' + dt.litpic + '\'><a href=\'/a/' + dt.id + '.html\'>' + dt.title + '</a><p>' + dt.description + '</p>'
-            zz += 1
+            zz = zz + 1
             dlist.appendChild(khtml)
           }
           if (len < 20) {

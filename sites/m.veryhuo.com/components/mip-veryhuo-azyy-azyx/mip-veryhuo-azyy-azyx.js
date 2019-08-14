@@ -67,7 +67,7 @@ export default class MIPMhotComment extends CustomElement {
           css(mclassifyCont, {display: 'none'})
           css(csearchDiv, {display: 'block'})
           if (sear.length > 0) {
-              sear[0].focus()
+            sear[0].focus()
           }
           bnum = 1
           nnum = 0
@@ -84,43 +84,43 @@ export default class MIPMhotComment extends CustomElement {
       }
       // 给隐藏的分类 tab 标题添加类样式
       for (let i = 0; i < cmslass.length; i++) {
-          cmslass[i].onclick = function () {
-              let siblings = this.parentNode.childNodes
-              for (let i = 0; i < siblings.length; i++) {
-                  if (siblings[i].nodeType === 1) {
-                      siblings[i].className = ''
-                      this.className = 'cur'
-                      cmslass[i].index = i
-                  }
-              }
-              // 点击隐藏的分类 tab 标题切换ul列表数据
-              if (this.index === 0) {
-                  cul[0].className = 'on'
-              } else {
-                  cul[0].className = ''
-              }
-              if (this.index === 1) {
-                  cul[1].className = 'on'
-              } else {
-                  cul[1].className = ''
-              }
+        cmslass[i].onclick = function () {
+          let siblings = this.parentNode.childNodes
+          for (let i = 0; i < siblings.length; i++) {
+            if (siblings[i].nodeType === 1) {
+              siblings[i].className = ''
+              this.className = 'cur'
+              cmslass[i].index = i
+            }
           }
+          // 点击隐藏的分类 tab 标题切换ul列表数据
+          if (this.index === 0) {
+            cul[0].className = 'on'
+          } else {
+            cul[0].className = ''
+          }
+          if (this.index === 1) {
+            cul[1].className = 'on'
+          } else {
+            cul[1].className = ''
+          }
+        }
       }
       // 点击顶部分类按钮
       mclassify.onclick = function () {
-          if (nnum === 0) {
-              css(mclassifyCont, {display: 'block'})
-              if (pullNav.length > 0) {
-                  pullNav[0].classList.remove('open')
-              }
-              if (moreNav.length > 0) {
-                  css(moreNav[0], {display: 'none'})
-              }
-              nnum = 1
-          } else {
-              css(mclassifyCont, {display: 'none'})
-              nnum = 0
+        if (nnum === 0) {
+          css(mclassifyCont, {display: 'block'})
+          if (pullNav.length > 0) {
+            pullNav[0].classList.remove('open')
           }
+          if (moreNav.length > 0) {
+            css(moreNav[0], {display: 'none'})
+          }
+          nnum = 1
+        } else {
+          css(mclassifyCont, {display: 'none'})
+          nnum = 0
+        }
       }
     }
     let browser1 = {
@@ -128,35 +128,35 @@ export default class MIPMhotComment extends CustomElement {
         let u = navigator.userAgent
         return {
           trident: u.indexOf('Trident') > -1,
-          presto: u.indexOf('Presto') > -1, 
+          presto: u.indexOf('Presto') > -1,
           webKit: u.indexOf('AppleWebKit') > -1,
-          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') === -1, 
+          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') === -1,
           mobile: !!u.match(/AppleWebKit.*Mobile/i) || !!u.match(/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/),
           ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
-          android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, 
+          android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
           iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
-          iPad: u.indexOf('iPad') > -1, 
-          webApp: u.indexOf('Safari') === -1 
+          iPad: u.indexOf('iPad') > -1,
+          webApp: u.indexOf('Safari') === -1
         }
       })(),
       language: (navigator.browserLanguage || navigator.language).toLowerCase()
     }
     if (location.href.indexOf('m.veryhuo.com') > -1 && browser1.versions.mobile === false && browser1.versions.ios === false && browser1.versions.android === false && browser1.versions.iPhone === false && browser1.versions.iPad === false) {
-      window.location='http://www.veryhuo.com'
+      window.location = 'http://www.veryhuo.com'
     }
     let moreBtn = this.element.querySelector('#soft-more')
     let sUl = this.element.querySelector('#soft-list')
-    let soft_p = 20
+    let softP = 20
     let isgame = document.getElementById('isgame').getAttribute('value')
     moreBtn.onclick = function () {
       // 创建一个Request对象
-      let req = new Request('https://admin.veryhuo.com/mobile/open/more_soft?p=' + soft_p + '&type=2&isgame=' + isgame, {
+      let req = new Request('https://admin.veryhuo.com/mobile/open/more_soft?p=' + softP + '&type=2&isgame=' + isgame, {
         method: 'GET',
         cache: 'reload'
-      });
+      })
       fetch(req).then(function (response) {
         return response.json()
-      }).then(function(data) {
+      }).then(function (data) {
         if (data === '') {
           moreBtn.innerText = '加载完毕啦,么么哒~'
           return false
@@ -165,20 +165,20 @@ export default class MIPMhotComment extends CustomElement {
           let khtml = ''
           let len = data.length
           for (let i = 0; i < len; i++) {
-              let dt = data[i]
-              dt.pubdate = to_date(dt.pubdate)
-              khtml = document.createElement("li")
-              khtml.innerHTML = '<a class=\'img\' href=\'/s/' + dt.id + '.html\'><mip-img src=\'' + dt.litpic + '\'></mip-img></a><p><a href=\'/s/' + dt.id + '.html\'>' + dt.title + '</a><span><u>' + dt.typename + '</u>' + dt.softsize + '</span><span><u class=\'vis\'>' + dt.os + '</u><u class=\'time\'>' + dt.pubdate + '</u></span></p><a href=\'/s/' + dt.id + '.html\' class=\'btn\'><em></em>下载</a>'
-              sUl.appendChild(khtml)
+            let dt = data[i]
+            dt.pubdate = toDate(dt.pubdate)
+            khtml = document.createElement('li')
+            khtml.innerHTML = '<a class=\'img\' href=\'/s/' + dt.id + '.html\'><mip-img src=\'' + dt.litpic + '\'></mip-img></a><p><a href=\'/s/' + dt.id + '.html\'>' + dt.title + '</a><span><u>' + dt.typename + '</u>' + dt.softsize + '</span><span><u class=\'vis\'>' + dt.os + '</u><u class=\'time\'>' + dt.pubdate + '</u></span></p><a href=\'/s/' + dt.id + '.html\' class=\'btn\'><em></em>下载</a>'
+            sUl.appendChild(khtml)
           }
           if (len < 20) {
-              moreBtn.innerText = '加载完毕啦,么么哒~'
+            moreBtn.innerText = '加载完毕啦,么么哒~'
           } else {
-              moreBtn.innerText = '点击有惊喜,萌萌哒~'
+            moreBtn.innerText = '点击有惊喜,萌萌哒~'
           }
-          soft_p = soft_p + 20
+          softP = softP + 20
         }
-        function to_date(phpstr) {
+        function toDate (phpstr) {
           let str = parseInt(phpstr) * 1000
           let newDate = new Date(str)
           let yy = newDate.getUTCFullYear()

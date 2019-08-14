@@ -159,7 +159,6 @@ export default class MIPMhotComment extends CustomElement {
       window.stop ? window.stop() : document.execCommand('Stop')
       window.location.href = '/mip_ddooo_m.rar/index.html'
     }
-    console.log(type);
     let moreBtn = this.element.querySelector('#moreApp')
     let iList = this.element.querySelector('.Apply .iList')
     // 发送请求
@@ -182,7 +181,7 @@ export default class MIPMhotComment extends CustomElement {
           } else {
             moreBtn.innerText = '加载中...'
             let khtml = ''
-            let len = data.length;
+            let len = data.length
             for (let i = 0; i < len; i++) {
               let dt = data[i]
               dt.pubdate = toDate(dt.pubdate)

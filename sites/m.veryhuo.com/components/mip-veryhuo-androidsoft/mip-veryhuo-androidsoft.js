@@ -26,7 +26,7 @@ export default class MIPMhotComment extends CustomElement {
     let fixNav = this.element.querySelector('.fixNav')
     let cbacktop = this.element.querySelectorAll('#Cbacktop')[0]
     let zxNav = this.element.querySelector('#zxNav')
-    searBtn.onclick = function() {
+    searBtn.onclick = function () {
       if (oDiv.length === 0) {
         css(alert, {display: 'block'})
       } else {
@@ -115,29 +115,29 @@ export default class MIPMhotComment extends CustomElement {
         return {
           trident: u.indexOf('Trident') > -1,
           presto: u.indexOf('Presto') > -1,
-          webKit: u.indexOf('AppleWebKit') > -1, 
-          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') === -1, 
-          mobile: !!u.match(/AppleWebKit.*Mobile/i) || !!u.match(/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/), 
-          ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), 
-          android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1, 
-          iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1, 
-          iPad: u.indexOf('iPad') > -1, 
-          webApp: u.indexOf('Safari') === -1 
+          webKit: u.indexOf('AppleWebKit') > -1,
+          gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') === -1,
+          mobile: !!u.match(/AppleWebKit.*Mobile/i) || !!u.match(/MIDP|SymbianOS|NOKIA|SAMSUNG|LG|NEC|TCL|Alcatel|BIRD|DBTEL|Dopod|PHILIPS|HAIER|LENOVO|MOT-|Nokia|SonyEricsson|SIE-|Amoi|ZTE/),
+          ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/),
+          android: u.indexOf('Android') > -1 || u.indexOf('Linux') > -1,
+          iPhone: u.indexOf('iPhone') > -1 || u.indexOf('Mac') > -1,
+          iPad: u.indexOf('iPad') > -1,
+          webApp: u.indexOf('Safari') === -1
         }
       })(),
       language: (navigator.browserLanguage || navigator.language).toLowerCase()
     }
     if (location.href.indexOf('m.veryhuo.com') > -1 && browser1.versions.mobile === false && browser1.versions.ios === false && browser1.versions.android === false && browser1.versions.iPhone === false && browser1.versions.iPad === false) {
-      window.location='http://www.veryhuo.com'
+      window.location = 'http://www.veryhuo.com'
     }
     let moreBtn = this.element.querySelector('#androidsoft-more')
     let asmUl = this.element.querySelector('#asm')
     let asm = 18
     moreBtn.onclick = function () {
-      let req = new Request('https://admin.veryhuo.com/mobile/open/more_soft?p='+asm+'&type=2'+'&isgame=0', {
+      let req = new Request('https://admin.veryhuo.com/mobile/open/more_soft?p=' + asm + '&type=2' + '&isgame=0', {
         method: 'GET',
         cache: 'reload'
-      });
+      })
       fetch(req).then(function (response) {
         return response.json()
       }).then(function (data) {
@@ -204,7 +204,7 @@ export default class MIPMhotComment extends CustomElement {
           }
           agm = agm + 20
         }
-        function toDate(phpstr) {
+        function toDate (phpstr) {
           let str = parseInt(phpstr) * 1000
           let newDate = new Date(str)
           let yy = newDate.getUTCFullYear()

@@ -156,8 +156,7 @@ export default class MIPMhotComment extends CustomElement {
           }
         }
       }
-    }
-    else if (iosweb === '1') {
+    } else if (iosweb === '1') {
       if (isyouxi === '1') {
         window.location.href = '/mip_ddooo_m.rar/rank.html'
       } else if (isyouxi === '2') {

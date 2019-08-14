@@ -185,7 +185,7 @@ export default class MIPMhotComment extends CustomElement {
     btn1.onclick = function () {
       if (btn1.innerText === '加载完毕啦') return false
       // 创建一个Request对象
-      let req = new Request('https://admin.veryhuo.com/mobile/open/list_more_zuixin?type='+ type + '&p='+ p + '&type_id=' + typeid, {
+      let req = new Request('https://admin.veryhuo.com/mobile/open/list_more_zuixin?type=' + type + '&p=' + p + '&type_id=' + typeNum, {
         method: 'GET',
         cache: 'reload'
       })
@@ -202,7 +202,7 @@ export default class MIPMhotComment extends CustomElement {
           for (let i = 0; i < len; i++) {
             let dt = data[i]
             if (dt.litpic === '') {
-              dt.litpic ='/images/nologo.png'
+              dt.litpic = '/images/nologo.png'
             }
             if (dt.version === 0) {
               dt.version = dt.os
@@ -210,8 +210,8 @@ export default class MIPMhotComment extends CustomElement {
               dt.softrank = 5
             }
             khtml = document.createElement('li')
-            khtml.innerHTML = '<div><a href=\'/s/' + dt.id + '.html\'><mip-img src=\'' + dt.litpic + '\'></mip-img></a><p><a href=\'/s/' + dt.id + '.html\'>'+ dt.title + '</a><span class=\'star\'><span class=\'star' + dt.softrank + '\'></span></span><span class=\'size\'>' + typename + '<i>|</i>' + dt.version + '<i>|</i>' + dt.softsize + '</span></p></div><a href=\'/s/' + dt.id + '.html\' class=\'aDown\'>下载</a>'
-            zz += 1
+            khtml.innerHTML = '<div><a href=\'/s/' + dt.id + '.html\'><mip-img src=\'' + dt.litpic + '\'></mip-img></a><p><a href=\'/s/' + dt.id + '.html\'>' + dt.title + '</a><span class=\'star\'><span class=\'star' + dt.softrank + '\'></span></span><span class=\'size\'>' + typename + '<i>|</i>' + dt.version + '<i>|</i>' + dt.softsize + '</span></p></div><a href=\'/s/' + dt.id + '.html\' class=\'aDown\'>下载</a>'
+            zz = zz + 1
             lists1.appendChild(khtml)
           }
           if (len < 10) {
@@ -225,7 +225,7 @@ export default class MIPMhotComment extends CustomElement {
     }
     let hqp = 10
     btn2.onclick = function () {
-      if (btn2.innerText === "加载完毕啦") return false
+      if (btn2.innerText === '加载完毕啦') return false
       let req = new Request('https://admin.veryhuo.com/mobile/open/list_more_zuire?type=' + type + '&p=' + hqp + '&type_id=' + typeNum, {
         method: 'GET',
         cache: 'reload'
@@ -255,13 +255,12 @@ export default class MIPMhotComment extends CustomElement {
             }
             rhtml = document.createElement('li')
             rhtml.innerHTML = '<div><a href=\'/s/' + dt.id + '.html\'><mip-img src=\'' + dt.litpic + '\'></mip-img></a><p><a href=\'/s/' + dt.id + '.html\'>' + dt.title + '</a><span class=\'star\'><span class=\'star' + dt.softrank + '\'></span></span><span class=\'size\'>' + typename + '<i>|</i>' + dt.version + '<i>|</i>' + dt.softsize + '</span></p></div><a href=\'/s/' + dt.id + '.html\' class=\'aDown\'>下载</a>'
-            zz += 1
+            zz = zz + 1
             lists2.appendChild(rhtml)
           }
           if (len < 20) {
             btn2.innerText = '加载完毕啦,么么哒~'
-          }
-          else {
+          } else {
             btn2.innerText = '点击有惊喜,萌萌哒~'
           }
           hqp = hqp + 30
@@ -301,7 +300,7 @@ export default class MIPMhotComment extends CustomElement {
             }
             phtml = document.createElement('li')
             phtml.innerHTML = '<div><a href=\'/s/' + dt.id + '.html\'><mip-img src=\'' + dt.litpic + '\'></mip-img></a><p><a href=\'/s/' + dt.id + '.html\'>' + dt.title + '</a><span class=\'star\'><span class=\'star' + dt.softrank + '\'></span></span><span class=\'size\'>' + typename + '<i>|</i>' + dt.version + '<i>|</i>' + dt.softsize + '</span></p></div><a href=\'/s/' + dt.id + '.html\' class=\'aDown\'>下载</a>'
-            zz += 1
+            zz = zz + 1
             lists3.appendChild(phtml)
           }
           if (len < 20) {

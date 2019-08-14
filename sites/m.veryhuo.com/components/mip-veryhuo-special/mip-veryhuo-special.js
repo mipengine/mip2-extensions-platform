@@ -121,8 +121,8 @@ export default class MIPMhotComment extends CustomElement {
     let btn2 = this.element.querySelector('#btn2')
     let specG = this.element.querySelector('#spec-game')
     let specS = this.element.querySelector('#spec-soft')
-    let sp1 = 20
     let zz = 13
+    let sp1 = 20
     btn1.onclick = function () {
       if (btn1.innerText === '加载完毕啦，么么哒~') return false
       // 创建一个Request对象
@@ -150,7 +150,7 @@ export default class MIPMhotComment extends CustomElement {
             }
             khtml = document.createElement('li')
             khtml.innerHTML = '<a href=\'/z/' + dt.filename + '/\'><span><mip-img src=\'' + dt.litpic + '\'></mip-img></span><p>' + dt.title + '</p></a>'
-            zz += 1
+            zz = zz + 1
             specG.appendChild(khtml)
           }
           if (len < 20) {
@@ -189,7 +189,7 @@ export default class MIPMhotComment extends CustomElement {
             }
             shtml = document.createElement('li')
             shtml.innerHTML = '<a href=\'/z/' + dt.filename + '/\'><span><mip-img src=\'' + dt.litpic + '\'></mip-img></span><p>' + dt.title + '</p></a>'
-            zz += 1
+            zz = zz + 1
             specS.appendChild(shtml)
           }
           if (len < 20) {

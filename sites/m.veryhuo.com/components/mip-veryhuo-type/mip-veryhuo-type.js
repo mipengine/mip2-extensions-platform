@@ -135,24 +135,23 @@ export default class MIPMhotComment extends CustomElement {
       language: (navigator.browserLanguage || navigator.language).toLowerCase()
     }
     if (location.href.indexOf('m.veryhuo.com') > -1 && browser1.versions.mobile === false && browser1.versions.ios === false && browser1.versions.android === false && browser1.versions.iPhone === false && browser1.versions.iPad === false) {
-      window.location='http://www.veryhuo.com'
+      window.location = 'http://www.veryhuo.com'
     }
     let u = navigator.userAgent
-    let isIphone= !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
+    let isIphone = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
     let iosweb = document.getElementById('iosweb').getAttribute('value')
     let classweb = document.getElementById('classweb').getAttribute('value')
     let isyouxi = document.getElementById('isyouxi').getAttribute('value')
-    var type =  iosweb === '0' ? '2' : '3'
     if (isIphone) {
       if (classweb === '1') {
         if (iosweb === '0') {
           let url = window.location.href
           if (isyouxi === '1') {
-            if (url.indexOf('611') !== -1){
+            if (url.indexOf('611') !== -1) {
               window.location.href = '/mip_ddooo_m.rar/list/987.html'
             }
           } else {
-            if (url.indexOf('363') !== -1){
+            if (url.indexOf('363') !== -1) {
               window.location.href = '/mip_ddooo_m.rar/list/986.html'
             }
           }
@@ -162,11 +161,11 @@ export default class MIPMhotComment extends CustomElement {
       if (classweb === '1') {
         let url = window.location.href
         if (isyouxi === '1') {
-          if (url.indexOf('987') !== -1){
+          if (url.indexOf('987') !== -1) {
             window.location.href = '/mip_ddooo_m.rar/list/611.html'
           }
-        } else {    //软件
-          if (url.indexOf('986') !== -1){
+        } else {
+          if (url.indexOf('986') !== -1) {
             window.location.href = '/mip_ddooo_m.rar/list/363.html'
           }
         }
