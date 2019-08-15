@@ -1,5 +1,7 @@
 # mip2-extensions-platform
 
+> 站长组件是扩展 MIP 功能的一种形式，在开发提交站长组件之前，请首先阅读[《请优先使用 MIP 现有机制和官方组件来实现业务功能》](https://www.mipengine.org/v2/contribute/getting-start/how-to-contribute.html)一文，看看所需要开发的站长组件是否已被 MIP 现有的机制和官方组件覆盖了，能够覆盖到的功能请勿重复开发相应的站长组件，减少开发和审核的时间成本。
+
 ## MIP 2 站长组件
 
 与 MIP 1.0 采用的方式不同，MIP 2.0 以项目（一个站点）的粒度来管理站长组件。每一个项目（使用 `mip2 init` 命令生成）中包含了这个站点所需的所有自定义组件。
