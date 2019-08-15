@@ -32,9 +32,14 @@ MIP 2.0 的站长组件托管在 [Github 站长组件仓库](https://github.com/
 
 ```
 
-`sites` 目录即是站点项目的集合。示例中已经托管了 `test.a.com` 和 `test.b.com` 两个站点的自定义组件。站长各自在其 `components` 目录下[编写组件](https://github.com/mipengine/mip2/blob/master/docs/contribute/development/component-syntax.md)。
+`sites` 目录即是站点项目的集合。示例中已经托管了 `test.a.com` 和 `test.b.com` 两个站点的自定义组件。站长各自在其 `components` 目录下[编写组件](https://www.mipengine.org/v2/contribute/development/component-syntax.html)。
 
-本地需求实现并测试无误后，通过 `Pull Request` 的方式（暂时方案）提交审核，官方通过审核后会定期编译上线。
+在站长组件开发完成并测试无误后，通过 `Pull Request` 的方式提交审核，官方通过审核后会定期编译上线。审核标准会严格根据以下原则进行审核：
+
+1. 组件功能能够直接通过 MIP 现有机制和 MIP 官方组件实现的，此类组件没有意义，将会直接打回；
+2. 组件不满足[《MIP 组件开发规范》](https://www.mipengine.org/v2/contribute/getting-start/component-spec.html)的要求的，此类组件不规范，将会直接打回；
+3. Pull Request 和 组件 REAME.md 不清晰导致审核人员无法理解组件的功能、用法的，会直接打回或要求补全相关文档。README.md 文档翔实度请参考官方组件； 
+4. 审核人员给出审核意见但不进行修复，也不进行回复说明的，预期 1 个月 PR 无更新则直接 close PR。
 
 供站点使用的最终发布地址为：
 
@@ -72,9 +77,8 @@ $ mip2 init
 $ cd cafe.com
 ```
 切换到站点项目目录即可快速进行组件开发工作了：
-
-- [组件开发](https://github.com/mipengine/mip2/blob/master/docs/contribute/development/component-syntax.md)
-- [调试](https://github.com/mipengine/mip2/blob/master/docs/contribute/debug/mip-dev.md)
+- [如何开发 MIP 组件](https://www.mipengine.org/v2/contribute/development/component-syntax.html)
+- [调试](https://www.mipengine.org/v2/contribute/debug/mip-dev.html)
 - [校验](https://www.mipengine.org/v2/contribute/getting-start/mip-cli-usage.html#mip2-validate-%E7%BB%84%E4%BB%B6%E5%92%8C%E9%A1%B5%E9%9D%A2%E6%A0%A1%E9%AA%8C)
 
 
@@ -97,3 +101,9 @@ $ cd cafe.com
 <script src="https://c.mipcdn.com/extensions/platform/v2/test.a.com/mip-example/mip-example.js"></script>
 ```
 
+## 相关资料
+
+- [MIP 官网](https://www.mipengine.org/)
+- [如何提交站长组件代码](https://www.mipengine.org/v2/contribute/getting-start/how-to-contribute.html)
+- [MIP 官方组件列表](https://www.mipengine.org/v2/components/index.html)
+- MIP QQ 群：580967494，欢迎前来咨询
