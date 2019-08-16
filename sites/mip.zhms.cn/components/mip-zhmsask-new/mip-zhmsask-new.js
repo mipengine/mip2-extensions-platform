@@ -46,11 +46,11 @@ export default class MIPZhmsasknew extends MIP.CustomElement {
   }
   bindSubmit () {
     this.tap(this.zhmsask.getElementsByClassName('mip-zhmsask-submit-btn')[0], () => {
-      let protocol = document.getElementById('data-protocol').checked;
+      let protocol = document.getElementById('data-protocol').checked
       if (!protocol) {
         this.toast('请阅读并同意《九州醉餐饮网用户使用协议》后再试')
         return false
-	  }
+      }
       if (!this.isSubmit) {
         this.isSubmit = true
         let data = {}
