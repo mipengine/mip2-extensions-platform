@@ -148,11 +148,11 @@ export default class MIPMhotComment extends CustomElement {
           let url = window.location.href
           if (isyouxi === '1') {
             if (url.indexOf('611') !== -1) {
-              window.location.href = '/mip_ddooo_m.rar/list/987.html'
+              window.location.href = '/list/987.html'
             }
           } else {
             if (url.indexOf('363') !== -1) {
-              window.location.href = '/mip_ddooo_m.rar/list/986.html'
+              window.location.href = '/list/986.html'
             }
           }
         }
@@ -162,11 +162,11 @@ export default class MIPMhotComment extends CustomElement {
         let url = window.location.href
         if (isyouxi === '1') {
           if (url.indexOf('987') !== -1) {
-            window.location.href = '/mip_ddooo_m.rar/list/611.html'
+            window.location.href = '/list/611.html'
           }
         } else {
           if (url.indexOf('986') !== -1) {
-            window.location.href = '/mip_ddooo_m.rar/list/363.html'
+            window.location.href = '/list/363.html'
           }
         }
       }
