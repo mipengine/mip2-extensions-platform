@@ -153,11 +153,11 @@ export default class MIPMhotComment extends CustomElement {
     if (isIphone) {
       if (iosweb === '0') {
         window.stop ? window.stop() : document.execCommand('Stop')
-        window.location.href = '/mip_ddooo_m.rar/apple/index.html'
+        window.location.href = '/apple/index.html'
       }
     } else if (iosweb === '1') {
       window.stop ? window.stop() : document.execCommand('Stop')
-      window.location.href = '/mip_ddooo_m.rar/index.html'
+      window.location.href = '/index.html'
     }
     let moreBtn = this.element.querySelector('#moreApp')
     let iList = this.element.querySelector('.Apply .iList')
@@ -168,7 +168,7 @@ export default class MIPMhotComment extends CustomElement {
       moreBtn.onclick = function () {
         if (doing === 1) return false
         // 创建一个Request对象
-        let req = new Request('http://admin.veryhuo.com/mobile/open/more_soft?type=' + type + '&p=' + p, {
+        let req = new Request('https://admin.veryhuo.com/mobile/open/more_soft?type=' + type + '&p=' + p, {
           method: 'GET',
           cache: 'reload'
         })
