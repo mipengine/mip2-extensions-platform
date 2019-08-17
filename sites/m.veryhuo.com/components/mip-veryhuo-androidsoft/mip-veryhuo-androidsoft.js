@@ -152,7 +152,7 @@ export default class MIPMhotComment extends CustomElement {
             let dt = data[i]
             dt.pubdate = toDate(dt.pubdate)
             khtml = document.createElement('li')
-            khtml.innerHTML = '<a class=\'img\' href=\'/s/' + dt.id + '.html\'><img src=\'' + dt.litpic + '\'></a><p><a href=\'/s/' + dt.id + '.html\'>' + dt.title + '</a><span><u>' + dt.typename + '</u>' + dt.softsize + '</span><span><u class=\'vis\'>' + dt.os + '</u><u class=\'time\'>' + dt.pubdate + '</u></span></p><a href=\'/s/' + dt.id + '.html\' class=\'btn\'><em></em>下载</a>'
+            khtml.innerHTML = '<a class=\'img\' href=\'/s/' + dt.id + '.html\'><mip-img src=\'' + dt.litpic + '\'></a><p><a href=\'/s/' + dt.id + '.html\'></mip-img>' + dt.title + '</a><span><u>' + dt.typename + '</u>' + dt.softsize + '</span><span><u class=\'vis\'>' + dt.os + '</u><u class=\'time\'>' + dt.pubdate + '</u></span></p><a href=\'/s/' + dt.id + '.html\' class=\'btn\'><em></em>下载</a>'
             asmUl.appendChild(khtml)
           }
           if (len < 20) {
@@ -194,7 +194,7 @@ export default class MIPMhotComment extends CustomElement {
             let dt = data[i]
             dt.pubdate = toDate(dt.pubdate)
             ghtml = document.createElement('li')
-            ghtml.innerHTML = '<a class=\'img\' href=\'/s/' + dt.id + '.html\'><img src=\'' + dt.litpic + '\'></a><p><a href=\'/s/' + dt.id + '.html\'>' + dt.title + '</a><span><u>' + dt.typename + '</u>' + dt.softsize + '</span><span><u class=\'vis\'>' + dt.os + '</u><u class=\'time\'>' + dt.pubdate + '</u></span></p><a href=\'/s/' + dt.id + '.html\' class=\'btn\'><em></em>下载</a>'
+            ghtml.innerHTML = '<a class=\'img\' href=\'/s/' + dt.id + '.html\'><mip-img src=\'' + dt.litpic + '\'></mip-img></a><p><a href=\'/s/' + dt.id + '.html\'>' + dt.title + '</a><span><u>' + dt.typename + '</u>' + dt.softsize + '</span><span><u class=\'vis\'>' + dt.os + '</u><u class=\'time\'>' + dt.pubdate + '</u></span></p><a href=\'/s/' + dt.id + '.html\' class=\'btn\'><em></em>下载</a>'
             agmUl.appendChild(ghtml)
           }
           if (len < 20) {
