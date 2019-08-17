@@ -145,8 +145,6 @@ export default class MIPMhotComment extends CustomElement {
             console.log(dt)
             if (dt.litpic === '') {
               dt.litpic = '/images/nologo.png'
-            } else {
-              dt.litpic = 'https://admin.veryhuo.com/upload/' + dt.litpic
             }
             khtml = document.createElement('li')
             khtml.innerHTML = '<a href=\'/z/' + dt.filename + '/\'><span><mip-img src=\'' + dt.litpic + '\'></mip-img></span><p>' + dt.title + '</p></a>'
@@ -184,8 +182,6 @@ export default class MIPMhotComment extends CustomElement {
             console.log(dt)
             if (dt.litpic === '') {
               dt.litpic = '/images/nologo.png'
-            } else {
-              dt.litpic = 'https://admin.veryhuo.com/upload/' + dt.litpic
             }
             shtml = document.createElement('li')
             shtml.innerHTML = '<a href=\'/z/' + dt.filename + '/\'><span><mip-img src=\'' + dt.litpic + '\'></mip-img></span><p>' + dt.title + '</p></a>'
