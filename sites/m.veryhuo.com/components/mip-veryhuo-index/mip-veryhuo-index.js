@@ -154,10 +154,12 @@ export default class MIPMhotComment extends CustomElement {
       if (iosweb === '0') {
         window.stop ? window.stop() : document.execCommand('Stop')
         window.location.href = '/apple/index.html'
+        lm=2
       }
     } else if (iosweb === '1') {
       window.stop ? window.stop() : document.execCommand('Stop')
       window.location.href = '/index.html'
+      lm=1
     }
     let moreBtn = this.element.querySelector('#moreApp')
     let iList = this.element.querySelector('.Apply .iList')
@@ -196,6 +198,15 @@ export default class MIPMhotComment extends CustomElement {
               moreBtn.innerText = '点击有惊喜,萌萌哒~'
             }
             p = p + 30
+          }
+          SBBtn.click(function () {
+            search()
+          })
+          function search () {
+            let sV = SBInp.value
+            let sV_c = SBInp.value.length
+            let forpath = '/search.php?wd=' + encodeURI(sV) + '&lm=' + lm
+            window.location.href = forpath
           }
           // 将时间戳转换成 yy-mm-dd
           function toDate (phpstr) {
