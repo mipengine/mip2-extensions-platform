@@ -157,7 +157,7 @@ export default class MIPMhotComment extends CustomElement {
       if (classweb === '2') {
         let azurl = window.location.href
         let azurlarr = azurl.split('/')
-        let azurlid = azurlarr[5].replace('.html', '')
+        let azurlid = azurlarr[4].replace('.html', '')
         if (isios === '0') {
           azurl = azurl.replace(azurlid, classid)
           window.location.href = azurl
@@ -167,7 +167,7 @@ export default class MIPMhotComment extends CustomElement {
       if (classweb === '2') {
         let azurl = window.location.href
         let azurlarr = azurl.split('/')
-        let azurlid = azurlarr[5].replace('.html', '')
+        let azurlid = azurlarr[4].replace('.html', '')
         if (isios === '1') {
           azurl = azurl.replace(azurlid, classid)
           window.location.href = azurl
