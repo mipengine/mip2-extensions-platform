@@ -147,7 +147,7 @@ export default class MIPMhotComment extends CustomElement {
               dt.litpic = '/images/noimg.png'
             }
             khtml = document.createElement('li')
-            khtml.innerHTML = '<mip-img src=\'' + dt.litpic + '\'><a href=\'/a/' + dt.id + '.html\'></mip-img>' + dt.title + '</a><p>' + dt.description + '</p>'
+            khtml.innerHTML = '<mip-img src=\'' + dt.litpic + '\'></mip-img><a href=\'/a/' + dt.id + '.html\'>' + dt.title + '</a><p>' + dt.description + '</p>'
             zz = zz + 1
             dlist.appendChild(khtml)
           }
