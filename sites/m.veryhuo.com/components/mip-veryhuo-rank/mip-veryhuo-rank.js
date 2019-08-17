@@ -148,21 +148,21 @@ export default class MIPMhotComment extends CustomElement {
         if (iosweb === '0') {
           window.stop ? window.stop() : document.execCommand('Stop')
           if (isyouxi === '1') {
-            window.location.href = '/mip_ddooo_m.rar/apple/rank.html'
+            window.location.href = '/apple/rank.html'
           } else if (isyouxi === '2') {
-            window.location.href = '/mip_ddooo_m.rar/apple/game.html'
+            window.location.href = '/apple/game.html'
           } else {
-            window.location.href = '/mip_ddooo_m.rar/apple/soft.html'
+            window.location.href = '/apple/soft.html'
           }
         }
       }
     } else if (iosweb === '1') {
       if (isyouxi === '1') {
-        window.location.href = '/mip_ddooo_m.rar/rank.html'
+        window.location.href = '/rank.html'
       } else if (isyouxi === '2') {
-        window.location.href = '/mip_ddooo_m.rar/game.html'
+        window.location.href = '/game.html'
       } else {
-        window.location.href = '/mip_ddooo_m.rar/soft.html'
+        window.location.href = '/soft.html'
       }
     }
     // 点击加载更多
