@@ -150,16 +150,20 @@ export default class MIPMhotComment extends CustomElement {
     let isIphone = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/)
     let iosweb = document.getElementById('iosweb').getAttribute('value')
     let type = iosweb === '0' ? '2' : '3'
+    let lm = ''
+    if (type === '2') {
+      lm = '1'
+    } else if (type === '3') {
+      lm = '2'
+    }
     if (isIphone) {
       if (iosweb === '0') {
         window.stop ? window.stop() : document.execCommand('Stop')
         window.location.href = '/apple/index.html'
-        lm=2
       }
     } else if (iosweb === '1') {
       window.stop ? window.stop() : document.execCommand('Stop')
       window.location.href = '/index.html'
-      lm=1
     }
     let moreBtn = this.element.querySelector('#moreApp')
     let iList = this.element.querySelector('.Apply .iList')
@@ -199,12 +203,13 @@ export default class MIPMhotComment extends CustomElement {
             }
             p = p + 30
           }
+          let SBBtn = this.element.querySelector('.SBBtn')
+          let SBInp = this.element.querySelectorAll('.SBInp input')
           SBBtn.click(function () {
             search()
           })
           function search () {
             let sV = SBInp.value
-            let sV_c = SBInp.value.length
             let forpath = '/search.php?wd=' + encodeURI(sV) + '&lm=' + lm
             window.location.href = forpath
           }
