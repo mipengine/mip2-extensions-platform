@@ -145,16 +145,9 @@ export default class MIPMhotComment extends CustomElement {
             let dt = data[i]
             if (dt.litpic === '') {
               dt.litpic = '/images/noimg.png'
-            } else {
-              let litpic = dt.litpic
-              if (litpic.indexOf('article/') !== -1 || litpic.indexOf('default/') !== -1) {
-                litpic = 'https://admin.veryhuo.com/upload/' + litpic
-              } else {
-                litpic = 'https://www.veryhuo.com' + litpic
-              }
             }
             khtml = document.createElement('li')
-            khtml.innerHTML = '<img src=\'' + dt.litpic + '\'><a href=\'/a/' + dt.id + '.html\'>' + dt.title + '</a><p>' + dt.description + '</p>'
+            khtml.innerHTML = '<mip-img src=\'' + dt.litpic + '\'><a href=\'/a/' + dt.id + '.html\'></mip-img>' + dt.title + '</a><p>' + dt.description + '</p>'
             zz = zz + 1
             dlist.appendChild(khtml)
           }
