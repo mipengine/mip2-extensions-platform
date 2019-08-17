@@ -245,8 +245,6 @@ export default class MIPMhotComment extends CustomElement {
             console.log(dt)
             if (dt.litpic === '') {
               dt.litpic = '/images/nologo.png'
-            } else {
-              dt.litpic = 'https://www.veryhuo.com' + dt.litpic
             }
             if (dt.version === 0) {
               dt.version = dt.os
@@ -290,8 +288,6 @@ export default class MIPMhotComment extends CustomElement {
             console.log(dt)
             if (dt.litpic === '') {
               dt.litpic = '/images/nologo.png'
-            } else {
-              dt.litpic = 'https://www.veryhuo.com' + dt.litpic
             }
             if (dt.version === 0) {
               dt.version = dt.os
