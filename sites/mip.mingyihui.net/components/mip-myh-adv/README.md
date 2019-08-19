@@ -4,7 +4,7 @@
 ----|----
 类型| 通用
 支持布局| responsive,fixed-height,fill,container,fixed
-所需脚本| [https://c.mipcdn.com/extensions/platform/v2/mip.mingyihui.net/mip-myh-adv/mip-myh-adv.js](https://c.mipcdn.com/extensions/platform/v2/mip.mingyihui.net/mip-myh-adv/mip-myh-adv.js)
+所需脚本| https://c.mipcdn.com/static/v2/mip-mustache/mip-mustache.js,https://c.mipcdn.com/extensions/platform/v2/mip.mingyihui.net/mip-myh-adv/mip-myh-adv.js
 
 ## 说明
 
@@ -15,7 +15,7 @@
 示例说明
 
 ```
-<mip-myh-adv src="http://localhost/my/thinkphp_5.0.24_with_extend/public/" data-post="{adpp_id:'adpp_index_1'}" data-post-extParams="{}">
+<mip-myh-adv src="http://localhost/my/thinkphp_5.0.24_with_extend/public/" data-post="{adpp_id:'adpp_index_1'}" data-post-extParams="{}" inner-cpnt="mip-carousel" cpnt-attrs="{autoplay:'autoplay',height:'250',width:'600',indicator:'indicator',indicatorId:'mip-carousel-example'}">
             <template type="mip-mustache">
                 <div>
                     <a href="{{ad_url}}"><mip-img src="{{ad_content}}"></mip-img></a>
@@ -42,5 +42,17 @@
 ### data-post-extParams
 
 **说明**：广告位内容扩展属性,json格式字符串
+
+**必选项**：可选
+
+### inner-cpnt
+
+**说明**：内嵌容器类型
+
+**必选项**：可选
+
+### cpnt-attrs
+
+**说明**：内嵌容器属性,json格式字符串
 
 **必选项**：可选
