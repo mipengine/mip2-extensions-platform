@@ -5,11 +5,11 @@ const { templates, util } = MIP
 const log = util.log('mip-myh-adv')
 export default class MIPMYHAdv extends MIP.CustomElement {
   build () {
-        // 在这里注册 say 事件的监听
-    this.addEventAction('click', (event, ad_sign) => {
-        this.faKey(ad_sign,1)
-        let ad_sign_val = ad_sign + "," + this.postData['userid'] + "," + this.postExtParams['referer'] + "," + ( new Date()).getTime()
-        setCookie('_adv_invite',ad_sign_val)
+    // 在这里注册 say 事件的监听
+    this.addEventAction('click', (event, adSign) => {
+      this.faKey(adSign, 1)
+      let adSignVal = adSign + ',' + this.postData['userid'] + ',' + this.postExtParams['referer'] + ',' + (new Date()).getTime()
+      setCookie('_adv_invite', adSignVal)
     })
   }
   connectedCallback () {
@@ -80,16 +80,16 @@ export default class MIPMYHAdv extends MIP.CustomElement {
     let returnData = []
     if (data.adv_list.length === 0) return returnData
     data.adv_list.forEach(adv => {
-      this.faKey(adv['sign'],0)
+      this.faKey(adv['sign'], 0)
       adv.ad_contents[0]['ad_sign'] = adv['sign']
       returnData.push(adv.ad_contents[0])
     })
     return returnData
   }
 
-  faKey (ad_sign,mode) {
-    let keyName = this.postExtParams['referer'] + 'Adv_' + ad_sign + (mode == 0 ? '_View' : '_Click')
-    let statUrl = "http://www.mingyihui.net/api/stat/statKey2/" + keyName + "/0/" + this.postData['userid']
+  faKey (adSign, mode) {
+    let keyName = this.postExtParams['referer'] + 'Adv_' + adSign + (mode === 0 ? '_View' : '_Click')
+    let statUrl = 'http://www.mingyihui.net/api/stat/statKey2/' + keyName + '/0/' + this.postData['userid']
     return fetch(statUrl, {
     })
   }
@@ -118,8 +118,8 @@ export default class MIPMYHAdv extends MIP.CustomElement {
    * */
   render (htmls) {
     let fragment = document.createElement(this.inner_cpnt)
-    for(var key in this.cpnt_attrs){
-        fragment.setAttribute(key,this.cpnt_attrs[key])
+    for (let key in this.cpnt_attrs) {
+      fragment.setAttribute(key, this.cpnt_attrs[key])
     }
     htmls.forEach(html => {
       let node = document.createElement('div')
@@ -160,11 +160,11 @@ function getCookie (name) {
   }
 }
 // 写cookies
- function setCookie (name,value) {
-  var Days = 30
-  var exp = new Date()
-  exp.setTime(exp.getTime() + Days*24*60*60*1000)
-  document.cookie = name + "="+ value + ";expires=" + exp.toGMTString() + ";domain=.mingyihui.net"
+function setCookie (name, value) {
+  let Days = 30
+  let exp = new Date()
+  exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000)
+  document.cookie = name + '=' + value + ';expires=' + exp.toGMTString() + ';domain=.mingyihui.net'
 }
 function getIP () {
   return fetch('https://api.ipify.org?format=json', {
