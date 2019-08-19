@@ -4,7 +4,7 @@
 ----|----
 类型| 通用
 支持布局| responsive,fixed-height,fill,container,fixed
-所需脚本| [https://c.mipcdn.com/extensions/platform/v2/mingyihui.net/mip-myh-adv/mip-myh-adv.js](https://c.mipcdn.com/extensions/platform/v2/mingyihui.net/mip-myh-adv/mip-myh-adv.js)
+所需脚本| [https://c.mipcdn.com/extensions/platform/v2/mip.mingyihui.net/mip-myh-adv/mip-myh-adv.js](https://c.mipcdn.com/extensions/platform/v2/mip.mingyihui.net/mip-myh-adv/mip-myh-adv.js)
 
 ## 说明
 
