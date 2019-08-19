@@ -15,42 +15,15 @@
 示例说明
 
 ```
-<mip-chinacn-judge type="baidu-wm-ext" domain="7011.stia.cn" token="avnreeuwb">
-<script type="application/json">{"s.sm.cn":"dyqazhnnn"}</script>
+<mip-chinacn-judge>
+  <script type="application/json">{"s.sm.cn":"dyqazhnnn"}</script>
+  <mip-ad type="baidu-wm-ext" domain="8131.qizhihaotian.cn" token="avnreeuwb">
+    <div id="avnreeuwb"></div>
+  </mip-ad>
 </mip-chinacn-judge>
 ```
 
 ## 属性
-
-### type
-
-**说明**：广告类型
-
-**必选项**：是
-
-**单位**：string
-
-**默认值**：无
-
-### domain
-
-**说明**：域名
-
-**必选项**：是
-
-**单位**：string
-
-**默认值**：无
-
-### token
-
-**说明**：广告token
-
-**必选项**：是
-
-**单位**：string
-
-**默认值**：无
 
 ### 配置参数
 
