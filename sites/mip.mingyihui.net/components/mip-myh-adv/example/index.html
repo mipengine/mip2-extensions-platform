@@ -12,13 +12,18 @@
   </head>
   <body>
     <div>
-        <mip-myh-adv src="http://localhost/my/thinkphp_5.0.24_with_extend/public/" data-post="{adpp_id:'adpp_index_1'}" data-post-extParams="{}">
+       <mip-myh-adv id="myhAdv1" src="http://localhost/my/thinkphp_5.0.24_with_extend/public/" data-post="{adpp_id:'adpp_index_1'}" data-post-extParams="{}" inner-cpnt="mip-carousel" cpnt-attrs="{autoplay:'autoplay',height:'250',width:'600',indicator:'indicator',indicatorId:'mip-carousel-example'}">
             <template type="mip-mustache">
-                <div>
-                    <a href="{{ad_url}}"><mip-img src="{{ad_content}}"></mip-img></a>
-                </div>
-            </template>
-        </mip-myh-adv>
+                   <a ><mip-img on="tap:myhAdv1.click({{ad_sign}})" src="{{ad_content}}"></mip-img></a>
+               </template>
+       </mip-myh-adv>
+        <div class="mip-carousel-indicator-wrapper">
+            <div class="mip-carousel-indicatorDot" id="mip-carousel-example">
+                <div class="mip-carousel-activeitem mip-carousel-indecator-item"></div>
+                <div class="mip-carousel-indecator-item"></div>
+                <div class="mip-carousel-indecator-item"></div>
+            </div>
+        </div>
     </div>
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
     <script src="https://c.mipcdn.com/static/v2/mip-mustache/mip-mustache.js"></script>
