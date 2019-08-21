@@ -29,11 +29,10 @@ export default class MIPGeolocation extends MIP.CustomElement {
           let url = this.src
           if (url.indexOf('?')) {
             url = url + '&lat=' + lat + '&lon=' + lng
-          }
-          else {
+          } else {
             url = url + '?lat=' + lat + '&lon=' + lng
           }
-          fetchJsonp(url, { timeout : this.timeout})
+          fetchJsonp(url, { timeout: this.timeout })
         },
         function (error) {
           switch (error.code) {
