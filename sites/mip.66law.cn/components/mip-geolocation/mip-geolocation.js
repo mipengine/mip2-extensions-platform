@@ -23,7 +23,7 @@ export default class MIPGeolocation extends MIP.CustomElement {
         /**
          * GPS H5定位
          */
-        navigator.geolocation.getCurrentPosition(function (position) {
+        navigator.geolocation.getCurrentPosition( position => {
           let lat = position.coords.latitude
           let lng = position.coords.longitude
           let url = this.src
@@ -34,7 +34,7 @@ export default class MIPGeolocation extends MIP.CustomElement {
           }
           fetchJsonp(url, { timeout: this.timeout })
         },
-        function (error) {
+        error => {
           switch (error.code) {
             case error.TIMEOUT :
               console.log('连接超时，请重试')
