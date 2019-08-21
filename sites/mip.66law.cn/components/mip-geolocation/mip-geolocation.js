@@ -27,6 +27,13 @@ export default class MIPGeolocation extends MIP.CustomElement {
           let lat = position.coords.latitude
           let lng = position.coords.longitude
           let url = this.src
+          if (url.indexOf('http') < 0) {
+            if (url.indexOf('//') < 0) {
+              url = 'https://' + url
+            } else {
+              url = 'https:' + url
+            }
+		  }
           if (url.indexOf('?')) {
             url = url + '&lat=' + lat + '&lon=' + lng
           } else {
