@@ -33,7 +33,7 @@ export default class MIPGeolocation extends MIP.CustomElement {
             } else {
               url = 'https:' + url
             }
-		  }
+          }
           if (url.indexOf('?')) {
             url = url + '&lat=' + lat + '&lon=' + lng
           } else {
