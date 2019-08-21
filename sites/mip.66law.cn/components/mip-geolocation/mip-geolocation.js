@@ -23,7 +23,7 @@ export default class MIPGeolocation extends MIP.CustomElement {
         /**
          * GPS H5定位
          */
-        navigator.geolocation.getCurrentPosition( position => {
+        navigator.geolocation.getCurrentPosition(position => {
           let lat = position.coords.latitude
           let lng = position.coords.longitude
           let url = this.src
