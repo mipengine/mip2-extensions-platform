@@ -82,14 +82,14 @@ export default class MIPMYHAdv extends MIP.CustomElement {
     data.adv_list.forEach(adv => {
       this.faKey(adv['sign'], 0)
       let adContents = []
-      adv.ad_contents.forEach(ad_content => {
+      adv.ad_contents.forEach(adcontent => {
         if (adContents.length === 0) {
-          adContents = ad_content
+          adContents = adcontent
           adContents['ad_name'] = adv['ad_name']
           adContents['ad_sign'] = adv['sign']
           adContents['lists'] = []
         } else {
-          adContents['lists'].push(ad_content)
+          adContents['lists'].push(adcontent)
         }
       })
       returnData.push(adContents)
