@@ -25,6 +25,14 @@
             </div>
         </div>
 
+        <mip-myh-adv id="myhAdv2" src="http://localhost/my/thinkphp_5.0.24_with_extend/public/" data-post="{adpp_id:'adpp_index_1'}" data-post-extParams="{}">
+            <template type="mip-mustache">
+                <a ><mip-img on="tap:myhAdv2.click({{ad_sign}})" src="{{ad_content}}"></mip-img></a>
+                {{#lists}}
+                <a  on="tap:myhAdv2.click({{ad_sign}})">{{ad_content}}</a>
+                {{/lists}}
+            </template>
+        </mip-myh-adv>
     </div>
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
     <script src="https://c.mipcdn.com/static/v2/mip-mustache/mip-mustache.js"></script>
