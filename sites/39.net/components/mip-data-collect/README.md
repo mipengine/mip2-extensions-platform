@@ -4,11 +4,11 @@
 ----|----
 类型|通用
 支持布局|
-所需脚本| [https://c.mipcdn.com/extensions/platform/v2/39.net/mip-example/mip-example.js](https://c.mipcdn.com/extensions/platform/v2/39.net/mip-example/mip-example.js)
+所需脚本|
 
 ## 说明
 
-收集用户行为信息，传输到后台
+收集浏览器的信息，web事件:click,change,submit信息的触发,通过gif形式，传输到后台
 
 ## 示例
 
