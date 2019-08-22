@@ -23,6 +23,14 @@
             </template>
 </mip-myh-adv>
 
+<mip-myh-adv id="myhAdv2" src="http://localhost/my/thinkphp_5.0.24_with_extend/public/" data-post="{adpp_id:'adpp_index_1'}" data-post-extParams="{}">
+            <template type="mip-mustache">
+                <a href="{{ad_url}}"><mip-img on="tap:myhAdv2.click({{ad_sign}})" src="{{ad_content}}"></mip-img></a>
+                {{#lists}}
+                <a  href="{{ad_url}}" on="tap:myhAdv2.click({{ad_sign}})">{{ad_content}}</a>
+                {{/lists}}
+            </template>
+</mip-myh-adv>
 ```
 
 ## 属性
