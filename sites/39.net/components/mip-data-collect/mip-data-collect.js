@@ -10,8 +10,8 @@ let _utils = {
   trim: function (str) {
     return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '')
   },
-  includes: function (str) {
-    return str.indexOf(str) !== -1
+  includes: function (arr, str) {
+    return arr.indexOf(str) !== -1
   },
   isUndefined: function (str) {
     return str === void 0
@@ -62,11 +62,11 @@ let _utils = {
 }
 
 /**
-   * 获取类名
-   *
-   * @param {*} el 节点
-   * @returns {string} 返回值
-   */
+ * 获取类名
+ *
+ * @param {*} el 节点
+ * @returns {string} 返回值
+ */
 function _getClassName (el) {
   switch (typeof el.className) {
     case 'string':
@@ -79,33 +79,33 @@ function _getClassName (el) {
 }
 
 /**
-   * 获取同层次的前一个节点
-   *
-   * @param {*} el 节点
-   */
-function _previousElementSibling (el) {
-  try {
-    if (el.previousElementSibling) {
-      return el.previousElementSibling
-    } else {
-      do {
-        el = el.previousSibling
-      } while (el && !_typeofNode(el, 'element'))
-      return el
-    }
-  } catch (e) {
-    console.log(e)
-    return null
-  }
-}
+ * 获取同层次的前一个节点
+ *
+ * @param {*} el 节点
+ */
+// function _previousElementSibling (el) {
+//   try {
+//     if (el.previousElementSibling) {
+//       return el.previousElementSibling
+//     } else {
+//       do {
+//         el = el.previousSibling
+//       } while (el && !_typeofNode(el, 'element'))
+//       return el
+//     }
+//   } catch (e) {
+//     console.log(e)
+//     return null
+//   }
+// }
 
 /**
-   * 判断节点的类型
-   *
-   * @param {*} el 节点
-   * @param {*} type 类型
-   * @returns {boolean|number} 返回值
-   */
+ * 判断节点的类型
+ *
+ * @param {*} el 节点
+ * @param {*} type 类型
+ * @returns {boolean|number} 返回值
+ */
 function _typeofNode (el, type) {
   if (!el) {
     throw Error('el no exist')
@@ -122,25 +122,34 @@ function _typeofNode (el, type) {
 }
 
 /**
-   * 判断元素的tag
-   *
-   * @param {*} el 节点
-   * @param {*} tag 节点的tag
-   * @returns {boolean} 返回值
-   */
+ * 判断元素的tag
+ *
+ * @param {*} el 节点
+ * @param {*} tag 节点的tag
+ * @returns {boolean} 返回值
+ */
 function _isTag (el, tag) {
   return el && el.tagName && el.tagName.toLowerCase() === tag.toLowerCase()
 }
 
 /**
-   * 判断是否追踪元素
-   *
-   * @param {*} el 节点
-   * @returns {boolean} 返回值
-   */
+ * 判断是否追踪元素
+ *
+ * @param {*} el 节点
+ * @returns {boolean} 返回值
+ */
 function _shouldTrackElement (el) {
   let classes = _getClassName(el).split(' ')
-  if (_utils.includes(classes, 'mp-no-track')) {
+  for (
+    let curEl = el;
+    curEl.parentNode && !_isTag(curEl, 'body');
+    curEl = curEl.parentNode
+  ) {
+    if (_utils.includes(classes, 'no-track')) {
+      return false
+    }
+  }
+  if (_utils.includes(classes, 'no-track')) {
     return false
   }
 
@@ -152,9 +161,9 @@ function _shouldTrackElement (el) {
   // a risk of clientside javascript placing sensitive data in attributes
   if (
     _isTag(el, 'input') ||
-      _isTag(el, 'select') ||
-      _isTag(el, 'textarea') ||
-      el.getAttribute('contenteditable') === 'true'
+    _isTag(el, 'select') ||
+    _isTag(el, 'textarea') ||
+    el.getAttribute('contenteditable') === 'true'
   ) {
     return false
   }
@@ -185,18 +194,18 @@ function _shouldTrackElement (el) {
 }
 
 /**
-   * 是否为追踪的事件
-   *
-   * @param {*} el 节点
-   * @param {*} event 事件
-   * @returns {boolean} 返回值
-   */
+ * 是否为追踪的事件
+ *
+ * @param {*} el 节点
+ * @param {*} event 事件
+ * @returns {boolean} 返回值
+ */
 function _shouldTrackDomEvent (el, event) {
   if (
     !el ||
-      _isTag(el, 'html') ||
-      _isTag(el, 'body') ||
-      !_typeofNode(el, 'element')
+    _isTag(el, 'html') ||
+    _isTag(el, 'body') ||
+    !_typeofNode(el, 'element')
   ) {
     return false
   }
@@ -220,19 +229,17 @@ function _shouldTrackDomEvent (el, event) {
 }
 
 /**
-   * 是否追踪input的值
-   *
-   * @param {*} value 值
-   * @returns {boolean} 返回值
-   */
+ * 是否追踪input的值
+ *
+ * @param {*} value 值
+ * @returns {boolean} 返回值
+ */
 function _shouldTrackValue (value) {
   if (value === null || _utils.isUndefined(value)) {
     return false
   }
-
   if (typeof value === 'string') {
     value = _utils.trim(value)
-
     // check to see if input value looks like a credit card number
     // see: https://www.safaribooksonline.com/library/view/regular-expressions-cookbook/9781449327453/ch04s20.html
     let ccRegex = /^(?:(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11}))$/
@@ -240,50 +247,47 @@ function _shouldTrackValue (value) {
     if (ccRegex.test((value || '').replace(/[\- ]/g, ''))) {
       return false
     }
-
     // check to see if input value looks like a social security number
     let ssnRegex = /(^\d{3}-?\d{2}-?\d{4}$)/
     if (ssnRegex.test(value)) {
       return false
     }
   }
-
   return true
 }
 
 /**
-   * 获取非敏感的文本
-   *
-   * @param {*} el 节点
-   * @returns {string} 返回值
-   */
+ * 获取非敏感的文本
+ *
+ * @param {*} el 节点
+ * @returns {string} 返回值
+ */
 function _getSafeText (el) {
   let elText = ''
-  if (el.textContent) {
-    elText += _utils
-      .trim(el.textContent)
-      .split(/(\s+)/)
-      .filter(_shouldTrackValue)
-      .join('')
-      .replace(/[\r\n]/g, ' ')
-      .replace(/[ ]+/g, ' ')
-      .substring(0, 255)
+  if (_shouldTrackElement(el) && el.childNodes && el.childNodes.length) {
+    Array.from(el.childNodes).forEach(function (child) {
+      if (_typeofNode(child, 'text') && child.textContent) {
+        elText += _utils.trim(child.textContent)
+          // scrub potentially sensitive values
+          .split(/(\s+)/).filter(_shouldTrackValue).join('')
+          // normalize whitespace
+          .replace(/[\r\n]/g, ' ').replace(/[ ]+/g, ' ')
+          // truncate
+          .substring(0, 255)
+      }
+    })
   }
   return _utils.trim(elText)
 }
 
 /**
-   * 获取事件的对象，兼容IE
-   *
-   * @param {*} e 节点
-   */
+ * 获取事件的对象，兼容IE
+ *
+ * @param {*} e 节点
+ */
 function _getEventTarget (e) {
   // https://developer.mozilla.org/en-US/docs/Web/API/Event/target#Compatibility_notes
-  if (typeof e.target === 'undefined') {
-    return e.srcElement
-  } else {
-    return e.target
-  }
+  return typeof e.target === 'undefined' ? e.srcElement : e.target
 }
 
 /**
@@ -291,104 +295,60 @@ function _getEventTarget (e) {
  *
  * @param {node} el
  */
-function _getNthChildAndNthOfType (el) {
-  let nthChild = 1
-  let nthOfType = 1
-  let currentElem = el
-  while ((currentElem = _previousElementSibling(currentElem))) {
-    nthChild++
-    if (currentElem.tagName === el.tagName) {
-      nthOfType++
-    }
-  }
-  return {
-    child: nthChild,
-    type: nthOfType
-  }
-}
+// function _getNthChildAndNthOfType (el) {
+//   let nthChild = 1
+//   let nthOfType = 1
+//   let currentElem = el
+//   while ((currentElem = _previousElementSibling(currentElem))) {
+//     nthChild++
+//     currentElem.tagName === el.tagName && nthOfType++
+//   }
+//   return {
+//     child: nthChild,
+//     type: nthOfType
+//   }
+// }
 
 /**
-   * 自动为目标元素生成唯一样式选择器来作为元素的唯一标识
-   *
-   * @param {*} el 节点
-   * @returns {Object} 返回值
-   */
-function _generateSelectorPath (el) {
-  let list = []
-  let curEl = el
-  do {
-    if (curEl.id) {
-      list.unshift(`#${curEl.id}`)
-      break
-    } else {
-      let nths = _getNthChildAndNthOfType(curEl)
-      let classes = _getClassName(curEl)
-      let className = classes ? `.${classes.split(' ')}` : ''
-      list.unshift(`${curEl.tagName.toLowerCase()}${className}:nth-child(${nths.child})`)
-      curEl = curEl.parentNode
-    }
-  } while (curEl.parentNode && !_isTag(curEl, 'body'))
-  return list.join(' ')
-}
+ * 自动为目标元素生成唯一样式选择器来作为元素的唯一标识
+ *
+ * @param {*} el 节点
+ * @returns {Object} 返回值
+ */
+// function _generateSelectorPath (el) {
+//   let list = []
+//   let curEl = el
+//   do {
+//     if (curEl.id) {
+//       list.unshift(`#${curEl.id}`)
+//       break
+//     } else {
+//       let nths = _getNthChildAndNthOfType(curEl)
+//       list.unshift(`${curEl.tagName.toLowerCase()}:nth-child(${nths.child})`)
+//       curEl = curEl.parentNode
+//     }
+//   } while (curEl.parentNode && !_isTag(curEl, 'body'))
+//   return list.join(' ')
+// }
 
 /**
-   * 获取元素的属性的数据
-   *
-   * @param {*} elem 节点
-   */
+ * 获取元素的属性的数据
+ *
+ * @param {*} elem 节点
+ */
 function _getPropertiesFromElement (elem) {
-  let props = {
-    tag_name: elem.tagName.toLowerCase(),
-    attr: {}
-  }
-
+  let props = {}
+  let whiteList = ['action', 'href']
   for (let i in elem.attributes) {
     let attr = elem.attributes[i]
-
-    if (_shouldTrackValue(attr.value)) {
-      props['attr'][attr.name] = attr.value
+    if (
+      _shouldTrackValue(attr.value) &&
+      _utils.includes(whiteList, attr.name)
+    ) {
+      props[attr.name] = attr.value
     }
   }
   return props
-}
-
-/**
-   * 获取基本数据
-   */
-function _getDefaultProperties () {
-  let params = {}
-  // Document对象数据
-  if (document) {
-    params.domain = document.domain || ''
-    params.url = document.URL || ''
-    params.title = document.title || ''
-    params.referrer = document.referrer || ''
-  }
-  // Window对象数据
-  if (window && window.screen) {
-    // 屏幕高度
-    params.sh = window.screen.height || 0
-    // 屏幕宽度
-    params.sw = window.screen.width || 0
-    // 返回目标设备或缓冲器上的调色板的比特深度。
-    params.cd = window.screen.colorDepth || 0
-  }
-  // navigator对象数据
-  if (navigator) {
-    params.lang = navigator.language || ''
-    params.userAgent = navigator.userAgent || ''
-    params.userLanguage = navigator.userLanguage || ''
-    params.browserLanguage = navigator.browserLanguage || ''
-  }
-  // Window对象数据
-  if (window && window.location) {
-    // 屏幕高度
-    params.lochost = window.location.host || ''
-    // 屏幕宽度
-    params.locpathname = window.location.pathname || ''
-    // 返回目标设备或缓冲器上的调色板的比特深度。
-  }
-  return { terminal: params }
 }
 
 function _trackEvent (event, instance) {
@@ -405,16 +365,78 @@ function _trackEvent (event, instance) {
   }
   // 生成生成数据
   let data = {
-    el_data: {
-      css_selector: _generateSelectorPath(el),
-      el_text: _getSafeText(el),
-      ..._getPropertiesFromElement(el)
-    },
-    ..._getDefaultProperties(event.type),
-    event_type: event.type
+    t: new Date().getTime(),
+    event: event.type,
+    ..._getPropertiesFromElement(el),
+    text: _getSafeText(el)
   }
   instance.track('web_event', data)
   return true
+}
+
+function getBrowserInfo () {
+  let agent = navigator.userAgent.toLowerCase()
+  let ie = /msie [\d.]+;/gi
+  let ff = /firefox\/[\d.]+/gi
+  let chrome = /chrome\/[\d.]+/gi
+  let saf = /safari\/[\d.]+/gi
+  let device = ''
+  // IE
+  if (agent.indexOf('msie') > 0) {
+    device = agent.match(ie)
+  }
+  // firefox
+  if (agent.indexOf('firefox') > 0) {
+    device = agent.match(ff)
+  }
+  // Safari
+  if (agent.indexOf('safari') > 0 && agent.indexOf('chrome') < 0) {
+    device = agent.match(saf)
+  }
+  // Chrome
+  if (agent.indexOf('chrome') > 0) {
+    device = agent.match(chrome)
+  }
+  device = device && device.length > 0 ? device[0] : ''
+  return device
+}
+
+/**
+ * 获取终端信息
+ */
+function getTerminalData () {
+  let params = {}
+  // Document对象数据
+  if (document) {
+    params.domain = document.domain || ''
+    params.title = document.title || ''
+    params.referrer = document.referrer || ''
+  }
+  // navigator对象数据
+  if (navigator) {
+    params.lang = navigator.language || ''
+    params.userAgent = navigator.userAgent || ''
+    params.userLanguage = navigator.userLanguage || ''
+    params.browserLanguage = navigator.browserLanguage || ''
+    params.device = getBrowserInfo()
+  }
+  // Window对象数据
+  if (window && window.location) {
+    params.host = window.location.host || ''
+    params.pathname = window.location.pathname || ''
+    params.url = window.location.href || ''
+    params.origin = window.location.origin || ''
+    params.protocol = window.location.protocol || ''
+  }
+  // 性能
+  if (window.performance) {
+    let time = window.performance.timing
+    params.load = time.loadEventEnd - time.navigationStart
+    params.domready = time.domInteractive - time.navigationStart
+    params.blank = time.responseEnd - time.navigationStart
+    // params.firstscreen = 0
+  }
+  return params
 }
 
 /**
@@ -432,19 +454,18 @@ function send (src, params) {
     args += i + '=' + encodeURIComponent(JSON.stringify(params[i]))
   }
   let img = new Image(1, 1)
-  let fuwuqi = src
-  img.src = fuwuqi + '/1.gif?' + args
+  img.src = src + '/1.gif?' + args
 }
 
 /**
-   * 记录页面活跃时间
-   */
+ * 记录页面活跃时间
+ */
 let timeOnPage = {
-  enter_time: 0,
-  leave_time: 0,
-  active_time: 0,
-  browse_time: 0,
-  pedding_time: 0
+  et: 0,
+  lt: 0,
+  at: 0,
+  st: 0,
+  pt: 0
 }
 
 function AutoTrack (config) {
@@ -464,40 +485,55 @@ AutoTrack.prototype.init = function init () {
     }, 500)
     return
   }
-  document.body.onclick = function (e) {
-    _trackEvent(e, config.instance)
-  }
-  document.body.onsubmit = function (e) {
-    _trackEvent(e, config.instance)
-  }
-  document.body.onchange = function (e) {
-    _trackEvent(e, config.instance)
-  }
-  document.body.onload = function () {
-    timeOnPage.enter_time = new Date()
-  }
+  let doc = document.documentElement.parentNode
+  doc.addEventListener(
+    'click',
+    function (e) {
+      _trackEvent(e, config.instance)
+    },
+    false
+  )
+  doc.addEventListener(
+    'submit',
+    function (e) {
+      _trackEvent(e, config.instance)
+    },
+    false
+  )
+  doc.addEventListener(
+    'change',
+    function (e) {
+      _trackEvent(e, config.instance)
+    },
+    false
+  )
+  doc.addEventListener(
+    'DOMContentLoaded',
+    function () {
+      timeOnPage.et = new Date().getTime()
+      let viewData = getTerminalData()
+      config.instance.track('web_view', viewData)
+    },
+    false
+  )
   document.body.onbeforeunload = function () {
-    timeOnPage.leave_time = new Date()
-    timeOnPage.browse_time = timeOnPage.leave_time - timeOnPage.enter_time
-    timeOnPage.active_time = timeOnPage.browse_time - timeOnPage.pedding_time
+    timeOnPage.lt = new Date().getTime()
+    timeOnPage.st = timeOnPage.lt - timeOnPage.et
+    timeOnPage.at = timeOnPage.st - timeOnPage.pt
     config.instance.track('web_close', timeOnPage)
   }
-  let doc = document.documentElement.parentNode
   let startTime = 0
   doc.onvisibilitychange = function () {
     if (doc.hidden) {
       startTime = new Date()
     } else {
-      timeOnPage.pedding_time += new Date() - startTime
+      timeOnPage.pt += new Date() - startTime
     }
   }
 }
 AutoTrack.prototype.track = function track (eventType, params) {
-  let data = _utils.extend({ track_type: eventType }, params)
+  let data = _utils.extend({ type: eventType }, params)
   send(this.config.src, data)
-}
-AutoTrack.prototype.setSrc = function setSrc (src) {
-  this.config.src = src
 }
 
 export default class MIPChinacnGetvideourl extends MIP.CustomElement {
@@ -507,5 +543,7 @@ export default class MIPChinacnGetvideourl extends MIP.CustomElement {
       src
     })
     instance.init()
+    // 暴露实例
+    this.element.instance = instance
   }
 }
