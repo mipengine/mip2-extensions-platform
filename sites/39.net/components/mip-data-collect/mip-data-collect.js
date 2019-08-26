@@ -79,6 +79,23 @@ function _getClassName (el) {
 }
 
 /**
+ * 类型检测
+ * @prop <String> type 类型
+ * 带type则检测是否为该类型，没有则返回值的类型
+ * @return <Boolean, String>
+ */
+
+function typeTest (obj, type) {
+  if (type) {
+    type = type.replace(/\w/, $1 => $1.toUpperCase())
+    return Object.prototype.toString.call(obj) === `[object ${type}]`
+  } else {
+    let typeStr = Object.prototype.toString.call(obj)
+    return typeStr.slice(8, -1).toLowerCase()
+  }
+}
+
+/**
  * 获取同层次的前一个节点
  *
  * @param {*} el 节点
@@ -130,6 +147,31 @@ function _typeofNode (el, type) {
  */
 function _isTag (el, tag) {
   return el && el.tagName && el.tagName.toLowerCase() === tag.toLowerCase()
+}
+
+/**
+ * 是否为标记元素
+ *
+ * @param {*} el 元素
+ * @param {*} stopFlag 标记
+ */
+function isFlagEl (el, stopFlag) {
+  let isFlag = null
+  if (!stopFlag) {
+    return true
+  }
+  if (/^#/.test(stopFlag)) {
+    isFlag = el => el.id === stopFlag
+  } else if (/^\./.test(stopFlag)) {
+    isFlag = el =>
+      _utils.includes(
+        _getClassName(el).split(' '),
+        stopFlag.replace(/^\./, '')
+      )
+  } else {
+    isFlag = el => _isTag(el, stopFlag)
+  }
+  return isFlag(el, stopFlag)
 }
 
 /**
@@ -264,18 +306,15 @@ function _shouldTrackValue (value) {
  */
 function _getSafeText (el) {
   let elText = ''
-  if (_shouldTrackElement(el) && el.childNodes && el.childNodes.length) {
-    Array.from(el.childNodes).forEach(function (child) {
-      if (_typeofNode(child, 'text') && child.textContent) {
-        elText += _utils.trim(child.textContent)
-          // scrub potentially sensitive values
-          .split(/(\s+)/).filter(_shouldTrackValue).join('')
-          // normalize whitespace
-          .replace(/[\r\n]/g, ' ').replace(/[ ]+/g, ' ')
-          // truncate
-          .substring(0, 255)
-      }
-    })
+  if (_shouldTrackElement(el)) {
+    elText = _utils
+      .trim(el.textContent)
+      .split(/(\s+)/)
+      .filter(_shouldTrackValue)
+      .join('')
+      .replace(/[\r\n]/g, ' ')
+      .replace(/[ ]+/g, ' ')
+      .substring(0, 255)
   }
   return _utils.trim(elText)
 }
@@ -284,10 +323,21 @@ function _getSafeText (el) {
  * 获取事件的对象，兼容IE
  *
  * @param {*} e 节点
+ * @param {string} stopFlag 向上递归截至得节点, 如果不存在则以当前点击的节点作为对象
  */
-function _getEventTarget (e) {
+function _getCollectTarget (e, stopFlag) {
   // https://developer.mozilla.org/en-US/docs/Web/API/Event/target#Compatibility_notes
-  return typeof e.target === 'undefined' ? e.srcElement : e.target
+  let el = typeof e.target === 'undefined' ? e.srcElement : e.target
+  let curEl = el
+  if (stopFlag) {
+    while (!_isTag(el, 'body') && !_isTag(el, 'html') && !isFlagEl(el, stopFlag)) {
+      el = el.parentNode
+    }
+  }
+  if (_isTag(el, 'body')) {
+    el = curEl
+  }
+  return el
 }
 
 /**
@@ -352,10 +402,10 @@ function _getPropertiesFromElement (elem) {
 }
 
 function _trackEvent (event, instance) {
-  let el = _getEventTarget(event)
-  if (_typeofNode(el, 'text')) {
-    // defeat Safari bug (see: http://www.quirksmode.org/js/events_properties.html)
-    el = el.parentNode
+  // 获取对象元素,可能为非点击元素
+  let el = _getCollectTarget(event, instance.config.stopFlag)
+  if (!isFlagEl(el, instance.config.onlyFlag)) {
+    return false
   }
   if (!_shouldTrackElement(el)) {
     return false
@@ -364,16 +414,14 @@ function _trackEvent (event, instance) {
     return false
   }
   // 生成生成数据
-  let data = {
-    t: new Date().getTime(),
-    event: event.type,
-    ..._getPropertiesFromElement(el),
-    text: _getSafeText(el)
-  }
+  let data = instance.setData(el, event)
   instance.track('web_event', data)
   return true
 }
 
+/**
+ * 获取终端设备类型
+ */
 function getBrowserInfo () {
   let agent = navigator.userAgent.toLowerCase()
   let ie = /msie [\d.]+;/gi
@@ -446,6 +494,7 @@ function getTerminalData () {
  * @param {*} params 发送的数据
  */
 function send (src, params) {
+  console.log(params)
   let args = ''
   for (let i in params) {
     if (args !== '') {
@@ -469,79 +518,107 @@ let timeOnPage = {
 }
 
 function AutoTrack (config) {
-  this.config = {
-    src: '',
-    instance: this
-  }
-  this.config = Object.assign({}, this.config, config)
+  this.config = config
 }
 
 AutoTrack.prototype.init = function init () {
-  let config = this.config
   if (!document.body) {
     console.log('document not ready yet, trying again in 500 milliseconds...')
-    setTimeout(function () {
-      config.instance.init()
+    setTimeout(() => {
+      this.init()
     }, 500)
     return
   }
   let doc = document.documentElement.parentNode
-  doc.addEventListener(
-    'click',
-    function (e) {
-      _trackEvent(e, config.instance)
-    },
-    false
-  )
-  doc.addEventListener(
-    'submit',
-    function (e) {
-      _trackEvent(e, config.instance)
-    },
-    false
-  )
-  doc.addEventListener(
-    'change',
-    function (e) {
-      _trackEvent(e, config.instance)
-    },
-    false
-  )
+  typeTest(this.config.listenerEvents, 'array') && this.config.listenerEvents.forEach(event => {
+    doc.addEventListener(
+      event,
+      e => {
+        _trackEvent(e, this)
+      },
+      false
+    )
+  })
   doc.addEventListener(
     'DOMContentLoaded',
-    function () {
+    e => {
       timeOnPage.et = new Date().getTime()
       let viewData = getTerminalData()
-      config.instance.track('web_view', viewData)
+      this.track('web_view', viewData)
     },
     false
   )
-  document.body.onbeforeunload = function () {
-    timeOnPage.lt = new Date().getTime()
-    timeOnPage.st = timeOnPage.lt - timeOnPage.et
-    timeOnPage.at = timeOnPage.st - timeOnPage.pt
-    config.instance.track('web_close', timeOnPage)
-  }
+  window.addEventListener(
+    'beforeunload',
+    () => {
+      timeOnPage.lt = new Date().getTime()
+      timeOnPage.st = timeOnPage.lt - timeOnPage.et
+      timeOnPage.at = timeOnPage.st - timeOnPage.pt
+      this.track('web_close', timeOnPage)
+    },
+    false
+  )
   let startTime = 0
-  doc.onvisibilitychange = function () {
-    if (doc.hidden) {
-      startTime = new Date()
-    } else {
-      timeOnPage.pt += new Date() - startTime
-    }
-  }
+  doc.addEventListener(
+    'visibilitychange',
+    () => {
+      if (doc.hidden) {
+        startTime = new Date()
+      } else {
+        timeOnPage.pt += new Date() - startTime
+      }
+    },
+    false
+  )
 }
+
+/**
+ * 手动埋点
+ *
+ * @param {string} eventType 事件的类型,可自定义
+ * @param {Object} params 传输的数据
+ */
 AutoTrack.prototype.track = function track (eventType, params) {
   let data = _utils.extend({ type: eventType }, params)
   send(this.config.src, data)
 }
 
+/**
+ * 提供对外的数据生成方法
+ *
+ * @param {Element} el 根据规则找到的元素对象
+ * @param {Event} event 点击事件
+ */
+AutoTrack.prototype.setData = function generateData (el, event) {
+  let data = {
+    t: new Date().getTime(),
+    event: event.type,
+    ..._getPropertiesFromElement(el),
+    text: _getSafeText(el)
+  }
+  return data
+}
+
 export default class MIPChinacnGetvideourl extends MIP.CustomElement {
   build () {
-    let src = this.element.getAttribute('src')
-    let instance = new AutoTrack({
-      src
-    })
+    let children = this.element.children
+    let defaultSetting = {
+      src: '',
+      stopFlag: 'a',
+      onlyFlag: 'a',
+      listenerEvents: ['click']
+    }
+    let userSetting = {}
+    if (children && children.length > 0) {
+      try {
+        userSetting = JSON.parse(children[0].textContent)
+      } catch (e) {
+        console.log(e)
+        userSetting = {}
+      }
+    }
+    let setting = Object.assign({}, defaultSetting, userSetting)
+    let instance = new AutoTrack(setting)
     instance.init()
     // 暴露实例
     this.element.instance = instance
