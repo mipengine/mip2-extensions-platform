@@ -129,7 +129,8 @@ export default class MIPMYHAdv extends MIP.CustomElement {
    * */
   render (htmls) {
     let fragment = document.createElement(this.inner_cpnt)
-    let indicatorId = '', mcidDotNodeInnerHtml = ''
+    let indicatorId = ''
+    let mcidDotNodeInnerHtml = ''
     for (let key in this.cpnt_attrs) {
       fragment.setAttribute(key, this.cpnt_attrs[key])
       if (key.toLowerCase() === 'indicatorid') {
