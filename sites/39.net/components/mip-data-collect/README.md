@@ -15,21 +15,37 @@
 示例说明
 
 ```
-<mip-data-collect src="http://test.39.net"></mip-data-collect>
+<mip-data-collect id="mip">
+    <script type="application/json">
+        {
+            "src": "http://wt.39.net",
+            "stopFlag": "a"
+        }
+        </script>
+</mip-data-collect>
 ```
+
+## 方法
+
+
+
+| 名称    | 类型                        | 返回值 | 说明                                  |
+| ------- | --------------------------- | ------ | ------------------------------------- |
+| setData | Function(el， event)        | Object | 提供对外的数据生成方法                |
+| track   | Function(eventType, params) | /      | 手动埋点函数，需传入eventType, params |
+|         |                             |        |                                       |
+
+
+
 
 ## 属性
 
-### src
 
-说明：数据传输的后台地址
 
-必选项：是
+| 名称           | 类型   | m默认值                       | 说明                                                         |
+| -------------- | ------ | ----------------------------- | ------------------------------------------------------------ |
+| src            | String | /                             | 数据传输的后台地址                                           |
+| stopFlag       | String | 'a'                           | 点击元素，向上递归，直到遇到该标志的节点，如果不存在则取点击节点 |
+| listenerEvents | Array  | ['click']                     | 监听的事件                                                   |
+| onlyFlag       | String | 'a'                           | 只上报标签元素                                                |
 
-类型：字符串
-
-取值范围：必须是 HTTPS 的
-
-单位：无
-
-默认值：无
