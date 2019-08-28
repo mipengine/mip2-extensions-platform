@@ -16,7 +16,15 @@
       </div>
     <div class="container1">
       <h1>this is test h1</h1>
-      <a href="#test">this is a link</a> <button type="button">click me 1</button><button>click me2</button>
+      <div>
+        <a href="#test">
+            <div>this is title</div>
+            <div class="content">
+                this is link content
+            </div>
+        </a>
+      </div>
+       <button class="no-track" type="button">click me 1</button><button>click me2</button>
       <select id="select">
           <option value="1">1</option>
           <option value="2">2</option>
@@ -24,8 +32,9 @@
       </select>
       <input type="hidden" value="password">
 
-      <div id="card">
-        <h1 class="title">this is title</h1>
+      <div id="card" class="collect-stop">
+        <h1 class="title" title="this is title">this is title</h1>
+        <h2 class="title no-track">this is no collect text</h2>
         <form class="form" action="/login">
             <label for="username">username</label><input name="username" type="text">
             <label for="password">password</label><input name="password" type="password">
@@ -38,7 +47,13 @@
     <div class="container2">
         <button class="click-3">click me 3</button>
     </div>
-    <mip-data-collect src="http://ts.39.net"></mip-data-collect>
+    <mip-data-collect id="mip">
+        <script type="application/json">
+            {
+              "src": "http://wt.39.net"
+            }
+          </script>
+    </mip-data-collect>
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
     <script src="/mip-data-collect/mip-data-collect.js"></script>
   </body>
