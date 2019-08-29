@@ -183,6 +183,7 @@ export default class MIPMapExt extends CustomElement {
         searchTypes: [ 1, 2 ]
       })
       tmpMarker.addEventListener('click', () => {
+        viewer.eventAction.execute('clickOverlay', this.element, pointsInfo[i])
         searchInfoWindow.open(tmpMarker)
       })
     }
