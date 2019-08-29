@@ -17,7 +17,7 @@ module.exports = {
      *
      * @type {boolean}
      */
-    livereload: false,
+    livereload: true,
 
     /**
      * server 启动自动打开页面，false 为关闭

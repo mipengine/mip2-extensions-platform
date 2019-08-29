@@ -1,5 +1,5 @@
 <template>
-  <div class="author-list">
+  <div class="poem-list">
     <div
       v-if="arr.length===0&&!isempty"
       class="load-box"><div class="loading"/></div>
@@ -23,7 +23,7 @@
 <script>
 import './index.less'
 import MipAuthItem from './mip-auths-item'
-import ajax from '../../common/ajax.js'
+import ajaxGet from '../../common/ajax.js'
 export default{
   components: {
     MipAuthItem
@@ -53,11 +53,8 @@ export default{
   },
   created () {
     // 无携带ID的情况 直接获取
-    let path = location.pathname.replace('.html', '').replace('/', '').split('_')
-    if (path.length === 1) {
+    if (location.pathname.indexOf('_') === -1) {
       this._getlist(this.url, this.page)
-    } else if (path[0] === 'a') {
-      this._getlist(this.url)
     }
   },
   mounted () {
@@ -114,7 +111,7 @@ export default{
     _renderdata (url, query) {
       let t = this
       t.arr = []
-      ajax.get(url, query, function (res) {
+      ajaxGet(url, query, function (res) {
         let list = res.list
         if (res.page_max === 0) {
           t.isempty = true
