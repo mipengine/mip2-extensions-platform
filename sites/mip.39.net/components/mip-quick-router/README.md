@@ -31,7 +31,7 @@
 
 **说明**：manifest.json中声明的包名 必选项：是 类型：string
 
-### appRouter
+### approuter
 
 **说明**：是否直接启动服务；不填默认直接启动 必选项：否 类型：{true|false}
 
