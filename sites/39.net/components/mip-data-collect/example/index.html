@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=no">
+    <title>MIP page</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <style mip-custom>
+    /* 自定义样式 */
+    </style>
+  </head>
+  <body>
+      <div class="container1">
+          <h1>this is container1</h1>
+      </div>
+    <div class="container1">
+      <h1>this is test h1</h1>
+      <div>
+        <a href="#test">
+            <div>this is title</div>
+            <div class="content">
+                this is link content
+            </div>
+        </a>
+      </div>
+       <button class="no-track" type="button">click me 1</button><button>click me2</button>
+      <select id="select">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+      </select>
+      <input type="hidden" value="password">
+
+      <div id="card" class="collect-stop">
+        <h1 class="title" title="this is title">this is title</h1>
+        <h2 class="title no-track">this is no collect text</h2>
+        <form class="form" action="/login">
+            <label for="username">username</label><input name="username" type="text">
+            <label for="password">password</label><input name="password" type="password">
+            <!-- <button type="submit">submit</button> -->
+            <input type="submit">
+            <button type="submit">submit</button>
+        </form>
+      </div>
+    </div>
+    <div class="container2">
+        <button class="click-3">click me 3</button>
+    </div>
+    <mip-data-collect id="mip">
+        <script type="application/json">
+            {
+              "src": "http://wt.39.net"
+            }
+          </script>
+    </mip-data-collect>
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="/mip-data-collect/mip-data-collect.js"></script>
+  </body>
+</html>
