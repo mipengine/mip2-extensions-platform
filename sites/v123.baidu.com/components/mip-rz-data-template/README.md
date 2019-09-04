@@ -19,7 +19,7 @@
     <template type="mip-xxx">
     </template>
 </mip-rz-data-template>
-```s
+```
 
 ## 属性
 

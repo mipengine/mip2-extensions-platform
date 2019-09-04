@@ -98,11 +98,11 @@ function realfull (element, data) {
   })
 }
 
-export default class MIPExample extends CustomElement {
+export default class MIPRzDataTemplate extends CustomElement {
   /**
    * 第一次进入可视区回调，只会执行一次
    */
-  firstInviewCallbac () {
+  firstInviewCallback () {
     let element = this.element
     // 获取当前页面的所有query
     let query = getQuery()
