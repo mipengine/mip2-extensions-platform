@@ -49,7 +49,7 @@ export default class MIPExample extends MIP.CustomElement {
     console.log(typeof M_DOM.getAttribute('approuter'))
     if (approuter) {
       let packagename = M_DOM.getAttribute('packagename')
-      let protocal = M_DOM.getAttribute('protocal') ? M_DOM.getAttribute('protocal') : 'http'
+      let protocal = M_DOM.getAttribute('protocal') ? M_DOM.getAttribute('protocal') : 'https'
       let page = M_DOM.getAttribute('page')
       let params = this.convertToHash(M_DOM.getAttribute('params'))
       let iframeWrapper = document.createElement('iframe')

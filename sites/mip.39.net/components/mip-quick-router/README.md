@@ -45,5 +45,5 @@
 
 ### protocal
 
-**说明**：请求协议；默认http 必选项：否 类型：string
+**说明**：请求协议；默认https 必选项：否 类型：string
 
