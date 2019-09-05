@@ -339,6 +339,7 @@ function _same (start, htm, str) {
 
 /**
  * 根据传入需要高亮的文本对文本执行高亮操作
+ *
  * @param  {string} body 文本
  * @param  {string} str  需高亮内容
  * @return {string}
