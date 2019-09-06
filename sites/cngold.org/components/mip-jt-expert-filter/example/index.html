@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=no">
+    <title>专家筛选</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <style mip-custom>
+/*common*/
+html {height: 100%;-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; overflow-x:hidden}
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, dl, dt, dd, input, a, table, img, hr, textarea, strong, figure { margin: 0; padding: 0;}
+body { color: #404040; font-size: .32rem; font-family: 'Microsoft Yahei';min-height: 100%; position: relative; margin: 0 auto;overflow-y: scroll;-webkit-overflow-scrolling : touch; overflow-x:hidden}
+body.noscroll{height:100%;}
+::-webkit-scrollbar{width:0;height:0}
+*html, html { height: 100%; overflow-x:hidden}
+article, footer, header, section, footer, nav, figure, menu, object, time {  display: block;}
+ul, ol, li { list-style: none; }
+a { color: #333333; text-decoration: none;}
+a:hover, a:active, a:focus, a:visited { color: #333; text-decoration: none;}
+img { border: none; vertical-align: middle; max-width: 100%; font-size:0px;}
+table {  border-collapse: collapse; border-spacing: 0;}
+a, input { outline: 0; cursor:pointer;font-family: 'microsoft yahei';}
+input[type="text"],input[type="password"]{text-indent: .15rem;}
+input::-webkit-input-placeholder {color:#ccc;}
+button,input[type="button"]{outline:none;}
+em,i { font-style: normal;}
+section{ background: #fff;}
+.clearfix:after{content:"\0020";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix{zoom:1;}
+.fl{ float: left;}
+.fr{ float: right;}
+.mt10{ margin-top: .1rem;}
+.mt20{ margin-top: .2rem;}
+.mt25{ margin-top: .25rem;}
+.mb20{ margin-bottom: .2rem;}
+.mb25{ margin-bottom: .25rem;}
+.pb20{ padding-bottom: .20rem;}
+.pb25{ padding-bottom: .25rem;}
+.pdlr30{ padding-left:.3rem; padding-right:.3rem;}
+.mglr30{ margin-left:.3rem; margin-right:.3rem;}
+.overhide{ overflow: hidden;}
+.index_tit{ height: 1rem; line-height: 1rem; padding: 0 .3rem; border-bottom: 1px solid #f0f0f0;}
+.index_tit i.icon{ float: left; width: .06rem; height: .3rem; background-position: 0 -4.85rem; margin: .36rem .16rem 0 0;}
+.index_tit h2{ float: left; font-size: .36rem; font-weight: normal;}
+
+
+.search-box .sel{font-size: .3rem;text-align: left;}
+.search-box .sel i{display: inline-block; width: .35rem; height: .32rem; background-position: -1.6rem -.5rem; }
+.sel-box{display: none;position: fixed;top: 0;left: 50%;transform: translateX(-50%);width: 100%;height: 100%;background-color: #fff;z-index: 99999;}
+.sel-top{font-size: 0.32rem;padding: 0 0.24rem;height: 0.8rem;line-height: 0.8rem;border-bottom: 1px solid #ececec;text-align: center;}
+.close-sel-box{display: block;width: 0.17rem;height: 0.31rem;background: url(https://res.cngoldres.com/mobile/img/close_sel_box.png) no-repeat;background-size: 0.17rem;margin-top: 0.24rem;}
+.sel-pices{padding: 0 0.24rem;}
+.sel-pices p{font-size: 0.32rem;margin: 0.34rem 0 0.05rem 0;}
+.sel-pices ul li{float: left;font-size: 0.26rem;margin: 0.17rem 0.18rem 0 0;}
+.sel-pices ul li a{font-size: 0.26rem;padding: 0.14rem 0.2rem;display: inline-block;background-color: #f2f2f2;border-radius: 4px;}
+.sel-pices ul li.on a{background-color: #2f74e9;color: #fff;}
+.sel-bot{position: fixed;bottom: 0;left: 0;}
+.sel-bot{}
+.sel-bot a{font-size: 0.3rem;display: inline-block;text-align: center;height: 0.8rem;line-height: 0.8rem;float: left;}
+.sel-bot a:first-child{background-color: #f0f0f0;width: 3.5rem;}
+.sel-bot a:last-child{background-color: #2f74e9;width: 4rem;color: #fff;}
+
+.select-li{display: none;padding: 0 0.24rem;padding-top: 0.2rem;background-color: #fff;}
+.select-li ul li{font-size: 0.26rem;color: #1c4a72;background-color: #e9f5ff;padding: 0.13rem 0.16rem;float: left;margin-right: 0.16rem;margin-bottom: 0.16rem;}
+.select-li ul li i{display: inline-block;width: 0.2rem;height: 0.2rem;background: url(https://res.cngoldres.com/mobile/img/sel_colse.png) no-repeat;background-size: 0.2rem;margin-left: 0.1rem;border-radius: 4px;}
+
+
+
+
+/*补充样式*/
+.search-box .sel{color: #2f75ea;height: 0.58rem;line-height: 0.58rem;margin-right: .2rem;margin-top:.26rem;}
+.sel-pices ul li span {font-size: 0.26rem;padding: 0.14rem 0.2rem;display: inline-block;border-radius: 4px;background-color: #f2f2f2;color: #333;}
+.sel-pices ul li.on span {background-color: #2f74e9;color: #fff;}
+.sel-bot span{font-size: 0.3rem;display: inline-block;text-align: center;height: 0.8rem;line-height: 0.8rem;float: left;}
+.sel-bot span:first-child{background-color: #f0f0f0;width: 3.5rem;}
+.sel-bot span:last-child{background-color: #2f74e9;width: 4rem;color: #fff;}
+.sel-box{display:block;}
+.sel-tips{display:none;position:absolute;top:45%;width:4rem;padding:.2rem .25rem;left:50%;margin-left:-2.25rem;background:rgba(0,0,0,.7);color:#fff;text-align:center;z-index:999999;line-height:.5rem;border-radius: .1rem;}
+    </style>
+  </head>
+  <body>
+
+<mip-jt-resize></mip-jt-resize>
+
+
+<mip-jt-expert-filter 
+  type='mingjia'
+  letter='0'
+  kind-id=''
+  grade-id=''
+>
+<!--用于存放已选条件-->
+<div class="select-li clearfix">
+  <ul>
+  </ul>
+</div>
+<section class="expert-list top-content">
+  <div class="index_tit clearfix search-box">
+    <i class="icon"></i>
+    <h2 class="fl">推荐专家</h2>
+    <span class="sel fr" id="show_chose" on="tap:chose-lightbox.open"><i class="icon4"></i>筛选</span>
+  </div>
+</section>
+
+<!--弹窗-->
+<mip-lightbox
+  id="chose-lightbox"
+  layout="nodisplay"
+  class="mip-hidden">
+  <div class="sel-box" id="chose_box">
+    <div class="sel-top">
+      <i class="close-sel-box fl" id="close_chose" on="tap:chose-lightbox.close"></i>
+      <span>筛选</span>
+    </div>
+    <div class="sel-pices">
+      <p>按业务分类</p>
+      <ul class="clearfix" id="kind-ul">
+        <li class="on b"><span data-value="-1">全部</span></li>
+        <li> <span data-value="25">金融</span></li>
+        <li> <span data-value="24">综合</span></li>
+        <li> <span data-value="20">其他</span></li>
+        <li> <span data-value="23">大宗商品</span></li>
+        <li> <span data-value="19">资管</span></li>
+        <li> <span data-value="18">私募</span></li>
+        <li> <span data-value="17">信托</span></li>
+        <li> <span data-value="16">基金</span></li>
+        <li> <span data-value="15">债券</span></li>
+        <li> <span data-value="14">房产</span></li>
+        <li> <span data-value="13">珠宝</span></li>
+        <li> <span data-value="12">银行</span></li>
+        <li> <span data-value="11">贷款</span></li>
+        <li> <span data-value="10">能源</span></li>
+        <li> <span data-value="9">奢侈品</span></li>
+        <li> <span data-value="8">收藏品</span></li>
+        <li> <span data-value="7">股票</span></li>
+        <li> <span data-value="6">期货</span></li>
+        <li> <span data-value="5">保险</span></li>
+        <li> <span data-value="4">p2p网贷</span></li>
+        <li> <span data-value="3">外汇</span></li>
+        <li> <span data-value="2">贵金属</span></li>
+        <li> <span data-value="1">信用卡</span></li>
+        <li> <span data-value="28">美股</span></li>
+        <li> <span data-value="27">港股</span></li>
+        <li> <span data-value="26">现货</span></li>
+        <li> <span data-value="22">原油</span></li>
+        <li> <span data-value="21">财经</span></li>
+      </ul>
+    </div>
+    <div class="sel-pices">
+      <p>按专家等级</p>
+      <ul class="clearfix" id="grade-ul">
+        <li class="on v"><span data-value="-1">全部</span></li>
+        <li><span data-value="0">普通专家</span></li>
+        <li><span data-value="1">黄金vip</span></li>
+        <li><span data-value="2">铂金vip</span></li>
+        <li><span data-value="3">铂金vip</span></li>
+        <li><span data-value="4">铂金vip</span></li>
+      </ul>
+    </div>
+    <div class="sel-bot clearfix">
+      <span class="reset" id="reset">重置</span>
+      <span class="confirm" id="confirm">完成（<i class="expertCount" id="expert-count">10</i>位专家）</span>
+    </div>
+    <p class="sel-tips" id="sel-tips"></p>
+  </div>
+</mip-lightbox>
+</mip-jt-expert-filter>
+
+
+
+<script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+<script src="https://c.mipcdn.com/static/v1/mip-jt-resize/mip-jt-resize.js"></script>
+<script src="https://c.mipcdn.com/static/v2/mip-lightbox/mip-lightbox.js"></script>
+<script src="/mip-jt-expert-filter/mip-jt-expert-filter.js"></script>
+  </body>
+</html>
