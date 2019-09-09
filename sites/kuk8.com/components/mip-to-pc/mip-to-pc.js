@@ -4,10 +4,8 @@ let { platform } = util
 function shebei () {
   let ios = platform.isIOS()
   let android = platform.isAndroid()
-  if (ios || android) {
-    return true }
-  else {
-    return false }
+  if (ios || android) { return true }
+  else { return false }
 }
 function topc (mipurl) {
   let wwwurl = mipurl.replace('mip', 'www')
