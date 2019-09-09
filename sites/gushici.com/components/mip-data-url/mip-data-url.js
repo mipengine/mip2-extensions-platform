@@ -186,40 +186,40 @@ export default class MIPDataUrl extends MIP.CustomElement {
     }
     let docs = []
     if (info.yi_zhu !== '') {
-      let doc = {
+      let docitem = {
         title: '译文及注释',
         arr: [],
         tip: ''
       }
       let o = doc(info.yi_zhu)
-      doc.arr = o.arr
-      doc.tip = o.tip
-      doc.hasmore = o.hasmore
-      docs.push(doc)
+      docitem.arr = o.arr
+      docitem.tip = o.tip
+      docitem.hasmore = o.hasmore
+      docs.push(docitem)
     }
     if (info.historical !== '') {
-      let doc = {
+      let docitem = {
         title: '创作背景',
         arr: [],
         tip: ''
       }
       let o = doc(info.historical)
-      doc.arr = o.arr
-      doc.tip = o.tip
-      doc.hasmore = o.hasmore
-      docs.push(doc)
+      docitem.arr = o.arr
+      docitem.tip = o.tip
+      docitem.hasmore = o.hasmore
+      docs.push(docitem)
     }
     if (info.appreciation !== '') {
-      let doc = {
+      let docitem = {
         title: '鉴赏',
         arr: [],
         tip: ''
       }
       let o = doc(info.appreciation)
-      doc.arr = o.arr
-      doc.tip = o.tip
-      doc.hasmore = o.hasmore
-      docs.push(doc)
+      docitem.arr = o.arr
+      docitem.tip = o.tip
+      docitem.hasmore = o.hasmore
+      docs.push(docitem)
     }
     let auth = {
       id: info.auth_id,
