@@ -4,11 +4,15 @@ let { platform } = util
 function shebei () {
   let ios = platform.isIOS()
   let android = platform.isAndroid()
-  if (ios || android) { return true }
-  else { return false }
+  if (ios || android) {
+    return true
+  }
+  else {
+    return false
+  }
 }
 function topc (mipurl) {
-  let wwwurl = mipurl.replace('mip','www')
+  let wwwurl = mipurl.replace('mip', 'www')
   window.location.href = wwwurl
 }
 export default class MIPToPc extends MIP.CustomElement {
