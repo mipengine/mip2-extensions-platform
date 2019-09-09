@@ -5,11 +5,9 @@ function shebei () {
   let ios = platform.isIOS()
   let android = platform.isAndroid()
   if (ios || android) {
-    return true
-  }
+    return true }
   else {
-    return false
-  }
+    return false }
 }
 function topc (mipurl) {
   let wwwurl = mipurl.replace('mip', 'www')
