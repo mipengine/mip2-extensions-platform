@@ -12,7 +12,7 @@
 
 ## 示例
 
-    <mip-to-pc url="http://mip.kuk8.com"></mip-to-pc>
+    <mip-to-pc url="https://mip.kuk8.com"></mip-to-pc>
     <script src="https://c.mipcdn.com/extensions/platform/v2/kuk8.com/mip-to-pc/mip-to-pc.js"></script>
 
 ```
