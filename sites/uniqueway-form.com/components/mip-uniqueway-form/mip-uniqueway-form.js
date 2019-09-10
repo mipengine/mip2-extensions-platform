@@ -35,16 +35,16 @@ export default class MIPExample extends MIP.CustomElement {
           window._hmt && window._hmt.push(trackEvent)
           this.removeAttribute('disabled')
         }).catch(error => {
-            window._hmt && window._hmt.push(['_trackEvent', 'submit_error', error])
-            this.removeAttribute('disabled')
-          })
+          window._hmt && window._hmt.push(['_trackEvent', 'submit_error', error])
+          this.removeAttribute('disabled')
+        })
       }
     }
 
-    var check = function (element, submitButton) {
+    let check = function (element, submitButton) {
       let data = {}
       let form = element.getElementsByTagName('input')
-      for (var i = 0; i < form.length; i++) {
+      for (let i = 0; i < form.length; i++) {
         if (form[i].getAttribute('type') !== 'hidden') {
           let label = form[i].getAttribute('label')
           let value = form[i].value
