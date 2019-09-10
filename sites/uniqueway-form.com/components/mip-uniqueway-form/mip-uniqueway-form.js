@@ -47,8 +47,8 @@ export default class MIPExample extends MIP.CustomElement {
       let form = element.getElementsByTagName('input')
       for(var i = 0; i < form.length; i++) {
         if(form[i].getAttribute('type') !== 'hidden') {
-          var label = form[i].getAttribute('label')
-          var value = form[i].value
+          let label = form[i].getAttribute('label')
+          let value = form[i].value
           if (!value) {
             notice.innerText = label + '不能为空'
             notice.classList.add('notice-mesage')
