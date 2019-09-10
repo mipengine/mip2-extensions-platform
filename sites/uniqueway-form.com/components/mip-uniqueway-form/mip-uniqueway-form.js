@@ -12,7 +12,6 @@ export default class MIPExample extends MIP.CustomElement {
       let trackEvent = submitButton.getAttribute('data-track-event').split(',')
       trackEvent.unshift('_trackEvent')
 
-      //验证字段是否为空
       if (check(element, submitButton)) {
         fetch(url, {
           method: 'POST',
@@ -47,7 +46,7 @@ export default class MIPExample extends MIP.CustomElement {
       let data = {}
       let form = element.getElementsByTagName('input')
       for(var i = 0; i < form.length; i++) {
-        if (form[i].getAttribute('type') !== 'hidden') {
+        if(form[i].getAttribute('type') !== 'hidden') {
           var label = form[i].getAttribute('label')
           var value = form[i].value
           if (!value) {
@@ -55,7 +54,7 @@ export default class MIPExample extends MIP.CustomElement {
             notice.classList.add('notice-mesage')
             window._hmt && window._hmt.push(['_trackEvent', 'input_error', notice.innerText])
             submitButton.removeAttribute('disabled')
-            setTimeout(()=> {
+            setTimeout(() => {
               notice.innerText = ''
               notice.classList.remove('notice-mesage')
             }, 3000)
