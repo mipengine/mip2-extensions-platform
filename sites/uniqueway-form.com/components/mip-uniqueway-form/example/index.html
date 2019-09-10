@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=no">
+    <title>MIP page</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <style mip-custom>
+    /* 自定义样式 */
+    </style>
+  </head>
+  <body>
+    <div>
+      <mip-uniqueway-form>
+        <div class="invalid"></div>
+        <div on="tap:form-lightbox.toggle" class="close-button">×</div>
+        <mip-form url="{{ env('APP_URL') }}/plans?response_json=true" class="mip-form">
+          <input type="hidden" name="destination" value="无" >
+          <input type="hidden" name="name" valur="无" >
+          <input type="hidden" name="comment" value=""/>
+
+          <input class="field textfield" type="text" name="destination" placeholder="填写目的地" label="目的地">
+
+          <input class="field textfield" type="tel" name="phone" placeholder="请填写手机号" required="true" label="手机号">
+
+          <button type="button" data-submit="true" class="button" data-track-event="consult,success,alert_form">免费咨询</button>
+        </mip-form>
+    </mmip-uniqueway-form>
+    </div>
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="/mip-uniqueway-form/mip-uniqueway-form.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-form/mip-form.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-mustache/mip-mustache.js"></script>
+  </body>
+</html>
