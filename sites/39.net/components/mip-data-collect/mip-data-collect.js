@@ -84,11 +84,11 @@ let _utils = {
 }
 
 /**
-     * 获取类名
-     *
-     * @param {*} el 节点
-     * @returns {string} 返回值
-     */
+ * 获取类名
+ *
+ * @param {*} el 节点
+ * @returns {string} 返回值
+ */
 function _getClassName (el) {
   switch (typeof el.className) {
     case 'string':
@@ -101,11 +101,11 @@ function _getClassName (el) {
 }
 
 /**
-     * 类型检测
-     * @prop <String> type 类型
-     * 带type则检测是否为该类型，没有则返回值的类型
-     * @return <Boolean, String>
-     */
+ * 类型检测
+ * @prop <String> type 类型
+ * 带type则检测是否为该类型，没有则返回值的类型
+ * @return <Boolean, String>
+ */
 
 function typeTest (obj, type) {
   if (type) {
@@ -120,12 +120,12 @@ function typeTest (obj, type) {
 }
 
 /**
-     * 判断节点的类型
-     *
-     * @param {*} el 节点
-     * @param {*} type 类型
-     * @returns {boolean|number} 返回值
-     */
+ * 判断节点的类型
+ *
+ * @param {*} el 节点
+ * @param {*} type 类型
+ * @returns {boolean|number} 返回值
+ */
 function _typeofNode (el, type) {
   if (!el) {
     throw Error('el no exist')
@@ -142,12 +142,12 @@ function _typeofNode (el, type) {
 }
 
 /**
-     * 监听函数兼容写法
-     *
-     * @param {*} ele 元素
-     * @param {*} type 事件类型
-     * @param {*} callback 回调
-     */
+ * 监听函数兼容写法
+ *
+ * @param {*} ele 元素
+ * @param {*} type 事件类型
+ * @param {*} callback 回调
+ */
 function addEventListeners (ele, type, callback) {
   if (ele.addEventListener) {
     ele.addEventListener(type, callback, false)
@@ -165,22 +165,22 @@ function addEventListeners (ele, type, callback) {
 }
 
 /**
-     * 判断元素的tag
-     *
-     * @param {*} el 节点
-     * @param {*} tag 节点的tag
-     * @returns {boolean} 返回值
-     */
+ * 判断元素的tag
+ *
+ * @param {*} el 节点
+ * @param {*} tag 节点的tag
+ * @returns {boolean} 返回值
+ */
 function _isTag (el, tag) {
   return el && el.tagName && el.tagName.toLowerCase() === tag.toLowerCase()
 }
 
 /**
-     * 是否为标记元素
-     *
-     * @param {*} el 元素
-     * @param {*} stopFlag 标记
-     */
+ * 是否为标记元素
+ *
+ * @param {*} el 元素
+ * @param {*} stopFlag 标记
+ */
 function isFlagEl (el, stopFlag) {
   let isFlag = null
   if (!stopFlag) {
@@ -206,11 +206,11 @@ function isFlagEl (el, stopFlag) {
 }
 
 /**
-     * 判断是否追踪元素
-     *
-     * @param {*} el 节点
-     * @returns {boolean} 返回值
-     */
+ * 判断是否追踪元素
+ *
+ * @param {*} el 节点
+ * @returns {boolean} 返回值
+ */
 function _shouldTrackElement (el) {
   let classes = _getClassName(el).split(' ')
   for (
@@ -234,9 +234,9 @@ function _shouldTrackElement (el) {
   // a risk of clientside javascript placing sensitive data in attributes
   if (
     _isTag(el, 'input') ||
-        _isTag(el, 'select') ||
-        _isTag(el, 'textarea') ||
-        el.getAttribute('contenteditable') === 'true'
+    _isTag(el, 'select') ||
+    _isTag(el, 'textarea') ||
+    el.getAttribute('contenteditable') === 'true'
   ) {
     return false
   }
@@ -267,18 +267,18 @@ function _shouldTrackElement (el) {
 }
 
 /**
-     * 是否为追踪的事件
-     *
-     * @param {*} el 节点
-     * @param {*} event 事件
-     * @returns {boolean} 返回值
-     */
+ * 是否为追踪的事件
+ *
+ * @param {*} el 节点
+ * @param {*} event 事件
+ * @returns {boolean} 返回值
+ */
 function _shouldTrackDomEvent (el, event) {
   if (
     !el ||
-        _isTag(el, 'html') ||
-        _isTag(el, 'body') ||
-        !_typeofNode(el, 'element')
+    _isTag(el, 'html') ||
+    _isTag(el, 'body') ||
+    !_typeofNode(el, 'element')
   ) {
     return false
   }
@@ -302,11 +302,11 @@ function _shouldTrackDomEvent (el, event) {
 }
 
 /**
-     * 是否追踪input的值
-     *
-     * @param {*} value 值
-     * @returns {boolean} 返回值
-     */
+ * 是否追踪input的值
+ *
+ * @param {*} value 值
+ * @returns {boolean} 返回值
+ */
 function _shouldTrackValue (value) {
   if (value === null || _utils.isUndefined(value)) {
     return false
@@ -330,11 +330,11 @@ function _shouldTrackValue (value) {
 }
 
 /**
-     * 获取非敏感的文本
-     *
-     * @param {*} el 节点
-     * @returns {string} 返回值
-     */
+ * 获取非敏感的文本
+ *
+ * @param {*} el 节点
+ * @returns {string} 返回值
+ */
 function _getSafeText (el) {
   let elText = ''
   if (_shouldTrackElement(el)) {
@@ -351,11 +351,11 @@ function _getSafeText (el) {
 }
 
 /**
-     * 获取事件的对象，兼容IE
-     *
-     * @param {*} e 节点
-     * @param {string} stopFlag 向上递归截至得节点, 如果不存在则以当前点击的节点作为对象
-     */
+ * 获取事件的对象，兼容IE
+ *
+ * @param {*} e 节点
+ * @param {string} stopFlag 向上递归截至得节点, 如果不存在则以当前点击的节点作为对象
+ */
 function _getCollectTarget (e, stopFlag) {
   // https://developer.mozilla.org/en-US/docs/Web/API/Event/target#Compatibility_notes
   let el = typeof e.target === 'undefined' ? e.srcElement : e.target
@@ -363,8 +363,8 @@ function _getCollectTarget (e, stopFlag) {
   if (stopFlag) {
     while (
       !_isTag(el, 'body') &&
-          !_isTag(el, 'html') &&
-          !isFlagEl(el, stopFlag)
+      !_isTag(el, 'html') &&
+      !isFlagEl(el, stopFlag)
     ) {
       el = el.parentNode
     }
@@ -376,10 +376,10 @@ function _getCollectTarget (e, stopFlag) {
 }
 
 /**
-     * 获取元素的属性的数据
-     *
-     * @param {*} elem 节点
-     */
+ * 获取元素的属性的数据
+ *
+ * @param {*} elem 节点
+ */
 function _getPropertiesFromElement (elem) {
   let props = {}
   let whiteList = ['action', 'href']
@@ -387,7 +387,7 @@ function _getPropertiesFromElement (elem) {
     let attr = elem.attributes[i]
     if (
       _shouldTrackValue(attr.value) &&
-          _utils.includes(whiteList, attr.name)
+      _utils.includes(whiteList, attr.name)
     ) {
       props[attr.name] = attr.value
     }
@@ -396,11 +396,11 @@ function _getPropertiesFromElement (elem) {
 }
 
 /**
-     * 追踪事件的函数
-     *
-     * @param {*} event 事件
-     * @param {*} instance 实例
-     */
+ * 追踪事件的函数
+ *
+ * @param {*} event 事件
+ * @param {*} instance 实例
+ */
 function _trackEvent (event, instance) {
   // 获取对象元素,可能为非点击元素
   let el = _getCollectTarget(event, instance.config.stopFlag)
@@ -420,8 +420,8 @@ function _trackEvent (event, instance) {
 }
 
 /**
-     * 获取终端信息
-     */
+ * 获取终端信息
+ */
 function getTerminalData () {
   let params = {}
   // Document对象数据
@@ -462,11 +462,11 @@ function getTerminalData () {
 }
 
 /**
-     * 发送数据
-     *
-     * @param {*} src 后台地址
-     * @param {*} params 发送的数据
-     */
+ * 发送数据
+ *
+ * @param {*} src 后台地址
+ * @param {*} params 发送的数据
+ */
 function send (src, params) {
   let args = ''
   for (let i in params) {
@@ -480,10 +480,10 @@ function send (src, params) {
 }
 
 /**
-     * 用户行为追踪类
-     *
-     * @param {*} config 配置
-     */
+ * 用户行为追踪类
+ *
+ * @param {*} config 配置
+ */
 function AutoTrack (config) {
   this.config = _utils.extend(
     {},
@@ -517,16 +517,16 @@ AutoTrack.prototype.init = function init () {
   let viewData = getTerminalData()
   _this.track('web_view', viewData)
   typeTest(_this.config.listenerEvents, 'array') &&
-        _this.config.listenerEvents.forEach(function (event) {
-          addEventListeners(doc, event, function (e) {
-            _trackEvent(e, _this)
-          })
-        })
+    _this.config.listenerEvents.forEach(function (event) {
+      addEventListeners(doc, event, function (e) {
+        _trackEvent(e, _this)
+      })
+    })
   addEventListeners(window, 'beforeunload', function () {
     timeOnPage.lt = new Date().getTime()
     timeOnPage.et =
-          _utils.getObjectValue(window, 'performance.timing.domLoading', 0) ||
-          (tempEnterTimer - timeOnPage.dt > 0 ? timeOnPage.dt : tempEnterTimer)
+      _utils.getObjectValue(window, 'performance.timing.domLoading', 0) ||
+      (tempEnterTimer - timeOnPage.dt > 0 ? timeOnPage.dt : tempEnterTimer)
     timeOnPage.st = timeOnPage.lt - timeOnPage.et
     timeOnPage.at = timeOnPage.st - timeOnPage.pt
     let data = _utils.extend(timeOnPage, getTerminalData())
@@ -535,11 +535,11 @@ AutoTrack.prototype.init = function init () {
 }
 
 /**
-     * 手动埋点
-     *
-     * @param {string} eventType 事件的类型,可自定义
-     * @param {Object} params 传输的数据
-     */
+ * 手动埋点
+ *
+ * @param {string} eventType 事件的类型,可自定义
+ * @param {Object} params 传输的数据
+ */
 AutoTrack.prototype.track = function track (eventType, params) {
   let data = _utils.extend(
     { type: eventType },
@@ -549,11 +549,11 @@ AutoTrack.prototype.track = function track (eventType, params) {
 }
 
 /**
-     * 提供对外的数据生成方法
-     *
-     * @param {Element} el 根据规则找到的元素对象
-     * @param {Event} event 点击事件
-     */
+ * 提供对外的数据生成方法
+ *
+ * @param {Element} el 根据规则找到的元素对象
+ * @param {Event} event 点击事件
+ */
 AutoTrack.prototype.setData = function generateData (el, event) {
   let data = _utils.extend(
     {
