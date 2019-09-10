@@ -1,7 +1,7 @@
 {
-  "name": "topba.com",
+  "name": "v123.baidu.com",
   "version": "0.0.1",
-  "description": "map ext",
+  "description": "A MIP project",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
@@ -10,8 +10,10 @@
     "fix": "npm run fix:js",
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
-  "author": "pengbo10 (pengbo10@baidu.com)",
-  "dependencies": {},
+  "author": "zhangpenghe (zhangpenghe@baidu.com)",
+  "dependencies": {
+    "clipboard": "^2.0.4"
+  },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",

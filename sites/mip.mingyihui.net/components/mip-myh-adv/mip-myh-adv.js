@@ -100,7 +100,7 @@ export default class MIPMYHAdv extends MIP.CustomElement {
 
   faKey (adSign, mode) {
     let keyName = this.postExtParams['referer'] + 'Adv_' + adSign + (mode === 0 ? '_View' : '_Click')
-    let statUrl = 'https://www.mingyihui.net/api/stat/statKey2/' + keyName + '/0/' + this.postData['userid']
+    let statUrl = 'https://mip.mingyihui.net/api/stat/statKey2/' + keyName + '/0/' + this.postData['userid']
     return fetch(statUrl, {
     })
   }
@@ -129,16 +129,34 @@ export default class MIPMYHAdv extends MIP.CustomElement {
    * */
   render (htmls) {
     let fragment = document.createElement(this.inner_cpnt)
+    let indicatorId = ''
+    let mcidDotNodeInnerHtml = ''
     for (let key in this.cpnt_attrs) {
       fragment.setAttribute(key, this.cpnt_attrs[key])
+      if (key.toLowerCase() === 'indicatorid') {
+        indicatorId = this.cpnt_attrs[key]
+      }
     }
     htmls.forEach(html => {
       let node = document.createElement('div')
       node.innerHTML = html
       node.setAttribute('role', 'listitem')
       fragment.appendChild(node)
+      if (this.inner_cpnt === 'mip-carousel') {
+        mcidDotNodeInnerHtml = mcidDotNodeInnerHtml + '<div class="mip-carousel-indecator-item"></div>'
+      }
     })
     this.container.appendChild(fragment)
+    if (this.inner_cpnt === 'mip-carousel') {
+      let mipCarouselIndicatorNode = document.createElement('div')
+      mipCarouselIndicatorNode.setAttribute('class', 'mip-carousel-indicator-wrapper')
+      let mciDotNode = document.createElement('div')
+      mciDotNode.setAttribute('class', 'mip-carousel-indicatorDot')
+      mciDotNode.setAttribute('id', indicatorId)
+      mciDotNode.innerHTML = mcidDotNodeInnerHtml
+      mipCarouselIndicatorNode.appendChild(mciDotNode)
+      this.container.appendChild(mipCarouselIndicatorNode)
+    }
   }
 }
 

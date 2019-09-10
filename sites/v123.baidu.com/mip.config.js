@@ -10,7 +10,7 @@ module.exports = {
      *
      * @type {number}
      */
-    port: 8115,
+    port: 8111,
 
     /**
      * 启用调试页面自动刷新
