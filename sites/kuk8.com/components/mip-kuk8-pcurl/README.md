@@ -12,14 +12,21 @@
 
 ## 示例
 
-示例说明
+    <mip-kuk8-pcurl url="https://mip.kuk8.com"></mip-kuk8-pcurl>
+    <script src="https://c.mipcdn.com/extensions/platform/v2/kuk8.com/mip-kuk8-pcurl/mip-kuk8-pcurl.js"></script>
 
 ```
-<mip-kuk8-pcurl url="https://mip.kuk8.com"></mip-kuk8-pcurl>
-<script src="/mip-kuk8-pcurl/mip-kuk8-pcurl.js"></script>
+// 代码示例
 ```
 
 ## 属性
 
+### 属性1
 
 **说明**：
+
+**必选项**：
+
+**单位**：
+
+**默认值**：
