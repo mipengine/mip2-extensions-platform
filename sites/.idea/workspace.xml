@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="cc5f276c-6b09-423f-9c83-1a5e60d4f057" name="默认的" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.editorconfig" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.eslintignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.eslintrc" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.travis.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kuk8.com/components/mip-kuk8-url/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kuk8.com/components/mip-kuk8-url/example/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kuk8.com/components/mip-kuk8-url/index.less" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kuk8.com/components/mip-kuk8-url/mip-to-pc.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/kuk8.com/example/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/kuk8.com/example/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/kuk8.com/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/kuk8.com/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tools/build-site.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tools/build.sh" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../tools/validate.sh" beforeDir="false" />
-    </list>
+    <list default="true" id="cc5f276c-6b09-423f-9c83-1a5e60d4f057" name="默认的" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,16 +53,6 @@
               <first_editor relative-caret-position="482">
                 <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
               </first_editor>
-              <second_editor />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/kuk8.com - 副本/components/mip-to-pc/README.md">
-          <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
-            <state split_layout="SPLIT">
-              <first_editor relative-caret-position="-355" />
               <second_editor />
             </state>
           </provider>
@@ -151,24 +122,6 @@
               <item name="kuk8.com" type="462c0819:PsiDirectoryNode" />
               <item name="example" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="sites" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sites" type="462c0819:PsiDirectoryNode" />
-              <item name="kuk8.com - 副本" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sites" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sites" type="462c0819:PsiDirectoryNode" />
-              <item name="kuk8.com - 副本" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="sites" type="b2602c69:ProjectViewProjectNode" />
-              <item name="sites" type="462c0819:PsiDirectoryNode" />
-              <item name="kuk8.com - 副本" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="mip-to-pc" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -214,12 +167,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1568856168291</updated>
-      <workItem from="1568856169572" duration="3187000" />
+      <workItem from="1568856169572" duration="3370000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3187000" />
+    <option name="totallyTimeSpent" value="3370000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
