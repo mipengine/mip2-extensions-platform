@@ -1,9 +1,9 @@
 {
   "parser": "vue-eslint-parser",
   "parserOptions": {
-      "ecmaVersion": 8,
-      "sourceType": "module",
-      "allowImportExportEverywhere": false
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "allowImportExportEverywhere": false
   },
   "extends": [
     "standard",

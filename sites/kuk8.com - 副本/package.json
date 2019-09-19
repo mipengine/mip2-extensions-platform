@@ -1,7 +1,7 @@
 {
   "name": "kuk8.com",
   "version": "0.0.1",
-  "description": "kuk8",
+  "description": "A MIP project",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
