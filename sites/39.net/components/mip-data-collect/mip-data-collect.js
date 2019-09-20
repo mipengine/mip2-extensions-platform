@@ -4,6 +4,11 @@
  */
 
 /**
+ * @file 用户行为收集
+ * @author yeyongqin@mail.39.net
+ */
+
+/**
  * 工具类
  */
 let _utils = {
@@ -23,9 +28,9 @@ let _utils = {
         return toString.call(arguments[0]) === '[object ' + name + ']'
       }
     }
-    const isObject = isObjFunc('Object')
-    const isArray = isObjFunc('Array')
-    const isBoolean = isObjFunc('Boolean')
+    let isObject = isObjFunc('Object')
+    let isArray = isObjFunc('Array')
+    let isBoolean = isObjFunc('Boolean')
     return function extend () {
       let index = 0
       let isDeep = false
@@ -58,7 +63,24 @@ let _utils = {
       }
       return destination
     }
-  })()
+  })(),
+  getObjectValue: function (value, valuePath, defalutValue) {
+    let temp = value
+    let arr = valuePath.split('.')
+    let tempPath = arr.shift()
+    defalutValue = !_utils.isUndefined(defalutValue) ? defalutValue : null
+    try {
+      while (temp && tempPath) {
+        temp = temp[tempPath]
+        tempPath = arr.shift()
+      }
+    } catch (e) {
+      console.log('arr: ', arr)
+      console.log(e)
+    }
+    temp = temp || defalutValue
+    return temp
+  }
 }
 
 /**
@@ -87,34 +109,15 @@ function _getClassName (el) {
 
 function typeTest (obj, type) {
   if (type) {
-    type = type.replace(/\w/, $1 => $1.toUpperCase())
-    return Object.prototype.toString.call(obj) === `[object ${type}]`
+    type = type.replace(/\w/, function ($1) {
+      return $1.toUpperCase()
+    })
+    return Object.prototype.toString.call(obj).slice(8, -1) === type
   } else {
     let typeStr = Object.prototype.toString.call(obj)
     return typeStr.slice(8, -1).toLowerCase()
   }
 }
-
-/**
- * 获取同层次的前一个节点
- *
- * @param {*} el 节点
- */
-// function _previousElementSibling (el) {
-//   try {
-//     if (el.previousElementSibling) {
-//       return el.previousElementSibling
-//     } else {
-//       do {
-//         el = el.previousSibling
-//       } while (el && !_typeofNode(el, 'element'))
-//       return el
-//     }
-//   } catch (e) {
-//     console.log(e)
-//     return null
-//   }
-// }
 
 /**
  * 判断节点的类型
@@ -128,13 +131,36 @@ function _typeofNode (el, type) {
     throw Error('el no exist')
   }
   if (type) {
-    const map = {
+    let map = {
       text: 3,
       element: 1
     }
     return map[type] === el.nodeType
   } else {
     return el.nodeType
+  }
+}
+
+/**
+ * 监听函数兼容写法
+ *
+ * @param {*} ele 元素
+ * @param {*} type 事件类型
+ * @param {*} callback 回调
+ */
+function addEventListeners (ele, type, callback) {
+  if (ele.addEventListener) {
+    ele.addEventListener(type, callback, false)
+  } else {
+    let fn = ele['on' + type]
+    if (fn) {
+      ele['on' + type] = function (val) {
+        callback(val)
+        fn(val)
+      }
+    } else {
+      ele['on' + type] = callback
+    }
   }
 }
 
@@ -161,15 +187,20 @@ function isFlagEl (el, stopFlag) {
     return true
   }
   if (/^#/.test(stopFlag)) {
-    isFlag = el => el.id === stopFlag
+    isFlag = function (el) {
+      return el.id === stopFlag
+    }
   } else if (/^\./.test(stopFlag)) {
-    isFlag = el =>
-      _utils.includes(
+    isFlag = function (el) {
+      return _utils.includes(
         _getClassName(el).split(' '),
         stopFlag.replace(/^\./, '')
       )
+    }
   } else {
-    isFlag = el => _isTag(el, stopFlag)
+    isFlag = function (el) {
+      return _isTag(el, stopFlag)
+    }
   }
   return isFlag(el, stopFlag)
 }
@@ -330,7 +361,11 @@ function _getCollectTarget (e, stopFlag) {
   let el = typeof e.target === 'undefined' ? e.srcElement : e.target
   let curEl = el
   if (stopFlag) {
-    while (!_isTag(el, 'body') && !_isTag(el, 'html') && !isFlagEl(el, stopFlag)) {
+    while (
+      !_isTag(el, 'body') &&
+      !_isTag(el, 'html') &&
+      !isFlagEl(el, stopFlag)
+    ) {
       el = el.parentNode
     }
   }
@@ -339,47 +374,6 @@ function _getCollectTarget (e, stopFlag) {
   }
   return el
 }
-
-/**
- * 获取元素在同级中的位置
- *
- * @param {node} el
- */
-// function _getNthChildAndNthOfType (el) {
-//   let nthChild = 1
-//   let nthOfType = 1
-//   let currentElem = el
-//   while ((currentElem = _previousElementSibling(currentElem))) {
-//     nthChild++
-//     currentElem.tagName === el.tagName && nthOfType++
-//   }
-//   return {
-//     child: nthChild,
-//     type: nthOfType
-//   }
-// }
-
-/**
- * 自动为目标元素生成唯一样式选择器来作为元素的唯一标识
- *
- * @param {*} el 节点
- * @returns {Object} 返回值
- */
-// function _generateSelectorPath (el) {
-//   let list = []
-//   let curEl = el
-//   do {
-//     if (curEl.id) {
-//       list.unshift(`#${curEl.id}`)
-//       break
-//     } else {
-//       let nths = _getNthChildAndNthOfType(curEl)
-//       list.unshift(`${curEl.tagName.toLowerCase()}:nth-child(${nths.child})`)
-//       curEl = curEl.parentNode
-//     }
-//   } while (curEl.parentNode && !_isTag(curEl, 'body'))
-//   return list.join(' ')
-// }
 
 /**
  * 获取元素的属性的数据
@@ -401,6 +395,12 @@ function _getPropertiesFromElement (elem) {
   return props
 }
 
+/**
+ * 追踪事件的函数
+ *
+ * @param {*} event 事件
+ * @param {*} instance 实例
+ */
 function _trackEvent (event, instance) {
   // 获取对象元素,可能为非点击元素
   let el = _getCollectTarget(event, instance.config.stopFlag)
@@ -415,38 +415,8 @@ function _trackEvent (event, instance) {
   }
   // 生成生成数据
   let data = instance.setData(el, event)
-  instance.track('web_event', data)
+  instance.track(instance.config.eventName, data)
   return true
-}
-
-/**
- * 获取终端设备类型
- */
-function getBrowserInfo () {
-  let agent = navigator.userAgent.toLowerCase()
-  let ie = /msie [\d.]+;/gi
-  let ff = /firefox\/[\d.]+/gi
-  let chrome = /chrome\/[\d.]+/gi
-  let saf = /safari\/[\d.]+/gi
-  let device = ''
-  // IE
-  if (agent.indexOf('msie') > 0) {
-    device = agent.match(ie)
-  }
-  // firefox
-  if (agent.indexOf('firefox') > 0) {
-    device = agent.match(ff)
-  }
-  // Safari
-  if (agent.indexOf('safari') > 0 && agent.indexOf('chrome') < 0) {
-    device = agent.match(saf)
-  }
-  // Chrome
-  if (agent.indexOf('chrome') > 0) {
-    device = agent.match(chrome)
-  }
-  device = device && device.length > 0 ? device[0] : ''
-  return device
 }
 
 /**
@@ -456,33 +426,37 @@ function getTerminalData () {
   let params = {}
   // Document对象数据
   if (document) {
-    params.domain = document.domain || ''
     params.title = document.title || ''
     params.referrer = document.referrer || ''
   }
   // navigator对象数据
   if (navigator) {
     params.lang = navigator.language || ''
-    params.userAgent = navigator.userAgent || ''
     params.userLanguage = navigator.userLanguage || ''
     params.browserLanguage = navigator.browserLanguage || ''
-    params.device = getBrowserInfo()
   }
   // Window对象数据
   if (window && window.location) {
-    params.host = window.location.host || ''
-    params.pathname = window.location.pathname || ''
     params.url = window.location.href || ''
-    params.origin = window.location.origin || ''
-    params.protocol = window.location.protocol || ''
+    params.sh = window.screen.height || 0
+    params.sw = window.screen.width || 0
+    params.cd = window.screen.colorDepth || 0
   }
   // 性能
   if (window.performance) {
     let time = window.performance.timing
-    params.load = time.loadEventEnd - time.navigationStart
-    params.domready = time.domInteractive - time.navigationStart
-    params.blank = time.responseEnd - time.navigationStart
-    // params.firstscreen = 0
+    params.load = time.loadEventEnd
+      ? time.loadEventEnd - time.navigationStart
+      : 0
+    params.domready = time.domContentLoadedEventEnd
+      ? time.domContentLoadedEventEnd - time.navigationStart
+      : 0
+    params.blank = time.domLoading - time.navigationStart
+  }
+  for (let i in params) {
+    if (!params[i]) {
+      delete params[i]
+    }
   }
   return params
 }
@@ -494,82 +468,70 @@ function getTerminalData () {
  * @param {*} params 发送的数据
  */
 function send (src, params) {
-  console.log(params)
   let args = ''
   for (let i in params) {
     if (args !== '') {
       args += '&'
     }
-    args += i + '=' + encodeURIComponent(JSON.stringify(params[i]))
+    args += i + '=' + encodeURIComponent(params[i])
   }
   let img = new Image(1, 1)
   img.src = src + '/1.gif?' + args
 }
 
 /**
- * 记录页面活跃时间
+ * 用户行为追踪类
+ *
+ * @param {*} config 配置
  */
-let timeOnPage = {
-  et: 0,
-  lt: 0,
-  at: 0,
-  st: 0,
-  pt: 0
-}
-
 function AutoTrack (config) {
-  this.config = config
+  this.config = _utils.extend(
+    {},
+    {
+      src: 'http://wt.39.net', // 上报地址
+      stopFlag: 'a', // 向上递归到该标签停止，如果不存在或者遇到body，则回退到当前点击节点
+      onlyFlag: 'a', // 仅上报该标签内容
+      listenerEvents: ['click'], // 监听的事件
+      eventName: 'web_event' // 默认发的事件名称
+    },
+    config
+  )
+  this.init()
 }
 
 AutoTrack.prototype.init = function init () {
-  if (!document.body) {
+  let _this = this
+  let doc = document.documentElement
+    ? document.documentElement.parentNode
+    : document
+  // 如果都获取不到进入时间，则已初始化函数时间为准
+  let tempEnterTimer = new Date().getTime()
+  if (!doc) {
     console.log('document not ready yet, trying again in 500 milliseconds...')
-    setTimeout(() => {
-      this.init()
+    setTimeout(function () {
+      _this.init()
     }, 500)
     return
   }
-  let doc = document.documentElement.parentNode
-  typeTest(this.config.listenerEvents, 'array') && this.config.listenerEvents.forEach(event => {
-    doc.addEventListener(
-      event,
-      e => {
-        _trackEvent(e, this)
-      },
-      false
-    )
+  // 发送view事件
+  let viewData = getTerminalData()
+  _this.track('web_view', viewData)
+  typeTest(_this.config.listenerEvents, 'array') &&
+    _this.config.listenerEvents.forEach(function (event) {
+      addEventListeners(doc, event, function (e) {
+        _trackEvent(e, _this)
+      })
+    })
+  addEventListeners(window, 'beforeunload', function () {
+    timeOnPage.lt = new Date().getTime()
+    timeOnPage.et =
+      _utils.getObjectValue(window, 'performance.timing.domLoading', 0) ||
+      (tempEnterTimer - timeOnPage.dt > 0 ? timeOnPage.dt : tempEnterTimer)
+    timeOnPage.st = timeOnPage.lt - timeOnPage.et
+    timeOnPage.at = timeOnPage.st - timeOnPage.pt
+    let data = _utils.extend(timeOnPage, getTerminalData())
+    _this.track('web_close', data)
   })
-  doc.addEventListener(
-    'DOMContentLoaded',
-    e => {
-      timeOnPage.et = new Date().getTime()
-      let viewData = getTerminalData()
-      this.track('web_view', viewData)
-    },
-    false
-  )
-  window.addEventListener(
-    'beforeunload',
-    () => {
-      timeOnPage.lt = new Date().getTime()
-      timeOnPage.st = timeOnPage.lt - timeOnPage.et
-      timeOnPage.at = timeOnPage.st - timeOnPage.pt
-      this.track('web_close', timeOnPage)
-    },
-    false
-  )
-  let startTime = 0
-  doc.addEventListener(
-    'visibilitychange',
-    () => {
-      if (doc.hidden) {
-        startTime = new Date()
-      } else {
-        timeOnPage.pt += new Date() - startTime
-      }
-    },
-    false
-  )
 }
 
 /**
@@ -579,7 +541,10 @@ AutoTrack.prototype.init = function init () {
  * @param {Object} params 传输的数据
  */
 AutoTrack.prototype.track = function track (eventType, params) {
-  let data = _utils.extend({ type: eventType }, params)
+  let data = _utils.extend(
+    { type: eventType },
+    _utils.extend({}, params, getTerminalData)
+  )
   send(this.config.src, data)
 }
 
@@ -590,24 +555,66 @@ AutoTrack.prototype.track = function track (eventType, params) {
  * @param {Event} event 点击事件
  */
 AutoTrack.prototype.setData = function generateData (el, event) {
-  let data = {
-    t: new Date().getTime(),
-    event: event.type,
-    ..._getPropertiesFromElement(el),
-    text: _getSafeText(el)
-  }
+  let data = _utils.extend(
+    {
+      t: new Date().getTime(),
+      event: event.type,
+      text: _getSafeText(el)
+    },
+    _getPropertiesFromElement(el),
+    getTerminalData()
+  )
   return data
 }
+
+let timeOnPage = {
+  et: 0,
+  lt: 0,
+  at: 0,
+  st: 0,
+  pt: 0,
+  dt: 0
+}
+function collectTime () {
+  let doc = document.documentElement
+    ? document.documentElement.parentNode
+    : document
+  if (!doc) {
+    console.log('document not ready yet, trying again in 500 milliseconds...')
+    setTimeout(function () {
+      collectTime()
+    }, 500)
+    return
+  }
+  addEventListeners(window, 'load', function () {
+    // 触发获取loadEventEnd
+    !timeOnPage.dt && (timeOnPage.dt = new Date().getTime())
+  })
+  if (!document.addEventListener) {
+    addEventListeners(doc, 'readystatechange', function () {
+      timeOnPage.dt = new Date().getTime()
+    })
+  } else {
+    addEventListeners(doc, 'DOMContentLoaded', function () {
+      timeOnPage.dt = new Date().getTime()
+    })
+  }
+  let peddingTime = 0
+  addEventListeners(doc, 'visibilitychange', function () {
+    if (doc.hidden) {
+      peddingTime = new Date()
+    } else {
+      peddingTime && (timeOnPage.pt += new Date() - peddingTime)
+    }
+  })
+}
+
+// 开始收集时间
+collectTime()
 
 export default class MIPChinacnGetvideourl extends MIP.CustomElement {
   build () {
     let children = this.element.children
-    let defaultSetting = {
-      src: '',
-      stopFlag: 'a',
-      onlyFlag: 'a',
-      listenerEvents: ['click']
-    }
     let userSetting = {}
     if (children && children.length > 0) {
       try {
@@ -617,9 +624,7 @@ export default class MIPChinacnGetvideourl extends MIP.CustomElement {
         userSetting = {}
       }
     }
-    let setting = Object.assign({}, defaultSetting, userSetting)
-    let instance = new AutoTrack(setting)
-    instance.init()
+    let instance = new AutoTrack(userSetting)
     // 暴露实例
     this.element.instance = instance
   }
