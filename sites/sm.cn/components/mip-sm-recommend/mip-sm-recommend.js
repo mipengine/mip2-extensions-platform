@@ -25,7 +25,7 @@ export default class MipSmRecommend extends CustomElement {
     fetch(recommendAPI)
       .then(res => res.json())
       .then(data => {
-        if (data.error == 'succ') {
+        if (data.error === 'succ') {
           let wordsJson = data.hits
           let listHtml = '<div class="title"><p>大家还在搜</p><ul>'
           Object.keys(wordsJson).map((key) => {
