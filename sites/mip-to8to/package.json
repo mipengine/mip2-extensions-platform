@@ -1,6 +1,6 @@
 {
   "name": "mip-to8to",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "to8to mip components",
   "scripts": {
     "dev": "mip2 dev",
