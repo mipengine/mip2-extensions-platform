@@ -7,12 +7,92 @@
     <link rel="canonical" href="对应的原页面地址">
     <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
     <style mip-custom>
-    /* 自定义样式 */
+      .pageContent {
+        height: 2000px;
+        background: linear-gradient(to bottom, #ff0000 0%,#00ff00 100%);;
+      }
+      #appBtn {
+        width: 3.02rem;
+        height: 1.2rem;
+        background: #cccccc;
+      }
+      .replyBtn {
+        width: 50px;
+        height: 50px;
+        background: rgba(0,0,0,0.7);
+        border-radius: 25px;
+      }
+      .postBtn {
+        width: 50px;
+        height: 50px;
+        background: rgba(0,0,0,0.6);
+        border-radius: 25px;
+      }
+      .goTop {
+        width: 50px;
+        height: 50px;
+        background: rgba(0,0,0,0.5);
+        border-radius: 25px;
+      }
+      .replyMask {
+        display: none;
+      }
+      .maskView {
+        display: block;
+        width: 100px;
+        height: 50px;
+        background: #dddddd;
+      }
     </style>
   </head>
   <body>
-    <div>
-      <mip-mbbs-cehome></mip-mbbs-cehome>
+    <div class="pageContent">
+      <mip-mbbs-cehome>
+
+        <p class="searchBox">搜索</p>
+        <div class="replyMask">
+          <div class="replyForm">
+            <div class="text-input">
+              <textarea name="message" id="message" rows="4" placeholder="甲友，说点你想说的话"></textarea>
+            </div>
+            <div class="row">
+              <span class="smile">表情</span>
+              <button id="postReply" data-tid="123">发表评论</button>
+            </div>
+            <div id="smiles">
+              <ul class="smileList"></ul>
+            </div>
+            <i class="maskView"></i>
+          </div>
+        </div>
+        <div class="thread">
+          <h1>data.threadInfo.subject</h1>
+          <div class="info clearfix">
+              <div class="user">
+                <p class="username" data-tuid="456"></p>
+              </div>
+          </div>
+        </div>
+
+        <ul class="tagBox clearfix">
+          <li class="tagSingle" data-tagid="111">aaa</li>
+          <li class="tagSingle" data-tagid="222"><em class="act">bbb</em></li>
+          <li class="tagSingle" data-tagid="333">ccc</li>
+        </ul>
+
+        <div id="tip" class="hint-text">点赞成功</div>
+
+        <mip-fixed type="bottom" data-slide id="appBtnFix">
+          <p id="appBtn" class="appBtn"></p>
+        </mip-fixed>
+        <mip-fixed type="right" bottom="1rem" id="floatBox" mipdata-fixedidx="Fixed4" class="mip-element">
+          <div class="sideBox">
+            <p class="replyBtn"></p>
+            <p class="postBtn"></p>
+            <p class="goTop"></p>
+          </div>
+        </mip-fixed>
+      </mip-mbbs-cehome>
     </div>
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
     <script src="/mip-mbbs-cehome/mip-mbbs-cehome.js"></script>
