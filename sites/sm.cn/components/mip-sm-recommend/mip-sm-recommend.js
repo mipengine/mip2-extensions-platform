@@ -12,20 +12,20 @@ const {
 export default class MipSmRecommend extends CustomElement {
   connectedCallback () {
     let element = this.element
-    let title = element.getAttribute('title') || (document.querySelector('title') && document.querySelector('title').textContent)
-    let query = MIP.hash.get('q')
-    let originUrl = encodeURIComponent(util.getOriginalUrl(location.href))
+    let title = (element.getAttribute('title') || (document.querySelector('title') && document.querySelector('title').textContent)) || ''
+    let query = MIP.hash.get('q') || ''
+    let originUrl = encodeURIComponent(util.getOriginalUrl(location.href)) || ''
     let from = 'wh30010'
     let count = 8
     let recommendAPI = 'https://rec.m.sm.cn/?app=related_query&type=json&query=' + query + '&url=' + originUrl + '&title=' + title + '&src=sm_rec&from=' + from + '&count=' + count + '&athena_allow_origin=rec.uc.cn'
-    if (!query) {
-      console.warn('query error')
+    if (!query && !title && !originUrl) {
+      console.warn('recommend param empty')
       return false
     }
     fetch(recommendAPI)
       .then(res => res.json())
       .then(data => {
-        if (data.error === 'succ') {
+        if (data && data.error && data.error[0] === 'succ') {
           let wordsJson = data.hits
           let listHtml = '<div class="title"><p>大家还在搜</p><ul>'
           Object.keys(wordsJson).map((key) => {
