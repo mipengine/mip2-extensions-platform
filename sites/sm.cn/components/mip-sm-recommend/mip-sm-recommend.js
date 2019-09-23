@@ -5,16 +5,19 @@
  */
 import './mip-sm-recommend.less'
 const {
-  CustomElement
+  CustomElement,
+  util
 } = MIP
 
 export default class MipSmRecommend extends CustomElement {
   connectedCallback () {
     let element = this.element
     let title = element.getAttribute('title') || (document.querySelector('title') && document.querySelector('title').textContent)
-    let query = MIP.hash.get('q') || encodeURIComponent(title)
-    let recommendAPI = 'https://mip.m.sm.cn/rec/recword?wd=' + query + '&from=mip'
-
+    let query = MIP.hash.get('q')
+    let originUrl = encodeURIComponent(util.getOriginalUrl(location.href))
+    let from = 'wh30010'
+    let count = 8
+    let recommendAPI = 'https://rec.m.sm.cn/?app=related_query&type=json&query=' + query + '&url=' + originUrl + '&title=' + title + '&src=sm_rec&from=' + from + '&count=' + count + '&athena_allow_origin=rec.uc.cn'
     if (!query) {
       console.warn('query error')
       return false
@@ -22,17 +25,20 @@ export default class MipSmRecommend extends CustomElement {
     fetch(recommendAPI)
       .then(res => res.json())
       .then(data => {
-        let wordsJson = data.items.words
-        wordsJson = wordsJson.slice(0, 8)
-        let listHtml = '<div class="title"><p>大家还在搜</p><ul>'
-        Object.keys(wordsJson).map((key) => {
-          let item = wordsJson[key]
-          let queryUrl = 'https://mip.m.sm.cn/rec/redirect/?src=http://m.sa.sm.cn/s?q=' + encodeURIComponent(item.show_word) + '&from=wh30010'
-          listHtml += '<li><div class="item"><a href="' + queryUrl + '">' + item.show_word + '</a></div></li>'
-        })
-        listHtml += '</ul></div>'
-        let createElement = MIP.util.dom.create(listHtml)
-        MIP.util.dom.insert(element, createElement)
+        if (data.error == 'succ') {
+          let wordsJson = data.hits
+          let listHtml = '<div class="title"><p>大家还在搜</p><ul>'
+          Object.keys(wordsJson).map((key) => {
+            let item = wordsJson[key]
+            let queryUrl = 'https://mip.m.sm.cn/rec/redirect/?src=http://m.sa.sm.cn/s?q=' + encodeURIComponent(item.word) + '&from=' + from
+            listHtml += '<li><div class="item"><a href="' + queryUrl + '">' + item.word + '</a></div></li>'
+          })
+          listHtml += '</ul></div>'
+          let createElement = MIP.util.dom.create(listHtml)
+          MIP.util.dom.insert(element, createElement)
+        } else {
+          console.warn('error ', 'data error')
+        }
       })
       .catch(error => {
         console.warn('error ', error.message)
