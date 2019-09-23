@@ -11,10 +11,6 @@
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
   "author": "fidermo.hu (fidermo.hu@corp.to8to.com)",
-  "dependencies": {
-    "fetch-jsonp": "^1.1.3",
-    "less": "^3.9.0"
-  },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
