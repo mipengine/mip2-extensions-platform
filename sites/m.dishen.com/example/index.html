@@ -18,9 +18,24 @@
     <div>
       <h2>First MIP page</h2>
       <h2>Add MIP components here</h2>
-      <mip-example></mip-example>
+      <mip-form  method="get" url="https://m.dishen.com/sg/bzsm/">
+        
+        <input type="number" name="age" validatetarget="age" required placeholder="年龄" >
+        <div target="age">年龄不能为空</div>
+        
+        <mip-datapicker class="ss"  data-type="0"  validatetarget="datepicker" required  data-toid-date="date" data-toid-hour="hour" data-toid-type="type">
+          <input type="hidden" name="date" id="date" value="" autocomplete="off" validatetarget="datepicker" required>
+          <input type="hidden" name="hour" id="hour" value="" autocomplete="off">
+          <input type="hidden" name="yinli" id="type" value="0">
+        </mip-datapicker>
+        
+        <div target="datepicker">请选择生辰</div>
+        <input type="submit" value="提交">
+      </mip-form>
     </div>
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
-    <script src="/mip-example/mip-example.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-form/mip-form.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-mustache/mip-mustache.js"></script>
+    <script src="/mip-datapicker/mip-datapicker.js"></script>
   </body>
 </html>
