@@ -1301,8 +1301,8 @@ export default class MIPExample extends MIP.CustomElement {
       // '<input type="hidden" name="hour" id="hour_'+timestamp+'" value="'+this.hour+'" autocomplete="off">'+
       // '<input type="hidden" name="yinli" value="'+this.type+'">'
     
-    let datepicker = new ruiDatepicker();
-    datepicker.init(wrapper.children[0]);
+    let datepicker = new ruiDatepicker()
+    datepicker.init(wrapper.children[0])
     this.element.appendChild(wrapper)
   }
 }
