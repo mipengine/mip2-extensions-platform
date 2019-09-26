@@ -7,6 +7,8 @@ import FooterLayer from './footerLayer'
 // 兼容部分不支持 NodeList.forEach 方法的机型，使用 Array.prototype.forEach.call
 // import util from './../../common/util'
 
+const {fetchJsonp} = window
+
 export default class MIPTubatuTender extends MIP.CustomElement {
   build () {
     // 添加底部节点
@@ -39,7 +41,6 @@ export default class MIPTubatuTender extends MIP.CustomElement {
           jsonpCallback: ''
         })
      */
-    const fetchJsonp = require('fetch-jsonp')
     fetchJsonp(`//secure.to8to.com/api/getindexdata.php?type=towninfo&townid=${wapTownid}`)
       .then((response) => response.json())
       .then((res) => {

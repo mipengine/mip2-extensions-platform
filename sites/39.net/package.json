@@ -1,6 +1,6 @@
 {
   "name": "39.net",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "39.net网自定义组件",
   "scripts": {
     "dev": "mip2 dev",

@@ -1,5 +1,5 @@
 import util from './../../common/util.js'
-const fetchJsonp = require('fetch-jsonp')
+const {fetchJsonp} = window
 
 class FooterLayer {
   constructor (art) {
@@ -331,7 +331,7 @@ class FooterLayer {
   /**
    * 判断是否已设定该标识,返回类型布尔值,标识尚在有效期内,即已存在且未过期返回true,否则返回false
    *
-   * @param localStorage键名
+   * @param name localStorage键名
    * @returns bool  是否存在该键名
    */
   isExist (name) {
@@ -352,7 +352,7 @@ class FooterLayer {
   /**
    * 写入localStorage的方法,其值 常用来做为标识当前标志是否已过期
    *
-   * @param localStorage 键名 localStorage[@param]
+   * @param name localStorage 键名 localStorage[@param]
    * @param time,过期时间,缺省值为一天,最大为365天
    * @returns bool 设置是否成功
    */
