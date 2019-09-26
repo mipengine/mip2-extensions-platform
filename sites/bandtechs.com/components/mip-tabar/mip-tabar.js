@@ -3,28 +3,29 @@ import './index.less'
 export default class MIPTabar extends MIP.CustomElement {
   build () {
     let wrapper = document.createElement('div')
-    wrapper.classList.add('wrapper');
+    wrapper.classList.add('wrapper')
+    let url = this.element.getAttribute('url')
     wrapper.innerHTML = `
        <mip-fixed type="bottom">
      <div class="fixed-bottom">
      <a href="tel:400-008-2585">
       <div class="fixed-bottom-box">
-          <mip-img src="" width="23" height="23"></mip-img>
+          <mip-img src="` + url + `/bandeng/电话咨询@2x.png" width="23" height="23"></mip-img>
           <span>电话咨询</span>
       </div>
       </a>
        <div class="fixed-bottom-box" on="tap:weixin.toggle" tabindex="0" id="btn-open">
-         <mip-img src="" width="23" height="23"></mip-img>
+         <mip-img src="` + url + `/bandeng/微信咨询@2x.png" width="23" height="23"></mip-img>
          <span>微信咨询</span>
        </div>
         <div class="fixed-bottom-box">
-          <mip-img src="" width="23" height="23"></mip-img>
+          <mip-img src="` + url + `/bandeng/在线咨询@2x.png" width="23" height="23"></mip-img>
           <!--<a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=781558368&site=qq&menu=yes">-->
           <span>在线咨询</span>
           <!--</a>-->
         </div>
          <div class="fixed-bottom-box" on="tap:top.scrollTo(duration=500,position='center')">
-           <mip-img src="" width="23" height="23"></mip-img>
+           <mip-img src="` + url + `/bandeng/返回顶部@2x.png" width="23" height="23"></mip-img>
            <span>返回顶部</span>
          </div>
      </div>
