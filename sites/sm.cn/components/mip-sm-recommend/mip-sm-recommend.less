@@ -20,13 +20,17 @@ mip-sm-recommend {
       justify-content: space-between;
       li {
         width: 50%;
-        .item {
-          &:nth-child(odd) {
+        &:nth-child(odd) {
+          .item {
             margin-right: 6px;
           }
-          &:nth-child(even) {
+        }
+        &:nth-child(even) {
+          .item {
             margin-left: 6px;
           }
+        }
+        .item {
           font-size: 14px;
           line-height: 40px;
           height: 40px;

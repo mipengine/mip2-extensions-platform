@@ -43,7 +43,7 @@ export default class MIPJtXianhuoExfilter extends MIP.CustomElement {
 
     // 字母查询
     function getLetter (letter) {
-      let fetchUrl = 'http://m.cngold.org/xianhuo/m_citys_firstletter.html?firstletter=' + letter
+      let fetchUrl = 'https://m.cngold.org/xianhuo/m_citys_firstletter.html?firstletter=' + letter
       fetch(fetchUrl).then((res) => {
         return res.json()
       }).then((data) => {
@@ -84,7 +84,7 @@ export default class MIPJtXianhuoExfilter extends MIP.CustomElement {
 
     // 获取省下面的市
     function getCitys (provinceId, provinceName) {
-      let fetchUrl = 'http://m.cngold.org/xianhuo/m_citys_provinceId.html?provinceId=' + provinceId
+      let fetchUrl = 'https://m.cngold.org/xianhuo/m_citys_provinceId.html?provinceId=' + provinceId
       fetch(fetchUrl).then((res) => {
         return res.json()
       }).then((data) => {
@@ -141,7 +141,7 @@ export default class MIPJtXianhuoExfilter extends MIP.CustomElement {
       let cityId = selCityId
       let provinceid = selProId
       let selecttypeid = seltypeId
-      let url = 'http://m.cngold.org/xianhuo/m_jiaoyisuo_province' +
+      let url = 'https://m.cngold.org/xianhuo/m_jiaoyisuo_province' +
         provinceid + '_city' + cityId + '_' + selecttypeid + '_v0.html'
       MIP.viewer.open(url, { isMipLink: false, replace: false })
     })
