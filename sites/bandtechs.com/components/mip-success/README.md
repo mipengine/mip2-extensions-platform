@@ -7,7 +7,7 @@
 所需脚本| [https://c.mipcdn.com/extensions/platform/v2/mipWebsite/mip-success/mip-success.js](https://c.mipcdn.com/extensions/platform/v2/mipWebsite/mip-success/mip-success.js)
 
 ## 说明
-对数据进行处理，再循环输出标签
+案列中心通用组件，用于展示各个案列的条目。简化页面
 
 
 ## 示例

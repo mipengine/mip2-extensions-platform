@@ -7,11 +7,11 @@ export default class MIPSuccess extends MIP.CustomElement {
     let dataList = sessionStorage.getItem('dataList')
     dataList = JSON.parse(dataList)
     let arr = []
-    dataList.newsList.forEach((item) => {
-      if (item.group === 4) {
-        arr.push(item)
+    for (let i = 0; i < dataList.newsList.length; i++) {
+      if (dataList.newsList[i].group === 4) {
+        arr.push(dataList.newsList[i])
       }
-    })
+    }
     for (let i = 0; i < 4; i++) {
       wrapper.innerHTML += `    
       <div class="exam-img-box">

@@ -7,7 +7,7 @@
 所需脚本| [https://c.mipcdn.com/extensions/platform/v2/mipWebsite/mip-company/mip-company.js](https://c.mipcdn.com/extensions/platform/v2/mipWebsite/mip-company/mip-company.js)
 
 ## 说明
-页面循环案列
+主要是对本地储存的案列数据进行提取和数据处理，再穿插在页面上
 
 ## 示例
 
@@ -19,10 +19,10 @@
 
 ## 属性
 
-### 属性1
+### url
 
 **说明**：
-
+获取动态的图片地址
 **必选项**：
 
 **单位**：
