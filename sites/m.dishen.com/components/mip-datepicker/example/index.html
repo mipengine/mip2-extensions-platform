@@ -18,8 +18,20 @@
     </style>
   </head>
   <body>
+    <div>           
+      选择时间                                
+      <mip-datepicker data-hour="0" data-min="0" data-toid-hour="hour" data-toid-min="min" data-confirm="false" data-confirm="true" data-fixed="true">
+          <input type="hidden" name="hour" id="hour" value="0"> 
+          <input type="hidden" name="min" id="min" value="0">
+      </mip-datepicker>
+    </div>
+    
     <div>
-      <mip-datepicker on="change:div.toggleClass(class='on')"></mip-datepicker>
+      选择日期             
+      <mip-datepicker data-hour="0" data-min="0" data-toid-hour="hour" data-toid-date="date" data-confirm="false" data-confirm="true" data-fixed="true">
+          <input type="hidden" name="hour" id="hour" value="0"> 
+          <input type="hidden" name="date" id="date" value="0">
+      </mip-datepicker>
     </div>
     <div id="div"></div>
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>

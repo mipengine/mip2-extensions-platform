@@ -155,6 +155,41 @@ ruiDatepicker.prototype = {
       var hourId=_self.trigger.getAttribute('data-toid-hour');
       var minId=_self.trigger.getAttribute('data-toid-min');
       var typeId=_self.trigger.getAttribute('data-toid-type');
+      var fixed = _self.trigger.getAttribute('data-fixed') === 'true';//选择公历/农历
+      var colNum = 0;
+      dateId && (colNum += 3);
+      hourId && (colNum += 1);
+      minId && (colNum += 1);
+      var dateHtml = '<div>' +
+          '<div class="gear date_yy" data-datetype="date_yy"></div>' +
+          '<div class="date_grid">' +
+          '</div>' +
+          '</div>' +
+          '<div>' +
+          '<div class="gear date_mm" data-datetype="date_mm"></div>' +
+          '<div class="date_grid">' +
+          '</div>' +
+          '</div>' +
+          '<div>' +
+          '<div class="gear date_dd" data-datetype="date_dd"></div>' +
+          '<div class="date_grid">' +
+          '</div>' +
+          '</div>';
+      var hourHtml = '<div>' +
+          '<div class="gear date_hh" data-datetype="date_hh"></div>' +
+          '<div class="date_grid">' +
+          '</div>' +
+          '</div>';
+      var minHtml = '<div>' +
+          '<div class="gear date_min" data-datetype="date_min"></div>' +
+          '<div class="date_grid">' +
+          '</div>' +
+          '</div>';
+      var changeTypeHtml = 
+      '<div class="date_class_box">' +
+      '<div class="date_class lcalendar_gongli"><span></span>公历</div>' +
+      '<div class="date_class lcalendar_nongli"><span></span>农历</div>' +
+      '</div>';
       _self.gearDate.innerHTML = '<div class="date_ctrl slideInUp">' +
           '<div class="date_info_box lcalendar_info">' +
           '</div>' +
@@ -164,33 +199,13 @@ ruiDatepicker.prototype = {
           '</div>' +
           '<div class="date_choice_wrap">' +
           '<div class="date_roll_mask">' +
-          '<div class="date_roll date_roll_more">' +
-          '<div>' +
-          '<div class="gear date_yy" data-datetype="date_yy"></div>' +
-          '<div class="date_grid">' +
+          '<div class="date_roll date_roll_col'+ colNum +'">' +
+          (dateId ? dateHtml:'') +
+          (hourId ? hourHtml:'') +
+          (minId ? minHtml:'') +          
           '</div>' +
           '</div>' +
-          '<div>' +
-          '<div class="gear date_mm" data-datetype="date_mm"></div>' +
-          '<div class="date_grid">' +
-          '</div>' +
-          '</div>' +
-          '<div>' +
-          '<div class="gear date_dd" data-datetype="date_dd"></div>' +
-          '<div class="date_grid">' +
-          '</div>' +
-          '</div>' +
-          '<div>' +
-          '<div class="gear date_hh" data-datetype="date_hh"></div>' +
-          '<div class="date_grid">' +
-          '</div>' +
-          '</div>' +
-          '</div>' +
-          '</div>' +
-          '<div class="date_class_box">' +
-          '<div class="date_class lcalendar_gongli"><span></span>公历</div>' +
-          '<div class="date_class lcalendar_nongli"><span></span>农历</div>' +
-          '</div>' +
+          (fixed ? '':changeTypeHtml) +   
           '</div>' +
           '<div class="date_confirm_wrap">' +
           '<div class="confirm_tit">请确认输入的时间是否正确</div>' +
@@ -198,49 +213,6 @@ ruiDatepicker.prototype = {
           '<div class="confirm_p">农历：<b class="confirm_nongli"></b></div>' +
           '</div>' +
           '</div>';
-      // 判断是否启用时辰
-      if(_self.trigger.getAttribute('data-toid-hour')){
-        
-      }else{
-        _self.gearDate.innerHTML = '<div class="date_ctrl slideInUp">' +
-          '<div class="date_info_box lcalendar_info">' +
-          '</div>' +
-          '<div class="date_btn_box">' +
-          '<div class="date_btn lcalendar_finish" data-isconfirm="0">完成</div>' +
-          '<div class="date_btn lcalendar_cancel">取消</div>' +
-          '</div>' +
-          '<div class="date_choice_wrap">' +
-          '<div class="date_roll_mask">' +
-          '<div class="date_roll">' +
-          '<div>' +
-          '<div class="gear date_yy" data-datetype="date_yy"></div>' +
-          '<div class="date_grid">' +
-          '</div>' +
-          '</div>' +
-          '<div>' +
-          '<div class="gear date_mm" data-datetype="date_mm"></div>' +
-          '<div class="date_grid">' +
-          '</div>' +
-          '</div>' +
-          '<div>' +
-          '<div class="gear date_dd" data-datetype="date_dd"></div>' +
-          '<div class="date_grid">' +
-          '</div>' +
-          '</div>' +
-          '</div>' +
-          '</div>' +
-          '<div class="date_class_box">' +
-          '<div class="date_class lcalendar_gongli"><span></span>公历</div>' +
-          '<div class="date_class lcalendar_nongli"><span></span>农历</div>' +
-          '</div>' +
-          '</div>' +
-          '<div class="date_confirm_wrap">' +
-          '<div class="confirm_tit">请确认输入的时间是否正确</div>' +
-          '<div class="confirm_p">公历：<b class="confirm_gongli"></b></div>' +
-          '<div class="confirm_p">农历：<b class="confirm_nongli"></b></div>' +
-          '</div>' +
-          '</div>';
-      }
       document.body.appendChild(_self.gearDate);
       //_self.trigger.parentElement.appendChild(_self.gearDate);
       dateCtrlInit();
@@ -249,46 +221,56 @@ ruiDatepicker.prototype = {
       lcalendar_cancel.addEventListener(hasTouch?'touchstart':'click', closeMobileCalendar);
       var lcalendar_finish = _self.gearDate.querySelector(".lcalendar_finish");
       lcalendar_finish.addEventListener(hasTouch?'touchstart':'click', finishMobileDate);
-      var lcalendar_gongli = _self.gearDate.querySelector(".lcalendar_gongli");
-      var lcalendar_nongli = _self.gearDate.querySelector(".lcalendar_nongli");
-      lcalendar_gongli.addEventListener(hasTouch?'touchstart':'click', function(){convertTap('gongli')},false);
-      lcalendar_nongli.addEventListener(hasTouch?'touchstart':'click', function(){convertTap('nongli')},false);
+      if(!fixed)
+      {
+        var lcalendar_gongli = _self.gearDate.querySelector(".lcalendar_gongli");
+        var lcalendar_nongli = _self.gearDate.querySelector(".lcalendar_nongli");
+        lcalendar_gongli.addEventListener(hasTouch?'touchstart':'click', function(){convertTap('gongli')},false);
+        lcalendar_nongli.addEventListener(hasTouch?'touchstart':'click', function(){convertTap('nongli')},false);
+      }
       var date_yy = _self.gearDate.querySelector(".date_yy");
       var date_mm = _self.gearDate.querySelector(".date_mm");
       var date_dd = _self.gearDate.querySelector(".date_dd");
       var date_hh = _self.gearDate.querySelector(".date_hh");
-      date_yy.addEventListener('touchstart', gearTouchStart);
-      date_mm.addEventListener('touchstart', gearTouchStart);
-      date_dd.addEventListener('touchstart', gearTouchStart);
+      var date_min = _self.gearDate.querySelector(".date_min");
+      date_yy?date_yy.addEventListener('touchstart', gearTouchStart):'';
+      date_mm?date_mm.addEventListener('touchstart', gearTouchStart):'';
+      date_dd?date_dd.addEventListener('touchstart', gearTouchStart):'';
       date_hh?date_hh.addEventListener('touchstart', gearTouchStart):'';
-      date_yy.addEventListener('mousedown', gearMouseSlide);
-      date_mm.addEventListener('mousedown', gearMouseSlide);
-      date_dd.addEventListener('mousedown', gearMouseSlide);
+      date_min?date_min.addEventListener('touchstart', gearTouchStart):'';
+      date_yy?date_yy.addEventListener('mousedown', gearMouseSlide):'';
+      date_mm?date_mm.addEventListener('mousedown', gearMouseSlide):'';
+      date_dd?date_dd.addEventListener('mousedown', gearMouseSlide):'';
       date_hh?date_hh.addEventListener('mousedown', gearMouseSlide):'';
-      date_yy.addEventListener('touchmove', gearTouchMove);
-      date_mm.addEventListener('touchmove', gearTouchMove);
-      date_dd.addEventListener('touchmove', gearTouchMove);
+      date_min?date_min.addEventListener('mousedown', gearMouseSlide):'';
+      date_yy?date_yy.addEventListener('touchmove', gearTouchMove):'';
+      date_mm?date_mm.addEventListener('touchmove', gearTouchMove):'';
+      date_dd?date_dd.addEventListener('touchmove', gearTouchMove):'';
       date_hh?date_hh.addEventListener('touchmove', gearTouchMove):'';
-      date_yy.addEventListener('touchend', gearTouchEnd);
-      date_mm.addEventListener('touchend', gearTouchEnd);
-      date_dd.addEventListener('touchend', gearTouchEnd);
+      date_min?date_min.addEventListener('touchmove', gearTouchMove):'';
+      date_yy?date_yy.addEventListener('touchend', gearTouchEnd):'';
+      date_mm?date_mm.addEventListener('touchend', gearTouchEnd):'';
+      date_dd?date_dd.addEventListener('touchend', gearTouchEnd):'';
       date_hh?date_hh.addEventListener('touchend', gearTouchEnd):'';
+      date_min?date_min.addEventListener('touchend', gearTouchEnd):'';
       // 阻止透视滑动
       _self.gearDate.addEventListener("touchmove",function(e){ e.preventDefault(); });
       // 阻止鼠标滚轮事件
       if(navigator.userAgent.indexOf("Firefox")>0){ 
         _self.gearDate.addEventListener('DOMMouseScroll',function(e){e.preventDefault();},false); 
-        date_yy.addEventListener('DOMMouseScroll', gearMouseRolling , false);
-        date_mm.addEventListener('DOMMouseScroll', gearMouseRolling , false);
-        date_dd.addEventListener('DOMMouseScroll', gearMouseRolling , false); 
+        date_yy?date_yy.addEventListener('DOMMouseScroll', gearMouseRolling , false):'';
+        date_mm?date_mm.addEventListener('DOMMouseScroll', gearMouseRolling , false):'';
+        date_dd?date_dd.addEventListener('DOMMouseScroll', gearMouseRolling , false):''; 
         date_hh?date_hh.addEventListener('DOMMouseScroll', gearMouseRolling , false):''; 
+        date_min?date_min.addEventListener('DOMMouseScroll', gearMouseRolling , false):''; 
       }
       else{ 
         _self.gearDate.onmousewheel = function(e){ return false};
-        date_yy.onmousewheel=gearMouseRolling;
-        date_mm.onmousewheel=gearMouseRolling;
-        date_dd.onmousewheel=gearMouseRolling;
+        date_yy?date_yy.onmousewheel=gearMouseRolling:'';
+        date_mm?date_mm.onmousewheel=gearMouseRolling:'';
+        date_dd?date_dd.onmousewheel=gearMouseRolling:'';
         date_hh?date_hh.onmousewheel=gearMouseRolling:'';
+        date_min?date_min.onmousewheel=gearMouseRolling:'';
       }
     }
     // 公历农历选择
@@ -345,30 +327,37 @@ ruiDatepicker.prototype = {
     }
     //初始化年月日插件默认值
     function dateCtrlInit() {
-      var date = new Date();
-      var dateArr = {
-        yy: date.getYear(),
-        mm: date.getMonth(),
-        dd: date.getDate() - 1
-      };
-      if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(_self.trigger.getAttribute('data-date'))) {
-        var rs = _self.trigger.getAttribute('data-date').match(/(^|-)\d{1,4}/g);
-        dateArr.yy = rs[0] - _self.minY;
-        dateArr.mm = rs[1].replace(/-/g, "") - 1;
-        dateArr.dd = rs[2].replace(/-/g, "") - 1;
-      } else {
-        dateArr.yy = dateArr.yy + 1900 - _self.minY;
-      };
-      _self.gearDate.querySelector(".date_yy").setAttribute("val", dateArr.yy);
-      _self.gearDate.querySelector(".date_mm").setAttribute("val", dateArr.mm);
-      _self.gearDate.querySelector(".date_dd").setAttribute("val", dateArr.dd);
+      // 判断有日期
+      if(_self.gearDate.querySelector(".date_yy")){
+        var date = new Date();
+        var dateArr = {
+          yy: date.getYear(),
+          mm: date.getMonth(),
+          dd: date.getDate() - 1
+        };
+        if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(_self.trigger.getAttribute('data-date'))) {
+          var rs = _self.trigger.getAttribute('data-date').match(/(^|-)\d{1,4}/g);
+          dateArr.yy = rs[0] - _self.minY;
+          dateArr.mm = rs[1].replace(/-/g, "") - 1;
+          dateArr.dd = rs[2].replace(/-/g, "") - 1;
+        } else {
+          dateArr.yy = dateArr.yy + 1900 - _self.minY;
+        };
+        _self.gearDate.querySelector(".date_yy").setAttribute("val", dateArr.yy);
+        _self.gearDate.querySelector(".date_mm").setAttribute("val", dateArr.mm);
+        _self.gearDate.querySelector(".date_dd").setAttribute("val", dateArr.dd);
+      }
       // 判断有时辰
-      var hour_val=0;
       if(_self.gearDate.querySelector(".date_hh")){
-        if(_self.trigger.getAttribute('data-hour') && _self.trigger.getAttribute('data-hour')>=0){
-          hour_val=parseInt(Math.round(_self.trigger.getAttribute('data-hour')));
-        }
+        var hour_val= _self.trigger.getAttribute('data-hour') || 0;
+        hour_val=parseInt(Math.round(hour_val));
         _self.gearDate.querySelector(".date_hh").setAttribute("val", hour_val);
+      }
+      // 判断有分钟      
+      if(_self.gearDate.querySelector(".date_min")){
+        var min_val= _self.trigger.getAttribute('data-min') || 0;
+        min_val=parseInt(Math.round(min_val));
+        _self.gearDate.querySelector(".date_min").setAttribute("val", min_val);
       }
       // 默认农历或公历
       if(parseInt(_self.trigger.getAttribute('data-type'))){
@@ -393,8 +382,10 @@ ruiDatepicker.prototype = {
         _self.gearDate.querySelector(".date_dd").setAttribute("val", objDate.dd-1);
       }else{
         _self.type=0;
-        var gongli=_self.gearDate.querySelector(".lcalendar_gongli");
-        gongli.className=gongli.className.replace(/active/, "").replace(/(^\s*)|(\s*$)/g, "")+' active';
+        if(_self.trigger.getAttribute('data-fixed') == 'false'){
+          var gongli=_self.gearDate.querySelector(".lcalendar_gongli");
+          gongli.className=gongli.className.replace(/active/, "").replace(/(^\s*)|(\s*$)/g, "")+' active';
+        }
       }
       setDateGearTooth();
     }
@@ -434,7 +425,7 @@ ruiDatepicker.prototype = {
           date_yy.setAttribute('top', (8 - yyVal * 2) + 'em');
         }
       } else {
-        return;
+        // return;
       }
       var date_mm = _self.gearDate.querySelector(".date_mm");
       if (date_mm && date_mm.getAttribute("val")) {
@@ -498,7 +489,7 @@ ruiDatepicker.prototype = {
         date_mm.style["-o-transform"] = 'translate(0,' + (8 - (mmVal - minM) * 2) + 'em)';
         date_mm.setAttribute('top', 8 - (mmVal - minM) * 2 + 'em');
       } else {
-        return;
+        // return;
       }
       var date_dd = _self.gearDate.querySelector(".date_dd");
       if (date_dd && date_dd.getAttribute("val")) {
@@ -547,7 +538,7 @@ ruiDatepicker.prototype = {
         date_dd.style["-o-transform"] = 'translate(0,' + (8 - (ddVal - minD) * 2) + 'em)';
         date_dd.setAttribute('top', 8 - (ddVal - minD) * 2 + 'em');
       } else {
-        return;
+        // return;
       }
       var date_hh = _self.gearDate.querySelector(".date_hh");
       if (date_hh && date_hh.getAttribute("val")) {
@@ -555,7 +546,7 @@ ruiDatepicker.prototype = {
         // itemStr = "<div class='tooth'>未知</div>";
         itemStr="";
         for (var p = 0; p < 24; p++) {
-          var strVal=_self.type?getChinese('hh',p):p;
+          var strVal=_self.type?getChinese('hh',p):  (p<10?'0'+p:p);
           itemStr += "<div class='tooth'>" + strVal + "时</div>";
         }
         date_hh.innerHTML = itemStr;
@@ -565,6 +556,24 @@ ruiDatepicker.prototype = {
         date_hh.style["-ms-transform"] = 'translate(0,' + (8 - hhVal * 2) + 'em)';
         date_hh.style["-o-transform"] = 'translate(0,' + (8 - hhVal * 2) + 'em)';
         date_hh.setAttribute('top', (8 - hhVal * 2) + 'em');
+      }
+      
+      var date_min = _self.gearDate.querySelector(".date_min");
+      if (date_min && date_min.getAttribute("val")) {
+        var minVal = parseInt(date_min.getAttribute("val"));
+        // itemStr = "<div class='tooth'>未知</div>";
+        itemStr="";
+        for (var p = 0; p < 60; p++) {
+          var strVal = (p<10?'0'+p:p);
+          itemStr += "<div class='tooth'>" + strVal + "分</div>";
+        }
+        date_min.innerHTML = itemStr;
+        date_min.style["transform"] = 'translate(0,' + (8 - minVal * 2) + 'em)';
+        date_min.style["-webkit-transform"] = 'translate(0,' + (8 - minVal * 2) + 'em)';
+        date_min.style["-moz-transform"] = 'translate(0,' + (8 - minVal * 2) + 'em)';
+        date_min.style["-ms-transform"] = 'translate(0,' + (8 - minVal * 2) + 'em)';
+        date_min.style["-o-transform"] = 'translate(0,' + (8 - minVal * 2) + 'em)';
+        date_min.setAttribute('top', (8 - minVal * 2) + 'em');
       }
       getCalendarDate();//设置日期
     }
@@ -1081,6 +1090,18 @@ ruiDatepicker.prototype = {
               clearInterval(target["int_" + target.id]);
             }
             break;
+          case "date_min":
+            var minTop = 8 - (60 - 1) * 2;
+            if (pos < minTop) {
+              pos = minTop;
+              stopGear = true;
+            }
+            if (stopGear) {
+              var gearVal = Math.abs(pos - 8) / 2;
+              setGear(target, gearVal);
+              clearInterval(target["int_" + target.id]);
+            }
+            break;
           default:
         }
         target["pos_" + target.id] = pos;
@@ -1159,104 +1180,143 @@ ruiDatepicker.prototype = {
         confirmNongli.innerHTML=d._yy+'年'+mmChina+''+getChinese('dd',d._dd)+' '+nongliHourStr;
         return false;
       }
-      _self.trigger.setAttribute('data-date',d.yy+ "-" + d.mm + "-" +d.dd);
-      _self.trigger.setAttribute('data-hour',d.hh);
       var dateId=_self.trigger.getAttribute('data-toid-date');
       var hourId=_self.trigger.getAttribute('data-toid-hour');
+      var minId=_self.trigger.getAttribute('data-toid-min');
       var typeId=_self.trigger.getAttribute('data-toid-type');
-      if(dateId) document.getElementById(dateId).value=d.yy+ "-" + d.mm + "-" +d.dd;
-      if(hourId) document.getElementById(hourId).value=d.hh<0?'':d.hh;
-      if(typeId) document.getElementById(typeId).value= _self.type;
-      var hourStr='';
-      if(_self.type){
-        var mmChina=d._mm<0?getChinese('rm',-d._mm):getChinese('mm',d._mm);
-        if(hourId){
-          if(d.hh<0){
-            hourStr="时辰未知";
-          }else{
-            hourStr=getChinese('hh',d.hh)+'时';
+      if(dateId) {
+        _self.trigger.setAttribute('data-date',d.yy+ "-" + d.mm + "-" +d.dd);
+        document.getElementById(dateId).value=d.yy+ "-" + d.mm + "-" +d.dd;
+      }
+      if(hourId) {
+        var strVal = (d.hh<10?'0'+d.hh:d.hh)
+        document.getElementById(hourId).value=strVal;
+        _self.trigger.setAttribute('data-hour',strVal);
+      }
+      if(minId) {
+        var strVal = (d.min<10?'0'+d.min:d.min)
+        document.getElementById(minId).value=strVal;
+        _self.trigger.setAttribute('data-min',strVal);
+      }
+      if(typeId) { document.getElementById(typeId).value= _self.type;}
+      if(dateId) {
+        var hourStr='';
+        if(_self.type){
+          var mmChina=d._mm<0?getChinese('rm',-d._mm):getChinese('mm',d._mm);
+          if(hourId){
+              hourStr=getChinese('hh',d.hh)+'时';
           }
-        }
-        _self.trigger.value = d._yy+ "年" +mmChina+''+getChinese('dd',d._dd)+' '+hourStr;
-      }else{
-        if(hourId){
-          if(d.hh<0){
-            hourStr="时辰未知";
-          }else{
-            hourStr=d.hh+'时';
+          _self.trigger.value = d._yy+ "年" +mmChina+''+getChinese('dd',d._dd)+' '+hourStr;
+        }else{
+          if(hourId){
+              hourStr=d.hh+'时';
           }
+          _self.trigger.value = d.yy+ "年" + d.mm + "月" +d.dd+'日 '+hourStr;
         }
-        _self.trigger.value = d.yy+ "年" + d.mm + "月" +d.dd+'日 '+hourStr;
+      }
+      else {           
+        var hourStr='';
+        var minStr='';
+        if(hourId){
+          hourStr=d.hh+'时';
+        } 
+        if(minId){
+          minStr=d.min+'分';
+        } 
+        _self.trigger.value = hourStr + minStr;
       }
       // 触发MIP事件
       MIP.viewer.eventAction.execute('change', _self.mipEl);
       closeMobileCalendar(e,'finish');
     }
-    //设置顶部日期+设置确认框数据+返回对象 _yy 农历年  yy公历年   
-    function getCalendarDate(){
-      var passY = _self.maxY - _self.minY + 1;
-      var val_yy = parseInt(Math.round(_self.gearDate.querySelector(".date_yy").getAttribute("val")));
-      var date_yy=val_yy % passY + _self.minY;
-      var date_mm = parseInt(Math.round(_self.gearDate.querySelector(".date_mm").getAttribute("val"))) + 1;
-      var date_dd = parseInt(Math.round(_self.gearDate.querySelector(".date_dd").getAttribute("val"))) + 1;
+    //设置顶部日期+设置确认框数据+返回对象 _yy 农历年  yy公历年  
+    function getCalendarDate(){      
+      // 判断是否启用日期
+      var date_on=_self.gearDate.querySelector(".date_yy")?1:0;
       // 判断是否启用时辰
       var hour_on=_self.gearDate.querySelector(".date_hh")?1:0;
-      if(hour_on){
-        var date_hh=parseInt(Math.round(_self.gearDate.querySelector(".date_hh").getAttribute("val")));
-      }
-      // 判断否有闰月
-      var rmNum=LunarCal[val_yy].Intercalation?LunarCal[val_yy].Intercalation:0;
-      if(_self.type && rmNum){
-        if(rmNum==(date_mm-1)){
-          date_mm=-(date_mm-1);
-        }else if(rmNum<(date_mm-1)){
-          date_mm=date_mm-1;
+      // 判断是否启用分钟
+      var min_on=_self.gearDate.querySelector(".date_min")?1:0;
+      if(date_on) {
+        var passY = _self.maxY - _self.minY + 1;
+        var val_yy = parseInt(Math.round(_self.gearDate.querySelector(".date_yy").getAttribute("val")));
+        var date_yy=val_yy % passY + _self.minY;
+        var date_mm = parseInt(Math.round(_self.gearDate.querySelector(".date_mm").getAttribute("val"))) + 1;
+        var date_dd = parseInt(Math.round(_self.gearDate.querySelector(".date_dd").getAttribute("val"))) + 1;        
+        if(hour_on){
+          var date_hh=parseInt(Math.round(_self.gearDate.querySelector(".date_hh").getAttribute("val")));
+        }
+        // 判断否有闰月
+        var rmNum=LunarCal[val_yy].Intercalation?LunarCal[val_yy].Intercalation:0;
+        if(_self.type && rmNum){
+          if(rmNum==(date_mm-1)){
+            date_mm=-(date_mm-1);
+          }else if(rmNum<(date_mm-1)){
+            date_mm=date_mm-1;
+          }else{
+            date_mm=date_mm;
+          }
+        }
+        var objDate=calendarConvert(_self.type,date_yy,date_mm,date_dd);
+        var info=_self.gearDate.querySelector(".lcalendar_info");
+        if(_self.type){
+          _self.trigger.setAttribute("data-type", 1);
+          var mmChina=date_mm<0?getChinese('rm',-date_mm):getChinese('mm',date_mm);
+          var hhStr="";
+          if(hour_on){
+            if(date_hh<0){
+              hhStr="时辰未知";
+            }else{
+              hhStr=getChinese('hh',date_hh)+'时';
+            }
+          }
+          info.innerHTML=date_yy+'年'+mmChina+''+getChinese('dd',date_dd)+' '+hhStr;
+          return {
+            yy:objDate.yy,
+            mm:objDate.mm,
+            dd:objDate.dd,
+            _yy:date_yy,
+            _mm:date_mm,
+            _dd:date_dd,
+            hh:date_hh
+          }
         }else{
-          date_mm=date_mm;
-        }
-      }
-      var objDate=calendarConvert(_self.type,date_yy,date_mm,date_dd);
-      var info=_self.gearDate.querySelector(".lcalendar_info");
-      if(_self.type){
-        _self.trigger.setAttribute("data-type", 1);
-        var mmChina=date_mm<0?getChinese('rm',-date_mm):getChinese('mm',date_mm);
-        var hhStr="";
-        if(hour_on){
-          if(date_hh<0){
-            hhStr="时辰未知";
-          }else{
-            hhStr=getChinese('hh',date_hh)+'时';
+          _self.trigger.setAttribute("data-type", 0);
+          var hhStr="";
+          if(hour_on){
+            if(date_hh<0){
+              hhStr="时辰未知";
+            }else{
+              hhStr=date_hh+'时';
+            }
           }
-        }
-        info.innerHTML=date_yy+'年'+mmChina+''+getChinese('dd',date_dd)+' '+hhStr;
-        return {
-          yy:objDate.yy,
-          mm:objDate.mm,
-          dd:objDate.dd,
-          _yy:date_yy,
-          _mm:date_mm,
-          _dd:date_dd,
-          hh:date_hh
-        }
-      }else{
-        _self.trigger.setAttribute("data-type", 0);
-        var hhStr="";
-        if(hour_on){
-          if(date_hh<0){
-            hhStr="时辰未知";
-          }else{
-            hhStr=date_hh+'时';
+          info.innerHTML=date_yy+'年'+date_mm+'月'+date_dd+'日'+' '+hhStr;
+          return {
+            _yy:objDate.yy,
+            _mm:objDate.mm,
+            _dd:objDate.dd,
+            yy:date_yy,
+            mm:date_mm,
+            dd:date_dd,
+            hh:date_hh
           }
+        }      
+      } else { 
+        if(hour_on){
+          var date_hh=parseInt(Math.round(_self.gearDate.querySelector(".date_hh").getAttribute("val")));
         }
-        info.innerHTML=date_yy+'年'+date_mm+'月'+date_dd+'日'+' '+hhStr;
+        if(min_on){
+          var date_min=parseInt(Math.round(_self.gearDate.querySelector(".date_min").getAttribute("val")));
+        }
         return {
-          _yy:objDate.yy,
-          _mm:objDate.mm,
-          _dd:objDate.dd,
-          yy:date_yy,
-          mm:date_mm,
-          dd:date_dd,
-          hh:date_hh
+          _yy:'',
+          _mm:'',
+          _dd:'',
+          yy:'',
+          mm:'',
+          dd:'',
+          hh: date_hh,
+          min: date_min
         }
       }
     }
@@ -1298,13 +1358,16 @@ export default class MIPExample extends MIP.CustomElement {
     let type = el.getAttribute('data-type') || "0"
     let dateId = el.getAttribute('data-toid-date') || ""
     let hourId = el.getAttribute('data-toid-hour') || ""
+    let minId = el.getAttribute('data-toid-min') || ""
     let typeId = el.getAttribute('data-toid-type') || ""    
     let confirm = el.getAttribute('data-confirm') || "true"
+    let fixed = el.getAttribute('data-fixed') || "false"
+    let placeholder = el.getAttribute('placeholder') || "" 
     let timestamp = (new Date()).valueOf()
     wrapper.classList.add('datepicker-wrapper')
     wrapper.innerHTML = 
-    '<input  class="form-time" data-toid-date="'+dateId+'" data-toid-hour="'+hourId+'" data-toid-type="'+typeId+'" data-type="'+type+'"  data-confirm="'+confirm+'"'+
-      'value="" placeholder="请选择生辰" readonly="readonly" autocomplete="off" id="birthday" data-date="'+date+'" data-hour="'+hour+'">'
+    '<input  class="form-time" data-toid-date="'+dateId+'" data-toid-hour="'+hourId+'" data-toid-min="'+minId+'" data-toid-type="'+typeId+'" data-type="'+type+'" data-fixed="'+fixed+'"  data-confirm="'+confirm+'"'+
+      'value="" placeholder="'+placeholder+'" readonly="readonly" autocomplete="off" id="birthday" data-date="'+date+'" data-hour="'+hour+'">'
     
     let datepicker = new ruiDatepicker()
     datepicker.init(wrapper.children[0],el)
