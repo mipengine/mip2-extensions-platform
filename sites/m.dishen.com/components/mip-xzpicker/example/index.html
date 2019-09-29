@@ -36,17 +36,19 @@
       @media only screen and (min-width:750px){
       html{font-size:100px}
       }
-      .test-box {
-        height: 1000px;
+      mip-xzpicker {
+        display: block;
+        margin: 200px 20px 0;
+        padding: 10px 20px;
+        border: 1px solid darkcyan;
+        border-radius: 5px;
       }
     </style>
   </head>
   <body>
     <div>
-      <mip-xzpicker>选择星座</mip-xzpicker>
+      <mip-xzpicker fetch-url="http://localhost:8099/pair" data-href="https://m.dishen.com/xz/pair/_val_.html">选择星座配对</mip-xzpicker>
     </div>
-
-    <div class="test-box">123213</div>
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
     <script src="/mip-xzpicker/mip-xzpicker.js"></script>
   </body>

@@ -1290,16 +1290,13 @@ export default class MIPExample extends MIP.CustomElement {
     this.type = el.getAttribute('data-type') || "0"
     this.dateId = el.getAttribute('data-toid-date')
     this.hourId = el.getAttribute('data-toid-hour') || ""
-    this.typeId = el.getAttribute('data-toid-type') || ""
+    this.typeId = el.getAttribute('data-toid-type') || ""    
+    this.confirm = el.getAttribute('data-confirm') || "true"
     let timestamp = (new Date()).valueOf()
     wrapper.classList.add('datepicker-wrapper')
     wrapper.innerHTML = 
-    '<input  class="form-time" data-toid-date="'+this.dateId+'" data-toid-hour="'+this.hourId+'" data-toid-type="'+this.typeId+'" data-type="'+this.type+'"  data-confirm="true"'+
+    '<input  class="form-time" data-toid-date="'+this.dateId+'" data-toid-hour="'+this.hourId+'" data-toid-type="'+this.typeId+'" data-type="'+this.type+'"  data-confirm="'+this.confirm+'"'+
       'value="" placeholder="请选择生辰" readonly="readonly" autocomplete="off" id="birthday" data-date="'+this.date+'" data-hour="'+this.hour+'">'
-      // +
-      // '<input type="hidden" name="date" id="date_'+timestamp+'" value="'+this.date+'" autocomplete="off" validatetarget="datepicker" required>'+
-      // '<input type="hidden" name="hour" id="hour_'+timestamp+'" value="'+this.hour+'" autocomplete="off">'+
-      // '<input type="hidden" name="yinli" value="'+this.type+'">'
     
     let datepicker = new ruiDatepicker()
     datepicker.init(wrapper.children[0])
