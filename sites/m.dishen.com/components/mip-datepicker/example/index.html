@@ -8,12 +8,20 @@
     <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
     <style mip-custom>
     /* 自定义样式 */
+    #div{
+      width: 1rem;
+      height: 1rem;
+    }
+    #div.on {
+      background:red;
+    }
     </style>
   </head>
   <body>
     <div>
-      <mip-datepicker></mip-datepicker>
+      <mip-datepicker on="change:div.toggleClass(class='on')"></mip-datepicker>
     </div>
+    <div id="div"></div>
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
     <script src="/mip-datepicker/mip-datepicker.js"></script>
   </body>
