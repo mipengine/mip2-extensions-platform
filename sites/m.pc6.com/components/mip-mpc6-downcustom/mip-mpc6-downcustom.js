@@ -233,10 +233,10 @@ export default class MIPMpc6DownCustom extends CustomElement {
         }
         let list = responseRes.data
         let listHtml = ''
-        for (var i = 0; i < list.length; ++i) {
+        for (let i = 0; i < list.length; ++i) {
           listHtml += '<a href="/s/' + list[i].app_id + '" data-stats-cnzz-obj="{\'type\':\'click\',\'data\':[\'_trackEvent\',\'reci\',\'reci' + (i + 1) + '\',\'' + list[i].title + '\']}">' + list[i].title + '</a>'
         }
-        document.getElementsByClassName('hot_words')[0].getElementsByClassName('dcatetory')[0].innerHTML = listHtml      
+        document.getElementsByClassName('hot_words')[0].getElementsByClassName('dcatetory')[0].innerHTML = listHtml
       })
     }
   }

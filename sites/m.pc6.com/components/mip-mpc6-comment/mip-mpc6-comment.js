@@ -140,11 +140,11 @@ export default class MIPMpc6Comment extends CustomElement {
             tt1 = tt1.replace(/\+/g, ' ')
           }
           let headnum = 1
-          if ((urId[i]+Number(String(userData[i]).split(' ')[0].split('/')[2])) % 2 === 0) {
+          if ((urId[i] + Number(String(userData[i]).split(' ')[0].split('/')[2])) % 2 === 0) {
             headnum = 2
           }
           if (urDing[i] !== 0) {
-            html += '<li><img src="/public/img/cmthead' + headnum + '.png" /><time>' + String(userData[i]).split(' ')[0] + '</time><p class="ctrl"><a class="zanC" href="javascript:"><span>'+urDing[i]+'</span></a><s rpid="' + urId[i] + '" class="rps">回复</s></p><div class="cmt"><p class="user">' + userForm[i] + userName[i] + '</p><p>' + tt1 + '</p></div></li>'
+            html += '<li><img src="/public/img/cmthead' + headnum + '.png" /><time>' + String(userData[i]).split(' ')[0] + '</time><p class="ctrl"><a class="zanC" href="javascript:"><span>' + urDing[i] + '</span></a><s rpid="' + urId[i] + '" class="rps">回复</s></p><div class="cmt"><p class="user">' + userForm[i] + userName[i] + '</p><p>' + tt1 + '</p></div></li>'
           } else {
             html += '<li><img src="/public/img/cmthead' + headnum + '.png" /><time>' + String(userData[i]).split(' ')[0] + '</time><p class="ctrl"><a class="zanC" href="javascript:" class="txt"><span>赞</span></a><s rpid="' + urId[i] + '" class="rps">回复</s></p><div class="cmt"><p class="user">' + userForm[i] + userName[i] + '</p><p>' + tt1 + '</p></div></li>'
           }
@@ -228,7 +228,7 @@ export default class MIPMpc6Comment extends CustomElement {
             document.getElementById('verify').onclick = function () {
               _this.writeComment(dom.closest(this, 'li').getElementsByClassName('ctrl')[0].getElementsByClassName('rps')[0].getAttribute('rpid'))
             }
-          } 
+          }
         }
       }
     }
