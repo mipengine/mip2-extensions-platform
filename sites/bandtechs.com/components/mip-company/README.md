@@ -7,7 +7,7 @@
 所需脚本| [https://c.mipcdn.com/extensions/platform/v2/mipWebsite/mip-company/mip-company.js](https://c.mipcdn.com/extensions/platform/v2/mipWebsite/mip-company/mip-company.js)
 
 ## 说明
-主要是对本地储存的案列数据进行提取和数据处理，再穿插在页面上
+主要是对请求并在首页储存的json文件数据提取和数据分类处理，再循环遍历出来
 
 ## 示例
 
