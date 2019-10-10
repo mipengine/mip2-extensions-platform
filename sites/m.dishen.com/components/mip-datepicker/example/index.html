@@ -18,23 +18,35 @@
     </style>
   </head>
   <body>
-    <div>           
-      选择时间                                
-      <mip-datepicker data-hour="0" data-min="0" data-toid-hour="hour" data-toid-min="min" data-confirm="false" data-confirm="true" data-fixed="true">
-          <input type="hidden" name="hour" id="hour" value="0"> 
-          <input type="hidden" name="min" id="min" value="0">
-      </mip-datepicker>
-    </div>
-    
     <div>
-      选择日期             
-      <mip-datepicker data-hour="0" data-min="0" data-toid-hour="hour" data-toid-date="date" data-confirm="false" data-confirm="true" data-fixed="true">
-          <input type="hidden" name="hour" id="hour" value="0"> 
-          <input type="hidden" name="date" id="date" value="0">
+      选择时间
+      <mip-datepicker data-hour="0" data-min="0" data-toid-hour="hour" data-toid-min="min" data-confirm="false" data-confirm="true" data-fixed="true">
+          <input type="hidden" name="hour" id="hour" value="0" on="change:MIP.setData({hour:event.value})">
+          <input type="hidden" name="min" id="min" value="0" on="change:MIP.setData({hour:event.value})">
       </mip-datepicker>
     </div>
+    <div><span m-text="hour"></span><span m-text="min"></span></div>
+    <div>
+      选择日期
+      <mip-datepicker data-hour="0" data-min="0" data-toid-hour="hour" data-toid-date="date" data-confirm="false" data-confirm="true" data-fixed="true" data-type="1">
+          <input type="hidden" name="hour" id="hour" value="0">
+          <input type="hidden" name="date" id="date" value="0" on="change:MIP.setData({date2:event.date2})">
+      </mip-datepicker>
+    </div>
+
+    <div><span m-text="date"></span>&nbsp;<span m-text="date2"></span></div>
     <div id="div"></div>
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
     <script src="/mip-datepicker/mip-datepicker.js"></script>
+    <mip-data>
+      <script  type="application/json">
+      {
+        date:'2001',
+        hour:'',
+        min:'',
+        date2:''
+      }
+      </script>
+    </mip-data>
   </body>
 </html>
