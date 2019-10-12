@@ -17,9 +17,10 @@ export default class MIPMpc6Comment extends CustomElement {
     }
   }
   build () {
+    let title = this.data().hasReply ? '<b><s id="gocomment">说两句</s>网友评论</b>' : '<em>网友评论</em>'
     let wrapper = dom.create(`
     <section class="cont p10" id="comment">
-      <div class="d_title"><em>网友评论</em></div>
+      <div class="d_title">${title}</div>
       <div id="view-comment" class="reviews">
         <div class="post">
           <ul id="comment-list"></ul>
@@ -60,12 +61,22 @@ export default class MIPMpc6Comment extends CustomElement {
    *显示评论
    */
   showComment () {
+    let hasReply = this.data().hasReply
     let cfb = document.getElementsByClassName('fb')[0]
     let cform = document.getElementById('submit')
     let clist = document.getElementById('comment-list')
     let cbutton = document.getElementsByClassName('button-status-complete')[0]
     cfb.onclick = () => {
-      if (!this.data().hasReply) {
+      clickEvent()
+    }
+    if (hasReply) {
+      let gocomment = document.getElementById('gocomment')
+      gocomment.onclick = () => {
+        clickEvent()
+      }
+    }
+    function clickEvent () {
+      if (!hasReply) {
         css(clist, { display: 'none' })
         css(cbutton, { display: 'none' })
       } else {
