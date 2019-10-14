@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=no">
+    <title>MIP page</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+  </head>
+  <body>
+    <div>
+      选择日期
+      <mip-dishen-datepicker data-date="2000-1-1" data-toid-date="date"  data-confirm="false" data-confirm="true" data-type="0">
+          <input type="hidden" name="date" id="date" value="0" on="change:MIP.setData({date:event.value})">
+      </mip-dishen-datepicker>
+    </div>
+    <div>
+      选择时间
+      <mip-dishen-datepicker data-hour="0" data-min="0" data-toid-hour="hour" data-toid-min="min" data-confirm="false" data-confirm="true" data-fixed="true">
+          <input type="hidden" name="hour" id="hour" value="0" on="change:MIP.setData({hour:event.value})">
+          <input type="hidden" name="min" id="min" value="0" on="change:MIP.setData({min:event.value})">
+      </mip-dishen-datepicker>
+    </div>
+    <div><span m-text="date"></span>&nbsp;<span m-text="hour"></span><span m-text="min"></span></div>
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="/mip-dishen-datepicker/mip-dishen-datepicker.js"></script>
+    <mip-data>
+      <script  type="application/json">
+      {
+        date:'',
+        hour:'',
+        min:''
+      }
+      </script>
+    </mip-data>
+  </body>
+</html>
