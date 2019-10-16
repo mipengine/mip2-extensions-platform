@@ -23,5 +23,4 @@ servers
 package-lock.json
 .project
 .history
-sites/m.dishen.com/.cleancssrc
 .gitignore

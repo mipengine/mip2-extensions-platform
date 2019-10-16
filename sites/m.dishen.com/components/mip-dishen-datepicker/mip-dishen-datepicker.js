@@ -1,23 +1,22 @@
-import './index.less'
+import './style/index.less'
 
-function RuiDatepicker (config) {
-  this.gearDate = null
-  this.minY = 1940
-  this.minM = 1
-  this.minD = 1
-  this.maxY = 2020
-  this.maxM = 12
-  this.maxD = 31
-  this.type = 1
-}
-
-RuiDatepicker.prototype = {
-  init: function (el, mipEl) {
+class RuiDatepicker {
+  constructor (config) {
+    this.gearDate = null
+    this.minY = 1940
+    this.minM = 1
+    this.minD = 1
+    this.maxY = 2020
+    this.maxM = 12
+    this.maxD = 31
+    this.type = 1
+  }
+  init (el, mipEl) {
     this.mipEl = mipEl
     this.trigger = el
     this.bindEvent('date')
-  },
-  bindEvent: function (type) {
+  }
+  bindEvent (type) {
     let _self = this
     // 农历数据
     let LunarCal = [
@@ -413,20 +412,12 @@ RuiDatepicker.prototype = {
           top > 8 && (top = 8)
           let minTop = 8 - (passY - 1) * 2
           top < minTop && (top = minTop)
-          dateYY.style['transform'] = 'translate(0,' + top + 'em)'
-          dateYY.style['-webkit-transform'] = 'translate(0,' + top + 'em)'
-          dateYY.style['-moz-transform'] = 'translate(0,' + top + 'em)'
-          dateYY.style['-ms-transform'] = 'translate(0,' + top + 'em)'
-          dateYY.style['-o-transform'] = 'translate(0,' + top + 'em)'
+          translateY(dateYY, top)
           dateYY.setAttribute('top', top + 'em')
           yyVal = Math.abs(top - 8) / 2
           dateYY.setAttribute('val', yyVal)
         } else {
-          dateYY.style['transform'] = 'translate(0,' + (8 - yyVal * 2) + 'em)'
-          dateYY.style['-webkit-transform'] = 'translate(0,' + (8 - yyVal * 2) + 'em)'
-          dateYY.style['-moz-transform'] = 'translate(0,' + (8 - yyVal * 2) + 'em)'
-          dateYY.style['-ms-transform'] = 'translate(0,' + (8 - yyVal * 2) + 'em)'
-          dateYY.style['-o-transform'] = 'translate(0,' + (8 - yyVal * 2) + 'em)'
+          translateY(dateYY, (8 - yyVal * 2))
           dateYY.setAttribute('top', (8 - yyVal * 2) + 'em')
         }
       } else {
@@ -489,11 +480,7 @@ RuiDatepicker.prototype = {
           mmVal = maxM
           dateMM.setAttribute('val', mmVal)
         }
-        dateMM.style['transform'] = 'translate(0,' + (8 - (mmVal - minM) * 2) + 'em)'
-        dateMM.style['-webkit-transform'] = 'translate(0,' + (8 - (mmVal - minM) * 2) + 'em)'
-        dateMM.style['-moz-transform'] = 'translate(0,' + (8 - (mmVal - minM) * 2) + 'em)'
-        dateMM.style['-ms-transform'] = 'translate(0,' + (8 - (mmVal - minM) * 2) + 'em)'
-        dateMM.style['-o-transform'] = 'translate(0,' + (8 - (mmVal - minM) * 2) + 'em)'
+        translateY(dateMM, (8 - (mmVal - minM) * 2))
         dateMM.setAttribute('top', 8 - (mmVal - minM) * 2 + 'em')
       } else {
         // return;
@@ -538,11 +525,7 @@ RuiDatepicker.prototype = {
           ddVal = minD
           dateDD.setAttribute('val', ddVal)
         }
-        dateDD.style['transform'] = 'translate(0,' + (8 - (ddVal - minD) * 2) + 'em)'
-        dateDD.style['-webkit-transform'] = 'translate(0,' + (8 - (ddVal - minD) * 2) + 'em)'
-        dateDD.style['-moz-transform'] = 'translate(0,' + (8 - (ddVal - minD) * 2) + 'em)'
-        dateDD.style['-ms-transform'] = 'translate(0,' + (8 - (ddVal - minD) * 2) + 'em)'
-        dateDD.style['-o-transform'] = 'translate(0,' + (8 - (ddVal - minD) * 2) + 'em)'
+        translateY(dateDD, (8 - (ddVal - minD) * 2))
         dateDD.setAttribute('top', 8 - (ddVal - minD) * 2 + 'em')
       } else {
         // return;
@@ -557,11 +540,7 @@ RuiDatepicker.prototype = {
           itemStr += "<div class='tooth'>" + strVal + '时</div>'
         }
         dateHH.innerHTML = itemStr
-        dateHH.style['transform'] = 'translate(0,' + (8 - hhVal * 2) + 'em)'
-        dateHH.style['-webkit-transform'] = 'translate(0,' + (8 - hhVal * 2) + 'em)'
-        dateHH.style['-moz-transform'] = 'translate(0,' + (8 - hhVal * 2) + 'em)'
-        dateHH.style['-ms-transform'] = 'translate(0,' + (8 - hhVal * 2) + 'em)'
-        dateHH.style['-o-transform'] = 'translate(0,' + (8 - hhVal * 2) + 'em)'
+        translateY(dateHH, (8 - hhVal * 2))
         dateHH.setAttribute('top', (8 - hhVal * 2) + 'em')
       }
 
@@ -575,14 +554,17 @@ RuiDatepicker.prototype = {
           itemStr += "<div class='tooth'>" + strVal + '分</div>'
         }
         dateMin.innerHTML = itemStr
-        dateMin.style['transform'] = 'translate(0,' + (8 - minVal * 2) + 'em)'
-        dateMin.style['-webkit-transform'] = 'translate(0,' + (8 - minVal * 2) + 'em)'
-        dateMin.style['-moz-transform'] = 'translate(0,' + (8 - minVal * 2) + 'em)'
-        dateMin.style['-ms-transform'] = 'translate(0,' + (8 - minVal * 2) + 'em)'
-        dateMin.style['-o-transform'] = 'translate(0,' + (8 - minVal * 2) + 'em)'
+        translateY(dateMin, (8 - minVal * 2))
         dateMin.setAttribute('top', (8 - minVal * 2) + 'em')
       }
       getCalendarDate()// 设置日期
+    }
+    function translateY (element, top) {
+      MIP.util.css(element, 'transform', 'translate(0,' + top + 'em)')
+      MIP.util.css(element, '-webkit-transform', 'translate(0,' + top + 'em)')
+      MIP.util.css(element, '-moz-transform', 'translate(0,' + top + 'em)')
+      MIP.util.css(element, '-ms-transform', 'translate(0,' + top + 'em)')
+      MIP.util.css(element, '-o-transform', 'translate(0,' + top + 'em)')
     }
     // 求月份最大天数
     function calcDays (year, month) {
@@ -630,9 +612,12 @@ RuiDatepicker.prototype = {
      * @param {string} dateDD 日
      */
     function calendarConvert (M, dateYY, dateMM, dateDD) {
-      let year = dateYY
-      let month = dateMM
-      let date = dateDD
+      let SolarYear = parseInt(dateYY)
+      let SolarMonth = parseInt(dateMM)
+      let SolarDate = parseInt(dateDD)
+      let LunarYear = parseInt(dateYY)
+      let LunarMonth = parseInt(dateMM)
+      let LunarDate = parseInt(dateDD)
 
       let FIRSTYEAR = 1940// 最小年份
       // let LASTYEAR = 2030// 最大年份
@@ -645,10 +630,6 @@ RuiDatepicker.prototype = {
       let i
       // 公历转农历
       if (M === 0) {
-        let SolarYear = parseInt(year)
-        let SolarMonth = parseInt(month)
-        let SolarDate = parseInt(date)
-        let LunarYear
         let sm = SolarMonth - 1
 
         let leap = GetLeap(SolarYear)
@@ -691,10 +672,6 @@ RuiDatepicker.prototype = {
         return {yy: LunarYear, mm: LunarMonth, dd: LunarDate}
       } else {
         /* 农历转公历 */
-        let LunarYear = parseInt(year)
-        let LunarMonth = parseInt(month)
-        let LunarDate = parseInt(date)
-
         let y = LunarYear - FIRSTYEAR
         let im = LunarCal[y].Intercalation
         let lm = LunarMonth
@@ -709,7 +686,7 @@ RuiDatepicker.prototype = {
         lm--
 
         let acc = 0
-        for (let i = 0; i < lm; i++) {
+        for (i = 0; i < lm; i++) {
           acc += LunarCal[y].MonthDays[i] + 29
         }
 
@@ -717,12 +694,10 @@ RuiDatepicker.prototype = {
 
         let leap = GetLeap(LunarYear)
 
-        for (let i = 13; i >= 0; i--) {
+        for (i = 13; i >= 0; i--) {
           if (acc > SolarDays[leap * 14 + i]) break
         }
-        let SolarDate = acc - SolarDays[leap * 14 + i]
-        let SolarYear
-        let SolarMonth
+        SolarDate = acc - SolarDays[leap * 14 + i]
         if (i <= 11) {
           SolarYear = LunarYear
           SolarMonth = i + 1
@@ -844,11 +819,7 @@ RuiDatepicker.prototype = {
         target['n_t_' + target.id] = (new Date()).getTime()
         let f = (target['new_' + target.id] - target['old_' + target.id]) * 18 / 370
         target['pos_' + target.id] = target['o_d_' + target.id] + f
-        target.style['transform'] = 'translate(0,' + target['pos_' + target.id] + 'em)'
-        target.style['-webkit-transform'] = 'translate(0,' + target['pos_' + target.id] + 'em)'
-        target.style['-moz-transform'] = 'translate(0,' + target['pos_' + target.id] + 'em)'
-        target.style['-ms-transform'] = 'translate(0,' + target['pos_' + target.id] + 'em)'
-        target.style['-o-transform'] = 'translate(0,' + target['pos_' + target.id] + 'em)'
+        translateY(target, target['pos_' + target.id])
         target.setAttribute('top', target['pos_' + target.id] + 'em')
       }
       // 释放鼠标
@@ -927,11 +898,7 @@ RuiDatepicker.prototype = {
       target['n_t_' + target.id] = (new Date()).getTime()
       let f = (target['new_' + target.id] - target['old_' + target.id]) * 18 / 370
       target['pos_' + target.id] = target['o_d_' + target.id] + f
-      target.style['transform'] = 'translate(0,' + target['pos_' + target.id] + 'em)'
-      target.style['-webkit-transform'] = 'translate(0,' + target['pos_' + target.id] + 'em)'
-      target.style['-moz-transform'] = 'translate(0,' + target['pos_' + target.id] + 'em)'
-      target.style['-ms-transform'] = 'translate(0,' + target['pos_' + target.id] + 'em)'
-      target.style['-o-transform'] = 'translate(0,' + target['pos_' + target.id] + 'em)'
+      translateY(target, target['pos_' + target.id])
       target.setAttribute('top', target['pos_' + target.id] + 'em')
     }
     // 离开屏幕
@@ -1116,11 +1083,7 @@ RuiDatepicker.prototype = {
           default:
         }
         target['pos_' + target.id] = pos
-        target.style['transform'] = 'translate(0,' + pos + 'em)'
-        target.style['-webkit-transform'] = 'translate(0,' + pos + 'em)'
-        target.style['-moz-transform'] = 'translate(0,' + pos + 'em)'
-        target.style['-ms-transform'] = 'translate(0,' + pos + 'em)'
-        target.style['-o-transform'] = 'translate(0,' + pos + 'em)'
+        translateY(target, pos)
         target.setAttribute('top', pos + 'em')
         d++
       }, 6)
@@ -1369,6 +1332,7 @@ RuiDatepicker.prototype = {
     initTriger()
   }
 }
+
 export default class MIPExample extends MIP.CustomElement {
   connectedCallback () {
     let el = this.element

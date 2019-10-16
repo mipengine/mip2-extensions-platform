@@ -1,3 +1,6 @@
+@import "./animation.less";
+@import "./roll.less";
+
 .mip-dishen-geardate {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 10px;
@@ -54,154 +57,6 @@
     -ms-transform: translateY(0);
     -moz-transform: translateY(0);
     background: #fff;
-  }
-
-  .date_roll,
-  .date_roll > div {
-    background-color: transparent;
-    overflow: hidden;
-  }
-
-  .slideInUp {
-    animation: slideInUp 0.3s ease-in;
-    -webkit-animation: slideInUp 0.3s ease-in;
-    -ms-animation: slideInUp 0.3s ease-in;
-    -moz-animation: slideInUp 0.3s ease-in;
-  }
-
-  @-webkit-keyframes slideInUp {
-    0% {
-      -webkit-transform: translateY(100%);
-      transform: translateY(100%);
-      -moz-transform: translateY(100%);
-      -ms-transform: translateY(100%);
-      -o-transform: translateY(100%);
-    }
-
-    100% {
-      -webkit-transform: translateY(0);
-      transform: translateY(0);
-      -moz-transform: translateY(0);
-      -o-transform: translateY(0);
-      -ms-transform: translateY(0);
-    }
-  }
-
-  @keyframes slideInUp {
-    0% {
-      -webkit-transform: translateY(100%);
-      transform: translateY(100%);
-      -moz-transform: translateY(100%);
-      -ms-transform: translateY(100%);
-      -o-transform: translateY(100%);
-    }
-
-    100% {
-      -webkit-transform: translateY(0);
-      transform: translateY(0);
-      -moz-transform: translateY(0);
-      -o-transform: translateY(0);
-      -ms-transform: translateY(0);
-    }
-  }
-
-  @-moz-keyframes slideInUp {
-    0% {
-      -webkit-transform: translateY(100%);
-      transform: translateY(100%);
-      -moz-transform: translateY(100%);
-      -ms-transform: translateY(100%);
-      -o-transform: translateY(100%);
-    }
-
-    100% {
-      -webkit-transform: translateY(0);
-      transform: translateY(0);
-      -moz-transform: translateY(0);
-      -o-transform: translateY(0);
-      -ms-transform: translateY(0);
-    }
-  }
-
-  @-ms-keyframes slideInUp {
-    0% {
-      -webkit-transform: translateY(100%);
-      transform: translateY(100%);
-      -moz-transform: translateY(100%);
-      -ms-transform: translateY(100%);
-      -o-transform: translateY(100%);
-    }
-
-    100% {
-      -webkit-transform: translateY(0);
-      transform: translateY(0);
-      -moz-transform: translateY(0);
-      -o-transform: translateY(0);
-      -ms-transform: translateY(0);
-    }
-  }
-
-  .date_roll {
-    position: relative;
-    width: 100%;
-    height: auto;
-    font-weight: 700;
-    -webkit-mask:
-      -webkit-gradient(
-        linear,
-        0 50%,
-        0 100%,
-        from(#debb47),
-        to(rgba(36, 142, 36, 0))
-      );
-    -webkit-mask:
-      -webkit-linear-gradient(
-        top,
-        #debb47 50%,
-        rgba(36, 142, 36, 0)
-      );
-  }
-
-  .date_roll > div {
-    font-size: 2em;
-    height: 6em;
-    float: left;
-    position: relative;
-    width: 33.33%;
-  }
-
-  .date_roll_col2 > div {
-    width: 50%;
-  }
-
-  .date_roll_col3 > div {
-    width: 33%;
-  }
-
-  .date_roll_col4 > div {
-    width: 25%;
-  }
-
-  .date_roll_col5 > div {
-    width: 20%;
-  }
-
-  .date_roll_mask {
-    padding: 0;
-    -webkit-mask:
-      -webkit-gradient(
-        linear,
-        0 40%,
-        0 0,
-        from(#debb47),
-        to(rgba(36, 142, 36, 0))
-      );
-    -webkit-mask:
-      -webkit-linear-gradient(
-        bottom,
-        #debb47 50%,
-        rgba(36, 142, 36, 0)
-      );
   }
 
   .date_grid {
@@ -375,13 +230,13 @@
     float: left;
     width: 20px;
     height: 20px;
-    background: url("../../static/ruidatepicker/radio.png") no-repeat;
+    background: url("../../../static/ruidatepicker/radio.png") no-repeat;
     background-size: 100% auto;
     margin: 4px 10px 0 0;
   }
 
   .date_class_box .active span {
-    background-image: url("../../static/ruidatepicker/radio-active.png");
+    background-image: url("../../../static/ruidatepicker/radio-active.png");
   }
 
   .lcalendar_nongli {
