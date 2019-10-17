@@ -1,3 +1,14 @@
+
+// 农历对象数据处理
+class TagLunarCal {
+  constructor (d, i, w, k, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13) {
+    this.BaseDays = d /* 1 月 1 日到正月初一的累计日 */
+    this.Intercalation = i /* 闰月月份. 0==此年沒有闰月 */
+    this.BaseWeekday = w /* 此年 1 月 1 日为星期减 1 */
+    this.BaseKanChih = k /* 此年 1 月 1 日之干支序号减 1 */
+    this.MonthDays = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13] /* 此农历年每月之大小, 0==小月(29日), 1==大月(30日) */
+  }
+}
 let calendar = {
   // 农历数据
   LunarCal: [
@@ -132,12 +143,12 @@ let calendar = {
   },
   /**
    *
-   * @param {string} M =0公历到农历,M=1农历到公历
+   * @param {string} type =0公历到农历,type=1农历到公历
    * @param {string} dateYY 年
    * @param {string} dateMM 月，闰月为 负数
    * @param {string} dateDD 日
    */
-  calendarConvert: function (M, dateYY, dateMM, dateDD) {
+  calendarConvert: function (type, dateYY, dateMM, dateDD) {
     let SolarYear = parseInt(dateYY)
     let SolarMonth = parseInt(dateMM)
     let SolarDate = parseInt(dateDD)
@@ -155,7 +166,7 @@ let calendar = {
     let SolarDays = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334, 365, 396, 0, 31, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366, 397]
     let i
     // 公历转农历
-    if (M === 0) {
+    if (type === 0) {
       let sm = SolarMonth - 1
 
       let leap = this.GetLeap(SolarYear)
@@ -169,7 +180,7 @@ let calendar = {
       Age = (Age < 22) ? 22 - Age : 82 - Age
 
       Age = Age + 3
-      if (Age < 10) Age = Age + 60
+      if (Age < 10) { Age = Age + 60 }
 
       if (acc <= this.LunarCal[y].BaseDays) {
         y--
@@ -241,12 +252,4 @@ let calendar = {
   }
 }
 
-// 农历对象数据处理
-function TagLunarCal (d, i, w, k, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13) {
-  this.BaseDays = d /* 1 月 1 日到正月初一的累计日 */
-  this.Intercalation = i /* 闰月月份. 0==此年沒有闰月 */
-  this.BaseWeekday = w /* 此年 1 月 1 日为星期减 1 */
-  this.BaseKanChih = k /* 此年 1 月 1 日之干支序号减 1 */
-  this.MonthDays = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13] /* 此农历年每月之大小, 0==小月(29日), 1==大月(30日) */
-}
 export default calendar

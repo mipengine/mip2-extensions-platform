@@ -10,13 +10,20 @@
   <body>
     <div>
       选择日期
-      <mip-dishen-datepicker data-date="2000-1-1" data-toid-date="date" data-type="0">
+      <mip-dishen-datepicker data-date="2000-1-1" data-toid-date="date" data-type="1">
           <input type="hidden" name="date" id="date" value="0" on="change:MIP.setData({date:event.value})">
       </mip-dishen-datepicker>
     </div>
     <div>
+      选择日期
+      <mip-dishen-datepicker data-toid-date="date2" data-toid-hour="hour2" data-type="1" data-hour="20" >
+          <input type="hidden" name="date" id="date2" value="0" on="change:MIP.setData({date:event.value})">
+          <input type="hidden" name="hour" id="hour2" value="0" on="change:MIP.setData({hour:event.value})">
+      </mip-dishen-datepicker>
+    </div>
+    <div>
       选择时间
-      <mip-dishen-datepicker data-hour="0" data-min="0" data-toid-hour="hour" data-toid-min="min" data-fixed="true" data-confirm="false">
+      <mip-dishen-datepicker data-hour="10" data-min="20" data-toid-hour="hour" data-toid-min="min" data-fixed="true" data-confirm="false">
           <input type="hidden" name="hour" id="hour" value="0" on="change:MIP.setData({hour:event.value})">
           <input type="hidden" name="min" id="min" value="0" on="change:MIP.setData({min:event.value})">
       </mip-dishen-datepicker>
