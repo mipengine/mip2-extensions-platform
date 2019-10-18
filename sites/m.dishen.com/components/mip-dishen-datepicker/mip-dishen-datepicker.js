@@ -15,7 +15,7 @@ class RuiDatepicker {
     this.minY = 1940
     this.minM = 4
     this.minD = 1
-    this.maxY = date.getYear() + 1901
+    this.maxY = date.getYear() + 1900
     this.maxM = 12
     this.maxD = 31
     this.type = 0
@@ -268,7 +268,8 @@ class RuiDatepicker {
           gongli.className = gongli.className.replace(/active/, '').replace(/(^\s*)|(\s*$)/g, '') + ' active'
         }
       }
-      let passY = this.maxY - this.minY
+      let passY = this.maxY - this.minY + 1
+      if (this.dateObj.yy >= passY) { this.dateObj.yy = passY - 1 }
       if (!render || render.yy) {
         this.yyScroll = new DateScroll({
           element: dateYY,
@@ -293,22 +294,7 @@ class RuiDatepicker {
         } else {
           maxM = 11
         }
-        // 当年份到达最大值
-        if (this.dateObj.yy === passY - 1) {
-          if (this.type) {
-            maxM = this.maxM - 1
-          } else {
-            maxM = this.maxM - 1
-          }
-        }
-        // 当年份到达最小值
-        if (this.dateObj.yy === 0) {
-          if (this.type) {
-            minM = this.minM - 1
-          } else {
-            minM = this.minM
-          }
-        }
+        if (this.dateObj.mm >= maxM - minM) { this.dateObj.mm = maxM - minM - 1 }
         this.mmScroll = new DateScroll({
           element: dateMM,
           index: this.dateObj.mm,
@@ -337,36 +323,16 @@ class RuiDatepicker {
       if (!render || render.dd) {
         // 返回月份的天数
         let maxMonthDays = calendar.calcDays(this.type, this.minY, this.dateObj.yy, this.dateObj.mm)
-        // p 当前节点前后需要展示的节点个数
-        let maxD = maxMonthDays - 1
-        let minD = 0
-        // 当年份月份到达最大值
-        if (this.dateObj.yy === passY - 1 && this.dateObj.mm + 1 === 12) {
-          if (this.type) {
-            maxD = this.maxD - 15
-          } else {
-            maxD = this.maxD - 1
-          }
-        }
-        // 当年、月到达最小值
-        if (this.dateObj.yy === 0 && this.dateObj.mm + 1 === 2) {
-          if (this.type) {
-            minD = this.minD - 1
-          } else {
-            minD = this.minD + 6
-          }
-        }
-        if (this.dateObj.dd > maxD) { this.dateObj.dd = maxD }
-        if (this.dateObj.dd < minD) { this.dateObj.dd = minD }
+        if (this.dateObj.dd > maxMonthDays) { this.dateObj.dd = maxMonthDays }
         this.ddScroll = new DateScroll({
           element: dateDD,
           index: this.dateObj.dd,
-          max: maxD - minD + 1,
+          max: maxMonthDays,
           callback: function (val) {
             _self.dateObj.dd = val
           },
           getHtml: function (i) {
-            let strVal = _self.type ? calendar.getChinese('dd', minD + i + 1) : (minD + i + 1)
+            let strVal = _self.type ? calendar.getChinese('dd', i + 1) : (i + 1)
             return "<div class='tooth'>" + strVal + '</div>'
           }
         })

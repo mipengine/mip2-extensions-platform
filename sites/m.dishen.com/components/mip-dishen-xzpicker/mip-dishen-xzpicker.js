@@ -17,7 +17,7 @@ class XzPicker {
           fetch(AJAXurl).then(function (res) {
             return res.json()
           }).then(function (data) {
-            if (data.code === 200) {
+            if (data.code === '200') {
               if (options.href) {
                 let href = options.href.replace('_val_', '' + data.pair_id)
                 window.location.href = href
@@ -109,7 +109,7 @@ class XzPicker {
   }
 }
 
-export default class MIPXzpicker extends MIP.CustomElement {
+export default class MIPDishenXzpicker extends MIP.CustomElement {
   build () {
     let el = this.element
     let fetchUrl = el.getAttribute('fetch-url')
