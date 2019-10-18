@@ -23,7 +23,7 @@ class RuiDatepicker {
   init (el, mipEl) {
     this.mipEl = mipEl
     this.trigger = el
-    this.type = parseInt(el.getAttribute('data-type'))
+    this.type = parseInt(mipEl.getAttribute('data-type'))
 
     // 判断移动端
     let isMove = false
@@ -54,7 +54,6 @@ class RuiDatepicker {
     }
     this.initTriger()
   }
-
   // 初始化年月日默认值
   initTriger () {
     let date = new Date()
@@ -65,21 +64,21 @@ class RuiDatepicker {
       hh: 0,
       min: 0
     }
-    if (this.trigger.getAttribute('data-toid-date')) {
-      if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(this.trigger.getAttribute('data-date'))) {
-        let rs = this.trigger.getAttribute('data-date').match(/(^|-)\d{1,4}/g)
+    if (this.mipEl.getAttribute('data-toid-date')) {
+      if (/^\d{4}-\d{1,2}-\d{1,2}$/.test(this.mipEl.getAttribute('data-date'))) {
+        let rs = this.mipEl.getAttribute('data-date').match(/(^|-)\d{1,4}/g)
         dateArr.yy = rs[0]
         dateArr.mm = rs[1].replace(/-/g, '')
         dateArr.dd = rs[2].replace(/-/g, '')
       }
       // 判断有时辰
       let hourVal = -1
-      if (this.trigger.getAttribute('data-hour') && this.trigger.getAttribute('data-hour') >= 0) {
-        hourVal = parseInt(Math.round(this.trigger.getAttribute('data-hour')))
+      if (this.mipEl.getAttribute('data-hour') && this.mipEl.getAttribute('data-hour') >= 0) {
+        hourVal = parseInt(Math.round(this.mipEl.getAttribute('data-hour')))
         this.dateObj.hh = hourVal
       }
       // 默认农历或公历
-      if (parseInt(this.trigger.getAttribute('data-type'))) {
+      if (parseInt(this.mipEl.getAttribute('data-type'))) {
         let objDate = calendar.calendarConvert(0, dateArr.yy, dateArr.mm, dateArr.dd) // 返回转换对象
         this.dateObj.yy = objDate.yy - this.minY
         this.dateObj.mm = objDate.mm - 1
@@ -91,9 +90,9 @@ class RuiDatepicker {
         this.dateObj.dd = dateArr.dd - 1
         this.trigger.value = dateArr.yy + '年' + dateArr.mm + '月' + dateArr.dd + '日' + (hourVal === -1 ? '' : ' ' + hourVal + '时')
       }
-    } else if (this.trigger.getAttribute('data-hour') || this.trigger.getAttribute('data-min')) {
-      let hour = this.trigger.getAttribute('data-hour')
-      let min = this.trigger.getAttribute('data-min')
+    } else if (this.mipEl.getAttribute('data-hour') || this.mipEl.getAttribute('data-min')) {
+      let hour = this.mipEl.getAttribute('data-hour')
+      let min = this.mipEl.getAttribute('data-min')
       let hourStr = hour ? hour + '时' : ''
       let minStr = min ? min + '分' : ''
       this.trigger.value = hourStr + minStr
@@ -107,10 +106,10 @@ class RuiDatepicker {
     // document.activeElement.blur();
     this.gearDate = document.createElement('div')
     this.gearDate.className = 'mip-dishen-geardate'
-    let dateId = this.trigger.getAttribute('data-toid-date')
-    let hourId = this.trigger.getAttribute('data-toid-hour')
-    let minId = this.trigger.getAttribute('data-toid-min')
-    let fixed = this.trigger.getAttribute('data-fixed') === 'true'// 选择公历/农历
+    let dateId = this.mipEl.getAttribute('data-toid-date')
+    let hourId = this.mipEl.getAttribute('data-toid-hour')
+    let minId = this.mipEl.getAttribute('data-toid-min')
+    let fixed = this.mipEl.getAttribute('data-fixed') === 'true'// 选择公历/农历
     let colNum = 0
     let _self = this
     dateId && (colNum += 3)
@@ -189,41 +188,18 @@ class RuiDatepicker {
     if (type === 'nongli' && this.type !== 1) {
       nongli.className = nongli.className.replace(/active/, '').replace(/(^\s*)|(\s*$)/g, '') + ' active'
       gongli.className = gongli.className.replace(/active/, '')
-      this.type = 1
       changeOn = 1
     } else if (type === 'gongli' && this.type !== 0) {
       nongli.className = nongli.className.replace(/active/, '')
       gongli.className = gongli.className.replace(/active/, '').replace(/(^\s*)|(\s*$)/g, '') + ' active'
-      this.type = 0
       changeOn = 1
     }
     // 判断是否切换
     if (changeOn) {
-      let passY = this.maxY - this.minY + 1
-      let valYY = parseInt(Math.round(this.gearDate.querySelector('.dateYY').getAttribute('val')))
-      let dateMM = parseInt(Math.round(this.gearDate.querySelector('.dateMM').getAttribute('val'))) + 1
-      let dateDD = parseInt(Math.round(this.gearDate.querySelector('.dateDD').getAttribute('val'))) + 1
-      let dateYY = valYY % passY + this.minY
-      let type = this.type ? 0 : 1
-      // 农历转公历前判断是否有闰月
-      let rmNum = calendar.LunarCal[valYY].Intercalation ? calendar.LunarCal[valYY].Intercalation : 0
-      if (!this.type && rmNum) {
-        if (rmNum === (dateMM - 1)) {
-          dateMM = -(dateMM - 1)
-        } else if (rmNum < (dateMM - 1)) {
-          dateMM = dateMM - 1
-        }
-      }
-      let objDate = calendar.calendarConvert(type, dateYY, dateMM, dateDD)// 返回转换对象
-      // 公历转农历后判断是否有闰月
-      let rmTip = calendar.LunarCal[objDate.yy - this.minY].Intercalation ? calendar.LunarCal[objDate.yy - this.minY].Intercalation : 0
-      if (rmTip && this.type) {
-        if (objDate.mm < 0) {
-          objDate.mm = -objDate.mm + 1
-        } else if (objDate.mm > rmTip) {
-          objDate.mm = objDate.mm + 1
-        }
-      }
+      let date = this.getDate()
+      let objDate = calendar.calendarConvert(this.type, date.yy, date.mm, date.dd)// 返回转换对象
+      this.type = type === 'nongli' ? 1 : 0
+      if (this.type) { objDate.mm = this.convertRMonth(objDate.yy, objDate.mm) }
       this.dateObj.yy = objDate.yy - this.minY
       this.dateObj.mm = objDate.mm - 1
       this.dateObj.dd = objDate.dd - 1
@@ -243,7 +219,7 @@ class RuiDatepicker {
     if (dateYY) {
       // 默认农历或公历
       if (this.type === 1) {
-        if (this.trigger.getAttribute('data-fixed') === 'false') {
+        if (!this.mipEl.getAttribute('data-fixed')) {
           let nongli = this.gearDate.querySelector('.lcalendar_nongli')
           nongli.className = nongli.className.replace(/active/, '').replace(/(^\s*)|(\s*$)/g, '') + ' active'
         }
@@ -263,7 +239,7 @@ class RuiDatepicker {
         objDate.mm = objDate.mm - 1
         objDate.dd = objDate.dd - 1
       } else {
-        if (this.trigger.getAttribute('data-fixed') === 'false') {
+        if (!this.mipEl.getAttribute('data-fixed')) {
           let gongli = this.gearDate.querySelector('.lcalendar_gongli')
           gongli.className = gongli.className.replace(/active/, '').replace(/(^\s*)|(\s*$)/g, '') + ' active'
         }
@@ -323,7 +299,7 @@ class RuiDatepicker {
       if (!render || render.dd) {
         // 返回月份的天数
         let maxMonthDays = calendar.calcDays(this.type, this.minY, this.dateObj.yy, this.dateObj.mm)
-        if (this.dateObj.dd > maxMonthDays) { this.dateObj.dd = maxMonthDays }
+        if (this.dateObj.dd >= maxMonthDays) { this.dateObj.dd = maxMonthDays - 1 }
         this.ddScroll = new DateScroll({
           element: dateDD,
           index: this.dateObj.dd,
@@ -380,8 +356,6 @@ class RuiDatepicker {
     e.preventDefault()
     // 判断是否在等待确认状态
     if (btnFinish.getAttribute('data-isconfirm') - 0 && !type) {
-      // 设置日期
-      this.getCalendarDate()
       btnFinish.setAttribute('data-isconfirm', 0)
       this.gearDate.querySelector('.date_choice_wrap').style.display = 'block'
       this.gearDate.querySelector('.date_confirm_wrap').style.display = 'none'
@@ -399,11 +373,11 @@ class RuiDatepicker {
   }
   // 日期确认
   finishMobileDate (e) {
-    let d = this.getCalendarDate()
+    let d = this.getDate(1)
     let btnFinish = this.gearDate.querySelector('.lcalendar_finish')
     let btnCancel = this.gearDate.querySelector('.lcalendar_cancel')
     // 判断是否在等待确认状态
-    if (!(btnFinish.getAttribute('data-isconfirm') - 0) && this.trigger.getAttribute('data-confirm') === 'true') {
+    if (!(btnFinish.getAttribute('data-isconfirm') - 0) && this.mipEl.getAttribute('data-confirm') === 'true') {
       let topInfo = this.gearDate.querySelector('.lcalendar_info')
       let confirmNongli = this.gearDate.querySelector('.confirm_nongli')
       let confirmGongli = this.gearDate.querySelector('.confirm_gongli')
@@ -433,22 +407,22 @@ class RuiDatepicker {
       confirmNongli.innerHTML = d._yy + '年' + mmChina + '' + calendar.getChinese('dd', d._dd) + ' ' + nongliHourStr
       return false
     }
-    let dateId = this.trigger.getAttribute('data-toid-date')
-    let hourId = this.trigger.getAttribute('data-toid-hour')
-    let minId = this.trigger.getAttribute('data-toid-min')
-    let typeId = this.trigger.getAttribute('data-toid-type')
+    let dateId = this.mipEl.getAttribute('data-toid-date')
+    let hourId = this.mipEl.getAttribute('data-toid-hour')
+    let minId = this.mipEl.getAttribute('data-toid-min')
+    let typeId = this.mipEl.getAttribute('data-toid-type')
     if (dateId) {
       let dateEl = document.getElementById(dateId)
-      this.trigger.setAttribute('data-date', d.yy + '-' + d.mm + '-' + d.dd)
+      this.mipEl.setAttribute('data-date', d.yy + '-' + d.mm + '-' + d.dd)
       dateEl.value = d.yy + '-' + d.mm + '-' + d.dd
       // 触发MIP事件
-      MIP.viewer.eventAction.execute('change', dateEl, {value: dateEl.value, date2: this.addZero(d.mm) + this.addZero(d.dd)})
+      MIP.viewer.eventAction.execute('change', dateEl, {value: dateEl.value, date2: this.addZero(d.mm) + this.addZero(d.dd), date3: d.yy + this.addZero(d.mm) + this.addZero(d.dd)})
     }
     if (hourId) {
       let hourEl = document.getElementById(hourId)
       let strVal = (d.hh < 10 ? '0' + d.hh : d.hh)
       hourEl.value = strVal
-      this.trigger.setAttribute('data-hour', strVal)
+      this.mipEl.setAttribute('data-hour', strVal)
       // 触发MIP事件
       MIP.viewer.eventAction.execute('change', hourEl, {value: hourEl.value})
     }
@@ -456,7 +430,7 @@ class RuiDatepicker {
       let minEl = document.getElementById(minId)
       let strVal = (d.min < 10 ? '0' + d.min : d.min)
       minEl.value = strVal
-      this.trigger.setAttribute('data-min', strVal)
+      this.mipEl.setAttribute('data-min', strVal)
       // 触发MIP事件
       MIP.viewer.eventAction.execute('change', minEl, {value: minEl.value})
     }
@@ -490,25 +464,16 @@ class RuiDatepicker {
     MIP.viewer.eventAction.execute('change', this.mipEl)
     this.closeMobileCalendar(e, 'finish')
   }
-  // 设置顶部日期+设置确认框数据+返回对象 _yy 农历年  yy公历年
-  getCalendarDate () {
-    // 判断是否启用日期
+  // 返回日期对象 type = 1 _yy 农历年  yy公历年
+  getDate (type) {
     let dateOn = this.gearDate.querySelector('.dateYY') ? 1 : 0
-    // 判断是否启用时辰
-    let hourOn = this.gearDate.querySelector('.dateHH') ? 1 : 0
-    // 判断是否启用分钟
-    let minOn = this.gearDate.querySelector('.dateMin') ? 1 : 0
+    let retDate = {}
+
     if (dateOn) {
       let passY = this.maxY - this.minY + 1
-      let valYY = parseInt(Math.round(this.gearDate.querySelector('.dateYY').getAttribute('val')))
-      let dateYY = valYY % passY + this.minY
-      let dateMM = parseInt(Math.round(this.gearDate.querySelector('.dateMM').getAttribute('val'))) + 1
-      let dateDD = parseInt(Math.round(this.gearDate.querySelector('.dateDD').getAttribute('val'))) + 1
-      let dateHH = ''
-      if (hourOn) {
-        dateHH = parseInt(Math.round(this.gearDate.querySelector('.dateHH').getAttribute('val')))
-      }
-      // 判断否有闰月
+      let valYY = this.dateObj.yy
+      let dateMM = this.dateObj.mm + 1
+      // 农历则判断是否有闰月
       let rmNum = calendar.LunarCal[valYY].Intercalation ? calendar.LunarCal[valYY].Intercalation : 0
       if (this.type && rmNum) {
         if (rmNum === (dateMM - 1)) {
@@ -517,70 +482,42 @@ class RuiDatepicker {
           dateMM = dateMM - 1
         }
       }
-      let objDate = calendar.calendarConvert(this.type, dateYY, dateMM, dateDD)
-      let info = this.gearDate.querySelector('.lcalendar_info')
-      if (this.type) {
-        this.trigger.setAttribute('data-type', 1)
-        let mmChina = dateMM < 0 ? calendar.getChinese('rm', -dateMM) : calendar.getChinese('mm', dateMM)
-        let hhStr = ''
-        if (hourOn) {
-          if (dateHH < 0) {
-            hhStr = '时辰未知'
-          } else {
-            hhStr = calendar.getChinese('hh', dateHH) + '时'
-          }
+      retDate.yy = valYY % passY + this.minY
+      retDate.mm = dateMM
+      retDate.dd = this.dateObj.dd + 1
+      if (type && type === 1) {
+        let objDate = calendar.calendarConvert(this.type, retDate.yy, retDate.mm, retDate.dd)
+        if (this.type) {
+          retDate._yy = retDate.yy
+          retDate._mm = retDate.mm
+          retDate._dd = retDate.dd
+          retDate.yy = objDate.yy
+          retDate.mm = objDate.mm
+          retDate.dd = objDate.dd
+        } else {
+          retDate._yy = objDate.yy
+          retDate._mm = objDate.mm
+          retDate._dd = objDate.dd
         }
-        info.innerHTML = dateYY + '年' + mmChina + '' + calendar.getChinese('dd', dateDD) + ' ' + hhStr
-        return {
-          yy: objDate.yy,
-          mm: objDate.mm,
-          dd: objDate.dd,
-          _yy: dateYY,
-          _mm: dateMM,
-          _dd: dateDD,
-          hh: dateHH
-        }
-      } else {
-        this.trigger.setAttribute('data-type', 0)
-        let hhStr = ''
-        if (hourOn) {
-          if (dateHH < 0) {
-            hhStr = '时辰未知'
-          } else {
-            hhStr = dateHH + '时'
-          }
-        }
-        info.innerHTML = dateYY + '年' + dateMM + '月' + dateDD + '日' + ' ' + hhStr
-        return {
-          _yy: objDate.yy,
-          _mm: objDate.mm,
-          _dd: objDate.dd,
-          yy: dateYY,
-          mm: dateMM,
-          dd: dateDD,
-          hh: dateHH
-        }
-      }
-    } else {
-      let dateHH = ''
-      let dateMin = ''
-      if (hourOn) {
-        dateHH = parseInt(Math.round(this.gearDate.querySelector('.dateHH').getAttribute('val')))
-      }
-      if (minOn) {
-        dateMin = parseInt(Math.round(this.gearDate.querySelector('.dateMin').getAttribute('val')))
-      }
-      return {
-        _yy: '',
-        _mm: '',
-        _dd: '',
-        yy: '',
-        mm: '',
-        dd: '',
-        hh: dateHH,
-        min: dateMin
       }
     }
+
+    retDate.hh = this.dateObj.hh
+    retDate.min = this.dateObj.min
+    return retDate
+  }
+  // 转换闰月
+  convertRMonth (year, month) {
+    let rm = calendar.LunarCal[year - this.minY].Intercalation ? calendar.LunarCal[year - this.minY].Intercalation : 0
+    let retMonth = month
+    if (rm) {
+      if (month < 0) {
+        retMonth = -month + 1
+      } else if (month > rm) {
+        retMonth = month + 1
+      }
+    }
+    return retMonth
   }
 }
 
@@ -588,21 +525,10 @@ export default class MIPDishenDatepicker extends MIP.CustomElement {
   connectedCallback () {
     let el = this.element
     let wrapper = document.createElement('div')
-    let date = el.getAttribute('data-date') || ''
-    let hour = el.getAttribute('data-hour') || ''
-    let min = el.getAttribute('data-min') || ''
-    let type = el.getAttribute('data-type') || '0'
-    let dateId = el.getAttribute('data-toid-date') || ''
-    let hourId = el.getAttribute('data-toid-hour') || ''
-    let minId = el.getAttribute('data-toid-min') || ''
-    let typeId = el.getAttribute('data-toid-type') || ''
-    let confirm = el.getAttribute('data-confirm') || 'true'
-    let fixed = el.getAttribute('data-fixed') || 'false'
     let placeholder = el.getAttribute('placeholder') || ''
     wrapper.classList.add('datepicker-wrapper')
     wrapper.innerHTML =
-    '<input  class="form-time" data-toid-date="' + dateId + '" data-toid-hour="' + hourId + '" data-toid-min="' + minId + '" data-toid-type="' + typeId + '" data-type="' + type + '" data-fixed="' + fixed + '"  data-confirm="' + confirm + '"' +
-      'value="" placeholder="' + placeholder + '" readonly="readonly" autocomplete="off" id="birthday" data-date="' + date + '" data-hour="' + hour + '" data-min="' + min + '">'
+    '<input  class="form-time" placeholder="' + placeholder + '" readonly="readonly" autocomplete="off" id="birthday">'
 
     let datepicker = new RuiDatepicker()
     datepicker.init(wrapper.children[0], el)
