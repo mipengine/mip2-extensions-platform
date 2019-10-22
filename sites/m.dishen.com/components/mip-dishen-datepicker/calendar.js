@@ -149,12 +149,12 @@ let calendar = {
    * @param {string} dateDD 日
    */
   calendarConvert: function (type, dateYY, dateMM, dateDD) {
-    let SolarYear = parseInt(dateYY)
-    let SolarMonth = parseInt(dateMM)
-    let SolarDate = parseInt(dateDD)
-    let LunarYear = parseInt(dateYY)
-    let LunarMonth = parseInt(dateMM)
-    let LunarDate = parseInt(dateDD)
+    let solarYear = parseInt(dateYY)
+    let solarMonth = parseInt(dateMM)
+    let solarDate = parseInt(dateDD)
+    let lunarYear = parseInt(dateYY)
+    let lunarMonth = parseInt(dateMM)
+    let lunarDate = parseInt(dateDD)
 
     let FIRSTYEAR = 1940// 最小年份
     // let LASTYEAR = 2030// 最大年份
@@ -167,14 +167,14 @@ let calendar = {
     let i
     // 公历转农历
     if (type === 0) {
-      let sm = SolarMonth - 1
+      let sm = solarMonth - 1
 
-      let leap = this.GetLeap(SolarYear)
+      let leap = this.GetLeap(solarYear)
 
       // let d = (sm === 1) ? leap + 28 : SolarCal[sm]
 
-      let y = SolarYear - FIRSTYEAR
-      let acc = SolarDays[leap * 14 + sm] + SolarDate
+      let y = solarYear - FIRSTYEAR
+      let acc = SolarDays[leap * 14 + sm] + solarDate
       let kc = acc + this.LunarCal[y].BaseKanChih
       let Age = kc % 60
       Age = (Age < 22) ? 22 - Age : 82 - Age
@@ -184,12 +184,12 @@ let calendar = {
 
       if (acc <= this.LunarCal[y].BaseDays) {
         y--
-        LunarYear = SolarYear - 1
-        leap = this.GetLeap(LunarYear)
+        lunarYear = solarYear - 1
+        leap = this.GetLeap(lunarYear)
         sm += 12
-        acc = SolarDays[leap * 14 + sm] + SolarDate
+        acc = SolarDays[leap * 14 + sm] + solarDate
       } else {
-        LunarYear = SolarYear
+        lunarYear = solarYear
       }
       let l1 = this.LunarCal[y].BaseDays
       for (i = 0; i < 13; i++) {
@@ -197,21 +197,21 @@ let calendar = {
         if (acc <= l2) break
         l1 = l2
       }
-      let LunarMonth = i + 1
-      let LunarDate = acc - l1
+      let lunarMonth = i + 1
+      let lunarDate = acc - l1
       let im = this.LunarCal[y].Intercalation
-      if (im !== 0 && LunarMonth > im) {
-        LunarMonth--
-        if (LunarMonth === im) LunarMonth = -im
+      if (im !== 0 && lunarMonth > im) {
+        lunarMonth--
+        if (lunarMonth === im) lunarMonth = -im
       }
-      if (LunarMonth > 12) LunarMonth -= 12
+      if (lunarMonth > 12) lunarMonth -= 12
 
-      return {yy: LunarYear, mm: LunarMonth, dd: LunarDate}
+      return {yy: lunarYear, mm: lunarMonth, dd: lunarDate}
     } else {
       /* 农历转公历 */
-      let y = LunarYear - FIRSTYEAR
+      let y = lunarYear - FIRSTYEAR
       let im = this.LunarCal[y].Intercalation
-      let lm = LunarMonth
+      let lm = lunarMonth
 
       if (im !== 0) {
         if (lm > im) {
@@ -227,23 +227,23 @@ let calendar = {
         acc += this.LunarCal[y].MonthDays[i] + 29
       }
 
-      acc += this.LunarCal[y].BaseDays + LunarDate
+      acc += this.LunarCal[y].BaseDays + lunarDate
 
-      let leap = this.GetLeap(LunarYear)
+      let leap = this.GetLeap(lunarYear)
 
       for (i = 13; i >= 0; i--) {
         if (acc > SolarDays[leap * 14 + i]) break
       }
-      SolarDate = acc - SolarDays[leap * 14 + i]
+      solarDate = acc - SolarDays[leap * 14 + i]
       if (i <= 11) {
-        SolarYear = LunarYear
-        SolarMonth = i + 1
+        solarYear = lunarYear
+        solarMonth = i + 1
       } else {
-        SolarYear = LunarYear + 1
-        SolarMonth = i - 11
+        solarYear = lunarYear + 1
+        solarMonth = i - 11
       }
-      // return SolarYear + "-" + SolarMonth + "-" + SolarDate;
-      return {yy: SolarYear, mm: SolarMonth, dd: SolarDate}
+      // return solarYear + "-" + solarMonth + "-" + solarDate;
+      return {yy: solarYear, mm: solarMonth, dd: solarDate}
     }
   },
   /* 闰年, 返回 0 平年, 1 闰年 */
