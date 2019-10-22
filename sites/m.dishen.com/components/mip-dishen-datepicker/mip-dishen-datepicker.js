@@ -228,15 +228,8 @@ class RuiDatepicker {
         let dateMM = this.dateObj.mm + 1
         let dateDD = this.dateObj.dd + 1
         let objDate = calendar.calendarConvert(0, dateYY, dateMM, dateDD)// 返回转换对象
-        let isRm = calendar.LunarCal[objDate.yy - this.minY].Intercalation ? calendar.LunarCal[objDate.yy - this.minY].Intercalation : 0// 判断是不是闰年
-        if (objDate.mm < 0) {
-          objDate.mm = -objDate.mm + 1// 返回的负数为 闰年
-        } else {
-          // 闰年月份+1重复选择，位置才正确
-          if (isRm && (objDate.mm - 1) >= isRm) objDate.mm = objDate.mm + 1
-        }
+        objDate.mm = this.convertRMonth(objDate.yy, objDate.mm) - 1
         objDate.yy = objDate.yy - this.minY
-        objDate.mm = objDate.mm - 1
         objDate.dd = objDate.dd - 1
       } else {
         if (!this.mipEl.getAttribute('data-fixed')) {
@@ -270,7 +263,7 @@ class RuiDatepicker {
         } else {
           maxM = 11
         }
-        if (this.dateObj.mm >= maxM - minM) { this.dateObj.mm = maxM - minM - 1 }
+        if (this.dateObj.mm > maxM - minM) { this.dateObj.mm = maxM - minM - 1 }
         this.mmScroll = new DateScroll({
           element: dateMM,
           index: this.dateObj.mm,
