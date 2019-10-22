@@ -337,10 +337,6 @@ class RuiDatepicker {
       })
     }
   }
-  // 补零
-  addZero (i) {
-    return i < 10 ? '0' + i : '' + i
-  }
   // 取消 type 判断是不是点击完成后调用
   closeMobileCalendar (e, type) {
     let btnFinish = this.gearDate.querySelector('.lcalendar_finish')
@@ -408,7 +404,7 @@ class RuiDatepicker {
       this.mipEl.setAttribute('data-date', d.yy + '-' + d.mm + '-' + d.dd)
       dateEl.value = d.yy + '-' + d.mm + '-' + d.dd
       // 触发MIP事件
-      MIP.viewer.eventAction.execute('change', dateEl, {value: dateEl.value, date2: this.addZero(d.mm) + this.addZero(d.dd), date3: d.yy + this.addZero(d.mm) + this.addZero(d.dd)})
+      MIP.viewer.eventAction.execute('change', dateEl, {value: dateEl.value, date2: calendar.addZero(d.mm) + calendar.addZero(d.dd), date3: d.yy + calendar.addZero(d.mm) + calendar.addZero(d.dd)})
     }
     if (hourId) {
       let hourEl = document.getElementById(hourId)
