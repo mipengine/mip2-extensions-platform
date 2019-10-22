@@ -22,8 +22,6 @@ class XzPicker {
                 let href = options.href.replace('_val_', '' + data.pair_id)
                 window.location.href = href
               }
-            } else {
-              console.log(data.msg)
             }
           }).catch(function (ex) {
             // 捕获 parse的异常
@@ -74,16 +72,16 @@ class XzPicker {
   }
   events () {
     let _self = this
-    let pickerList = _self.pickerEl.querySelectorAll('.picker-list')
+    let pickerList = this.pickerEl.querySelectorAll('.picker-list')
     new XzScroll().init(pickerList[0])
     new XzScroll().init(pickerList[1])
-    _self.pickerEl.querySelector('.close').addEventListener('click', function () {
+    this.pickerEl.querySelector('.close').addEventListener('click', function () {
       _self.pickerEl.classList.remove('on')
     })
-    _self.pickerEl.querySelector('.xz-selector-overlay').addEventListener('click', function () {
+    this.pickerEl.querySelector('.xz-selector-overlay').addEventListener('click', function () {
       _self.pickerEl.classList.remove('on')
     })
-    _self.pickerEl.querySelector('.btn-pair').addEventListener('click', function () {
+    this.pickerEl.querySelector('.btn-pair').addEventListener('click', function () {
       let girlIndex = _self.pickerEl.querySelector('.picker-girl-list').getAttribute('data-index')
       let boyIndex = _self.pickerEl.querySelector('.picker-boy-list').getAttribute('data-index')
       let girlData = _self.params.astro[girlIndex]

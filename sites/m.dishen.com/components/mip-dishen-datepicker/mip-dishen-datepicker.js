@@ -24,7 +24,6 @@ class RuiDatepicker {
     this.mipEl = mipEl
     this.trigger = el
     this.type = parseInt(mipEl.getAttribute('data-type'))
-
     // 判断移动端
     let isMove = false
     let startTime = 0
@@ -199,7 +198,7 @@ class RuiDatepicker {
       let date = this.getDate()
       let objDate = calendar.calendarConvert(this.type, date.yy, date.mm, date.dd)// 返回转换对象
       this.type = type === 'nongli' ? 1 : 0
-      if (this.type) { objDate.mm = this.convertRMonth(objDate.yy, objDate.mm) }
+      if (this.type) { objDate.mm = calendar.convertRMonthToValue(objDate.yy - this.minY, objDate.mm) }
       this.dateObj.yy = objDate.yy - this.minY
       this.dateObj.mm = objDate.mm - 1
       this.dateObj.dd = objDate.dd - 1
@@ -228,7 +227,7 @@ class RuiDatepicker {
         let dateMM = this.dateObj.mm + 1
         let dateDD = this.dateObj.dd + 1
         let objDate = calendar.calendarConvert(0, dateYY, dateMM, dateDD)// 返回转换对象
-        objDate.mm = this.convertRMonth(objDate.yy, objDate.mm) - 1
+        objDate.mm = calendar.convertRMonthToValue(objDate.yy - this.minY, objDate.mm) - 1
         objDate.yy = objDate.yy - this.minY
         objDate.dd = objDate.dd - 1
       } else {
@@ -463,54 +462,23 @@ class RuiDatepicker {
     let retDate = {}
 
     if (dateOn) {
-      let passY = this.maxY - this.minY + 1
-      let valYY = this.dateObj.yy
-      let dateMM = this.dateObj.mm + 1
-      // 农历则判断是否有闰月
-      let rmNum = calendar.LunarCal[valYY].Intercalation ? calendar.LunarCal[valYY].Intercalation : 0
-      if (this.type && rmNum) {
-        if (rmNum === (dateMM - 1)) {
-          dateMM = -(dateMM - 1)
-        } else if (rmNum < (dateMM - 1)) {
-          dateMM = dateMM - 1
-        }
-      }
-      retDate.yy = valYY % passY + this.minY
-      retDate.mm = dateMM
+      retDate.yy = this.dateObj.yy + this.minY
+      retDate.mm = this.type ? calendar.convertValueToRMonth(this.dateObj.yy, this.dateObj.mm + 1) : this.dateObj.mm + 1 // 农历则判断是否有闰月
       retDate.dd = this.dateObj.dd + 1
       if (type && type === 1) {
         let objDate = calendar.calendarConvert(this.type, retDate.yy, retDate.mm, retDate.dd)
-        if (this.type) {
-          retDate._yy = retDate.yy
-          retDate._mm = retDate.mm
-          retDate._dd = retDate.dd
-          retDate.yy = objDate.yy
-          retDate.mm = objDate.mm
-          retDate.dd = objDate.dd
-        } else {
-          retDate._yy = objDate.yy
-          retDate._mm = objDate.mm
-          retDate._dd = objDate.dd
-        }
+        retDate._yy = this.type ? retDate.yy : objDate.yy
+        retDate._mm = this.type ? retDate.mm : objDate.mm
+        retDate._dd = this.type ? retDate.dd : objDate.dd
+        retDate.yy = this.type ? objDate.yy : retDate.yy
+        retDate.mm = this.type ? objDate.mm : retDate.mm
+        retDate.dd = this.type ? objDate.dd : retDate.dd
       }
     }
 
     retDate.hh = this.dateObj.hh
     retDate.min = this.dateObj.min
     return retDate
-  }
-  // 转换闰月
-  convertRMonth (year, month) {
-    let rm = calendar.LunarCal[year - this.minY].Intercalation ? calendar.LunarCal[year - this.minY].Intercalation : 0
-    let retMonth = month
-    if (rm) {
-      if (month < 0) {
-        retMonth = -month + 1
-      } else if (month > rm) {
-        retMonth = month + 1
-      }
-    }
-    return retMonth
   }
 }
 

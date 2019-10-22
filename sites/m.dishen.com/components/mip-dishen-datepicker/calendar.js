@@ -249,7 +249,34 @@ let calendar = {
   /* 闰年, 返回 0 平年, 1 闰年 */
   GetLeap: function (year) {
     if (year % 400 === 0) { return 1 } else if (year % 100 === 0) { return 0 } else if (year % 4 === 0) { return 1 } else { return 0 }
+  },
+  // 转换闰月为滚轮数值
+  convertRMonthToValue (valYY, month) {
+    let rm = calendar.LunarCal[valYY].Intercalation ? calendar.LunarCal[valYY].Intercalation : 0
+    let retMonth = month
+    if (rm) {
+      if (month < 0) {
+        retMonth = -month + 1
+      } else if (month > rm) {
+        retMonth = month + 1
+      }
+    }
+    return retMonth
+  },
+  // 转换滚轮数值为闰月
+  convertValueToRMonth (valYY, month) {
+    let rm = calendar.LunarCal[valYY].Intercalation ? calendar.LunarCal[valYY].Intercalation : 0
+    let retMonth = month
+    if (rm) {
+      if (rm === (month - 1)) {
+        retMonth = -(month - 1)
+      } else if (rm < (month - 1)) {
+        retMonth = month - 1
+      }
+    }
+    return retMonth
   }
+
 }
 
 export default calendar

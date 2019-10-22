@@ -26,15 +26,14 @@ export default class DateScroll {
     }
   }
   init () {
-    let _self = this
-    _self.params.items = this.params.list.querySelectorAll('.tooth')
-    _self.params.itemHeight = _self.params.items[0].offsetHeight
-    _self.params.scrollHeight = _self.params.list.offsetHeight - _self.params.itemHeight // 可滚动的高度
-    if (!isNaN(_self.params.index)) {
-      _self.params.offsetY = -_self.params.index * _self.params.itemHeight
-      _self.params.recordY = _self.params.offsetY
-      translateY(_self.params.list, _self.params.offsetY)
-      this.dom.setAttribute('val', _self.params.index)
+    this.params.items = this.params.list.querySelectorAll('.tooth')
+    this.params.itemHeight = this.params.items[0].offsetHeight
+    this.params.scrollHeight = this.params.list.offsetHeight - this.params.itemHeight // 可滚动的高度
+    if (!isNaN(this.params.index)) {
+      this.params.offsetY = -this.params.index * this.params.itemHeight
+      this.params.recordY = this.params.offsetY
+      translateY(this.params.list, this.params.offsetY)
+      this.dom.setAttribute('val', this.params.index)
     }
     this.bindEvents()
     return this
@@ -152,20 +151,6 @@ export default class DateScroll {
     }
     // 开始执行动画
     step()
-  }
-  update (index) {
-    let _self = this
-    if (index) {
-      _self.params.index = index
-    } else if (_self.dom.getAttribute('val')) {
-      _self.params.index = _self.dom.getAttribute('val')
-    } else {
-      return
-    }
-    _self.params.offsetY = -_self.params.index * _self.params.itemHeight
-    _self.params.recordY = _self.params.offsetY
-    translateY(_self.params.list, _self.params.offsetY)
-    _self.dom.setAttribute('val', _self.params.index)
   }
   render (max, getHtml) {
     let itemStr = ''
