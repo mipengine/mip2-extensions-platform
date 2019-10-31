@@ -53,7 +53,7 @@
                 <div class="ldf-inline-field-other">
                   粤
                 </div>
-                <a class="mint-cell mint-field illegal-input is-nolabel">
+                <a class="mint-cell mint-field uppercase illegal-input is-nolabel">
                   <div class="mint-cell-left"/>
                   <div class="mint-cell-wrapper">
                     <div class="mint-cell-title"><span class="mint-cell-text"/></div>
@@ -100,7 +100,7 @@
             <div class="mint-cell-left"/>
             <div class="mint-cell-wrapper">
               <div class="mint-cell-title"><span class="mint-cell-text">验证码</span></div>
-              <div class="mint-cell-value">
+              <div class="mint-cell-value mint-cell-value-yzm">
                 <input
                   v-model="imgCode"
                   placeholder="请输入验证码"
@@ -113,7 +113,9 @@
                 <span class="mint-field-state is-default"><i class="mintui mintui-field-default"/></span>
                 <div
                   class="mint-field-other"
-                  @click="updateVcode"><mip-img :src="imgCodeUrl"/></div>
+                  @click="updateVcode"><mip-img
+                    :src="imgCodeUrl"
+                    layout="fill"/></div>
               </div>
             </div>
             <div class="mint-cell-right"/>
@@ -211,7 +213,7 @@
             <div class="mint-cell-left"/>
             <div class="mint-cell-wrapper">
               <div class="mint-cell-title"><span class="mint-cell-text">验证码</span></div>
-              <div class="mint-cell-value">
+              <div class="mint-cell-value mint-cell-value-yzm">
                 <input
                   v-model="imgCode"
                   placeholder="请输入验证码"
@@ -224,7 +226,9 @@
                 <span class="mint-field-state is-default"><i class="mintui mintui-field-default"/></span>
                 <div
                   class="mint-field-other"
-                  @click="updateVcode"><mip-img :src="imgCodeUrl"/></div>
+                  @click="updateVcode"><mip-img
+                    :src="imgCodeUrl"
+                    layout="fill"/></div>
               </div>
             </div>
             <div class="mint-cell-right"/>
@@ -316,7 +320,7 @@
           </p>
           <p>③本服务不提供相关票据，如遇特殊情况无法办理，将于结果反馈后
             <span class="clause-num">7个工作日</span>原路退款，如有疑问，可致电客服。
-            <span class="clause-num">020-31136463。</span>
+            <span class="clause-num">40000016353。</span>
           </p>
           <p>④付款成功后，请勿通过其他渠道
             <span>重复处理</span>，生成的纠纷
@@ -352,11 +356,29 @@
   margin: 0 auto;
   text-align: center;
 
+  .uppercase {
+    input {
+      text-transform: uppercase;
+    }
+  }
+
   .mint-cell {
     .mint-cell-wrapper {
       padding: 0 15px;
       .mint-cell-title {
         text-align: left;
+      }
+      .mint-cell-value-yzm {
+        .mint-field-core {
+          width: initial;
+          /*flex-grow: 2;*/
+          max-width: 2.6rem;
+        }
+        justify-content: space-between;
+        .mint-field-other {
+          width: 70px;
+          height: 25px;
+        }
       }
     }
   }
@@ -388,6 +410,7 @@
         }
       }
       .ldf-inline-field-other {
+        min-width: 1rem;
         padding-right: 6px;
       }
       .mint-cell-wrapper {
@@ -635,7 +658,7 @@ export default {
           title: '1.  查询范围',
           state: false,
           content:
-            '交通违法缴罚：粤牌小型汽车在各地产生的违法行为。<br> 罚单代缴：各类型车辆在广东省产生的处罚决定书（不是告知单，请完成认罚，领取处罚决定书后再进行查询办理'
+            '交通违法缴罚：粤牌小型汽车和粤牌小型新能源汽车在各地产生的违法行为。<br> 罚单代缴：各类型车辆在广东省产生的处罚决定书（不是告知单，请完成认罚，领取处罚决定书后再进行查询办理'
         },
         {
           title: '2.  处理时间',
@@ -659,6 +682,11 @@ export default {
           state: false,
           content:
             '针对电子违法，处理时间延长不会产生滞纳金。<br/>针对已转决定书的违法，认罚后请在15天内缴费，若超期需缴纳每天3％的滞纳金，因涉及办理周期，决定书代缴计算滞纳金自认罚第11日起。（由于客户信息填写错误导致的经济损失将由客户自行承担，办理延误所产生的滞纳金由我方承担。）'
+        },
+        {
+          title: `6.  一车三证与一证三车`,
+          state: false,
+          content: `一车三证：一台机动车在一个年检周期内最多可以使用三本驾驶证来处理本车的违章行为。<br/>一证三车：一本驾驶证在一个年检周期内最多只能处理三台机动车的交通违法行为。`
         }
       ],
       carTypeVisible: false,
@@ -808,6 +836,7 @@ export default {
             engine: params.engine
           })
           Storage.set('illegalIndexResult', data)
+          console.log('ad', gConst.BASE_URL_PAGE + 'mip-xmd-illegal-msg.html')
           MIP.viewer.open(gConst.BASE_URL_PAGE + 'mip-xmd-illegal-msg.html')
         })
         .catch(() => {
@@ -856,6 +885,12 @@ export default {
         if (self.engine.length !== 6) {
           Toast.open({
             message: '发动机号输入有误, <br>请重新输入'
+          })
+          return true
+        }
+        if (!self.info.hasOwnProperty('isLogin') || self.info.isLogin !== true) {
+          Toast.open({
+            message: '未登录'
           })
           return true
         }

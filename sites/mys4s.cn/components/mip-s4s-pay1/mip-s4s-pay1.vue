@@ -6,7 +6,7 @@
         width="60"
         height="50" />
       <div class="s4s-tips-right">
-        <p>交通违法代缴的办理周期为<span style="color:#FE7000">1-2个工作日，部分地区2-5个工作日</span>，需年检用户如需当日处理完成，请勿下单。其他问题请参见
+        <p>交通违法代缴的办理周期为1-2个工作日，部分地区2-5个工作日，<span style="color:#FE7000">需年检用户如需当日处理完成，请勿下单</span>。其他问题请参见
           <a
             data-type="mip"
             href="help.html"
@@ -24,7 +24,11 @@
     </div>
 
     <div class="s4s-pay-body">
+
       <div class="s4s-title">违章详情</div>
+      <p
+        v-if="DzyNotice"
+        style="font-size:.13rem;color:#FD2900">{{ DzyNotice.Content }}</p>
       <div
         v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_no == 1"
         class="s4s-group">
@@ -35,13 +39,22 @@
           placeholder="请输入驾驶证号码" >
       </div>
       <div
+        v-if="illegal&&(illegal.car_no||illegal.CarNo || '').substring(0, 1) === '豫'"
+        class="s4s-group">
+        <span class="s4s-group-tit">中文姓名</span>
+        <input
+          v-model="name"
+          type="text"
+          placeholder="请输入姓名" >
+      </div>
+      <div
         v-if="illegal.FreeRuleObject && illegal.FreeRuleObject.drive_file_number == 1"
         class="s4s-group">
-        <span class="s4s-group-tit">驾驶证档案号</span>
+        <span class="s4s-group-tit">行驶证档案号</span>
         <input
           v-model="drive_file_number"
           type="idcard"
-          placeholder="请输入驾驶证档案编号" >
+          placeholder="请输入行驶证档案编号" >
         <span
           class="s4s-help"
           @click="openDriveFileNumber">?</span>
@@ -66,7 +79,7 @@
           type="text"
           maxlength="11"
           style="width:auto;max-width:3rem;min-width:1.05rem"
-          placeholder="请输入手机号码" >
+          placeholder="请输入手机号码接收订单状态" >
 
       </div>
       <div class="s4s-group">
@@ -303,11 +316,13 @@ export default {
   },
   data () {
     return {
+      DzyNotice: null,
       id: 0,
       carno: '',
       date: '',
       phone: '',
       price: 0,
+      name: '',
       ownFree: 0,
       lateFree: 0,
       illegal: {},
@@ -382,30 +397,49 @@ export default {
       this.globalData.OccTime && this.globalData.OccTime.substring(0, 10)
     this.getNotify()
     this.getVipFee()
+    this.getNotice()
   },
   methods: {
+    getNotice () {
+      util.fetchData('v3/violation/view/notice').then(res => {
+        console.log(res)
+        if (res.code === 0 && res.data) {
+          if (res.data.DzyHave) {
+            this.DzyNotice = res.data.DzyNotice
+          }
+        } else {
+          this.DzyNotice = null
+        }
+      }).catch((e) => {
+        this.DzyNotice = null
+      })
+    },
     closeMake () {
       this.detail = false
     },
     openDriveFile () {
       this.detail = true
       this.height = 480
-      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveFile.png'
+      this.src =
+        'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveFile.png'
     },
     openDriverFile () {
       this.detail = true
       this.height = 480
-      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driverFile.png'
+      this.src =
+        'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driverFile.png'
     },
     openDriveFileNumber () {
       this.detail = true
       this.height = 240
-      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveFileNumber.png'
+      this.src =
+        'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveFileNumber.png'
     },
     openDriveBarCode () {
       this.detail = true
       this.height = 240
-      this.src = 'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveBarCode.png'
+      this.src =
+        'https://s4s-imges.oss-cn-hangzhou.aliyuncs.com/img/driveBarCode.png'
     },
     testCode () {
       util
@@ -440,7 +474,7 @@ export default {
         .fetchData('v5/user/code', { tel: this.phone })
         .then(res => {
           if (res.code === 0) {
-            util.toast(res.data)
+            util.toast('发送成功')
           } else {
             util.toast(res.msg)
           }
@@ -591,7 +625,7 @@ export default {
           context.drawImage(imgSrc, 0, 0, targetWidth, targetHeight)
           let data = canvas.toDataURL('image/jpeg').split(',')[1]
           // 获取base64图片大小，返回MB数字
-          let size = parseInt(data.length - (data.length / 8) * 2)
+          let size = parseInt(data.length - data.length / 8 * 2)
           console.log(size)
           if (size) {
             const isLt2M = size / 1024 / 1024 < 2
@@ -649,9 +683,10 @@ export default {
     },
     uploadBase64 (data, name) {
       let self = this
-      util.fetchData('/v3/violation/image/upload', {
-        imageString: data
-      })
+      util
+        .fetchData('v3/violation/image/upload', {
+          imageString: data
+        })
         .then(data => {
           if (data.code === 0) {
             util.toast('上传成功')
@@ -714,6 +749,13 @@ export default {
           return
         }
       }
+      if ((this.illegal.car_no || this.illegal.CarNo || '').substring(0, 1) === '豫') {
+        if (!this.name) {
+          util.toast('请输入姓名')
+          return
+        }
+      }
+
       if (
         this.illegal.FreeRuleObject &&
         this.illegal.FreeRuleObject.drive_file_number === 1
@@ -775,13 +817,13 @@ export default {
         let totalPrice = Number(
           price +
             Math.round(this.ownFree * 100) +
-            Math.round(this.lateFree * 100)
+            this.lateFree * 100
         )
         let param = {
           source: 'xzapp',
           fine: price + '', // 罚金
           lateFree: (this.lateFree ? Math.round(this.lateFree * 100) : 0) + '',
-          ownFree: Math.round(this.ownFree * 100) + '', // 服务费
+          ownFree: this.ownFree * 100 + '', // 服务费
           totalPrice: totalPrice + '', // 总金额
           vio_time: this.date, // 文章时间：格式：2017-12-13
           carno: this.illegal.car_no || this.illegal.CarNo || '',
@@ -793,18 +835,19 @@ export default {
           jsz_drive_url: this.JSZDriveUrl || '', // 驾驶证正面
           jsz_travel_url: this.JSZTravelUrl || '', // 驾驶证反面
           vin: this.illegal.vin || '',
-          engion: this.illegal.engion || '',
+          engion: this.illegal.engine || this.illegal.engion || '',
           drive_bar_code: this.drive_bar_code || '',
-          drive_file_number: this.drive_file_number || ''
+          drive_file_number: this.drive_file_number || '',
+          name: this.name
         }
-        if (
-          !window.localStorage.getItem(
-            'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
-          )
-        ) {
-          util.toast('未授权百度账号')
-          return
-        }
+        // if (
+        //   !window.localStorage.getItem(
+        //     'mip-login-xzh:sessionId:https://mys4s.cn/v3/nc/auth?source=xzapp'
+        //   )
+        // ) {
+        //   util.toast('未授权百度账号')
+        //   return
+        // }
         util.fetchData('v3/violation/web/order/create', param).then(res => {
           if (res.code === 0) {
             MIP.setData({
@@ -815,7 +858,10 @@ export default {
                 ),
                 postData: {
                   order_id: res.data + ''
-                }
+                },
+                redirectUrl:
+                  'https://mys4s.cn/static/vio/xz/success.html?orderId=' +
+                  res.data
               }
             })
             this.$emit('canpay', {})
@@ -840,22 +886,41 @@ export default {
     },
     getVipFee () {
       let self = this
-      util
-        .fetchData('v3/violation/fee', {
-          vio_id: this.illegal.ViolationId,
-          car_no: this.illegal.car_no || this.illegal.CarNo,
-          fine: Number(this.price * 100) + ''
-        })
-        .then(res => {
-          if (res.code === 0) {
-            self.lateFree = res.data.LateFree
-              ? Number((res.data.LateFree / 100).toFixed(2))
-              : 0
-            self.ownFree = res.data.OwnFree
-              ? Number((res.data.OwnFree / 100).toFixed(2))
-              : 0
-          }
-        })
+      util.fetchData('v3/violation/submit_rule', {
+        'vio_id': this.illegal.ViolationId,
+        'car_no': this.illegal.car_no || this.illegal.CarNo,
+        'city_code': this.illegal.Locationid
+      }).then((res) => {
+        if (res.code === 0) {
+          self.ownFree = res.data.CooperFee ? (res.data.CooperFee * 0.01) : 0
+          self.illegal.FreeRuleObject.drive_no = res.data.NeedJszNo// 驾驶证号
+          self.illegal.FreeRuleObject.drive_file_number = res.data.NeedJszFileNo// 驾驶证档案编号
+          self.illegal.FreeRuleObject.drive_bar_code = res.data.NeedJszBarCode// 驾驶证条形码
+
+          self.illegal.FreeRuleObject.drive_licence = res.data.NeedXszFront // 行驶证正面
+          self.illegal.FreeRuleObject.travel_licence = res.data.NeedXszBack// 行驶证反面
+
+          self.illegal.FreeRuleObject.jsz_drive_licence = res.data.NeedJszFront// 驾驶证正面
+          self.illegal.FreeRuleObject.jsz_travel_licence = res.data.NeedJszBack// 驾驶证反面
+        }
+      })
+      // let self = this
+      // util
+      //   .fetchData('v3/violation/fee', {
+      //     vio_id: this.illegal.ViolationId,
+      //     car_no: this.illegal.car_no || this.illegal.CarNo,
+      //     fine: Number(this.price * 100) + ''
+      //   })
+      //   .then(res => {
+      //     if (res.code === 0) {
+      //       self.lateFree = res.data.LateFree
+      //         ? Number((res.data.LateFree / 100).toFixed(2))
+      //         : 0
+      //       self.ownFree = res.data.OwnFree
+      //         ? Number((res.data.OwnFree / 100).toFixed(2))
+      //         : 0
+      //     }
+      //   })
     }
   }
 }
@@ -869,15 +934,15 @@ export default {
   font-size: 0.12rem;
   color: #4b4b4b;
   display: flex;
-  align-items:center;
+  align-items: center;
 }
 
 .s4s-tips-right {
-  flex:1;
+  flex: 1;
   display: flex;
-  flex-direction:column;
+  flex-direction: column;
   padding-left: 0.15rem;
-  line-height: .2rem;
+  line-height: 0.2rem;
 }
 
 .s4s-pay-body {
@@ -892,13 +957,13 @@ export default {
 
 .s4s-sum {
   margin: 0.2rem 0.1rem 0 0.1rem;
-  -webkit-box-flex:1;
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
-  -ms-box-flex:1;
-  align-items:center;
+  -webkit-box-flex: 1;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  flex: 1;
+  -webkit-flex: 1;
+  -ms-box-flex: 1;
+  align-items: center;
   text-align: left;
   font-size: 0.13rem;
   color: #4b4b4b;
@@ -919,10 +984,10 @@ export default {
 .s4s-group {
   position: relative;
   line-height: 0.15rem;
-  border-bottom: 0.01rem #EAEAEA solid;
+  border-bottom: 0.01rem #eaeaea solid;
   color: #666;
   overflow: hidden;
-  align-items:center;
+  align-items: center;
   display: flex;
   padding: 0.15rem 0;
   box-sizing: content-box;
@@ -930,8 +995,8 @@ export default {
 .s4s-group-tit {
   font-size: 0.15rem;
   width: 1rem;
-  line-height: .25rem;
-  padding-top:.025rem;
+  line-height: 0.25rem;
+  padding-top: 0.025rem;
 }
 .s4s-group-txt {
   font-size: 0.15rem;
@@ -942,7 +1007,7 @@ export default {
   border: none;
   font-size: 0.15rem;
   text-align: left;
-  line-height: .25rem;
+  line-height: 0.25rem;
   flex: 1;
 }
 select {
@@ -959,7 +1024,7 @@ select {
 }
 
 .s4s-title {
-  font-size: .2rem;
+  font-size: 0.2rem;
   /* padding: .15rem; */
   padding-top: 0.25rem;
   font-weight: bold;
@@ -973,19 +1038,19 @@ select {
 }
 .agree-container mip-img {
   vertical-align: bottom;
-  margin-right: .12rem;
+  margin-right: 0.12rem;
 }
 
 .group-upload {
-  align-items:end;
+  align-items: end;
   height: auto;
 }
 .group-upload-margin {
-  margin: 0.025rem 0.1rem  0.025rem 0;
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
+  margin: 0.025rem 0.1rem 0.025rem 0;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  flex: 1;
+  -webkit-flex: 1;
 }
 .code-btn,
 .code-btn-disable {
@@ -996,11 +1061,11 @@ select {
   font-size: 0.14rem;
   border: 0.01rem solid #ff7b00;
   padding: 0.05rem 0.075rem;
-  line-height: .20rem;
+  line-height: 0.2rem;
   position: absolute;
   right: 0;
-  top:50%;
-  margin-top:-.15rem
+  top: 50%;
+  margin-top: -0.15rem;
 }
 .code-btn-disable {
   opacity: 0.5;
@@ -1013,14 +1078,14 @@ select {
 }
 
 .pay-contaienr-first {
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  flex: 1;
+  -webkit-flex: 1;
   font-size: 0.16rem;
   display: flex;
-  flex-direction:column;
-  justify-content:center;
+  flex-direction: column;
+  justify-content: center;
   padding: 0 0.1rem;
 }
 
@@ -1041,7 +1106,7 @@ select {
 
 .pay-contaienr-last {
   width: 1.2rem;
-  background-image: linear-gradient(40deg,  #ff7c00 0%, #fe5a00 100%);
+  background-image: linear-gradient(40deg, #ff7c00 0%, #fe5a00 100%);
   text-align: center;
   line-height: 0.5rem;
   font-size: 0.18rem;
@@ -1053,22 +1118,26 @@ select {
   color: #999;
   background: #e6e6e6 !important;
 }
-input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
   color: #ccc;
 }
-input:-moz-placeholder, textarea:-moz-placeholder {
-  color:#ccc;
+input:-moz-placeholder,
+textarea:-moz-placeholder {
+  color: #ccc;
 }
-input::-moz-placeholder, textarea::-moz-placeholder {
-  color:#ccc;
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+  color: #ccc;
 }
-input:-ms-input-placeholder, textarea:-ms-input-placeholder {
-  color:#ccc;
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+  color: #ccc;
 }
 .s4s-help {
   border-radius: 50%;
-  border: .02rem solid #FE7000;
-  color: #FE7000;
+  border: 0.02rem solid #fe7000;
+  color: #fe7000;
   font-size: 0.13rem;
   height: 0.2rem;
   min-width: 0.2rem;
@@ -1088,6 +1157,6 @@ input:-ms-input-placeholder, textarea:-ms-input-placeholder {
   left: 50%;
   -webkit-transform: translateY(-50%) translateX(-50%);
   transform: translateY(-50%) translateX(-50%);
-  width: calc( 100% - .3rem );
+  width: calc(100% - 0.3rem);
 }
 </style>

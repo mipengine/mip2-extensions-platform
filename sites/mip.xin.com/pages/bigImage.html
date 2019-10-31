@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html mip>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=no">
+    <title>
+        <%-title%>
+    </title>
+    <link rel="canonical" href="https://www.xin.com/">
+    <link rel="shortcut icon" href="//m.xin.com/favicon.ico">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+</head>
+<style mip-custom>
+    /* 设置弹层透明度 */
+
+    #MIP-LLIGTBOX-MASK {
+        opacity: 0.5;
+    }
+
+    .mack {
+        top: 0;
+        left: 0;
+        z-index: 999;
+        width: 100%;
+        height: 100% !important;
+        background: #000;
+    }
+</style>
+
+<body class="mack" data-carid="<%-query.carId%>" data-ajaxtoken="<%-ajaxToken%>" data-optoken="<%-query.optoken%>">
+    <mip-shell-inservice mip-shell>
+        <script type="application/json">
+               
+                {   
+                    "isId": "1578861028762702",
+                    "routes": [
+                        {
+                            "pattern": "*",
+                            "meta": {
+                                "header": {
+                                    "show": true,
+                                    "xiongzhang": true,
+                                    "title": "优信二手车"
+                                },
+                                "view": {
+                                    "isIndex": false
+                                }
+                            }
+                        }
+    
+                    ]
+                }
+            
+            </script>
+    </mip-shell-inservice>
+    <mip-data>
+        <script type="application/json">
+            {
+                "#query": <%-JSON.stringify(query)%>,
+                "ajaxToken": "<%=ajaxToken%>",
+            }
+        </script>
+    </mip-data>
+    <div>
+        <mip-xin-image m-bind:query="query" m-bind:token="ajaxToken"></mip-xin-image>
+    </div>
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip.xin.com/mip-toast/mip-toast.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-fixed/mip-fixed.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-shell-inservice/mip-shell-inservice.js"></script>
+
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-image/mip-xin-image.js"></script>
+    <script src="<%-global.HOST_CONFIG.bdAssetsPath%>/mip-xin-button/mip-xin-button.js"></script>
+
+</body>
+
+</html>

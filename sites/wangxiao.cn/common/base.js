@@ -10,7 +10,8 @@ export default ({
     getOrderList: zdyxhttp + 'Order/orderList',
     cancelOrder: zdyxhttp + 'order/cancel',
     comitEvaluate: zdyxhttp + 'Order/evaluateOrder',
-    placeOrder: zdyxhttp + 'baiduUser/placeOrder'
+    placeOrder: zdyxhttp + 'baiduUser/placeOrder',
+    authentication: zdyxhttp + 'baidu/getJsSignature'
   },
   getQueryString: function (name) {
     let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')

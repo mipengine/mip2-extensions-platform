@@ -1,6 +1,5 @@
 <template>
-  <div
-    v-show="devicedata.show">
+  <div v-show="devicedata.show">
     <div
       ref="mask"
       class="mask">
@@ -11,7 +10,7 @@
           <div class="head">
             <span
               class="close"
-              @click.self="close"/>
+              @click.self="close" />
             <p
               v-for="(item,index) in tab"
               :key="index"
@@ -121,8 +120,7 @@ export default {
       price: 0,
       malfunctionId: '', // 故障id，
       // 判断验证码是否为空,判断form组件的内容，清空
-      isForm: {
-      }
+      isForm: {}
     }
   },
   watch: {
@@ -135,7 +133,7 @@ export default {
       // }, { passive: false })
       if (val.last) {
         this.last = val.last
-        this.tab = ['类型', '品牌', '型号']
+        this.tab = ['品牌', '类型', '型号']
         this.changeColor = 0
         this.queryBrand()
       } else {
@@ -164,14 +162,13 @@ export default {
       this.categoryId = this.devicedata.categoryId
       this.brandId = this.devicedata.brandId
     } else if (this.devicedata.price > 0) {
-
     }
     this.queryBrand()
   },
   methods: {
     changeTab (index) {
       if (this.last) {
-        if (index === 0) this.tab = ['类型', '品牌', '型号']
+        if (index === 0) this.tab = ['品牌', '类型', '型号']
         this.changeColor = index
       } else {
         if (index === 0) this.tab = ['分类', '故障']
@@ -184,8 +181,49 @@ export default {
       request(apiUrl.categoryList).then(res => {
         if (res.code === 200) {
           this.data1 = res.data.list
+          let brand = []
+          // let len = this.data1.length
+          // 整理收集品牌
+          res.data.list.forEach((val, ind) => {
+            brand = [...brand, ...val.brandList]
+          })
+          // 去除手机相同品牌
+          brand.forEach((v, i) => {
+            brand.forEach((V, I) => {
+              brand[i].brandList = []
+
+              if (i !== I && v.id === V.id) {
+                brand.splice(I, 1)
+              }
+            })
+          })
+          // 调整顺序，删掉其它品牌
+          brand.forEach((v, i) => {
+            if (v.name === '苹果') {
+              brand.unshift(v)
+              brand.splice(i + 1, 1)
+            }
+            if (v.name === '其他品牌') {
+              brand.splice(i, 1)
+            }
+          })
+          // 品牌下的类型
+          let cI = 0
+          res.data.list.forEach((v, i) => {
+            v.brandList.forEach((V, I) => {
+              brand.forEach((val, ind) => {
+                if (V.name === val.name) {
+                  val.brandList.push(v)
+                }
+                if (Number(val.id) === Number(this.brandId)) {
+                  cI = ind
+                }
+              })
+            })
+          })
+          this.data1 = brand
           if (this.changeColor === 1 && this.data1.length > 0) {
-            this.data2 = this.data1[0].brandList
+            this.data2 = this.data1[cI].brandList
           } else {
             this.data2 = this.data1[0].brandList
           }
@@ -197,7 +235,11 @@ export default {
       MIP.setData({
         loading: true
       })
-      request(`${apiUrl.deviceList}?categoryId=${this.categoryId}&brandId=${this.brandId}`).then(res => {
+      request(
+        `${apiUrl.deviceList}?categoryId=${this.categoryId}&brandId=${
+          this.brandId
+        }`
+      ).then(res => {
         if (res.code === 200) {
           this.data3 = res.data.list
           MIP.setData({
@@ -209,10 +251,13 @@ export default {
     // 获取设备故障
     getMalfunction () {
       // let options = {deviceId: this.color, attributeIds: this.attr, attributeValues: this.attrValue}
-      request(`${apiUrl.getMalfunction}?deviceId=${this.color}&attributeIds=${this.attr}&attributeValues=${this.attrValue}`)
-        .then(res => {
-          if (res.code === 200) this.data4 = res.data.list
-        })
+      request(
+        `${apiUrl.getMalfunction}?deviceId=${this.color}&attributeIds=${
+          this.attr
+        }&attributeValues=${this.attrValue}`
+      ).then(res => {
+        if (res.code === 200) this.data4 = res.data.list
+      })
     },
     queryBrand () {
       if (this.last) {
@@ -243,7 +288,8 @@ export default {
       this.brandsIndex1 = index
       this.changeColor = 1
       this.changeColor1 = 1
-      this.categoryId = item.id
+      // this.categoryId = item.id
+      this.brandId = item.id
       if (this.last) {
         this.tab[0] = item.name
         this.data2 = this.data1[index].brandList
@@ -255,7 +301,8 @@ export default {
     chooseBrands (item, index) {
       this.brandsIndex2 = index
       this.changeColor = 2
-      this.brandId = item.id
+      // this.brandId = item.id
+      this.categoryId = item.id
       this.queryBrand()
       if (!this.last) {
         this.tab[1] = item.title
@@ -263,6 +310,7 @@ export default {
         this.show = false
         this.price = item.price
         this.malfunctionId = this.data4[this.brandsIndex1].children[index].id
+        this.solutionId = this.data4[this.brandsIndex1].children[index].smInfo.solutionId
         let per = ''
         if (item.smInfo.warrantyPeriod > 0) {
           per = `质保${item.smInfo.warrantyPeriod}天`
@@ -273,19 +321,26 @@ export default {
         }
         MIP.setData({
           orderData: {
-            'solution': this.name1,
-            'malfunctionId': this.malfunctionId,
-            'price': this.price > 0 ? `￥${this.price}` : '待检测',
-            'fault': item.name,
-            'brandId': item.id,
-            'period': `(${per})`
+            solution: this.name1,
+            malfunctionId: this.malfunctionId,
+            price: this.price > 0 ? `￥${this.price}` : '待检测',
+            fault: item.name,
+            brandId: item.id,
+            period: `(${per})`,
+            solutionId: this.solutionId
           },
           deviceData: {
             name1: this.name1,
             show: false,
             showTxt2: true,
             changeColor: this.changeColor,
-            changeColor1: this.changeColor1
+            changeColor1: this.changeColor1,
+            price: this.price > 0 ? `￥${this.price}` : '待检测',
+            fault: item.smInfo.method,
+            brandId: item.id,
+            period: `(${per})`,
+            showFault: !!item.smInfo.method,
+            solutionId: this.solutionId
           }
         })
       } else {
@@ -297,146 +352,208 @@ export default {
       this.changeColor = 2
       if (this.last) {
         this.name = item.model
-        MIP.setData({orderData: {
-          'device': this.name
-        },
-        deviceData: {
-          name: this.name,
-          show: false,
-          showTxt1: true,
-          changeColor: this.changeColor,
-          changeColor1: this.changeColor1
-        }
+        MIP.setData({
+          orderData: {
+            device: this.name,
+            color1: true,
+            showTxt2: false
+          },
+          deviceData: {
+            name: this.name,
+            show: false,
+            showTxt1: true,
+            showTxt2: false,
+            changeColor: this.changeColor,
+            changeColor1: this.changeColor1,
+            showFault: false,
+            color1: true
+          }
         })
         // this.show = false
         this.queryColor(item.id)
+      } else {
+        MIP.setData({
+          orderData: {
+            device: '选择型号',
+            color1: false,
+            showTxt2: false
+          },
+          deviceData: {
+            name: '选择型号',
+            show: false,
+            showTxt1: false,
+            showTxt2: false,
+            changeColor: this.changeColor,
+            changeColor1: this.changeColor1,
+            showFault: false,
+            color1: false
+          }
+        })
       }
     },
     // 获取颜色
     queryColor (id) {
       this.deviceId = id
-      request(apiUrl.getUserOrderList, 'post', {deviceId: id}).then(res => {
+      request(apiUrl.getUserOrderList, 'post', { deviceId: id }).then(res => {
         if (res.code === 200) {
           this.color = res.data.list[0].deviceId
           this.attr = res.data.list[0].attributeId
           this.attrValue = res.data.list[0].id
-          MIP.setData({orderData: {
-            'deviceId': this.color,
-            'attributeId': this.attr,
-            'attrValue': this.attrValue,
-            changeColor: this.changeColor,
-            changeColor1: this.changeColor1
-          }})
+          MIP.setData({
+            orderData: {
+              deviceId: this.color,
+              attributeId: this.attr,
+              attrValue: this.attrValue,
+              changeColor: this.changeColor,
+              changeColor1: this.changeColor1
+            }
+          })
         }
       })
     },
     close () {
-      MIP.setData({
-        deviceData: {
-          show: false,
-          changeColor: this.changeColor,
-          changeColor1: this.changeColor1
-        }
-      })
+      if (this.last) {
+        MIP.setData({
+          deviceData: {
+            show: false,
+            changeColor: this.changeColor,
+            changeColor1: this.changeColor1,
+            showFault: false,
+            device: this.last ? this.name : '选择故障',
+            showTxt1: !this.last,
+            showTxt2: !this.last,
+            name: this.name || '选择型号',
+            name1: this.name1
+          },
+          orderData: {
+            solution: this.name1,
+            malfunctionId: this.malfunctionId,
+            price: this.price > 0 ? `￥${this.price}` : '待检测'
+          }
+        })
+      } else {
+        MIP.setData({
+          orderData: {
+            solution: this.name1,
+            malfunctionId: this.malfunctionId,
+            price: this.price > 0 ? `￥${this.price}` : '待检测'
+            // fault: item.name,
+            // brandId: item.id,
+            // period: `(${per})`
+          },
+          deviceData: {
+            name1: this.name1,
+            show: false,
+            showTxt2: this.name1 && this.name1 !== '选择故障',
+            changeColor: this.changeColor,
+            changeColor1: this.changeColor1,
+            price: this.price > 0 ? `￥${this.price}` : '待检测'
+            // fault: item.smInfo.method,
+            // brandId: item.id,
+            // period: `(${per})`,
+            // showFault: !!item.smInfo.method
+          }
+        })
+      }
     }
   }
 }
 </script>
 <style lang="less" scoped>
-  .mask{
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 10000;
-  }
-  .mask-wrapper{
+.mask {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10000;
+}
+.mask-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100001;
+  .mask-content {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 40%;
     width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,.5);
+    height: 60%;
     z-index: 100001;
-    .mask-content{
-      position: absolute;
-      top: 40%;
-      width: 100%;
-      height: 60%;
-      z-index: 100001;
-      .head{
-        position: relative;
-        display: -webkit-flex;
-        display: flex;
-        flex-direction: row;
-        background: #f8f9fa;
-        padding: 10px 10px;
-        .close{
-          position: absolute;
-          top: 10px;
-          right: 10px;
-          display: block;
-          width: 20px;
-          height: 20px;
-          background: url('../../common/icon/close.png') no-repeat center center;
-          background-size: 100% 100%;
-        }
-        p{
-          width: 20%;
-          text-align: center;
-          word-break:keep-all;
-          white-space:nowrap;
-          overflow:hidden;/* 内容超出宽度时隐藏超出部分的内容 */
-          text-overflow:ellipsis;/* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
-        }
-        .active{
-          position: relative;
-          color: #e94609;
-        }
-        .active:after{
-          content: '';
-          position: absolute;
-          bottom: -10px;
-          left: 0;
-          width: 100%;
-          height: 1px;
-          background: #e94609;
-        }
+    .head {
+      position: relative;
+      display: -webkit-flex;
+      display: flex;
+      flex-direction: row;
+      background: #f8f9fa;
+      padding: 10px 10px;
+      .close {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: block;
+        width: 20px;
+        height: 20px;
+        background: url("../../common/icon/close.png") no-repeat center center;
+        background-size: 100% 100%;
       }
-      .content-wrapper{
-        height: 100%;
-        overflow-y: auto;
+      p {
+        width: 20%;
+        text-align: center;
+        word-break: keep-all;
+        white-space: nowrap;
+        overflow: hidden; /* 内容超出宽度时隐藏超出部分的内容 */
+        text-overflow: ellipsis; /* 当对象内文本溢出时显示省略标记(...) ；需与overflow:hidden;一起使用。*/
+      }
+      .active {
+        position: relative;
+        color: #e94609;
+      }
+      .active:after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 100%;
+        height: 1px;
+        background: #e94609;
+      }
+    }
+    .content-wrapper {
+      height: 100%;
+      overflow-y: auto;
+      background: #fff;
+      -webkit-overflow-scrolling: touch;
+      .content {
+        height: 90%;
+        padding-bottom: 90px;
+        overflow-y: scroll;
         background: #fff;
-        -webkit-overflow-scrolling : touch;
-        .content{
-          height: 90%;
-          padding-bottom: 90px;
-          overflow-y: scroll;
-          background:#fff;
-          -webkit-overflow-scrolling : touch;
-        .brandsList{
+        -webkit-overflow-scrolling: touch;
+        .brandsList {
           position: relative;
           padding: 10px;
           font-size: 15px;
           color: #666;
           // text-indent: 20px;
           border-bottom: 1px solid #eee;
-          p{
+          p {
             position: absolute;
             top: 0;
             right: 10px;
             height: 20px;
-            padding:10px 0;
+            padding: 10px 0;
             background: #fff;
             z-index: 99;
           }
         }
-        .act{
+        .act {
           position: relative;
         }
-        .act:after{
-          content: '';
+        .act:after {
+          content: "";
           position: absolute;
           top: 50%;
           right: 20px;
@@ -446,44 +563,44 @@ export default {
           background-size: 100% 100%;
         }
       }
-      }
     }
   }
- .bot{
-    width: 100%;
-    height: 52px;
-    background: #fff;
-    z-index: 100;
-    .bot-left{
-      float: left;
-      width: 60%;
-      .flex{
-        span{
-          display: inline-block;
-          padding-top: 10px;
-        }
-        span:nth-child(1){
-          padding-left: 10px;
-        }
-        span:nth-child(2){
-          color: #fa5e24;
-        }
+}
+.bot {
+  width: 100%;
+  height: 52px;
+  background: #fff;
+  z-index: 100;
+  .bot-left {
+    float: left;
+    width: 60%;
+    .flex {
+      span {
+        display: inline-block;
+        padding-top: 10px;
       }
-      p{
+      span:nth-child(1) {
         padding-left: 10px;
-        color: #999;
+      }
+      span:nth-child(2) {
+        color: #fa5e24;
       }
     }
-    .bot-right{
-      float: right;
-      height: 50px;
-      width:40%;
-      line-height: 50px;
-      text-align: center;
-      color: #fff;
-      border-top: 1px solid #ddd;
-      border-bottom: 1px solid #ddd;
-      background-color: #fa5e24;
+    p {
+      padding-left: 10px;
+      color: #999;
     }
   }
+  .bot-right {
+    float: right;
+    height: 50px;
+    width: 40%;
+    line-height: 50px;
+    text-align: center;
+    color: #fff;
+    border-top: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    background-color: #fa5e24;
+  }
+}
 </style>

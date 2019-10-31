@@ -4,19 +4,13 @@
     id="bot"
     ref="bot">
     <div class="bot">
-      <div class="bot-left">
-        <div class="flex">
-          <span>金额：</span>
-          <span>{{ price }}</span>
-        </div>
-        <p>{{ fault }}{{ period }}</p>
-      </div>
       <div
         class="bot-right"
         @click.stop="save">
         确认下单
       </div>
     </div>
+    <div id="protect-fix" />
   </div>
 </template>
 <script>
@@ -38,8 +32,7 @@ export default {
     info: {
       default () {
         return {
-          userinfo: {
-          }
+          userinfo: {}
         }
       },
       type: Object
@@ -100,7 +93,10 @@ export default {
             isError: true
           }
         })
-      } else if (this.orderdata.name && !regName.test(Number(this.orderdata.name))) {
+      } else if (
+        this.orderdata.name &&
+        !regName.test(Number(this.orderdata.name))
+      ) {
         MIP.setData({
           alertMsg: {
             errorTitle: '请您填写正确的姓名',
@@ -114,7 +110,10 @@ export default {
             isError: true
           }
         })
-      } else if (this.orderdata.phone && !reg.test(Number(this.orderdata.phone))) {
+      } else if (
+        this.orderdata.phone &&
+        !reg.test(Number(this.orderdata.phone))
+      ) {
         MIP.setData({
           alertMsg: {
             errorTitle: '请您填写正确的手机号',
@@ -128,7 +127,10 @@ export default {
             isError: true
           }
         })
-      } else if (this.orderdata.imgCode.length > 0 && this.orderdata.imgCode.length < 4) {
+      } else if (
+        this.orderdata.imgCode.length > 0 &&
+        this.orderdata.imgCode.length < 4
+      ) {
         MIP.setData({
           alertMsg: {
             errorTitle: '请您填写四位图形验证码',
@@ -142,7 +144,10 @@ export default {
             isError: true
           }
         })
-      } else if (this.orderdata.code.length > 0 && this.orderdata.code.length < 6) {
+      } else if (
+        this.orderdata.code.length > 0 &&
+        this.orderdata.code.length < 6
+      ) {
         MIP.setData({
           alertMsg: {
             errorTitle: '请您填写六位短信验证码',
@@ -200,10 +205,10 @@ export default {
       //  token没有过期
       if (fTime - nowTime > 0 && fTime - nowTime < 2 * 60 * 60 * 1000) {
         this.validate()
-      //  token过期了，但是可以刷新
+        //  token过期了，但是可以刷新
       } else if (nowTime - fTime > 0 && nowTime - fTime < nowTime1) {
         this.refreshToken()
-      //  token大于一周了
+        //  token大于一周了
       } else if (nowTime - fTime > nowTime1) {
         this.register()
       }
@@ -239,27 +244,30 @@ export default {
     refreshToken () {
       request(apiUrl.refreshToken, 'post', {
         grant_type: 'refresh_token',
-        refresh_token: JSON.parse(localStorage.getItem('tokenMsg')).refresh_token,
+        refresh_token: JSON.parse(localStorage.getItem('tokenMsg'))
+          .refresh_token,
         scope: 'all'
-      }).then(res => {
-        if (res.expires_in) {
-          localStorage.removeItem('tokenMsg')
-          res.expires_in = new Date().getTime() + res.expires_in * 1000
-          localStorage.setItem('tokenMsg', JSON.stringify(res))
-          //  保存订单
-          this.validate()
-        } else {
-          MIP.setData({
-            alertMsg: {
-              errorTitle: res.message,
-              isError: true
-            }
-          })
-        }
-      }).catch(error => {
-        console.log(error)
-        this.register()
       })
+        .then(res => {
+          if (res.expires_in) {
+            localStorage.removeItem('tokenMsg')
+            res.expires_in = new Date().getTime() + res.expires_in * 1000
+            localStorage.setItem('tokenMsg', JSON.stringify(res))
+            //  保存订单
+            this.validate()
+          } else {
+            MIP.setData({
+              alertMsg: {
+                errorTitle: res.message,
+                isError: true
+              }
+            })
+          }
+        })
+        .catch(error => {
+          console.log(error)
+          this.register()
+        })
     },
     //  保存订单
     saveOrder () {
@@ -285,6 +293,7 @@ export default {
           //  维修方案故障ID 数组
           'solutionMalfunctionList[0].malfunctionId': this.orderdata.malfunctionId,
           'orderAttributeValueList[0].attributeId': this.orderdata.attributeId,
+          'solutionMalfunctionList[0].solutionId': this.orderdata.solutionId,
           'orderAttributeValueList[0].valueId': this.orderdata.attrValue
         }
         request(apiUrl.saveOrder, 'post', subjosn).then(res => {
@@ -311,43 +320,56 @@ export default {
 }
 </script>
 <style scoped lang="less">
- .bot{
-    width: 100%;
-    height: 52px;
-    background: #fff;
-    z-index: 100;
-    .bot-left{
-      float: left;
-      width: 60%;
-      .flex{
-        span{
-          display: inline-block;
-        }
-        span:nth-child(1){
-          padding-left: 10px;
-        }
-        span:nth-child(2){
-          color: #fa5e24;
-          line-height: 30px;
-        }
+#bot {
+  position: relative;
+}
+#protect-fix {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  display: none;
+}
+.bot {
+  width: 100%;
+  height: 52px;
+  z-index: 100;
+  .bot-left {
+    float: left;
+    width: 60%;
+    .flex {
+      span {
+        display: inline-block;
       }
-      p{
+      span:nth-child(1) {
         padding-left: 10px;
-        font-size: 13px;
-        color: #999;
-        overflow:hidden;
-        text-overflow:ellipsis;
-        white-space:nowrap;
+      }
+      span:nth-child(2) {
+        color: #fa5e24;
+        line-height: 30px;
       }
     }
-    .bot-right{
-      float: right;
-      height: 50px;
-      width: 40%;
-      line-height: 50px;
-      text-align: center;
-      color: #fff;
-      background-color: #fa5e24;
+    p {
+      padding-left: 10px;
+      font-size: 13px;
+      color: #999;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
+  .bot-right {
+    // float: right;
+    height: 50px;
+    width: 80%;
+    margin: 0 auto;
+    line-height: 50px;
+    text-align: center;
+    color: #fff;
+    border-radius: 10px;
+    background-color: #fa5e24;
+  }
+}
 </style>

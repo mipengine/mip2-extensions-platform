@@ -19,6 +19,8 @@
         pattern="[0-9]*"
         class="right"
         placeholder="请填写您的手机号码"
+        @focus = "foucs"
+        @blur = "blur"
         @input="inputCode">
     </div>
     <div class="sendCode flex">
@@ -82,7 +84,9 @@ export default {
         },
         codeSessionkey: ''
       },
-      isTap: false
+      isTap: false,
+      timeOut: ''
+
     }
   },
   watch: {
@@ -193,46 +197,48 @@ export default {
           }
         })
       } else {
-        if (this.form.imgCode.length === 4) {
-          request(apiUrl.sendCode, 'post', {
-            authcode: this.form.imgCode,
-            sessionkey: this.form.img.sessionkey,
-            mobile: this.form.phone
-          }).then(res => {
-            if (res.code === 200) {
-              this.time = 60
-              this.timer()
-              this.lastsendtime = res.data.lastsendtime
-              this.form.codeSessionkey = res.data.sessionkey
-              MIP.setData({
-                orderData: {
-                  'codeSessionkey': this.form.codeSessionkey
-                }
-              })
-              localStorage.setItem('sessionkey', JSON.stringify(res.data.sessionkey))
-            } else {
-              MIP.setData({
-                alertMsg: {
-                  'errorTitle': res.msg,
-                  'isError': true
-                },
-                orderData: {
-                  'imgCode': ''
-                }
-              })
-              this.form.imgCode = ''
-              this.refreshImg()
-            }
-          }).catch(error => {
-            console.log('错误' + error)
-          })
-        } else {
-          MIP.setData({
-            alertMsg: {
-              'errorTitle': '请输入4位图形验证码',
-              'isError': true
-            }
-          })
+        if (!this.isTap) {
+          if (this.form.imgCode.length === 4) {
+            request(apiUrl.sendCode, 'post', {
+              authcode: this.form.imgCode,
+              sessionkey: this.form.img.sessionkey,
+              mobile: this.form.phone
+            }).then(res => {
+              if (res.code === 200) {
+                this.time = 60
+                this.timer()
+                this.lastsendtime = res.data.lastsendtime
+                this.form.codeSessionkey = res.data.sessionkey
+                MIP.setData({
+                  orderData: {
+                    'codeSessionkey': this.form.codeSessionkey
+                  }
+                })
+                localStorage.setItem('sessionkey', JSON.stringify(res.data.sessionkey))
+              } else {
+                MIP.setData({
+                  alertMsg: {
+                    'errorTitle': res.msg,
+                    'isError': true
+                  },
+                  orderData: {
+                    'imgCode': ''
+                  }
+                })
+                this.form.imgCode = ''
+                this.refreshImg()
+              }
+            }).catch(error => {
+              console.log('错误' + error)
+            })
+          } else {
+            MIP.setData({
+              alertMsg: {
+                'errorTitle': '请输入4位图形验证码',
+                'isError': true
+              }
+            })
+          }
         }
       }
     },
@@ -247,6 +253,20 @@ export default {
           'codeSessionkey': this.form.codeSessionkey
         }})
     }
+    // focus () {
+    //   if (this.timeOut) {
+    //     clearTimeout(this.timeOut)
+    //     this.timeOut = ''
+    //   }
+    //   document.getElementById('bot').style.opacity = 0
+    //   document.getElementById('protect-fix').style.display = 'block'
+    // },
+    // blur () {
+    //   this.timeOut = setTimeout(() => {
+    //     document.getElementById('bot').style.opacity = 1
+    //     document.getElementById('protect-fix').style.display = 'none'
+    //   }, 300)
+    // }
   }
 }
 </script>

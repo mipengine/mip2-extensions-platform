@@ -1,6 +1,6 @@
 const lxnhttp = 'https://www.lanxiniu.com/BaiduMip/'
 // const lxnhttp = 'https://www.lanxiniu.com/BdMipDev/'
-// const lxnhttp = 'http://127.0.0.1:8111/example/'
+// const lxnhttp = 'http://192.168.100.103:8111/example/'
 
 const tranObjUrlToCache = urls => {
   let result = {}
@@ -12,6 +12,9 @@ const tranObjUrlToCache = urls => {
 
 export default ({
   url: '//www.lanxiniu.com',
+  ak: 'yqnitg5uvNmj1DkrhStCdM98hFYYbUVc',
+  //   客服url
+  customeServerUrl: 'http://www.sobot.com/chat/h5/index.html?sysNum=e1fec6880bef4d51be83a7487e9afeef&source=1',
   // 线上
   htmlhref: tranObjUrlToCache({
     order: lxnhttp + 'order',
@@ -23,10 +26,11 @@ export default ({
     listdetail: lxnhttp + 'listdetail',
     costdetail: lxnhttp + 'costdetail',
     costdes: lxnhttp + 'costdes',
-    userguide: lxnhttp + 'userguide'
+    userguide: lxnhttp + 'userguide',
+    placeorder: lxnhttp + 'placeorder'
   }),
 
-  // 测试
+  //   // 测试
   //   htmlhref: tranObjUrlToCache({
   //     order: lxnhttp + 'order.html',
   //     payorder: lxnhttp + 'payorder.html',
@@ -37,7 +41,8 @@ export default ({
   //     listdetail: lxnhttp + 'listdetail.html',
   //     costdetail: lxnhttp + 'costdetail.html',
   //     costdes: lxnhttp + 'costdes.html',
-  //     userguide: lxnhttp + 'userguide.html'
+  //     userguide: lxnhttp + 'userguide.html',
+  //     placeorder: lxnhttp + 'placeorder.html'
   //   }),
   setHtmlRem: function () {
     let b = document
@@ -139,11 +144,21 @@ export default ({
       let str = url.substr(1)
       let strs = str.split('&')
       for (let i = 0; i < strs.length; i++) {
-        theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
+        theRequest[strs[i].split('=')[0]] = strs[i].split('=')[1]
       }
       return theRequest
     } else {
       return theRequest
+    }
+  },
+  // 字符串替换
+  strReplace: function (str) {
+    let str1 = ',楼层费'
+    let str2 = '...'
+    if (str !== '') {
+      return str.replace(str1, str2)
+    } else {
+      return str
     }
   }
 })

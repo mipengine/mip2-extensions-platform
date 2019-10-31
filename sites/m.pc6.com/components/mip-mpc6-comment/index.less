@@ -1,0 +1,280 @@
+mip-mpc6-comment {
+  fieldset {
+    border: 0
+  }
+
+  input,
+  textarea {
+    outline: none;
+  }
+
+  #comment form {
+    padding: 20px 0;
+  }
+
+  #comment .d_title {
+    border-bottom: 0 !important;
+    overflow: hidden;
+    line-height: 35px;
+    padding: 0 10px 0 10px;
+    position: relative;
+    font-size: 16px;
+  }
+
+  #comment .d_title em {
+    font-size: 16px;
+    font-style: normal;
+    padding: 0 !important
+  }
+
+  #comment .fb {
+    display: block;
+    border-radius: 2px;
+    border: 1px solid #ccc;
+    color: #333;
+    -webkit-box-sizing: border-box;
+    line-height: 28px;
+    padding: 10px 5px 10px 46px;
+    position: relative;
+    margin: 8px 10px 0 10px;
+    background: url(../../static/all_ico.png) 5px -963px no-repeat;
+    box-shadow: 0px 2px 1px #fff, inset 0px 1px 1px rgba(138, 138, 138, 0.2);
+  }
+
+  #comment-list {
+    margin: 10px;
+    font-size: 14px;
+  }
+
+  #comment-list li {
+    padding: 10px 2px;
+    border-top: 1px solid #e6e6e6;
+    line-height: 24px;
+  }
+
+  #comment-list .user {
+    color: #65bb0a;
+    padding-right: 100px;
+    position: relative;
+    margin-bottom: 2px;
+    height: 24px;
+    overflow: hidden;
+  }
+
+  .w-text {
+    margin: 0 15px 15px;
+    padding: 8px 20px 0 0;
+  }
+
+  .w-text textarea {
+    color: #666;
+    background: #fff;
+    border: 1px solid #c5c5c5;
+    width: 100%;
+    font-size: 24px;
+    -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, .1) inset;
+    height: 80px;
+    padding: 5px 10px;
+    line-height: 32px;
+    box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    font-size: 14px;
+  }
+
+  .w-button {
+    margin: 0 20px;
+  }
+
+  #comment .button {
+    display: inline-block;
+    color: #555;
+    height: 32px;
+    border: 1px solid #ccc;
+    background: url(../../static/all_ico.png) 0 -1090px repeat-x;
+    -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .06);
+    -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .06);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, .06);
+    cursor: pointer;
+    text-align: center;
+    line-height: 32px;
+    height: 32px;
+    font-size: 14px;
+    border-radius: 0;
+    padding: 0;
+    margin: 0 0 0 2%;
+    vertical-align: middle;
+  }
+
+  #submit .button {
+    width: 47%;
+    margin-left: 2%;
+  }
+
+  #comment #cancel {}
+
+  #comment .comment-toggle-enter #view-comment {
+    display: none
+  }
+
+  #comment #submit {
+    display: none
+  }
+
+  #comment .comment-toggle-enter #submit {
+    display: block
+  }
+
+  #view-comment .button-status-complete {
+    border-top: 1px solid #e6e6e6;
+    overflow: hidden;
+    text-align: center;
+    position: relative;
+    display: none;
+    padding: 0;
+    padding-top: 15px;
+  }
+
+  #view-comment .button {
+    padding: 0 20px;
+  }
+
+  #submit #verify {
+    color: #fff;
+    border: 1px solid #94c804;
+    background-position: 0 -1055px;
+    cursor: pointer;
+  }
+
+  #submit #verify.disable {
+    background-position: 0 -1090px;
+    color: #999;
+    height: 34px;
+    line-height: 34px;
+    border: 1px #ccc solid;
+  }
+
+  /*new comment*/
+  #comment.new #gocomment {
+    float: right;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 0 0 0 40px;
+    background: url(../../static/all_ico.png) 15px -549px no-repeat;
+    background-size: 24px auto;
+  }
+
+  #alist #comment.new #gocomment {
+    background-position: 15px -549px;
+    line-height: 28px;
+    padding: 0 15px 0 40px;
+  }
+
+  #comment.new #view-comment .button-status-complete {
+    padding-bottom: 10px;
+  }
+
+  #comment.new #comment-list>li {
+    position: relative;
+    padding: 10px 0px;
+  }
+
+  #comment.new #comment-list li>img {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 13px;
+  }
+
+  #comment.new #comment-list li>time {
+    position: absolute;
+    right: 0;
+    top: 10px;
+    color: #999;
+    font-size: 14px;
+  }
+
+  #comment.new #comment-list li .cmt {
+    padding: 0 85px 0 55px;
+  }
+
+  #comment.new #comment-list li .cmt p {
+    word-wrap: break-word;
+    word-break: normal;
+  }
+
+  #comment.new #comment-list li .cmt blockquote {
+    padding: 5px 0 5px 10px;
+    border-left: 2px solid #ddd;
+  }
+
+  #comment.new #comment-list li .cmt blockquote h4 {
+    height: 24px;
+    overflow: hidden;
+    color: #fff;
+  }
+
+  #comment.new #comment-list li .cmt blockquote h4 cite {
+    color: #65bb0a;
+  }
+
+  #comment.new #comment-list .ctrl {
+    position: absolute;
+    right: 0;
+    top: 36px;
+    color: #999;
+    font-size: 14px;
+  }
+
+  #comment.new #comment-list .ctrl>a {
+    display: inline-block;
+    padding-left: 15px;
+    background: url(../../static/zan.png) 0px 5px no-repeat;
+  }
+
+  #comment.new #comment-list .ctrl>a span {
+    display: inline-block;
+    max-width: 32px;
+    overflow: hidden;
+    color: #fc9438;
+  }
+
+  #comment.new #comment-list .ctrl .txt span {
+    color: #999;
+  }
+
+  #comment.new #comment-list .ctrl>s {
+    margin-left: 10px;
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  #comment.new #comment-list .post {
+    clear: both;
+    width: 100%;
+  }
+
+  #comment.new #comment-list .post .w-text {
+    margin: 6px 12px 10px 0px;
+    padding: 0 10px 0 0;
+  }
+
+  #comment.new textarea {
+    font-size: 14px;
+  }
+
+  #comment.new #comment-list .post .w-button {
+    margin: 0;
+  }
+
+  #comment.new #comment-list .post .button {
+    float: right;
+    background: #65bb0a;
+    color: #fff;
+    border: none;
+    padding: 0 10px;
+    border-radius: 6px;
+  }
+
+}

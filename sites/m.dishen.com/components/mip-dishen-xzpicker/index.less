@@ -1,0 +1,257 @@
+.mip-dishen-xzpicker {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 201;
+  user-select: none;
+  touch-action: none;
+  visibility: hidden;
+  -moz-transition: all 0s;
+  -o-transition: all 0s;
+  -webkit-transition: all 0s;
+  transition: all 0s;
+
+  .picker-columns {
+    overflow: hidden;
+    padding: 0 0.7rem;
+  }
+
+  .picker-column {
+    width: 1.6rem;
+    float: left;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+  }
+
+  .picker-column + .picker-column {
+    float: right;
+  }
+
+  .picker-name {
+    color: #666;
+    margin-bottom: 0.3rem;
+  }
+
+  .picker-list {
+    height: 5.4rem;
+    position: relative;
+    overflow: hidden;
+    -webkit-mask-box-image: -webkit-linear-gradient(
+      bottom,
+      transparent,
+      transparent 5%,
+      #fff 20%,
+      #fff 80%,
+      transparent 95%,
+      transparent
+    );
+    -webkit-mask-box-image: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0),
+      rgba(0, 0, 0, 0) 5%,
+      #fff 20%,
+      #fff 80%,
+      rgba(0, 0, 0, 0) 95%,
+      rgba(0, 0, 0, 0)
+    );
+  }
+
+  .picker-list ul {
+    padding: 1.8rem 0;
+    touch-action: none;
+  }
+
+  .picker-list li {
+    height: 1.8rem;
+  }
+
+  .picker-ctrl {
+    position: absolute;
+    bottom: 2.25rem;
+    left: 50%;
+    width: 3.19rem;
+    height: 1.92rem;
+    background: url(../../static/xzpicker/sprite.png) no-repeat;
+    background-size: 3.19rem 2.93rem;
+    background-position: 0 -1.01rem;
+    margin-left: -1.6rem;
+    text-align: center;
+  }
+
+  .pic {
+    width: 1rem;
+    height: 1rem;
+    margin-top: 0.2rem;
+    margin-bottom: 0.05rem;
+    display: inline-block;
+  }
+
+  .tit {
+    font-size: 0.24rem;
+    color: #666;
+  }
+
+  .btn-pair {
+    display: inline-block;
+    min-width: 1.26rem;
+    margin-bottom: 0;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    width: 1.72rem;
+    padding: 0.1rem 0;
+    margin-top: 0.7rem;
+    font-size: 0.28rem;
+    background: #af7aeb;
+    box-shadow: 0 0.06rem #9657b9;
+    border-radius: 0.4rem;
+    border: 0;
+    color: #fff;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-pair:active {
+    box-shadow: 0 0 #f37b3a;
+    transform: translateY(0.1rem);
+    transition-duration: 0.1s;
+  }
+
+  .btn-text {
+    display: block;
+    -webkit-transform: skewX(-8deg);
+    transform: skewX(-8deg);
+  }
+
+  .xz-picker-inner {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background: #fff2ec;
+    padding-bottom: 0.3rem;
+  }
+
+  .xz-picker-inner .title {
+    text-align: center;
+    margin: 0.43rem auto;
+    height: 0.57rem;
+    width: 1.95rem;
+    background: url(../../static/xzpicker/sprite.png) no-repeat;
+    background-size: 3.19rem 2.93rem;
+    background-position: 0 -0.44rem;
+    font-size: 0;
+  }
+
+  .xz-picker-inner .close {
+    position: absolute;
+    top: 0.3rem;
+    right: 0.3rem;
+    width: 0.44rem;
+    height: 0.44rem;
+    background: url(../../static/xzpicker/sprite.png) no-repeat;
+    background-size: 3.19rem 2.93rem;
+    background-position: 0 0;
+  }
+
+  .xz-selector-overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .astro-icon {
+    background: url(../../static/xzpicker/astro-icon.png) no-repeat;
+    background-size: 1rem auto;
+
+    &.icon9 {
+      height: 1rem;
+      width: 1rem;
+      background-position: 0 0;
+    }
+
+    &.icon8 {
+      height: 1rem;
+      width: 1rem;
+      background-position: 0 -1rem;
+    }
+
+    &.icon7 {
+      height: 1rem;
+      width: 1rem;
+      background-position: 0 -2rem;
+    }
+
+    &.icon12 {
+      height: 1rem;
+      width: 1rem;
+      background-position: 0 -3rem;
+    }
+
+    &.icon11 {
+      height: 1rem;
+      width: 1rem;
+      background-position: 0 -4rem;
+    }
+
+    &.icon10 {
+      height: 1rem;
+      width: 1rem;
+      background-position: 0 -5rem;
+    }
+
+    &.icon3 {
+      height: 1rem;
+      width: 1rem;
+      background-position: 0 -6rem;
+    }
+
+    &.icon2 {
+      height: 1rem;
+      width: 1rem;
+      background-position: 0 -7rem;
+    }
+
+    &.icon1 {
+      height: 1rem;
+      width: 1rem;
+      background-position: 0 -8rem;
+    }
+
+    &.icon6 {
+      height: 1rem;
+      width: 1rem;
+      background-position: 0 -9rem;
+    }
+
+    &.icon5 {
+      height: 1rem;
+      width: 1rem;
+      background-position: 0 -10rem;
+    }
+
+    &.icon4 {
+      height: 1rem;
+      width: 1rem;
+      background-position: 0 -11rem;
+    }
+  }
+
+  .sprite-bg-ctrl {
+    background: url(../../static/xzpicker/sprite.png) no-repeat;
+    height: 1.92rem;
+    width: 3.19rem;
+    background-position: 0 -1.01rem;
+  }
+
+  &.on {
+    visibility: visible;
+  }
+}

@@ -131,7 +131,7 @@ export default {
       MIP.setData({
         '#globalData': {
           provice: car.CarNo.substring(0, 1),
-          car_no: car.CarNo.substring(1, 7),
+          car_no: car.CarNo.substring(1),
           vin: car.ClassNo,
           engine: car.EngineNo
         }
@@ -161,7 +161,7 @@ export default {
         '#changeCarData': {
           car_id: car.Id + '',
           provice: car.CarNo.substring(0, 1),
-          car_no: car.CarNo.substring(1, 7),
+          car_no: car.CarNo.substring(1),
           vin: car.ClassNo,
           engine: car.EngineNo
         }
@@ -176,7 +176,6 @@ export default {
         .fetchData('v3/violation/car/list')
         .then(res => {
           if (res.code === 40000) {
-
           } else if (res.code === 0) {
             self.list = res.data ? res.data : []
             // 本地存储一波 保持本地localstorage为最新的
@@ -190,7 +189,10 @@ export default {
                   car_type: car.CarType || ''
                 })
               })
-              window.localStorage.setItem('localCarList', JSON.stringify(newLocalCarList))
+              window.localStorage.setItem(
+                'localCarList',
+                JSON.stringify(newLocalCarList)
+              )
             } catch (error) {
               console.log(error)
               // util.toast('由于您处在无痕模式，不能存储您的爱车的记录')
@@ -214,8 +216,8 @@ export default {
 .list {
   background: #fff;
   /* border-radius: 0.04rem; */
-  border-bottom: .01rem solid #eaeaea;
-  margin:0 0.15rem;
+  border-bottom: 0.01rem solid #eaeaea;
+  margin: 0 0.15rem;
 }
 .list:last-child {
   border-bottom: none;
@@ -224,22 +226,22 @@ export default {
 .bd {
   display: flex;
   padding: 0.18rem 0;
-  align-items:center;
+  align-items: center;
   overflow: hidden;
 }
 
 .bd-fl {
   display: flex;
-  align-items:center;
+  align-items: center;
   overflow: hidden;
-  flex:1;
+  flex: 1;
   margin-left: 0.15rem;
 }
 
 .car-info-edit {
   padding: 0.04rem 0.1rem;
-  border-radius: .01rem;
-  font-size: .12rem;
+  border-radius: 0.01rem;
+  font-size: 0.12rem;
 }
 .car-info-edit.orange {
   border: 0.01rem solid #ff7b00;
@@ -253,10 +255,10 @@ export default {
 .car-no {
   font-size: 0.15rem;
   font-weight: 500;
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  flex: 1;
+  -webkit-flex: 1;
   color: #1f2d3d;
   font-weight: bold;
 }
@@ -316,16 +318,16 @@ export default {
 .s4s-confirm-btn {
   height: 0.45rem;
   display: -ms-flexbox;
-  display:-webkit-box;
+  display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
   -ms-flex-align: center;
-  align-items:center;
-  -webkit-box-align:center;
-  -moz-box-align:center;
-  -webkit-box-align:center;
+  align-items: center;
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  -webkit-box-align: center;
   border-top: 0.01rem rgba(0, 0, 0, 0.1) solid;
   font-size: 0.15rem;
 }
@@ -333,21 +335,21 @@ export default {
   line-height: 0.45rem;
   border-right: 0.01rem rgba(0, 0, 0, 0.1) solid;
   display: -ms-flexbox;
-  display:-webkit-box;
+  display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
   display: -webkit-flex;
   display: flex;
-  -webkit-box-flex:1;
-  -moz-box-flex:1;
-  flex:1;
-  -webkit-flex:1;
+  -webkit-box-flex: 1;
+  -moz-box-flex: 1;
+  flex: 1;
+  -webkit-flex: 1;
   -ms-flex-pack: center;
-  -webkit-justify-content:center;
-  justify-content:center;
-  -moz-box-pack:center;
-  -moz-box-pack:center;
-  -webkit-box-pack:center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -moz-box-pack: center;
+  -moz-box-pack: center;
+  -webkit-box-pack: center;
 }
 .s4s-confirm-btn span:last-child {
   border-right: 0;

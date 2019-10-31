@@ -17,6 +17,12 @@
       <div class="left">实付金额</div>
       <div class="right text_red">¥{{ (data.payamount/100).toFixed(2) }} </div>
     </div>
+    <div
+      v-if="data.pay_dalibao"
+      class="row_">
+      注：应付金额和实付金额均包含{{ data.dalibao_name }}金额（{{ (data.dalibao_price/100).toFixed(2) }}元）
+
+    </div>
     <div class="header">
       支付方式
     </div>
@@ -117,6 +123,18 @@
   line-height: 14px;
   position: relative;
   background: #fff;
+
+}
+.row_ {
+  padding-top:15px;
+  height: 35px;
+  line-height: 14px;
+  position: relative;
+
+  left: 15px;
+  font-size:12px;
+  color:#f00;
+  margin-right:15px;
 }
 .border {
   width:345px;
@@ -143,7 +161,12 @@
   position: absolute;
   left: 15px;
 }
-
+.left_ {
+  position: absolute;
+  left: 15px;
+  font-size:12px;
+  color:#f00;
+}
 .right {
   position: absolute;
   right: 15px;
@@ -260,10 +283,11 @@ API.wrapRet_ = function (api, opts, fn) {
     })
 }
 
-API.payOrderWithBalance = function (orderId, type, amount, fn) {
+API.payOrderWithBalance = function (orderId, payId, type, amount, fn) {
   API.wrapRet_(
     'https://mip.putibaby.com/api/pay/pay_order_with_balance', {
       'order_id': orderId,
+      'pay_id': payId,
       'type': type,
       'amount': amount
 
@@ -272,7 +296,7 @@ API.payOrderWithBalance = function (orderId, type, amount, fn) {
 }
 API.ajaxDoPay = function (orderId, fn) {
   API.wrapRet_(
-    'https://mip.putibaby.com/api/ajax_do_pay', {
+    'https://mip.putibaby.com/api/ajax_do_pay_new', {
       'order_id': orderId
 
     },
@@ -458,6 +482,7 @@ export default {
       }
       API.payOrderWithBalance(
         this.data.order_id,
+        this.data.pay_id,
         this.data.type,
         this.balancePayAmount,
         function (isOk, res) {
@@ -466,7 +491,7 @@ export default {
             var xzUrl = 'https://xiongzhang.baidu.com/opensc/wps/payment' +
                   '?id=1544608709261251&redirect=' + encodeURIComponent(donePage)
             // window.top.location.href = xzUrl
-            window.MIP.viewer.open(xzUrl, {isMipLink: false})
+            window.MIP.viewer.open(xzUrl, {isMipLink: false, replace: true})
           } else {
             console.error(res)
             window.MIP.viewer.open(MIP.util.makeCacheUrl('https://mip.putibaby.com/order_list'), {replace: true})

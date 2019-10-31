@@ -4,16 +4,15 @@
  */
 
 const path = require('path')
-const async = require('async')
 const fs = require('fs-extra')
 const glob = require('glob')
-const builder = require('../node_modules/mip2/lib/build')
+const execa = require('execa')
 const rootDir = path.join(__dirname, '..')
 
 // 编译，结束后生成预览站点
 buildComponents()
 
-function buildComponents () {
+async function buildComponents () {
   const projects = fs.readdirSync(path.join(rootDir, 'sites')).filter(file =>
     fs.statSync(path.join(rootDir, 'sites', file)).isDirectory()
   )
@@ -23,35 +22,27 @@ function buildComponents () {
     return
   }
 
-  const build = async function (proj) {
+  console.log('Building... Please wait')
+
+  for (const proj of projects) {
+    console.log('[building site]: ' + proj)
+
     let src = path.join(rootDir, 'sites', proj)
     let dist = path.join(rootDir, 'dist', proj)
     let publicPath = '/' + proj
 
+    let options = ['build', '--dir', src, '--output', dist, '--asset', publicPath, '--clean']
+
     try {
-      await builder({
-        dir: src,
-        output: dist,
-        asset: publicPath,
-        clean: true
-      })
-    } catch (e) {
-      console.log(e)
+      await execa('mip2', options)
+    } catch (err) {
+      console.log(err)
       process.exit(1)
     }
   }
 
-  console.log('Building... Please wait')
-
-  async.each(projects, build, err => {
-    if (err) {
-      console.log(err)
-      throw err
-    } else {
-      console.log('All sites has been build successfully!')
-      genPreviewPage()
-    }
-  })
+  console.log('All sites has been build successfully!')
+  genPreviewPage()
 }
 
 function genPreviewPage () {

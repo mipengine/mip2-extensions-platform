@@ -1,9 +1,9 @@
 node_modules/
 dist/
+auth/
 mip-example/
 npm-debug.log
 Thumbs.db
-package-lock.json
 .DS_Store
 *.svn
 .svn
@@ -17,3 +17,9 @@ package-lock.json
 *.log
 *.lock
 /.idea
+config
+README.txt
+servers
+package-lock.json
+.project
+.history
