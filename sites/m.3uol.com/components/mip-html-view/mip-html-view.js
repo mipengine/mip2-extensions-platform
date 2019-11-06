@@ -1,10 +1,10 @@
 export default class MIPHtmlView extends MIP.CustomElement {
   firstInviewCallback() {
-    let el = this.element,
-      input = el.getAttribute('url'),
-      body = new URLSearchParams(el.getAttribute('body')),
-      init = el.hasAttribute('init') ? JSON.parse(el.getAttribute('init')) : false,
-      html = ''
+    let el = this.element
+    let input = el.getAttribute('url')
+    let body = new URLSearchParams(el.getAttribute('body'))
+    let init = el.hasAttribute('init') ? JSON.parse(el.getAttribute('init')) : false
+    let html = ''
     body.append('refurl', encodeURIComponent(document.referrer || ''))
     if (init) {
       if (init.method && (init.method === 'POST') && !init.body) {
@@ -26,8 +26,8 @@ export default class MIPHtmlView extends MIP.CustomElement {
         html = await fetch(input, init).then(function(res) {
           if (res.ok) {
             return res
-          } else if (res.status == 401) {
-            console.log("Oops! You are not authorized.")
+          } else if (res.status === 401) {
+            console.log('Oops! You are not authorized.')
             return Promise.reject(res.statusText)
           } else {
             console.log('Network response was not ok.')
@@ -41,7 +41,7 @@ export default class MIPHtmlView extends MIP.CustomElement {
           if (contentType.indexOf('text/html') !== -1) {
             return res.text()
           } else {
-            return Promise.reject('response was not text/html')
+            return Promise.reject(new Error('response was not text/html'))
           }
         })
         el.innerHTML = html
