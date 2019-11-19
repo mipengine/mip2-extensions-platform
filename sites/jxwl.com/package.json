@@ -1,7 +1,7 @@
 {
   "name": "jxwl.com",
-  "version": "0.0.2",
-  "description": "jxwl custom components",
+  "version": "0.0.3",
+  "description": "v0.0.3新增组件",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
@@ -10,7 +10,7 @@
     "fix": "npm run fix:js",
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
-  "author": "laiyg",
+  "author": "datou",
   "dependencies": {
     "fastclick": "^1.0.6",
     "mip-sandbox": "^1.0.22",
