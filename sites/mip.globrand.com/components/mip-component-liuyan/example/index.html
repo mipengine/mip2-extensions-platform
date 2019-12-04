@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html mip>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=no">
+  <title>MIP page</title>
+  <link rel="canonical" href="对应的原页面地址">
+  <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+  <style mip-custom>
+    .liuyan,
+    .freetalk {
+      position: relative;
+    }
+
+    .mask .liuyan,
+    .mask .freetalk {
+      top: 30%;
+      width: 95%;
+      margin: auto;
+      transition: all 1s;
+      display: block;
+    }
+
+    .liuyan-form {
+      padding: 15px 5%;
+      width: 90%;
+      font-size: 0px;
+      background-color: white;
+    }
+
+    .liuyan-form .radio {
+      width: 25%;
+    }
+
+    .liuyan-form .radio label {
+      margin-left: 5%;
+    }
+
+    .liuyan-form .line .k-v {
+      width: 65%;
+    }
+
+    .liuyan-form p {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .liuyan-form .btn-default {
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .freetalk .time mip-img {
+      width: 100px;
+      height: 71px;
+      display: block;
+      margin: 10px auto;
+    }
+
+    .freetalk .time p {
+      font-size: 18px;
+      color: #000;
+      text-align: center;
+    }
+
+    .freetalk .btn-default {
+      width: 80%;
+      text-align: center;
+      display: block;
+      margin: auto;
+      background-color: #33bd57;
+      border-color: #33bd57;
+    }
+
+    .freetalk .box-title {
+      color: black;
+      background-image: none;
+    }
+
+    .freetalk .input-area {
+      height: 125px;
+    }
+
+    .tip {
+      padding-left: 0.3rem;
+      width: 93%;
+      height: 0.42666667rem;
+      font-size: 12px;
+      text-align: center;
+      color: #999;
+      margin-top: 0.06666667rem;
+      padding-top: 10px;
+    }
+
+    .box {
+      font-size: 0px;
+      box-sizing: border-box;
+      background-color: white;
+      border-collapse: collapse;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .box-title {
+      height: 36px;
+      line-height: 36px;
+      font-size: 16px;
+      color: #FF6666;
+      border: 1px solid rgba(228, 228, 228, 1);
+      background-color: rgba(242, 242, 242, 1);
+      background-image: url(https://mip.globrand.com/images/vertical.png);
+      background-repeat: no-repeat;
+      background-position: 15px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    mip-form div {
+      display: block !important;
+      padding: 0px;
+      color: black;
+    }
+
+    .line {
+      white-space: nowrap;
+      display: block;
+    }
+
+    .liuyan-form p {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .k-v {
+      height: 34px;
+      width: 100%;
+      box-sizing: border-box;
+      white-space: nowrap;
+      display: inline-flex;
+    }
+
+    .liuyan-form .radio {
+      width: 25%;
+    }
+
+    .liuyan-form p {
+      margin-top: 10px;
+      text-align: center;
+    }
+
+    .radio {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .liuyan-form .radio label {
+      margin-left: 5%;
+    }
+
+    .radio label {
+      font-size: 14px;
+    }
+
+    mip-form label {
+      display: inline-block;
+    }
+
+    .radio input {
+      margin-left: 5px;
+      vertical-align: middle;
+    }
+
+    mip-form input,
+    mip-form select,
+    mip-form textarea {
+      display: inline-block !important;
+    }
+
+    .k-v span {
+      font-size: 14px;
+      display: inline-block;
+      height: 100%;
+      border: 1px solid rgba(215, 215, 215, 1);
+      background-color: rgba(242, 242, 242, 1);
+      padding: 6px 18px;
+      border-radius: 5px 0px 0px 5px;
+      box-sizing: border-box;
+    }
+
+    .k-v input {
+      display: inline-block;
+      height: 100%;
+      border: 1px solid rgba(215, 215, 215, 1);
+      border-left: none;
+      padding: 6px 10px;
+      border-radius: 0px 5px 5px 0px;
+      box-sizing: border-box;
+      outline: none;
+      line-height: 100%;
+      vertical-align: bottom;
+      width: 100%;
+    }
+
+    mip-form input,
+    mip-form select,
+    mip-form textarea {
+      display: inline-block !important;
+    }
+
+    .checkbox label {
+      font-size: 14px;
+    }
+
+    .liuyan-form .btn-default {
+      width: 100%;
+      font-size: 16px;
+    }
+
+    .btn-default {
+      width: 86px;
+      height: 32px;
+      background-color: rgba(255, 102, 102, 1);
+      box-sizing: border-box;
+      border: 1px solid rgba(255, 102, 102, 1);
+      border-radius: 5px;
+      font-size: 14px;
+      color: #FFFFFF;
+    }
+
+    .font-red {
+      color: #FF6666 !important;
+    }
+
+    .animate.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .animate {
+      opacity: 0;
+      visibility: hidden;
+      transition: all 300ms;
+    }
+
+    .mask {
+      position: fixed;
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      z-index: 999;
+      background-color: rgba(121, 121, 121, 0.4);
+      overflow: hidden;
+    }
+
+    .close {
+      width: 20px;
+      height: 20px;
+      background: url(https://mip.globrand.com/images/close.png) center no-repeat;
+      float: right;
+      padding: 5px 15px 10px;
+    }
+
+    .dialog {
+      position: absolute;
+      font-size: 14px;
+      top: 20px;
+      background-color: rgba(51, 51, 51, 0.5);
+      width: 90%;
+      display: block;
+      margin-left: 3%;
+      margin-top: 6%;
+      padding: 10px;
+    }
+
+    .dialog .dialog-head {
+      background-color: #CDCDCD;
+      font-weight: 700;
+      padding: 5px 10px;
+      color: #474747;
+      pointer-events: none;
+    }
+
+    .dialog-head:after {
+      content: '×';
+      width: 20px;
+      height: 20px;
+      float: right;
+      color: white;
+      font-size: 25px;
+      line-height: 20px;
+      pointer-events: auto;
+    }
+
+    .dialog-content {
+      background-color: #FFFFFF;
+    }
+
+    .dialog-content p:last-of-type {
+      color: #ff6600;
+    }
+
+    .dialog-content p {
+      text-align: center;
+      padding-top: 30px;
+      padding-bottom: 60px;
+    }
+
+    .dialog-content .ewcode {
+      height: 120px;
+      background: url(https://mip.globrand.com/images/ewcode.png) no-repeat center;
+      background-size: 120px;
+      padding-bottom: 5px;
+    }
+
+    .dialog-content .tipmsg {
+      padding: 10px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div>
+    <button type="button" class="btn-default" on="click:liuyan.open(575734)">加盟咨询</button>
+    <mip-component-liuyan id="liuyan" data-type="liuyan" data-fetchurl="http://mip.ldf/ajax/saveLiuyan.ashx"
+      class="mip-element mip-layout-container">
+      <mip-form url="https://mip.globrand.com" method="post" class="liuyan box hidden">
+        <input type="hidden" class="hidden UserID" name="UserID" value="575734">
+        <div class="box-title">
+          我对此项目感兴趣，立即留言
+          <em class="close"></em>
+        </div>
+        <div class="liuyan-form">
+          <div class="line">
+            <p class="k-v">
+              <span>姓名</span>
+              <input validatetype="must" type="text" name="Name">
+            </p>
+            <p class="radio">
+              <label>
+                <input type="radio" name="Sex" value="先生" checked="checked">先生</label>
+              <label>
+                <input type="radio" name="Sex" value="女士">女士</label>
+            </p>
+          </div>
+          <p class="k-v">
+            <span>手机</span>
+            <input type="text" name="Phone" class="Phone" maxlength="11">
+          </p>
+          <p class="k-v">
+            <span>留言</span>
+            <input type="text" placeholder=" 我对此项目很感兴趣，想加盟，请速与我联系！" name="Content" class="Phone">
+          </p>
+          <p class="checkbox">
+            <input type="checkbox" checked="checked">
+            <label for="tiaokuan">
+              我已阅读并同意 《 <a class="font-red" data-type="mip" href="https://mip.globrand.com/about.html">品牌网服务条款</a>》
+            </label>
+          </p>
+          <p>
+            <button type="button" class="btn-default submit" on="tap:liuyan.submit">提交咨询</button>
+          </p>
+        </div>
+        <input type="hidden" name="sourcepage" value="20">
+      </mip-form>
+      <div class="animate mask"></div>
+    </mip-component-liuyan>
+  </div>
+  <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+  <script src="/mip-component-liuyan/mip-component-liuyan.js"></script>
+</body>
+
+</html>

@@ -52,8 +52,6 @@ export default class MIPMpc6DownCustom extends CustomElement {
         this.element.removeChild(document.getElementsByClassName('guess')[0])
       }
     }
-    // 移除空内容
-    this.emptyRemove()
     // 文章动态增加链接
     if (document.getElementsByClassName('xgwz').length) {
       MIPCommon.alterNewUrl(document.getElementsByClassName('xgwz')[0].getElementsByClassName('d_title')[0], this.data().id, ['手游', '软件'], this.data().url)
@@ -64,6 +62,8 @@ export default class MIPMpc6DownCustom extends CustomElement {
     this.downHref()
     // 获取精品推荐
     this.bestRec()
+    // 获取实时热词
+    this.hotWord()
     // 下载弹窗
     this.downAlert()
     // 预约
@@ -72,6 +72,8 @@ export default class MIPMpc6DownCustom extends CustomElement {
     MIPCommon.statCustom()
     // 排行榜
     MIPCommon.rank(this.data().id)
+    // 移除空内容
+    this.emptyRemove()
   }
   /*
    * 移除空内容
@@ -88,6 +90,21 @@ export default class MIPMpc6DownCustom extends CustomElement {
     // 相关视频
     if (document.getElementsByClassName('xgsp').length && document.getElementsByClassName('xgsp')[0].getElementsByTagName('li').length === 0) {
       this.element.removeChild(document.getElementsByClassName('xgsp')[0])
+    }
+    // 更多标签
+    if (!document.getElementById('dcatetory')) {
+      this.element.removeChild(document.getElementsByClassName('tips_more')[0])
+    }
+    if (document.body.getAttribute('show')) {
+      if (document.getElementsByClassName('hot_gamerec').length) {
+        this.element.removeChild(document.getElementsByClassName('hot_gamerec')[0])
+      }
+      if (document.getElementsByClassName('rank').length) {
+        this.element.removeChild(document.getElementsByClassName('rank')[0])
+      }
+      if (document.getElementsByClassName('tips_more').length) {
+        this.element.removeChild(document.getElementsByClassName('tips_more')[0])
+      }
     }
   }
   /*
@@ -139,62 +156,87 @@ export default class MIPMpc6DownCustom extends CustomElement {
    * 精品推荐
    */
   bestRec () {
-    let kKeys = [] // K关键词
-    let curPlatform = 2 // 平台类型
-    let pid = 0 // 关联平台资源ID
-    let rCid = 0 // 关联资源的分类ID
-    let rRid = 0 // 关联资源的根分类ID
-    // 平台类型
-    if (platform.isAndroid()) {
-      curPlatform = 0
-      if (void 0 !== this.data().platAndroidAddress) {
-        rCid = this.data().platAndroidCid
-        rRid = this.data().platAndroidRid
-        pid = this.data().platAndroidId
+    if (document.getElementsByClassName('tjyxph').length) {
+      let kKeys = [] // K关键词
+      let curPlatform = 2 // 平台类型
+      let pid = 0 // 关联平台资源ID
+      let rCid = 0 // 关联资源的分类ID
+      let rRid = 0 // 关联资源的根分类ID
+      // 平台类型
+      if (platform.isAndroid()) {
+        curPlatform = 0
+        if (void 0 !== this.data().platAndroidAddress) {
+          rCid = this.data().platAndroidCid
+          rRid = this.data().platAndroidRid
+          pid = this.data().platAndroidId
+        }
+      } else if (platform.isIos()) {
+        curPlatform = 1
+        if (void 0 !== this.data().platIPhoneAddress) {
+          rCid = this.data().platIPhoneCid
+          rRid = this.data().platIPhoneRid
+          pid = this.data().platIPhoneId
+        }
       }
-    } else if (platform.isIos()) {
-      curPlatform = 1
-      if (void 0 !== this.data().platIPhoneAddress) {
-        rCid = this.data().platIPhoneCid
-        rRid = this.data().platIPhoneRid
-        pid = this.data().platIPhoneId
+      // 只处理android和iphone
+      if (curPlatform !== 2) {
+        // K关键字获取
+        let xgkA = document.getElementById('xgk').getElementsByTagName('a')
+        for (let i = 0; i < xgkA.length; i++) {
+          kKeys.push(xgkA[i].innerText)
+        }
+        if (kKeys.length === 0) {
+          kKeys = ''
+        } else {
+          kKeys = kKeys.join(',')
+        }
+        fetch(this.data().url + '/ajax.asp?action=998&k_keys=' + kKeys + '&id=' + this.data().webInfoId + '&platform=' + curPlatform + '&pid=' + pid + '&cid=' + ((typeof (this.data().webInfoCid) !== 'undefined') ? this.data().webInfoCid : 0) + '&rid=' + ((typeof (this.data().webInfoRid) !== 'undefined') ? this.data().webInfoRid : 0) + '&rcid=' + rCid + '&rrid=' + rRid, {
+          'method': 'GET'
+        }).then((responseText) => {
+          return responseText.json()
+        }).then((responseRes) => {
+          if (responseRes.list.length === 0) {
+            this.element.removeChild(document.getElementsByClassName('tjyxph')[0])
+            return false
+          }
+          if (void 0 !== responseRes.list) {
+            let n = responseRes.list
+            let r = ''
+            if (curPlatform === 0) {
+              for (let k = 0; k < n.length; ++k) {
+                r += '<li><a href="' + this.data().url + '/down.asp?id=' + n[k].ID + '"><mip-img src="' + n[k].SmallImg + '" data-stats-cnzz-obj="{\'type\':\'click\',\'data\':[\'_trackEvent\',\'tuijian\',\'tuijian' + (k + 1) + '\',\'' + n[k].ResName + '\']}"></mip-img><p>' + n[k].ResName + '</p></a></li>'
+              }
+            } else if (curPlatform === 1) {
+              for (let b = 0; b < n.length; ++b) {
+                r += '<li><a href="' + this.data().url + '/mipd/' + n[b].ID + '.html" target="_blank"><mip-img src="' + n[b].SmallImg + '" data-stats-cnzz-obj="{\'type\':\'click\',\'data\':[\'_trackEvent\',\'tuijian\',\'tuijian' + (b + 1) + '\',\'' + n[b].ResName + '\']}"></mip-img><p>' + n[b].ResName + '</p></a></li>'
+              }
+            }
+            document.getElementsByClassName('tjyxph')[0].getElementsByTagName('ul')[0].innerHTML = r
+          }
+        })
       }
     }
-    // 只处理android和iphone
-    if (curPlatform !== 2) {
-      // K关键字获取
-      let xgkA = document.getElementById('xgk').getElementsByTagName('a')
-      for (let i = 0; i < xgkA.length; i++) {
-        kKeys.push(xgkA[i].innerText)
-      }
-      if (kKeys.length === 0) {
-        kKeys = ''
-      } else {
-        kKeys = kKeys.join(',')
-      }
-      fetch(this.data().url + '/ajax.asp?action=998&k_keys=' + kKeys + '&id=' + this.data().webInfoId + '&platform=' + curPlatform + '&pid=' + pid + '&cid=' + ((typeof (this.data().webInfoCid) !== 'undefined') ? this.data().webInfoCid : 0) + '&rid=' + ((typeof (this.data().webInfoRid) !== 'undefined') ? this.data().webInfoRid : 0) + '&rcid=' + rCid + '&rrid=' + rRid, {
+  }
+  /*
+   *实时热词
+   */
+  hotWord () {
+    if (document.getElementsByClassName('hot_words').length) {
+      fetch(`${this.data().url}/ajax.asp?action=894&position=2`, {
         'method': 'GET'
       }).then((responseText) => {
         return responseText.json()
       }).then((responseRes) => {
-        if (responseRes.list.length === 0) {
-          this.element.removeChild(document.getElementsByClassName('tjyxph')[0])
+        if (typeof responseRes.data === 'undefined' || responseRes.code !== 0 || responseRes.data.length === 0) {
+          this.element.removeChild(document.getElementsByClassName('hot_words')[0])
           return false
         }
-        if (void 0 !== responseRes.list) {
-          let n = responseRes.list
-          let r = ''
-          if (curPlatform === 0) {
-            for (let k = 0; k < n.length; ++k) {
-              r += '<li><a href="' + this.data().url + '/down.asp?id=' + n[k].ID + '"><mip-img src="' + n[k].SmallImg + '" data-stats-cnzz-obj="{\'type\':\'click\',\'data\':[\'_trackEvent\',\'tuijian\',\'tuijian' + (k + 1) + '\',\'' + n[k].ResName + '\']}"></mip-img><p>' + n[k].ResName + '</p></a></li>'
-            }
-          } else if (curPlatform === 1) {
-            for (let b = 0; b < n.length; ++b) {
-              r += '<li><a href="' + this.data().url + '/mipd/' + n[b].ID + '.html" target="_blank"><mip-img src="' + n[b].SmallImg + '" data-stats-cnzz-obj="{\'type\':\'click\',\'data\':[\'_trackEvent\',\'tuijian\',\'tuijian' + (b + 1) + '\',\'' + n[b].ResName + '\']}"></mip-img><p>' + n[b].ResName + '</p></a></li>'
-            }
-          }
-          document.getElementsByClassName('tjyxph')[0].getElementsByTagName('ul')[0].innerHTML = r
+        let list = responseRes.data
+        let listHtml = ''
+        for (let i = 0; i < list.length; ++i) {
+          listHtml += '<a href="/s/' + list[i].app_id + '" data-stats-cnzz-obj="{\'type\':\'click\',\'data\':[\'_trackEvent\',\'reci\',\'reci' + (i + 1) + '\',\'' + list[i].title + '\']}">' + list[i].title + '</a>'
         }
+        document.getElementsByClassName('hot_words')[0].getElementsByClassName('dcatetory')[0].innerHTML = listHtml
       })
     }
   }
