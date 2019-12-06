@@ -1,4 +1,4 @@
-export default class MIPExample extends MIP.CustomElement {
+export default class MIPQuickRouter extends MIP.CustomElement {
   convertToHash (str) {
     let hash = {}
     let list = str.split('&')
@@ -14,16 +14,11 @@ export default class MIPExample extends MIP.CustomElement {
 
   typeofHuawei () {
     let userAgent = navigator.userAgent.toLowerCase()
-    console.log(userAgent)
     if (userAgent) {
       let huaweibrowser = userAgent.indexOf('huaweibrowser')
-      // let android = userAgent.indexOf('android')
       let huawei = userAgent.indexOf('build/huawei')
       if (huaweibrowser >= 0) return 1
       if (huawei >= 0) return 1
-      // if (0 > huawei && (huawei = userAgent.indexOf("build/honor")), android >= 0 && huawei >= 0) {
-      //     if (userAgent.slice(android + 8, android + 9) >= 8) return 0
-      // }
     }
     return 0
   }
@@ -42,16 +37,15 @@ export default class MIPExample extends MIP.CustomElement {
   }
 
   build () {
-    let M_DOM = this.element
+    let mipDom = this.element
 
-    let approuter = M_DOM.getAttribute('approuter') === 'false' ? 0 : 1
+    let appRouter = mipDom.getAttribute('approuter') === 'false' ? 0 : 1
 
-    console.log(typeof M_DOM.getAttribute('approuter'))
-    if (approuter) {
-      let packagename = M_DOM.getAttribute('packagename')
-      let protocal = M_DOM.getAttribute('protocal') ? M_DOM.getAttribute('protocal') : 'https'
-      let page = M_DOM.getAttribute('page')
-      let params = this.convertToHash(M_DOM.getAttribute('params'))
+    if (appRouter) {
+      let packageName = mipDom.getAttribute('packagename')
+      let protocol = mipDom.getAttribute('protocol') ? mipDom.getAttribute('protocol') : 'https'
+      let page = mipDom.getAttribute('page')
+      let params = this.convertToHash(mipDom.getAttribute('params'))
       let iframeWrapper = document.createElement('iframe')
       let iframeSrc = ''
       let query
@@ -70,7 +64,7 @@ export default class MIPExample extends MIP.CustomElement {
       }
 
       if (this.typeofHuawei()) {
-        iframeSrc = 'hap://app/' + packagename
+        iframeSrc = 'hap://app/' + packageName
         if (page) {
           iframeSrc += '/' + page
         }
@@ -79,7 +73,7 @@ export default class MIPExample extends MIP.CustomElement {
           iframeSrc += '?' + query
         }
       } else {
-        iframeSrc = protocal + '://thefatherofsalmon.com?i=' + packagename
+        iframeSrc = protocol + '://thefatherofsalmon.com?i=' + packageName
         if (page) {
           iframeSrc += '&p=' + page
         }
@@ -91,7 +85,7 @@ export default class MIPExample extends MIP.CustomElement {
 
       iframeWrapper.src = iframeSrc
       iframeWrapper.style.cssText = 'visibility:hidden;height:0;border: 0;'
-      M_DOM.appendChild(iframeWrapper)
+      mipDom.appendChild(iframeWrapper)
     }
   }
 }

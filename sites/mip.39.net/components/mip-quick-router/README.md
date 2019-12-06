@@ -43,7 +43,7 @@
 
 **说明**：请求附带的参数，通过：a1=v1&a2=v2的方式书写 必选项：否 类型：string
 
-### protocal
+### protocol
 
 **说明**：请求协议；默认https 必选项：否 类型：string
 
