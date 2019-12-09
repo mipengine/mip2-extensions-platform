@@ -1,5 +1,5 @@
 import util from './../../common/util.js'
-const {fetchJsonp} = window
+const fetchJsonp = require('fetch-jsonp')
 
 class FooterLayer {
   constructor (art) {
@@ -12,7 +12,7 @@ class FooterLayer {
       startY: 0,
       endY: 0
     }
-    this.autoShow = false
+    // this.autoShow = false
     this.slideTimes = 0
   }
 
@@ -376,9 +376,9 @@ class FooterLayer {
   }
 
   init () {
-    if (!this.isExist('autoShow')) {
-      this.autoShow = true
-    }
+    // if (!this.isExist('autoShow')) {
+    //   this.autoShow = true
+    // }
     // 当出现键盘时，触碰屏幕取消键盘
     document.body.addEventListener('touchstart', () => {
       Array.prototype.forEach.call(document.querySelectorAll('input'), (item) => {
@@ -543,16 +543,16 @@ class FooterLayer {
     document.body.addEventListener('touchend', () => {
       if (this.moveObj.isMove && this.moveObj.endY + 10 < this.moveObj.startY) {
         // 往上滑了一次
-        if (this.autoShow) {
+        // if (this.autoShow) {
           this.slideTimes += 1
           if (this.slideTimes === 2) {
             // $('.btn-zxbj')[0].click()
             // 第二个卡片，免费报价上滑
-            this.showCard(1)
-            this.autoShow = false
-            this.setFlag('autoShow', 1 / 24) // 1小时过期
+            // this.showCard(1)
+            // this.autoShow = false
+            // this.setFlag('autoShow', 1 / 24) // 1小时过期
           }
-        }
+        // }
       }
     })
   }
