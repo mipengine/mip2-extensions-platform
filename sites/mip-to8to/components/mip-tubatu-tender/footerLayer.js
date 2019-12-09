@@ -1,5 +1,5 @@
 import util from './../../common/util.js'
-const fetchJsonp = require('fetch-jsonp')
+const {fetchJsonp} = window
 
 class FooterLayer {
   constructor (art) {
