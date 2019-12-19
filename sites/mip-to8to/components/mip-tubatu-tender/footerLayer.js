@@ -543,16 +543,10 @@ class FooterLayer {
     document.body.addEventListener('touchend', () => {
       if (this.moveObj.isMove && this.moveObj.endY + 10 < this.moveObj.startY) {
         // 往上滑了一次
-        // if (this.autoShow) {
-          this.slideTimes += 1
-          if (this.slideTimes === 2) {
-            // $('.btn-zxbj')[0].click()
-            // 第二个卡片，免费报价上滑
-            // this.showCard(1)
-            // this.autoShow = false
-            // this.setFlag('autoShow', 1 / 24) // 1小时过期
-          }
-        // }
+        this.slideTimes += 1
+        if (this.slideTimes === 2) {
+          
+        }
       }
     })
   }
