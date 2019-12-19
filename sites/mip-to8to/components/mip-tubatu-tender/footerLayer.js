@@ -539,16 +539,6 @@ class FooterLayer {
         this.moveObj.endY = e.changedTouches[0].screenY
       }
     })
-
-    document.body.addEventListener('touchend', () => {
-      if (this.moveObj.isMove && this.moveObj.endY + 10 < this.moveObj.startY) {
-        // 往上滑了一次
-        this.slideTimes += 1
-        if (this.slideTimes === 2) {
-          
-        }
-      }
-    })
   }
 }
 
