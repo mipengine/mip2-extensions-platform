@@ -55,7 +55,7 @@ export default class MIPCybComment extends CustomElement {
       }
       document.getElementById('plnum').innerText = data.num
       if (data.num === 0) {
-        data.list = '<p class="nodp">还没有发布过评价</p>'
+        morepl[0].innerHTML = '<p class="nodp">还没有发布过评价</p>'
       }
       for (let i = 0; i < data.list.length; i++) {
         let list = data.list[i]
