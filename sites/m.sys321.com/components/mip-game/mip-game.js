@@ -70,7 +70,6 @@ export default class MIPMsysComment extends CustomElement {
               pagedata.appendChild(khtml)
             }
             if (len < 20) {
-              doing = 1
               softListMore.innerText = '加载完毕啦,么么哒~'
             } else {
               softListMore.innerText = '点击有惊喜,萌萌哒~'

@@ -135,46 +135,45 @@ export default class MIPMsysComment extends CustomElement {
   }
   // 加载更多评价、评论
   loadMore (clickYS, apiV, type) {
-  	let that = this
-  	clickYS.onclick = function () {
-  		let sohucs = that.element.querySelectorAll('#SOHUCS')[0]
-  		let sId = sohucs.getAttribute('sid')
-  		let formData = new FormData()
-  		formData.append('softid', sId)
+    let that = this
+    clickYS.onclick = function () {
+      let sohucs = that.element.querySelectorAll('#SOHUCS')[0]
+      let sId = sohucs.getAttribute('sid')
+      let formData = new FormData()
+      formData.append('softid', sId)
       if (type === 'pj') {
         formData.append('p', that.scoreP)
       } else {
         formData.append('p', that.commentP)
       }
-  		formData.append('api', apiV)
-  		let req = new Request('http://www.sys321.com/Api.php', {
-  		  method: 'POST',
-  		  body: formData
-  		})
-  		fetch(req).then(function (response) {
-  		  return response.json()
-  		}).then(function (data) {
+      formData.append('api', apiV)
+      let req = new Request('http://www.sys321.com/Api.php', {
+        method: 'POST',
+        body: formData
+      })
+      fetch(req).then(function (response) {
+        return response.json()
+      }).then(function (data) {
         if (data === '') {
           clickYS.innerText = '加载完毕啦,么么哒~'
           css(clickYS, {cursor: 'default'})
         } else {
           that.pjFun(clickYS, data, type)
         }
-  		})
-  	}
+      })
+    }
   }
   pjFun (clickYS, data, type) {
     let pjUl = this.element.querySelectorAll('.pj-c .cmt-reply')[0]
     let plUl = this.element.querySelectorAll('.pl-c .cmt-reply')[0]
-    let that = this
-  	if (data === '') {
-  	  clickYS.innerText = '加载完毕啦,么么哒~'
-  	  css(clickYS, {cursor: 'default'})
-  	} else {
-  	  clickYS.innerText = '加载中...'
-  	  let khtml = ''
-  	  let len = data.length
-  	  for (let i = 0; i < len; i++) {
+    if (data === '') {
+      clickYS.innerText = '加载完毕啦,么么哒~'
+      css(clickYS, {cursor: 'default'})
+    } else {
+      clickYS.innerText = '加载中...'
+      let khtml = ''
+      let len = data.length
+      for (let i = 0; i < len; i++) {
         let dt = data[i]
         dt.content = this.emoji(dt.content)
         khtml = document.createElement('li')
@@ -184,14 +183,14 @@ export default class MIPMsysComment extends CustomElement {
           khtml.innerHTML = '<div class=\'cmt-root-cont cmt-root-cl-cont\'><div class=\'cmt-root-top\'><div class=\'cmt-root-message cmt-message\'><p>' + dt.content + '</p><div class=\'cmt-root-footer\'><span>' + dt.create_time + '</span></div></div><div class=\'clear\'></div></div></div>'
         }
       }
-  	  if (len < 20) {
+      if (len < 20) {
         clickYS.innerText = '加载完毕啦,么么哒~'
         // css(clickYS, {cursor: 'default'})
         css(clickYS, {pointerEvents: 'none'})
-  	  } else {
+      } else {
         css(clickYS, {display: 'block'})
         css(clickYS, {pointerEvents: 'inherit'})
-  	  }
+      }
       if (type === 'pj') {
         pjUl.appendChild(khtml)
         this.scoreP = this.scoreP + 20
@@ -199,19 +198,19 @@ export default class MIPMsysComment extends CustomElement {
         plUl.appendChild(khtml)
         this.commentP = this.commentP + 20
       }
-  	}
+    }
   }
-  emoji(content){
-  	content = content.replace(/:blush:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f60a.png\'></mip-img>')
-  	content = content.replace(/:joy:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f602.png\'></mip-img>')
-  	content = content.replace(/:heart:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/2764.png\'></mip-img>')
-  	content = content.replace(/:sob:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f62d.png\'></mip-img>')
-  	content = content.replace(/:heart_eyes:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f60d.png\'></mip-img>')
-  	content = content.replace(/:kissing_heart:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f618.png\'></mip-img>')
-  	content = content.replace(/:rolling_eyes:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f644.png\'></mip-img>')
-  	content = content.replace(/:skull:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f480.png\'></mip-img>')
-  	content = content.replace(/:tired_face:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f62b.png\'></mip-img>')
-  	content = content.replace(/:thinking:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f914.png\'></mip-img>')
-  	return content
+  emoji (content) {
+    content = content.replace(/:blush:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f60a.png\'></mip-img>')
+    content = content.replace(/:joy:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f602.png\'></mip-img>')
+    content = content.replace(/:heart:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/2764.png\'></mip-img>')
+    content = content.replace(/:sob:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f62d.png\'></mip-img>')
+    content = content.replace(/:heart_eyes:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f60d.png\'></mip-img>')
+    content = content.replace(/:kissing_heart:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f618.png\'></mip-img>')
+    content = content.replace(/:rolling_eyes:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f644.png\'></mip-img>')
+    content = content.replace(/:skull:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f480.png\'></mip-img>')
+    content = content.replace(/:tired_face:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f62b.png\'></mip-img>')
+    content = content.replace(/:thinking:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f914.png\'></mip-img>')
+    return content
   }
 }

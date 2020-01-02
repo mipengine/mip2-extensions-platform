@@ -21,7 +21,6 @@ export default class MIPMsysComment extends CustomElement {
     let emojiBtn = this.element.querySelectorAll('.cmt-icon-emoji')[0]
     let emojiCont = this.element.querySelectorAll('.cmt-emoji-cont')[0]
     let bqLis = this.element.querySelectorAll('.cmt-emoji-list li mip-img')
-    let bjCont = this.element.querySelectorAll('#cmt-edit-reply')[0]
     // 资讯
     let tabs = this.element.querySelectorAll('.elflList a')
     // 资讯tab切换
@@ -77,7 +76,7 @@ export default class MIPMsysComment extends CustomElement {
       menu.style.left = '-270px'
       css(shadow, {display: 'none'})
     }
-    for(let i = 0; i < bannerPic.length; i++) {
+    for (let i = 0; i < bannerPic.length; i++) {
       bannerPic[i].onclick = function () {
         location.href = './down_xq.html'
       }
@@ -120,21 +119,23 @@ export default class MIPMsysComment extends CustomElement {
         }
       }
     }
+    let that = this
+    let bjCont = this.element.querySelectorAll('#cmt-edit-reply')[0]
+    let submitBtn = this.element.querySelectorAll('.cmt-btn')[0]
     // 点击添加表情
     for (let i = 0; i < bqLis.length; i++) {
       bqLis[i].onclick = function () {
         let src = this.childNodes[0].src
         let alt = this.childNodes[0].alt
-        let str = '<mip-img contenteditable=\'false\' class=\'emojione mip-element mip-layout-container mip-img-loaded\' alt=' + alt + ' src=' + src + 'unselectable=\'on\' data-short=\':blush:\' mip-firstscreen-element></mip-img>&nbsp;'
+        let str = '<mip-img contenteditable=\'false\' class=\'emojione mip-element mip-layout-container mip-img-loaded\' alt=' + alt + ' src=' + src + ' unselectable=\'on\' data-short=\':blush:\' mip-firstscreen-element></mip-img>'
         let content = bjCont.innerHTML.replace('&lrm;', '')
         content = content.replace(/<img[^>]+>/g, '')
         bjCont.innerHTML = content + str + '&lrm;'
-        that.getStatus()
+        that.getStatus(bjCont, submitBtn)
       }
     }
-    let that = this
     bjCont.onkeyup = function () {
-      that.getStatus()
+      that.getStatus(bjCont, submitBtn)
     }
     // 加载更多评论
     let sohucs = this.element.querySelectorAll('#SOHUCS')[0]
@@ -175,40 +176,37 @@ export default class MIPMsysComment extends CustomElement {
             if (len < 20) {
               plMore.innerText = '加载完毕啦,么么哒~'
               // css(plMore, {cursor: 'default'})
-              css(clickYS, {pointerEvents: 'none'})
+              css(plMore, {pointerEvents: 'none'})
             } else {
               css(plMore, {display: 'block'})
-              css(clickYS, {pointerEvents: 'inherit'})
+              css(plMore, {pointerEvents: 'inherit'})
             }
           }
         })
       }
     }
   }
-  getStatus () {
-    let bjCont = this.element.querySelectorAll('#cmt-edit-reply')[0]
-    let submitBtn = this.element.querySelectorAll('.cmt-btn')[0]
-    let bjContVal = bjCont.innerHTML
-    var content = bjCont.innerHTML.split('&nbsp;').join('').split(' ').join('')
-    if (bjContVal === '') {
-      submitBtn.setAttribute('disabled','disabled')
-      submitBtn.classList.add('cmt-disabled')
+  getStatus (cont, btn) {
+    let content = cont.innerHTML.split('&nbsp;').join('').split(' ').join('')
+    if (content === '') {
+      btn.setAttribute('disabled', 'disabled')
+      btn.classList.add('cmt-disabled')
     } else {
-      submitBtn.removeAttribute('disabled')
-      submitBtn.classList.remove('cmt-disabled')
+      btn.removeAttribute('disabled')
+      btn.classList.remove('cmt-disabled')
     }
   }
-  emoji (content){
-  	content = content.replace(/:blush:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f60a.png\'></mip-img>')
-  	content = content.replace(/:joy:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f602.png\'></mip-img>')
-  	content = content.replace(/:heart:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/2764.png\'></mip-img>')
-  	content = content.replace(/:sob:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f62d.png\'></mip-img>')
-  	content = content.replace(/:heart_eyes:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f60d.png\'></mip-img>')
-  	content = content.replace(/:kissing_heart:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f618.png\'></mip-img>')
-  	content = content.replace(/:rolling_eyes:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f644.png\'></mip-img>')
-  	content = content.replace(/:skull:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f480.png\'></mip-img>')
-  	content = content.replace(/:tired_face:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f62b.png\'></mip-img>')
-  	content = content.replace(/:thinking:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f914.png\'></mip-img>')
-  	return content
+  emoji (content) {
+    content = content.replace(/:blush:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f60a.png\'></mip-img>')
+    content = content.replace(/:joy:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f602.png\'></mip-img>')
+    content = content.replace(/:heart:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/2764.png\'></mip-img>')
+    content = content.replace(/:sob:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f62d.png\'></mip-img>')
+    content = content.replace(/:heart_eyes:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f60d.png\'></mip-img>')
+    content = content.replace(/:kissing_heart:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f618.png\'></mip-img>')
+    content = content.replace(/:rolling_eyes:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f644.png\'></mip-img>')
+    content = content.replace(/:skull:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f480.png\'></mip-img>')
+    content = content.replace(/:tired_face:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f62b.png\'></mip-img>')
+    content = content.replace(/:thinking:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f914.png\'></mip-img>')
+    return content
   }
 }
