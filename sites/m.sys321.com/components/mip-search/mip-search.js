@@ -2,7 +2,7 @@
  * @file 评论模块
  * @author fl
  */
-import fetchJsonp from 'fetch-jsonp'
+// import fetch from 'fetch'
 
 const { CustomElement, util } = MIP
 const { css } = util
@@ -31,10 +31,10 @@ export default class MIPMsysComment extends CustomElement {
       searchBtn.onclick = function () {
         if (searchInp.value.length !== 0) {
           css(alert, {display: 'none'})
-          location.href = '../../searchResult.html?q='+searchInp.value
+          location.href = '../../searchResult.html?q=' + searchInp.value
         } else {
           if (timer != null) {
-            clearInterval(timer);
+            clearInterval(timer)
           }
           css(alert, {display: 'block'})
           timer = setInterval(function () {

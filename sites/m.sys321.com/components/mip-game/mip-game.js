@@ -2,7 +2,7 @@
  * @file 评论模块
  * @author fl
  */
-import fetchJsonp from 'fetch-jsonp'
+// import fetch from 'fetch'
 
 const { CustomElement, util } = MIP
 const { css } = util
@@ -37,31 +37,28 @@ export default class MIPMsysComment extends CustomElement {
     }
     let softListMore = this.element.querySelectorAll('#softListMore')[0]
     let pagedata = this.element.querySelectorAll('#pagedata')[0]
-    let p = 15
-    let doing = 0
-    let softlist_p = 24
+    let softlistP = 24
     if (softListMore !== undefined) {
       softListMore.onclick = function () {
-        let cut = softListMore.getAttribute('data-cut');
-        let typeid = softListMore.getAttribute('data-typeid');
-        console.log(cut, typeid)
+        let cut = softListMore.getAttribute('data-cut')
+        let typeid = softListMore.getAttribute('data-typeid')
         let req = new Request('http://sys321.56xz.com/api/softListMore', {
           method: 'POST',
           headers: {
-            "Content-Type": "application/json"
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify({
             cut: cut,
-            typeid: typeid, 
-            p: softlist_p
+            typeid: typeid,
+            p: softlistP
           })
-        });
+        })
         fetch(req).then(function (response) {
           return response.json()
         }).then(function (data) {
           if (data === '') {
             softListMore.innerText = '加载完毕啦,么么哒~'
-            return false;
+            return false
           } else {
             softListMore.innerText = '加载中...'
             let khtml = ''
@@ -69,19 +66,18 @@ export default class MIPMsysComment extends CustomElement {
             for (let i = 0; i < len; i++) {
               let dt = data[i]
               khtml = document.createElement('li')
-              khtml.innerHTML = '<a title='+ '\'' + dt.title +'\'' +'href='+ dt.url +'><dt><mip-img alt='+'\'' + dt.title + '\'' +'class=\'lazy\' data-original='+ dt.litpic +' src='+ dt.litpic +'></mip-img></dt><dd class=\'d1\'>'+ dt.title +'</dd><dd class=\'d3\'><div class=\'stars\'><span class=\'score\' title='+ dt.title +'评级'+ dt.score +'></span><span class=\'star\'>'+ dt.score +'</span></div></dd></a>'
+              khtml.innerHTML = '<a title=' + '\'' + dt.title + '\'' + 'href='+ dt.url +'><dt><mip-img alt=' + '\'' + dt.title + '\'' + 'class=\'lazy\' data-original=' + dt.litpic + ' src=' + dt.litpic + '></mip-img></dt><dd class=\'d1\'>' + dt.title + '</dd><dd class=\'d3\'><div class=\'stars\'><span class=\'score\' title=' + dt.title + '评级' + dt.score + '></span><span class=\'star\'>' + dt.score + '</span></div></dd></a>'
               pagedata.appendChild(khtml)
             }
             if (len < 20) {
-              doing = 1;
-              softListMore.innerText = '加载完毕啦,么么哒~';
+              doing = 1
+              softListMore.innerText = '加载完毕啦,么么哒~'
+            } else {
+              softListMore.innerText = '点击有惊喜,萌萌哒~'
             }
-            else {
-              softListMore.innerText = '点击有惊喜,萌萌哒~';
-            }
-            softlist_p = softlist_p + 24;
+            softlistP = softlistP + 24
           }
-        });
+        })
       }
     }
   }

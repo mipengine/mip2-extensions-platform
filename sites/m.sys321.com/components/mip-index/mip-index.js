@@ -2,7 +2,7 @@
  * @file 评论模块
  * @author fl
  */
-import fetchJsonp from 'fetch-jsonp'
+// import fetch from 'fetch'
 
 const { CustomElement, util } = MIP
 const { css } = util
@@ -47,7 +47,7 @@ export default class MIPMsysComment extends CustomElement {
           if (siblings[i].nodeType === 1) {
             siblings[i].className = 'a'
             this.className = 'a on'
-            if (siblings[i].innerText == '') {
+            if (siblings[i].innerText === '') {
               siblings[i].className = 'tbg'
             }
           }
@@ -79,7 +79,7 @@ export default class MIPMsysComment extends CustomElement {
     }
     for(let i = 0; i < bannerPic.length; i++) {
       bannerPic[i].onclick = function () {
-        location.href = "./down_xq.html"
+        location.href = './down_xq.html'
       }
     }
     if (!a) {
@@ -113,10 +113,10 @@ export default class MIPMsysComment extends CustomElement {
       return
     } else {
       emojiBtn.onclick = function () {
-        if (emojiCont.className.indexOf("none") > -1) {
-          emojiCont.classList.remove("none");
+        if (emojiCont.className.indexOf('none') > -1) {
+          emojiCont.classList.remove('none')
         } else {
-          emojiCont.classList.add("none");
+          emojiCont.classList.add('none')
         }
       }
     }
@@ -125,14 +125,14 @@ export default class MIPMsysComment extends CustomElement {
       bqLis[i].onclick = function () {
         let src = this.childNodes[0].src
         let alt = this.childNodes[0].alt
-        let str = '<mip-img contenteditable=\'false\' class=\'emojione mip-element mip-layout-container mip-img-loaded\' alt='+alt+' src='+src+' unselectable=\'on\' data-short=\':blush:\' mip-firstscreen-element></mip-img>&nbsp;'
-        content = bjCont.innerHTML.replace("&lrm;","")
-        content = content.replace(/<img[^>]+>/g,"")
+        let str = '<mip-img contenteditable=\'false\' class=\'emojione mip-element mip-layout-container mip-img-loaded\' alt=' + alt + ' src=' + src + 'unselectable=\'on\' data-short=\':blush:\' mip-firstscreen-element></mip-img>&nbsp;'
+        let content = bjCont.innerHTML.replace('&lrm;', '')
+        content = content.replace(/<img[^>]+>/g, '')
         bjCont.innerHTML = content + str + '&lrm;'
         that.getStatus()
       }
     }
-    var that = this
+    let that = this
     bjCont.onkeyup = function () {
       that.getStatus()
     }
@@ -140,28 +140,27 @@ export default class MIPMsysComment extends CustomElement {
     let sohucs = this.element.querySelectorAll('#SOHUCS')[0]
     let plMore = this.element.querySelectorAll('#more-comment')[0]
     let plUl = this.element.querySelectorAll('.pl-c .cmt-reply')[0]
-    this.comment_p = 0;
+    this.comment_p = 0
     if (!plMore) {
-      return
+      return false
     } else {
       plMore.onclick = function () {
         let sid = sohucs.getAttribute('sid')
         let formData = new FormData()
-        formData.append("softid",sid)
-        formData.append("p",this.comment_p)
-        formData.append("api","commentData")
+        formData.append('softid', sid)
+        formData.append('p', this.comment_p)
+        formData.append('api', 'commentData')
         let req = new Request('http://www.sys321.com/Api.php', {
           method: 'POST',
           body: formData
         })
         fetch(req).then(function (response) {
-        return response.json()
+          return response.json()
         }).then(function (data) {
-          console.log(data)
           if (data === '') {
             plMore.innerText = '加载完毕啦,么么哒~'
             css(plMore, {cursor: 'default'})
-            return false;
+            return false
           } else {
             plMore.innerText = '加载中...'
             let khtml = ''
@@ -170,45 +169,46 @@ export default class MIPMsysComment extends CustomElement {
               let dt = data[i]
               dt.content = that.emoji(dt.content)
               khtml = document.createElement('li')
-              khtml.innerHTML = '<div class=\'cmt-root-cont cmt-root-cl-cont\'><div class=\'cmt-root-top\'><div class=\'cmt-root-user\'><span class=\'cmt-root-user-name\'><span class=\'cmt-icon-s-stars\' data-score='+ dt.star_class +'><i class=\'cmt-icon-s-star\' style=\'width:' + dt.star +'px\''+'></i><i class=\'cmt-icon-s-star-empty\'></i></span></span></div><div class=\'cmt-root-message cmt-message\'><p>'+ dt.content +'</p><div class=\'cmt-root-footer\'><span>'+ dt.create_time +'</span></div></div><div class=\'clear\'></div></div></div>'
+              khtml.innerHTML = '<div class=\'cmt-root-cont cmt-root-cl-cont\'><div class=\'cmt-root-top\'><div class=\'cmt-root-user\'><span class=\'cmt-root-user-name\'><span class=\'cmt-icon-s-stars\' data-score=' + dt.star_class + '><i class=\'cmt-icon-s-star\' style=\'width:' + dt.star + 'px\''+'></i><i class=\'cmt-icon-s-star-empty\'></i></span></span></div><div class=\'cmt-root-message cmt-message\'><p>' + dt.content + '</p><div class=\'cmt-root-footer\'><span>' + dt.create_time + '</span></div></div><div class=\'clear\'></div></div></div>'
               plUl.appendChild(khtml)
             }
             if (len < 20) {
-              doing = 1;
               plMore.innerText = '加载完毕啦,么么哒~'
-              css(plMore, {cursor: 'default'})
+              // css(plMore, {cursor: 'default'})
+              css(clickYS, {pointerEvents: 'none'})
             } else {
               css(plMore, {display: 'block'})
+              css(clickYS, {pointerEvents: 'inherit'})
             }
           }
         })
       }
     }
   }
-  getStatus() {
+  getStatus () {
     let bjCont = this.element.querySelectorAll('#cmt-edit-reply')[0]
     let submitBtn = this.element.querySelectorAll('.cmt-btn')[0]
     let bjContVal = bjCont.innerHTML
     var content = bjCont.innerHTML.split('&nbsp;').join('').split(' ').join('')
     if (bjContVal === '') {
-      submitBtn.setAttribute("disabled","disabled")
-      submitBtn.classList.add("cmt-disabled")
+      submitBtn.setAttribute('disabled','disabled')
+      submitBtn.classList.add('cmt-disabled')
     } else {
-      submitBtn.removeAttribute("disabled")
-      submitBtn.classList.remove("cmt-disabled")
+      submitBtn.removeAttribute('disabled')
+      submitBtn.classList.remove('cmt-disabled')
     }
   }
-  emoji(content){
-  	content=content.replace(/:blush:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f60a.png'></mip-img>");
-  	content=content.replace(/:joy:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f602.png'></mip-img>");
-  	content=content.replace(/:heart:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/2764.png'></mip-img>");
-  	content=content.replace(/:sob:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f62d.png'></mip-img>");
-  	content=content.replace(/:heart_eyes:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f60d.png'></mip-img>");
-  	content=content.replace(/:kissing_heart:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f618.png'></mip-img>");
-  	content=content.replace(/:rolling_eyes:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f644.png'></mip-img>");
-  	content=content.replace(/:skull:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f480.png'></mip-img>");
-  	content=content.replace(/:tired_face:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f62b.png'></mip-img>");
-  	content=content.replace(/:thinking:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f914.png'></mip-img>");
-  	return content;
+  emoji (content){
+  	content = content.replace(/:blush:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f60a.png\'></mip-img>')
+  	content = content.replace(/:joy:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f602.png\'></mip-img>')
+  	content = content.replace(/:heart:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/2764.png\'></mip-img>')
+  	content = content.replace(/:sob:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f62d.png\'></mip-img>')
+  	content = content.replace(/:heart_eyes:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f60d.png\'></mip-img>')
+  	content = content.replace(/:kissing_heart:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f618.png\'></mip-img>')
+  	content = content.replace(/:rolling_eyes:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f644.png\'></mip-img>')
+  	content = content.replace(/:skull:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f480.png\'></mip-img>')
+  	content = content.replace(/:tired_face:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f62b.png\'></mip-img>')
+  	content = content.replace(/:thinking:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f914.png\'></mip-img>')
+  	return content
   }
 }

@@ -2,7 +2,7 @@
  * @file 评论模块
  * @author fl
  */
-import fetchJsonp from 'fetch-jsonp'
+// import fetch from 'fetch'
 
 const { CustomElement, util } = MIP
 const { css } = util
@@ -55,7 +55,7 @@ export default class MIPMsysComment extends CustomElement {
           liA[j].className = ''
         }
         this.className = 'on'
-        if (this.innerHTML == '评论') {
+        if (this.innerHTML === '评论') {
           css(pjC, {display: 'none'})
           css(plC, {display: 'block'})
         } else {
@@ -86,16 +86,16 @@ export default class MIPMsysComment extends CustomElement {
     }
     // 加载更多评价
     let pjMore = this.element.querySelectorAll('#more-score')[0]
-    this.score_p = 0
+    this.scoreP = 0
     that.loadMore(pjMore, 'scoreData', 'pj')
     // 加载更多评论
     let plMore = this.element.querySelectorAll('#more-comment')[0]
-    this.comment_p = 0
+    this.commentP = 0
     that.loadMore(plMore, 'commentData', 'pl')
   }
   // 显示隐藏表情
   pjTab (clickYS, contBox) {
-    clickYS.onclick = function() {
+    clickYS.onclick = function () {
       if (contBox.className.indexOf('none') > -1) {
         contBox.classList.remove('none')
       } else {
@@ -104,18 +104,18 @@ export default class MIPMsysComment extends CustomElement {
     }
   }
   // 添加表情
-  addEmoji(lis, cont) {
+  addEmoji (lis, cont) {
     let that = this
     let pjbjCont = this.element.querySelectorAll('.pj-c .cmt-edit-reply')[0]
     let plbjCont = this.element.querySelectorAll('.pl-c .cmt-edit-reply')[0]
     let pjsubmitBtn = this.element.querySelectorAll('.pj-c .cmt-btn')[0]
     let plsubmitBtn = this.element.querySelectorAll('.pl-c .cmt-btn')[0]
-    for (var i = 0; i < lis.length; i++) {
+    for (let i = 0; i < lis.length; i++) {
       lis[i].onclick = function () {
         let src = this.childNodes[0].src
         let alt = this.childNodes[0].alt
-        let str = '<mip-img contenteditable=\'false\' class=\'emojione mip-element mip-layout-container mip-img-loaded\' alt='+alt+' src='+src+' unselectable=\'on\' data-short=\':blush:\' mip-firstscreen-element></mip-img>'
-        var content = cont.innerHTML.replace('&lrm;', '')
+        let str = '<mip-img contenteditable=\'false\' class=\'emojione mip-element mip-layout-container mip-img-loaded\' alt=' + alt + ' src=' + src + ' unselectable=\'on\' data-short=\':blush:\' mip-firstscreen-element></mip-img>'
+        let content = cont.innerHTML.replace('&lrm;', '')
         content = content.replace(/<img[^>]+>/g, '')
         cont.innerHTML = content + str + '&lrm;'
         that.getStatus(pjbjCont, pjsubmitBtn)
@@ -123,9 +123,9 @@ export default class MIPMsysComment extends CustomElement {
       }
     }
   }
-  getStatus(bjCont, submitBtn) {
-    var content = bjCont.innerHTML.split('&nbsp;').join('').split(' ').join('')
-    if (content == '') {
+  getStatus (bjCont, submitBtn) {
+    let content = bjCont.innerHTML.split('&nbsp;').join('').split(' ').join('')
+    if (content === '') {
       submitBtn.setAttribute('disabled', 'disabled')
       submitBtn.classList.add('cmt-disabled')
     } else {
@@ -134,17 +134,17 @@ export default class MIPMsysComment extends CustomElement {
     }
   }
   // 加载更多评价、评论
-  loadMore(clickYS, apiV, type) {
-  	let _this = this
+  loadMore (clickYS, apiV, type) {
+  	let that = this
   	clickYS.onclick = function () {
-  		let sohucs = _this.element.querySelectorAll('#SOHUCS')[0]
-  		let sid = sohucs.getAttribute('sid')
+  		let sohucs = that.element.querySelectorAll('#SOHUCS')[0]
+  		let sId = sohucs.getAttribute('sid')
   		let formData = new FormData()
-  		formData.append('softid', sid)
-      if (type == 'pj') {
-        formData.append('p', _this.score_p)
+  		formData.append('softid', sId)
+      if (type === 'pj') {
+        formData.append('p', that.scoreP)
       } else {
-        formData.append('p', _this.comment_p)
+        formData.append('p', that.commentP)
       }
   		formData.append('api', apiV)
   		let req = new Request('http://www.sys321.com/Api.php', {
@@ -158,14 +158,15 @@ export default class MIPMsysComment extends CustomElement {
           clickYS.innerText = '加载完毕啦,么么哒~'
           css(clickYS, {cursor: 'default'})
         } else {
-          _this.pjFun(clickYS, data, type)
+          that.pjFun(clickYS, data, type)
         }
   		})
   	}
   }
-  pjFun(clickYS, data, type) {
+  pjFun (clickYS, data, type) {
     let pjUl = this.element.querySelectorAll('.pj-c .cmt-reply')[0]
     let plUl = this.element.querySelectorAll('.pl-c .cmt-reply')[0]
+    let that = this
   	if (data === '') {
   	  clickYS.innerText = '加载完毕啦,么么哒~'
   	  css(clickYS, {cursor: 'default'})
@@ -175,39 +176,42 @@ export default class MIPMsysComment extends CustomElement {
   	  let len = data.length
   	  for (let i = 0; i < len; i++) {
         let dt = data[i]
+        dt.content = this.emoji(dt.content)
         khtml = document.createElement('li')
-        if (type == 'pj') {
-          khtml.innerHTML = '<div class=\'cmt-root-cont cmt-root-cl-cont\'><div class=\'cmt-root-top\'><div class=\'cmt-root-user\'><span class=\'cmt-root-user-name\'><span class=\'cmt-icon-s-stars\' data-score='+ dt.star_class +'><i class=\'cmt-icon-s-star\' style=\'width:' + dt.star +'px\''+'></i><i class=\'cmt-icon-s-star-empty\'></i></span></span></div><div class=\'cmt-root-message cmt-message\'><p>'+ dt.content +'</p><div class=\'cmt-root-footer\'><span>'+ dt.create_time +'</span></div></div><div class=\'clear\'></div></div></div>'
+        if (type === 'pj') {
+          khtml.innerHTML = '<div class=\'cmt-root-cont cmt-root-cl-cont\'><div class=\'cmt-root-top\'><div class=\'cmt-root-user\'><span class=\'cmt-root-user-name\'><span class=\'cmt-icon-s-stars\' data-score=' + dt.star_class + '><i class=\'cmt-icon-s-star\' style=\'width:' + dt.star + 'px\''+'></i><i class=\'cmt-icon-s-star-empty\'></i></span></span></div><div class=\'cmt-root-message cmt-message\'><p>' + dt.content + '</p><div class=\'cmt-root-footer\'><span>' + dt.create_time + '</span></div></div><div class=\'clear\'></div></div></div>'
         } else {
-          khtml.innerHTML = '<div class=\'cmt-root-cont cmt-root-cl-cont\'><div class=\'cmt-root-top\'><div class=\'cmt-root-message cmt-message\'><p>'+ dt.content +'</p><div class=\'cmt-root-footer\'><span>'+ dt.create_time +'</span></div></div><div class=\'clear\'></div></div></div>'
+          khtml.innerHTML = '<div class=\'cmt-root-cont cmt-root-cl-cont\'><div class=\'cmt-root-top\'><div class=\'cmt-root-message cmt-message\'><p>' + dt.content + '</p><div class=\'cmt-root-footer\'><span>' + dt.create_time + '</span></div></div><div class=\'clear\'></div></div></div>'
         }
       }
   	  if (len < 20) {
         clickYS.innerText = '加载完毕啦,么么哒~'
-        css(clickYS, {cursor: 'default'})
+        // css(clickYS, {cursor: 'default'})
+        css(clickYS, {pointerEvents: 'none'})
   	  } else {
         css(clickYS, {display: 'block'})
+        css(clickYS, {pointerEvents: 'inherit'})
   	  }
-      if (type == 'pj') {
+      if (type === 'pj') {
         pjUl.appendChild(khtml)
-        this.score_p = this.score_p + 20
+        this.scoreP = this.scoreP + 20
       } else {
         plUl.appendChild(khtml)
-        this.comment_p = this.comment_p + 20
+        this.commentP = this.commentP + 20
       }
   	}
   }
   emoji(content){
-  	content=content.replace(/:blush:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f60a.png'></mip-img>");
-  	content=content.replace(/:joy:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f602.png'></mip-img>");
-  	content=content.replace(/:heart:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/2764.png'></mip-img>");
-  	content=content.replace(/:sob:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f62d.png'></mip-img>");
-  	content=content.replace(/:heart_eyes:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f60d.png'></mip-img>");
-  	content=content.replace(/:kissing_heart:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f618.png'></mip-img>");
-  	content=content.replace(/:rolling_eyes:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f644.png'></mip-img>");
-  	content=content.replace(/:skull:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f480.png'></mip-img>");
-  	content=content.replace(/:tired_face:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f62b.png'></mip-img>");
-  	content=content.replace(/:thinking:/g,"<mip-img class='emojione' src='http://m.sys321.com/m-static/picture/1f914.png'></mip-img>");
-  	return content;
+  	content = content.replace(/:blush:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f60a.png\'></mip-img>')
+  	content = content.replace(/:joy:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f602.png\'></mip-img>')
+  	content = content.replace(/:heart:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/2764.png\'></mip-img>')
+  	content = content.replace(/:sob:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f62d.png\'></mip-img>')
+  	content = content.replace(/:heart_eyes:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f60d.png\'></mip-img>')
+  	content = content.replace(/:kissing_heart:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f618.png\'></mip-img>')
+  	content = content.replace(/:rolling_eyes:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f644.png\'></mip-img>')
+  	content = content.replace(/:skull:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f480.png\'></mip-img>')
+  	content = content.replace(/:tired_face:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f62b.png\'></mip-img>')
+  	content = content.replace(/:thinking:/g, '<mip-img class=\'emojione\' src=\'http://m.sys321.com/m-static/picture/1f914.png\'></mip-img>')
+  	return content
   }
 }
