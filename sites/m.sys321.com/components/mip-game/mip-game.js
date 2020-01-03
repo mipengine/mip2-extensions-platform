@@ -66,7 +66,7 @@ export default class MIPMsysComment extends CustomElement {
             for (let i = 0; i < len; i++) {
               let dt = data[i]
               khtml = document.createElement('li')
-              khtml.innerHTML = '<a title=' + '\'' + dt.title + '\'' + 'href='+ dt.url +'><dt><mip-img alt=' + '\'' + dt.title + '\'' + 'class=\'lazy\' data-original=' + dt.litpic + ' src=' + dt.litpic + '></mip-img></dt><dd class=\'d1\'>' + dt.title + '</dd><dd class=\'d3\'><div class=\'stars\'><span class=\'score\' title=' + dt.title + '评级' + dt.score + '></span><span class=\'star\'>' + dt.score + '</span></div></dd></a>'
+              khtml.innerHTML = '<a title=' + '\'' + dt.title + '\'' + 'href=' + dt.url + '><dt><mip-img alt=' + '\'' + dt.title + '\'' + 'class=\'lazy\' data-original=' + dt.litpic + ' src=' + dt.litpic + '></mip-img></dt><dd class=\'d1\'>' + dt.title + '</dd><dd class=\'d3\'><div class=\'stars\'><span class=\'score\' title=' + dt.title + '评级' + dt.score + '></span><span class=\'star\'>' + dt.score + '</span></div></dd></a>'
               pagedata.appendChild(khtml)
             }
             if (len < 20) {
