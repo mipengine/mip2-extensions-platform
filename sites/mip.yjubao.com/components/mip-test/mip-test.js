@@ -7,19 +7,22 @@ export default class MIPTest extends MIP.CustomElement {
     this.element.appendChild(wrapper);
     //this.element.children[0].innerHTML='jkjkjkj';
     //console.log(this.element.children[0].innerHTML)
-    console.log(this.element.getAttribute('data-id'));
+    /*console.log(this.element.getAttribute('data-id'));
     this.element.classList.add('inkkj');
     console.log(this.element.childElementCount)
-    console.log(this.element.children)
+    console.log(this.element.children)*/
+    wrapper.onclick=function(){
+      console.log(12222);
+    }
     // 在这里注册 say 事件的监听
     this.addEventAction('say', (event, str) => {
       this.element.innerText = str;
-      aaaa();
+      //aaaa();
       //uaredirect('http://localhost:8111/components/mip-test/example/index.html','http://localhost:8111/components/mip-test/example/index.html',2);
     })
   }
 }
-function aaaa(){
+/*function aaaa(){
   console.log('测试函数');
 }
 function uaredirect(f,l,o) {
@@ -36,4 +39,4 @@ function uaredirect(f,l,o) {
         }
 			}
 	} catch(d) {}
-}
+}*/
