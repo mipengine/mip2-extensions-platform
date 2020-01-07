@@ -27,8 +27,8 @@
 
     data-attrs="key1=value1||key2=value2||key3=value3"
 
-	poster="https://file.bohe.cn/fhfile1/M00/73/EF/ooYBAF0Z2OGALZFjAAHJXpIzQBc95.jpeg"
-	src="https://video.bohe.cn/20190701zzs10.mp4">
+	video-poster="https://file.bohe.cn/fhfile1/M00/73/EF/ooYBAF0Z2OGALZFjAAHJXpIzQBc95.jpeg"
+	video-src="https://video.bohe.cn/20190701zzs10.mp4">
 	<div class="hide pop">
 	  <p class="close" on="click:video.close"><a>关闭</a><b></b></p>
 	  <div class="play" on="click:video.play">继续播放</div>
@@ -38,12 +38,12 @@
 
 ## 属性
 
-### src
+### video-src
 说明：视频的url地址  
 必选项：是
 类型：string
 
-### poster
+### video-poster
 说明：视频的封面图片    
 必选项：是  
 类型：string
