@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=no">
+    <title>MIP page</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <style mip-custom>
+    #alert_tips {
+        background: #000;
+        opacity: .8;
+        color: #fff;
+        width: 200px;
+        line-height: 50px;
+        left: 50%;
+        top: 50%;
+        margin: -25px 0 0 -100px;
+        text-align: center;
+        border-radius: 5px;
+        z-index: 1000000;
+        padding:0 10px;
+        &.fadeIn {
+          -webkit-animation-name: fadeIn;
+          animation-name: fadeIn
+        }
+        &.animated {
+          -webkit-animation-duration: 1s;
+          -webkit-animation-fill-mode: both;
+          animation-duration: 1s;
+          animation-fill-mode: both
+        }
+      }
+    
+      @-webkit-keyframes fadeIn {
+        0% {
+          opacity: 0
+        }
+    
+        to {
+          opacity: 1
+        }
+      }
+    
+      @keyframes fadeIn {
+        0% {
+          opacity: 0
+        }
+    
+        to {
+          opacity: 1
+        }
+      }
+	  .ins {display: none;}
+	  .show {display: block;}
+    </style>
+  </head>
+  <body>
+    <div>
+<mip-cyb-comment id="24628" cid="279" url="http://192.168.2.242:808">
+		<div class="plbox ins">
+		<mip-form method="POST" fetch-url="/e/pl/doaction.php">
+		<input hidden name="nomember" type="text" id="nomember" value="1" />
+		<input hidden name="repid" type="text" id="repid" value="0" />
+		<input hidden name="id" type="text" id="id" value="24628" />
+		<input hidden name="classid" type="text" id="classid" value="279" />
+		<input hidden name="enews" type="text" id="enews" value="AddPlajax" />
+		<ul>
+			<li><textarea validatetarget="saytext" name="saytext" id="saytext" placeholder="请填写评论内容" class="textarea" required></textarea></li>
+			<li class="sbtn"><button type="submit" id="submit">立即发布</button> <span id="cancel" class="button">取消</span></li>
+		</ul>
+		<div class="erro" target="saytext">请填写评论内容</div>
+		<div submitting>
+		    <template type="mip-mustache">
+		      <p>正在提交申请，请耐心等待</p>
+		    </template>
+		  </div>
+		  <div class="mip-example-submit-results" submit-success>
+		    <template type="mip-mustache">
+		      <p>{{message}}</p>
+		    </template>
+		  </div>
+		  <div submit-error>
+		    <template type="mip-mustache">
+		      Sorry, 请求发生了一点错误
+		    </template>
+		  </div>
+		</mip-form>
+				</div>
+				<div class="plbtn">我要跟帖 </div>
+
+		  <div class="comment_2 f14">所有评论 共 <span class="c1 plnum" id="plnum">0</span> 条</div>
+		  <div id="comment-list" class="comment-list"></div>
+		  <div id="comment-more"><input type="button" value="更多评论" class="button"></div>
+	  </mip-cyb-comment>
+    </div>
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="/mip-cyb-comment/mip-cyb-comment.js"></script>
+  </body>
+</html>
