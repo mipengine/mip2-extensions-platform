@@ -2,10 +2,8 @@
  * @file 评论模块
  * @author fl
  */
-
 const { CustomElement, util } = MIP
 const { css } = util
-
 export default class MIPMsysComment extends CustomElement {
   build () {
     let open = this.element.querySelectorAll('#open')[0]
