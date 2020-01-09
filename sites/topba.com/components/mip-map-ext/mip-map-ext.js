@@ -183,6 +183,7 @@ export default class MIPMapExt extends CustomElement {
         searchTypes: [ 1, 2 ]
       })
       tmpMarker.addEventListener('click', () => {
+        viewer.eventAction.execute('clickOverlay', this.element, pointsInfo[i])
         searchInfoWindow.open(tmpMarker)
       })
     }
@@ -334,7 +335,7 @@ export default class MIPMapExt extends CustomElement {
           let link1 = document.createElement('link')
           window.document.body.appendChild(link1)
           link1.rel = 'stylesheet'
-          link1.href = `http://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css`
+          link1.href = `https://api.map.baidu.com/library/SearchInfoWindow/1.5/src/SearchInfoWindow_min.css`
         }
       })
       let script = document.createElement('script')

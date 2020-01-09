@@ -10,7 +10,7 @@ module.exports = {
      *
      * @type {number}
      */
-    port: 8000,
+    port: 8001,
 
     /**
      * 启用调试页面自动刷新
@@ -26,6 +26,6 @@ module.exports = {
      *
      * @type {string|boolean}
      */
-    autoopen: '/components/mip-hlj-dropmenu/example/mip-example.html'
+    autoopen: '/components/mip-hlj-baike/example/index.html'
   }
 }
