@@ -95,7 +95,7 @@ export default class MIPMsysComment extends CustomElement {
       let pjAlert = that.element.querySelectorAll('.pj-c .alert')[0]
       let timer = null
       if (timer != null) {
-        clearInterval(timer);
+        clearInterval(timer)
       }
       if (pjStar === 0) {
         css(pjAlert, {display: 'block'})
@@ -112,14 +112,14 @@ export default class MIPMsysComment extends CustomElement {
     }
     // 初次加载评价内容
     let pjMore = this.element.querySelectorAll('#more-score')[0]
-    let nopjData = this.element.querySelectorAll('#no-pj-data')[0]
+    // let nopjData = this.element.querySelectorAll('#no-pj-data')[0]
     // that.loadData(pjMore, nopjData, 'scoreData', 'pj')
     // 加载更多评价
     this.scoreP = 0
     that.loadMore(pjMore, 'scoreData', 'pj')
     // 初次加载评价内容
     let plMore = this.element.querySelectorAll('#more-comment')[0]
-    let noplData = this.element.querySelectorAll('#no-pj-data')[0]
+    // let noplData = this.element.querySelectorAll('#no-pj-data')[0]
     // that.loadData(plMore, noplData, 'commentData', 'pl')
     // 加载更多评论
     this.commentP = 0
@@ -157,7 +157,7 @@ export default class MIPMsysComment extends CustomElement {
         css(pjAlert, {display: 'block'})
         let timer = null
         if (timer != null) {
-          clearInterval(timer);
+          clearInterval(timer)
         }
         timer = setInterval(function () {
           css(pjAlert, {display: 'none'})
@@ -167,7 +167,7 @@ export default class MIPMsysComment extends CustomElement {
         css(plAlert, {display: 'block'})
         let timer = null
         if (timer != null) {
-          clearInterval(timer);
+          clearInterval(timer)
         }
         timer = setInterval(function () {
           css(plAlert, {display: 'none'})

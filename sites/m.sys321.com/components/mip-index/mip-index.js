@@ -125,7 +125,7 @@ export default class MIPMsysComment extends CustomElement {
       that.getStatus(bjCont, submitBtn)
     }
     // 页面初次渲染
-    let noData = this.element.querySelectorAll('#no-pl-data')[0]
+    // let noData = this.element.querySelectorAll('#no-pl-data')[0]
     // that.loadData(function (data) {
     //   if (data.length === 2) {
     //     css(noData, {display: 'block'})
@@ -136,7 +136,6 @@ export default class MIPMsysComment extends CustomElement {
     // })
     // 点击加载更多评论
     let plMore = this.element.querySelectorAll('#more-comment')[0]
-    let plUl = this.element.querySelectorAll('.pl-c .cmt-reply')[0]
     that.commentP = 0
     if (!plMore) {
       return false
@@ -155,7 +154,7 @@ export default class MIPMsysComment extends CustomElement {
     }
   }
   // 加载评论
-  loadData(callback) {
+  loadData (callback) {
     let that = this
     let sId = that.element.querySelectorAll('#SOHUCS')[0].getAttribute('sid')
     let formData = new FormData()
@@ -173,6 +172,8 @@ export default class MIPMsysComment extends CustomElement {
     })
   }
   plFun (clickYS, data) {
+    let plUl = this.element.querySelectorAll('.pl-c .cmt-reply')[0]
+    let that = this
     if (data === '') {
       clickYS.innerText = '加载完毕啦,么么哒~'
       css(clickYS, {cursor: 'default'})
