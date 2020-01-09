@@ -2,7 +2,6 @@
  * @file 评论模块
  * @author fl
  */
-// import fetch from 'fetch'
 
 const { CustomElement, util } = MIP
 const { css } = util
@@ -185,7 +184,6 @@ export default class MIPMsysComment extends CustomElement {
       }
       if (len < 20) {
         clickYS.innerText = '加载完毕啦,么么哒~'
-        // css(clickYS, {cursor: 'default'})
         css(clickYS, {pointerEvents: 'none'})
       } else {
         css(clickYS, {display: 'block'})

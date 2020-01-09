@@ -2,7 +2,6 @@
  * @file 评论模块
  * @author fl
  */
-// import fetch from 'fetch'
 
 const { CustomElement, util } = MIP
 const { css } = util
@@ -42,7 +41,7 @@ export default class MIPMsysComment extends CustomElement {
       softListMore.onclick = function () {
         let cut = softListMore.getAttribute('data-cut')
         let typeid = softListMore.getAttribute('data-typeid')
-        let req = new Request('http://sys321.56xz.com/api/softListMore', {
+        let req = new Request('http://s.sys321.com/api/softListMore', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'

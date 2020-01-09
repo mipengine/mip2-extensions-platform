@@ -2,7 +2,6 @@
  * @file 评论模块
  * @author fl
  */
-// import fetch from 'fetch'
 
 const { CustomElement, util } = MIP
 const { css } = util
