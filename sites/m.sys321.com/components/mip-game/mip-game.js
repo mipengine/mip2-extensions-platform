@@ -10,8 +10,6 @@ export default class MIPMsysComment extends CustomElement {
     let close = this.element.querySelectorAll('#close')[0]
     let menu = this.element.querySelectorAll('#menu')[0]
     let shadow = this.element.querySelectorAll('#shadow')[0]
-    let a = this.element.querySelectorAll('#type a')
-    let rank = this.element.querySelectorAll('#rank')[0]
     open.onclick = function () {
       css(menu, {left: '0px'})
       css(shadow, {display: 'block'})
@@ -20,6 +18,13 @@ export default class MIPMsysComment extends CustomElement {
       menu.style.left = '-270px'
       css(shadow, {display: 'none'})
     }
+    shadow.onclick = function () {
+      menu.style.left = '-270px'
+      css(shadow, {display: 'none'})
+    }
+    // tab样式
+    let a = this.element.querySelectorAll('#type a')
+    let rank = this.element.querySelectorAll('#rank')[0]
     for (let i = 0; i < a.length; i++) {
       a[i].onclick = function () {
         css(rank, {display: 'block'})
@@ -32,6 +37,7 @@ export default class MIPMsysComment extends CustomElement {
         }
       }
     }
+    // 加载更多数据
     let softListMore = this.element.querySelectorAll('#softListMore')[0]
     let pagedata = this.element.querySelectorAll('#pagedata')[0]
     let softlistP = 24

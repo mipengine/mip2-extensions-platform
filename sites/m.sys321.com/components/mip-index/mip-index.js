@@ -10,29 +10,54 @@ export default class MIPMsysComment extends CustomElement {
     let close = this.element.querySelectorAll('#close')[0]
     let menu = this.element.querySelectorAll('#menu')[0]
     let shadow = this.element.querySelectorAll('#shadow')[0]
+    open.onclick = function () {
+      css(menu, {left: '0px'})
+      css(shadow, {display: 'block'})
+    }
+    close.onclick = function () {
+      menu.style.left = '-270px'
+      css(shadow, {display: 'none'})
+    }
+    shadow.onclick = function () {
+      menu.style.left = '-270px'
+      css(shadow, {display: 'none'})
+    }
     // 分类
     let bannerPic = this.element.querySelectorAll('.bannerPic')
     let a = this.element.querySelectorAll('#sNav a')
     let main = this.element.querySelectorAll('.main dd')
-    // 资讯详情评论
-    let emojiBtn = this.element.querySelectorAll('.cmt-icon-emoji')[0]
-    let emojiCont = this.element.querySelectorAll('.cmt-emoji-cont')[0]
-    let bqLis = this.element.querySelectorAll('.cmt-emoji-list li mip-img')
-    // 资讯
-    let tabs = this.element.querySelectorAll('.elflList a')
-    // 资讯tab切换
-    for (let i = 0; i < tabs.length; i++) {
-      tabs[i].onclick = function () {
-        tabs[i].index = i
-        let siblings = this.parentNode.childNodes
-        for (let i = 0; i < siblings.length; i++) {
-          if (siblings[i].nodeType === 1) {
-            siblings[i].className = ''
-            this.className = 'on'
+    for (let i = 0; i < bannerPic.length; i++) {
+      bannerPic[i].onclick = function () {
+        location.href = './down_xq.html'
+      }
+    }
+    if (!a) {
+      return
+    } else {
+      for (let i = 0; i < a.length; i++) {
+        a[i].onclick = function () {
+          a[i].index = i
+          let siblings = this.parentNode.childNodes
+          for (let i = 0; i < siblings.length; i++) {
+            if (siblings[i].nodeType === 1) {
+              siblings[i].className = ''
+              this.className = 'b_cur'
+            }
+          }
+          if (this.index === 0) {
+            main[0].className = 'ton'
+          } else {
+            main[0].className = ''
+          }
+          if (this.index === 1) {
+            main[1].className = 'ton'
+          } else {
+            main[1].className = ''
           }
         }
       }
     }
+    // 首页最新资讯tab切换
     let as = this.element.querySelectorAll('.a')
     let ul = this.element.querySelectorAll('.Cont5 ul')
     for (let i = 0; i < as.length; i++) {
@@ -65,45 +90,10 @@ export default class MIPMsysComment extends CustomElement {
         }
       }
     }
-    open.onclick = function () {
-      css(menu, {left: '0px'})
-      css(shadow, {display: 'block'})
-    }
-    close.onclick = function () {
-      menu.style.left = '-270px'
-      css(shadow, {display: 'none'})
-    }
-    for (let i = 0; i < bannerPic.length; i++) {
-      bannerPic[i].onclick = function () {
-        location.href = './down_xq.html'
-      }
-    }
-    if (!a) {
-      return
-    } else {
-      for (let i = 0; i < a.length; i++) {
-        a[i].onclick = function () {
-          a[i].index = i
-          let siblings = this.parentNode.childNodes
-          for (let i = 0; i < siblings.length; i++) {
-            if (siblings[i].nodeType === 1) {
-              siblings[i].className = ''
-              this.className = 'b_cur'
-            }
-          }
-          if (this.index === 0) {
-            main[0].className = 'ton'
-          } else {
-            main[0].className = ''
-          }
-          if (this.index === 1) {
-            main[1].className = 'ton'
-          } else {
-            main[1].className = ''
-          }
-        }
-      }
-    }
+    // 资讯详情评论
+    let emojiBtn = this.element.querySelectorAll('.cmt-icon-emoji')[0]
+    let emojiCont = this.element.querySelectorAll('.cmt-emoji-cont')[0]
+    let bqLis = this.element.querySelectorAll('.cmt-emoji-list li mip-img')
     // 显示隐藏表情
     if (!emojiBtn) {
       return
@@ -134,54 +124,80 @@ export default class MIPMsysComment extends CustomElement {
     bjCont.onkeyup = function () {
       that.getStatus(bjCont, submitBtn)
     }
-    // 加载更多评论
-    let sohucs = this.element.querySelectorAll('#SOHUCS')[0]
+    // 页面初次渲染
+    let noData = this.element.querySelectorAll('#no-pl-data')[0]
+    // that.loadData(function (data) {
+    //   if (data.length === 2) {
+    //     css(noData, {display: 'block'})
+    //     return false
+    //   } else {
+    //     that.plFun(plMore, data)
+    //   }
+    // })
+    // 点击加载更多评论
     let plMore = this.element.querySelectorAll('#more-comment')[0]
     let plUl = this.element.querySelectorAll('.pl-c .cmt-reply')[0]
-    this.comment_p = 0
+    that.commentP = 0
     if (!plMore) {
       return false
     } else {
       plMore.onclick = function () {
-        let sid = sohucs.getAttribute('sid')
-        let formData = new FormData()
-        formData.append('softid', sid)
-        formData.append('p', this.comment_p)
-        formData.append('api', 'commentData')
-        let req = new Request('http://www.sys321.com/Api.php', {
-          method: 'POST',
-          body: formData
-        })
-        fetch(req).then(function (response) {
-          return response.json()
-        }).then(function (data) {
+        that.loadData(function (data) {
           if (data === '') {
             plMore.innerText = '加载完毕啦,么么哒~'
             css(plMore, {cursor: 'default'})
             return false
           } else {
-            plMore.innerText = '加载中...'
-            let khtml = ''
-            let len = data.length
-            for (let i = 0; i < len; i++) {
-              let dt = data[i]
-              dt.content = that.emoji(dt.content)
-              khtml = document.createElement('li')
-              khtml.innerHTML = '<div class=\'cmt-root-cont cmt-root-cl-cont\'><div class=\'cmt-root-top\'><div class=\'cmt-root-user\'><span class=\'cmt-root-user-name\'><span class=\'cmt-icon-s-stars\' data-score=' + dt.star_class + '><i class=\'cmt-icon-s-star\' style=\'width:' + dt.star + 'px\'' + '></i><i class=\'cmt-icon-s-star-empty\'></i></span></span></div><div class=\'cmt-root-message cmt-message\'><p>' + dt.content + '</p><div class=\'cmt-root-footer\'><span>' + dt.create_time + '</span></div></div><div class=\'clear\'></div></div></div>'
-              plUl.appendChild(khtml)
-            }
-            if (len < 20) {
-              plMore.innerText = '加载完毕啦,么么哒~'
-              css(plMore, {pointerEvents: 'none'})
-            } else {
-              css(plMore, {display: 'block'})
-              css(plMore, {pointerEvents: 'inherit'})
-            }
+            that.plFun(plMore, data)
           }
         })
       }
     }
   }
+  // 加载评论
+  loadData(callback) {
+    let that = this
+    let sId = that.element.querySelectorAll('#SOHUCS')[0].getAttribute('sid')
+    let formData = new FormData()
+    formData.append('softid', sId)
+    formData.append('p', that.commentP)
+    formData.append('api', 'articleCommentData')
+    let req = new Request('http://www.sys321.com/Api.php', {
+      method: 'POST',
+      body: formData
+    })
+    fetch(req).then(function (response) {
+      return response.json()
+    }).then(function (data) {
+      callback(data)
+    })
+  }
+  plFun (clickYS, data) {
+    if (data === '') {
+      clickYS.innerText = '加载完毕啦,么么哒~'
+      css(clickYS, {cursor: 'default'})
+      return false
+    } else {
+      clickYS.innerText = '加载中...'
+      let khtml = ''
+      let len = data.length
+      for (let i = 0; i < len; i++) {
+        let dt = data[i]
+        dt.content = that.emoji(dt.content)
+        khtml = document.createElement('li')
+        khtml.innerHTML = '<div class=\'cmt-root-cont cmt-root-cl-cont\'><div class=\'cmt-root-top\'><div class=\'cmt-root-user\'><span class=\'cmt-root-user-name\'><span class=\'cmt-icon-s-stars\' data-score=' + dt.star_class + '><i class=\'cmt-icon-s-star\' style=\'width:' + dt.star + 'px\'' + '></i><i class=\'cmt-icon-s-star-empty\'></i></span></span></div><div class=\'cmt-root-message cmt-message\'><p>' + dt.content + '</p><div class=\'cmt-root-footer\'><span>' + dt.create_time + '</span></div></div><div class=\'clear\'></div></div></div>'
+        plUl.appendChild(khtml)
+      }
+      if (len < 20) {
+        clickYS.innerText = '加载完毕啦,么么哒~'
+        css(clickYS, {pointerEvents: 'none'})
+      } else {
+        css(clickYS, {display: 'block'})
+        css(clickYS, {pointerEvents: 'inherit'})
+      }
+    }
+  }
+  // 判断是否有值
   getStatus (cont, btn) {
     let content = cont.innerHTML.split('&nbsp;').join('').split(' ').join('')
     if (content === '') {

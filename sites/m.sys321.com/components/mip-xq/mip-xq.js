@@ -11,23 +11,6 @@ export default class MIPMsysComment extends CustomElement {
     let close = this.element.querySelectorAll('#close')[0]
     let menu = this.element.querySelectorAll('#menu')[0]
     let shadow = this.element.querySelectorAll('#shadow')[0]
-    let moreBtn = this.element.querySelectorAll('#show-more')[0]
-    let describe = this.element.querySelectorAll('#describe')[0]
-    let showMore = this.element.querySelectorAll('.show-more')[0]
-    let liA = this.element.querySelectorAll('.cmt-tabs li a')
-    let pjC = this.element.querySelectorAll('.pj-c')[0]
-    let plC = this.element.querySelectorAll('.pl-c')[0]
-    let pjbjCont = this.element.querySelectorAll('.pj-c .cmt-edit-reply')[0]
-    let plbjCont = this.element.querySelectorAll('.pl-c .cmt-edit-reply')[0]
-    let plemojiBtn = this.element.querySelectorAll('.pl-c .cmt-btn-emoji')[0]
-    let pjemojiBtn = this.element.querySelectorAll('.pj-c .cmt-btn-emoji')[0]
-    let plemojiCont = this.element.querySelectorAll('.pl-c .cmt-emoji-cont')[0]
-    let pjemojiCont = this.element.querySelectorAll('.pj-c .cmt-emoji-cont')[0]
-    let star = this.element.querySelectorAll('.cmt-icon-b-stars i')
-    let pjbqLis = this.element.querySelectorAll('.pj-c .cmt-emoji-list li mip-img')
-    let plbqLis = this.element.querySelectorAll('.pl-c .cmt-emoji-list li mip-img')
-    let pjsubmitBtn = this.element.querySelectorAll('.pj-c .cmt-btn')[0]
-    let plsubmitBtn = this.element.querySelectorAll('.pl-c .cmt-btn')[0]
     // 显示隐藏左边栏
     open.onclick = function () {
       css(menu, {left: '0px'})
@@ -37,6 +20,13 @@ export default class MIPMsysComment extends CustomElement {
       menu.style.left = '-270px'
       css(shadow, {display: 'none'})
     }
+    shadow.onclick = function () {
+      menu.style.left = '-270px'
+      css(shadow, {display: 'none'})
+    }
+    let moreBtn = this.element.querySelectorAll('#show-more')[0]
+    let describe = this.element.querySelectorAll('#describe')[0]
+    let showMore = this.element.querySelectorAll('.show-more')[0]
     // 点击更多按钮
     moreBtn.onclick = function () {
       css(describe, {
@@ -45,6 +35,9 @@ export default class MIPMsysComment extends CustomElement {
       })
       css(showMore, {display: 'none'})
     }
+    let liA = this.element.querySelectorAll('.cmt-tabs li a')
+    let pjC = this.element.querySelectorAll('.pj-c')[0]
+    let plC = this.element.querySelectorAll('.pl-c')[0]
     // 评论评价切换显示
     for (let i = 0; i < liA.length; i++) {
       liA[i].onclick = function () {
@@ -61,10 +54,23 @@ export default class MIPMsysComment extends CustomElement {
         }
       }
     }
+    // 显示隐藏表情
+    let plemojiBtn = this.element.querySelectorAll('.pl-c .cmt-btn-emoji')[0]
+    let pjemojiBtn = this.element.querySelectorAll('.pj-c .cmt-btn-emoji')[0]
+    let plemojiCont = this.element.querySelectorAll('.pl-c .cmt-emoji-cont')[0]
+    let pjemojiCont = this.element.querySelectorAll('.pj-c .cmt-emoji-cont')[0]
     that.pjTab(pjemojiBtn, pjemojiCont)
     that.pjTab(plemojiBtn, plemojiCont)
+    // 点击添加表情
+    let pjbqLis = this.element.querySelectorAll('.pj-c .cmt-emoji-list li mip-img')
+    let plbqLis = this.element.querySelectorAll('.pl-c .cmt-emoji-list li mip-img')
+    let pjbjCont = this.element.querySelectorAll('.pj-c .cmt-edit-reply')[0]
+    let plbjCont = this.element.querySelectorAll('.pl-c .cmt-edit-reply')[0]
     that.addEmoji(pjbqLis, pjbjCont)
     that.addEmoji(plbqLis, plbjCont)
+    // 判断输入框是否有值
+    let pjsubmitBtn = this.element.querySelectorAll('.pj-c .cmt-btn')[0]
+    let plsubmitBtn = this.element.querySelectorAll('.pl-c .cmt-btn')[0]
     pjbjCont.onkeyup = function () {
       that.getStatus(pjbjCont, pjsubmitBtn)
     }
@@ -72,6 +78,7 @@ export default class MIPMsysComment extends CustomElement {
       that.getStatus(plbjCont, plsubmitBtn)
     }
     // 点亮星星
+    let star = this.element.querySelectorAll('.cmt-icon-b-stars i')
     for (let i = 0; i < star.length; i++) {
       star[i].onclick = function () {
         if (this.className !== 'cmt-icon-b-star') {
@@ -81,14 +88,93 @@ export default class MIPMsysComment extends CustomElement {
         }
       }
     }
-    // 加载更多评价
+    // 点击提交评价评论
+    let pjP = that.element.querySelectorAll('.pj-c .alert p')[0]
+    pjsubmitBtn.onclick = function () {
+      let pjStar = that.element.querySelectorAll('.pj-c .cmt-icon-b-star').length
+      let pjAlert = that.element.querySelectorAll('.pj-c .alert')[0]
+      let timer = null
+      if (timer != null) {
+        clearInterval(timer);
+      }
+      if (pjStar === 0) {
+        css(pjAlert, {display: 'block'})
+        timer = setInterval(function () {
+          css(pjAlert, {display: 'none'})
+        }, 4000)
+      } else {
+        that.request('pj', 'http://m.sys321.com/Api.php', pjP)
+      }
+    }
+    let plP = that.element.querySelectorAll('.pl-c .alert p')[0]
+    plsubmitBtn.onclick = function () {
+      that.request('pl', 'http://m.sys321.com/Api.php', plP)
+    }
+    // 初次加载评价内容
     let pjMore = this.element.querySelectorAll('#more-score')[0]
+    let nopjData = this.element.querySelectorAll('#no-pj-data')[0]
+    // that.loadData(pjMore, nopjData, 'scoreData', 'pj')
+    // 加载更多评价
     this.scoreP = 0
     that.loadMore(pjMore, 'scoreData', 'pj')
-    // 加载更多评论
+    // 初次加载评价内容
     let plMore = this.element.querySelectorAll('#more-comment')[0]
+    let noplData = this.element.querySelectorAll('#no-pj-data')[0]
+    // that.loadData(plMore, noplData, 'commentData', 'pl')
+    // 加载更多评论
     this.commentP = 0
     that.loadMore(plMore, 'commentData', 'pl')
+  }
+  // 提交评价或评论内容
+  request (type, url, p) {
+    let that = this
+    let pjCont = that.element.querySelectorAll('.pj-c .cmt-edit-reply')[0].innerText
+    let plCont = that.element.querySelectorAll('.pl-c .cmt-edit-reply')[0].innerText
+    let sId = that.element.querySelectorAll('#SOHUCS')[0].getAttribute('sid')
+    let pjStar = that.element.querySelectorAll('.pj-c .cmt-icon-b-star').length
+    let pjAlert = that.element.querySelectorAll('.pj-c .alert')[0]
+    let plAlert = that.element.querySelectorAll('.pl-c .alert')[0]
+    let formData = new FormData()
+    formData.append('softid', sId)
+    formData.append('type', 1)
+    if (type === 'pj') {
+      formData.append('comment', pjCont)
+      formData.append('star_class', pjStar)
+      formData.append('api', 'scoreSubmit')
+    } else {
+      formData.append('comment', plCont)
+      formData.append('api', 'commentSubmit')
+    }
+    let req = new Request(url, {
+      method: 'POST',
+      body: formData
+    })
+    fetch(req).then(function (response) {
+      return response.json()
+    }).then(function (data) {
+      if (type === 'pj') {
+        p.innerText = '您的评价发表成功，需要审核才能显示~'
+        css(pjAlert, {display: 'block'})
+        let timer = null
+        if (timer != null) {
+          clearInterval(timer);
+        }
+        timer = setInterval(function () {
+          css(pjAlert, {display: 'none'})
+          that.element.querySelectorAll('.pj-c .cmt-edit-reply')[0].innerText = ''
+        }, 4000)
+      } else {
+        css(plAlert, {display: 'block'})
+        let timer = null
+        if (timer != null) {
+          clearInterval(timer);
+        }
+        timer = setInterval(function () {
+          css(plAlert, {display: 'none'})
+          that.element.querySelectorAll('.pl-c .cmt-edit-reply')[0].innerText = ''
+        }, 4000)
+      }
+    })
   }
   // 显示隐藏表情
   pjTab (clickYS, contBox) {
@@ -130,7 +216,36 @@ export default class MIPMsysComment extends CustomElement {
       submitBtn.classList.remove('cmt-disabled')
     }
   }
-  // 加载更多评价、评论
+  // 页面初次加载评价、评论
+  loadData (clickYS, noData, apiV, type) {
+    let that = this
+    let sohucs = that.element.querySelectorAll('#SOHUCS')[0]
+    let sId = sohucs.getAttribute('sid')
+    let formData = new FormData()
+    formData.append('softid', sId)
+    if (type === 'pj') {
+      formData.append('p', that.scoreP)
+      formData.append('api', 'scoreData')
+    } else {
+      formData.append('p', that.commentP)
+      formData.append('api', 'commentData')
+    }
+    let req = new Request('http://www.sys321.com/Api.php', {
+      method: 'POST',
+      body: formData
+    })
+    fetch(req).then(function (response) {
+      return response.json()
+    }).then(function (data) {
+      if (data.length === 2) {
+        css(noData, {display: 'block'})
+        return false
+      } else {
+        that.pjFun(clickYS, data, type)
+      }
+    })
+  }
+  // 点击加载更多评价、评论
   loadMore (clickYS, apiV, type) {
     let that = this
     clickYS.onclick = function () {

@@ -21,6 +21,11 @@ export default class MIPMsysComment extends CustomElement {
       menu.style.left = '-270px'
       css(shadow, {display: 'none'})
     }
+    shadow.onclick = function () {
+      menu.style.left = '-270px'
+      css(shadow, {display: 'none'})
+    }
+    // 点击搜索判断内容是否为空
     let timer = null
     if (!searchBtn) {
       return
@@ -40,6 +45,7 @@ export default class MIPMsysComment extends CustomElement {
         }
       }
     }
+    // 如果没有查到搜索数据,显示空白样式
     let empty = this.element.querySelectorAll('.search-empty')[0]
     let lis = this.element.querySelectorAll('.search-res li')
     if (lis.length === 0) {
@@ -47,6 +53,7 @@ export default class MIPMsysComment extends CustomElement {
     } else {
       css(empty, {display: 'none'})
     }
+    // tab切换
     let listUl = this.element.querySelectorAll('.search-res')
     let listAs = this.element.querySelectorAll('.search-tabs li')
     for (let i = 0; i < listAs.length; i++) {
