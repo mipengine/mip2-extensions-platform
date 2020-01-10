@@ -6,7 +6,7 @@ m.sys321.com移动端搜索页面逻辑合集
 ----|----
 类型| 游戏, 软件搜索列表
 支持布局| fixed
-所需脚本| [https://c.mipcdn.com/extensions/platform/v2/m.56xz.com/mip-search/mip-search.js](https://c.mipcdn.com/extensions/platform/v2/m.56xz.com/mip-search/mip-search.js)
+所需脚本| [https://c.mipcdn.com/extensions/platform/v2/m.sys321.com/mip-search/mip-search.js](https://c.mipcdn.com/extensions/platform/v2/m.sys321.com/mip-search/mip-search.js)
 
 ## 示例
 

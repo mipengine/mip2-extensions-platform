@@ -6,7 +6,7 @@ m.sys321.com移动端首页逻辑合集
 ----|----
 类型| 通用
 支持布局| responsive, fixed-height, fill, container, fixed
-所需脚本| [https://c.mipcdn.com/extensions/platform/v2/m.56xz.com/mip-index/mip-index.js](https://c.mipcdn.com/extensions/platform/v2/m.56xz.com/mip-index/mip-index.js)
+所需脚本| [https://c.mipcdn.com/extensions/platform/v2/m.sys321.com/mip-index/mip-index.js](https://c.mipcdn.com/extensions/platform/v2/m.sys321.com/mip-index/mip-index.js)
 
 ## 示例
 
