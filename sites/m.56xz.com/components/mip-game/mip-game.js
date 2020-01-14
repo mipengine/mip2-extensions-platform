@@ -26,7 +26,7 @@ export default class MIP56Comment extends CustomElement {
     // 获取url?后index参数
     let url = window.location.search
     let theRequest = {}
-    if (url.indexOf('?') != -1) {
+    if (url.indexOf('?') !== -1) {
       let str = url.substr(1)
       let strs = str.split('&')
       for (let i = 0; i < strs.length; i++) {
@@ -105,7 +105,6 @@ export default class MIP56Comment extends CustomElement {
       downSx.classList.remove('selected')
       newSx.classList.add('selected')
       order = 'new'
-      let p = 24
       let tempStr = str.substr(0, str.length - 1)
       pagedata2.innerHTML = ''
       that.request(tempStr, order)
@@ -114,7 +113,6 @@ export default class MIP56Comment extends CustomElement {
       newSx.classList.remove('selected')
       downSx.classList.add('selected')
       order = 'down'
-      let p = 24
       let tempStr = str.substr(0, str.length - 1)
       pagedata2.innerHTML = ''
       that.request(tempStr, order)

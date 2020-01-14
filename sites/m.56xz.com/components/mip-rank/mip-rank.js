@@ -69,9 +69,9 @@ export default class MIP56Comment extends CustomElement {
     clickBtn.onclick = function () {
       siblingCls.className = 'dropdown'
       let cn = clickBtn.className
-      if(cn == 'dropdown'){
+      if (cn === 'dropdown') {
         clickBtn.className = 'dropdown open'
-      }else{
+      } else {
         clickBtn.className = 'dropdown'
       }
     }
