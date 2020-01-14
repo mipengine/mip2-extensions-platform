@@ -2,6 +2,7 @@
  * @file 评论模块
  * @author fl
  */
+
 const { CustomElement, util } = MIP
 const { css } = util
 export default class MIP56Comment extends CustomElement {
