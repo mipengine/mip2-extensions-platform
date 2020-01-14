@@ -46,7 +46,7 @@ export default class MIP56Comment extends CustomElement {
           liA[j].className = ''
         }
         this.className = 'on'
-        if (this.innerHTML == '评论') {
+        if (this.innerHTML === '评论') {
           css(pjC, {display: 'none'})
           css(plC, {display: 'block'})
         } else {
@@ -111,7 +111,7 @@ export default class MIP56Comment extends CustomElement {
     }
     let plP = that.element.querySelectorAll('.pl-c .alert p')[0]
     plsubmitBtn.onclick = function () {
-        that.request('pl', api.baseUrl + 'comment', plP, plReply)
+      that.request('pl', api.baseUrl + 'comment', plP, plReply)
     }
     // 评价
     let pjMore = this.element.querySelectorAll('#more-score')[0]
@@ -130,7 +130,7 @@ export default class MIP56Comment extends CustomElement {
     // 加载更多评论
     that.loadMore(plMore, 'commentData', 'pl', api.baseUrl + 'commentData')
   }
-  // 提交评价或评论内容 
+  // 提交评价或评论内容
   request (type, url, p) {
     let that = this
     let pjCont = that.element.querySelectorAll('.pj-c .cmt-edit-reply')[0].innerText
@@ -197,7 +197,7 @@ export default class MIP56Comment extends CustomElement {
   }
   // 显示隐藏表情
   pjTab (clickYS, contBox) {
-    clickYS.onclick = function() {
+    clickYS.onclick = function () {
       if (contBox.className.indexOf('none') > -1) {
         contBox.classList.remove('none')
       } else {
@@ -212,12 +212,14 @@ export default class MIP56Comment extends CustomElement {
     let plbjCont = this.element.querySelectorAll('.pl-c .cmt-edit-reply')[0]
     let pjsubmitBtn = this.element.querySelectorAll('.pj-c .cmt-btn')[0]
     let plsubmitBtn = this.element.querySelectorAll('.pl-c .cmt-btn')[0]
-    for (var i = 0; i < lis.length; i++) {
+    let pjReply = this.element.querySelectorAll('.pj-reply')[0]
+    let plReply = this.element.querySelectorAll('.pl-reply')[0]
+    for (let i = 0; i < lis.length; i++) {
       lis[i].onclick = function () {
         let src = this.childNodes[0].src
         let alt = this.childNodes[0].alt
         let str = '<mip-img contenteditable=\'false\' class=\'emojione mip-element mip-layout-container mip-img-loaded\' alt=' + alt + ' src=' + src + ' unselectable=\'on\' data-short=\':blush:\' mip-firstscreen-element></mip-img>'
-        var content = cont.innerHTML.replace('&lrm;', '')
+        let content = cont.innerHTML.replace('&lrm;', '')
         content = content.replace(/<img[^>]+>/g, '')
         cont.innerHTML = content + str + '&lrm;'
         that.getStatus(pjbjCont, pjsubmitBtn, pjReply)

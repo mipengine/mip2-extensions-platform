@@ -27,7 +27,7 @@ export default class MIP56Comment extends CustomElement {
     let bannerPic = this.element.querySelectorAll('.bannerPic')
     let a = this.element.querySelectorAll('#sNav a')
     let main = this.element.querySelectorAll('.main dd')
-    for(let i = 0; i < bannerPic.length; i++) {
+    for (let i = 0; i < bannerPic.length; i++) {
       bannerPic[i].onclick = function () {
         location.href = './down_xq.html'
       }
@@ -100,7 +100,7 @@ export default class MIP56Comment extends CustomElement {
             }
             if (len < 20) {
               softListMore.innerText = '加载完毕啦,么么哒~'
-            css(softListMore, {pointerEvents: 'none'})
+              css(softListMore, {pointerEvents: 'none'})
             } else {
               softListMore.innerText = '点击有惊喜,萌萌哒~'
             }
@@ -308,7 +308,7 @@ export default class MIP56Comment extends CustomElement {
         css(plAlert, {display: 'block'})
         let timer = null
         if (timer != null) {
-          clearInterval(timer);
+          clearInterval(timer)
         }
         timer = setInterval(function () {
           css(plAlert, {display: 'none'})
@@ -318,7 +318,6 @@ export default class MIP56Comment extends CustomElement {
     }
     // 评论
     let plMore = this.element.querySelectorAll('#more-comment')[0]
-    let plUl = this.element.querySelectorAll('.pl-c .cmt-reply')[0]
     this.commentP = 0
     // 页面初次加载评论
     // let noData = this.element.querySelectorAll('#no-pl-data')[0]
@@ -364,6 +363,8 @@ export default class MIP56Comment extends CustomElement {
     })
   }
   plFun (clickYS, data) {
+    let plUl = this.element.querySelectorAll('.pl-c .cmt-reply')[0]
+    let that = this
     if (data === '') {
       clickYS.innerText = '加载完毕啦,么么哒~'
       css(clickYS, {cursor: 'default'})
@@ -392,13 +393,13 @@ export default class MIP56Comment extends CustomElement {
   getStatus (cont, btn) {
     let content = cont.innerHTML.split('&nbsp;').join('').split(' ').join('')
     if (content === '') {
-		btn.setAttribute('disabled', 'disabled')
-		btn.classList.add('cmt-disabled')
-		cont.classList.add('background')
+      btn.setAttribute('disabled', 'disabled')
+      btn.classList.add('cmt-disabled')
+      cont.classList.add('background')
     } else {
-		btn.removeAttribute('disabled')
-		btn.classList.remove('cmt-disabled')
-		cont.classList.remove('background')
+      btn.removeAttribute('disabled')
+      btn.classList.remove('cmt-disabled')
+      cont.classList.remove('background')
     }
   }
   emoji (content) {

@@ -25,10 +25,10 @@ export default class MIP56Comment extends CustomElement {
     }
     // 获取url?后index参数
     let url = window.location.search
-    let theRequest = new Object()
+    let theRequest = {}
     if (url.indexOf('?') != -1) {
       let str = url.substr(1)
-      strs = str.split('&')
+      let strs = str.split('&')
       for (let i = 0; i < strs.length; i++) {
         theRequest[strs[i].split('=')[0]] = unescape(strs[i].split('=')[1])
       }
@@ -71,12 +71,11 @@ export default class MIP56Comment extends CustomElement {
             ipts = lebal[i].children[0]
             if (ipts.value !== '') {
               ipts.value = ''
-		          ipts.checked = false
+              ipts.checked = false
               str = ''
             }
           }
-		      isClickLabel = 0
-		      // return false
+          isClickLabel = 0
         }
         css(zyxBtn, {display: 'block'})
       }
@@ -87,12 +86,11 @@ export default class MIP56Comment extends CustomElement {
     let type = this.element.querySelectorAll('#type')[0].value
     let isClickLabel = 0
     let order = 'new'
-    let p = 20
     let str = ''
     let that = this
     zyxBtn.onclick = function () {
       isClickLabel = 1
-      let tempStr = str.substr(0, str.length-1)
+      let tempStr = str.substr(0, str.length - 1)
       pagedata2.innerHTML = ''
       if (type === '游戏') {
         order = 'new'
@@ -107,23 +105,24 @@ export default class MIP56Comment extends CustomElement {
       downSx.classList.remove('selected')
       newSx.classList.add('selected')
       order = 'new'
-      p = 20
-      let tempStr = str.substr(0, str.length-1)
+      let p = 24
+      let tempStr = str.substr(0, str.length - 1)
       pagedata2.innerHTML = ''
-      that.request(tempStr,  order)
+      that.request(tempStr, order)
     }
     downSx.onclick = function () {
       newSx.classList.remove('selected')
       downSx.classList.add('selected')
       order = 'down'
-      p = 20
-      let tempStr = str.substr(0, str.length-1)
+      let p = 24
+      let tempStr = str.substr(0, str.length - 1)
       pagedata2.innerHTML = ''
       that.request(tempStr, order)
     }
     let softlistP = 24
     // 加载更多
     let softListMore = this.element.querySelectorAll('#softListMore')[0]
+    let pagedata = this.element.querySelectorAll('#pagedata')[0]
     softListMore.onclick = function () {
       let cut = softListMore.getAttribute('data-cut')
       let typeid = softListMore.getAttribute('data-typeid')
@@ -175,7 +174,7 @@ export default class MIP56Comment extends CustomElement {
     // 删除之前的添加记录
     let sxtj = this.element.querySelectorAll('.sxtj')[0]
     if (sxtj !== undefined) {
-	  boxAdd.innerHTML = ''
+      boxAdd.innerHTML = ''
     }
     for (let i = 0; i < tags.length; i++) {
       let value = ''
@@ -205,7 +204,7 @@ export default class MIP56Comment extends CustomElement {
             let dt = data[i]
             tempHtml += '<li><a title=' + '\'' + dt.title + '\'' + 'href=' + dt.url + '><mip-img alt=' + '\'' + dt.title + '\'' + 'class=\'lazy\' src=' + dt.litpic + '></mip-img><p class=\'d1\'>' + dt.title + '</p><p class=\'stars d3\'><span class=\'score\' title=' + '\'' + dt.title + ' 评级 ' + dt.score + '\' style=\'width:' + dt.star + '%\'></span><span class=\'star\'>' + dt.score + '</span></p></a></li>'
           }
-          if(len < 3) {return false}
+          if (len < 3) { return false }
           tempHtml += '</ul><div class=\'cl\'></div></div>'
           khtml.innerHTML = tempHtml
           boxAdd.appendChild(khtml)
@@ -243,7 +242,8 @@ export default class MIP56Comment extends CustomElement {
         tag: tempStr,
         p: 0,
         typeid: sxTypeid,
-        order: order
+        order: order,
+        count: 24
       })
     })
     fetch(req).then(function (response) {
@@ -267,7 +267,7 @@ export default class MIP56Comment extends CustomElement {
         css(pagedata2, {display: 'block'})
         css(softListMore, {display: 'none'})
         css(sorting1, {display: 'none'})
-        if(len === 0){
+        if (len === 0) {
           pagedata2.innerHTML = '<div class=\'tip\'>抱歉，暂无相关内容</div>'
           css(screenMore, {display: 'none'})
           css(sorting2, {display: 'none'})

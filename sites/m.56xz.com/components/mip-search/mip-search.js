@@ -32,7 +32,7 @@ export default class MIP56Comment extends CustomElement {
       searchBtn.onclick = function () {
         if (searchInp.value.length !== 0) {
           css(alert, {display: 'none'})
-          location.href = '../../searchResult.html?q='+searchInp.value
+          location.href = '../../searchResult.html?q=' + searchInp.value
         } else {
           if (timer != null) {
             clearInterval(timer)
