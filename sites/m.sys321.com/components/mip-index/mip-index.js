@@ -162,7 +162,7 @@ export default class MIPMsysComment extends CustomElement {
     formData.append('softid', sId)
     formData.append('p', that.commentP)
     formData.append('api', 'articleCommentData')
-    let req = new Request(api.baseUrl + 'Api.php', {
+    let req = new Request(api.basePJUrl + '/Api.php', {
       method: 'POST',
       body: formData
     })

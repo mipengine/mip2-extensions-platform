@@ -104,12 +104,12 @@ export default class MIPMsysComment extends CustomElement {
           css(pjAlert, {display: 'none'})
         }, 4000)
       } else {
-        that.request('pj', api.baseUrl + 'Api.php', pjP)
+        that.request('pj', api.basePJUrl + '/Api.php', pjP)
       }
     }
     let plP = that.element.querySelectorAll('.pl-c .alert p')[0]
     plsubmitBtn.onclick = function () {
-      that.request('pl', api.baseUrl + 'Api.php', plP)
+      that.request('pl', api.basePJUrl + '/Api.php', plP)
     }
     // 初次加载评价内容
     let pjMore = this.element.querySelectorAll('#more-score')[0]
@@ -231,7 +231,7 @@ export default class MIPMsysComment extends CustomElement {
       formData.append('p', that.commentP)
       formData.append('api', 'commentData')
     }
-    let req = new Request(api.baseUrl + 'Api.php', {
+    let req = new Request(api.basePJUrl + '/Api.php', {
       method: 'POST',
       body: formData
     })
@@ -260,7 +260,7 @@ export default class MIPMsysComment extends CustomElement {
         formData.append('p', that.commentP)
       }
       formData.append('api', apiV)
-      let req = new Request(api.baseUrl + 'Api.php', {
+      let req = new Request(api.basePJUrl + '/Api.php', {
         method: 'POST',
         body: formData
       })

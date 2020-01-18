@@ -46,7 +46,7 @@ export default class MIPMsysComment extends CustomElement {
       softListMore.onclick = function () {
         let cut = softListMore.getAttribute('data-cut')
         let typeid = softListMore.getAttribute('data-typeid')
-        let req = new Request(api.baseUrl + 'api/softListMore', {
+        let req = new Request(api.baseUrl + '/api/softListMore', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
