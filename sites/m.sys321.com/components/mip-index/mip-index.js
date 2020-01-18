@@ -2,6 +2,7 @@
  * @file 评论模块
  * @author fl
  */
+import api from '../../common/config.api'
 const { CustomElement, util } = MIP
 const { css } = util
 export default class MIPMsysComment extends CustomElement {
@@ -161,7 +162,7 @@ export default class MIPMsysComment extends CustomElement {
     formData.append('softid', sId)
     formData.append('p', that.commentP)
     formData.append('api', 'articleCommentData')
-    let req = new Request('http://www.sys321.com/Api.php', {
+    let req = new Request(api.baseUrl + 'Api.php', {
       method: 'POST',
       body: formData
     })

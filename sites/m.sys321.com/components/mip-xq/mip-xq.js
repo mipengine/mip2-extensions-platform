@@ -2,6 +2,7 @@
  * @file 评论模块
  * @author fl
  */
+import api from '../../common/config.api'
 const { CustomElement, util } = MIP
 const { css } = util
 export default class MIPMsysComment extends CustomElement {
@@ -103,12 +104,12 @@ export default class MIPMsysComment extends CustomElement {
           css(pjAlert, {display: 'none'})
         }, 4000)
       } else {
-        that.request('pj', 'http://m.sys321.com/Api.php', pjP)
+        that.request('pj', api.baseUrl + 'Api.php', pjP)
       }
     }
     let plP = that.element.querySelectorAll('.pl-c .alert p')[0]
     plsubmitBtn.onclick = function () {
-      that.request('pl', 'http://m.sys321.com/Api.php', plP)
+      that.request('pl', api.baseUrl + 'Api.php', plP)
     }
     // 初次加载评价内容
     let pjMore = this.element.querySelectorAll('#more-score')[0]
@@ -230,7 +231,7 @@ export default class MIPMsysComment extends CustomElement {
       formData.append('p', that.commentP)
       formData.append('api', 'commentData')
     }
-    let req = new Request('http://www.sys321.com/Api.php', {
+    let req = new Request(api.baseUrl + 'Api.php', {
       method: 'POST',
       body: formData
     })
@@ -259,7 +260,7 @@ export default class MIPMsysComment extends CustomElement {
         formData.append('p', that.commentP)
       }
       formData.append('api', apiV)
-      let req = new Request('http://www.sys321.com/Api.php', {
+      let req = new Request(api.baseUrl + 'Api.php', {
         method: 'POST',
         body: formData
       })
