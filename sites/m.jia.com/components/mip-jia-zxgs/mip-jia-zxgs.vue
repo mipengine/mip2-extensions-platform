@@ -74,42 +74,6 @@
 					<div class="nav-popmask" :class="{'show':zxgsArea||zxgsSort ||zxgsFilter}"  @click="_setData({ zxgsArea: false, zxgsSort: false, zxgsFilter: false})"></div>
 				</div>
 			</section>
-			<!--<div class="swiper_contents">
-				<div class="list_box">
-					<ul class="clearfixm swiper-container swiper-wrapper">
-						<li class="zx_list_click swiper-slide">
-							<div class="tsfu" data-id="20359">
-								<a href="javascript:;" tjjj="click_m_zx_list_rc_sanwei">三维设计</a>
-							</div>
-						</li>
-						<li class="zx_list_click swiper-slide">
-							<div class="tsfu" data-id="20360">
-								<a href="javascript:;" tjjj="click_m_zx_list_rc_ybf">样板房带看</a>
-							</div>
-						</li>
-						<li class="zx_list_click swiper-slide">
-							<div class="tsfu" data-id="20361">
-								<a href="javascript:;" tjjj="click_m_zx_list_rc_zb">超长质保期</a>
-							</div>
-						</li>
-						<li class="zx_list_click swiper-slide">
-							<div class="tsfu" data-id="20362">
-								<a href="javascript:;" tjjj="click_m_zx_list_rc_fq">装修分期</a>
-							</div>
-						</li>
-						<li class="zx_list_click swiper-slide sjcn-box">
-							<div class="sjcn" data-id="20366">
-								<a href="javascript:;" tjjj="click_m_zx_list_rc_zengxiang">施工零增项</a>
-							</div>
-						</li>
-						<li class="zx_list_click swiper-slide sjcn-box">
-							<div class="sjcn" data-id="20365">
-								<a href="javascript:;" tjjj="click_m_zx_list_rc_fxys">放心预算商家</a>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>-->
 			<section class="zxcompany-list">
 				<div class="company-item" v-for="(item,index) in zxgsData" :key="index">
 					<a class="y_layout" :href="`https://m.jia.com${item.detail_url}`">
