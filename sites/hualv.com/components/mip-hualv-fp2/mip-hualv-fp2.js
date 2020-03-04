@@ -183,8 +183,7 @@ export default class MIPExample extends MIP.CustomElement {
                     }), i.connect(o), o.connect(r.destination), i.start(0), r.startRendering()
                     var l = setTimeout(function() {
                         return console.warn(
-                            'Audio fingerprint timed out. Please report bug at https://github.com/Valve/fingerprintjs2 with your user agent: '' +
-                            navigator.userAgent + ''.'), r.oncomplete = function() {}, r = null, e('audioTimeout')
+                            'Audio fingerprint timed out. Please report bug at https://github.com/Valve/fingerprintjs2 with your user agent: "' + navigator.userAgent + '".'), r.oncomplete = function() {}, r = null, e('audioTimeout')
                     }, t.timeout)
                     r.oncomplete = function(n) {
                         var t
