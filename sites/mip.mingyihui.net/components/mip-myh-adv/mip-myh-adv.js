@@ -5,8 +5,17 @@ const { templates, util } = MIP
 const log = util.log('mip-myh-adv')
 export default class MIPMYHAdv extends MIP.CustomElement {
   build () {
+    // 在这里注册 say 事件的监听
+    this.addEventAction('click', (event, adSign) => {
+      let adSignVal = adSign + ',' + this.postData['userid'] + ',' + this.postExtParams['referer'] + ',' + (new Date()).getTime()
+      setCookie('_adv_invite', adSignVal)
+      this.faKey(adSign, 1)
+    })
   }
   connectedCallback () {
+    this.inner_cpnt = this.element.getAttribute('inner-cpnt') || 'div'
+    this.cpnt_attrs = this.element.getAttribute('cpnt-attrs') || '{}'
+    this.cpnt_attrs = util.jsonParse(this.cpnt_attrs)
     this.src = this.element.getAttribute('src') || ''
     this.data_post = this.element.getAttribute('data-post') || '{}'
     this.data_post_extParams = this.element.getAttribute('data-post-extParams') || '{}'
@@ -71,9 +80,29 @@ export default class MIPMYHAdv extends MIP.CustomElement {
     let returnData = []
     if (data.adv_list.length === 0) return returnData
     data.adv_list.forEach(adv => {
-      returnData.push(adv.ad_contents[0])
+      this.faKey(adv['sign'], 0)
+      let adContents = []
+      adv.ad_contents.forEach(adcontent => {
+        if (adContents.length === 0) {
+          adContents = adcontent
+          adContents['ad_name'] = adv['ad_name']
+          adContents['ad_sign'] = adv['sign']
+          adContents['lists'] = []
+        } else {
+          adContents['lists'].push(adcontent)
+        }
+      })
+      returnData.push(adContents)
     })
+    // console.log(returnData)
     return returnData
+  }
+
+  faKey (adSign, mode) {
+    let keyName = this.postExtParams['referer'] + 'Adv_' + adSign + (mode === 0 ? '_View' : '_Click')
+    let statUrl = 'https://mip.mingyihui.net/api/stat/statKey2/' + keyName + '/0/' + this.postData['userid']
+    return fetch(statUrl, {
+    })
   }
   /**
    * renderTemplate 获取模板
@@ -99,14 +128,35 @@ export default class MIPMYHAdv extends MIP.CustomElement {
    *
    * */
   render (htmls) {
-    let fragment = document.createDocumentFragment()
+    let fragment = document.createElement(this.inner_cpnt)
+    let indicatorId = ''
+    let mcidDotNodeInnerHtml = ''
+    for (let key in this.cpnt_attrs) {
+      fragment.setAttribute(key, this.cpnt_attrs[key])
+      if (key.toLowerCase() === 'indicatorid') {
+        indicatorId = this.cpnt_attrs[key]
+      }
+    }
     htmls.forEach(html => {
       let node = document.createElement('div')
       node.innerHTML = html
       node.setAttribute('role', 'listitem')
       fragment.appendChild(node)
+      if (this.inner_cpnt === 'mip-carousel') {
+        mcidDotNodeInnerHtml = mcidDotNodeInnerHtml + '<div class="mip-carousel-indecator-item"></div>'
+      }
     })
     this.container.appendChild(fragment)
+    if (this.inner_cpnt === 'mip-carousel') {
+      let mipCarouselIndicatorNode = document.createElement('div')
+      mipCarouselIndicatorNode.setAttribute('class', 'mip-carousel-indicator-wrapper')
+      let mciDotNode = document.createElement('div')
+      mciDotNode.setAttribute('class', 'mip-carousel-indicatorDot')
+      mciDotNode.setAttribute('id', indicatorId)
+      mciDotNode.innerHTML = mcidDotNodeInnerHtml
+      mipCarouselIndicatorNode.appendChild(mciDotNode)
+      this.container.appendChild(mipCarouselIndicatorNode)
+    }
   }
 }
 
@@ -139,12 +189,12 @@ function getCookie (name) {
   }
 }
 // 写cookies
-/* function setCookie (name,value) {
-  var Days = 30
-  var exp = new Date()
-  exp.setTime(exp.getTime() + Days*24*60*60*1000)
-  document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString()
-} */
+function setCookie (name, value) {
+  let Days = 30
+  let exp = new Date()
+  exp.setTime(exp.getTime() + Days * 24 * 60 * 60 * 1000)
+  document.cookie = name + '=' + value + ';expires=' + exp.toGMTString() + ';domain=.mingyihui.net'
+}
 function getIP () {
   return fetch('https://api.ipify.org?format=json', {
   })
