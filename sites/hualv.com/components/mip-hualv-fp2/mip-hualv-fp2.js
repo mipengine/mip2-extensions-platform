@@ -394,7 +394,7 @@ export default class MIPExample extends MIP.CustomElement {
                         },
                         g = function(e, n) {
                             var t = f()
-                            return t.style.fontFamily = ''' + e + '',' + n, t
+                            return t.style.fontFamily = '"' + e + '",' + n, t
                         },
                         h = function() {
                             for (var e = [], n = 0, a = t.length; n < a; n++) {
@@ -861,7 +861,7 @@ export default class MIPExample extends MIP.CustomElement {
                 }],
                 Ce = function(e) {
                     throw new Error(
-                        ''new Fingerprint()' is deprecated, see https://github.com/Valve/fingerprintjs2#upgrade-guide-from-182-to-200'
+                        '"new Fingerprint()" is deprecated, see https://github.com/Valve/fingerprintjs2#upgrade-guide-from-182-to-200'
                     )
                 }
             return Ce.get = function(e, n) {
