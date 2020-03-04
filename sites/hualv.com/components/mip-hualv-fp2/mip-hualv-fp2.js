@@ -4,9 +4,9 @@ export default class MIPExample extends MIP.CustomElement {
   build() {
     (function (e, n, t) {
       'use strict'
-      'undefined' != typeof window && 'function' == typeof define && define.amd ? define(t) : 'undefined' != typeof module &&
+      'undefined' !== typeof window && 'function' === typeof define && define.amd ? define(t) : 'undefined' !== typeof module &&
         module.exports ? module.exports = t() : n.exports ? n.exports = t() : n[e] = t()
-    })('Fingerprint2', this, function() {
+    })('Fingerprint2', this, function () {
       'use strict'
       void 0 === Array.isArray && (Array.isArray = function (e) {
         return '[object Array]' === Object.prototype.toString.call(e)
@@ -18,8 +18,7 @@ export default class MIPExample extends MIP.CustomElement {
           let t = [0, 0, 0, 0]
           return t[3] += e[3] + n[3], t[2] += t[3] >>> 16, t[3] &= 65535, t[2] += e[2] + n[2], t[1] += t[2] >>> 16, t[2] &=
             65535, t[1] += e[1] + n[1], t[0] += t[1] >>> 16, t[1] &= 65535, t[0] += e[0] + n[0], t[0] &= 65535, [t[0] <<
-              16 | t[1], t[2] << 16 | t[3]
-            ]
+              16 | t[1], t[2] << 16 | t[3]]
         },
         n = function (e, n) {
           e = [e[0] >>> 16, 65535 & e[0], e[1] >>> 16, 65535 & e[1]], n = [n[0] >>> 16, 65535 & n[0], n[1] >>> 16, 65535 &
@@ -30,8 +29,7 @@ export default class MIPExample extends MIP.CustomElement {
             65535, t[2] += e[3] * n[2], t[1] += t[2] >>> 16, t[2] &= 65535, t[1] += e[1] * n[3], t[0] += t[1] >>> 16, t[1] &=
             65535, t[1] += e[2] * n[2], t[0] += t[1] >>> 16, t[1] &= 65535, t[1] += e[3] * n[1], t[0] += t[1] >>> 16, t[1] &=
             65535, t[0] += e[0] * n[3] + e[1] * n[2] + e[2] * n[1] + e[3] * n[0], t[0] &= 65535, [t[0] << 16 | t[1], t[2] <<
-              16 | t[3]
-            ]
+              16 | t[3]]
         },
         t = function (e, n) {
           return n %= 64, 32 === n ? [e[1], e[0]] : n < 32 ? [e[0] << n | e[1] >>> 32 - n, e[1] << n | e[0] >>> 32 - n] :
@@ -112,8 +110,7 @@ export default class MIPExample extends MIP.CustomElement {
           }
           return u = r(u, [0, o.length]), d = r(d, [0, o.length]), u = e(u, d), d = e(d, u), u = i(u), d = i(d), u = e(u,
               d), d = e(d, u), ('00000000' + (u[0] >>> 0).toString(16)).slice(-8) + ('00000000' + (u[1] >>> 0).toString(16))
-            .slice(-8) + ('00000000' + (d[0] >>> 0).toString(16)).slice(-8) + ('00000000' + (d[1] >>> 0).toString(16)).slice(
-              -8)
+            .slice(-8) + ('00000000' + (d[0] >>> 0).toString(16)).slice(-8) + ('00000000' + (d[1] >>> 0).toString(16)).slice(-8)
         },
         l = {
           preprocessor: null,
@@ -154,14 +151,14 @@ export default class MIPExample extends MIP.CustomElement {
         },
         c = function (e, n) {
           let t = []
-          return null == e ? t : Array.prototype.map && e.map === Array.prototype.map ? e.map(n) : (s(e, function (e, a, r) {
+          return null === e ? t : Array.prototype.map && e.map === Array.prototype.map ? e.map(n) : (s(e, function (e, a, r) {
             t.push(n(e, a, r))
           }), t)
         },
         u = function (e, n) {
-          if (null == n) return e
+          if (null === n) return e
           let t, a
-          for (a in n) t = n[a], null == t || Object.prototype.hasOwnProperty.call(e, a) || (e[a] = t)
+          for (a in n) t = n[a], null === t || Object.prototype.hasOwnProperty.call(e, a) || (e[a] = t)
           return e
         },
         d = function (e, n) {
@@ -181,7 +178,7 @@ export default class MIPExample extends MIP.CustomElement {
           let t = n.audio
           if (t.excludeIOS11 && navigator.userAgent.match(/OS 11.+Version\/11.+Safari/)) return e(n.EXCLUDED)
           let a = window.OfflineAudioContext || window.webkitOfflineAudioContext
-          if (null == a) return e(n.NOT_AVAILABLE)
+          if (null === a) return e(n.NOT_AVAILABLE)
           let r = new a(1, 44100, 44100),
             i = r.createOscillator()
           i.type = 'triangle', i.frequency.setValueAtTime(1e4, r.currentTime)
@@ -216,7 +213,7 @@ export default class MIPExample extends MIP.CustomElement {
           e(navigator.userAgent)
         },
         m = function (e, n) {
-          e(null == navigator.webdriver ? n.NOT_AVAILABLE : navigator.webdriver)
+          e(null === navigator.webdriver ? n.NOT_AVAILABLE : navigator.webdriver)
         },
         p = function (e, n) {
           e(navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || n.NOT_AVAILABLE)
@@ -445,7 +442,7 @@ export default class MIPExample extends MIP.CustomElement {
           he() ? n.plugins.excludeIE ? e(n.EXCLUDED) : e(K(n)) : e(j(n))
         },
         j = function (e) {
-          if (null == navigator.plugins) return e.NOT_AVAILABLE
+          if (null === navigator.plugins) return e.NOT_AVAILABLE
           for (let n = [], t = 0, a = navigator.plugins.length; t < a; t++) navigator.plugins[t] && n.push(navigator.plugins[
             t])
           return z(e) && (n = n.sort(function (e, n) {
@@ -675,8 +672,10 @@ export default class MIPExample extends MIP.CustomElement {
               'ipad') >= 0 || n.indexOf('ipod') >= 0 || n.indexOf('crios') >= 0 || n.indexOf('fxios') >= 0 ? 'iOS' : n.indexOf(
               'macintosh') >= 0 || n.indexOf('mac_powerpc)') >= 0 ? 'Mac' : 'Other'
           let r = 'ontouchstart' in window || navigator.maxTouchPoints > 0 || navigator.msMaxTouchPoints > 0
-          if (r && 'Windows' !== e && 'Windows Phone' !== e && 'Android' !== e && 'iOS' !== e && 'Other' !== e && -1 ===
-            n.indexOf('cros')) return !0
+          if (r && 'Windows' !== e && 'Windows Phone' !== e && 'Android' !== e && 'iOS' !== e && 'Other' !== e && -1 === n.indexOf('cros')) 
+          {
+          	 return !0
+          }
           if (void 0 !== t) {
             if (t = t.toLowerCase(), t.indexOf('win') >= 0 && 'Windows' !== e && 'Windows Phone' !== e) return !0
             if (t.indexOf('linux') >= 0 && 'Linux' !== e && 'Android' !== e) return !0
@@ -770,7 +769,7 @@ export default class MIPExample extends MIP.CustomElement {
         },
         we = function (e) {
           let n = e.getExtension('WEBGL_lose_context')
-          null != n && n.loseContext()
+          null !== n && n.loseContext()
         },
         Se = [{
           key: 'userAgent',
@@ -916,7 +915,7 @@ export default class MIPExample extends MIP.CustomElement {
           Ce.get(e, n)
         })
       }, Ce.getV18 = function (e, n) {
-        return null == n && (n = e, e = {}), Ce.get(e, function (t) {
+        return null === n && (n = e, e = {}), Ce.get(e, function (t) {
           for (let a = [], r = 0; r < t.length; r++) {
             let i = t[r]
             if (i.value === (e.NOT_AVAILABLE || 'not available')) a.push({
@@ -995,7 +994,7 @@ export default class MIPExample extends MIP.CustomElement {
         o = ''
         for (let t = 1; t <= 32; t++) {
           let a = Math.floor(16 * Math.random()).toString(16)
-          o += a, 8 != t && 12 != t && 16 != t && 20 != t || (o += '-')
+          o += a, 8 !== t && 12 !== t && 16 !== t && 20 !== t || (o += '-')
         }
         let r = new Date,
           l = r - n
