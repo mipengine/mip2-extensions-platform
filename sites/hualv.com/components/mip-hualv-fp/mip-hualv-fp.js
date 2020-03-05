@@ -1316,7 +1316,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     }
   }
 
-  Fingerprint2 = options => {
+  Fingerprint2 () {
     throw new Error("'new Fingerprint()' is deprecated, see https://github.com/Valve/fingerprintjs2#upgrade-guide-from-182-to-200")
   }
 
