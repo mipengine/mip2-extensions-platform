@@ -118,7 +118,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
   
   arrayPropertyBind () {
     if (typeof Array.isArray === 'undefined') {
-      Array.isArray (obj) {
+      Array.isArray = obj => {
         return Object.prototype.toString.call(obj) === '[object Array]'
       }
     }
