@@ -80,7 +80,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     this.fpCacheKey = 'fp2';
     this.trackUrl = "//hualv.cn-beijing.log.aliyuncs.com/logstores/hualv-fingerprint2-test/track.gif?APIVersion=0.6.0";
 	this.Fingerprint2 = {
-      VERSION = '2.1.0'
+      'VERSION' : '2.1.0'
 	}
   }
   build () {
