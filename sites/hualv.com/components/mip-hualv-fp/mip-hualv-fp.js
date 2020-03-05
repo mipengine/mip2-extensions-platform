@@ -1500,7 +1500,6 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       }
       callback(param)
     }
-    
   }
   fp (callback) {
     let d1 = new Date()
