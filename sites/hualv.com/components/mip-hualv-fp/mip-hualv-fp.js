@@ -79,11 +79,18 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     this.hasConsole = typeof console !== "undefined";
     this.fpCacheKey = 'fp2';
     this.trackUrl = "//hualv.cn-beijing.log.aliyuncs.com/logstores/hualv-fingerprint2-test/track.gif?APIVersion=0.6.0";
+	this.Fingerprint2 = {
+      VERSION = '2.1.0'
+	}
   }
   build () {
 	// detect if object is array
     // only implement if no native implementation is available
     this.init('Fingerprint2', this, arrayPropertyBind)
+	this.Fingerprint2.x64hash128 = this.x64hash128
+	this.Fingerprint2.get = this.Fingerprint2get
+	this.Fingerprint2.getPromise = this.Fingerprint2getPromise
+	this.Fingerprint2.getV18 = this.Fingerprint2getV18
     setTimeout(name => {
       let sessionId = cookie('hl.guid');
       let murmur = cache(fpCacheKey);
@@ -1320,7 +1327,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     throw new Error("'new Fingerprint()' is deprecated, see https://github.com/Valve/fingerprintjs2#upgrade-guide-from-182-to-200")
   }
 
-  Fingerprint2.get = (options, callback) => {
+  Fingerprint2get = (options, callback) => {
     if (!callback) {
       callback = options
       options = {}
@@ -1377,13 +1384,13 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     chainComponents(false)
   }
 
-  Fingerprint2.getPromise = options => {
+  Fingerprint2getPromise = options => {
     return new Promise((resolve, reject) => {
       Fingerprint2.get(options, resolve)
     })
   }
 
-  Fingerprint2.getV18 = (options, callback) => {
+  Fingerprint2getV18 = (options, callback) => {
     if (callback == null) {
       callback = options
       options = {}
@@ -1428,10 +1435,6 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       callback(murmur, newComponents)
     })
   }
-
-  Fingerprint2.x64hash128 = x64hash128
-  Fingerprint2.VERSION = '2.1.0'
-  return Fingerprint2
   
   send(data) {
     data['request'] = location.href;
