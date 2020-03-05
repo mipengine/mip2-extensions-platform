@@ -574,18 +574,18 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
           let r =
             'attribute vec2 attrVertex;varying vec2 varyinTexCoordinate;uniform vec2 uniformOffset;void main(){varyinTexCoordinate=attrVertex+uniformOffset;gl_Position=vec4(attrVertex,0,1);}'
           let i =
-            'precision mediump float;varying vec2 varyinTexCoordinate;void main() {gl_FragColor=vec4(varyinTexCoordinate,0,1);}',
-            o = e.createBuffer()
+            'precision mediump float;varying vec2 varyinTexCoordinate;void main() {gl_FragColor=vec4(varyinTexCoordinate,0,1);}'
+          o = e.createBuffer()
           e.bindBuffer(e.ARRAY_BUFFER, o)
-          let l = new Float32Array([-.2, -.9, 0, .4, -.26, 0, 0, .732134444, 0])
-          let e.bufferData(e.ARRAY_BUFFER, l, e.STATIC_DRAW)
-          let o.itemSize = 3
-          let o.numItems = 3
-          let c = e.createProgram()
-          let u = e.createShader(e.VERTEX_SHADER)
+          l = new Float32Array([-.2, -.9, 0, .4, -.26, 0, 0, .732134444, 0])
+          e.bufferData(e.ARRAY_BUFFER, l, e.STATIC_DRAW)
+          o.itemSize = 3
+          o.numItems = 3
+          c = e.createProgram()
+          u = e.createShader(e.VERTEX_SHADER)
           e.shaderSource(u, r)
 		  e.compileShader(u)
-          let d = e.createShader(e.FRAGMENT_SHADER)
+          d = e.createShader(e.FRAGMENT_SHADER)
           e.shaderSource(d, i)
 		  e.compileShader(d)
 		  e.attachShader(c, u)
