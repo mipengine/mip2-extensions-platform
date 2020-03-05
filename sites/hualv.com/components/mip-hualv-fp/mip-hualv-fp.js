@@ -95,12 +95,12 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       let sessionId = this.cookie('hl.guid')
       let murmur = this.cache(this.fpCacheKey)
       if (murmur) {
-        send({
+        this.send({
           duration: 0,
           fingerprint: murmur,
           sessionId: sessionId,
           type: 'cache'
-        });
+        })
       } else {
         try {
           this.fp(data => {
@@ -120,7 +120,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     }, this.showTime)
   }
   init (name, context, definition) {
-    if (typeof window !== 'undefined' && typeof define === 'function' && define.amd) { define(definition) } else if (typeof module !== 'undefined' && module.exports) { module.exports = definition() } else if (context.exports) { context.exports = definition() } else { context[name] = definition()}
+    if (typeof window !== 'undefined' && typeof define === 'function' && define.amd) { define(definition) } else if (typeof module !== 'undefined' && module.exports) { module.exports = definition() } else if (context.exports) { context.exports = definition() } else { context[name] = definition() }
   }
   arrayPropertyBind () {
     if (typeof Array.isArray === 'undefined') {
@@ -250,7 +250,8 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     let k2 = [0, 0]
     let c1 = [0x87c37b91, 0x114253d5]
     let c2 = [0x4cf5ad43, 0x2745937f]
-    for (let i = 0; i < bytes; i = i + 16) {
+	let i = 0
+    for (i = 0; i < bytes; i = i + 16) {
       k1 = [((key.charCodeAt(i + 4) & 0xff)) | ((key.charCodeAt(i + 5) & 0xff) << 8) | ((key.charCodeAt(i + 6) & 0xff) << 16) | ((key.charCodeAt(i + 7) & 0xff) << 24), ((key.charCodeAt(i) & 0xff)) | ((key.charCodeAt(i + 1) & 0xff) << 8) | ((key.charCodeAt(i + 2) & 0xff) << 16) | ((key.charCodeAt(i + 3) & 0xff) << 24)]
       k2 = [((key.charCodeAt(i + 12) & 0xff)) | ((key.charCodeAt(i + 13) & 0xff) << 8) | ((key.charCodeAt(i + 14) & 0xff) << 16) | ((key.charCodeAt(i + 15) & 0xff) << 24), ((key.charCodeAt(i + 8) & 0xff)) | ((key.charCodeAt(i + 9) & 0xff) << 8) | ((key.charCodeAt(i + 10) & 0xff) << 16) | ((key.charCodeAt(i + 11) & 0xff) << 24)]
       k1 = this.x64Multiply(k1, c1)
@@ -259,35 +260,35 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       h1 = this.x64Xor(h1, k1)
       h1 = this.x64Rotl(h1, 27)
       h1 = this.x64Add(h1, h2)
-      h1 = this.x64Add(x64Multiply(h1, [0, 5]), [0, 0x52dce729])
+      h1 = this.x64Add(this.x64Multiply(h1, [0, 5]), [0, 0x52dce729])
       k2 = this.x64Multiply(k2, c2)
       k2 = this.x64Rotl(k2, 33)
       k2 = this.x64Multiply(k2, c1)
       h2 = this.x64Xor(h2, k2)
       h2 = this.x64Rotl(h2, 31)
       h2 = this.x64Add(h2, h1)
-      h2 = this.x64Add(x64Multiply(h2, [0, 5]), [0, 0x38495ab5])
+      h2 = this.x64Add(this.x64Multiply(h2, [0, 5]), [0, 0x38495ab5])
     }
     k1 = [0, 0]
     k2 = [0, 0]
     switch (remainder) {
       case 15:
-        k2 = x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 14)], 48))
+        k2 = this.x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 14)], 48))
       // fallthrough
       case 14:
-        k2 = x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 13)], 40))
+        k2 = this.x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 13)], 40))
       // fallthrough
       case 13:
-        k2 = x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 12)], 32))
+        k2 = this.x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 12)], 32))
       // fallthrough
       case 12:
-        k2 = x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 11)], 24))
+        k2 = this.x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 11)], 24))
       // fallthrough
       case 11:
-        k2 = x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 10)], 16))
+        k2 = this.x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 10)], 16))
       // fallthrough
       case 10:
-        k2 = x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 9)], 8))
+        k2 = this.x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 9)], 8))
       // fallthrough
       case 9:
         k2 = this.x64Xor(k2, [0, key.charCodeAt(i + 8)])
@@ -297,25 +298,25 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
         h2 = this.x64Xor(h2, k2)
       // fallthrough
       case 8:
-        k1 = x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 7)], 56))
+        k1 = this.x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 7)], 56))
       // fallthrough
       case 7:
-        k1 = x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 6)], 48))
+        k1 = this.x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 6)], 48))
       // fallthrough
       case 6:
-        k1 = x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 5)], 40))
+        k1 = this.x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 5)], 40))
       // fallthrough
       case 5:
-        k1 = x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 4)], 32))
+        k1 = this.x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 4)], 32))
       // fallthrough
       case 4:
-        k1 = x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 3)], 24))
+        k1 = this.x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 3)], 24))
       // fallthrough
       case 3:
-        k1 = x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 2)], 16))
+        k1 = this.x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 2)], 16))
       // fallthrough
       case 2:
-        k1 = x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 1)], 8))
+        k1 = this.x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 1)], 8))
       // fallthrough
       case 1:
         k1 = this.x64Xor(k1, [0, key.charCodeAt(i)])
@@ -1092,7 +1093,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       let glContext = this.getWebglCanvas()
       let extensionDebugRendererInfo = glContext.getExtension('WEBGL_debug_renderer_info')
       let params = glContext.getParameter(extensionDebugRendererInfo.UNMASKED_VENDOR_WEBGL) + '~' + glContext.getParameter(extensionDebugRendererInfo.UNMASKED_RENDERER_WEBGL)
-      loseWebglContext(glContext)
+      this.loseWebglContext(glContext)
       return params
     } catch (e) {
       return null
@@ -1453,9 +1454,9 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     document.body.appendChild(img)
     img.onload = img.onerror = () => {
       document.body.removeChild(img)
-    };
+    }
   }
-  storage(key, value) {
+  storage (key, value) {
     if (value !== undefined) {
       return window['localStorage'].setItem(key, value)
     } else {
@@ -1469,7 +1470,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       return (document.cookie = [
         key, '=', value,
         '; expires=' + expire.toUTCString(), // use expires attribute, max-age is not supported by IE
-        '; domain=hm.hualv.com',
+        '; domain=hm.hualv.com'
       ].join(''))
     } else {
       let result = RegExp('(^|\s|;)' + key + '=([^;]*)(;|$)').exec(document.cookie)
@@ -1480,42 +1481,41 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     return global['localStorage'] ? this.storage(key, value) : this.cookie(key, value)
   }
   guid (callback) {
-    let d1 = new Date();
-    guid = '';
+    let d1 = new Date()
+    guid = ''
     for (let i = 1; i <= 32; i++) {
-      let n = Math.floor(Math.random() * 16.0).toString(16);
-      guid += n;
+      let n = Math.floor(Math.random() * 16.0).toString(16)
+      guid += n
       if ((i === 8) || (i === 12) || (i === 16) || (i === 20)){
-        guid += '-';
+        guid += '-'
       }
     }
-    let d2 = new Date();
-    let time = d2 - d1;
-    this.cache(this.fpCacheKey, guid);
+    let d2 = new Date()
+    let time = d2 - d1
+    this.cache(this.fpCacheKey, guid)
     callback && callback({
       fingerprint: guid,
       duration: time
-    });
+    })
   }
-  fp(callback) {
-    let d1 = new Date();
+  fp (callback) {
+    let d1 = new Date()
     this.Fingerprint2.get(components => {
-      let list=[];
+      let list = []
       for (let key in components) {
         if (components.hasOwnProperty(key)) {
-          let pair = components[key];
-          list.push(pair.value);          
+          let pair = components[key]
+          list.push(pair.value)
         }
-      }      
+      }
       let murmur = this.Fingerprint2.x64hash128(list.join(), 31)
-      let d2 = new Date();
-      let time = d2 - d1;
-      cache(this.fpCacheKey, murmur);
+      let d2 = new Date()
+      let time = d2 - d1
+      this.cache(this.fpCacheKey, murmur)
       callback && callback({
         fingerprint: murmur,
         duration: time
       })
     });
   }
-  
 }
