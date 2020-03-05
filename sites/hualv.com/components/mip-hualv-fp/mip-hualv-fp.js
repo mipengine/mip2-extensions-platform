@@ -1512,11 +1512,12 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       let d2 = new Date()
       let time = d2 - d1
       this.cache(this.fpCacheKey, murmur)
-      let param = {
-        fingerprint: murmur,
-        duration: time
+      if (callback) {
+        callback({
+          fingerprint: murmur,
+          duration: time
+        })
       }
-      callback && (callback(param))
     })
   }
 }
