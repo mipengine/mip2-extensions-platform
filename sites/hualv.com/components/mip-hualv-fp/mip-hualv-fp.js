@@ -250,7 +250,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     let k2 = [0, 0]
     let c1 = [0x87c37b91, 0x114253d5]
     let c2 = [0x4cf5ad43, 0x2745937f]
-	let i = 0
+    let i = 0
     for (i = 0; i < bytes; i = i + 16) {
       k1 = [((key.charCodeAt(i + 4) & 0xff)) | ((key.charCodeAt(i + 5) & 0xff) << 8) | ((key.charCodeAt(i + 6) & 0xff) << 16) | ((key.charCodeAt(i + 7) & 0xff) << 24), ((key.charCodeAt(i) & 0xff)) | ((key.charCodeAt(i + 1) & 0xff) << 8) | ((key.charCodeAt(i + 2) & 0xff) << 16) | ((key.charCodeAt(i + 3) & 0xff) << 24)]
       k2 = [((key.charCodeAt(i + 12) & 0xff)) | ((key.charCodeAt(i + 13) & 0xff) << 8) | ((key.charCodeAt(i + 14) & 0xff) << 16) | ((key.charCodeAt(i + 15) & 0xff) << 24), ((key.charCodeAt(i + 8) & 0xff)) | ((key.charCodeAt(i + 9) & 0xff) << 8) | ((key.charCodeAt(i + 10) & 0xff) << 16) | ((key.charCodeAt(i + 11) & 0xff) << 24)]
@@ -1473,7 +1473,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
         '; domain=hm.hualv.com'
       ].join(''))
     } else {
-      let result = RegExp('(^|\s|;)' + key + '=([^;]*)(;|$)').exec(document.cookie)
+      let result = RegExp('(^|\\s|;)' + key + '=([^;]*)(;|$)').exec(document.cookie)
       return result ? result[2] : ''
     }
   }
@@ -1482,19 +1482,19 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
   }
   guid (callback) {
     let d1 = new Date()
-    guid = ''
+    let guidStr = ''
     for (let i = 1; i <= 32; i++) {
       let n = Math.floor(Math.random() * 16.0).toString(16)
-      guid += n
+      guidStr += n
       if ((i === 8) || (i === 12) || (i === 16) || (i === 20)){
-        guid += '-'
+        guidStr += '-'
       }
     }
     let d2 = new Date()
     let time = d2 - d1
-    this.cache(this.fpCacheKey, guid)
+    this.cache(this.fpCacheKey, guidStr)
     callback && callback({
-      fingerprint: guid,
+      fingerprint: guidStr,
       duration: time
     })
   }
@@ -1512,10 +1512,11 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       let d2 = new Date()
       let time = d2 - d1
       this.cache(this.fpCacheKey, murmur)
-      callback && callback({
+      let param = {
         fingerprint: murmur,
         duration: time
-      })
-    });
+      }
+      callback && callback(param)
+    })
   }
 }
