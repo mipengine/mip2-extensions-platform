@@ -1,6 +1,9 @@
 import './index.less'
 
-export default class MIPExample extends MIP.CustomElement {
+export default class MIPHualvfingerprint extends MIP.CustomElement {
+  constructor (element) {
+    super(element)
+  }
   build() {
     (function (e, n, t) {
       'use strict'
