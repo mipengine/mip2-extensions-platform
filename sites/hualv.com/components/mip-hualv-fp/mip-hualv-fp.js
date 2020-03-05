@@ -6,11 +6,9 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
   }
   build() {
     (function (e, n, t) {
-      'use strict'
       'undefined' !== typeof window && 'function' === typeof define && define.amd ? define(t) : 'undefined' !== typeof module &&
         module.exports ? module.exports = t() : n.exports ? n.exports = t() : n[e] = t()
     })('Fingerprint2', this, function () {
-      'use strict'
       void 0 === Array.isArray && (Array.isArray = function (e) {
         return '[object Array]' === Object.prototype.toString.call(e)
       })
@@ -22,8 +20,8 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
           return t[3] += e[3] + n[3], t[2] += t[3] >>> 16, t[3] &= 65535, t[2] += e[2] + n[2], t[1] += t[2] >>> 16, t[2] &=
             65535, t[1] += e[1] + n[1], t[0] += t[1] >>> 16, t[1] &= 65535, t[0] += e[0] + n[0], t[0] &= 65535, [t[0] <<
               16 | t[1], t[2] << 16 | t[3]]
-        },
-        n = function (e, n) {
+        }
+      let n = function (e, n) {
           e = [e[0] >>> 16, 65535 & e[0], e[1] >>> 16, 65535 & e[1]], n = [n[0] >>> 16, 65535 & n[0], n[1] >>> 16, 65535 &
             n[1]
           ]
@@ -33,23 +31,23 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
             65535, t[1] += e[2] * n[2], t[0] += t[1] >>> 16, t[1] &= 65535, t[1] += e[3] * n[1], t[0] += t[1] >>> 16, t[1] &=
             65535, t[0] += e[0] * n[3] + e[1] * n[2] + e[2] * n[1] + e[3] * n[0], t[0] &= 65535, [t[0] << 16 | t[1], t[2] <<
               16 | t[3]]
-        },
-        t = function (e, n) {
+        }
+      let t = function (e, n) {
           return n %= 64, 32 === n ? [e[1], e[0]] : n < 32 ? [e[0] << n | e[1] >>> 32 - n, e[1] << n | e[0] >>> 32 - n] :
             (n -= 32, [e[1] << n | e[0] >>> 32 - n, e[0] << n | e[1] >>> 32 - n])
-        },
-        a = function (e, n) {
+        }
+      let a = function (e, n) {
           return n %= 64, 0 === n ? e : n < 32 ? [e[0] << n | e[1] >>> 32 - n, e[1] << n] : [e[1] << n - 32, 0]
-        },
-        r = function (e, n) {
+        }
+      let r = function (e, n) {
           return [e[0] ^ n[0], e[1] ^ n[1]]
-        },
-        i = function (e) {
+        }
+      let i = function (e) {
           return e = r(e, [0, e[0] >>> 1]), e = n(e, [4283543511, 3981806797]), e = r(e, [0, e[0] >>> 1]), e = n(e, [
             3301882366, 444984403
           ]), e = r(e, [0, e[0] >>> 1]), e
-        },
-        o = function (o, l) {
+        }
+      let o = function (o, l) {
           o = o || '', l = l || 0
           for (let s = o.length % 16, c = o.length - s, u = [0, l], d = [0, l], f = [0, 0], g = [0, 0], h = [2277735313,
               289559509
@@ -114,8 +112,8 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
           return u = r(u, [0, o.length]), d = r(d, [0, o.length]), u = e(u, d), d = e(d, u), u = i(u), d = i(d), u = e(u,
               d), d = e(d, u), ('00000000' + (u[0] >>> 0).toString(16)).slice(-8) + ('00000000' + (u[1] >>> 0).toString(16))
             .slice(-8) + ('00000000' + (d[0] >>> 0).toString(16)).slice(-8) + ('00000000' + (d[1] >>> 0).toString(16)).slice(-8)
-        },
-        l = {
+        }
+      let l = {
           preprocessor: null,
           audio: {
             timeout: 1e3,
@@ -144,27 +142,27 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
           NOT_AVAILABLE: 'not available',
           ERROR: 'error',
           EXCLUDED: 'excluded'
-        },
-        s = function (e, n) {
+        }
+      let s = function (e, n) {
           if (Array.prototype.forEach && e.forEach === Array.prototype.forEach) e.forEach(n)
           else if (e.length === +e.length)
             for (let t = 0, a = e.length; t < a; t++) n(e[t], t, e)
           else
             for (let r in e) e.hasOwnProperty(r) && n(e[r], r, e)
-        },
-        c = function (e, n) {
+        }
+      let c = function (e, n) {
           let t = []
           return null === e ? t : Array.prototype.map && e.map === Array.prototype.map ? e.map(n) : (s(e, function (e, a, r) {
             t.push(n(e, a, r))
           }), t)
-        },
-        u = function (e, n) {
+        }
+      let u = function (e, n) {
           if (null === n) return e
           let t, a
           for (a in n) t = n[a], null === t || Object.prototype.hasOwnProperty.call(e, a) || (e[a] = t)
           return e
-        },
-        d = function (e, n) {
+        }
+      let d = function (e, n) {
           if (!f()) return e(n.NOT_AVAILABLE)
           navigator.mediaDevices.enumerateDevices().then(function (n) {
             e(n.map(function (e) {
@@ -173,11 +171,11 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
           }).catch(function (n) {
             e(n)
           })
-        },
-        f = function() {
+        }
+      let f = function() {
           return navigator.mediaDevices && navigator.mediaDevices.enumerateDevices
-        },
-        g = function (e, n) {
+        }
+      let g = function (e, n) {
           let t = n.audio
           if (t.excludeIOS11 && navigator.userAgent.match(/OS 11.+Version\/11.+Safari/)) return e(n.EXCLUDED)
           let a = window.OfflineAudioContext || window.webkitOfflineAudioContext
@@ -211,103 +209,103 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
             }
             e(t)
           }
-        },
-        h = function (e) {
+        }
+      let h = function (e) {
           e(navigator.userAgent)
-        },
-        m = function (e, n) {
+        }
+      let m = function (e, n) {
           e(null === navigator.webdriver ? n.NOT_AVAILABLE : navigator.webdriver)
-        },
-        p = function (e, n) {
+        }
+      let p = function (e, n) {
           e(navigator.language || navigator.userLanguage || navigator.browserLanguage || navigator.systemLanguage || n.NOT_AVAILABLE)
-        },
-        T = function (e, n) {
+        }
+      let T = function (e, n) {
           e(window.screen.colorDepth || n.NOT_AVAILABLE)
-        },
-        v = function (e, n) {
+        }
+      let v = function (e, n) {
           e(navigator.deviceMemory || n.NOT_AVAILABLE)
-        },
-        A = function (e, n) {
+        }
+      let A = function (e, n) {
           e(window.devicePixelRatio || n.NOT_AVAILABLE)
-        },
-        w = function (e, n) {
+        }
+      let w = function (e, n) {
           e(S(n))
-        },
-        S = function (e) {
+        }
+      let S = function (e) {
           let n = [window.screen.width, window.screen.height]
           return e.screen.detectScreenOrientation && n.sort().reverse(), n
-        },
-        C = function (e, n) {
+        }
+      let C = function (e, n) {
           e(y(n))
-        },
-        y = function (e) {
+        }
+      let y = function (e) {
           if (window.screen.availWidth && window.screen.availHeight) {
             let n = [window.screen.availHeight, window.screen.availWidth]
             return e.screen.detectScreenOrientation && n.sort().reverse(), n
           }
           return e.NOT_AVAILABLE
-        },
-        B = function (e) {
+        }
+      let B = function (e) {
           e((new Date).getTimezoneOffset())
-        },
-        E = function (e, n) {
+        }
+      let E = function (e, n) {
           window.Intl && window.Intl.DateTimeFormat ? e((new window.Intl.DateTimeFormat).resolvedOptions().timeZone) : e(
             n.NOT_AVAILABLE)
-        },
-        x = function (e, n) {
+        }
+      let x = function (e, n) {
           e(Y(n))
-        },
-        O = function (e, n) {
+        }
+      let O = function (e, n) {
           e(q(n))
-        },
-        M = function (e, n) {
+        }
+      let M = function (e, n) {
           e(Q(n))
-        },
-        b = function (e) {
+        }
+      let b = function (e) {
           e(!(!document.body || !document.body.addBehavior))
-        },
-        P = function (e) {
+        }
+      let P = function (e) {
           e(!!window.openDatabase)
-        },
-        I = function (e, n) {
+        }
+      let I = function (e, n) {
           e(ee(n))
-        },
-        L = function (e, n) {
+        }
+      let L = function (e, n) {
           e(ne(n))
-        },
-        k = function (e, n) {
+        }
+      let k = function (e, n) {
           e(te(n))
-        },
-        D = function (e, n) {
+        }
+      let D = function (e, n) {
           fe() ? e(re(n)) : e(n.NOT_AVAILABLE)
-        },
-        R = function (e, n) {
+        }
+      let R = function (e, n) {
           ge() ? e(ie()) : e(n.NOT_AVAILABLE)
-        },
-        N = function (e) {
+        }
+      let N = function (e) {
           ge() ? e(oe()) : e()
-        },
-        _ = function (e) {
+        }
+      let _ = function (e) {
           e(le())
-        },
-        F = function (e) {
+        }
+      let F = function (e) {
           e(se())
-        },
-        G = function (e) {
+        }
+      let G = function (e) {
           e(ce())
-        },
-        U = function (e) {
+        }
+      let U = function (e) {
           e(ue())
-        },
-        V = function (e) {
+        }
+      let V = function (e) {
           e(de())
-        },
-        H = function (e, n) {
+        }
+      let H = function (e, n) {
           return me() ? pe() ? n.fonts.swfPath ? void ve(function (n) {
             e(n)
           }, n) : e('missing options.fonts.swfPath') : e('flash not installed') : e('swf object not loaded')
-        },
-        W = function (e, n) {
+        }
+      let W = function (e, n) {
           let t = ['monospace', 'sans-serif', 'serif'],
             a = ['Andale Mono', 'Arial', 'Arial Black', 'Arial Hebrew', 'Arial MT', 'Arial Narrow',
               'Arial Rounded MT Bold', 'Arial Unicode MS', 'Bitstream Vera Sans Mono', 'Book Antiqua', 'Bookman Old Style',
@@ -440,11 +438,11 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
           l.appendChild(c)
           for (let S = [], C = 0, y = a.length; C < y; C++) p(w[a[C]]) && S.push(a[C])
           l.removeChild(c), l.removeChild(s), e(S)
-        },
-        X = function (e, n) {
+        }
+      let X = function (e, n) {
           he() ? n.plugins.excludeIE ? e(n.EXCLUDED) : e(K(n)) : e(j(n))
-        },
-        j = function (e) {
+        }
+      let j = function (e) {
           if (null === navigator.plugins) return e.NOT_AVAILABLE
           for (let n = [], t = 0, a = navigator.plugins.length; t < a; t++) navigator.plugins[t] && n.push(navigator.plugins[
             t])
@@ -456,8 +454,8 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
             })
             return [e.name, e.description, n]
           })
-        },
-        K = function (e) {
+        }
+      let K = function (e) {
           let n = []
           if (Object.getOwnPropertyDescriptor && Object.getOwnPropertyDescriptor(window, 'ActiveXObject') ||
             'ActiveXObject' in window) {
@@ -477,8 +475,8 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
             })
           } else n.push(e.NOT_AVAILABLE)
           return navigator.plugins && (n = n.concat(j(e))), n
-        },
-        z = function (e) {
+        }
+      let z = function (e) {
           for (let n = !1, t = 0, a = e.plugins.sortPluginsFor.length; t < a; t++) {
             let r = e.plugins.sortPluginsFor[t]
             if (navigator.userAgent.match(r)) {
@@ -487,48 +485,48 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
             }
           }
           return n
-        },
-        Z = function (e) {
+        }
+      let Z = function (e) {
           e(ae())
-        },
-        J = function (e, n) {
+        }
+      let J = function (e, n) {
           e($(n))
-        },
-        Y = function (e) {
+        }
+      let Y = function (e) {
           try {
             return !!window.sessionStorage
           } catch (n) {
             return e.ERROR
           }
-        },
-        q = function (e) {
+        }
+      let q = function (e) {
           try {
             return !!window.localStorage
           } catch (n) {
             return e.ERROR
           }
-        },
-        Q = function (e) {
+        }
+      let Q = function (e) {
           try {
             return !!window.indexedDB
           } catch (n) {
             return e.ERROR
           }
-        },
-        $ = function (e) {
+        }
+      let $ = function (e) {
           return navigator.hardwareConcurrency ? navigator.hardwareConcurrency : e.NOT_AVAILABLE
-        },
-        ee = function (e) {
+        }
+      let ee = function (e) {
           return navigator.cpuClass || e.NOT_AVAILABLE
-        },
-        ne = function (e) {
+        }
+      let ne = function (e) {
           return navigator.platform ? navigator.platform : e.NOT_AVAILABLE
-        },
-        te = function (e) {
+        }
+      let te = function (e) {
           return navigator.doNotTrack ? navigator.doNotTrack : navigator.msDoNotTrack ? navigator.msDoNotTrack : window.doNotTrack ?
             window.doNotTrack : e.NOT_AVAILABLE
-        },
-        ae = function() {
+        }
+      let ae = function() {
           let e, n = 0
           void 0 !== navigator.maxTouchPoints ? n = navigator.maxTouchPoints : void 0 !== navigator.msMaxTouchPoints && (
             n = navigator.msMaxTouchPoints)
@@ -539,8 +537,8 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
           }
           let t = 'ontouchstart' in window
           return [n, e, t]
-        },
-        re = function (e) {
+        }
+      let re = function (e) {
           let n = [],
             t = document.createElement('canvas')
           t.width = 2e3, t.height = 200, t.style.display = 'inline'
@@ -555,13 +553,14 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
             'rgb(255,255,0)', a.beginPath(), a.arc(75, 100, 50, 0, 2 * Math.PI, !0), a.closePath(), a.fill(), a.fillStyle =
             'rgb(255,0,255)', a.arc(75, 75, 75, 0, 2 * Math.PI, !0), a.arc(75, 75, 25, 0, 2 * Math.PI, !0), a.fill(
               'evenodd'), t.toDataURL && n.push('canvas fp:' + t.toDataURL()), n
-        },
-        ie = function() {
-          let e, n = function (n) {
+        }
+      let ie = function() {
+          let e
+          let n = function (n) {
               return e.clearColor(0, 0, 0, 1), e.enable(e.DEPTH_TEST), e.depthFunc(e.LEQUAL), e.clear(e.COLOR_BUFFER_BIT |
                 e.DEPTH_BUFFER_BIT), '[' + n[0] + ', ' + n[1] + ']'
-            },
-            t = function (e) {
+            }
+          let t = function (e) {
               let n = e.getExtension('EXT_texture_filter_anisotropic') || e.getExtension(
                 'WEBKIT_EXT_texture_filter_anisotropic') || e.getExtension('MOZ_EXT_texture_filter_anisotropic')
               if (n) {
@@ -571,23 +570,34 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
               return null
             }
           if (e = Ae(), !e) return null
-          let a = [],
-            r =
-            'attribute vec2 attrVertex;varying vec2 varyinTexCoordinate;uniform vec2 uniformOffset;void main(){varyinTexCoordinate=attrVertex+uniformOffset;gl_Position=vec4(attrVertex,0,1);}',
-            i =
+          let a = []
+          let r =
+            'attribute vec2 attrVertex;varying vec2 varyinTexCoordinate;uniform vec2 uniformOffset;void main(){varyinTexCoordinate=attrVertex+uniformOffset;gl_Position=vec4(attrVertex,0,1);}'
+          let i =
             'precision mediump float;varying vec2 varyinTexCoordinate;void main() {gl_FragColor=vec4(varyinTexCoordinate,0,1);}',
             o = e.createBuffer()
           e.bindBuffer(e.ARRAY_BUFFER, o)
           let l = new Float32Array([-.2, -.9, 0, .4, -.26, 0, 0, .732134444, 0])
-          e.bufferData(e.ARRAY_BUFFER, l, e.STATIC_DRAW), o.itemSize = 3, o.numItems = 3
-          let c = e.createProgram(),
-            u = e.createShader(e.VERTEX_SHADER)
-          e.shaderSource(u, r), e.compileShader(u)
+          let e.bufferData(e.ARRAY_BUFFER, l, e.STATIC_DRAW)
+          let o.itemSize = 3
+          let o.numItems = 3
+          let c = e.createProgram()
+          let u = e.createShader(e.VERTEX_SHADER)
+          e.shaderSource(u, r)
+		  e.compileShader(u)
           let d = e.createShader(e.FRAGMENT_SHADER)
-          e.shaderSource(d, i), e.compileShader(d), e.attachShader(c, u), e.attachShader(c, d), e.linkProgram(c), e.useProgram(
-            c), c.vertexPosAttrib = e.getAttribLocation(c, 'attrVertex'), c.offsetUniform = e.getUniformLocation(c,
-            'uniformOffset'), e.enableVertexAttribArray(c.vertexPosArray), e.vertexAttribPointer(c.vertexPosAttrib, o.itemSize,
-            e.FLOAT, !1, 0, 0), e.uniform2f(c.offsetUniform, 1, 1), e.drawArrays(e.TRIANGLE_STRIP, 0, o.numItems)
+          e.shaderSource(d, i)
+		  e.compileShader(d)
+		  e.attachShader(c, u)
+		  e.attachShader(c, d)
+		  e.linkProgram(c)
+		  e.useProgram(c)
+		  c.vertexPosAttrib = e.getAttribLocation(c, 'attrVertex')
+		  c.offsetUniform = e.getUniformLocation(c,'uniformOffset')
+		  e.enableVertexAttribArray(c.vertexPosArray)
+		  e.vertexAttribPointer(c.vertexPosAttrib, o.itemSize, e.FLOAT, !1, 0, 0)
+		  e.uniform2f(c.offsetUniform, 1, 1)
+		  e.drawArrays(e.TRIANGLE_STRIP, 0, o.numItems)
           try {
             a.push(e.canvas.toDataURL())
           } catch (e) {}
@@ -629,8 +639,8 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
               })
             })
           }), we(e), a) : (we(e), a)
-        },
-        oe = function() {
+        }
+      let oe = function() {
           try {
             let e = Ae(),
               n = e.getExtension('WEBGL_debug_renderer_info'),
@@ -639,8 +649,8 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
           } catch (e) {
             return null
           }
-        },
-        le = function() {
+        }
+      let le = function() {
           let e = document.createElement('div')
           e.innerHTML = '&nbsp;', e.className = 'adsbox'
           let n = !1
@@ -651,8 +661,8 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
             n = !1
           }
           return n
-        },
-        se = function() {
+        }
+      let se = function() {
           if (void 0 !== navigator.languages) try {
             let e = navigator.languages[0].substr(0, 2)
             if (e !== navigator.language.substr(0, 2)) return !0
@@ -660,11 +670,11 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
             return !0
           }
           return !1
-        },
-        ce = function() {
+        }
+      let ce = function() {
           return window.screen.width < window.screen.availWidth || window.screen.height < window.screen.availHeight
-        },
-        ue = function() {
+        }
+      let ue = function() {
           let e, n = navigator.userAgent.toLowerCase(),
             t = navigator.oscpu,
             a = navigator.platform.toLowerCase()
@@ -696,8 +706,8 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
           let i = a.indexOf('win') < 0 && a.indexOf('linux') < 0 && a.indexOf('mac') < 0 && a.indexOf('iphone') < 0 && a.indexOf(
             'ipad') < 0 && a.indexOf('ipod') < 0
           return i !== ('Other' === e) || void 0 === navigator.plugins && 'Windows' !== e && 'Windows Phone' !== e
-        },
-        de = function() {
+        }
+      let de = function() {
           let e, n = navigator.userAgent.toLowerCase(),
             t = navigator.productSub
           if (n.indexOf('edge/') >= 0 || n.indexOf('iemobile/') >= 0) return !1
@@ -721,32 +731,32 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
             }
           }
           return a && 'Firefox' !== e && 'Other' !== e
-        },
-        fe = function() {
+        }
+      let fe = function() {
           let e = document.createElement('canvas')
           return !(!e.getContext || !e.getContext('2d'))
-        },
-        ge = function() {
+        }
+      let ge = function() {
           if (!fe()) return !1
           let e = Ae(),
             n = !!window.WebGLRenderingContext && !!e
           return we(e), n
-        },
-        he = function() {
+        }
+      let he = function() {
           return 'Microsoft Internet Explorer' === navigator.appName || !('Netscape' !== navigator.appName || !/Trident/.test(
             navigator.userAgent))
-        },
-        me = function() {
+        }
+      let me = function() {
           return void 0 !== window.swfobject
-        },
-        pe = function() {
+        }
+      let pe = function() {
           return window.swfobject.hasFlashPlayerVersion('9.0.0')
-        },
-        Te = function (e) {
+        }
+      let Te = function (e) {
           let n = document.createElement('div')
           n.setAttribute('id', e.fonts.swfContainerId), document.body.appendChild(n)
-        },
-        ve = function (e, n) {
+        }
+      let ve = function (e, n) {
           let t = '___fp_swf_loaded'
           window[t] = function (n) {
             e(n)
@@ -761,20 +771,20 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
               menu: 'false'
             }
           window.swfobject.embedSWF(n.fonts.swfPath, a, '1', '1', '9.0.0', !1, r, i, {})
-        },
-        Ae = function() {
+        }
+      let Ae = function() {
           let e = document.createElement('canvas'),
             n = null
           try {
             n = e.getContext('webgl') || e.getContext('experimental-webgl')
           } catch (e) {}
           return n || (n = null), n
-        },
-        we = function (e) {
+        }
+      let we = function (e) {
           let n = e.getExtension('WEBGL_lose_context')
           null !== n && n.loseContext()
-        },
-        Se = [{
+        }
+      let Se = [{
           key: 'userAgent',
           getData: h
         }, {
@@ -875,13 +885,13 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
         }, {
           key: 'enumerateDevices',
           getData: d
-        }],
-        Ce = function (e) {
+        }]
+      let Ce = function (e) {
           throw new Error(
             '"new Fingerprint()" is deprecated, see https://github.com/Valve/fingerprintjs2#upgrade-guide-from-182-to-200'
           )
         }
-      return Ce.get = function (e, n) {
+      Ce.get = function (e, n) {
         n ? e || (e = {}) : (n = e, e = {}), u(e, l), e.components = e.extraComponents.concat(Se)
         let t = {
             data: [],
@@ -913,11 +923,13 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
             }
           }
         r(!1)
-      }, Ce.getPromise = function (e) {
+      }
+	  Ce.getPromise = function (e) {
         return new Promise(function (n, t) {
           Ce.get(e, n)
         })
-      }, Ce.getV18 = function (e, n) {
+      }
+	  Ce.getV18 = function (e, n) {
         return null === n && (n = e, e = {}), Ce.get(e, function (t) {
           for (let a = [], r = 0; r < t.length; r++) {
             let i = t[r]
@@ -957,7 +969,10 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
           }).join('~~~'), 31)
           n(l, a)
         })
-      }, Ce.x64hash128 = o, Ce.VERSION = '2.1.0', Ce
+      }
+	  Ce.x64hash128 = o
+	  Ce.VERSION = '2.1.0'
+	  return Ce
     }),
     function (e, n) {
       function t(e) {
