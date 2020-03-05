@@ -417,8 +417,8 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
         m = function() {
         for (let e = {}, n = 0, r = a.length; n < r; n++) {
           for (let i = [], o = 0, l = t.length; o < l; o++) {
-            let s = g(a[n], t[o])
-            c.appendChild(s), i.push(s)
+          let s = g(a[n], t[o])
+          c.appendChild(s), i.push(s)
           }
           e[a[n]] = i
         }
@@ -627,12 +627,12 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
         s(['VERTEX', 'FRAGMENT'], function (t) {
         s(['HIGH', 'MEDIUM', 'LOW'], function (r) {
           s(['precision', 'rangeMin', 'rangeMax'], function (i) {
-            let o = e.getShaderPrecisionFormat(e[t + '_SHADER'], e[r + '_' + n])[i]
-            'precision' !== i && (i = 'precision ' + i)
-            let l = ['webgl ', t.toLowerCase(), ' shader ', r.toLowerCase(), ' ', n.toLowerCase(), ' ', i, ':',
-              o
-            ].join('')
-            a.push(l)
+          let o = e.getShaderPrecisionFormat(e[t + '_SHADER'], e[r + '_' + n])[i]
+          'precision' !== i && (i = 'precision ' + i)
+          let l = ['webgl ', t.toLowerCase(), ' shader ', r.toLowerCase(), ' ', n.toLowerCase(), ' ', i, ':',
+            o
+          ].join('')
+          a.push(l)
           })
         })
         })
@@ -908,14 +908,14 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
         if (e.excludes[o.key]) r(!1)
         else {
           if (!i && o.pauseBefore) return a -= 1, void setTimeout(function() {
-            r(!0)
+          r(!0)
           }, 1)
           try {
-            o.getData(function (e) {
-              t.addPreprocessedComponent(o.key, e), r(!1)
-            }, e)
+          o.getData(function (e) {
+            t.addPreprocessedComponent(o.key, e), r(!1)
+          }, e)
           } catch (e) {
-            t.addPreprocessedComponent(o.key, String(e)), r(!1)
+          t.addPreprocessedComponent(o.key, String(e)), r(!1)
           }
         }
         }
@@ -939,7 +939,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
         key: 'plugins',
         value: c(i.value, function (e) {
           let n = c(e[2], function (e) {
-            return e.join ? e.join('~') : e
+          return e.join ? e.join('~') : e
           }).join(',')
           return [e[0], e[1], n].join('::')
         })
