@@ -1327,7 +1327,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     throw new Error("'new Fingerprint()' is deprecated, see https://github.com/Valve/fingerprintjs2#upgrade-guide-from-182-to-200")
   }
 
-  Fingerprint2get = (options, callback) => {
+  Fingerprint2get (options, callback) {
     if (!callback) {
       callback = options
       options = {}
@@ -1384,13 +1384,13 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     chainComponents(false)
   }
 
-  Fingerprint2getPromise = options => {
+  Fingerprint2getPromise (options) {
     return new Promise((resolve, reject) => {
       Fingerprint2.get(options, resolve)
     })
   }
 
-  Fingerprint2getV18 = (options, callback) => {
+  Fingerprint2getV18 (options, callback) {
     if (callback == null) {
       callback = options
       options = {}
