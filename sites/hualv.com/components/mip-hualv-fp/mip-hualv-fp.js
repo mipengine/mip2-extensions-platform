@@ -3,7 +3,7 @@ import './index.less'
 export default class MIPHualvfingerprint extends MIP.CustomElement {
   constructor (element) {
     super(element)
-	this.defaultOptions = {
+    this.defaultOptions = {
       preprocessor: null,
       audio: {
         timeout: 1000,
@@ -41,59 +41,59 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       ERROR: 'error',
       EXCLUDED: 'excluded'
     }
-	this.components = [
-      { key: 'userAgent', getData: UserAgent },
-      { key: 'webdriver', getData: webdriver },
-      { key: 'language', getData: languageKey },
-      { key: 'colorDepth', getData: colorDepthKey },
-      { key: 'deviceMemory', getData: deviceMemoryKey },
-      { key: 'pixelRatio', getData: pixelRatioKey },
-      { key: 'hardwareConcurrency', getData: hardwareConcurrencyKey },
-      { key: 'screenResolution', getData: screenResolutionKey },
-      { key: 'availableScreenResolution', getData: availableScreenResolutionKey },
-      { key: 'timezoneOffset', getData: timezoneOffset },
-      { key: 'timezone', getData: timezone },
-      { key: 'sessionStorage', getData: sessionStorageKey },
-      { key: 'localStorage', getData: localStorageKey },
-      { key: 'indexedDb', getData: indexedDbKey },
-      { key: 'addBehavior', getData: addBehaviorKey },
-      { key: 'openDatabase', getData: openDatabaseKey },
-      { key: 'cpuClass', getData: cpuClassKey },
-      { key: 'platform', getData: platformKey },
-      { key: 'doNotTrack', getData: doNotTrackKey },
-      { key: 'plugins', getData: pluginsComponent },
-      { key: 'canvas', getData: canvasKey },
-      { key: 'webgl', getData: webglKey },
-      { key: 'webglVendorAndRenderer', getData: webglVendorAndRendererKey },
-      { key: 'adBlock', getData: adBlockKey },
-      { key: 'hasLiedLanguages', getData: hasLiedLanguagesKey },
-      { key: 'hasLiedResolution', getData: hasLiedResolutionKey },
-      { key: 'hasLiedOs', getData: hasLiedOsKey },
-      { key: 'hasLiedBrowser', getData: hasLiedBrowserKey },
-      { key: 'touchSupport', getData: touchSupportKey },
-      { key: 'fonts', getData: jsFontsKey, pauseBefore: true },
-      { key: 'fontsFlash', getData: flashFontsKey, pauseBefore: true },
-      { key: 'audio', getData: audioKey },
-      { key: 'enumerateDevices', getData: enumerateDevicesKey }
+    this.components = [
+      { key: 'userAgent', getData: this.UserAgent },
+      { key: 'webdriver', getData: this.webdriver },
+      { key: 'language', getData: this.languageKey },
+      { key: 'colorDepth', getData: this.colorDepthKey },
+      { key: 'deviceMemory', getData: this.deviceMemoryKey },
+      { key: 'pixelRatio', getData: this.pixelRatioKey },
+      { key: 'hardwareConcurrency', getData: this.hardwareConcurrencyKey },
+      { key: 'screenResolution', getData: this.screenResolutionKey },
+      { key: 'availableScreenResolution', getData: this.availableScreenResolutionKey },
+      { key: 'timezoneOffset', getData: this.timezoneOffset },
+      { key: 'timezone', getData: this.timezone },
+      { key: 'sessionStorage', getData: this.sessionStorageKey },
+      { key: 'localStorage', getData: this.localStorageKey },
+      { key: 'indexedDb', getData: this.indexedDbKey },
+      { key: 'addBehavior', getData: this.addBehaviorKey },
+      { key: 'openDatabase', getData: this.openDatabaseKey },
+      { key: 'cpuClass', getData: this.cpuClassKey },
+      { key: 'platform', getData: this.platformKey },
+      { key: 'doNotTrack', getData: this.doNotTrackKey },
+      { key: 'plugins', getData: this.pluginsComponent },
+      { key: 'canvas', getData: this.canvasKey },
+      { key: 'webgl', getData: this.webglKey },
+      { key: 'webglVendorAndRenderer', getData: this.webglVendorAndRendererKey },
+      { key: 'adBlock', getData: this.adBlockKey },
+      { key: 'hasLiedLanguages', getData: this.hasLiedLanguagesKey },
+      { key: 'hasLiedResolution', getData: this.hasLiedResolutionKey },
+      { key: 'hasLiedOs', getData: this.hasLiedOsKey },
+      { key: 'hasLiedBrowser', getData: this.hasLiedBrowserKey },
+      { key: 'touchSupport', getData: this.touchSupportKey },
+      { key: 'fonts', getData: this.jsFontsKey, pauseBefore: true },
+      { key: 'fontsFlash', getData: this.flashFontsKey, pauseBefore: true },
+      { key: 'audio', getData: this.audioKey },
+      { key: 'enumerateDevices', getData: this.enumerateDevicesKey }
     ]
-    this.hasConsole = typeof console !== "undefined";
-    this.fpCacheKey = 'fp2';
-    this.trackUrl = "//hualv.cn-beijing.log.aliyuncs.com/logstores/hualv-fingerprint2-test/track.gif?APIVersion=0.6.0";
-	this.Fingerprint2 = {
-      'VERSION' : '2.1.0'
-	}
+    this.hasConsole = typeof console !== 'undefined'
+    this.fpCacheKey = 'fp2'
+    this.trackUrl = '//hualv.cn-beijing.log.aliyuncs.com/logstores/hualv-fingerprint2-test/track.gif?APIVersion=0.6.0'
+    this.Fingerprint2 = {
+      'VERSION': '2.1.0'
+    }
   }
   build () {
-	// detect if object is array
+    // detect if object is array
     // only implement if no native implementation is available
-    this.init('Fingerprint2', this, arrayPropertyBind)
-	this.Fingerprint2.x64hash128 = this.x64hash128
-	this.Fingerprint2.get = this.Fingerprint2get
-	this.Fingerprint2.getPromise = this.Fingerprint2getPromise
-	this.Fingerprint2.getV18 = this.Fingerprint2getV18
+    this.init('Fingerprint2', this, this.arrayPropertyBind)
+    this.Fingerprint2.x64hash128 = this.x64hash128
+    this.Fingerprint2.get = this.Fingerprint2get
+    this.Fingerprint2.getPromise = this.Fingerprint2getPromise
+    this.Fingerprint2.getV18 = this.Fingerprint2getV18
     setTimeout(name => {
-      let sessionId = cookie('hl.guid');
-      let murmur = cache(fpCacheKey);
+      let sessionId = this.cookie('hl.guid')
+      let murmur = this.cache(this.fpCacheKey)
       if (murmur) {
         send({
           duration: 0,
@@ -103,26 +103,25 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
         });
       } else {
         try {
-          fp(data => {
-            data['sessionId'] = sessionId;
-            data['type'] = 'fp';
-            send(data);
+          this.fp(data => {
+            data['sessionId'] = sessionId
+            data['type'] = 'fp'
+            this.send(data)
           })
         } catch (error) {
-          guid(data => {
-            data['sessionId'] = sessionId;
-            data['type'] = 'guid';
-            data['err'] = error;
-            send(data);
+          this.guid(data => {
+            data['sessionId'] = sessionId
+            data['type'] = 'guid'
+            data['err'] = error
+            this.send(data)
           })
         }
       }
     }, this.showTime)
   }
   init (name, context, definition) {
-    if (typeof window !== 'undefined' && typeof define === 'function' && define.amd) { define(definition) } else if (typeof module !== 'undefined' && module.exports) { module.exports = definition() } else if (context.exports) { context.exports = definition() } else { context[name] = definition() }
+    if (typeof window !== 'undefined' && typeof define === 'function' && define.amd) { define(definition) } else if (typeof module !== 'undefined' && module.exports) { module.exports = definition() } else if (context.exports) { context.exports = definition() } else { context[name] = definition()}
   }
-  
   arrayPropertyBind () {
     if (typeof Array.isArray === 'undefined') {
       Array.isArray = obj => {
@@ -228,11 +227,11 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
   // only place where we need to right shift 64bit ints.)
   //
   x64Fmix (h) {
-    h = x64Xor(h, [0, h[0] >>> 1])
-    h = x64Multiply(h, [0xff51afd7, 0xed558ccd])
-    h = x64Xor(h, [0, h[0] >>> 1])
-    h = x64Multiply(h, [0xc4ceb9fe, 0x1a85ec53])
-    h = x64Xor(h, [0, h[0] >>> 1])
+    h = this.x64Xor(h, [0, h[0] >>> 1])
+    h = this.x64Multiply(h, [0xff51afd7, 0xed558ccd])
+    h = this.x64Xor(h, [0, h[0] >>> 1])
+    h = this.x64Multiply(h, [0xc4ceb9fe, 0x1a85ec53])
+    h = this.x64Xor(h, [0, h[0] >>> 1])
     return h
   }
 
@@ -243,97 +242,97 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
   x64hash128 (key, seed) {
     key = key || ''
     seed = seed || 0
-    var remainder = key.length % 16
-    var bytes = key.length - remainder
-    var h1 = [0, seed]
-    var h2 = [0, seed]
-    var k1 = [0, 0]
-    var k2 = [0, 0]
-    var c1 = [0x87c37b91, 0x114253d5]
-    var c2 = [0x4cf5ad43, 0x2745937f]
-    for (var i = 0; i < bytes; i = i + 16) {
+    let remainder = key.length % 16
+    let bytes = key.length - remainder
+    let h1 = [0, seed]
+    let h2 = [0, seed]
+    let k1 = [0, 0]
+    let k2 = [0, 0]
+    let c1 = [0x87c37b91, 0x114253d5]
+    let c2 = [0x4cf5ad43, 0x2745937f]
+    for (let i = 0; i < bytes; i = i + 16) {
       k1 = [((key.charCodeAt(i + 4) & 0xff)) | ((key.charCodeAt(i + 5) & 0xff) << 8) | ((key.charCodeAt(i + 6) & 0xff) << 16) | ((key.charCodeAt(i + 7) & 0xff) << 24), ((key.charCodeAt(i) & 0xff)) | ((key.charCodeAt(i + 1) & 0xff) << 8) | ((key.charCodeAt(i + 2) & 0xff) << 16) | ((key.charCodeAt(i + 3) & 0xff) << 24)]
       k2 = [((key.charCodeAt(i + 12) & 0xff)) | ((key.charCodeAt(i + 13) & 0xff) << 8) | ((key.charCodeAt(i + 14) & 0xff) << 16) | ((key.charCodeAt(i + 15) & 0xff) << 24), ((key.charCodeAt(i + 8) & 0xff)) | ((key.charCodeAt(i + 9) & 0xff) << 8) | ((key.charCodeAt(i + 10) & 0xff) << 16) | ((key.charCodeAt(i + 11) & 0xff) << 24)]
-      k1 = x64Multiply(k1, c1)
-      k1 = x64Rotl(k1, 31)
-      k1 = x64Multiply(k1, c2)
-      h1 = x64Xor(h1, k1)
-      h1 = x64Rotl(h1, 27)
-      h1 = x64Add(h1, h2)
-      h1 = x64Add(x64Multiply(h1, [0, 5]), [0, 0x52dce729])
-      k2 = x64Multiply(k2, c2)
-      k2 = x64Rotl(k2, 33)
-      k2 = x64Multiply(k2, c1)
-      h2 = x64Xor(h2, k2)
-      h2 = x64Rotl(h2, 31)
-      h2 = x64Add(h2, h1)
-      h2 = x64Add(x64Multiply(h2, [0, 5]), [0, 0x38495ab5])
+      k1 = this.x64Multiply(k1, c1)
+      k1 = this.x64Rotl(k1, 31)
+      k1 = this.x64Multiply(k1, c2)
+      h1 = this.x64Xor(h1, k1)
+      h1 = this.x64Rotl(h1, 27)
+      h1 = this.x64Add(h1, h2)
+      h1 = this.x64Add(x64Multiply(h1, [0, 5]), [0, 0x52dce729])
+      k2 = this.x64Multiply(k2, c2)
+      k2 = this.x64Rotl(k2, 33)
+      k2 = this.x64Multiply(k2, c1)
+      h2 = this.x64Xor(h2, k2)
+      h2 = this.x64Rotl(h2, 31)
+      h2 = this.x64Add(h2, h1)
+      h2 = this.x64Add(x64Multiply(h2, [0, 5]), [0, 0x38495ab5])
     }
     k1 = [0, 0]
     k2 = [0, 0]
     switch (remainder) {
       case 15:
-        k2 = x64Xor(k2, x64LeftShift([0, key.charCodeAt(i + 14)], 48))
+        k2 = x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 14)], 48))
       // fallthrough
       case 14:
-        k2 = x64Xor(k2, x64LeftShift([0, key.charCodeAt(i + 13)], 40))
+        k2 = x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 13)], 40))
       // fallthrough
       case 13:
-        k2 = x64Xor(k2, x64LeftShift([0, key.charCodeAt(i + 12)], 32))
+        k2 = x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 12)], 32))
       // fallthrough
       case 12:
-        k2 = x64Xor(k2, x64LeftShift([0, key.charCodeAt(i + 11)], 24))
+        k2 = x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 11)], 24))
       // fallthrough
       case 11:
-        k2 = x64Xor(k2, x64LeftShift([0, key.charCodeAt(i + 10)], 16))
+        k2 = x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 10)], 16))
       // fallthrough
       case 10:
-        k2 = x64Xor(k2, x64LeftShift([0, key.charCodeAt(i + 9)], 8))
+        k2 = x64Xor(k2, this.x64LeftShift([0, key.charCodeAt(i + 9)], 8))
       // fallthrough
       case 9:
-        k2 = x64Xor(k2, [0, key.charCodeAt(i + 8)])
-        k2 = x64Multiply(k2, c2)
-        k2 = x64Rotl(k2, 33)
-        k2 = x64Multiply(k2, c1)
-        h2 = x64Xor(h2, k2)
+        k2 = this.x64Xor(k2, [0, key.charCodeAt(i + 8)])
+        k2 = this.x64Multiply(k2, c2)
+        k2 = this.x64Rotl(k2, 33)
+        k2 = this.x64Multiply(k2, c1)
+        h2 = this.x64Xor(h2, k2)
       // fallthrough
       case 8:
-        k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 7)], 56))
+        k1 = x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 7)], 56))
       // fallthrough
       case 7:
-        k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 6)], 48))
+        k1 = x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 6)], 48))
       // fallthrough
       case 6:
-        k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 5)], 40))
+        k1 = x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 5)], 40))
       // fallthrough
       case 5:
-        k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 4)], 32))
+        k1 = x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 4)], 32))
       // fallthrough
       case 4:
-        k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 3)], 24))
+        k1 = x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 3)], 24))
       // fallthrough
       case 3:
-        k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 2)], 16))
+        k1 = x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 2)], 16))
       // fallthrough
       case 2:
-        k1 = x64Xor(k1, x64LeftShift([0, key.charCodeAt(i + 1)], 8))
+        k1 = x64Xor(k1, this.x64LeftShift([0, key.charCodeAt(i + 1)], 8))
       // fallthrough
       case 1:
-        k1 = x64Xor(k1, [0, key.charCodeAt(i)])
-        k1 = x64Multiply(k1, c1)
-        k1 = x64Rotl(k1, 31)
-        k1 = x64Multiply(k1, c2)
-        h1 = x64Xor(h1, k1)
+        k1 = this.x64Xor(k1, [0, key.charCodeAt(i)])
+        k1 = this.x64Multiply(k1, c1)
+        k1 = this.x64Rotl(k1, 31)
+        k1 = this.x64Multiply(k1, c2)
+        h1 = this.x64Xor(h1, k1)
       // fallthrough
     }
-    h1 = x64Xor(h1, [0, key.length])
-    h2 = x64Xor(h2, [0, key.length])
-    h1 = x64Add(h1, h2)
-    h2 = x64Add(h2, h1)
-    h1 = x64Fmix(h1)
-    h2 = x64Fmix(h2)
-    h1 = x64Add(h1, h2)
-    h2 = x64Add(h2, h1)
+    h1 = this.x64Xor(h1, [0, key.length])
+    h2 = this.x64Xor(h2, [0, key.length])
+    h1 = this.x64Add(h1, h2)
+    h2 = this.x64Add(h2, h1)
+    h1 = this.x64Fmix(h1)
+    h2 = this.x64Fmix(h2)
+    h1 = this.x64Add(h1, h2)
+    h2 = this.x64Add(h2, h1)
     return ('00000000' + (h1[0] >>> 0).toString(16)).slice(-8) + ('00000000' + (h1[1] >>> 0).toString(16)).slice(-8) + ('00000000' + (h2[0] >>> 0).toString(16)).slice(-8) + ('00000000' + (h2[1] >>> 0).toString(16)).slice(-8)
   }
 
@@ -341,11 +340,11 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     if (Array.prototype.forEach && obj.forEach === Array.prototype.forEach) {
       obj.forEach(iterator)
     } else if (obj.length === +obj.length) {
-      for (var i = 0, l = obj.length; i < l; i++) {
+      for (let i = 0, l = obj.length; i < l; i++) {
         iterator(obj[i], i, obj)
       }
     } else {
-      for (var key in obj) {
+      for (let key in obj) {
         if (obj.hasOwnProperty(key)) {
           iterator(obj[key], key, obj)
         }
@@ -354,14 +353,14 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
   }
 
   map (obj, iterator) {
-    var results = []
+    let results = []
     // Not using strict equality so that this acts as a
     // shortcut to checking for `null` and `undefined`.
     if (obj == null) {
       return results
     }
     if (Array.prototype.map && obj.map === Array.prototype.map) { return obj.map(iterator) }
-    each(obj, (value, index, list) => {
+    this.each(obj, (value, index, list) => {
       results.push(iterator(value, index, list))
     })
     return results
@@ -369,8 +368,8 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
 
   extendSoft (target, source) {
     if (source == null) { return target }
-    var value
-    var key
+    let value
+    let key
     for (key in source) {
       value = source[key]
       if (value != null && !(Object.prototype.hasOwnProperty.call(target, key))) {
@@ -382,7 +381,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
 
   // https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/enumerateDevices
   enumerateDevicesKey (done, options) {
-    if (!isEnumerateDevicesSupported()) {
+    if (!this.isEnumerateDevicesSupported()) {
       return done(options.NOT_AVAILABLE)
     }
     navigator.mediaDevices.enumerateDevices().then(devices => {
@@ -399,26 +398,24 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
   }
   // Inspired by and based on https://github.com/cozylife/audio-fingerprint
   audioKey (done, options) {
-    var audioOptions = options.audio
+    let audioOptions = options.audio
     if (audioOptions.excludeIOS11 && navigator.userAgent.match(/OS 11.+Version\/11.+Safari/)) {
       // See comment for excludeUserAgent and https://stackoverflow.com/questions/46363048/onaudioprocess-not-called-on-ios11#46534088
       return done(options.EXCLUDED)
     }
-
-    var AudioContext = window.OfflineAudioContext || window.webkitOfflineAudioContext
-
+    let AudioContext = window.OfflineAudioContext || window.webkitOfflineAudioContext
     if (AudioContext == null) {
       return done(options.NOT_AVAILABLE)
     }
 
-    var context = new AudioContext(1, 44100, 44100)
+    let context = new AudioContext(1, 44100, 44100)
 
-    var oscillator = context.createOscillator()
+    let oscillator = context.createOscillator()
     oscillator.type = 'triangle'
     oscillator.frequency.setValueAtTime(10000, context.currentTime)
 
-    var compressor = context.createDynamicsCompressor()
-    each([
+    let compressor = context.createDynamicsCompressor()
+    this.each([
       ['threshold', -50],
       ['knee', 40],
       ['ratio', 12],
@@ -444,7 +441,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     }, audioOptions.timeout)
 
     context.oncomplete = event => {
-      var fingerprint
+      let fingerprint
       try {
         clearTimeout(audioTimeoutId)
         fingerprint = event.renderedBuffer.getChannelData(0)
@@ -479,21 +476,21 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     done(window.devicePixelRatio || options.NOT_AVAILABLE)
   }
   screenResolutionKey (done, options) {
-    done(getScreenResolution(options))
+    done(this.getScreenResolution(options))
   }
   getScreenResolution (options) {
-    var resolution = [window.screen.width, window.screen.height]
+    let resolution = [window.screen.width, window.screen.height]
     if (options.screen.detectScreenOrientation) {
       resolution.sort().reverse()
     }
     return resolution
   }
   availableScreenResolutionKey (done, options) {
-    done(getAvailableScreenResolution(options))
+    done(this.getAvailableScreenResolution(options))
   }
   getAvailableScreenResolution (options) {
     if (window.screen.availWidth && window.screen.availHeight) {
-      var available = [window.screen.availHeight, window.screen.availWidth]
+      let available = [window.screen.availHeight, window.screen.availWidth]
       if (options.screen.detectScreenOrientation) {
         available.sort().reverse()
       }
@@ -513,13 +510,13 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     done(options.NOT_AVAILABLE)
   }
   sessionStorageKey (done, options) {
-    done(hasSessionStorage(options))
+    done(this.hasSessionStorage(options))
   }
   localStorageKey (done, options) {
-    done(hasLocalStorage(options))
+    done(this.hasLocalStorage(options))
   }
   indexedDbKey (done, options) {
-    done(hasIndexedDB(options))
+    done(this.hasIndexedDB(options))
   }
   addBehaviorKey (done) {
     // body might not be defined at this point or removed programmatically
@@ -529,63 +526,63 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     done(!!window.openDatabase)
   }
   cpuClassKey (done, options) {
-    done(getNavigatorCpuClass(options))
+    done(this.getNavigatorCpuClass(options))
   }
   platformKey (done, options) {
-    done(getNavigatorPlatform(options))
+    done(this.getNavigatorPlatform(options))
   }
   doNotTrackKey (done, options) {
-    done(getDoNotTrack(options))
+    done(this.getDoNotTrack(options))
   }
   canvasKey (done, options) {
-    if (isCanvasSupported()) {
-      done(getCanvasFp(options))
+    if (this.isCanvasSupported()) {
+      done(this.getCanvasFp(options))
       return
     }
     done(options.NOT_AVAILABLE)
   }
   webglKey (done, options) {
-    if (isWebGlSupported()) {
-      done(getWebglFp())
+    if (this.isWebGlSupported()) {
+      done(this.getWebglFp())
       return
     }
     done(options.NOT_AVAILABLE)
   }
   webglVendorAndRendererKey (done) {
-    if (isWebGlSupported()) {
-      done(getWebglVendorAndRenderer())
+    if (this.isWebGlSupported()) {
+      done(this.getWebglVendorAndRenderer())
       return
     }
     done()
   }
   adBlockKey (done) {
-    done(getAdBlock())
+    done(this.getAdBlock())
   }
   hasLiedLanguagesKey (done) {
-    done(getHasLiedLanguages())
+    done(this.getHasLiedLanguages())
   }
   hasLiedResolutionKey (done) {
-    done(getHasLiedResolution())
+    done(this.getHasLiedResolution())
   }
   hasLiedOsKey (done) {
-    done(getHasLiedOs())
+    done(this.getHasLiedOs())
   }
   hasLiedBrowserKey (done) {
-    done(getHasLiedBrowser())
+    done(this.getHasLiedBrowser())
   }
   // flash fonts (will increase fingerprinting time 20X to ~ 130-150ms)
   flashFontsKey (done, options) {
     // we do flash if swfobject is loaded
-    if (!hasSwfObjectLoaded()) {
+    if (!this.hasSwfObjectLoaded()) {
       return done('swf object not loaded')
     }
-    if (!hasMinFlashInstalled()) {
+    if (!this.hasMinFlashInstalled()) {
       return done('flash not installed')
     }
     if (!options.fonts.swfPath) {
       return done('missing options.fonts.swfPath')
     }
-    loadSwfAndDetectFonts(fonts => {
+    this.loadSwfAndDetectFonts(fonts => {
       done(fonts)
     }, options)
   }
@@ -593,12 +590,12 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
   jsFontsKey (done, options) {
     // a font will be compared against all the three default fonts.
     // and if it doesn't match all 3 then that font is not available.
-    var baseFonts = ['monospace', 'sans-serif', 'serif']
+    let baseFonts = ['monospace', 'sans-serif', 'serif']
 
-    var fontList = []
+    let fontList = []
 
     if (options.fonts.extendedJsFonts) {
-      var extendedFontList = []
+      let extendedFontList = []
       fontList = fontList.concat(extendedFontList)
     }
 
@@ -611,25 +608,25 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
 
     // we use m or w because these two characters take up the maximum width.
     // And we use a LLi so that the same matching fonts can get separated
-    var testString = 'mmmmmmmmmmlli'
+    let testString = 'mmmmmmmmmmlli'
 
     // we test using 72px font size, we may use any size. I guess larger the better.
-    var testSize = '72px'
+    let testSize = '72px'
 
-    var h = document.getElementsByTagName('body')[0]
+    let h = document.getElementsByTagName('body')[0]
 
     // div to load spans for the base fonts
-    var baseFontsDiv = document.createElement('div')
+    let baseFontsDiv = document.createElement('div')
 
     // div to load spans for the fonts to detect
-    var fontsDiv = document.createElement('div')
+    let fontsDiv = document.createElement('div')
 
-    var defaultWidth = {}
-    var defaultHeight = {}
+    let defaultWidth = {}
+    let defaultHeight = {}
 
     // creates a span where the fonts will be loaded
-    var createSpan = () => {
-      var s = document.createElement('span')
+    let createSpan = () => {
+      let s = document.createElement('span')
       /*
        * We need this css as in some weird browser this
        * span elements shows up for a microSec which creates a
@@ -658,17 +655,17 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     }
 
     // creates a span and load the font to detect and a base font for fallback
-    var createSpanWithFonts = (fontToDetect, baseFont) => {
-      var s = createSpan()
+    let createSpanWithFonts = (fontToDetect, baseFont) => {
+      let s = createSpan()
       s.style.fontFamily = "'" + fontToDetect + "'," + baseFont
       return s
     }
 
     // creates spans for the base fonts and adds them to baseFontsDiv
-    var initializeBaseFontsSpans = () => {
-      var spans = []
-      for (var index = 0, length = baseFonts.length; index < length; index++) {
-        var s = createSpan()
+    let initializeBaseFontsSpans = () => {
+      let spans = []
+      for (let index = 0, length = baseFonts.length; index < length; index++) {
+        let s = createSpan()
         s.style.fontFamily = baseFonts[index]
         baseFontsDiv.appendChild(s)
         spans.push(s)
@@ -677,12 +674,12 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     }
 
     // creates spans for the fonts to detect and adds them to fontsDiv
-    var initializeFontsSpans = () => {
-      var spans = {}
-      for (var i = 0, l = fontList.length; i < l; i++) {
-        var fontSpans = []
-        for (var j = 0, numDefaultFonts = baseFonts.length; j < numDefaultFonts; j++) {
-          var s = createSpanWithFonts(fontList[i], baseFonts[j])
+    let initializeFontsSpans = () => {
+      let spans = {}
+      for (let i = 0, l = fontList.length; i < l; i++) {
+        let fontSpans = []
+        for (let j = 0, numDefaultFonts = baseFonts.length; j < numDefaultFonts; j++) {
+          let s = createSpanWithFonts(fontList[i], baseFonts[j])
           fontsDiv.appendChild(s)
           fontSpans.push(s)
         }
@@ -692,9 +689,9 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     }
 
     // checks if a font is available
-    var isFontAvailable = fontSpans => {
-      var detected = false
-      for (var i = 0; i < baseFonts.length; i++) {
+    let isFontAvailable = fontSpans => {
+      let detected = false
+      for (let i = 0; i < baseFonts.length; i++) {
         detected = (fontSpans[i].offsetWidth !== defaultWidth[baseFonts[i]] || fontSpans[i].offsetHeight !== defaultHeight[baseFonts[i]])
         if (detected) {
           return detected
@@ -704,26 +701,26 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     }
 
     // create spans for base fonts
-    var baseFontsSpans = initializeBaseFontsSpans()
+    let baseFontsSpans = initializeBaseFontsSpans()
 
     // add the spans to the DOM
     h.appendChild(baseFontsDiv)
 
     // get the default width for the three base fonts
-    for (var index = 0, length = baseFonts.length; index < length; index++) {
+    for (let index = 0, length = baseFonts.length; index < length; index++) {
       defaultWidth[baseFonts[index]] = baseFontsSpans[index].offsetWidth // width for the default font
       defaultHeight[baseFonts[index]] = baseFontsSpans[index].offsetHeight // height for the default font
     }
 
     // create spans for fonts to detect
-    var fontsSpans = initializeFontsSpans()
+    let fontsSpans = initializeFontsSpans()
 
     // add all the spans to the DOM
     h.appendChild(fontsDiv)
 
     // check available fonts
-    var available = []
-    for (var i = 0, l = fontList.length; i < l; i++) {
+    let available = []
+    for (let i = 0, l = fontList.length; i < l; i++) {
       if (isFontAvailable(fontsSpans[fontList[i]])) {
         available.push(fontList[i])
       }
@@ -735,14 +732,14 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     done(available)
   }
   pluginsComponent (done, options) {
-    if (isIE()) {
+    if (this.isIE()) {
       if (!options.plugins.excludeIE) {
-        done(getIEPlugins(options))
+        done(this.getIEPlugins(options))
       } else {
         done(options.EXCLUDED)
       }
     } else {
-      done(getRegularPlugins(options))
+      done(this.getRegularPlugins(options))
     }
   }
   getRegularPlugins (options) {
@@ -750,32 +747,32 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       return options.NOT_AVAILABLE
     }
 
-    var plugins = []
+    let plugins = []
     // plugins isn't defined in Node envs.
-    for (var i = 0, l = navigator.plugins.length; i < l; i++) {
+    for (let i = 0, l = navigator.plugins.length; i < l; i++) {
       if (navigator.plugins[i]) { plugins.push(navigator.plugins[i]) }
     }
 
     // sorting plugins only for those user agents, that we know randomize the plugins
     // every time we try to enumerate them
-    if (pluginsShouldBeSorted(options)) {
+    if (this.pluginsShouldBeSorted(options)) {
       plugins = plugins.sort((a, b) => {
         if (a.name > b.name) { return 1 }
         if (a.name < b.name) { return -1 }
         return 0
       })
     }
-    return map(plugins, p => {
-      var mimeTypes = map(p, mt => {
+    return this.map(plugins, p => {
+      let mimeTypes = this.map(p, mt => {
         return [mt.type, mt.suffixes]
       })
       return [p.name, p.description, mimeTypes]
     })
   }
   getIEPlugins (options) {
-    var result = []
+    let result = []
     if ((Object.getOwnPropertyDescriptor && Object.getOwnPropertyDescriptor(window, 'ActiveXObject')) || ('ActiveXObject' in window)) {
-      var names = [
+      let names = [
         'AcroPDF.PDF', // Adobe PDF reader 7+
         'Adodb.Stream',
         'AgControl.AgControl', // Silverlight
@@ -800,7 +797,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
         'rmocx.RealPlayer G2 Control.1'
       ]
       // starting to detect plugins in IE
-      result = map(names, name => {
+      result = this.map(names, name => {
         try {
           // eslint-disable-next-line no-new
           new window.ActiveXObject(name)
@@ -813,14 +810,14 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       result.push(options.NOT_AVAILABLE)
     }
     if (navigator.plugins) {
-      result = result.concat(getRegularPlugins(options))
+      result = result.concat(this.getRegularPlugins(options))
     }
     return result
   }
   pluginsShouldBeSorted (options) {
-    var should = false
-    for (var i = 0, l = options.plugins.sortPluginsFor.length; i < l; i++) {
-      var re = options.plugins.sortPluginsFor[i]
+    let should = false
+    for (let i = 0, l = options.plugins.sortPluginsFor.length; i < l; i++) {
+      let re = options.plugins.sortPluginsFor[i]
       if (navigator.userAgent.match(re)) {
         should = true
         break
@@ -829,10 +826,10 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     return should
   }
   touchSupportKey (done) {
-    done(getTouchSupport())
+    done(this.getTouchSupport())
   }
   hardwareConcurrencyKey (done, options) {
-    done(getHardwareConcurrency(options))
+    done(this.getHardwareConcurrency(options))
   }
   hasSessionStorage (options) {
     try {
@@ -894,8 +891,8 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
   // and the availability of the 'ontouchstart' property
 
   getTouchSupport () {
-    var maxTouchPoints = 0
-    var touchEvent
+    let maxTouchPoints = 0
+    let touchEvent
     if (typeof navigator.maxTouchPoints !== 'undefined') {
       maxTouchPoints = navigator.maxTouchPoints
     } else if (typeof navigator.msMaxTouchPoints !== 'undefined') {
@@ -907,19 +904,19 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     } catch (_) {
       touchEvent = false
     }
-    var touchStart = 'ontouchstart' in window
+    let touchStart = 'ontouchstart' in window
     return [maxTouchPoints, touchEvent, touchStart]
   }
   // https://www.browserleaks.com/canvas#how-does-it-work
 
   getCanvasFp (options) {
-    var result = []
+    let result = []
     // Very simple now, need to make it more complex (geo shapes etc)
-    var canvas = document.createElement('canvas')
+    let canvas = document.createElement('canvas')
     canvas.width = 2000
     canvas.height = 200
     canvas.style.display = 'inline'
-    var ctx = canvas.getContext('2d')
+    let ctx = canvas.getContext('2d')
     // detect browser support of canvas winding
     // http://blogs.adobe.com/webplatform/2013/01/30/winding-rules-in-canvas/
     // https://github.com/Modernizr/Modernizr/blob/master/feature-detects/canvas/winding.js
@@ -973,18 +970,18 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     return result
   }
   getWebglFp () {
-    var gl
-    var fa2s = fa => {
+    let gl
+    let fa2s = fa => {
       gl.clearColor(0.0, 0.0, 0.0, 1.0)
       gl.enable(gl.DEPTH_TEST)
       gl.depthFunc(gl.LEQUAL)
       gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT)
       return '[' + fa[0] + ', ' + fa[1] + ']'
     }
-    var maxAnisotropy = gl => {
-      var ext = gl.getExtension('EXT_texture_filter_anisotropic') || gl.getExtension('WEBKIT_EXT_texture_filter_anisotropic') || gl.getExtension('MOZ_EXT_texture_filter_anisotropic')
+    let maxAnisotropy = gl => {
+      let ext = gl.getExtension('EXT_texture_filter_anisotropic') || gl.getExtension('WEBKIT_EXT_texture_filter_anisotropic') || gl.getExtension('MOZ_EXT_texture_filter_anisotropic')
       if (ext) {
-        var anisotropy = gl.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT)
+        let anisotropy = gl.getParameter(ext.MAX_TEXTURE_MAX_ANISOTROPY_EXT)
         if (anisotropy === 0) {
           anisotropy = 2
         }
@@ -994,26 +991,26 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       }
     }
 
-    gl = getWebglCanvas()
+    gl = this.getWebglCanvas()
     if (!gl) { return null }
     // WebGL fingerprinting is a combination of techniques, found in MaxMind antifraud script & Augur fingerprinting.
     // First it draws a gradient object with shaders and convers the image to the Base64 string.
     // Then it enumerates all WebGL extensions & capabilities and appends them to the Base64 string, resulting in a huge WebGL string, potentially very unique on each device
     // Since iOS supports webgl starting from version 8.1 and 8.1 runs on several graphics chips, the results may be different across ios devices, but we need to verify it.
-    var result = []
-    var vShaderTemplate = 'attribute vec2 attrVertex;varying vec2 varyinTexCoordinate;uniform vec2 uniformOffset;void main(){varyinTexCoordinate=attrVertex+uniformOffset;gl_Position=vec4(attrVertex,0,1);}'
-    var fShaderTemplate = 'precision mediump float;varying vec2 varyinTexCoordinate;void main() {gl_FragColor=vec4(varyinTexCoordinate,0,1);}'
-    var vertexPosBuffer = gl.createBuffer()
+    let result = []
+    let vShaderTemplate = 'attribute vec2 attrVertex;varying vec2 varyinTexCoordinate;uniform vec2 uniformOffset;void main(){varyinTexCoordinate=attrVertex+uniformOffset;gl_Position=vec4(attrVertex,0,1);}'
+    let fShaderTemplate = 'precision mediump float;varying vec2 varyinTexCoordinate;void main() {gl_FragColor=vec4(varyinTexCoordinate,0,1);}'
+    let vertexPosBuffer = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, vertexPosBuffer)
-    var vertices = new Float32Array([-0.2, -0.9, 0, 0.4, -0.26, 0, 0, 0.732134444, 0])
+    let vertices = new Float32Array([-0.2, -0.9, 0, 0.4, -0.26, 0, 0, 0.732134444, 0])
     gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW)
     vertexPosBuffer.itemSize = 3
     vertexPosBuffer.numItems = 3
-    var program = gl.createProgram()
-    var vshader = gl.createShader(gl.VERTEX_SHADER)
+    let program = gl.createProgram()
+    let vshader = gl.createShader(gl.VERTEX_SHADER)
     gl.shaderSource(vshader, vShaderTemplate)
     gl.compileShader(vshader)
-    var fshader = gl.createShader(gl.FRAGMENT_SHADER)
+    let fshader = gl.createShader(gl.FRAGMENT_SHADER)
     gl.shaderSource(fshader, fShaderTemplate)
     gl.compileShader(fshader)
     gl.attachShader(program, vshader)
@@ -1060,7 +1057,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
 
     try {
       // Add the unmasked vendor and unmasked renderer if the debug_renderer_info extension is available
-      var extensionDebugRendererInfo = gl.getExtension('WEBGL_debug_renderer_info')
+      let extensionDebugRendererInfo = gl.getExtension('WEBGL_debug_renderer_info')
       if (extensionDebugRendererInfo) {
         result.push('webgl unmasked vendor:' + gl.getParameter(extensionDebugRendererInfo.UNMASKED_VENDOR_WEBGL))
         result.push('webgl unmasked renderer:' + gl.getParameter(extensionDebugRendererInfo.UNMASKED_RENDERER_WEBGL))
@@ -1068,33 +1065,33 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     } catch (e) { /* squelch */ }
 
     if (!gl.getShaderPrecisionFormat) {
-      loseWebglContext(gl)
+      this.loseWebglContext(gl)
       return result
     }
 
-    each(['FLOAT', 'INT'], numType => {
-      each(['VERTEX', 'FRAGMENT'], shader => {
-        each(['HIGH', 'MEDIUM', 'LOW'], numSize => {
-          each(['precision', 'rangeMin', 'rangeMax'], key => {
-            var format = gl.getShaderPrecisionFormat(gl[shader + '_SHADER'], gl[numSize + '_' + numType])[key]
+    this.each(['FLOAT', 'INT'], numType => {
+      this.each(['VERTEX', 'FRAGMENT'], shader => {
+        this.each(['HIGH', 'MEDIUM', 'LOW'], numSize => {
+          this.each(['precision', 'rangeMin', 'rangeMax'], key => {
+            let format = gl.getShaderPrecisionFormat(gl[shader + '_SHADER'], gl[numSize + '_' + numType])[key]
             if (key !== 'precision') {
               key = 'precision ' + key
             }
-            var line = ['webgl ', shader.toLowerCase(), ' shader ', numSize.toLowerCase(), ' ', numType.toLowerCase(), ' ', key, ':', format].join('')
+            let line = ['webgl ', shader.toLowerCase(), ' shader ', numSize.toLowerCase(), ' ', numType.toLowerCase(), ' ', key, ':', format].join('')
             result.push(line)
           })
         })
       })
     })
-    loseWebglContext(gl)
+    this.loseWebglContext(gl)
     return result
   }
   getWebglVendorAndRenderer () {
     /* This a subset of the WebGL fingerprint with a lot of entropy, while being reasonably browser-independent */
     try {
-      var glContext = getWebglCanvas()
-      var extensionDebugRendererInfo = glContext.getExtension('WEBGL_debug_renderer_info')
-      var params = glContext.getParameter(extensionDebugRendererInfo.UNMASKED_VENDOR_WEBGL) + '~' + glContext.getParameter(extensionDebugRendererInfo.UNMASKED_RENDERER_WEBGL)
+      let glContext = this.getWebglCanvas()
+      let extensionDebugRendererInfo = glContext.getExtension('WEBGL_debug_renderer_info')
+      let params = glContext.getParameter(extensionDebugRendererInfo.UNMASKED_VENDOR_WEBGL) + '~' + glContext.getParameter(extensionDebugRendererInfo.UNMASKED_RENDERER_WEBGL)
       loseWebglContext(glContext)
       return params
     } catch (e) {
@@ -1102,10 +1099,10 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     }
   }
   getAdBlock () {
-    var ads = document.createElement('div')
+    let ads = document.createElement('div')
     ads.innerHTML = '&nbsp;'
     ads.className = 'adsbox'
-    var result = false
+    let result = false
     try {
       // body may not exist, that's why we need try/catch
       document.body.appendChild(ads)
@@ -1121,7 +1118,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     // navigator.languages is undefined on IE11 (and potentially older IEs)
     if (typeof navigator.languages !== 'undefined') {
       try {
-        var firstLanguages = navigator.languages[0].substr(0, 2)
+        let firstLanguages = navigator.languages[0].substr(0, 2)
         if (firstLanguages !== navigator.language.substr(0, 2)) {
           return true
         }
@@ -1135,10 +1132,10 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     return window.screen.width < window.screen.availWidth || window.screen.height < window.screen.availHeight
   }
   getHasLiedOs () {
-    var userAgent = navigator.userAgent.toLowerCase()
-    var oscpu = navigator.oscpu
-    var platform = navigator.platform.toLowerCase()
-    var os
+    let userAgent = navigator.userAgent.toLowerCase()
+    let oscpu = navigator.oscpu
+    let platform = navigator.platform.toLowerCase()
+    let os
     // We extract the OS from the user agent (respect the order of the if else if statement)
     if (userAgent.indexOf('windows phone') >= 0) {
       os = 'Windows Phone'
@@ -1156,7 +1153,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       os = 'Other'
     }
     // We detect if the person uses a touch device
-    var mobileDevice = (('ontouchstart' in window) ||
+    let mobileDevice = (('ontouchstart' in window) ||
       (navigator.maxTouchPoints > 0) ||
       (navigator.msMaxTouchPoints > 0))
 
@@ -1190,7 +1187,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     } else if (platform.indexOf('pike') >= 0 && userAgent.indexOf('opera mini') >= 0) {
       return false
     } else {
-      var platformIsOther = platform.indexOf('win') < 0 &&
+      let platformIsOther = platform.indexOf('win') < 0 &&
         platform.indexOf('linux') < 0 &&
         platform.indexOf('mac') < 0 &&
         platform.indexOf('iphone') < 0 &&
@@ -1204,11 +1201,11 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     return typeof navigator.plugins === 'undefined' && os !== 'Windows' && os !== 'Windows Phone'
   }
   getHasLiedBrowser () {
-    var userAgent = navigator.userAgent.toLowerCase()
-    var productSub = navigator.productSub
+    let userAgent = navigator.userAgent.toLowerCase()
+    let productSub = navigator.productSub
 
     // we extract the browser from the user agent (respect the order of the tests)
-    var browser
+    let browser
     if (userAgent.indexOf('edge/') >= 0 || userAgent.indexOf('iemobile/') >= 0) {
       // Unreliable, different versions use EdgeHTML, Webkit, Blink, etc.
       return false
@@ -1238,7 +1235,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     }
 
     // eslint-disable-next-line no-eval
-    var tempRes = eval.toString().length
+    let tempRes = eval.toString().length
     if (tempRes === 37 && browser !== 'Safari' && browser !== 'Firefox' && browser !== 'Other') {
       return true
     } else if (tempRes === 39 && browser !== 'Internet Explorer' && browser !== 'Other') {
@@ -1248,7 +1245,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     }
 
     // We create an error to see how it is handled
-    var errFirefox
+    let errFirefox
     try {
       // eslint-disable-next-line no-throw-literal
       throw 'a'
@@ -1263,18 +1260,18 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     return errFirefox && browser !== 'Firefox' && browser !== 'Other'
   }
   isCanvasSupported () {
-    var elem = document.createElement('canvas')
+    let elem = document.createElement('canvas')
     return !!(elem.getContext && elem.getContext('2d'))
   }
   isWebGlSupported () {
     // code taken from Modernizr
-    if (!isCanvasSupported()) {
+    if (!this.isCanvasSupported()) {
       return false
     }
 
-    var glContext = getWebglCanvas()
-    var isSupported = !!window.WebGLRenderingContext && !!glContext
-    loseWebglContext(glContext)
+    let glContext = this.getWebglCanvas()
+    let isSupported = !!window.WebGLRenderingContext && !!glContext
+    this.loseWebglContext(glContext)
     return isSupported
   }
   isIE () {
@@ -1292,24 +1289,24 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     return window.swfobject.hasFlashPlayerVersion('9.0.0')
   }
   addFlashDivNode (options) {
-    var node = document.createElement('div')
+    let node = document.createElement('div')
     node.setAttribute('id', options.fonts.swfContainerId)
     document.body.appendChild(node)
   }
   loadSwfAndDetectFonts (done, options) {
-    var hiddenCallback = '___fp_swf_loaded'
+    let hiddenCallback = '___fp_swf_loaded'
     window[hiddenCallback] = fonts => {
       done(fonts)
     }
-    var id = options.fonts.swfContainerId
-    addFlashDivNode()
-    var flashvars = { onReady: hiddenCallback }
-    var flashparams = { allowScriptAccess: 'always', menu: 'false' }
+    let id = options.fonts.swfContainerId
+    this.addFlashDivNode()
+    let flashvars = { onReady: hiddenCallback }
+    let flashparams = { allowScriptAccess: 'always', menu: 'false' }
     window.swfobject.embedSWF(options.fonts.swfPath, id, '1', '1', '9.0.0', false, flashvars, flashparams, {})
   }
   getWebglCanvas () {
-    var canvas = document.createElement('canvas')
-    var gl = null
+    let canvas = document.createElement('canvas')
+    let gl = null
     try {
       gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl')
     } catch (e) { /* squelch */ }
@@ -1317,7 +1314,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     return gl
   }
   loseWebglContext (context) {
-    var loseContextExtension = context.getExtension('WEBGL_lose_context')
+    let loseContextExtension = context.getExtension('WEBGL_lose_context')
     if (loseContextExtension != null) {
       loseContextExtension.loseContext()
     }
@@ -1334,10 +1331,10 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     } else if (!options) {
       options = {}
     }
-    extendSoft(options, defaultOptions)
-    options.components = options.extraComponents.concat(components)
+    this.extendSoft(options, this.defaultOptions)
+    options.components = options.extraComponents.concat(this.components)
 
-    var keys = {
+    let keys = {
       data: [],
       addPreprocessedComponent: (key, value) => {
         if (typeof options.preprocessor === 'function') {
@@ -1347,14 +1344,14 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       }
     }
 
-    var i = -1
-    var chainComponents = alreadyWaited => {
+    let i = -1
+    let chainComponents = alreadyWaited => {
       i += 1
       if (i >= options.components.length) { // on finish
         callback(keys.data)
         return
       }
-      var component = options.components[i]
+      let component = options.components[i]
 
       if (options.excludes[component.key]) {
         chainComponents(false) // skip
@@ -1386,7 +1383,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
 
   Fingerprint2getPromise (options) {
     return new Promise((resolve, reject) => {
-      Fingerprint2.get(options, resolve)
+      this.Fingerprint2.get(options, resolve)
     })
   }
 
@@ -1395,17 +1392,17 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       callback = options
       options = {}
     }
-    return Fingerprint2.get(options, components => {
-      var newComponents = []
-      for (var i = 0; i < components.length; i++) {
-        var component = components[i]
+    return this.Fingerprint2.get(options, components => {
+      let newComponents = []
+      for (let i = 0; i < components.length; i++) {
+        let component = components[i]
         if (component.value === (options.NOT_AVAILABLE || 'not available')) {
           newComponents.push({ key: component.key, value: 'unknown' })
         } else if (component.key === 'plugins') {
           newComponents.push({
             key: 'plugins',
-            value: map(component.value, p => {
-              var mimeTypes = map(p[2], mt => {
+            value: this.map(component.value, p => {
+              let mimeTypes = this.map(p[2], mt => {
                 if (mt.join) { return mt.join('~') }
                 return mt
               }).join(',')
@@ -1431,35 +1428,33 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
           }
         }
       }
-      var murmur = x64hash128(map(newComponents, component => { return component.value }).join('~~~'), 31)
+      let murmur = this.x64hash128(this.map(newComponents, component => { return component.value }).join('~~~'), 31)
       callback(murmur, newComponents)
     })
   }
-  
-  send(data) {
-    data['request'] = location.href;
-    data['referrer'] = document.referrer;
-    data['agent'] = navigator.userAgent;
-    if (hasConsole) {
-      console.log("fp2", data)
+  send (data) {
+    data['request'] = location.href
+    data['referrer'] = document.referrer
+    data['agent'] = navigator.userAgent
+    if (this.hasConsole) {
+      console.log('fp2', data)
     }
-    data = data || {};
-    data['_'] = +new Date;
-    var param = [];
-    for (var i in data) {
-      data.hasOwnProperty(i) && param.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]));
+    data = data || {}
+    data['_'] = +new Date()
+    let param = []
+    for (let i in data) {
+      data.hasOwnProperty(i) && param.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]))
     }
-    var url = trackUrl + (~trackUrl.indexOf('?') ? '&' : '?') + param.join('&');
-    var img = new Image();
-    img.width = img.height = 0;
-    img.src = url;
-    img.style.display = 'none';
-    document.body.appendChild(img);
+    let url = this.trackUrl + (~this.trackUrl.indexOf('?') ? '&' : '?') + param.join('&')
+    let img = new Image()
+    img.width = img.height = 0
+    img.src = url
+    img.style.display = 'none'
+    document.body.appendChild(img)
     img.onload = img.onerror = () => {
-      document.body.removeChild(img);
+      document.body.removeChild(img)
     };
   }
-  
   storage(key, value) {
     if (value !== undefined) {
       return window['localStorage'].setItem(key, value)
@@ -1467,55 +1462,55 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
       return window['localStorage'].getItem(key)
     }
   }
-  
-  cookie(key, value) {
+  cookie (key, value) {
     if (value !== undefined) {
-      var expire = new Date();
-      expire.setDate(expire.getDate + 365);
+      let expire = new Date()
+      expire.setDate(expire.getDate + 365)
       return (document.cookie = [
         key, '=', value,
         '; expires=' + expire.toUTCString(), // use expires attribute, max-age is not supported by IE
         '; domain=hm.hualv.com',
       ].join(''))
     } else {
-      var result = RegExp("(^|\s|;)" + key + "=([^;]*)(;|$)").exec(document.cookie);
-      return result ? result[2] : '';
+      let result = RegExp('(^|\s|;)' + key + '=([^;]*)(;|$)').exec(document.cookie)
+      return result ? result[2] : ''
     }
   }
-  cache(key, value) {
-    return global['localStorage'] ? storage(key, value) : cookie(key, value);
+  cache (key, value) {
+    return global['localStorage'] ? this.storage(key, value) : this.cookie(key, value)
   }
-  guid(callback) {
-    var d1 = new Date();
+  guid (callback) {
+    let d1 = new Date();
     guid = '';
-    for (var i = 1; i <= 32; i++) {
-      var n = Math.floor(Math.random() * 16.0).toString(16);
+    for (let i = 1; i <= 32; i++) {
+      let n = Math.floor(Math.random() * 16.0).toString(16);
       guid += n;
-      if ((i == 8) || (i == 12) || (i == 16) || (i == 20))
-        guid += "-";
+      if ((i === 8) || (i === 12) || (i === 16) || (i === 20)){
+        guid += '-';
+      }
     }
-    var d2 = new Date();
-    var time = d2 - d1;
-    cache(fpCacheKey, guid);
+    let d2 = new Date();
+    let time = d2 - d1;
+    this.cache(this.fpCacheKey, guid);
     callback && callback({
       fingerprint: guid,
       duration: time
     });
   }
   fp(callback) {
-    var d1 = new Date();
-    Fingerprint2.get(components => {
-      var list=[];
-      for (var key in components) {
+    let d1 = new Date();
+    this.Fingerprint2.get(components => {
+      let list=[];
+      for (let key in components) {
         if (components.hasOwnProperty(key)) {
-          var pair = components[key];
+          let pair = components[key];
           list.push(pair.value);          
         }
       }      
-      var murmur = Fingerprint2.x64hash128(list.join(), 31)
-      var d2 = new Date();
-      var time = d2 - d1;
-      cache(fpCacheKey, murmur);
+      let murmur = this.Fingerprint2.x64hash128(list.join(), 31)
+      let d2 = new Date();
+      let time = d2 - d1;
+      cache(this.fpCacheKey, murmur);
       callback && callback({
         fingerprint: murmur,
         duration: time
