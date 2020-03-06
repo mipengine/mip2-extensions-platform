@@ -1,7 +1,7 @@
 {
   "name": "hualv.com",
   "version": "0.0.1",
-  "description": "mip webiste for hualv",
+  "description": "计算用户指纹",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
@@ -10,7 +10,7 @@
     "fix": "npm run fix:js",
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
-  "author": "Mrchensama",
+  "author": "MrChenSama",
   "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",
