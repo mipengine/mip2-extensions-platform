@@ -6,9 +6,9 @@
     "dev": "mip2 dev",
     "build": "mip2 build",
     "lint": "npm run lint:js",
-    "lint:js": "eslint --ext .vue,.js .",
+    "lint:js": "./node_modules/eslint/bin/eslint.js --fix --ext .vue,.js .",
     "fix": "npm run fix:js",
-    "fix:js": "eslint --ext .vue,.js . --fix"
+    "fix:js": "./node_modules/eslint/bin/eslint.js --fix --ext .vue,.js . --fix"
   },
   "author": "MrChenSama",
   "dependencies": {},
