@@ -82,7 +82,6 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     this.Fingerprint2 = {
       'VERSION': '2.1.0'
     }
-	
   }
   build () {
     // detect if object is array
@@ -1435,7 +1434,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     data['request'] = location.href
     data['referrer'] = document.referrer
     data['agent'] = navigator.userAgent
-	MIP.setData({ FingerPrint: data })
+    MIP.setData({ FingerPrint: data })
     if (this.hasConsole) {
       console.log('fp', data)
     }
