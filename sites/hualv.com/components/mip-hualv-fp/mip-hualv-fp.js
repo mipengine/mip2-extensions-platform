@@ -120,7 +120,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     }, this.showTime)
   }
   init (name, context, definition) {
-    if (typeof window !== 'undefined' && typeof define === 'function' && define.amd) { define(definition) } else if (typeof module !== 'undefined' && module.exports) { module.exports = definition() } else if (context.exports) { context.exports = definition() } else { context[name] = definition() }
+    if (typeof module !== 'undefined' && module.exports) { module.exports = definition() } else if (context.exports) { context.exports = definition() } else { context[name] = definition() }
   }
   arrayPropertyBind () {
     if (typeof Array.isArray === 'undefined') {
