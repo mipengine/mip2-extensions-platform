@@ -82,11 +82,12 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     this.Fingerprint2 = {
       'VERSION': '2.1.0'
     }
+	
   }
   build () {
     // detect if object is array
     // only implement if no native implementation is available
-    this.init('Fingerprint2', this, this.arrayPropertyBind)
+    this.arrayPropertyBind()
     this.Fingerprint2.x64hash128 = this.x64hash128
     this.Fingerprint2.get = this.Fingerprint2get
     this.Fingerprint2.getPromise = this.Fingerprint2getPromise
@@ -118,9 +119,6 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
         }
       }
     }, this.showTime)
-  }
-  init (name, context, definition) {
-    if (typeof module !== 'undefined' && module.exports) { module.exports = definition() } else if (context.exports) { context.exports = definition() } else { context[name] = definition() }
   }
   arrayPropertyBind () {
     if (typeof Array.isArray === 'undefined') {
@@ -1437,8 +1435,9 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     data['request'] = location.href
     data['referrer'] = document.referrer
     data['agent'] = navigator.userAgent
+	MIP.setData({ FingerPrint: data })
     if (this.hasConsole) {
-      console.log('fp2', data)
+      console.log('fp', data)
     }
     data = data || {}
     data['_'] = +new Date()
