@@ -1236,7 +1236,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     }
 
     // eslint-disable-next-line no-eval
-    let tempRes = eval.toString().length
+    let tempRes = MIP.sandbox.eval.toString().length
     if (tempRes === 37 && browser !== 'Safari' && browser !== 'Firefox' && browser !== 'Other') {
       return true
     } else if (tempRes === 39 && browser !== 'Internet Explorer' && browser !== 'Other') {
@@ -1478,7 +1478,7 @@ export default class MIPHualvfingerprint extends MIP.CustomElement {
     }
   }
   cache (key, value) {
-    return global['localStorage'] ? this.storage(key, value) : this.cookie(key, value)
+    return window['localStorage'] ? this.storage(key, value) : this.cookie(key, value)
   }
   guid (callback) {
     let d1 = new Date()
