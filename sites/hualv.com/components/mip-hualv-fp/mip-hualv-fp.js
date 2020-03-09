@@ -1,6 +1,6 @@
 import './index.less'
 
-export default class MIPHualvfingerprint extends MIP.CustomElement {
+export default class MIPHualvFingerPrint extends MIP.CustomElement {
   constructor (element) {
     super(element)
     this.defaultOptions = {

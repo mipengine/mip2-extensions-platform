@@ -11,7 +11,6 @@
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
   "author": "MrChenSama",
-  "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
