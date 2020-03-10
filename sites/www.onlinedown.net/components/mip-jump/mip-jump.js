@@ -168,7 +168,10 @@ export default class MIPExample extends MIP.CustomElement {
         let soft = urls.toString().split('soft/')[1]
         let sort = urls.toString().split('sorts/')[1]
         let info = urls.toString().split('info/')[1]
-        let list = '/sorts/' + sort
+        let list = null
+        if (sort !== 'game/' && sort !== '') {
+          list = '/sorts/' + sort
+        }
         let softDetail = '/soft/' + soft
         let infoDetail = '/info/' + info
         if (urls === mprefix + list && sort !== '') { // 聚合页（列表）
@@ -206,7 +209,7 @@ export default class MIPExample extends MIP.CustomElement {
         }
       }
     }
-    function getData (startUrl, endUrl) {
+    function getData (startUrl, endUrl) { // 跳转统计
       fetch('https://mip.js.xzstatic.com/collect', {
         method: 'POST',
         body: 'startUrl=' + startUrl + '&endUrl=' + endUrl,
