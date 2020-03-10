@@ -33,7 +33,7 @@ export default class MIPExample extends MIP.CustomElement {
           window.location.href = wprefix + list
         } else if (urls === mprefix + softDetail && soft !== '') { // 软件详情页
           getData(mprefix + softDetail, wprefix + softDetail)
-          window.location.href = wprefix + infoDetail
+          window.location.href = wprefix + softDetail
         } else if (urls === mprefix + infoDetail && info !== '') { // 资讯情页
           getData(mprefix + infoDetail, wprefix + infoDetail)
           window.location.href = wprefix + infoDetail
