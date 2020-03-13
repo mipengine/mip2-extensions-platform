@@ -58,7 +58,7 @@ export default class MIPExample extends MIP.CustomElement {
           startUrl: mprefix + infoDetail,
           endUrl: wprefix + infoDetail
         }]
-        jumpUrl.forEach((item) => {  // 进行跳转
+        jumpUrl.forEach((item) => {
           if (urls === item.startUrl) {
             getData(item.startUrl, item.endUrl)
             window.location.href = item.endUrl
