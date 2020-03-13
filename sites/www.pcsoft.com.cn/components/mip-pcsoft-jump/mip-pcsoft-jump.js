@@ -102,7 +102,7 @@ export default class MIPExample extends MIP.CustomElement {
             getData(item.startUr, item.endUrl)
             window.location.href = item.endUrl
           }
-        });
+        })
       }
     }
 
