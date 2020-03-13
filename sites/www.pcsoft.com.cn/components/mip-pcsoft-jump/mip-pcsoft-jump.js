@@ -37,66 +37,65 @@ export default class MIPExample extends MIP.CustomElement {
         let iosgDetail = '/ios/game/' + urls.split('ios/game/')[1]
         let iossDetail = '/ios/soft/' + urls.split('ios/soft/')[1]
         let jumpUrl = [{ // 首页
-            startUrl: 'https://m.pcsoft.com.cn/',
-            endUrl: 'https://www.pcsoft.com.cn/'
-          },
-          { // 最近更新
-            startUrl: 'https://m.pcsoft.com.cn/soft/newlist.html',
-            endUrl: 'https://www.pcsoft.com.cn/soft/newlist.html'
-          },
-          { // 专题频道页
-            startUrl: 'https://m.pcsoft.com.cn/zhuanti/',
-            endUrl: 'https://www.pcsoft.com.cn/zhuanti/'
-          },
-          { // 软件频道页
-            startUrl: 'https://m.pcsoft.com.cn/android/soft',
-            endUrl: 'https://www.pcsoft.com.cn/android/soft'
-          },
-          { // 安卓频道页
-            startUrl: 'https://m.pcsoft.com.cn/android/',
-            endUrl: 'https://www.pcsoft.com.cn/android/'
-          },
-          { // 苹果频道页
-            startUrl: 'https://m.pcsoft.com.cn/ios/',
-            endUrl: 'https://www.pcsoft.com.cn/ios/'
-          },
-          { // 资讯频道页
-            startUrl: 'https://m.pcsoft.com.cn/wap_article/',
-            endUrl: 'https://www.pcsoft.com.cn/wap_article/'
-          },
-          { // 聚合页（列表）
-            startUrl: mprefix + list,
-            endUrl: wprefix + list
-          },
-          { // 专题详情页
-            startUrl: mprefix + zuanti,
-            endUrl: wprefix + zuanti
-          },
-          { // 软件详情页
-            startUrl: mprefix + softDetail,
-            endUrl: wprefix + softDetail
-          },
-          { // 安卓软件详情页
-            startUrl: mprefix + ansDetail,
-            endUrl: wprefix + ansDetail
-          },
-          { // 安卓游戏详情页
-            startUrl: mprefix + angDetail,
-            endUrl: wprefix + angDetail
-          },
-          { // 苹果游戏详情页
-            startUrl: mprefix + iosgDetail,
-            endUrl: wprefix + iosgDetail
-          },
-          { // 苹果软件详情页
-            startUrl: mprefix + iossDetail,
-            endUrl: wprefix + iossDetail
-          },
-          { // 资讯详情页
-            startUrl: mprefix + articleDetail,
-            endUrl: wprefix + articleDetail
-          }
-        ]
+          startUrl: 'https://m.pcsoft.com.cn/',
+          endUrl: 'https://www.pcsoft.com.cn/'
+        },
+        { // 最近更新
+          startUrl: 'https://m.pcsoft.com.cn/soft/newlist.html',
+          endUrl: 'https://www.pcsoft.com.cn/soft/newlist.html'
+        },
+        { // 专题频道页
+          startUrl: 'https://m.pcsoft.com.cn/zhuanti/',
+          endUrl: 'https://www.pcsoft.com.cn/zhuanti/'
+        },
+        { // 软件频道页
+          startUrl: 'https://m.pcsoft.com.cn/android/soft',
+          endUrl: 'https://www.pcsoft.com.cn/android/soft'
+        },
+        { // 安卓频道页
+          startUrl: 'https://m.pcsoft.com.cn/android/',
+          endUrl: 'https://www.pcsoft.com.cn/android/'
+        },
+        { // 苹果频道页
+          startUrl: 'https://m.pcsoft.com.cn/ios/',
+          endUrl: 'https://www.pcsoft.com.cn/ios/'
+        },
+        { // 资讯频道页
+          startUrl: 'https://m.pcsoft.com.cn/wap_article/',
+          endUrl: 'https://www.pcsoft.com.cn/wap_article/'
+        },
+        { // 聚合页（列表）
+          startUrl: mprefix + list,
+          endUrl: wprefix + list
+        },
+        { // 专题详情页
+          startUrl: mprefix + zuanti,
+          endUrl: wprefix + zuanti
+        },
+        { // 软件详情页
+          startUrl: mprefix + softDetail,
+          endUrl: wprefix + softDetail
+        },
+        { // 安卓软件详情页
+          startUrl: mprefix + ansDetail,
+          endUrl: wprefix + ansDetail
+        },
+        { // 安卓游戏详情页
+          startUrl: mprefix + angDetail,
+          endUrl: wprefix + angDetail
+        },
+        { // 苹果游戏详情页
+          startUrl: mprefix + iosgDetail,
+          endUrl: wprefix + iosgDetail
+        },
+        { // 苹果软件详情页
+          startUrl: mprefix + iossDetail,
+          endUrl: wprefix + iossDetail
+        },
+        { // 资讯详情页
+          startUrl: mprefix + articleDetail,
+          endUrl: wprefix + articleDetail
+        }]
         jumpUrl.forEach((item) => {
           if (urls === item.startUrl) {
             getData(item.startUr, item.endUrl)
