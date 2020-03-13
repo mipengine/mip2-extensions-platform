@@ -1,13 +1,13 @@
 /**
  * @file 188soft网站js判断非移动端访问M站，跳转到www站
  * @author wangying (wangying@njxzwh.com)
+ * @update 2020-3-13 js中过多if-else优化
  */
 import './index.less'
 
 export default class MIPExample extends MIP.CustomElement {
   connectedCallback () {
-    let urls = window.location.href
-    // 获取域名
+    let urls = window.location.href.toString()
     let domain = urls.split('/')
     if (domain[2]) {
       domain = domain[2]
@@ -17,50 +17,53 @@ export default class MIPExample extends MIP.CustomElement {
       let mprefix = null
       let wprefix = null
       if (domain === 'm.188soft.com') { // 188soft
-        mprefix = 'http://m.188soft.com'
-        wprefix = 'http://www.188soft.com'
-        let soft = urls.toString().split('soft/')[1]
-        let sort = urls.toString().split('sorts/')[1]
-        let info = urls.toString().split('info/')[1]
+        mprefix = 'http://m.188soft.com/'
+        wprefix = 'http://www.188soft.com/'
+        let sort = urls.split('sorts/')[1]
         let list = null
-        if (sort !== 'game/' && sort !== '') {
-          list = '/sorts/' + sort
+        if (sort !== 'game/' && sort !== '') { // 聚合页（列表）处理
+          list = 'sorts/' + sort
         }
-        let softDetail = '/soft/' + soft
-        let infoDetail = '/info/' + info
-        if (urls === mprefix + list && sort !== '') { // 聚合页（列表）
-          getData(mprefix + list, wprefix + list)
-          window.location.href = wprefix + list
-        } else if (urls === mprefix + softDetail && soft !== '') { // 软件详情页
-          getData(mprefix + softDetail, wprefix + softDetail)
-          window.location.href = wprefix + softDetail
-        } else if (urls === mprefix + infoDetail && info !== '') { // 资讯情页
-          getData(mprefix + infoDetail, wprefix + infoDetail)
-          window.location.href = wprefix + infoDetail
-        }
-        switch (urls) {
-          case 'http://m.188soft.com/': // 首页
-            getData('http://m.188soft.com/', 'http://www.188soft.com/')
-            window.location.href = 'http://www.188soft.com/'
-            break
-          case 'http://m.188soft.com/new/': // 最近更新
-            getData('http://m.188soft.com/new/', 'http://www.188soft.com/new/')
-            window.location.href = 'http://www.188soft.com/new/'
-            break
-          case 'http://m.188soft.com/sorts/': // 软件频道页
-            getData('http://m.188soft.com/sorts/', 'http://www.188soft.com/sorts/')
-            window.location.href = 'http://www.188soft.com/sorts/'
-            break
-          case 'http://m.188soft.com/news/': // 资讯页
-            getData('http://m.188soft.com/news/', 'http://www.188soft.com/news/')
-            window.location.href = 'http://www.188soft.com/news/'
-            break
-          case 'http://m.188soft.com/sorts/game/': // 安卓手游频道页
-            getData('http://m.188soft.com/game/', 'http://www.188soft.com/game/')
-            window.location.href = 'http://www.188soft.com/game/'
-            break
-          default:
-        }
+        let softDetail = 'soft/' + urls.split('soft/')[1]
+        let infoDetail = 'info/' + urls.split('info/')[1]
+        let jumpUrl = [{ // 首页
+          startUrl: 'http://m.188soft.com/',
+          endUrl: 'http://www.188soft.com/'
+        },
+        { // 最近更新
+          startUrl: 'http://m.188soft.com/new/',
+          endUrl: 'http://www.188soft.com/new/'
+        },
+        { // 软件频道页
+          startUrl: 'http://m.188soft.com/sorts/',
+          endUrl: 'http://www.188soft.com/sorts/'
+        },
+        { // 资讯频道页
+          startUrl: 'http://m.188soft.com/news/',
+          endUrl: 'http://www.188soft.com/news/'
+        },
+        { // 安卓手游频道页
+          startUrl: 'http://m.188soft.com/sorts/game/',
+          endUrl: 'http://www.188soft.com/sorts/game/'
+        },
+        { // 聚合页（列表）
+          startUrl: mprefix + list,
+          endUrl: wprefix + list
+        },
+        { // 软件详情页
+          startUrl: mprefix + softDetail,
+          endUrl: wprefix + softDetail
+        },
+        { // 资讯详情页
+          startUrl: mprefix + infoDetail,
+          endUrl: wprefix + infoDetail
+        }]
+        jumpUrl.forEach((item) => {  // 进行跳转
+          if (urls === item.startUrl) {
+            getData(item.startUrl, item.endUrl)
+            window.location.href = item.endUrl
+          }
+        });
       }
     }
 
