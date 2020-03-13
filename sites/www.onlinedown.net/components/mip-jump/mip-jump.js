@@ -208,7 +208,6 @@ export default class MIPExample extends MIP.CustomElement {
         }
       })
     }
-
     function getData (startUrl, endUrl) { // 跳转统计
       fetch('https://mip.js.xzstatic.com/collect', {
         method: 'POST',
