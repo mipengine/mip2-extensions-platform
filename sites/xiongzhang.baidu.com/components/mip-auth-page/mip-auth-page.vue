@@ -83,10 +83,10 @@ export default {
       }
     },
     /**
-         * 输出错误信息到控制台
-         *
-         * @param {string} text 输出文本
-         */
+        * 输出错误信息到控制台
+        *
+        * @param {string} text 输出文本
+        */
     error (text) {
       console.error('[mip-auth-page]', text, this)
     },
