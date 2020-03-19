@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=no">
+    <title>MIP page</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <style mip-custom>
+    /* 自定义样式 */
+    </style>
+  </head>
+  <body>
+    <div>
+      <mip-hualv-fp>
+		<div>duration：<span m-text="FingerPrint.duration"></span></div>
+		<div>fingerprint：<span m-text="FingerPrint.fingerprint"></span></div>
+		<div>sessionId：<span m-text="FingerPrint.sessionId"></span></div>
+		<div>type：<span m-text="FingerPrint.type"></span></div>
+		<div>request：<span m-text="FingerPrint.request"></span></div>
+		<div>referrer：<span m-text="FingerPrint.referrer"></span></div>
+		<div>agent：<span m-text="FingerPrint.agent"></span></div>
+		<mip-data id="FingerPrint" scope>
+			<script type="application/json">
+            {
+				
+            }
+			</script>
+		</mip-data>
+	  </mip-hualv-fp>
+    </div>
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="/mip-hualv-fp/mip-hualv-fp.js"></script>
+  </body>
+</html>
