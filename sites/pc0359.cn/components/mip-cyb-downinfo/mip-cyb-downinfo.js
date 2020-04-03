@@ -10,7 +10,11 @@ export default class MIPCybDowninfo extends CustomElement {
     let dofficial = ele.querySelectorAll('#down-official')
     let dappstore = ele.querySelectorAll('#down-appstore')
     let dnormal = ele.querySelectorAll('#down-normal')
+    let official = ele.querySelectorAll('.official')
     ele.querySelectorAll('#soft-download').innerHTML = '<li id="noDownload" class="officials">此软件不提供苹果版下载</li>'
+    if (official.length) {
+        return
+    }
     if (ios) {
       if (dandroid.length) {
         down[0].removeChild(dandroid[0])
