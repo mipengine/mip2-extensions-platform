@@ -8,10 +8,9 @@ export default class MIPYs137Copytext extends MIP.CustomElement {
       return res.text()
     }).then(function (txt) {
       let e = txt.split(',')
-      console.log(e)
       let t = document.createElement('input')
       t.type = 'text'
-      t.readOnly = !0
+      t.readOnly = false
       t.className = 'tkl'
       t.style.position = 'absolute'
       t.style.left = '-9999px'
@@ -20,13 +19,12 @@ export default class MIPYs137Copytext extends MIP.CustomElement {
       t.value = e[n]
       null == document.querySelector('.tkl') && document.body.appendChild(t)
       document.querySelector('html').addEventListener('click',
-      function() {
-        console.log('copy')
-        var e = document.querySelector('.tkl')
-        e.select(),
-        e.setSelectionRange(0, e.value.length)
-        document.execCommand('copy')
-      })
+        function () {
+          var e = document.querySelector('.tkl')
+          e.select()
+          e.setSelectionRange(0, e.value.length)
+          document.execCommand('copy')
+        })
     });
   }
 }
