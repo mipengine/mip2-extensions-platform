@@ -1,7 +1,7 @@
 {
-  "name": "39.net",
-  "version": "0.0.5",
-  "description": "39.net网自定义组件",
+  "name": "m.dishen.com",
+  "version": "0.0.1",
+  "description": "帝神mip版",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
@@ -10,7 +10,7 @@
     "fix": "npm run fix:js",
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
-  "author": "叶永钦 (yeyongqin@mail.39.net)",
+  "author": "wagason (wjxdty@gmail.com)",
   "dependencies": {},
   "devDependencies": {
     "eslint": "^4.19.1",
