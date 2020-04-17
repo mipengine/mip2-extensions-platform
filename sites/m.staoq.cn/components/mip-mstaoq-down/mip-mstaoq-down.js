@@ -7,7 +7,7 @@ const { util } = MIP
 const { platform, css } = util
 
 export default class MIPMstaoqDown extends MIP.CustomElement {
-  data() {
+  data () {
     let platAndroid = document.getElementById('plat_Android')
     let platiPhone = document.getElementById('plat_iPhone')
     let dataJson = {}
@@ -27,7 +27,7 @@ export default class MIPMstaoqDown extends MIP.CustomElement {
     }
     return dataJson
   }
-  build() {
+  build () {
     this.difDownFlatform()
     this.domShow()
     this.removeEmpty()
@@ -36,7 +36,7 @@ export default class MIPMstaoqDown extends MIP.CustomElement {
   /**
    * 区分下载平台
    */
-  difDownFlatform() {
+  difDownFlatform () {
     let bxz = document.getElementById('tabNav').getElementsByClassName('bxz')[0]
     let h1 = document.getElementById('game-detail').getElementsByTagName('h1')[0]
     if (platform.isAndroid() && void 0 !== this.data().platAndroidAddress) {
@@ -50,10 +50,10 @@ export default class MIPMstaoqDown extends MIP.CustomElement {
   /**
    * 显示对应内容
    */
-  domShow() {
+  domShow () {
     let span = document.getElementById('tabNav').getElementsByTagName('span')
 
-    function spanClick(index) {
+    function spanClick (index) {
       // 回到顶部
       if (document.getElementById('tabNav').getElementsByClassName('mip-semi-fixed')[0].classList.contains('info_fixed')) {
         document.body.scrollTop = document.documentElement.scrollTop = 0
@@ -110,7 +110,7 @@ export default class MIPMstaoqDown extends MIP.CustomElement {
   /**
    * 移出空dom
    */
-  removeEmpty() {
+  removeEmpty () {
     // 相关标签
     if (!document.getElementById('tagsk').getElementsByTagName('a').length) {
       document.getElementById('tagsk').parentNode.removeChild(document.getElementById('tagsk'))
@@ -131,7 +131,7 @@ export default class MIPMstaoqDown extends MIP.CustomElement {
   /**
    * 根据终端修改底部连接
    */
-  alterFooterHref() {
+  alterFooterHref () {
     if (platform.isIos()) {
       let footer = document.getElementsByClassName('foot-nav')[0].getElementsByTagName('li')
       footer[2].getElementsByTagName('a')[0].setAttribute('href', '/x/Rootid/13/0/')
