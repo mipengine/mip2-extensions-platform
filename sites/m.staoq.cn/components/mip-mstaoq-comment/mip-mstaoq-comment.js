@@ -377,7 +377,7 @@ export default class MIPMstaoqComment extends CustomElement {
         'Content-Type': 'application/x-www-form-urlencoded'
       },
       method: 'POST',
-      body: 'Action=' + defaultData.Action.write + '&ParentId=' + ParentId + '&ResourceId=' + defaultData.ResourceId +
+      body: 'Action=' + defaultData.Action.write + '&ParentId=' + defaultData.ParentId + '&ResourceId=' + defaultData.ResourceId +
         '&CommentType=' + defaultData.CommentType + '&UserName=' + defaultData.UserName + '&Content=' + defaultData.Content
     }).then((responseText) => {
       return responseText.text()
