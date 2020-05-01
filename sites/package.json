@@ -1,0 +1,14 @@
+{
+    "name": "mip-syt5-txclass",
+    "version": "1.0.0",
+    "description": "组件介绍",
+    "contributors": [
+        {
+            "name": "class控制",
+            "email": ""
+        }
+    ],
+    "engines": {
+        "mip": ">=1.1.0"
+    }
+}
