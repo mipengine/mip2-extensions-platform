@@ -53,16 +53,16 @@ export default class MIPMpc6Comment extends CustomElement {
         css(cDSContent, {display: 'none'})
       }
     }
-    let bodya = this.element.querySelectorAll("body")
+    let bodya = this.element.querySelectorAll('body')
     let ssid = cSOHUCS[0].attributes['sid'].value
     css(bodya, {display: 'none'})
-    fetch('/Api.php?action=forbidCity&id=' + ssid).then( function(e) {
-        return e.text()
-    }).then(function(text) {
-    if (text === 1){
-        MIP.viewer.href('https://m.veryhuo.com')
+    fetch('/Api.php?action=forbidCity&id=' + ssid).then(function (e) {
+      return e.text()
+    }).then(function (text) {
+    if (text === 1) {
+      MIP.viewer.href('https://m.veryhuo.com')
     } else {
-        css(bodya, {display: 'block'})
+      css(bodya, {display: 'block'})
     }
     })
     let coryverlist = this.element.querySelectorAll('.oryverlist')[0]
