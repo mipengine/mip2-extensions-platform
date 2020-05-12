@@ -1,5 +1,5 @@
 import util from './../../common/util.js'
-const fetchJsonp = require('fetch-jsonp')
+const {fetchJsonp} = window
 
 class FooterLayer {
   constructor (art) {
@@ -12,7 +12,7 @@ class FooterLayer {
       startY: 0,
       endY: 0
     }
-    this.autoShow = false
+    // this.autoShow = false
     this.slideTimes = 0
   }
 
@@ -331,7 +331,7 @@ class FooterLayer {
   /**
    * 判断是否已设定该标识,返回类型布尔值,标识尚在有效期内,即已存在且未过期返回true,否则返回false
    *
-   * @param localStorage键名
+   * @param name localStorage键名
    * @returns bool  是否存在该键名
    */
   isExist (name) {
@@ -352,7 +352,7 @@ class FooterLayer {
   /**
    * 写入localStorage的方法,其值 常用来做为标识当前标志是否已过期
    *
-   * @param localStorage 键名 localStorage[@param]
+   * @param name localStorage 键名 localStorage[@param]
    * @param time,过期时间,缺省值为一天,最大为365天
    * @returns bool 设置是否成功
    */
@@ -376,9 +376,9 @@ class FooterLayer {
   }
 
   init () {
-    if (!this.isExist('autoShow')) {
-      this.autoShow = true
-    }
+    // if (!this.isExist('autoShow')) {
+    //   this.autoShow = true
+    // }
     // 当出现键盘时，触碰屏幕取消键盘
     document.body.addEventListener('touchstart', () => {
       Array.prototype.forEach.call(document.querySelectorAll('input'), (item) => {
@@ -537,22 +537,6 @@ class FooterLayer {
       this.moveObj.isMove = true
       if (e.changedTouches) {
         this.moveObj.endY = e.changedTouches[0].screenY
-      }
-    })
-
-    document.body.addEventListener('touchend', () => {
-      if (this.moveObj.isMove && this.moveObj.endY + 10 < this.moveObj.startY) {
-        // 往上滑了一次
-        if (this.autoShow) {
-          this.slideTimes += 1
-          if (this.slideTimes === 2) {
-            // $('.btn-zxbj')[0].click()
-            // 第二个卡片，免费报价上滑
-            this.showCard(1)
-            this.autoShow = false
-            this.setFlag('autoShow', 1 / 24) // 1小时过期
-          }
-        }
       }
     })
   }

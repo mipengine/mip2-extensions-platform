@@ -4,8 +4,8 @@ export default class MIPVideoOver extends MIP.CustomElement {
   build () {
     let ele = this.element
     let popEle = ele.children[0]
-    let src = ele.getAttribute('src')
-    let poster = ele.getAttribute('poster')
+    let src = ele.getAttribute('video-src')
+    let poster = ele.getAttribute('video-poster')
     // 视频宽高比
     let wh = ele.getAttribute('wh')
     let video = document.createElement('video')
