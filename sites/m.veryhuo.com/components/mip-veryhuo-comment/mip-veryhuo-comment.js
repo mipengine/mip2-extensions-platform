@@ -56,7 +56,7 @@ export default class MIPMpc6Comment extends CustomElement {
     let bodya = this.element.querySelectorAll("body")
     let ssid = cSOHUCS[0].attributes['sid'].value
     css(bodya, {display: 'none'})
-    fetch('/Api.php?action='forbidCity'&id=' + ssid).ten( function(e) {
+    fetch('/Api.php?action=forbidCity&id=' + ssid).then( function(e) {
         return e.text()
     }).then(function(text) {
     if (text === 1){
