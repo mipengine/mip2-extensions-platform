@@ -82,6 +82,21 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     this.Fingerprint2 = {
       'VERSION': '2.1.0'
     }
+
+    this.trackUrl = 'https://hualv.cn-beijing.log.aliyuncs.com/logstores/hualv-fingerprint2-test/track.gif?APIVersion=0.6.0'
+    this.trackEventUrl = 'https://hualv.cn-beijing.log.aliyuncs.com/logstores/event-trace/track.gif?APIVersion=0.6.0'
+    this.startTime = new Date()
+    this.endTime = new Date()
+    this.matches = /^(?:(https?):)?\/\/([^:\/]+)(?::\d+)?([^#]+).*/i.exec(location.href)
+    this.global_var = {
+      'scheme': matches[1],
+      'host': matches[2],
+      'request': matches[3],
+      'sessionId': cookie('hl.guid'),
+      'userId': cookie('hl.uid'),
+      'fingerprint': null
+    }
+    this._hmga = MIP.getData({ FingerPrint: _hmga })
   }
   build () {
     // detect if object is array
@@ -118,6 +133,52 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
         }
       }
     }, this.showTime)
+    setInterval(function () {
+      if (typeof (this._hmga) !== 'undefined' && this._hmga) {
+        var param
+        while ((param = this._hmga.shift())) {
+          switch (param[0]) {
+            case '_trackEvent':
+              var pvStr = []
+              if (param[2]) {
+                param.eventType = param[1] || ''
+                for (var i in param[2]) {
+                  pvStr.push(i + ':' + param[2][i])
+                }
+              }
+              trackEvent({
+                eventType: param[1] || '',
+                data: pvStr.join('|')
+              })
+              break
+          }
+        }
+      }
+    }, 10)
+    window.addEventListener ? document.body.addEventListener('click', this.clickHandler, false) : document.body.attachEvent('onlick', this.clickHandler)
+    setTimeout(() => {
+      let murmur = cache(fpCacheKey)
+      if (murmur) {
+        this.global_var.fingerprint = murmur
+        trackPv({
+          duration: 0,
+          type: 'cache'
+        })
+      } else {
+        try {
+          fp(function (data) {
+            data['type'] = 'fp'
+            trackPv(data)
+          })
+        } catch (error) {
+          guid(function (data) {
+            data['type'] = 'guid'
+            data['err'] = error
+            trackPv(data)
+          })
+        }
+      }
+    }, 500)
   }
   arrayPropertyBind () {
     if (typeof Array.isArray === 'undefined') {
@@ -1516,6 +1577,148 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
       if (callback) {
         let param = {
           fingerprint: murmur,
+          duration: time
+        }
+        callback(param)
+      }
+    })
+  }
+  // 2020-06-04
+  trackEvent(data) {
+    data['referrer'] = document.referrer
+    this.extendSoft(data, global_var)
+    this.send1(trackEventUrl, data)
+  }
+  log() {
+    typeof console !== 'undefined' && console.log.apply(window, arguments)
+  }
+  trackPv(data) {
+    data['swh'] = (window.screen.width || 0) + 'X' + (window.screen.height || 0)
+    data['referrer'] = document.referrer
+    data['agent'] = navigator.userAgent
+    data['pageTitle'] = document.title.length > 50 ? document.title.substr(0, 50) : document.title
+    this.extendSoft(data, this.global_var)
+    this.send1(trackPvUrl, data)
+  }
+  trackClick(data) {
+    data['referrer'] = document.referrer
+    data['agent'] = navigator.userAgent
+    data['pageTitle'] = document.title.length > 50 ? document.title.substr(0, 50) : document.title
+    this.extendSoft(data, this.global_var)
+    this.send1(trackEventUrl, data)
+  }
+  send1(baseUrl, data) {
+    data = data || {}
+    let t = +new Date()
+    data['_'] = t
+    let param = []
+    for (var i in data) {
+      data.hasOwnProperty(i) && param.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]))
+    }
+    let url = baseUrl + (~baseUrl.indexOf('?') ? '&' : '?') + param.join('&')
+    let img = new Image()
+    img.width = img.height = 0
+    img.src = url
+    img.style.display = 'none'
+    let key = 'img' + Math.random() + t
+    window[key] = img
+    img.onload = img.onerror = () => {
+      window[key] = null
+    }
+  }
+  /// 向上查找带ID的元素，到body截止
+  findParentId(target) {
+    if (!target) {
+      return 'none'
+    }
+    while (target.parentNode) {
+      let nodeName = target.nodeName.toLowerCase()
+      if (nodeName == 'body') {
+        return 'body'
+      }
+      if (target.id) {
+        return nodeName + '#' + target.id
+      }
+      target = target.parentNode
+    }
+  }
+  /// 向上查找A元素，到body截止
+  findAnchor(target) {
+    let paths = []
+    while (target && target.parentNode) {
+      switch (target.nodeName.toLowerCase()) {
+        case 'a':
+          paths.push(this.getElement(target))
+          return { 'ele': target, 'path': paths.reverse().join('>') }
+        case 'body':
+          return { 'ele': null }
+        default:
+          paths.push(this.getElement(target, target.parentNode))
+          break
+      }
+      target = target.parentNode
+    }
+    return { 'ele': null }
+  }
+  /// 获取元素路径表达式
+  getElement(element, parent) {
+    if (!element) return ''
+    let src = element.nodeName.toLowerCase()
+    if (parent && parent.childNodes) {
+      for (let index = 0, len = parent.childNodes.length; index < len; index++) {
+        if (element === parent.childNodes[index]) {
+          src += '[' + index + ']'
+        }
+      }
+    }
+    if (element.id) {
+      src += '#' + element.id
+    } else if (element.className) {
+      src += '.' + element.className.replace(/ +/g, ',.')
+    }
+    return src
+  }
+  clickHandler(e) {
+    try {
+      if (!e || e.type != 'click') return
+      // 向上寻找最近的A标签
+      let res = findAnchor(e.srcElement || e.target)
+      let target = res['ele']
+      let path = res['path']
+      if (!target) return
+      let href = target.href
+      if (~href.indexOf('javascript')) return
+      let txt = target.innerText.split('\n')[0]
+      txt.length > 20 && (txt = txt.substr(0, 20))
+      // e.stopImmediatePropagation();
+      this.trackClick({
+        'target': path,
+        'eventType': 'click',
+        'href': href,
+        'text': txt,
+        'box': this.findParentId(target)
+      })
+    } catch (err) {
+      this.log('[Error] trackEvent', err)
+    }
+  }
+  fp1(callback) {
+    var d1 = new Date()
+    this.Fingerprint2.get(function (components) {
+      var list = []
+      for (var key in components) {
+        if (components.hasOwnProperty(key)) {
+          var pair = components[key]
+          list.push(pair.value)
+        }
+      }
+      var murmur = this.Fingerprint2.x64hash128(list.join(), 31)
+      var d2 = new Date()
+      var time = d2 - d1
+      this.cache(fpCacheKey, murmur)
+      this.global_var.fingerprint = murmur
+      if (callback) {
+        let param = {
           duration: time
         }
         callback(param)
