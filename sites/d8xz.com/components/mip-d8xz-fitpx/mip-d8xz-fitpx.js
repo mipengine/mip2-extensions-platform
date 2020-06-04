@@ -11,7 +11,7 @@ export default class MIPD8xzFitpx extends MIP.CustomElement {
         const i = t > u ? w : t / (u / 100);
         i = i > h ? i : h, document.documentElement.style.fontSize = i + "px"
       }
-      const i, n = e.navigator.userAgent,
+      const n = e.navigator.userAgent,
         a = n.match(/iphone/i),
         o = n.match(/yixin/i),
         c = n.match(/Mb2345/i),
