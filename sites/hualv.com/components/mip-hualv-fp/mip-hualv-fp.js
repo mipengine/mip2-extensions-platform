@@ -86,14 +86,14 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     this.trackUrl = 'https://hualv.cn-beijing.log.aliyuncs.com/logstores/hualv-fingerprint2-test/track.gif?APIVersion=0.6.0'
     this.trackEventUrl = 'https://hualv.cn-beijing.log.aliyuncs.com/logstores/event-trace/track.gif?APIVersion=0.6.0'
     this.startTime = new Date()
-    this.endTime = new Date()
+    this.endTime
     this.matches = /^(?:(https?):)?\/\/([^:\/]+)(?::\d+)?([^#]+).*/i.exec(location.href)
     this.global_var = {
-      'scheme': matches[1],
-      'host': matches[2],
-      'request': matches[3],
-      'sessionId': cookie('hl.guid'),
-      'userId': cookie('hl.uid'),
+      'scheme': this.matches[1],
+      'host': this.matches[2],
+      'request': this.matches[3],
+      'sessionId': this.cookie('hl.guid'),
+      'userId': this.cookie('hl.uid'),
       'fingerprint': null
     }
     this._hmga = MIP.getData({ FingerPrint: _hmga })
@@ -135,18 +135,18 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     }, this.showTime)
     setInterval(function () {
       if (typeof (this._hmga) !== 'undefined' && this._hmga) {
-        var param
+        let param
         while ((param = this._hmga.shift())) {
           switch (param[0]) {
             case '_trackEvent':
-              var pvStr = []
+              let pvStr = []
               if (param[2]) {
                 param.eventType = param[1] || ''
-                for (var i in param[2]) {
+                for (let i in param[2]) {
                   pvStr.push(i + ':' + param[2][i])
                 }
               }
-              trackEvent({
+              this.trackEvent({
                 eventType: param[1] || '',
                 data: pvStr.join('|')
               })
@@ -157,24 +157,24 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     }, 10)
     window.addEventListener ? document.body.addEventListener('click', this.clickHandler, false) : document.body.attachEvent('onlick', this.clickHandler)
     setTimeout(() => {
-      let murmur = cache(fpCacheKey)
+      let murmur = this.cache(fpCacheKey)
       if (murmur) {
         this.global_var.fingerprint = murmur
-        trackPv({
+        this.trackPv({
           duration: 0,
           type: 'cache'
         })
       } else {
         try {
-          fp(function (data) {
+          this.fp1(function (data) {
             data['type'] = 'fp'
-            trackPv(data)
+            this.trackPv(data)
           })
         } catch (error) {
-          guid(function (data) {
+          this.guid(function (data) {
             data['type'] = 'guid'
             data['err'] = error
-            trackPv(data)
+            this.trackPv(data)
           })
         }
       }
@@ -1584,35 +1584,35 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     })
   }
   // 2020-06-04
-  trackEvent(data) {
+  trackEvent (data) {
     data['referrer'] = document.referrer
-    this.extendSoft(data, global_var)
-    this.send1(trackEventUrl, data)
+    this.extendSoft(data, this.global_var)
+    this.send1(this.trackEventUrl, data)
   }
-  log() {
+  log () {
     typeof console !== 'undefined' && console.log.apply(window, arguments)
   }
-  trackPv(data) {
+  trackPv (data) {
     data['swh'] = (window.screen.width || 0) + 'X' + (window.screen.height || 0)
     data['referrer'] = document.referrer
     data['agent'] = navigator.userAgent
     data['pageTitle'] = document.title.length > 50 ? document.title.substr(0, 50) : document.title
     this.extendSoft(data, this.global_var)
-    this.send1(trackPvUrl, data)
+    this.send1(this.trackPvUrl, data)
   }
-  trackClick(data) {
+  trackClick (data) {
     data['referrer'] = document.referrer
     data['agent'] = navigator.userAgent
     data['pageTitle'] = document.title.length > 50 ? document.title.substr(0, 50) : document.title
     this.extendSoft(data, this.global_var)
-    this.send1(trackEventUrl, data)
+    this.send1(this.trackEventUrl, data)
   }
-  send1(baseUrl, data) {
+  send1 (baseUrl, data) {
     data = data || {}
     let t = +new Date()
     data['_'] = t
     let param = []
-    for (var i in data) {
+    for (let i in data) {
       data.hasOwnProperty(i) && param.push(encodeURIComponent(i) + '=' + encodeURIComponent(data[i]))
     }
     let url = baseUrl + (~baseUrl.indexOf('?') ? '&' : '?') + param.join('&')
@@ -1627,13 +1627,13 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     }
   }
   /// 向上查找带ID的元素，到body截止
-  findParentId(target) {
+  findParentId (target) {
     if (!target) {
       return 'none'
     }
     while (target.parentNode) {
       let nodeName = target.nodeName.toLowerCase()
-      if (nodeName == 'body') {
+      if (nodeName === 'body') {
         return 'body'
       }
       if (target.id) {
@@ -1643,7 +1643,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     }
   }
   /// 向上查找A元素，到body截止
-  findAnchor(target) {
+  findAnchor (target) {
     let paths = []
     while (target && target.parentNode) {
       switch (target.nodeName.toLowerCase()) {
@@ -1661,7 +1661,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     return { 'ele': null }
   }
   /// 获取元素路径表达式
-  getElement(element, parent) {
+  getElement (element, parent) {
     if (!element) return ''
     let src = element.nodeName.toLowerCase()
     if (parent && parent.childNodes) {
@@ -1678,11 +1678,11 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     }
     return src
   }
-  clickHandler(e) {
+  clickHandler (e) {
     try {
-      if (!e || e.type != 'click') return
+      if (!e || e.type !== 'click') return
       // 向上寻找最近的A标签
-      let res = findAnchor(e.srcElement || e.target)
+      let res = this.findAnchor(e.srcElement || e.target)
       let target = res['ele']
       let path = res['path']
       if (!target) return
@@ -1702,20 +1702,20 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
       this.log('[Error] trackEvent', err)
     }
   }
-  fp1(callback) {
+  fp1 (callback) {
     var d1 = new Date()
     this.Fingerprint2.get(function (components) {
-      var list = []
-      for (var key in components) {
+      let list = []
+      for (let key in components) {
         if (components.hasOwnProperty(key)) {
-          var pair = components[key]
+          let pair = components[key]
           list.push(pair.value)
         }
       }
-      var murmur = this.Fingerprint2.x64hash128(list.join(), 31)
-      var d2 = new Date()
-      var time = d2 - d1
-      this.cache(fpCacheKey, murmur)
+      let murmur = this.Fingerprint2.x64hash128(list.join(), 31)
+      let d2 = new Date()
+      let time = d2 - d1
+      this.cache(this.fpCacheKey, murmur)
       this.global_var.fingerprint = murmur
       if (callback) {
         let param = {
