@@ -84,6 +84,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     }
 
     this.trackUrl = 'https://hualv.cn-beijing.log.aliyuncs.com/logstores/hualv-fingerprint2-test/track.gif?APIVersion=0.6.0'
+    this.trackPvUrl = 'https://hualv.cn-beijing.log.aliyuncs.com/logstores/hualv-fingerprint2-test/track.gif?APIVersion=0.6.0'
     this.trackEventUrl = 'https://hualv.cn-beijing.log.aliyuncs.com/logstores/event-trace/track.gif?APIVersion=0.6.0'
     this.startTime = new Date()
     this.endTime = new Date()
@@ -96,7 +97,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
       'userId': this.cookie('hl.uid'),
       'fingerprint': null
     }
-    this._hmga = MIP.getData('FingerPrint.Hmga')
+    this._hmga = []
   }
   build () {
     // detect if object is array
@@ -133,7 +134,10 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
         }
       }
     }, this.showTime)
-    setInterval(function () {
+    MIP.watch('FingerPrint.Hmga', newval => {
+      this._hmga.push(newval)
+    })
+    setInterval(() => {
       if (typeof (this._hmga) !== 'undefined' && this._hmga) {
         let param
         while ((param = this._hmga.shift())) {
@@ -154,8 +158,8 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
           }
         }
       }
-    }, 10)
-    window.addEventListener ? document.body.addEventListener('click', this.clickHandler, false) : document.body.attachEvent('onlick', this.clickHandler)
+    }, 50)
+    window.addEventListener ? document.body.addEventListener('click', (e) => { this.clickHandler(e) }, false) : document.body.attachEvent('onlick', (e) => { this.clickHandler(e) })
     setTimeout(() => {
       let murmur = this.cache(this.fpCacheKey)
       if (murmur) {
@@ -1682,7 +1686,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     try {
       if (!e || e.type !== 'click') return
       // 向上寻找最近的A标签
-      let res = this.findAnchor(e.srcElement || e.target)
+      let res = this.findAnchor(e.target)
       let target = res['ele']
       let path = res['path']
       if (!target) return

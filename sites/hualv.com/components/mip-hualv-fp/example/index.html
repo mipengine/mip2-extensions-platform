@@ -13,23 +13,31 @@
   <body>
     <div>
       <mip-hualv-fp>
-		<div>duration：<span m-text="FingerPrint.duration"></span></div>
-		<div>fingerprint：<span m-text="FingerPrint.fingerprint"></span></div>
-		<div>sessionId：<span m-text="FingerPrint.sessionId"></span></div>
-		<div>type：<span m-text="FingerPrint.type"></span></div>
-		<div>request：<span m-text="FingerPrint.request"></span></div>
-		<div>referrer：<span m-text="FingerPrint.referrer"></span></div>
-		<div>agent：<span m-text="FingerPrint.agent"></span></div>
+        <a href="https://www.zhms.cn">https://www.zhms.cn</a>
+        <button on="tap: MIP.setData({ FingerPrint: { Hmga : ['_trackEvent','test-event',{'questionId':111123}]}})">交互测试</button>
+		<div>duration：<span m-text="FingerPrint.Data.duration"></span></div>
+		<div>fingerprint：<span m-text="FingerPrint.Data.fingerprint"></span></div>
+		<div>sessionId：<span m-text="FingerPrint.Data.sessionId"></span></div>
+		<div>type：<span m-text="FingerPrint.Data.type"></span></div>
+		<div>request：<span m-text="FingerPrint.Data.request"></span></div>
+		<div>referrer：<span m-text="FingerPrint.Data.referrer"></span></div>
+		<div>agent：<span m-text="FingerPrint.Data.agent"></span></div>
 		<mip-data id="FingerPrint" scope>
-			<script type="application/json">
-            {
-				
-            }
+      <script type="application/json">
+        {
+          
+        }
 			</script>
-		</mip-data>
+    </mip-data>
+    <mip-script>
+      setTimeout(() => {
+        MIP.setData({FingerPrint:{Hmga:['_trackEvent','test-event',{'questionId':111123}]}})
+      },2000)
+    </mip-script>
 	  </mip-hualv-fp>
     </div>
     <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="https://c.mipcdn.com/static/v2/mip-script/mip-script.js"></script>
     <script src="/mip-hualv-fp/mip-hualv-fp.js"></script>
   </body>
 </html>
