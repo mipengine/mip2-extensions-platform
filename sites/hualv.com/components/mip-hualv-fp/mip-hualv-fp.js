@@ -87,7 +87,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     this.trackEventUrl = 'https://hualv.cn-beijing.log.aliyuncs.com/logstores/event-trace/track.gif?APIVersion=0.6.0'
     this.startTime = new Date()
     this.endTime = new Date()
-    this.matches = /^(?:(https?):)?\/\/([^:\/]+)(?::\d+)?([^#]+).*/i.exec(location.href)
+    this.matches = /^(?:(https?)\:)?\/\/([^\:\/]+)(?:\:\d+)?([^#]+).*/i.exec(location.href)
     this.global_var = {
       'scheme': this.matches[1],
       'host': this.matches[2],
