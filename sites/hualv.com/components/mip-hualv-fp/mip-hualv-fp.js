@@ -86,7 +86,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     this.trackUrl = 'https://hualv.cn-beijing.log.aliyuncs.com/logstores/hualv-fingerprint2-test/track.gif?APIVersion=0.6.0'
     this.trackEventUrl = 'https://hualv.cn-beijing.log.aliyuncs.com/logstores/event-trace/track.gif?APIVersion=0.6.0'
     this.startTime = new Date()
-    this.endTime
+    this.endTime = new Date()
     this.matches = /^(?:(https?):)?\/\/([^:\/]+)(?::\d+)?([^#]+).*/i.exec(location.href)
     this.global_var = {
       'scheme': this.matches[1],
@@ -96,7 +96,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
       'userId': this.cookie('hl.uid'),
       'fingerprint': null
     }
-    this._hmga = MIP.getData({ FingerPrint: _hmga })
+    this._hmga = MIP.getData('FingerPrint.Hmga')
   }
   build () {
     // detect if object is array
@@ -157,7 +157,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     }, 10)
     window.addEventListener ? document.body.addEventListener('click', this.clickHandler, false) : document.body.attachEvent('onlick', this.clickHandler)
     setTimeout(() => {
-      let murmur = this.cache(fpCacheKey)
+      let murmur = this.cache(this.fpCacheKey)
       if (murmur) {
         this.global_var.fingerprint = murmur
         this.trackPv({
@@ -1495,7 +1495,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     data['request'] = location.href
     data['referrer'] = document.referrer
     data['agent'] = navigator.userAgent
-    MIP.setData({ FingerPrint: data })
+    MIP.setData({ FingerPrint: { Data: data } })
     if (this.hasConsole) {
       console.log('fp', data)
     }
@@ -1703,7 +1703,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     }
   }
   fp1 (callback) {
-    var d1 = new Date()
+    let d1 = new Date()
     this.Fingerprint2.get(function (components) {
       let list = []
       for (let key in components) {
