@@ -99,7 +99,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     }
     this._hmga = []
   }
-  build () {
+  build() {
     // detect if object is array
     // only implement if no native implementation is available
     this.arrayPropertyBind()
@@ -183,6 +183,21 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
         }
       }
     }, 500)
+    window.addEventListener ? window.addEventListener('beforeunload', () => {
+      this.endTime = new Date()
+      console.log(this.endTime - this.startTime)
+      this.trackEvent({
+        'eventType': 'close',
+        'duration': this.endTime - this.startTime
+      })
+    }, false) : window.attachEvent('beforeunload', () => {
+      this.endTime = new Date()
+      console.log(this.endTime - this.startTime)
+      this.trackEvent({
+        'eventType': 'close',
+        'duration': this.endTime - this.startTime
+      })
+    })
   }
   arrayPropertyBind () {
     if (typeof Array.isArray === 'undefined') {
