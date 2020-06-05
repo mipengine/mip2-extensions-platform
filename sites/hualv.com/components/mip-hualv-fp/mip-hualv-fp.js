@@ -99,7 +99,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
     }
     this._hmga = []
   }
-  build() {
+  build () {
     // detect if object is array
     // only implement if no native implementation is available
     this.arrayPropertyBind()
