@@ -170,12 +170,12 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
         })
       } else {
         try {
-          this.fp1(function (data) {
+          this.fp1(data => {
             data['type'] = 'fp'
             this.trackPv(data)
           })
         } catch (error) {
-          this.guid(function (data) {
+          this.guid(data => {
             data['type'] = 'guid'
             data['err'] = error
             this.trackPv(data)
@@ -1461,7 +1461,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
 
   Fingerprint2getPromise (options) {
     return new Promise((resolve, reject) => {
-      this.Fingerprint2.get(options, resolve)
+      this.Fingerprint2get(options, resolve)
     })
   }
 
@@ -1470,7 +1470,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
       callback = options
       options = {}
     }
-    return this.Fingerprint2.get(options, components => {
+    return this.Fingerprint2get(options, components => {
       let newComponents = []
       for (let i = 0; i < components.length; i++) {
         let component = components[i]
@@ -1581,7 +1581,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
   }
   fp (callback) {
     let d1 = new Date()
-    this.Fingerprint2.get(components => {
+    this.Fingerprint2get(components => {
       let list = []
       for (let key in components) {
         if (components.hasOwnProperty(key)) {
@@ -1589,7 +1589,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
           list.push(pair.value)
         }
       }
-      let murmur = this.Fingerprint2.x64hash128(list.join(), 31)
+      let murmur = this.x64hash128(list.join(), 31)
       let d2 = new Date()
       let time = d2 - d1
       this.cache(this.fpCacheKey, murmur)
@@ -1723,7 +1723,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
   }
   fp1 (callback) {
     let d1 = new Date()
-    this.Fingerprint2.get(function (components) {
+    this.Fingerprint2get(components => {
       let list = []
       for (let key in components) {
         if (components.hasOwnProperty(key)) {
@@ -1731,7 +1731,7 @@ export default class MIPHualvFingerPrint extends MIP.CustomElement {
           list.push(pair.value)
         }
       }
-      let murmur = this.Fingerprint2.x64hash128(list.join(), 31)
+      let murmur = this.x64hash128(list.join(), 31)
       let d2 = new Date()
       let time = d2 - d1
       this.cache(this.fpCacheKey, murmur)
