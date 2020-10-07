@@ -1,31 +1,19 @@
-# mip-example
+# mip-zdwx-catalog
 
-标题|内容
+标题|加载 MIP 页中的广告脚本，投放广告。
 ----|----
-类型|
-支持布局|
-所需脚本| [https://c.mipcdn.com/extensions/platform/v2/njt.com/mip-example/mip-example.js](https://c.mipcdn.com/extensions/platform/v2/njt.com/mip-example/mip-example.js)
+类型|通用
+支持布局|无
+所需脚本|无
 
 ## 说明
 
-组件功能说明
+根据定向策略加载业务。
 
 ## 示例
 
-示例说明
-
-```
-// 代码示例
-```
+<mip-njt-ad></mip-njt-ad>
 
 ## 属性
 
-### 属性1
-
-**说明**：
-
-**必选项**：
-
-**单位**：
-
-**默认值**：
+无
