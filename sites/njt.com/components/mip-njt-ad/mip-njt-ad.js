@@ -1,28 +1,27 @@
 export default class MIPNjtAd extends MIP.CustomElement {
   build () {
     let element = document.querySelectorAll('mip-njt-ad')[0]
-    let ajaxIp = element.getAttribute('ajaxIp') ? element.getAttribute('ajaxIp') : '/API/IP.ashx?action=js'
     let pagename = element.getAttribute('pagename')
     let ptypeid = element.getAttribute('ptypeid')
     let pcategoryid = element.getAttribute('pcategoryid')
-    let adplace = element.getAttribute('adplace').split(",")
-    let cl_free_selected = new Array()
+    let adplace = element.getAttribute('adplace').split(',')
+    let clFreeSelected = []
     loadXml()
     function loadXml () {
-      var formData = new FormData()
-      formData.append('action' , 'AllAdvertising')
-      fetch('/API/pageajax.ashx',{method:"POST",body:formData}).then(function (res) {
-        res.json().then(function(data){
-          var adlist = data.ExtraJsonReturn
-          var isLbs = false
-          for(var i in adlist){
-            for(var a in adplace){
-              if(adlist[i].placeName == adplace[a]){
-                  for(var l in adlist[i].list){
-                      if((adlist[i].list[l].pagename.length==0||adlist[i].list[l].pagename.indexOf(pagename)!=-1)
-                      &&(adlist[i].list[l].typeid.length==0||adlist[i].list[l].pagename.indexOf(ptypeid.toString())!=-1)
-                      &&(adlist[i].list[l].categoryid.length==0||adlist[i].list[l].pagename.indexOf(pcategoryid.toString())!=-1)
-                      &&(adlist[i].list[l].province.length>0||adlist[i].list[l].city.length>0)
+      let formData = new FormData()
+      formData.append('action', 'AllAdvertising')
+      fetch('/API/pageajax.ashx', { method:'POST', body:formData}).then( function (res) {
+        res.json().then( function(data){
+          let adlist = data.ExtraJsonReturn
+          let isLbs = false
+          for (let i in adlist){
+            for (let a in adplace){
+              if (adlist[i].placeName === adplace[a]){
+                  for (let l in adlist[i].list){
+                      if ((adlist[i].list[l].pagename.length === 0|| adlist[i].list[l].pagename.indexOf(pagename) !== -1 )&&
+                      (adlist[i].list[l].typeid.lengt === 0|| adlist[i].list[l].pagename.indexOf(ptypeid.toString()) !== -1 )&&
+                      (adlist[i].list[l].categoryid.length === 0|| adlist[i].list[l].pagename.indexOf(pcategoryid.toString()) !== -1 )&&
+                      (adlist[i].list[l].province.length >0 || adlist[i].list[l].city.length >0 )
                       ){
                           isLbs = true
                           return false
@@ -32,99 +31,97 @@ export default class MIPNjtAd extends MIP.CustomElement {
             }
           }
           if (isLbs) {
-            fetch('/API/IP.ashx?action=json',{method:"GET"}).then(function (ipres) {
-              ipres.json().then(function(remote_ip_info){
-                if(!!remote_ip_info){
-                  if (remote_ip_info.ret == 1) {
-                      for (x in adplace) {
-                          loadadm(adlist, remote_ip_info.province, remote_ip_info.city, adplace[x]);
+            fetch('/API/IP.ashx?action=json', { method:'GET' }).then( function (ipres) {
+              ipres.json().then( function(remote_ip_info){
+                if(remote_ip_info){
+                  if (remote_ip_info.ret === 1) {
+                      for (let q in adplace) {
+                          loadadm(adlist, remote_ip_info.province, remote_ip_info.city, adplace[q])
+                      }
+                  } else {
+                      for (let w in adplace) {
+                          loadadm(adlist, '', '', adplace[w])
                       }
                   }
-                  else {
-                      for (var x in adplace) {
-                          loadadm(adlist, "", "", adplace[x])
-                      }
+                } else {
+                  for (let e in adplace) {
+                      loadadm(adlist, '', '', adplace[e])
                   }
-                }else{
-                  for (var x in adplace) {
-                      loadadm(adlist, "", "", adplace[x])
-                  }
-                  var err_report_str = '<img src="https://error-report.danongchang.cn/img.aspx?Appname=njtwap&priority=10&Url=' + window.location.href + '&Errcode=njtwap' + '" />';
-                  document.body.appendChild(err_report_str)
+                  let errReportStr = '<img src="https://error-report.danongchang.cn/img.aspx?Appname=njtwap&priority=10&Url=' + window.location.href + '&Errcode=njtwap' + '" />'
+                  document.body.appendChild(errReportStr)
                 }
               })
             })
-            setTimeout(function () { checkAdmIPajax(adlist)}, 3000)
-          }else {
-            for (var x in adplace) {
-              loadadm(adlist, "", "", adplace[x])
+            setTimeout( function () { checkAdmIPajax(adlist)}, 3000)
+          } else {
+            for (let x in adplace) {
+              loadadm(adlist, '', '', adplace[x])
             }
           }
         })
       })
     }
     function loadadm(adarray, province, city, placeName){
-      var ishaveinadm = 0
-      for(var i in adarray){
-          if(adarray[i].placeName == placeName){
-            if(placeName == "ad_t3"){
-                adarray[i].list = randomad(adarray[i].list)
-                var adt3html = ''
-                for(var l in adarray[i].list){
-                    if((adarray[i].list[l].pagename.length==0||adarray[i].list[l].pagename.indexOf(pagename)!=-1)
-                    &&(adarray[i].list[l].typeid.length==0||adarray[i].list[l].typeid.indexOf(ptypeid.toString())!=-1)
-                    &&(adarray[i].list[l].categoryid.length==0||adarray[i].list[l].typeid.indexOf(pcategoryid.toString())!=-1)
-                    &&(adarray[i].list[l].province.length==0||adarray[i].list[l].province.indexOf(province)!=-1 || province.indexOf(adarray[i].list[l].province)!=-1)
-                    &&(adarray[i].list[l].city.length==0||adarray[i].list[l].city.indexOf(city)!=-1 || city.indexOf(adarray[i].list[l].city)!=-1)
-                    ){
-                        adt3html+=adarray[i].list[l].adcode.split("</a>")[0]
-                        adt3html+="<div>"+adarray[i].list[l].title+"</div>"
-                        adt3html+="</a>"
-                        ishaveinadm = 1
-                    }
+      let ishaveinadm = 0
+      for (let i in adarray){
+          if (adarray[i].placeName === placeName){
+            if (placeName === 'ad_t3'){
+              adarray[i].list = randomad(adarray[i].list)
+              let adt3html = ''
+              for (let l in adarray[i].list){
+                  if((adarray[i].list[l].pagename.length === 0 || adarray[i].list[l].pagename.indexOf(pagename) !== -1 )
+                  &&(adarray[i].list[l].typeid.length === 0 || adarray[i].list[l].typeid.indexOf(ptypeid.toString()) !== -1 )
+                  &&(adarray[i].list[l].categoryid.length === 0 || adarray[i].list[l].typeid.indexOf(pcategoryid.toString()) !== -1 )
+                  &&(adarray[i].list[l].province.length === 0 || adarray[i].list[l].province.indexOf(province) !== -1 || province.indexOf(adarray[i].list[l].province) !== -1 )
+                  &&(adarray[i].list[l].city.length ===0 || adarray[i].list[l].city.indexOf(city) !==-1 || city.indexOf(adarray[i].list[l].city) !== -1 )
+                  ){
+                      adt3html += adarray[i].list[l].adcode.split('</a>')[0]
+                      adt3html += '<div>'+adarray[i].list[l].title + '</div>'
+                      adt3html += '</a>'
+                      ishaveinadm = 1
+                  }
+              }
+              document.getElementById(placeName).innerHTML = adt3html
+            } else {
+              for (let h in adarray[i].list){
+                if ((adarray[i].list[h].pagename.length === 0 || adarray[i].list[h].pagename.indexOf(pagename) !== -1 )&&
+                (adarray[i].list[h].typeid.length === 0 || adarray[i].list[h].typeid.indexOf(ptypeid.toString()) !== -1 )&&
+                (adarray[i].list[h].categoryid.length === 0 || adarray[i].list[h].typeid.indexOf(pcategoryid.toString()) !== -1 )&&
+                (adarray[i].list[h].province.length === 0 || adarray[i].list[h].province.indexOf(province) !== -1 || province.indexOf(adarray[i].list[h].province) !== -1 )&&
+                (adarray[i].list[h].city.length === 0 || adarray[i].list[h].city.indexOf(city) !== -1 || city.indexOf(adarray[i].list[h].city) !== -1 )
+                ){
+                    document.getElementById(placeName).innerHTML = adarray[i].list[h].adcode
+                    ishaveinadm = 1
+                    return false
                 }
-                document.getElementById(placeName).innerHTML = adt3html
-            }else{
-                for(var l in adarray[i].list){
-                    if((adarray[i].list[l].pagename.length==0||adarray[i].list[l].pagename.indexOf(pagename)!=-1)
-                    &&(adarray[i].list[l].typeid.length==0||adarray[i].list[l].typeid.indexOf(ptypeid.toString())!=-1)
-                    &&(adarray[i].list[l].categoryid.length==0||adarray[i].list[l].typeid.indexOf(pcategoryid.toString())!=-1)
-                    &&(adarray[i].list[l].province.length==0||adarray[i].list[l].province.indexOf(province)!=-1 || province.indexOf(adarray[i].list[l].province)!=-1)
-                    &&(adarray[i].list[l].city.length==0||adarray[i].list[l].city.indexOf(city)!=-1 || city.indexOf(adarray[i].list[l].city)!=-1)
-                    ){
-                        document.getElementById(placeName).innerHTML = adarray[i].list[l].adcode;
-                        ishaveinadm = 1
-                        return false
-                    }
-                }
+              }
             }
           }
       }
       if (ishaveinadm === 0) {
-        var rnd = Math.floor(Math.random() * 100)
         switch (placeName) {
-            case "ad_c1":
-                var cl_free_itemLength = 0
-                for(var i in adarray){
-                    if(adarray[i].placeName=="c_free"){
-                        cl_free_itemLength = adarray[i].list.length
-                    }
+          case 'ad_c1':
+            let clFreeitemLength = 0
+            for (let i in adarray){
+                if (adarray[i].placeName === 'c_free'){
+                  clFreeitemLength = adarray[i].list.length
                 }
-                var cl_free_itemPosition = Math.floor(Math.random() * (cl_free_itemLength))
-                for (var x in cl_free_selected) {
-                    if (cl_free_selected[x] === cl_free_itemPosition) {
-                      cl_free_itemPosition = Math.floor(Math.random() * (cl_free_itemLength))
-                    }
+            }
+            let clFreeItemPosition = Math.floor(Math.random() * (clFreeitemLength))
+            for (let f in clFreeSelected) {
+                if (clFreeSelected[f] === clFreeItemPosition) {
+                  clFreeItemPosition = Math.floor(Math.random() * (clFreeitemLength))
                 }
-                cl_free_selected[cl_free_selected.length] = cl_free_itemPosition
-                for(var i in adarray){
-                    if(adarray[i].placeName == "c_free"){
-                      document.getElementById(placeName).innerHTML = adarray[i].list[cl_free_itemPosition].adcode
-                    }
+            }
+            clFreeSelected[clFreeSelected.length] = clFreeItemPosition
+            for (let s in adarray){
+                if (adarray[s].placeName === 'c_free'){
+                  document.getElementById(placeName).innerHTML = adarray[s].list[clFreeItemPosition].adcode
                 }
-                break
-            default:
-                break
+            }
+            break
+          default:
+          break
         }
       }
     }
@@ -139,9 +136,9 @@ export default class MIPNjtAd extends MIP.CustomElement {
         document.body.appendChild(errReportStr)
     }
     function randomad(arr){
-      for (var i = 0,len = arr.length;i < len; i++ ) {
-        var rand = parseInt(Math.random()*len)
-        var temp = arr[rand]
+      for (let i = 0, len = arr.length; i < len; i++ ) {
+        let rand = parseInt(Math.random()*len)
+        let temp = arr[rand]
         arr[rand] = arr[i]
         arr[i] = temp
       }
