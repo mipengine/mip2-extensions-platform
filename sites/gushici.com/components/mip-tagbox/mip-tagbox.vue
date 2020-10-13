@@ -12,7 +12,7 @@
 
 <script>
 import './index.less'
-import ajax from '../../common/ajax.js'
+import ajaxGet from '../../common/ajax.js'
 export default{
   props: {
     url: {
@@ -31,7 +31,7 @@ export default{
   methods: {
     init () {
       let t = this
-      ajax.get(this.url, {}, function (res) {
+      ajaxGet(this.url, {}, function (res) {
         t.arr = res.list
       })
     }
