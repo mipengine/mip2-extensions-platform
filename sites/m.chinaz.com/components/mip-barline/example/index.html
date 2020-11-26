@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html mip>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+    <title>MIP page</title>
+    <link rel="canonical" href="对应的原页面地址">
+    <link rel="stylesheet" href="https://c.mipcdn.com/static/v2/mip.css">
+    <style mip-custom>
+    .score-bar {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between
+}
+
+.score-bar-name a {
+    color: #050e41;
+    font-weight: 400
+}
+
+.score-bar-name a:hover {
+    color: #3949ab
+}
+
+.score-bar-result-number {
+    font-weight: 600
+}
+
+.score-bar-result-square,.score-bar-result-square-dark {
+    background: #e6e6e8;
+    color: #000!important;
+    display: inline-block;
+    border-radius: 3px;
+    margin: 0 0 4px 8px;
+    line-height: 22px;
+    font-weight: 500;
+    width: 30px;
+    text-align: center
+}
+
+.score-bar-result-square-dark {
+    background-color: #3949ab;
+    color: #fff!important
+}
+
+.score-bar-diff {
+    color: green;
+    font-size: 12px;
+    padding: 0 0 0 3px
+}
+
+.score-bar-line {
+    width: 100%;
+    position: relative;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    height: 4px;
+    margin: 2px 0 0;
+    background-color: #e6e6e8;
+    border-radius: 4px;
+    overflow: hidden
+}
+
+.score-bar-line-filled {
+    height: 4px;
+    border-radius: 4px;
+    display: block;
+    background-color: #1F66BE;
+    z-index: 1;
+    -webkit-transition-timing-function: ease-in-out;
+    transition-timing-function: ease-in-out;
+    -webkit-transition: width 2s;
+    transition: width 2s
+}
+
+    </style>
+  </head>
+  <body>
+  
+  <div class="score-bar">
+			<div class="score-bar-name">
+				安兔兔v8 跑分
+				
+			</div>
+			<div class="score-bar-result">
+				<span class="score-bar-result-number">519967</span>
+			</div>
+			<div class="score-bar-line">
+			  <mip-barline class="score-bar-line-filled"  filled="70"></mip-barline>
+			</div>
+		</div>
+  
+
+    <script src="https://c.mipcdn.com/static/v2/mip.js"></script>
+    <script src="/mip-barline/mip-barline.js"></script>
+  </body>
+</html>
