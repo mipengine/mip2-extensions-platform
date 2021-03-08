@@ -20,9 +20,7 @@ export default class MIPMczComment extends CustomElement {
   build () {
     const wrapper = dom.create(`
      <section class='cont p10' id='comment'>
-       <mip-form method='post' url='${
-         this.data().url
-       }' id='submit' class='post'>
+       <mip-form method='post' url='${this.data().url}' id='submit' class='post'>
          <fieldset class='w-text'><textarea id='cTextarea'></textarea></fieldset>
            <fieldset class='w-button'>
            <input id='verify' class='button disable' type='button' value='提交跟贴' hidefocus='true'/>
