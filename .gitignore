@@ -7,6 +7,7 @@ Thumbs.db
 .DS_Store
 *.svn
 .svn
+.prettierrc
 .svn/
 *.git
 .git
