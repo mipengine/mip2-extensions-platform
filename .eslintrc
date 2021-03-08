@@ -19,6 +19,7 @@
     "browser": true
   },
   "rules": {
+    "linebreak-style": ["off", "windows"],
     "jsdoc/check-param-names": 1,
     "jsdoc/check-tag-names": 1,
     "jsdoc/check-types": 1,

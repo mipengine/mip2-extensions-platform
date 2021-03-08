@@ -156,7 +156,7 @@ export default class MIPMpc6Comment extends CustomElement {
     let oli = ul.getElementsByTagName('li');
     let p = Math.floor(oli.length / 5 + 1);
     fetch(
-        `${this.data().url}/sajax.asp?action=0&id=${
+        `${this.data().url}/api/MCommnet/getmlist?action=0&id=${
         this.data().id
       }&page=${p}&CommentTpye=0`, {
           method: 'GET'
@@ -242,7 +242,7 @@ export default class MIPMpc6Comment extends CustomElement {
       return false;
     }
     fetch(
-        `${this.data().url}/ajax.asp?type=POST&content=${content}&SoftID=${
+        `${this.data().url}api/MCommnet/savemdata?type=POST&content=${content}&id=${
         this.data().id
       }&Action=2&CommentTpye=0`, {
           method: 'GET'
