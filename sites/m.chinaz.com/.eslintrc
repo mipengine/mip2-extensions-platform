@@ -1,9 +1,9 @@
 {
   "parser": "vue-eslint-parser",
   "parserOptions": {
-      "ecmaVersion": 8,
-      "sourceType": "module",
-      "allowImportExportEverywhere": false
+    "ecmaVersion": 8,
+    "sourceType": "module",
+    "allowImportExportEverywhere": false
   },
   "extends": [
     "standard",
@@ -19,7 +19,6 @@
     "browser": true
   },
   "rules": {
-    "linebreak-style": ["off", "windows"],
     "jsdoc/check-param-names": 1,
     "jsdoc/check-tag-names": 1,
     "jsdoc/check-types": 1,
@@ -35,6 +34,7 @@
     "jsdoc/require-returns-description": 1,
     "jsdoc/require-returns-type": 1,
     "jsdoc/valid-types": 1,
-    "no-var": 2
+    "no-var": 2,
+    "camelcase": 0
   }
 }
