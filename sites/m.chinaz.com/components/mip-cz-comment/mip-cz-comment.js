@@ -6,7 +6,7 @@ import './index.less'
 import '../../common/mip-common.less'
 import MIPCommon from '../../common/mip-common'
 const { CustomElement, util } = MIP
-const { jsonParse, dom, css } = util
+const { dom, css } = util
 
 export default class MIPMczComment extends CustomElement {
   data () {
@@ -119,11 +119,11 @@ export default class MIPMczComment extends CustomElement {
         css(cbutton, {
           display: 'block'
         })
+        css(ctit, {
+          display: 'block'
+        })
       }
       css(clist, {
-        display: 'block'
-      })
-      css(ctit, {
         display: 'block'
       })
     }
@@ -137,7 +137,7 @@ export default class MIPMczComment extends CustomElement {
     const verify = document.getElementById('verify')
     textarea.onkeyup = function () {
       const len = this.value.length
-      if (len < 5) {
+      if (len < 6) {
         verify.classList.add('disable')
       } else {
         verify.classList.remove('disable')
@@ -153,32 +153,35 @@ export default class MIPMczComment extends CustomElement {
     const oli = ul.getElementsByTagName('li')
     const p = Math.floor(oli.length / 5 + 1)
     fetch(
-      `${this.data().url}/api/MCommnet/getmlist?action=0&id=${
+      `${this.data().url}/api/Mcomment/getmlist?id=${
         this.data().id
-      }&page=${p}&CommentTpye=0`,
+      }&start=${p}&t=1`,
       {
         method: 'GET'
       }
     )
       .then((responseText) => {
-        return responseText.text()
+        return responseText.json()
       })
       .then((responseRes) => {
         let html = ''
-        const data = jsonParse(responseRes)
-        const userName = data.sUserName
-        const userData = data.sDateAndTime
-        const userText = data.sContent
+        const data = responseRes
         // 查看更多按钮显示
         const btnStatusC = document
           .getElementById('view-comment')
           .getElementsByClassName('button-status-complete')[0]
-        if (data.RecordCount > 5) {
+        if (data.total > 5) {
           css(btnStatusC, {
             display: 'block'
           })
         }
-        if (p >= data.PageCount) {
+        const titStatus = document.getElementById('tit')
+        if (data.total < 1) {
+          css(titStatus, {
+            display: 'none'
+          })
+        }
+        if (p >= Math.floor(data.total / 5 + 1)) {
           btnStatusC.removeChild(
             document
               .getElementById('view-comment')
@@ -188,14 +191,14 @@ export default class MIPMczComment extends CustomElement {
             '<input type="button" value="没有更多评论了！" class="more-comment button">'
         }
 
-        for (let i = 0; i < userName.length; i++) {
+        for (let i = 0; i < data.data.length; i++) {
           html +=
             '<li><p class="user">' +
-            userName[i] +
+            data.data[i].userName +
             '<time>' +
-            userData[i] +
+            data.data[i].twoAuditTime +
             '</time></p><p>' +
-            decodeURIComponent(userText[i]) +
+            data.data[i].content +
             '</p></li>'
         }
         oli.length === 0
@@ -242,9 +245,9 @@ export default class MIPMczComment extends CustomElement {
     fetch(
       `${
         this.data().url
-      }api/MCommnet/savemdata?type=POST&content=${content}&id=${
+      }/api/Mcomment/savemdata?content=${content}&id=${
         this.data().id
-      }&Action=2&CommentTpye=0`,
+      }&t=1`,
       {
         method: 'GET'
       }
