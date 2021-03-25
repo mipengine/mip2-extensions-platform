@@ -1,7 +1,7 @@
 {
-  "name": "39.net",
-  "version": "0.0.5",
-  "description": "39.net网自定义组件",
+  "name": "hualv.com",
+  "version": "0.0.1",
+  "description": "计算用户指纹",
   "scripts": {
     "dev": "mip2 dev",
     "build": "mip2 build",
@@ -10,8 +10,7 @@
     "fix": "npm run fix:js",
     "fix:js": "eslint --ext .vue,.js . --fix"
   },
-  "author": "叶永钦 (yeyongqin@mail.39.net)",
-  "dependencies": {},
+  "author": "MrChenSama",
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-config-standard": "^11.0.0",
