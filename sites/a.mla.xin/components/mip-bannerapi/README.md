@@ -4,7 +4,7 @@
 ----|----
 类型|
 支持布局|
-所需脚本| [https://c.mipcdn.com/extensions/platform/v2/mla.xin/mip-bannerapi/mip-bannerapi.js](https://c.mipcdn.com/extensions/platform/v2/mla.xin/mip-bannerapi/mip-bannerapi.js)
+所需脚本| [https://c.mipcdn.com/extensions/platform/v2/a.mla.xin/mip-bannerapi/mip-bannerapi.js](https://c.mipcdn.com/extensions/platform/v2/a.mla.xin/mip-bannerapi/mip-bannerapi.js)
 
 ## 说明
 
