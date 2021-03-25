@@ -16,7 +16,7 @@
 
 ```
 <mip-bannerapi 
-  url="https://s.mla.xin/test/" bwidth="1920" bheight="465" defer="5000">
+  url="http://cdnbanner.071000.top/api/mlabdjzyjy1/index" bwidth="1920" bheight="465" defer="5000">
 </mip-bannerapi>
 ```
 
