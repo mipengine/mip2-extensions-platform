@@ -14,12 +14,11 @@ export default class MIPBannerapi extends MIP.CustomElement {
     window.fetch(url).then(function (res) {
       return res.json()
     }).then(function (data) {
-      console.log(data);
-      if(data.msg!='success'){
-        console.log("请检查服务器!")
+      if (data.msg! == 'success'){
+        console.log('请检查服务器!')
         return
       }
-      let oData = data.data;
+      let oData = data.data
       for (let i = 0; i < oData.length; i++) {
         objHtml = `<a href="${oData[i].linkto}"><mip-img src="${oData[i].image}" alt="banner"></mip-img></a>` + objHtml
         if (i === 0) {
