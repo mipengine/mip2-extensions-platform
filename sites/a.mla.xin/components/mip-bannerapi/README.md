@@ -8,7 +8,7 @@
 
 ## 说明
 
-扩展官方 mip-carousel 多图轮播，通过jsonp的方式获取数据
+扩展官方 mip-carousel 多图轮播，通过json的方式获取数据
 
 ## 示例
 
